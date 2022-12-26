@@ -1,5 +1,7 @@
 # Vultr Resource Provider
 
+![Vultr](img/logo.png)
+
 The Vultr Resource Provider lets you manage [Vultr](https://vultr.com/) resources.
 
 ## Installing
