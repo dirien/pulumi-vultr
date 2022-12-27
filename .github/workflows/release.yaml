@@ -130,9 +130,9 @@ jobs:
         goversion:
           - 1.19.x
         language:
-          #- nodejs
-          #- python
-          #- dotnet
+          - nodejs
+          - python
+          - dotnet
           - go
         nodeversion:
           - 16.x
