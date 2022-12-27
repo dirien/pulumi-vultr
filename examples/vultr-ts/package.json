@@ -1,0 +1,11 @@
+{
+  "name": "vultr-ts",
+  "main": "index.ts",
+  "devDependencies": {
+    "@types/node": "^18"
+  },
+  "dependencies": {
+    "@pulumi/pulumi": "^3.0.0",
+    "@ediri/vultr": "2.12.0"
+  }
+}

@@ -10,11 +10,26 @@ This package is available for several languages/platforms:
 
 ### Node.js (JavaScript/TypeScript)
 
-Currently, the Vultr provider is not available for Node.js (JavaScript/TypeScript).
+
+To use from JavaScript or TypeScript in Node.js, install using either `npm`:
+
+```bash
+npm install @ediri/vultr
+```
+
+or `yarn`:
+
+```bash
+yarn add @ediri/vultr
+```
 
 ### Python
 
-Currently, the Vultr provider is not available for Python.
+To use from Python, install using `pip`:
+``
+```bash
+pip install ediri-vultr
+```
 
 ### Go
 
@@ -26,7 +41,11 @@ go get github.com/dirien/pulumi-vultr/sdk/v2
 
 ### .NET
 
-Currently, the .NET SDK is not available.
+To use from .NET, install using `dotnet add package`:
+
+```bash
+dotnet add package ediri.Vultr
+```
 
 ## Configuration
 

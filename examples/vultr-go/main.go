@@ -8,7 +8,7 @@ import (
 func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
 
-		kubernetes, err := vultr.NewKubernetes(ctx, "kubernetes", &vultr.KubernetesArgs{
+		vke, err := vultr.NewKubernetes(ctx, "vke", &vultr.KubernetesArgs{
 			Region:  pulumi.String("fra"),
 			Version: pulumi.String("v1.25.4+1"),
 			Label:   pulumi.String("pulumi-vultr"),
@@ -21,7 +21,7 @@ func main() {
 		if err != nil {
 			return err
 		}
-		ctx.Export("kubeconfig", kubernetes.KubeConfig)
+		ctx.Export("kubeconfig", vke.KubeConfig)
 		return nil
 	})
 }
