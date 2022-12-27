@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Pulumi.Serialization;
 using Pulumi;
 
-namespace dirien.Vultr
+namespace ediri.Vultr
 {
     /// <summary>
     /// Deprecated: Use `vultr.Vpc` instead
@@ -22,7 +22,7 @@ namespace dirien.Vultr
     /// ```csharp
     /// using System.Collections.Generic;
     /// using Pulumi;
-    /// using Vultr = dirien.Vultr;
+    /// using Vultr = ediri.Vultr;
     /// 
     /// return await Deployment.RunAsync(() =&gt; 
     /// {
@@ -40,7 +40,7 @@ namespace dirien.Vultr
     /// ```csharp
     /// using System.Collections.Generic;
     /// using Pulumi;
-    /// using Vultr = dirien.Vultr;
+    /// using Vultr = ediri.Vultr;
     /// 
     /// return await Deployment.RunAsync(() =&gt; 
     /// {

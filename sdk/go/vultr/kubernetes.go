@@ -20,8 +20,8 @@ import (
 //
 // import (
 //
+//	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr"
 //	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-//	"github.com/pulumiverse/pulumi-vultr/sdk/v2/go/vultr"
 //
 // )
 //
@@ -56,8 +56,8 @@ import (
 //
 // import (
 //
+//	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr"
 //	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-//	"github.com/pulumiverse/pulumi-vultr/sdk/v2/go/vultr"
 //
 // )
 //

@@ -37,7 +37,7 @@ def readme():
         return "vultr Pulumi Package - Development Version"
 
 
-setup(name='dirien_vultr',
+setup(name='ediri_vultr',
       version=VERSION,
       description="A Pulumi package for creating and managing Vultr cloud resources.",
       long_description=readme(),
@@ -53,7 +53,7 @@ setup(name='dirien_vultr',
       license='Apache-2.0',
       packages=find_packages(),
       package_data={
-          'dirien_vultr': [
+          'ediri_vultr': [
               'py.typed',
               'pulumi-plugin.json',
           ]
