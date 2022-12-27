@@ -13,7 +13,7 @@ import * as utilities from "./utilities";
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as vultr from "@dirien/vultr";
+ * import * as vultr from "@ediri/vultr";
  *
  * const mySnapshot = new vultr.SnapshotFromUrl("mySnapshot", {url: "http://dl-cdn.alpinelinux.org/alpine/v3.9/releases/x86_64/alpine-virt-3.9.1-x86_64.iso"});
  * ```

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Pulumi.Serialization;
 using Pulumi;
 
-namespace dirien.Vultr
+namespace ediri.Vultr
 {
     public static class GetVpc
     {

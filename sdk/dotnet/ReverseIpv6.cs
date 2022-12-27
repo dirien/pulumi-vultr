@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Pulumi.Serialization;
 using Pulumi;
 
-namespace dirien.Vultr
+namespace ediri.Vultr
 {
     /// <summary>
     /// Provides a Vultr Reverse IPv6 resource. This can be used to create, read,

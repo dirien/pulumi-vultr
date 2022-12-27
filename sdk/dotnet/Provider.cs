@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Pulumi.Serialization;
 using Pulumi;
 
-namespace dirien.Vultr
+namespace ediri.Vultr
 {
     /// <summary>
     /// The provider type for the vultr package. By default, resources use package-wide configuration

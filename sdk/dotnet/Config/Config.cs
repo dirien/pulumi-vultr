@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Immutable;
 
-namespace dirien.Vultr
+namespace ediri.Vultr
 {
     public static class Config
     {

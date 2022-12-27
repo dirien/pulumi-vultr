@@ -15,7 +15,7 @@ import * as utilities from "./utilities";
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as vultr from "@dirien/vultr";
+ * import * as vultr from "@ediri/vultr";
  *
  * const np_1 = new vultr.KubernetesNodePools("np-1", {
  *     clusterId: vultr_kubernetes.k8.id,

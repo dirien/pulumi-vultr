@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Pulumi.Serialization;
 using Pulumi;
 
-namespace dirien.Vultr
+namespace ediri.Vultr
 {
     [VultrResourceType("vultr:index/isoPrivate:IsoPrivate")]
     public partial class IsoPrivate : global::Pulumi.CustomResource

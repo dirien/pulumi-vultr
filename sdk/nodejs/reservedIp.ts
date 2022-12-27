@@ -13,7 +13,7 @@ import * as utilities from "./utilities";
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as vultr from "@dirien/vultr";
+ * import * as vultr from "@ediri/vultr";
  *
  * const myReservedIp = new vultr.ReservedIp("myReservedIp", {
  *     ipType: "v4",
@@ -26,7 +26,7 @@ import * as utilities from "./utilities";
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as vultr from "@dirien/vultr";
+ * import * as vultr from "@ediri/vultr";
  *
  * const myReservedIp = new vultr.ReservedIp("myReservedIp", {
  *     instanceId: "b9cc6fad-70b1-40ee-ab6a-4d622858962f",

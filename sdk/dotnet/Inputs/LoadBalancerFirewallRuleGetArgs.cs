@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Pulumi.Serialization;
 using Pulumi;
 
-namespace dirien.Vultr.Inputs
+namespace ediri.Vultr.Inputs
 {
 
     public sealed class LoadBalancerFirewallRuleGetArgs : global::Pulumi.ResourceArgs

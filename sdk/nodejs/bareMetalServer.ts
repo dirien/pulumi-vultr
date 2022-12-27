@@ -13,7 +13,7 @@ import * as utilities from "./utilities";
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as vultr from "@dirien/vultr";
+ * import * as vultr from "@ediri/vultr";
  *
  * const myServer = new vultr.BareMetalServer("myServer", {
  *     osId: 270,
@@ -26,7 +26,7 @@ import * as utilities from "./utilities";
  *
  * ```typescript
  * import * as pulumi from "@pulumi/pulumi";
- * import * as vultr from "@dirien/vultr";
+ * import * as vultr from "@ediri/vultr";
  *
  * const myServer = new vultr.BareMetalServer("myServer", {
  *     activationEmail: false,

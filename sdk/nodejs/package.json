@@ -1,5 +1,5 @@
 {
-    "name": "@dirien/vultr",
+    "name": "@ediri/vultr",
     "version": "${VERSION}",
     "description": "A Pulumi package for creating and managing Vultr cloud resources.",
     "keywords": [
