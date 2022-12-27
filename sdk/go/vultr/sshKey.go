@@ -23,13 +23,13 @@ import (
 // import (
 //
 //	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-//	"github.com/pulumiverse/pulumi-vultr/sdk/go/vultr"
+//	"github.com/pulumiverse/pulumi-vultr/sdk/v2/go/vultr"
 //
 // )
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := vultr.NewSshKey(ctx, "mySshKey", &vultr.SshKeyArgs{
+//			_, err := vultr.NewSSHKey(ctx, "mySshKey", &vultr.SSHKeyArgs{
 //				SshKey: pulumi.String("ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCyVGaw1PuEl98f4/7Kq3O9ZIvDw2OFOSXAFVqilSFNkHlefm1iMtPeqsIBp2t9cbGUf55xNDULz/bD/4BCV43yZ5lh0cUYuXALg9NI29ui7PEGReXjSpNwUD6ceN/78YOK41KAcecq+SS0bJ4b4amKZIJG3JWmDKljtv1dmSBCrTmEAQaOorxqGGBYmZS7NQumRe4lav5r6wOs8OACMANE1ejkeZsGFzJFNqvr5DuHdDL5FAudW23me3BDmrM9ifUzzjl1Jwku3bnRaCcjaxH8oTumt1a00mWci/1qUlaVFft085yvVq7KZbF2OPPbl+erDW91+EZ2FgEi+v1/CSJ5 your_username@hostname"),
 //			})
 //			if err != nil {
@@ -47,10 +47,10 @@ import (
 //
 // ```sh
 //
-//	$ pulumi import vultr:index/sshKey:SshKey my_key 6b0876a7-f709-41ba-aed8-abed9d38ae45
+//	$ pulumi import vultr:index/sSHKey:SSHKey my_key 6b0876a7-f709-41ba-aed8-abed9d38ae45
 //
 // ```
-type SshKey struct {
+type SSHKey struct {
 	pulumi.CustomResourceState
 
 	// The date the SSH key was added to your Vultr account.
@@ -61,9 +61,9 @@ type SshKey struct {
 	SshKey pulumi.StringOutput `pulumi:"sshKey"`
 }
 
-// NewSshKey registers a new resource with the given unique name, arguments, and options.
-func NewSshKey(ctx *pulumi.Context,
-	name string, args *SshKeyArgs, opts ...pulumi.ResourceOption) (*SshKey, error) {
+// NewSSHKey registers a new resource with the given unique name, arguments, and options.
+func NewSSHKey(ctx *pulumi.Context,
+	name string, args *SSHKeyArgs, opts ...pulumi.ResourceOption) (*SSHKey, error) {
 	if args == nil {
 		return nil, errors.New("missing one or more required arguments")
 	}
@@ -72,28 +72,28 @@ func NewSshKey(ctx *pulumi.Context,
 		return nil, errors.New("invalid value for required argument 'SshKey'")
 	}
 	opts = pkgResourceDefaultOpts(opts)
-	var resource SshKey
-	err := ctx.RegisterResource("vultr:index/sshKey:SshKey", name, args, &resource, opts...)
+	var resource SSHKey
+	err := ctx.RegisterResource("vultr:index/sSHKey:SSHKey", name, args, &resource, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return &resource, nil
 }
 
-// GetSshKey gets an existing SshKey resource's state with the given name, ID, and optional
+// GetSSHKey gets an existing SSHKey resource's state with the given name, ID, and optional
 // state properties that are used to uniquely qualify the lookup (nil if not required).
-func GetSshKey(ctx *pulumi.Context,
-	name string, id pulumi.IDInput, state *SshKeyState, opts ...pulumi.ResourceOption) (*SshKey, error) {
-	var resource SshKey
-	err := ctx.ReadResource("vultr:index/sshKey:SshKey", name, id, state, &resource, opts...)
+func GetSSHKey(ctx *pulumi.Context,
+	name string, id pulumi.IDInput, state *SSHKeyState, opts ...pulumi.ResourceOption) (*SSHKey, error) {
+	var resource SSHKey
+	err := ctx.ReadResource("vultr:index/sSHKey:SSHKey", name, id, state, &resource, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return &resource, nil
 }
 
-// Input properties used for looking up and filtering SshKey resources.
-type sshKeyState struct {
+// Input properties used for looking up and filtering SSHKey resources.
+type sshkeyState struct {
 	// The date the SSH key was added to your Vultr account.
 	DateCreated *string `pulumi:"dateCreated"`
 	// The name/label of the SSH key.
@@ -102,7 +102,7 @@ type sshKeyState struct {
 	SshKey *string `pulumi:"sshKey"`
 }
 
-type SshKeyState struct {
+type SSHKeyState struct {
 	// The date the SSH key was added to your Vultr account.
 	DateCreated pulumi.StringPtrInput
 	// The name/label of the SSH key.
@@ -111,172 +111,172 @@ type SshKeyState struct {
 	SshKey pulumi.StringPtrInput
 }
 
-func (SshKeyState) ElementType() reflect.Type {
-	return reflect.TypeOf((*sshKeyState)(nil)).Elem()
+func (SSHKeyState) ElementType() reflect.Type {
+	return reflect.TypeOf((*sshkeyState)(nil)).Elem()
 }
 
-type sshKeyArgs struct {
+type sshkeyArgs struct {
 	// The name/label of the SSH key.
 	Name *string `pulumi:"name"`
 	// The public SSH key.
 	SshKey string `pulumi:"sshKey"`
 }
 
-// The set of arguments for constructing a SshKey resource.
-type SshKeyArgs struct {
+// The set of arguments for constructing a SSHKey resource.
+type SSHKeyArgs struct {
 	// The name/label of the SSH key.
 	Name pulumi.StringPtrInput
 	// The public SSH key.
 	SshKey pulumi.StringInput
 }
 
-func (SshKeyArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*sshKeyArgs)(nil)).Elem()
+func (SSHKeyArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*sshkeyArgs)(nil)).Elem()
 }
 
-type SshKeyInput interface {
+type SSHKeyInput interface {
 	pulumi.Input
 
-	ToSshKeyOutput() SshKeyOutput
-	ToSshKeyOutputWithContext(ctx context.Context) SshKeyOutput
+	ToSSHKeyOutput() SSHKeyOutput
+	ToSSHKeyOutputWithContext(ctx context.Context) SSHKeyOutput
 }
 
-func (*SshKey) ElementType() reflect.Type {
-	return reflect.TypeOf((**SshKey)(nil)).Elem()
+func (*SSHKey) ElementType() reflect.Type {
+	return reflect.TypeOf((**SSHKey)(nil)).Elem()
 }
 
-func (i *SshKey) ToSshKeyOutput() SshKeyOutput {
-	return i.ToSshKeyOutputWithContext(context.Background())
+func (i *SSHKey) ToSSHKeyOutput() SSHKeyOutput {
+	return i.ToSSHKeyOutputWithContext(context.Background())
 }
 
-func (i *SshKey) ToSshKeyOutputWithContext(ctx context.Context) SshKeyOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(SshKeyOutput)
+func (i *SSHKey) ToSSHKeyOutputWithContext(ctx context.Context) SSHKeyOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SSHKeyOutput)
 }
 
-// SshKeyArrayInput is an input type that accepts SshKeyArray and SshKeyArrayOutput values.
-// You can construct a concrete instance of `SshKeyArrayInput` via:
+// SSHKeyArrayInput is an input type that accepts SSHKeyArray and SSHKeyArrayOutput values.
+// You can construct a concrete instance of `SSHKeyArrayInput` via:
 //
-//	SshKeyArray{ SshKeyArgs{...} }
-type SshKeyArrayInput interface {
+//	SSHKeyArray{ SSHKeyArgs{...} }
+type SSHKeyArrayInput interface {
 	pulumi.Input
 
-	ToSshKeyArrayOutput() SshKeyArrayOutput
-	ToSshKeyArrayOutputWithContext(context.Context) SshKeyArrayOutput
+	ToSSHKeyArrayOutput() SSHKeyArrayOutput
+	ToSSHKeyArrayOutputWithContext(context.Context) SSHKeyArrayOutput
 }
 
-type SshKeyArray []SshKeyInput
+type SSHKeyArray []SSHKeyInput
 
-func (SshKeyArray) ElementType() reflect.Type {
-	return reflect.TypeOf((*[]*SshKey)(nil)).Elem()
+func (SSHKeyArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]*SSHKey)(nil)).Elem()
 }
 
-func (i SshKeyArray) ToSshKeyArrayOutput() SshKeyArrayOutput {
-	return i.ToSshKeyArrayOutputWithContext(context.Background())
+func (i SSHKeyArray) ToSSHKeyArrayOutput() SSHKeyArrayOutput {
+	return i.ToSSHKeyArrayOutputWithContext(context.Background())
 }
 
-func (i SshKeyArray) ToSshKeyArrayOutputWithContext(ctx context.Context) SshKeyArrayOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(SshKeyArrayOutput)
+func (i SSHKeyArray) ToSSHKeyArrayOutputWithContext(ctx context.Context) SSHKeyArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SSHKeyArrayOutput)
 }
 
-// SshKeyMapInput is an input type that accepts SshKeyMap and SshKeyMapOutput values.
-// You can construct a concrete instance of `SshKeyMapInput` via:
+// SSHKeyMapInput is an input type that accepts SSHKeyMap and SSHKeyMapOutput values.
+// You can construct a concrete instance of `SSHKeyMapInput` via:
 //
-//	SshKeyMap{ "key": SshKeyArgs{...} }
-type SshKeyMapInput interface {
+//	SSHKeyMap{ "key": SSHKeyArgs{...} }
+type SSHKeyMapInput interface {
 	pulumi.Input
 
-	ToSshKeyMapOutput() SshKeyMapOutput
-	ToSshKeyMapOutputWithContext(context.Context) SshKeyMapOutput
+	ToSSHKeyMapOutput() SSHKeyMapOutput
+	ToSSHKeyMapOutputWithContext(context.Context) SSHKeyMapOutput
 }
 
-type SshKeyMap map[string]SshKeyInput
+type SSHKeyMap map[string]SSHKeyInput
 
-func (SshKeyMap) ElementType() reflect.Type {
-	return reflect.TypeOf((*map[string]*SshKey)(nil)).Elem()
+func (SSHKeyMap) ElementType() reflect.Type {
+	return reflect.TypeOf((*map[string]*SSHKey)(nil)).Elem()
 }
 
-func (i SshKeyMap) ToSshKeyMapOutput() SshKeyMapOutput {
-	return i.ToSshKeyMapOutputWithContext(context.Background())
+func (i SSHKeyMap) ToSSHKeyMapOutput() SSHKeyMapOutput {
+	return i.ToSSHKeyMapOutputWithContext(context.Background())
 }
 
-func (i SshKeyMap) ToSshKeyMapOutputWithContext(ctx context.Context) SshKeyMapOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(SshKeyMapOutput)
+func (i SSHKeyMap) ToSSHKeyMapOutputWithContext(ctx context.Context) SSHKeyMapOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SSHKeyMapOutput)
 }
 
-type SshKeyOutput struct{ *pulumi.OutputState }
+type SSHKeyOutput struct{ *pulumi.OutputState }
 
-func (SshKeyOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((**SshKey)(nil)).Elem()
+func (SSHKeyOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**SSHKey)(nil)).Elem()
 }
 
-func (o SshKeyOutput) ToSshKeyOutput() SshKeyOutput {
+func (o SSHKeyOutput) ToSSHKeyOutput() SSHKeyOutput {
 	return o
 }
 
-func (o SshKeyOutput) ToSshKeyOutputWithContext(ctx context.Context) SshKeyOutput {
+func (o SSHKeyOutput) ToSSHKeyOutputWithContext(ctx context.Context) SSHKeyOutput {
 	return o
 }
 
 // The date the SSH key was added to your Vultr account.
-func (o SshKeyOutput) DateCreated() pulumi.StringOutput {
-	return o.ApplyT(func(v *SshKey) pulumi.StringOutput { return v.DateCreated }).(pulumi.StringOutput)
+func (o SSHKeyOutput) DateCreated() pulumi.StringOutput {
+	return o.ApplyT(func(v *SSHKey) pulumi.StringOutput { return v.DateCreated }).(pulumi.StringOutput)
 }
 
 // The name/label of the SSH key.
-func (o SshKeyOutput) Name() pulumi.StringOutput {
-	return o.ApplyT(func(v *SshKey) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
+func (o SSHKeyOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v *SSHKey) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
 
 // The public SSH key.
-func (o SshKeyOutput) SshKey() pulumi.StringOutput {
-	return o.ApplyT(func(v *SshKey) pulumi.StringOutput { return v.SshKey }).(pulumi.StringOutput)
+func (o SSHKeyOutput) SshKey() pulumi.StringOutput {
+	return o.ApplyT(func(v *SSHKey) pulumi.StringOutput { return v.SshKey }).(pulumi.StringOutput)
 }
 
-type SshKeyArrayOutput struct{ *pulumi.OutputState }
+type SSHKeyArrayOutput struct{ *pulumi.OutputState }
 
-func (SshKeyArrayOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*[]*SshKey)(nil)).Elem()
+func (SSHKeyArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]*SSHKey)(nil)).Elem()
 }
 
-func (o SshKeyArrayOutput) ToSshKeyArrayOutput() SshKeyArrayOutput {
+func (o SSHKeyArrayOutput) ToSSHKeyArrayOutput() SSHKeyArrayOutput {
 	return o
 }
 
-func (o SshKeyArrayOutput) ToSshKeyArrayOutputWithContext(ctx context.Context) SshKeyArrayOutput {
+func (o SSHKeyArrayOutput) ToSSHKeyArrayOutputWithContext(ctx context.Context) SSHKeyArrayOutput {
 	return o
 }
 
-func (o SshKeyArrayOutput) Index(i pulumi.IntInput) SshKeyOutput {
-	return pulumi.All(o, i).ApplyT(func(vs []interface{}) *SshKey {
-		return vs[0].([]*SshKey)[vs[1].(int)]
-	}).(SshKeyOutput)
+func (o SSHKeyArrayOutput) Index(i pulumi.IntInput) SSHKeyOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) *SSHKey {
+		return vs[0].([]*SSHKey)[vs[1].(int)]
+	}).(SSHKeyOutput)
 }
 
-type SshKeyMapOutput struct{ *pulumi.OutputState }
+type SSHKeyMapOutput struct{ *pulumi.OutputState }
 
-func (SshKeyMapOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*map[string]*SshKey)(nil)).Elem()
+func (SSHKeyMapOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*map[string]*SSHKey)(nil)).Elem()
 }
 
-func (o SshKeyMapOutput) ToSshKeyMapOutput() SshKeyMapOutput {
+func (o SSHKeyMapOutput) ToSSHKeyMapOutput() SSHKeyMapOutput {
 	return o
 }
 
-func (o SshKeyMapOutput) ToSshKeyMapOutputWithContext(ctx context.Context) SshKeyMapOutput {
+func (o SSHKeyMapOutput) ToSSHKeyMapOutputWithContext(ctx context.Context) SSHKeyMapOutput {
 	return o
 }
 
-func (o SshKeyMapOutput) MapIndex(k pulumi.StringInput) SshKeyOutput {
-	return pulumi.All(o, k).ApplyT(func(vs []interface{}) *SshKey {
-		return vs[0].(map[string]*SshKey)[vs[1].(string)]
-	}).(SshKeyOutput)
+func (o SSHKeyMapOutput) MapIndex(k pulumi.StringInput) SSHKeyOutput {
+	return pulumi.All(o, k).ApplyT(func(vs []interface{}) *SSHKey {
+		return vs[0].(map[string]*SSHKey)[vs[1].(string)]
+	}).(SSHKeyOutput)
 }
 
 func init() {
-	pulumi.RegisterInputType(reflect.TypeOf((*SshKeyInput)(nil)).Elem(), &SshKey{})
-	pulumi.RegisterInputType(reflect.TypeOf((*SshKeyArrayInput)(nil)).Elem(), SshKeyArray{})
-	pulumi.RegisterInputType(reflect.TypeOf((*SshKeyMapInput)(nil)).Elem(), SshKeyMap{})
-	pulumi.RegisterOutputType(SshKeyOutput{})
-	pulumi.RegisterOutputType(SshKeyArrayOutput{})
-	pulumi.RegisterOutputType(SshKeyMapOutput{})
+	pulumi.RegisterInputType(reflect.TypeOf((*SSHKeyInput)(nil)).Elem(), &SSHKey{})
+	pulumi.RegisterInputType(reflect.TypeOf((*SSHKeyArrayInput)(nil)).Elem(), SSHKeyArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*SSHKeyMapInput)(nil)).Elem(), SSHKeyMap{})
+	pulumi.RegisterOutputType(SSHKeyOutput{})
+	pulumi.RegisterOutputType(SSHKeyArrayOutput{})
+	pulumi.RegisterOutputType(SSHKeyMapOutput{})
 }

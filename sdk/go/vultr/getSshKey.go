@@ -22,13 +22,13 @@ import (
 // import (
 //
 //	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-//	"github.com/pulumiverse/pulumi-vultr/sdk/go/vultr"
+//	"github.com/pulumiverse/pulumi-vultr/sdk/v2/go/vultr"
 //
 // )
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := vultr.LookupSshKey(ctx, &vultr.LookupSshKeyArgs{
+//			_, err := vultr.GetSshKey(ctx, &vultr.GetSshKeyArgs{
 //				Filters: []vultr.GetSshKeyFilter{
 //					{
 //						Name: "name",
@@ -46,9 +46,9 @@ import (
 //	}
 //
 // ```
-func LookupSshKey(ctx *pulumi.Context, args *LookupSshKeyArgs, opts ...pulumi.InvokeOption) (*LookupSshKeyResult, error) {
+func GetSshKey(ctx *pulumi.Context, args *GetSshKeyArgs, opts ...pulumi.InvokeOption) (*GetSshKeyResult, error) {
 	opts = pkgInvokeDefaultOpts(opts)
-	var rv LookupSshKeyResult
+	var rv GetSshKeyResult
 	err := ctx.Invoke("vultr:index/getSshKey:getSshKey", args, &rv, opts...)
 	if err != nil {
 		return nil, err
@@ -57,13 +57,13 @@ func LookupSshKey(ctx *pulumi.Context, args *LookupSshKeyArgs, opts ...pulumi.In
 }
 
 // A collection of arguments for invoking getSshKey.
-type LookupSshKeyArgs struct {
+type GetSshKeyArgs struct {
 	// Query parameters for finding SSH keys.
 	Filters []GetSshKeyFilter `pulumi:"filters"`
 }
 
 // A collection of values returned by getSshKey.
-type LookupSshKeyResult struct {
+type GetSshKeyResult struct {
 	// The date the SSH key was added to your Vultr account.
 	DateCreated string            `pulumi:"dateCreated"`
 	Filters     []GetSshKeyFilter `pulumi:"filters"`
@@ -75,68 +75,68 @@ type LookupSshKeyResult struct {
 	SshKey string `pulumi:"sshKey"`
 }
 
-func LookupSshKeyOutput(ctx *pulumi.Context, args LookupSshKeyOutputArgs, opts ...pulumi.InvokeOption) LookupSshKeyResultOutput {
+func GetSshKeyOutput(ctx *pulumi.Context, args GetSshKeyOutputArgs, opts ...pulumi.InvokeOption) GetSshKeyResultOutput {
 	return pulumi.ToOutputWithContext(context.Background(), args).
-		ApplyT(func(v interface{}) (LookupSshKeyResult, error) {
-			args := v.(LookupSshKeyArgs)
-			r, err := LookupSshKey(ctx, &args, opts...)
-			var s LookupSshKeyResult
+		ApplyT(func(v interface{}) (GetSshKeyResult, error) {
+			args := v.(GetSshKeyArgs)
+			r, err := GetSshKey(ctx, &args, opts...)
+			var s GetSshKeyResult
 			if r != nil {
 				s = *r
 			}
 			return s, err
-		}).(LookupSshKeyResultOutput)
+		}).(GetSshKeyResultOutput)
 }
 
 // A collection of arguments for invoking getSshKey.
-type LookupSshKeyOutputArgs struct {
+type GetSshKeyOutputArgs struct {
 	// Query parameters for finding SSH keys.
 	Filters GetSshKeyFilterArrayInput `pulumi:"filters"`
 }
 
-func (LookupSshKeyOutputArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*LookupSshKeyArgs)(nil)).Elem()
+func (GetSshKeyOutputArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetSshKeyArgs)(nil)).Elem()
 }
 
 // A collection of values returned by getSshKey.
-type LookupSshKeyResultOutput struct{ *pulumi.OutputState }
+type GetSshKeyResultOutput struct{ *pulumi.OutputState }
 
-func (LookupSshKeyResultOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*LookupSshKeyResult)(nil)).Elem()
+func (GetSshKeyResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetSshKeyResult)(nil)).Elem()
 }
 
-func (o LookupSshKeyResultOutput) ToLookupSshKeyResultOutput() LookupSshKeyResultOutput {
+func (o GetSshKeyResultOutput) ToGetSshKeyResultOutput() GetSshKeyResultOutput {
 	return o
 }
 
-func (o LookupSshKeyResultOutput) ToLookupSshKeyResultOutputWithContext(ctx context.Context) LookupSshKeyResultOutput {
+func (o GetSshKeyResultOutput) ToGetSshKeyResultOutputWithContext(ctx context.Context) GetSshKeyResultOutput {
 	return o
 }
 
 // The date the SSH key was added to your Vultr account.
-func (o LookupSshKeyResultOutput) DateCreated() pulumi.StringOutput {
-	return o.ApplyT(func(v LookupSshKeyResult) string { return v.DateCreated }).(pulumi.StringOutput)
+func (o GetSshKeyResultOutput) DateCreated() pulumi.StringOutput {
+	return o.ApplyT(func(v GetSshKeyResult) string { return v.DateCreated }).(pulumi.StringOutput)
 }
 
-func (o LookupSshKeyResultOutput) Filters() GetSshKeyFilterArrayOutput {
-	return o.ApplyT(func(v LookupSshKeyResult) []GetSshKeyFilter { return v.Filters }).(GetSshKeyFilterArrayOutput)
+func (o GetSshKeyResultOutput) Filters() GetSshKeyFilterArrayOutput {
+	return o.ApplyT(func(v GetSshKeyResult) []GetSshKeyFilter { return v.Filters }).(GetSshKeyFilterArrayOutput)
 }
 
 // The provider-assigned unique ID for this managed resource.
-func (o LookupSshKeyResultOutput) Id() pulumi.StringOutput {
-	return o.ApplyT(func(v LookupSshKeyResult) string { return v.Id }).(pulumi.StringOutput)
+func (o GetSshKeyResultOutput) Id() pulumi.StringOutput {
+	return o.ApplyT(func(v GetSshKeyResult) string { return v.Id }).(pulumi.StringOutput)
 }
 
 // The name of the SSH key.
-func (o LookupSshKeyResultOutput) Name() pulumi.StringOutput {
-	return o.ApplyT(func(v LookupSshKeyResult) string { return v.Name }).(pulumi.StringOutput)
+func (o GetSshKeyResultOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v GetSshKeyResult) string { return v.Name }).(pulumi.StringOutput)
 }
 
 // The public SSH key.
-func (o LookupSshKeyResultOutput) SshKey() pulumi.StringOutput {
-	return o.ApplyT(func(v LookupSshKeyResult) string { return v.SshKey }).(pulumi.StringOutput)
+func (o GetSshKeyResultOutput) SshKey() pulumi.StringOutput {
+	return o.ApplyT(func(v GetSshKeyResult) string { return v.SshKey }).(pulumi.StringOutput)
 }
 
 func init() {
-	pulumi.RegisterOutputType(LookupSshKeyResultOutput{})
+	pulumi.RegisterOutputType(GetSshKeyResultOutput{})
 }

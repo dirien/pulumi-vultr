@@ -124,7 +124,7 @@ func Provider() tfbridge.ProviderInfo {
 			"vultr_reverse_ipv6":          {Tok: tfbridge.MakeResource(mainPkg, mainMod, "ReverseIpv6")},
 			"vultr_snapshot":              {Tok: tfbridge.MakeResource(mainPkg, mainMod, "Snapshot")},
 			"vultr_snapshot_from_url":     {Tok: tfbridge.MakeResource(mainPkg, mainMod, "SnapshotFromUrl")},
-			"vultr_ssh_key":               {Tok: tfbridge.MakeResource(mainPkg, mainMod, "SshKey")},
+			"vultr_ssh_key":               {Tok: tfbridge.MakeResource(mainPkg, mainMod, "SSHKey")},
 			"vultr_startup_script":        {Tok: tfbridge.MakeResource(mainPkg, mainMod, "StartupScript")},
 			"vultr_user":                  {Tok: tfbridge.MakeResource(mainPkg, mainMod, "User")},
 			"vultr_vpc":                   {Tok: tfbridge.MakeResource(mainPkg, mainMod, "Vpc")},

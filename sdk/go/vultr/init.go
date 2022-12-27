@@ -54,12 +54,12 @@ func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi
 		r = &ReverseIpv4{}
 	case "vultr:index/reverseIpv6:ReverseIpv6":
 		r = &ReverseIpv6{}
+	case "vultr:index/sSHKey:SSHKey":
+		r = &SSHKey{}
 	case "vultr:index/snapshot:Snapshot":
 		r = &Snapshot{}
 	case "vultr:index/snapshotFromUrl:SnapshotFromUrl":
 		r = &SnapshotFromUrl{}
-	case "vultr:index/sshKey:SshKey":
-		r = &SshKey{}
 	case "vultr:index/startupScript:StartupScript":
 		r = &StartupScript{}
 	case "vultr:index/user:User":
@@ -181,17 +181,17 @@ func init() {
 	)
 	pulumi.RegisterResourceModule(
 		"vultr",
+		"index/sSHKey",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"vultr",
 		"index/snapshot",
 		&module{version},
 	)
 	pulumi.RegisterResourceModule(
 		"vultr",
 		"index/snapshotFromUrl",
-		&module{version},
-	)
-	pulumi.RegisterResourceModule(
-		"vultr",
-		"index/sshKey",
 		&module{version},
 	)
 	pulumi.RegisterResourceModule(
