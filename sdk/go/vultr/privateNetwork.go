@@ -25,7 +25,7 @@ import (
 // import (
 //
 //	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-//	"github.com/pulumiverse/pulumi-vultr/sdk/go/vultr"
+//	"github.com/pulumiverse/pulumi-vultr/sdk/v2/go/vultr"
 //
 // )
 //
@@ -52,7 +52,7 @@ import (
 // import (
 //
 //	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-//	"github.com/pulumiverse/pulumi-vultr/sdk/go/vultr"
+//	"github.com/pulumiverse/pulumi-vultr/sdk/v2/go/vultr"
 //
 // )
 //
