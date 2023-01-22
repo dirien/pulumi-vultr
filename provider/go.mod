@@ -178,7 +178,7 @@ require (
 	github.com/posener/complete v1.2.3 // indirect
 	github.com/pulumi/pulumi-java/pkg v0.7.1 // indirect
 	github.com/pulumi/pulumi-yaml v1.0.4 // indirect
-	github.com/pulumi/pulumi/pkg/v3 v3.51.0 // indirect
+	github.com/pulumi/pulumi/pkg/v3 v3.52.1 // indirect
 	github.com/pulumi/schema-tools v0.1.0 // indirect
 	github.com/pulumi/terraform-diff-reader v0.0.0-20201211191010-ad4715e9285e // indirect
 	github.com/rivo/uniseg v0.2.0 // indirect
