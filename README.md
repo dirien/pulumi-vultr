@@ -57,4 +57,4 @@ The following configuration points are available for the `vultr` provider:
 
 ## Reference
 
-A detailed reference for each of the available resources is currently not available.
+For detailed reference documentation, please visit [the Pulumi registry](https://www.pulumi.com/registry/packages/pulumi-vultr/api-docs/).
