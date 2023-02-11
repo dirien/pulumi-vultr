@@ -22,6 +22,11 @@ WORKING_DIR     := $(shell pwd)
 OS := $(shell uname)
 EMPTY_TO_AVOID_SED := ""
 
+ensure::
+	cd provider && go mod tidy
+	cd sdk && go mod tidy
+	cd examples && go mod tidy
+
 prepare::
 	@if test -z "${NAME}"; then echo "NAME not set"; exit 1; fi
 	@if test -z "${REPOSITORY}"; then echo "REPOSITORY not set"; exit 1; fi
@@ -118,7 +123,7 @@ clean::
 
 install_plugins::
 	[ -x $(shell which pulumi) ] || curl -fsSL https://get.pulumi.com | sh
-	pulumi plugin install resource random 4.3.1
+	pulumi plugin install resource random 4.8.2
 
 install_dotnet_sdk::
 	mkdir -p $(WORKING_DIR)/nuget

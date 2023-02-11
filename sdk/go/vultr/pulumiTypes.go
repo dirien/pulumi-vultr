@@ -1460,6 +1460,430 @@ func (o GetApplicationFilterArrayOutput) Index(i pulumi.IntInput) GetApplication
 	}).(GetApplicationFilterOutput)
 }
 
+type GetBackupFilter struct {
+	// Attribute name to filter with.
+	Name string `pulumi:"name"`
+	// One or more values filter with.
+	Values []string `pulumi:"values"`
+}
+
+// GetBackupFilterInput is an input type that accepts GetBackupFilterArgs and GetBackupFilterOutput values.
+// You can construct a concrete instance of `GetBackupFilterInput` via:
+//
+//	GetBackupFilterArgs{...}
+type GetBackupFilterInput interface {
+	pulumi.Input
+
+	ToGetBackupFilterOutput() GetBackupFilterOutput
+	ToGetBackupFilterOutputWithContext(context.Context) GetBackupFilterOutput
+}
+
+type GetBackupFilterArgs struct {
+	// Attribute name to filter with.
+	Name pulumi.StringInput `pulumi:"name"`
+	// One or more values filter with.
+	Values pulumi.StringArrayInput `pulumi:"values"`
+}
+
+func (GetBackupFilterArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetBackupFilter)(nil)).Elem()
+}
+
+func (i GetBackupFilterArgs) ToGetBackupFilterOutput() GetBackupFilterOutput {
+	return i.ToGetBackupFilterOutputWithContext(context.Background())
+}
+
+func (i GetBackupFilterArgs) ToGetBackupFilterOutputWithContext(ctx context.Context) GetBackupFilterOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetBackupFilterOutput)
+}
+
+// GetBackupFilterArrayInput is an input type that accepts GetBackupFilterArray and GetBackupFilterArrayOutput values.
+// You can construct a concrete instance of `GetBackupFilterArrayInput` via:
+//
+//	GetBackupFilterArray{ GetBackupFilterArgs{...} }
+type GetBackupFilterArrayInput interface {
+	pulumi.Input
+
+	ToGetBackupFilterArrayOutput() GetBackupFilterArrayOutput
+	ToGetBackupFilterArrayOutputWithContext(context.Context) GetBackupFilterArrayOutput
+}
+
+type GetBackupFilterArray []GetBackupFilterInput
+
+func (GetBackupFilterArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetBackupFilter)(nil)).Elem()
+}
+
+func (i GetBackupFilterArray) ToGetBackupFilterArrayOutput() GetBackupFilterArrayOutput {
+	return i.ToGetBackupFilterArrayOutputWithContext(context.Background())
+}
+
+func (i GetBackupFilterArray) ToGetBackupFilterArrayOutputWithContext(ctx context.Context) GetBackupFilterArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetBackupFilterArrayOutput)
+}
+
+type GetBackupFilterOutput struct{ *pulumi.OutputState }
+
+func (GetBackupFilterOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetBackupFilter)(nil)).Elem()
+}
+
+func (o GetBackupFilterOutput) ToGetBackupFilterOutput() GetBackupFilterOutput {
+	return o
+}
+
+func (o GetBackupFilterOutput) ToGetBackupFilterOutputWithContext(ctx context.Context) GetBackupFilterOutput {
+	return o
+}
+
+// Attribute name to filter with.
+func (o GetBackupFilterOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v GetBackupFilter) string { return v.Name }).(pulumi.StringOutput)
+}
+
+// One or more values filter with.
+func (o GetBackupFilterOutput) Values() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetBackupFilter) []string { return v.Values }).(pulumi.StringArrayOutput)
+}
+
+type GetBackupFilterArrayOutput struct{ *pulumi.OutputState }
+
+func (GetBackupFilterArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetBackupFilter)(nil)).Elem()
+}
+
+func (o GetBackupFilterArrayOutput) ToGetBackupFilterArrayOutput() GetBackupFilterArrayOutput {
+	return o
+}
+
+func (o GetBackupFilterArrayOutput) ToGetBackupFilterArrayOutputWithContext(ctx context.Context) GetBackupFilterArrayOutput {
+	return o
+}
+
+func (o GetBackupFilterArrayOutput) Index(i pulumi.IntInput) GetBackupFilterOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetBackupFilter {
+		return vs[0].([]GetBackupFilter)[vs[1].(int)]
+	}).(GetBackupFilterOutput)
+}
+
+type GetBareMetalPlanFilter struct {
+	// Attribute name to filter with.
+	Name string `pulumi:"name"`
+	// One or more values filter with.
+	Values []string `pulumi:"values"`
+}
+
+// GetBareMetalPlanFilterInput is an input type that accepts GetBareMetalPlanFilterArgs and GetBareMetalPlanFilterOutput values.
+// You can construct a concrete instance of `GetBareMetalPlanFilterInput` via:
+//
+//	GetBareMetalPlanFilterArgs{...}
+type GetBareMetalPlanFilterInput interface {
+	pulumi.Input
+
+	ToGetBareMetalPlanFilterOutput() GetBareMetalPlanFilterOutput
+	ToGetBareMetalPlanFilterOutputWithContext(context.Context) GetBareMetalPlanFilterOutput
+}
+
+type GetBareMetalPlanFilterArgs struct {
+	// Attribute name to filter with.
+	Name pulumi.StringInput `pulumi:"name"`
+	// One or more values filter with.
+	Values pulumi.StringArrayInput `pulumi:"values"`
+}
+
+func (GetBareMetalPlanFilterArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetBareMetalPlanFilter)(nil)).Elem()
+}
+
+func (i GetBareMetalPlanFilterArgs) ToGetBareMetalPlanFilterOutput() GetBareMetalPlanFilterOutput {
+	return i.ToGetBareMetalPlanFilterOutputWithContext(context.Background())
+}
+
+func (i GetBareMetalPlanFilterArgs) ToGetBareMetalPlanFilterOutputWithContext(ctx context.Context) GetBareMetalPlanFilterOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetBareMetalPlanFilterOutput)
+}
+
+// GetBareMetalPlanFilterArrayInput is an input type that accepts GetBareMetalPlanFilterArray and GetBareMetalPlanFilterArrayOutput values.
+// You can construct a concrete instance of `GetBareMetalPlanFilterArrayInput` via:
+//
+//	GetBareMetalPlanFilterArray{ GetBareMetalPlanFilterArgs{...} }
+type GetBareMetalPlanFilterArrayInput interface {
+	pulumi.Input
+
+	ToGetBareMetalPlanFilterArrayOutput() GetBareMetalPlanFilterArrayOutput
+	ToGetBareMetalPlanFilterArrayOutputWithContext(context.Context) GetBareMetalPlanFilterArrayOutput
+}
+
+type GetBareMetalPlanFilterArray []GetBareMetalPlanFilterInput
+
+func (GetBareMetalPlanFilterArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetBareMetalPlanFilter)(nil)).Elem()
+}
+
+func (i GetBareMetalPlanFilterArray) ToGetBareMetalPlanFilterArrayOutput() GetBareMetalPlanFilterArrayOutput {
+	return i.ToGetBareMetalPlanFilterArrayOutputWithContext(context.Background())
+}
+
+func (i GetBareMetalPlanFilterArray) ToGetBareMetalPlanFilterArrayOutputWithContext(ctx context.Context) GetBareMetalPlanFilterArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetBareMetalPlanFilterArrayOutput)
+}
+
+type GetBareMetalPlanFilterOutput struct{ *pulumi.OutputState }
+
+func (GetBareMetalPlanFilterOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetBareMetalPlanFilter)(nil)).Elem()
+}
+
+func (o GetBareMetalPlanFilterOutput) ToGetBareMetalPlanFilterOutput() GetBareMetalPlanFilterOutput {
+	return o
+}
+
+func (o GetBareMetalPlanFilterOutput) ToGetBareMetalPlanFilterOutputWithContext(ctx context.Context) GetBareMetalPlanFilterOutput {
+	return o
+}
+
+// Attribute name to filter with.
+func (o GetBareMetalPlanFilterOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v GetBareMetalPlanFilter) string { return v.Name }).(pulumi.StringOutput)
+}
+
+// One or more values filter with.
+func (o GetBareMetalPlanFilterOutput) Values() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetBareMetalPlanFilter) []string { return v.Values }).(pulumi.StringArrayOutput)
+}
+
+type GetBareMetalPlanFilterArrayOutput struct{ *pulumi.OutputState }
+
+func (GetBareMetalPlanFilterArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetBareMetalPlanFilter)(nil)).Elem()
+}
+
+func (o GetBareMetalPlanFilterArrayOutput) ToGetBareMetalPlanFilterArrayOutput() GetBareMetalPlanFilterArrayOutput {
+	return o
+}
+
+func (o GetBareMetalPlanFilterArrayOutput) ToGetBareMetalPlanFilterArrayOutputWithContext(ctx context.Context) GetBareMetalPlanFilterArrayOutput {
+	return o
+}
+
+func (o GetBareMetalPlanFilterArrayOutput) Index(i pulumi.IntInput) GetBareMetalPlanFilterOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetBareMetalPlanFilter {
+		return vs[0].([]GetBareMetalPlanFilter)[vs[1].(int)]
+	}).(GetBareMetalPlanFilterOutput)
+}
+
+type GetBareMetalServerFilter struct {
+	// Attribute name to filter with.
+	Name string `pulumi:"name"`
+	// One or more values filter with.
+	Values []string `pulumi:"values"`
+}
+
+// GetBareMetalServerFilterInput is an input type that accepts GetBareMetalServerFilterArgs and GetBareMetalServerFilterOutput values.
+// You can construct a concrete instance of `GetBareMetalServerFilterInput` via:
+//
+//	GetBareMetalServerFilterArgs{...}
+type GetBareMetalServerFilterInput interface {
+	pulumi.Input
+
+	ToGetBareMetalServerFilterOutput() GetBareMetalServerFilterOutput
+	ToGetBareMetalServerFilterOutputWithContext(context.Context) GetBareMetalServerFilterOutput
+}
+
+type GetBareMetalServerFilterArgs struct {
+	// Attribute name to filter with.
+	Name pulumi.StringInput `pulumi:"name"`
+	// One or more values filter with.
+	Values pulumi.StringArrayInput `pulumi:"values"`
+}
+
+func (GetBareMetalServerFilterArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetBareMetalServerFilter)(nil)).Elem()
+}
+
+func (i GetBareMetalServerFilterArgs) ToGetBareMetalServerFilterOutput() GetBareMetalServerFilterOutput {
+	return i.ToGetBareMetalServerFilterOutputWithContext(context.Background())
+}
+
+func (i GetBareMetalServerFilterArgs) ToGetBareMetalServerFilterOutputWithContext(ctx context.Context) GetBareMetalServerFilterOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetBareMetalServerFilterOutput)
+}
+
+// GetBareMetalServerFilterArrayInput is an input type that accepts GetBareMetalServerFilterArray and GetBareMetalServerFilterArrayOutput values.
+// You can construct a concrete instance of `GetBareMetalServerFilterArrayInput` via:
+//
+//	GetBareMetalServerFilterArray{ GetBareMetalServerFilterArgs{...} }
+type GetBareMetalServerFilterArrayInput interface {
+	pulumi.Input
+
+	ToGetBareMetalServerFilterArrayOutput() GetBareMetalServerFilterArrayOutput
+	ToGetBareMetalServerFilterArrayOutputWithContext(context.Context) GetBareMetalServerFilterArrayOutput
+}
+
+type GetBareMetalServerFilterArray []GetBareMetalServerFilterInput
+
+func (GetBareMetalServerFilterArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetBareMetalServerFilter)(nil)).Elem()
+}
+
+func (i GetBareMetalServerFilterArray) ToGetBareMetalServerFilterArrayOutput() GetBareMetalServerFilterArrayOutput {
+	return i.ToGetBareMetalServerFilterArrayOutputWithContext(context.Background())
+}
+
+func (i GetBareMetalServerFilterArray) ToGetBareMetalServerFilterArrayOutputWithContext(ctx context.Context) GetBareMetalServerFilterArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetBareMetalServerFilterArrayOutput)
+}
+
+type GetBareMetalServerFilterOutput struct{ *pulumi.OutputState }
+
+func (GetBareMetalServerFilterOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetBareMetalServerFilter)(nil)).Elem()
+}
+
+func (o GetBareMetalServerFilterOutput) ToGetBareMetalServerFilterOutput() GetBareMetalServerFilterOutput {
+	return o
+}
+
+func (o GetBareMetalServerFilterOutput) ToGetBareMetalServerFilterOutputWithContext(ctx context.Context) GetBareMetalServerFilterOutput {
+	return o
+}
+
+// Attribute name to filter with.
+func (o GetBareMetalServerFilterOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v GetBareMetalServerFilter) string { return v.Name }).(pulumi.StringOutput)
+}
+
+// One or more values filter with.
+func (o GetBareMetalServerFilterOutput) Values() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetBareMetalServerFilter) []string { return v.Values }).(pulumi.StringArrayOutput)
+}
+
+type GetBareMetalServerFilterArrayOutput struct{ *pulumi.OutputState }
+
+func (GetBareMetalServerFilterArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetBareMetalServerFilter)(nil)).Elem()
+}
+
+func (o GetBareMetalServerFilterArrayOutput) ToGetBareMetalServerFilterArrayOutput() GetBareMetalServerFilterArrayOutput {
+	return o
+}
+
+func (o GetBareMetalServerFilterArrayOutput) ToGetBareMetalServerFilterArrayOutputWithContext(ctx context.Context) GetBareMetalServerFilterArrayOutput {
+	return o
+}
+
+func (o GetBareMetalServerFilterArrayOutput) Index(i pulumi.IntInput) GetBareMetalServerFilterOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetBareMetalServerFilter {
+		return vs[0].([]GetBareMetalServerFilter)[vs[1].(int)]
+	}).(GetBareMetalServerFilterOutput)
+}
+
+type GetBlockStorageFilter struct {
+	// Attribute name to filter with.
+	Name string `pulumi:"name"`
+	// One or more values filter with.
+	Values []string `pulumi:"values"`
+}
+
+// GetBlockStorageFilterInput is an input type that accepts GetBlockStorageFilterArgs and GetBlockStorageFilterOutput values.
+// You can construct a concrete instance of `GetBlockStorageFilterInput` via:
+//
+//	GetBlockStorageFilterArgs{...}
+type GetBlockStorageFilterInput interface {
+	pulumi.Input
+
+	ToGetBlockStorageFilterOutput() GetBlockStorageFilterOutput
+	ToGetBlockStorageFilterOutputWithContext(context.Context) GetBlockStorageFilterOutput
+}
+
+type GetBlockStorageFilterArgs struct {
+	// Attribute name to filter with.
+	Name pulumi.StringInput `pulumi:"name"`
+	// One or more values filter with.
+	Values pulumi.StringArrayInput `pulumi:"values"`
+}
+
+func (GetBlockStorageFilterArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetBlockStorageFilter)(nil)).Elem()
+}
+
+func (i GetBlockStorageFilterArgs) ToGetBlockStorageFilterOutput() GetBlockStorageFilterOutput {
+	return i.ToGetBlockStorageFilterOutputWithContext(context.Background())
+}
+
+func (i GetBlockStorageFilterArgs) ToGetBlockStorageFilterOutputWithContext(ctx context.Context) GetBlockStorageFilterOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetBlockStorageFilterOutput)
+}
+
+// GetBlockStorageFilterArrayInput is an input type that accepts GetBlockStorageFilterArray and GetBlockStorageFilterArrayOutput values.
+// You can construct a concrete instance of `GetBlockStorageFilterArrayInput` via:
+//
+//	GetBlockStorageFilterArray{ GetBlockStorageFilterArgs{...} }
+type GetBlockStorageFilterArrayInput interface {
+	pulumi.Input
+
+	ToGetBlockStorageFilterArrayOutput() GetBlockStorageFilterArrayOutput
+	ToGetBlockStorageFilterArrayOutputWithContext(context.Context) GetBlockStorageFilterArrayOutput
+}
+
+type GetBlockStorageFilterArray []GetBlockStorageFilterInput
+
+func (GetBlockStorageFilterArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetBlockStorageFilter)(nil)).Elem()
+}
+
+func (i GetBlockStorageFilterArray) ToGetBlockStorageFilterArrayOutput() GetBlockStorageFilterArrayOutput {
+	return i.ToGetBlockStorageFilterArrayOutputWithContext(context.Background())
+}
+
+func (i GetBlockStorageFilterArray) ToGetBlockStorageFilterArrayOutputWithContext(ctx context.Context) GetBlockStorageFilterArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetBlockStorageFilterArrayOutput)
+}
+
+type GetBlockStorageFilterOutput struct{ *pulumi.OutputState }
+
+func (GetBlockStorageFilterOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetBlockStorageFilter)(nil)).Elem()
+}
+
+func (o GetBlockStorageFilterOutput) ToGetBlockStorageFilterOutput() GetBlockStorageFilterOutput {
+	return o
+}
+
+func (o GetBlockStorageFilterOutput) ToGetBlockStorageFilterOutputWithContext(ctx context.Context) GetBlockStorageFilterOutput {
+	return o
+}
+
+// Attribute name to filter with.
+func (o GetBlockStorageFilterOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v GetBlockStorageFilter) string { return v.Name }).(pulumi.StringOutput)
+}
+
+// One or more values filter with.
+func (o GetBlockStorageFilterOutput) Values() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetBlockStorageFilter) []string { return v.Values }).(pulumi.StringArrayOutput)
+}
+
+type GetBlockStorageFilterArrayOutput struct{ *pulumi.OutputState }
+
+func (GetBlockStorageFilterArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetBlockStorageFilter)(nil)).Elem()
+}
+
+func (o GetBlockStorageFilterArrayOutput) ToGetBlockStorageFilterArrayOutput() GetBlockStorageFilterArrayOutput {
+	return o
+}
+
+func (o GetBlockStorageFilterArrayOutput) ToGetBlockStorageFilterArrayOutputWithContext(ctx context.Context) GetBlockStorageFilterArrayOutput {
+	return o
+}
+
+func (o GetBlockStorageFilterArrayOutput) Index(i pulumi.IntInput) GetBlockStorageFilterOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetBlockStorageFilter {
+		return vs[0].([]GetBlockStorageFilter)[vs[1].(int)]
+	}).(GetBlockStorageFilterOutput)
+}
+
 type GetFirewallGroupFilter struct {
 	// Attribute name to filter with.
 	Name string `pulumi:"name"`
@@ -4023,6 +4447,14 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*LoadBalancerSslPtrInput)(nil)).Elem(), LoadBalancerSslArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetApplicationFilterInput)(nil)).Elem(), GetApplicationFilterArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetApplicationFilterArrayInput)(nil)).Elem(), GetApplicationFilterArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetBackupFilterInput)(nil)).Elem(), GetBackupFilterArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetBackupFilterArrayInput)(nil)).Elem(), GetBackupFilterArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetBareMetalPlanFilterInput)(nil)).Elem(), GetBareMetalPlanFilterArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetBareMetalPlanFilterArrayInput)(nil)).Elem(), GetBareMetalPlanFilterArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetBareMetalServerFilterInput)(nil)).Elem(), GetBareMetalServerFilterArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetBareMetalServerFilterArrayInput)(nil)).Elem(), GetBareMetalServerFilterArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetBlockStorageFilterInput)(nil)).Elem(), GetBlockStorageFilterArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetBlockStorageFilterArrayInput)(nil)).Elem(), GetBlockStorageFilterArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetFirewallGroupFilterInput)(nil)).Elem(), GetFirewallGroupFilterArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetFirewallGroupFilterArrayInput)(nil)).Elem(), GetFirewallGroupFilterArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetInstanceFilterInput)(nil)).Elem(), GetInstanceFilterArgs{})
@@ -4085,6 +4517,14 @@ func init() {
 	pulumi.RegisterOutputType(LoadBalancerSslPtrOutput{})
 	pulumi.RegisterOutputType(GetApplicationFilterOutput{})
 	pulumi.RegisterOutputType(GetApplicationFilterArrayOutput{})
+	pulumi.RegisterOutputType(GetBackupFilterOutput{})
+	pulumi.RegisterOutputType(GetBackupFilterArrayOutput{})
+	pulumi.RegisterOutputType(GetBareMetalPlanFilterOutput{})
+	pulumi.RegisterOutputType(GetBareMetalPlanFilterArrayOutput{})
+	pulumi.RegisterOutputType(GetBareMetalServerFilterOutput{})
+	pulumi.RegisterOutputType(GetBareMetalServerFilterArrayOutput{})
+	pulumi.RegisterOutputType(GetBlockStorageFilterOutput{})
+	pulumi.RegisterOutputType(GetBlockStorageFilterArrayOutput{})
 	pulumi.RegisterOutputType(GetFirewallGroupFilterOutput{})
 	pulumi.RegisterOutputType(GetFirewallGroupFilterArrayOutput{})
 	pulumi.RegisterOutputType(GetInstanceFilterOutput{})

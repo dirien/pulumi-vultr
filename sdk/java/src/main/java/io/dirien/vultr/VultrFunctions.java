@@ -7,9 +7,20 @@ import com.pulumi.core.Output;
 import com.pulumi.core.TypeShape;
 import com.pulumi.deployment.Deployment;
 import com.pulumi.deployment.InvokeOptions;
+import com.pulumi.resources.InvokeArgs;
 import io.dirien.vultr.Utilities;
 import io.dirien.vultr.inputs.GetApplicationArgs;
 import io.dirien.vultr.inputs.GetApplicationPlainArgs;
+import io.dirien.vultr.inputs.GetBackupArgs;
+import io.dirien.vultr.inputs.GetBackupPlainArgs;
+import io.dirien.vultr.inputs.GetBareMetalPlanArgs;
+import io.dirien.vultr.inputs.GetBareMetalPlanPlainArgs;
+import io.dirien.vultr.inputs.GetBareMetalServerArgs;
+import io.dirien.vultr.inputs.GetBareMetalServerPlainArgs;
+import io.dirien.vultr.inputs.GetBlockStorageArgs;
+import io.dirien.vultr.inputs.GetBlockStoragePlainArgs;
+import io.dirien.vultr.inputs.GetDnsDomainArgs;
+import io.dirien.vultr.inputs.GetDnsDomainPlainArgs;
 import io.dirien.vultr.inputs.GetFirewallGroupArgs;
 import io.dirien.vultr.inputs.GetFirewallGroupPlainArgs;
 import io.dirien.vultr.inputs.GetInstanceArgs;
@@ -52,7 +63,13 @@ import io.dirien.vultr.inputs.GetUserArgs;
 import io.dirien.vultr.inputs.GetUserPlainArgs;
 import io.dirien.vultr.inputs.GetVpcArgs;
 import io.dirien.vultr.inputs.GetVpcPlainArgs;
+import io.dirien.vultr.outputs.GetAccountResult;
 import io.dirien.vultr.outputs.GetApplicationResult;
+import io.dirien.vultr.outputs.GetBackupResult;
+import io.dirien.vultr.outputs.GetBareMetalPlanResult;
+import io.dirien.vultr.outputs.GetBareMetalServerResult;
+import io.dirien.vultr.outputs.GetBlockStorageResult;
+import io.dirien.vultr.outputs.GetDnsDomainResult;
 import io.dirien.vultr.outputs.GetFirewallGroupResult;
 import io.dirien.vultr.outputs.GetInstanceIpv4Result;
 import io.dirien.vultr.outputs.GetInstanceResult;
@@ -77,6 +94,222 @@ import io.dirien.vultr.outputs.GetVpcResult;
 import java.util.concurrent.CompletableFuture;
 
 public final class VultrFunctions {
+    /**
+     * Get information about your Vultr account. This data source provides the balance, pending charges, last payment date, and last payment amount for your Vultr account.
+     * 
+     * ## Example Usage
+     * 
+     * Get the information for an account:
+     * ```java
+     * package generated_program;
+     * 
+     * import com.pulumi.Context;
+     * import com.pulumi.Pulumi;
+     * import com.pulumi.core.Output;
+     * import com.pulumi.vultr.VultrFunctions;
+     * import java.util.List;
+     * import java.util.ArrayList;
+     * import java.util.Map;
+     * import java.io.File;
+     * import java.nio.file.Files;
+     * import java.nio.file.Paths;
+     * 
+     * public class App {
+     *     public static void main(String[] args) {
+     *         Pulumi.run(App::stack);
+     *     }
+     * 
+     *     public static void stack(Context ctx) {
+     *         final var myAccount = VultrFunctions.getAccount();
+     * 
+     *     }
+     * }
+     * ```
+     * 
+     */
+    public static Output<GetAccountResult> getAccount() {
+        return getAccount(InvokeArgs.Empty, InvokeOptions.Empty);
+    }
+    /**
+     * Get information about your Vultr account. This data source provides the balance, pending charges, last payment date, and last payment amount for your Vultr account.
+     * 
+     * ## Example Usage
+     * 
+     * Get the information for an account:
+     * ```java
+     * package generated_program;
+     * 
+     * import com.pulumi.Context;
+     * import com.pulumi.Pulumi;
+     * import com.pulumi.core.Output;
+     * import com.pulumi.vultr.VultrFunctions;
+     * import java.util.List;
+     * import java.util.ArrayList;
+     * import java.util.Map;
+     * import java.io.File;
+     * import java.nio.file.Files;
+     * import java.nio.file.Paths;
+     * 
+     * public class App {
+     *     public static void main(String[] args) {
+     *         Pulumi.run(App::stack);
+     *     }
+     * 
+     *     public static void stack(Context ctx) {
+     *         final var myAccount = VultrFunctions.getAccount();
+     * 
+     *     }
+     * }
+     * ```
+     * 
+     */
+    public static CompletableFuture<GetAccountResult> getAccountPlain() {
+        return getAccountPlain(InvokeArgs.Empty, InvokeOptions.Empty);
+    }
+    /**
+     * Get information about your Vultr account. This data source provides the balance, pending charges, last payment date, and last payment amount for your Vultr account.
+     * 
+     * ## Example Usage
+     * 
+     * Get the information for an account:
+     * ```java
+     * package generated_program;
+     * 
+     * import com.pulumi.Context;
+     * import com.pulumi.Pulumi;
+     * import com.pulumi.core.Output;
+     * import com.pulumi.vultr.VultrFunctions;
+     * import java.util.List;
+     * import java.util.ArrayList;
+     * import java.util.Map;
+     * import java.io.File;
+     * import java.nio.file.Files;
+     * import java.nio.file.Paths;
+     * 
+     * public class App {
+     *     public static void main(String[] args) {
+     *         Pulumi.run(App::stack);
+     *     }
+     * 
+     *     public static void stack(Context ctx) {
+     *         final var myAccount = VultrFunctions.getAccount();
+     * 
+     *     }
+     * }
+     * ```
+     * 
+     */
+    public static Output<GetAccountResult> getAccount(InvokeArgs args) {
+        return getAccount(args, InvokeOptions.Empty);
+    }
+    /**
+     * Get information about your Vultr account. This data source provides the balance, pending charges, last payment date, and last payment amount for your Vultr account.
+     * 
+     * ## Example Usage
+     * 
+     * Get the information for an account:
+     * ```java
+     * package generated_program;
+     * 
+     * import com.pulumi.Context;
+     * import com.pulumi.Pulumi;
+     * import com.pulumi.core.Output;
+     * import com.pulumi.vultr.VultrFunctions;
+     * import java.util.List;
+     * import java.util.ArrayList;
+     * import java.util.Map;
+     * import java.io.File;
+     * import java.nio.file.Files;
+     * import java.nio.file.Paths;
+     * 
+     * public class App {
+     *     public static void main(String[] args) {
+     *         Pulumi.run(App::stack);
+     *     }
+     * 
+     *     public static void stack(Context ctx) {
+     *         final var myAccount = VultrFunctions.getAccount();
+     * 
+     *     }
+     * }
+     * ```
+     * 
+     */
+    public static CompletableFuture<GetAccountResult> getAccountPlain(InvokeArgs args) {
+        return getAccountPlain(args, InvokeOptions.Empty);
+    }
+    /**
+     * Get information about your Vultr account. This data source provides the balance, pending charges, last payment date, and last payment amount for your Vultr account.
+     * 
+     * ## Example Usage
+     * 
+     * Get the information for an account:
+     * ```java
+     * package generated_program;
+     * 
+     * import com.pulumi.Context;
+     * import com.pulumi.Pulumi;
+     * import com.pulumi.core.Output;
+     * import com.pulumi.vultr.VultrFunctions;
+     * import java.util.List;
+     * import java.util.ArrayList;
+     * import java.util.Map;
+     * import java.io.File;
+     * import java.nio.file.Files;
+     * import java.nio.file.Paths;
+     * 
+     * public class App {
+     *     public static void main(String[] args) {
+     *         Pulumi.run(App::stack);
+     *     }
+     * 
+     *     public static void stack(Context ctx) {
+     *         final var myAccount = VultrFunctions.getAccount();
+     * 
+     *     }
+     * }
+     * ```
+     * 
+     */
+    public static Output<GetAccountResult> getAccount(InvokeArgs args, InvokeOptions options) {
+        return Deployment.getInstance().invoke("vultr:index/getAccount:getAccount", TypeShape.of(GetAccountResult.class), args, Utilities.withVersion(options));
+    }
+    /**
+     * Get information about your Vultr account. This data source provides the balance, pending charges, last payment date, and last payment amount for your Vultr account.
+     * 
+     * ## Example Usage
+     * 
+     * Get the information for an account:
+     * ```java
+     * package generated_program;
+     * 
+     * import com.pulumi.Context;
+     * import com.pulumi.Pulumi;
+     * import com.pulumi.core.Output;
+     * import com.pulumi.vultr.VultrFunctions;
+     * import java.util.List;
+     * import java.util.ArrayList;
+     * import java.util.Map;
+     * import java.io.File;
+     * import java.nio.file.Files;
+     * import java.nio.file.Paths;
+     * 
+     * public class App {
+     *     public static void main(String[] args) {
+     *         Pulumi.run(App::stack);
+     *     }
+     * 
+     *     public static void stack(Context ctx) {
+     *         final var myAccount = VultrFunctions.getAccount();
+     * 
+     *     }
+     * }
+     * ```
+     * 
+     */
+    public static CompletableFuture<GetAccountResult> getAccountPlain(InvokeArgs args, InvokeOptions options) {
+        return Deployment.getInstance().invokeAsync("vultr:index/getAccount:getAccount", TypeShape.of(GetAccountResult.class), args, Utilities.withVersion(options));
+    }
     /**
      * Get information about applications that can be launched when creating a Vultr VPS.
      * 
@@ -328,6 +561,1170 @@ public final class VultrFunctions {
      */
     public static CompletableFuture<GetApplicationResult> getApplicationPlain(GetApplicationPlainArgs args, InvokeOptions options) {
         return Deployment.getInstance().invokeAsync("vultr:index/getApplication:getApplication", TypeShape.of(GetApplicationResult.class), args, Utilities.withVersion(options));
+    }
+    /**
+     * Get information about a Vultr backup. This data source provides a list of backups which contain the description, size, status, and the creation date for your Vultr backup.
+     * 
+     * ## Example Usage
+     * 
+     * Get the information for a backup by `description`:
+     * ```java
+     * package generated_program;
+     * 
+     * import com.pulumi.Context;
+     * import com.pulumi.Pulumi;
+     * import com.pulumi.core.Output;
+     * import com.pulumi.vultr.VultrFunctions;
+     * import com.pulumi.vultr.inputs.GetBackupArgs;
+     * import java.util.List;
+     * import java.util.ArrayList;
+     * import java.util.Map;
+     * import java.io.File;
+     * import java.nio.file.Files;
+     * import java.nio.file.Paths;
+     * 
+     * public class App {
+     *     public static void main(String[] args) {
+     *         Pulumi.run(App::stack);
+     *     }
+     * 
+     *     public static void stack(Context ctx) {
+     *         final var myBackup = VultrFunctions.getBackup(GetBackupArgs.builder()
+     *             .filters(GetBackupFilterArgs.builder()
+     *                 .name(&#34;description&#34;)
+     *                 .values(&#34;my-backup-description&#34;)
+     *                 .build())
+     *             .build());
+     * 
+     *     }
+     * }
+     * ```
+     * 
+     */
+    public static Output<GetBackupResult> getBackup() {
+        return getBackup(GetBackupArgs.Empty, InvokeOptions.Empty);
+    }
+    /**
+     * Get information about a Vultr backup. This data source provides a list of backups which contain the description, size, status, and the creation date for your Vultr backup.
+     * 
+     * ## Example Usage
+     * 
+     * Get the information for a backup by `description`:
+     * ```java
+     * package generated_program;
+     * 
+     * import com.pulumi.Context;
+     * import com.pulumi.Pulumi;
+     * import com.pulumi.core.Output;
+     * import com.pulumi.vultr.VultrFunctions;
+     * import com.pulumi.vultr.inputs.GetBackupArgs;
+     * import java.util.List;
+     * import java.util.ArrayList;
+     * import java.util.Map;
+     * import java.io.File;
+     * import java.nio.file.Files;
+     * import java.nio.file.Paths;
+     * 
+     * public class App {
+     *     public static void main(String[] args) {
+     *         Pulumi.run(App::stack);
+     *     }
+     * 
+     *     public static void stack(Context ctx) {
+     *         final var myBackup = VultrFunctions.getBackup(GetBackupArgs.builder()
+     *             .filters(GetBackupFilterArgs.builder()
+     *                 .name(&#34;description&#34;)
+     *                 .values(&#34;my-backup-description&#34;)
+     *                 .build())
+     *             .build());
+     * 
+     *     }
+     * }
+     * ```
+     * 
+     */
+    public static CompletableFuture<GetBackupResult> getBackupPlain() {
+        return getBackupPlain(GetBackupPlainArgs.Empty, InvokeOptions.Empty);
+    }
+    /**
+     * Get information about a Vultr backup. This data source provides a list of backups which contain the description, size, status, and the creation date for your Vultr backup.
+     * 
+     * ## Example Usage
+     * 
+     * Get the information for a backup by `description`:
+     * ```java
+     * package generated_program;
+     * 
+     * import com.pulumi.Context;
+     * import com.pulumi.Pulumi;
+     * import com.pulumi.core.Output;
+     * import com.pulumi.vultr.VultrFunctions;
+     * import com.pulumi.vultr.inputs.GetBackupArgs;
+     * import java.util.List;
+     * import java.util.ArrayList;
+     * import java.util.Map;
+     * import java.io.File;
+     * import java.nio.file.Files;
+     * import java.nio.file.Paths;
+     * 
+     * public class App {
+     *     public static void main(String[] args) {
+     *         Pulumi.run(App::stack);
+     *     }
+     * 
+     *     public static void stack(Context ctx) {
+     *         final var myBackup = VultrFunctions.getBackup(GetBackupArgs.builder()
+     *             .filters(GetBackupFilterArgs.builder()
+     *                 .name(&#34;description&#34;)
+     *                 .values(&#34;my-backup-description&#34;)
+     *                 .build())
+     *             .build());
+     * 
+     *     }
+     * }
+     * ```
+     * 
+     */
+    public static Output<GetBackupResult> getBackup(GetBackupArgs args) {
+        return getBackup(args, InvokeOptions.Empty);
+    }
+    /**
+     * Get information about a Vultr backup. This data source provides a list of backups which contain the description, size, status, and the creation date for your Vultr backup.
+     * 
+     * ## Example Usage
+     * 
+     * Get the information for a backup by `description`:
+     * ```java
+     * package generated_program;
+     * 
+     * import com.pulumi.Context;
+     * import com.pulumi.Pulumi;
+     * import com.pulumi.core.Output;
+     * import com.pulumi.vultr.VultrFunctions;
+     * import com.pulumi.vultr.inputs.GetBackupArgs;
+     * import java.util.List;
+     * import java.util.ArrayList;
+     * import java.util.Map;
+     * import java.io.File;
+     * import java.nio.file.Files;
+     * import java.nio.file.Paths;
+     * 
+     * public class App {
+     *     public static void main(String[] args) {
+     *         Pulumi.run(App::stack);
+     *     }
+     * 
+     *     public static void stack(Context ctx) {
+     *         final var myBackup = VultrFunctions.getBackup(GetBackupArgs.builder()
+     *             .filters(GetBackupFilterArgs.builder()
+     *                 .name(&#34;description&#34;)
+     *                 .values(&#34;my-backup-description&#34;)
+     *                 .build())
+     *             .build());
+     * 
+     *     }
+     * }
+     * ```
+     * 
+     */
+    public static CompletableFuture<GetBackupResult> getBackupPlain(GetBackupPlainArgs args) {
+        return getBackupPlain(args, InvokeOptions.Empty);
+    }
+    /**
+     * Get information about a Vultr backup. This data source provides a list of backups which contain the description, size, status, and the creation date for your Vultr backup.
+     * 
+     * ## Example Usage
+     * 
+     * Get the information for a backup by `description`:
+     * ```java
+     * package generated_program;
+     * 
+     * import com.pulumi.Context;
+     * import com.pulumi.Pulumi;
+     * import com.pulumi.core.Output;
+     * import com.pulumi.vultr.VultrFunctions;
+     * import com.pulumi.vultr.inputs.GetBackupArgs;
+     * import java.util.List;
+     * import java.util.ArrayList;
+     * import java.util.Map;
+     * import java.io.File;
+     * import java.nio.file.Files;
+     * import java.nio.file.Paths;
+     * 
+     * public class App {
+     *     public static void main(String[] args) {
+     *         Pulumi.run(App::stack);
+     *     }
+     * 
+     *     public static void stack(Context ctx) {
+     *         final var myBackup = VultrFunctions.getBackup(GetBackupArgs.builder()
+     *             .filters(GetBackupFilterArgs.builder()
+     *                 .name(&#34;description&#34;)
+     *                 .values(&#34;my-backup-description&#34;)
+     *                 .build())
+     *             .build());
+     * 
+     *     }
+     * }
+     * ```
+     * 
+     */
+    public static Output<GetBackupResult> getBackup(GetBackupArgs args, InvokeOptions options) {
+        return Deployment.getInstance().invoke("vultr:index/getBackup:getBackup", TypeShape.of(GetBackupResult.class), args, Utilities.withVersion(options));
+    }
+    /**
+     * Get information about a Vultr backup. This data source provides a list of backups which contain the description, size, status, and the creation date for your Vultr backup.
+     * 
+     * ## Example Usage
+     * 
+     * Get the information for a backup by `description`:
+     * ```java
+     * package generated_program;
+     * 
+     * import com.pulumi.Context;
+     * import com.pulumi.Pulumi;
+     * import com.pulumi.core.Output;
+     * import com.pulumi.vultr.VultrFunctions;
+     * import com.pulumi.vultr.inputs.GetBackupArgs;
+     * import java.util.List;
+     * import java.util.ArrayList;
+     * import java.util.Map;
+     * import java.io.File;
+     * import java.nio.file.Files;
+     * import java.nio.file.Paths;
+     * 
+     * public class App {
+     *     public static void main(String[] args) {
+     *         Pulumi.run(App::stack);
+     *     }
+     * 
+     *     public static void stack(Context ctx) {
+     *         final var myBackup = VultrFunctions.getBackup(GetBackupArgs.builder()
+     *             .filters(GetBackupFilterArgs.builder()
+     *                 .name(&#34;description&#34;)
+     *                 .values(&#34;my-backup-description&#34;)
+     *                 .build())
+     *             .build());
+     * 
+     *     }
+     * }
+     * ```
+     * 
+     */
+    public static CompletableFuture<GetBackupResult> getBackupPlain(GetBackupPlainArgs args, InvokeOptions options) {
+        return Deployment.getInstance().invokeAsync("vultr:index/getBackup:getBackup", TypeShape.of(GetBackupResult.class), args, Utilities.withVersion(options));
+    }
+    /**
+     * Get information about a Vultr bare metal server plan.
+     * 
+     * ## Example Usage
+     * 
+     * Get the information for a plan by `id`:
+     * ```java
+     * package generated_program;
+     * 
+     * import com.pulumi.Context;
+     * import com.pulumi.Pulumi;
+     * import com.pulumi.core.Output;
+     * import com.pulumi.vultr.VultrFunctions;
+     * import com.pulumi.vultr.inputs.GetBareMetalPlanArgs;
+     * import java.util.List;
+     * import java.util.ArrayList;
+     * import java.util.Map;
+     * import java.io.File;
+     * import java.nio.file.Files;
+     * import java.nio.file.Paths;
+     * 
+     * public class App {
+     *     public static void main(String[] args) {
+     *         Pulumi.run(App::stack);
+     *     }
+     * 
+     *     public static void stack(Context ctx) {
+     *         final var myPlan = VultrFunctions.getBareMetalPlan(GetBareMetalPlanArgs.builder()
+     *             .filters(GetBareMetalPlanFilterArgs.builder()
+     *                 .name(&#34;id&#34;)
+     *                 .values(&#34;vbm-4c-32gb&#34;)
+     *                 .build())
+     *             .build());
+     * 
+     *     }
+     * }
+     * ```
+     * 
+     */
+    public static Output<GetBareMetalPlanResult> getBareMetalPlan() {
+        return getBareMetalPlan(GetBareMetalPlanArgs.Empty, InvokeOptions.Empty);
+    }
+    /**
+     * Get information about a Vultr bare metal server plan.
+     * 
+     * ## Example Usage
+     * 
+     * Get the information for a plan by `id`:
+     * ```java
+     * package generated_program;
+     * 
+     * import com.pulumi.Context;
+     * import com.pulumi.Pulumi;
+     * import com.pulumi.core.Output;
+     * import com.pulumi.vultr.VultrFunctions;
+     * import com.pulumi.vultr.inputs.GetBareMetalPlanArgs;
+     * import java.util.List;
+     * import java.util.ArrayList;
+     * import java.util.Map;
+     * import java.io.File;
+     * import java.nio.file.Files;
+     * import java.nio.file.Paths;
+     * 
+     * public class App {
+     *     public static void main(String[] args) {
+     *         Pulumi.run(App::stack);
+     *     }
+     * 
+     *     public static void stack(Context ctx) {
+     *         final var myPlan = VultrFunctions.getBareMetalPlan(GetBareMetalPlanArgs.builder()
+     *             .filters(GetBareMetalPlanFilterArgs.builder()
+     *                 .name(&#34;id&#34;)
+     *                 .values(&#34;vbm-4c-32gb&#34;)
+     *                 .build())
+     *             .build());
+     * 
+     *     }
+     * }
+     * ```
+     * 
+     */
+    public static CompletableFuture<GetBareMetalPlanResult> getBareMetalPlanPlain() {
+        return getBareMetalPlanPlain(GetBareMetalPlanPlainArgs.Empty, InvokeOptions.Empty);
+    }
+    /**
+     * Get information about a Vultr bare metal server plan.
+     * 
+     * ## Example Usage
+     * 
+     * Get the information for a plan by `id`:
+     * ```java
+     * package generated_program;
+     * 
+     * import com.pulumi.Context;
+     * import com.pulumi.Pulumi;
+     * import com.pulumi.core.Output;
+     * import com.pulumi.vultr.VultrFunctions;
+     * import com.pulumi.vultr.inputs.GetBareMetalPlanArgs;
+     * import java.util.List;
+     * import java.util.ArrayList;
+     * import java.util.Map;
+     * import java.io.File;
+     * import java.nio.file.Files;
+     * import java.nio.file.Paths;
+     * 
+     * public class App {
+     *     public static void main(String[] args) {
+     *         Pulumi.run(App::stack);
+     *     }
+     * 
+     *     public static void stack(Context ctx) {
+     *         final var myPlan = VultrFunctions.getBareMetalPlan(GetBareMetalPlanArgs.builder()
+     *             .filters(GetBareMetalPlanFilterArgs.builder()
+     *                 .name(&#34;id&#34;)
+     *                 .values(&#34;vbm-4c-32gb&#34;)
+     *                 .build())
+     *             .build());
+     * 
+     *     }
+     * }
+     * ```
+     * 
+     */
+    public static Output<GetBareMetalPlanResult> getBareMetalPlan(GetBareMetalPlanArgs args) {
+        return getBareMetalPlan(args, InvokeOptions.Empty);
+    }
+    /**
+     * Get information about a Vultr bare metal server plan.
+     * 
+     * ## Example Usage
+     * 
+     * Get the information for a plan by `id`:
+     * ```java
+     * package generated_program;
+     * 
+     * import com.pulumi.Context;
+     * import com.pulumi.Pulumi;
+     * import com.pulumi.core.Output;
+     * import com.pulumi.vultr.VultrFunctions;
+     * import com.pulumi.vultr.inputs.GetBareMetalPlanArgs;
+     * import java.util.List;
+     * import java.util.ArrayList;
+     * import java.util.Map;
+     * import java.io.File;
+     * import java.nio.file.Files;
+     * import java.nio.file.Paths;
+     * 
+     * public class App {
+     *     public static void main(String[] args) {
+     *         Pulumi.run(App::stack);
+     *     }
+     * 
+     *     public static void stack(Context ctx) {
+     *         final var myPlan = VultrFunctions.getBareMetalPlan(GetBareMetalPlanArgs.builder()
+     *             .filters(GetBareMetalPlanFilterArgs.builder()
+     *                 .name(&#34;id&#34;)
+     *                 .values(&#34;vbm-4c-32gb&#34;)
+     *                 .build())
+     *             .build());
+     * 
+     *     }
+     * }
+     * ```
+     * 
+     */
+    public static CompletableFuture<GetBareMetalPlanResult> getBareMetalPlanPlain(GetBareMetalPlanPlainArgs args) {
+        return getBareMetalPlanPlain(args, InvokeOptions.Empty);
+    }
+    /**
+     * Get information about a Vultr bare metal server plan.
+     * 
+     * ## Example Usage
+     * 
+     * Get the information for a plan by `id`:
+     * ```java
+     * package generated_program;
+     * 
+     * import com.pulumi.Context;
+     * import com.pulumi.Pulumi;
+     * import com.pulumi.core.Output;
+     * import com.pulumi.vultr.VultrFunctions;
+     * import com.pulumi.vultr.inputs.GetBareMetalPlanArgs;
+     * import java.util.List;
+     * import java.util.ArrayList;
+     * import java.util.Map;
+     * import java.io.File;
+     * import java.nio.file.Files;
+     * import java.nio.file.Paths;
+     * 
+     * public class App {
+     *     public static void main(String[] args) {
+     *         Pulumi.run(App::stack);
+     *     }
+     * 
+     *     public static void stack(Context ctx) {
+     *         final var myPlan = VultrFunctions.getBareMetalPlan(GetBareMetalPlanArgs.builder()
+     *             .filters(GetBareMetalPlanFilterArgs.builder()
+     *                 .name(&#34;id&#34;)
+     *                 .values(&#34;vbm-4c-32gb&#34;)
+     *                 .build())
+     *             .build());
+     * 
+     *     }
+     * }
+     * ```
+     * 
+     */
+    public static Output<GetBareMetalPlanResult> getBareMetalPlan(GetBareMetalPlanArgs args, InvokeOptions options) {
+        return Deployment.getInstance().invoke("vultr:index/getBareMetalPlan:getBareMetalPlan", TypeShape.of(GetBareMetalPlanResult.class), args, Utilities.withVersion(options));
+    }
+    /**
+     * Get information about a Vultr bare metal server plan.
+     * 
+     * ## Example Usage
+     * 
+     * Get the information for a plan by `id`:
+     * ```java
+     * package generated_program;
+     * 
+     * import com.pulumi.Context;
+     * import com.pulumi.Pulumi;
+     * import com.pulumi.core.Output;
+     * import com.pulumi.vultr.VultrFunctions;
+     * import com.pulumi.vultr.inputs.GetBareMetalPlanArgs;
+     * import java.util.List;
+     * import java.util.ArrayList;
+     * import java.util.Map;
+     * import java.io.File;
+     * import java.nio.file.Files;
+     * import java.nio.file.Paths;
+     * 
+     * public class App {
+     *     public static void main(String[] args) {
+     *         Pulumi.run(App::stack);
+     *     }
+     * 
+     *     public static void stack(Context ctx) {
+     *         final var myPlan = VultrFunctions.getBareMetalPlan(GetBareMetalPlanArgs.builder()
+     *             .filters(GetBareMetalPlanFilterArgs.builder()
+     *                 .name(&#34;id&#34;)
+     *                 .values(&#34;vbm-4c-32gb&#34;)
+     *                 .build())
+     *             .build());
+     * 
+     *     }
+     * }
+     * ```
+     * 
+     */
+    public static CompletableFuture<GetBareMetalPlanResult> getBareMetalPlanPlain(GetBareMetalPlanPlainArgs args, InvokeOptions options) {
+        return Deployment.getInstance().invokeAsync("vultr:index/getBareMetalPlan:getBareMetalPlan", TypeShape.of(GetBareMetalPlanResult.class), args, Utilities.withVersion(options));
+    }
+    /**
+     * Get information about a Vultr bare metal server.
+     * 
+     * ## Example Usage
+     * 
+     * Get the information for a server by `label`:
+     * ```java
+     * package generated_program;
+     * 
+     * import com.pulumi.Context;
+     * import com.pulumi.Pulumi;
+     * import com.pulumi.core.Output;
+     * import com.pulumi.vultr.VultrFunctions;
+     * import com.pulumi.vultr.inputs.GetBareMetalServerArgs;
+     * import java.util.List;
+     * import java.util.ArrayList;
+     * import java.util.Map;
+     * import java.io.File;
+     * import java.nio.file.Files;
+     * import java.nio.file.Paths;
+     * 
+     * public class App {
+     *     public static void main(String[] args) {
+     *         Pulumi.run(App::stack);
+     *     }
+     * 
+     *     public static void stack(Context ctx) {
+     *         final var myServer = VultrFunctions.getBareMetalServer(GetBareMetalServerArgs.builder()
+     *             .filters(GetBareMetalServerFilterArgs.builder()
+     *                 .name(&#34;label&#34;)
+     *                 .values(&#34;my-server-label&#34;)
+     *                 .build())
+     *             .build());
+     * 
+     *     }
+     * }
+     * ```
+     * 
+     */
+    public static Output<GetBareMetalServerResult> getBareMetalServer() {
+        return getBareMetalServer(GetBareMetalServerArgs.Empty, InvokeOptions.Empty);
+    }
+    /**
+     * Get information about a Vultr bare metal server.
+     * 
+     * ## Example Usage
+     * 
+     * Get the information for a server by `label`:
+     * ```java
+     * package generated_program;
+     * 
+     * import com.pulumi.Context;
+     * import com.pulumi.Pulumi;
+     * import com.pulumi.core.Output;
+     * import com.pulumi.vultr.VultrFunctions;
+     * import com.pulumi.vultr.inputs.GetBareMetalServerArgs;
+     * import java.util.List;
+     * import java.util.ArrayList;
+     * import java.util.Map;
+     * import java.io.File;
+     * import java.nio.file.Files;
+     * import java.nio.file.Paths;
+     * 
+     * public class App {
+     *     public static void main(String[] args) {
+     *         Pulumi.run(App::stack);
+     *     }
+     * 
+     *     public static void stack(Context ctx) {
+     *         final var myServer = VultrFunctions.getBareMetalServer(GetBareMetalServerArgs.builder()
+     *             .filters(GetBareMetalServerFilterArgs.builder()
+     *                 .name(&#34;label&#34;)
+     *                 .values(&#34;my-server-label&#34;)
+     *                 .build())
+     *             .build());
+     * 
+     *     }
+     * }
+     * ```
+     * 
+     */
+    public static CompletableFuture<GetBareMetalServerResult> getBareMetalServerPlain() {
+        return getBareMetalServerPlain(GetBareMetalServerPlainArgs.Empty, InvokeOptions.Empty);
+    }
+    /**
+     * Get information about a Vultr bare metal server.
+     * 
+     * ## Example Usage
+     * 
+     * Get the information for a server by `label`:
+     * ```java
+     * package generated_program;
+     * 
+     * import com.pulumi.Context;
+     * import com.pulumi.Pulumi;
+     * import com.pulumi.core.Output;
+     * import com.pulumi.vultr.VultrFunctions;
+     * import com.pulumi.vultr.inputs.GetBareMetalServerArgs;
+     * import java.util.List;
+     * import java.util.ArrayList;
+     * import java.util.Map;
+     * import java.io.File;
+     * import java.nio.file.Files;
+     * import java.nio.file.Paths;
+     * 
+     * public class App {
+     *     public static void main(String[] args) {
+     *         Pulumi.run(App::stack);
+     *     }
+     * 
+     *     public static void stack(Context ctx) {
+     *         final var myServer = VultrFunctions.getBareMetalServer(GetBareMetalServerArgs.builder()
+     *             .filters(GetBareMetalServerFilterArgs.builder()
+     *                 .name(&#34;label&#34;)
+     *                 .values(&#34;my-server-label&#34;)
+     *                 .build())
+     *             .build());
+     * 
+     *     }
+     * }
+     * ```
+     * 
+     */
+    public static Output<GetBareMetalServerResult> getBareMetalServer(GetBareMetalServerArgs args) {
+        return getBareMetalServer(args, InvokeOptions.Empty);
+    }
+    /**
+     * Get information about a Vultr bare metal server.
+     * 
+     * ## Example Usage
+     * 
+     * Get the information for a server by `label`:
+     * ```java
+     * package generated_program;
+     * 
+     * import com.pulumi.Context;
+     * import com.pulumi.Pulumi;
+     * import com.pulumi.core.Output;
+     * import com.pulumi.vultr.VultrFunctions;
+     * import com.pulumi.vultr.inputs.GetBareMetalServerArgs;
+     * import java.util.List;
+     * import java.util.ArrayList;
+     * import java.util.Map;
+     * import java.io.File;
+     * import java.nio.file.Files;
+     * import java.nio.file.Paths;
+     * 
+     * public class App {
+     *     public static void main(String[] args) {
+     *         Pulumi.run(App::stack);
+     *     }
+     * 
+     *     public static void stack(Context ctx) {
+     *         final var myServer = VultrFunctions.getBareMetalServer(GetBareMetalServerArgs.builder()
+     *             .filters(GetBareMetalServerFilterArgs.builder()
+     *                 .name(&#34;label&#34;)
+     *                 .values(&#34;my-server-label&#34;)
+     *                 .build())
+     *             .build());
+     * 
+     *     }
+     * }
+     * ```
+     * 
+     */
+    public static CompletableFuture<GetBareMetalServerResult> getBareMetalServerPlain(GetBareMetalServerPlainArgs args) {
+        return getBareMetalServerPlain(args, InvokeOptions.Empty);
+    }
+    /**
+     * Get information about a Vultr bare metal server.
+     * 
+     * ## Example Usage
+     * 
+     * Get the information for a server by `label`:
+     * ```java
+     * package generated_program;
+     * 
+     * import com.pulumi.Context;
+     * import com.pulumi.Pulumi;
+     * import com.pulumi.core.Output;
+     * import com.pulumi.vultr.VultrFunctions;
+     * import com.pulumi.vultr.inputs.GetBareMetalServerArgs;
+     * import java.util.List;
+     * import java.util.ArrayList;
+     * import java.util.Map;
+     * import java.io.File;
+     * import java.nio.file.Files;
+     * import java.nio.file.Paths;
+     * 
+     * public class App {
+     *     public static void main(String[] args) {
+     *         Pulumi.run(App::stack);
+     *     }
+     * 
+     *     public static void stack(Context ctx) {
+     *         final var myServer = VultrFunctions.getBareMetalServer(GetBareMetalServerArgs.builder()
+     *             .filters(GetBareMetalServerFilterArgs.builder()
+     *                 .name(&#34;label&#34;)
+     *                 .values(&#34;my-server-label&#34;)
+     *                 .build())
+     *             .build());
+     * 
+     *     }
+     * }
+     * ```
+     * 
+     */
+    public static Output<GetBareMetalServerResult> getBareMetalServer(GetBareMetalServerArgs args, InvokeOptions options) {
+        return Deployment.getInstance().invoke("vultr:index/getBareMetalServer:getBareMetalServer", TypeShape.of(GetBareMetalServerResult.class), args, Utilities.withVersion(options));
+    }
+    /**
+     * Get information about a Vultr bare metal server.
+     * 
+     * ## Example Usage
+     * 
+     * Get the information for a server by `label`:
+     * ```java
+     * package generated_program;
+     * 
+     * import com.pulumi.Context;
+     * import com.pulumi.Pulumi;
+     * import com.pulumi.core.Output;
+     * import com.pulumi.vultr.VultrFunctions;
+     * import com.pulumi.vultr.inputs.GetBareMetalServerArgs;
+     * import java.util.List;
+     * import java.util.ArrayList;
+     * import java.util.Map;
+     * import java.io.File;
+     * import java.nio.file.Files;
+     * import java.nio.file.Paths;
+     * 
+     * public class App {
+     *     public static void main(String[] args) {
+     *         Pulumi.run(App::stack);
+     *     }
+     * 
+     *     public static void stack(Context ctx) {
+     *         final var myServer = VultrFunctions.getBareMetalServer(GetBareMetalServerArgs.builder()
+     *             .filters(GetBareMetalServerFilterArgs.builder()
+     *                 .name(&#34;label&#34;)
+     *                 .values(&#34;my-server-label&#34;)
+     *                 .build())
+     *             .build());
+     * 
+     *     }
+     * }
+     * ```
+     * 
+     */
+    public static CompletableFuture<GetBareMetalServerResult> getBareMetalServerPlain(GetBareMetalServerPlainArgs args, InvokeOptions options) {
+        return Deployment.getInstance().invokeAsync("vultr:index/getBareMetalServer:getBareMetalServer", TypeShape.of(GetBareMetalServerResult.class), args, Utilities.withVersion(options));
+    }
+    /**
+     * Get information about a Vultr block storage subscription.
+     * 
+     * ## Example Usage
+     * 
+     * Get the information for a block storage subscription by `label`:
+     * ```java
+     * package generated_program;
+     * 
+     * import com.pulumi.Context;
+     * import com.pulumi.Pulumi;
+     * import com.pulumi.core.Output;
+     * import com.pulumi.vultr.VultrFunctions;
+     * import com.pulumi.vultr.inputs.GetBlockStorageArgs;
+     * import java.util.List;
+     * import java.util.ArrayList;
+     * import java.util.Map;
+     * import java.io.File;
+     * import java.nio.file.Files;
+     * import java.nio.file.Paths;
+     * 
+     * public class App {
+     *     public static void main(String[] args) {
+     *         Pulumi.run(App::stack);
+     *     }
+     * 
+     *     public static void stack(Context ctx) {
+     *         final var myBlockStorage = VultrFunctions.getBlockStorage(GetBlockStorageArgs.builder()
+     *             .filters(GetBlockStorageFilterArgs.builder()
+     *                 .name(&#34;label&#34;)
+     *                 .values(&#34;my-block-storage-label&#34;)
+     *                 .build())
+     *             .build());
+     * 
+     *     }
+     * }
+     * ```
+     * 
+     */
+    public static Output<GetBlockStorageResult> getBlockStorage() {
+        return getBlockStorage(GetBlockStorageArgs.Empty, InvokeOptions.Empty);
+    }
+    /**
+     * Get information about a Vultr block storage subscription.
+     * 
+     * ## Example Usage
+     * 
+     * Get the information for a block storage subscription by `label`:
+     * ```java
+     * package generated_program;
+     * 
+     * import com.pulumi.Context;
+     * import com.pulumi.Pulumi;
+     * import com.pulumi.core.Output;
+     * import com.pulumi.vultr.VultrFunctions;
+     * import com.pulumi.vultr.inputs.GetBlockStorageArgs;
+     * import java.util.List;
+     * import java.util.ArrayList;
+     * import java.util.Map;
+     * import java.io.File;
+     * import java.nio.file.Files;
+     * import java.nio.file.Paths;
+     * 
+     * public class App {
+     *     public static void main(String[] args) {
+     *         Pulumi.run(App::stack);
+     *     }
+     * 
+     *     public static void stack(Context ctx) {
+     *         final var myBlockStorage = VultrFunctions.getBlockStorage(GetBlockStorageArgs.builder()
+     *             .filters(GetBlockStorageFilterArgs.builder()
+     *                 .name(&#34;label&#34;)
+     *                 .values(&#34;my-block-storage-label&#34;)
+     *                 .build())
+     *             .build());
+     * 
+     *     }
+     * }
+     * ```
+     * 
+     */
+    public static CompletableFuture<GetBlockStorageResult> getBlockStoragePlain() {
+        return getBlockStoragePlain(GetBlockStoragePlainArgs.Empty, InvokeOptions.Empty);
+    }
+    /**
+     * Get information about a Vultr block storage subscription.
+     * 
+     * ## Example Usage
+     * 
+     * Get the information for a block storage subscription by `label`:
+     * ```java
+     * package generated_program;
+     * 
+     * import com.pulumi.Context;
+     * import com.pulumi.Pulumi;
+     * import com.pulumi.core.Output;
+     * import com.pulumi.vultr.VultrFunctions;
+     * import com.pulumi.vultr.inputs.GetBlockStorageArgs;
+     * import java.util.List;
+     * import java.util.ArrayList;
+     * import java.util.Map;
+     * import java.io.File;
+     * import java.nio.file.Files;
+     * import java.nio.file.Paths;
+     * 
+     * public class App {
+     *     public static void main(String[] args) {
+     *         Pulumi.run(App::stack);
+     *     }
+     * 
+     *     public static void stack(Context ctx) {
+     *         final var myBlockStorage = VultrFunctions.getBlockStorage(GetBlockStorageArgs.builder()
+     *             .filters(GetBlockStorageFilterArgs.builder()
+     *                 .name(&#34;label&#34;)
+     *                 .values(&#34;my-block-storage-label&#34;)
+     *                 .build())
+     *             .build());
+     * 
+     *     }
+     * }
+     * ```
+     * 
+     */
+    public static Output<GetBlockStorageResult> getBlockStorage(GetBlockStorageArgs args) {
+        return getBlockStorage(args, InvokeOptions.Empty);
+    }
+    /**
+     * Get information about a Vultr block storage subscription.
+     * 
+     * ## Example Usage
+     * 
+     * Get the information for a block storage subscription by `label`:
+     * ```java
+     * package generated_program;
+     * 
+     * import com.pulumi.Context;
+     * import com.pulumi.Pulumi;
+     * import com.pulumi.core.Output;
+     * import com.pulumi.vultr.VultrFunctions;
+     * import com.pulumi.vultr.inputs.GetBlockStorageArgs;
+     * import java.util.List;
+     * import java.util.ArrayList;
+     * import java.util.Map;
+     * import java.io.File;
+     * import java.nio.file.Files;
+     * import java.nio.file.Paths;
+     * 
+     * public class App {
+     *     public static void main(String[] args) {
+     *         Pulumi.run(App::stack);
+     *     }
+     * 
+     *     public static void stack(Context ctx) {
+     *         final var myBlockStorage = VultrFunctions.getBlockStorage(GetBlockStorageArgs.builder()
+     *             .filters(GetBlockStorageFilterArgs.builder()
+     *                 .name(&#34;label&#34;)
+     *                 .values(&#34;my-block-storage-label&#34;)
+     *                 .build())
+     *             .build());
+     * 
+     *     }
+     * }
+     * ```
+     * 
+     */
+    public static CompletableFuture<GetBlockStorageResult> getBlockStoragePlain(GetBlockStoragePlainArgs args) {
+        return getBlockStoragePlain(args, InvokeOptions.Empty);
+    }
+    /**
+     * Get information about a Vultr block storage subscription.
+     * 
+     * ## Example Usage
+     * 
+     * Get the information for a block storage subscription by `label`:
+     * ```java
+     * package generated_program;
+     * 
+     * import com.pulumi.Context;
+     * import com.pulumi.Pulumi;
+     * import com.pulumi.core.Output;
+     * import com.pulumi.vultr.VultrFunctions;
+     * import com.pulumi.vultr.inputs.GetBlockStorageArgs;
+     * import java.util.List;
+     * import java.util.ArrayList;
+     * import java.util.Map;
+     * import java.io.File;
+     * import java.nio.file.Files;
+     * import java.nio.file.Paths;
+     * 
+     * public class App {
+     *     public static void main(String[] args) {
+     *         Pulumi.run(App::stack);
+     *     }
+     * 
+     *     public static void stack(Context ctx) {
+     *         final var myBlockStorage = VultrFunctions.getBlockStorage(GetBlockStorageArgs.builder()
+     *             .filters(GetBlockStorageFilterArgs.builder()
+     *                 .name(&#34;label&#34;)
+     *                 .values(&#34;my-block-storage-label&#34;)
+     *                 .build())
+     *             .build());
+     * 
+     *     }
+     * }
+     * ```
+     * 
+     */
+    public static Output<GetBlockStorageResult> getBlockStorage(GetBlockStorageArgs args, InvokeOptions options) {
+        return Deployment.getInstance().invoke("vultr:index/getBlockStorage:getBlockStorage", TypeShape.of(GetBlockStorageResult.class), args, Utilities.withVersion(options));
+    }
+    /**
+     * Get information about a Vultr block storage subscription.
+     * 
+     * ## Example Usage
+     * 
+     * Get the information for a block storage subscription by `label`:
+     * ```java
+     * package generated_program;
+     * 
+     * import com.pulumi.Context;
+     * import com.pulumi.Pulumi;
+     * import com.pulumi.core.Output;
+     * import com.pulumi.vultr.VultrFunctions;
+     * import com.pulumi.vultr.inputs.GetBlockStorageArgs;
+     * import java.util.List;
+     * import java.util.ArrayList;
+     * import java.util.Map;
+     * import java.io.File;
+     * import java.nio.file.Files;
+     * import java.nio.file.Paths;
+     * 
+     * public class App {
+     *     public static void main(String[] args) {
+     *         Pulumi.run(App::stack);
+     *     }
+     * 
+     *     public static void stack(Context ctx) {
+     *         final var myBlockStorage = VultrFunctions.getBlockStorage(GetBlockStorageArgs.builder()
+     *             .filters(GetBlockStorageFilterArgs.builder()
+     *                 .name(&#34;label&#34;)
+     *                 .values(&#34;my-block-storage-label&#34;)
+     *                 .build())
+     *             .build());
+     * 
+     *     }
+     * }
+     * ```
+     * 
+     */
+    public static CompletableFuture<GetBlockStorageResult> getBlockStoragePlain(GetBlockStoragePlainArgs args, InvokeOptions options) {
+        return Deployment.getInstance().invokeAsync("vultr:index/getBlockStorage:getBlockStorage", TypeShape.of(GetBlockStorageResult.class), args, Utilities.withVersion(options));
+    }
+    /**
+     * Get information about a DNS domain associated with your Vultr account.
+     * 
+     * ## Example Usage
+     * 
+     * Get the information for a DNS domain:
+     * ```java
+     * package generated_program;
+     * 
+     * import com.pulumi.Context;
+     * import com.pulumi.Pulumi;
+     * import com.pulumi.core.Output;
+     * import com.pulumi.vultr.VultrFunctions;
+     * import com.pulumi.vultr.inputs.GetDnsDomainArgs;
+     * import java.util.List;
+     * import java.util.ArrayList;
+     * import java.util.Map;
+     * import java.io.File;
+     * import java.nio.file.Files;
+     * import java.nio.file.Paths;
+     * 
+     * public class App {
+     *     public static void main(String[] args) {
+     *         Pulumi.run(App::stack);
+     *     }
+     * 
+     *     public static void stack(Context ctx) {
+     *         final var myDomain = VultrFunctions.getDnsDomain(GetDnsDomainArgs.builder()
+     *             .domain(&#34;example.com&#34;)
+     *             .build());
+     * 
+     *     }
+     * }
+     * ```
+     * 
+     */
+    public static Output<GetDnsDomainResult> getDnsDomain(GetDnsDomainArgs args) {
+        return getDnsDomain(args, InvokeOptions.Empty);
+    }
+    /**
+     * Get information about a DNS domain associated with your Vultr account.
+     * 
+     * ## Example Usage
+     * 
+     * Get the information for a DNS domain:
+     * ```java
+     * package generated_program;
+     * 
+     * import com.pulumi.Context;
+     * import com.pulumi.Pulumi;
+     * import com.pulumi.core.Output;
+     * import com.pulumi.vultr.VultrFunctions;
+     * import com.pulumi.vultr.inputs.GetDnsDomainArgs;
+     * import java.util.List;
+     * import java.util.ArrayList;
+     * import java.util.Map;
+     * import java.io.File;
+     * import java.nio.file.Files;
+     * import java.nio.file.Paths;
+     * 
+     * public class App {
+     *     public static void main(String[] args) {
+     *         Pulumi.run(App::stack);
+     *     }
+     * 
+     *     public static void stack(Context ctx) {
+     *         final var myDomain = VultrFunctions.getDnsDomain(GetDnsDomainArgs.builder()
+     *             .domain(&#34;example.com&#34;)
+     *             .build());
+     * 
+     *     }
+     * }
+     * ```
+     * 
+     */
+    public static CompletableFuture<GetDnsDomainResult> getDnsDomainPlain(GetDnsDomainPlainArgs args) {
+        return getDnsDomainPlain(args, InvokeOptions.Empty);
+    }
+    /**
+     * Get information about a DNS domain associated with your Vultr account.
+     * 
+     * ## Example Usage
+     * 
+     * Get the information for a DNS domain:
+     * ```java
+     * package generated_program;
+     * 
+     * import com.pulumi.Context;
+     * import com.pulumi.Pulumi;
+     * import com.pulumi.core.Output;
+     * import com.pulumi.vultr.VultrFunctions;
+     * import com.pulumi.vultr.inputs.GetDnsDomainArgs;
+     * import java.util.List;
+     * import java.util.ArrayList;
+     * import java.util.Map;
+     * import java.io.File;
+     * import java.nio.file.Files;
+     * import java.nio.file.Paths;
+     * 
+     * public class App {
+     *     public static void main(String[] args) {
+     *         Pulumi.run(App::stack);
+     *     }
+     * 
+     *     public static void stack(Context ctx) {
+     *         final var myDomain = VultrFunctions.getDnsDomain(GetDnsDomainArgs.builder()
+     *             .domain(&#34;example.com&#34;)
+     *             .build());
+     * 
+     *     }
+     * }
+     * ```
+     * 
+     */
+    public static Output<GetDnsDomainResult> getDnsDomain(GetDnsDomainArgs args, InvokeOptions options) {
+        return Deployment.getInstance().invoke("vultr:index/getDnsDomain:getDnsDomain", TypeShape.of(GetDnsDomainResult.class), args, Utilities.withVersion(options));
+    }
+    /**
+     * Get information about a DNS domain associated with your Vultr account.
+     * 
+     * ## Example Usage
+     * 
+     * Get the information for a DNS domain:
+     * ```java
+     * package generated_program;
+     * 
+     * import com.pulumi.Context;
+     * import com.pulumi.Pulumi;
+     * import com.pulumi.core.Output;
+     * import com.pulumi.vultr.VultrFunctions;
+     * import com.pulumi.vultr.inputs.GetDnsDomainArgs;
+     * import java.util.List;
+     * import java.util.ArrayList;
+     * import java.util.Map;
+     * import java.io.File;
+     * import java.nio.file.Files;
+     * import java.nio.file.Paths;
+     * 
+     * public class App {
+     *     public static void main(String[] args) {
+     *         Pulumi.run(App::stack);
+     *     }
+     * 
+     *     public static void stack(Context ctx) {
+     *         final var myDomain = VultrFunctions.getDnsDomain(GetDnsDomainArgs.builder()
+     *             .domain(&#34;example.com&#34;)
+     *             .build());
+     * 
+     *     }
+     * }
+     * ```
+     * 
+     */
+    public static CompletableFuture<GetDnsDomainResult> getDnsDomainPlain(GetDnsDomainPlainArgs args, InvokeOptions options) {
+        return Deployment.getInstance().invokeAsync("vultr:index/getDnsDomain:getDnsDomain", TypeShape.of(GetDnsDomainResult.class), args, Utilities.withVersion(options));
     }
     /**
      * Get information about a firewall group on your Vultr account.

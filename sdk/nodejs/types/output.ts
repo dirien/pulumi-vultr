@@ -16,6 +16,50 @@ export interface GetApplicationFilter {
     values: string[];
 }
 
+export interface GetBackupFilter {
+    /**
+     * Attribute name to filter with.
+     */
+    name: string;
+    /**
+     * One or more values filter with.
+     */
+    values: string[];
+}
+
+export interface GetBareMetalPlanFilter {
+    /**
+     * Attribute name to filter with.
+     */
+    name: string;
+    /**
+     * One or more values filter with.
+     */
+    values: string[];
+}
+
+export interface GetBareMetalServerFilter {
+    /**
+     * Attribute name to filter with.
+     */
+    name: string;
+    /**
+     * One or more values filter with.
+     */
+    values: string[];
+}
+
+export interface GetBlockStorageFilter {
+    /**
+     * Attribute name to filter with.
+     */
+    name: string;
+    /**
+     * One or more values filter with.
+     */
+    values: string[];
+}
+
 export interface GetFirewallGroupFilter {
     /**
      * Attribute name to filter with.
