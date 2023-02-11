@@ -583,6 +583,126 @@
                 "values"
             ]
         },
+        "vultr:index/getBackupFilter:getBackupFilter": {
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Attribute name to filter with.\n",
+                    "language": {
+                        "python": {
+                            "mapCase": false
+                        }
+                    }
+                },
+                "values": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "One or more values filter with.\n",
+                    "language": {
+                        "python": {
+                            "mapCase": false
+                        }
+                    }
+                }
+            },
+            "type": "object",
+            "required": [
+                "name",
+                "values"
+            ]
+        },
+        "vultr:index/getBareMetalPlanFilter:getBareMetalPlanFilter": {
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Attribute name to filter with.\n",
+                    "language": {
+                        "python": {
+                            "mapCase": false
+                        }
+                    }
+                },
+                "values": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "One or more values filter with.\n",
+                    "language": {
+                        "python": {
+                            "mapCase": false
+                        }
+                    }
+                }
+            },
+            "type": "object",
+            "required": [
+                "name",
+                "values"
+            ]
+        },
+        "vultr:index/getBareMetalServerFilter:getBareMetalServerFilter": {
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Attribute name to filter with.\n",
+                    "language": {
+                        "python": {
+                            "mapCase": false
+                        }
+                    }
+                },
+                "values": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "One or more values filter with.\n",
+                    "language": {
+                        "python": {
+                            "mapCase": false
+                        }
+                    }
+                }
+            },
+            "type": "object",
+            "required": [
+                "name",
+                "values"
+            ]
+        },
+        "vultr:index/getBlockStorageFilter:getBlockStorageFilter": {
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Attribute name to filter with.\n",
+                    "language": {
+                        "python": {
+                            "mapCase": false
+                        }
+                    }
+                },
+                "values": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "One or more values filter with.\n",
+                    "language": {
+                        "python": {
+                            "mapCase": false
+                        }
+                    }
+                }
+            },
+            "type": "object",
+            "required": [
+                "name",
+                "values"
+            ]
+        },
         "vultr:index/getFirewallGroupFilter:getFirewallGroupFilter": {
             "properties": {
                 "name": {
@@ -4490,6 +4610,60 @@
         }
     },
     "functions": {
+        "vultr:index/getAccount:getAccount": {
+            "description": "Get information about your Vultr account. This data source provides the balance, pending charges, last payment date, and last payment amount for your Vultr account.\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\nGet the information for an account:\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@pulumi/vultr\";\n\nconst myAccount = vultr.getAccount({});\n```\n```python\nimport pulumi\nimport pulumi_vultr as vultr\n\nmy_account = vultr.get_account()\n```\n```csharp\nusing System.Collections.Generic;\nusing Pulumi;\nusing Vultr = Pulumi.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var myAccount = Vultr.GetAccount.Invoke();\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.GetAccount(ctx, nil, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.VultrFunctions;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var myAccount = VultrFunctions.getAccount();\n\n    }\n}\n```\n```yaml\nvariables:\n  myAccount:\n    fn::invoke:\n      Function: vultr:getAccount\n      Arguments: {}\n```\n{{% /example %}}\n{{% /examples %}}",
+            "outputs": {
+                "description": "A collection of values returned by getAccount.\n",
+                "properties": {
+                    "acls": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "The access control list on your Vultr account.\n"
+                    },
+                    "balance": {
+                        "type": "number",
+                        "description": "The current balance on your Vultr account.\n"
+                    },
+                    "email": {
+                        "type": "string",
+                        "description": "The email address on your Vultr account.\n"
+                    },
+                    "id": {
+                        "type": "string",
+                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                    },
+                    "lastPaymentAmount": {
+                        "type": "number",
+                        "description": "The amount of the last payment made on your Vultr account.\n"
+                    },
+                    "lastPaymentDate": {
+                        "type": "string",
+                        "description": "The date of the last payment made on your Vultr account.\n"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "The name on your Vultr account.\n"
+                    },
+                    "pendingCharges": {
+                        "type": "number",
+                        "description": "The pending charges on your Vultr account.\n"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "acls",
+                    "balance",
+                    "email",
+                    "lastPaymentAmount",
+                    "lastPaymentDate",
+                    "name",
+                    "pendingCharges",
+                    "id"
+                ]
+            }
+        },
         "vultr:index/getApplication:getApplication": {
             "description": "Get information about applications that can be launched when creating a Vultr VPS.\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\nGet the information for an application by `deploy_name`:\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@pulumi/vultr\";\n\nconst docker = vultr.getApplication({\n    filters: [{\n        name: \"deploy_name\",\n        values: [\"Docker on CentOS 7 x64\"],\n    }],\n});\n```\n```python\nimport pulumi\nimport pulumi_vultr as vultr\n\ndocker = vultr.get_application(filters=[vultr.GetApplicationFilterArgs(\n    name=\"deploy_name\",\n    values=[\"Docker on CentOS 7 x64\"],\n)])\n```\n```csharp\nusing System.Collections.Generic;\nusing Pulumi;\nusing Vultr = Pulumi.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var docker = Vultr.GetApplication.Invoke(new()\n    {\n        Filters = new[]\n        {\n            new Vultr.Inputs.GetApplicationFilterInputArgs\n            {\n                Name = \"deploy_name\",\n                Values = new[]\n                {\n                    \"Docker on CentOS 7 x64\",\n                },\n            },\n        },\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.GetApplication(ctx, \u0026vultr.GetApplicationArgs{\n\t\t\tFilters: []vultr.GetApplicationFilter{\n\t\t\t\t{\n\t\t\t\t\tName: \"deploy_name\",\n\t\t\t\t\tValues: []string{\n\t\t\t\t\t\t\"Docker on CentOS 7 x64\",\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t},\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.VultrFunctions;\nimport com.pulumi.vultr.inputs.GetApplicationArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var docker = VultrFunctions.getApplication(GetApplicationArgs.builder()\n            .filters(GetApplicationFilterArgs.builder()\n                .name(\"deploy_name\")\n                .values(\"Docker on CentOS 7 x64\")\n                .build())\n            .build());\n\n    }\n}\n```\n```yaml\nvariables:\n  docker:\n    fn::invoke:\n      Function: vultr:getApplication\n      Arguments:\n        filters:\n          - name: deploy_name\n            values:\n              - Docker on CentOS 7 x64\n```\n{{% /example %}}\n{{% /examples %}}",
             "inputs": {
@@ -4552,6 +4726,407 @@
                     "shortName",
                     "type",
                     "vendor",
+                    "id"
+                ]
+            }
+        },
+        "vultr:index/getBackup:getBackup": {
+            "description": "Get information about a Vultr backup. This data source provides a list of backups which contain the description, size, status, and the creation date for your Vultr backup.\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\nGet the information for a backup by `description`:\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@pulumi/vultr\";\n\nconst myBackup = vultr.getBackup({\n    filters: [{\n        name: \"description\",\n        values: [\"my-backup-description\"],\n    }],\n});\n```\n```python\nimport pulumi\nimport pulumi_vultr as vultr\n\nmy_backup = vultr.get_backup(filters=[vultr.GetBackupFilterArgs(\n    name=\"description\",\n    values=[\"my-backup-description\"],\n)])\n```\n```csharp\nusing System.Collections.Generic;\nusing Pulumi;\nusing Vultr = Pulumi.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var myBackup = Vultr.GetBackup.Invoke(new()\n    {\n        Filters = new[]\n        {\n            new Vultr.Inputs.GetBackupFilterInputArgs\n            {\n                Name = \"description\",\n                Values = new[]\n                {\n                    \"my-backup-description\",\n                },\n            },\n        },\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.GetBackup(ctx, \u0026vultr.GetBackupArgs{\n\t\t\tFilters: []vultr.GetBackupFilter{\n\t\t\t\t{\n\t\t\t\t\tName: \"description\",\n\t\t\t\t\tValues: []string{\n\t\t\t\t\t\t\"my-backup-description\",\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t},\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.VultrFunctions;\nimport com.pulumi.vultr.inputs.GetBackupArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var myBackup = VultrFunctions.getBackup(GetBackupArgs.builder()\n            .filters(GetBackupFilterArgs.builder()\n                .name(\"description\")\n                .values(\"my-backup-description\")\n                .build())\n            .build());\n\n    }\n}\n```\n```yaml\nvariables:\n  myBackup:\n    fn::invoke:\n      Function: vultr:getBackup\n      Arguments:\n        filters:\n          - name: description\n            values:\n              - my-backup-description\n```\n{{% /example %}}\n{{% /examples %}}",
+            "inputs": {
+                "description": "A collection of arguments for invoking getBackup.\n",
+                "properties": {
+                    "filters": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/vultr:index/getBackupFilter:getBackupFilter"
+                        },
+                        "description": "Query parameters for finding backups.\n",
+                        "willReplaceOnChanges": true
+                    }
+                },
+                "type": "object"
+            },
+            "outputs": {
+                "description": "A collection of values returned by getBackup.\n",
+                "properties": {
+                    "backups": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "$ref": "pulumi.json#/Any"
+                            }
+                        }
+                    },
+                    "filters": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/vultr:index/getBackupFilter:getBackupFilter"
+                        }
+                    },
+                    "id": {
+                        "type": "string",
+                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "backups",
+                    "id"
+                ]
+            }
+        },
+        "vultr:index/getBareMetalPlan:getBareMetalPlan": {
+            "description": "Get information about a Vultr bare metal server plan.\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\nGet the information for a plan by `id`:\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@pulumi/vultr\";\n\nconst myPlan = vultr.getBareMetalPlan({\n    filters: [{\n        name: \"id\",\n        values: [\"vbm-4c-32gb\"],\n    }],\n});\n```\n```python\nimport pulumi\nimport pulumi_vultr as vultr\n\nmy_plan = vultr.get_bare_metal_plan(filters=[vultr.GetBareMetalPlanFilterArgs(\n    name=\"id\",\n    values=[\"vbm-4c-32gb\"],\n)])\n```\n```csharp\nusing System.Collections.Generic;\nusing Pulumi;\nusing Vultr = Pulumi.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var myPlan = Vultr.GetBareMetalPlan.Invoke(new()\n    {\n        Filters = new[]\n        {\n            new Vultr.Inputs.GetBareMetalPlanFilterInputArgs\n            {\n                Name = \"id\",\n                Values = new[]\n                {\n                    \"vbm-4c-32gb\",\n                },\n            },\n        },\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.GetBareMetalPlan(ctx, \u0026vultr.GetBareMetalPlanArgs{\n\t\t\tFilters: []vultr.GetBareMetalPlanFilter{\n\t\t\t\t{\n\t\t\t\t\tName: \"id\",\n\t\t\t\t\tValues: []string{\n\t\t\t\t\t\t\"vbm-4c-32gb\",\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t},\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.VultrFunctions;\nimport com.pulumi.vultr.inputs.GetBareMetalPlanArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var myPlan = VultrFunctions.getBareMetalPlan(GetBareMetalPlanArgs.builder()\n            .filters(GetBareMetalPlanFilterArgs.builder()\n                .name(\"id\")\n                .values(\"vbm-4c-32gb\")\n                .build())\n            .build());\n\n    }\n}\n```\n```yaml\nvariables:\n  myPlan:\n    fn::invoke:\n      Function: vultr:getBareMetalPlan\n      Arguments:\n        filters:\n          - name: id\n            values:\n              - vbm-4c-32gb\n```\n{{% /example %}}\n{{% /examples %}}",
+            "inputs": {
+                "description": "A collection of arguments for invoking getBareMetalPlan.\n",
+                "properties": {
+                    "filters": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/vultr:index/getBareMetalPlanFilter:getBareMetalPlanFilter"
+                        },
+                        "description": "Query parameters for finding plans.\n",
+                        "willReplaceOnChanges": true
+                    }
+                },
+                "type": "object"
+            },
+            "outputs": {
+                "description": "A collection of values returned by getBareMetalPlan.\n",
+                "properties": {
+                    "bandwidth": {
+                        "type": "integer",
+                        "description": "The bandwidth available on the plan.\n"
+                    },
+                    "cpuCount": {
+                        "type": "integer",
+                        "description": "The number of CPUs available on the plan.\n"
+                    },
+                    "cpuModel": {
+                        "type": "string",
+                        "description": "The CPU model of the plan.\n"
+                    },
+                    "cpuThreads": {
+                        "type": "integer",
+                        "description": "The number of CPU threads.\n"
+                    },
+                    "disk": {
+                        "type": "integer",
+                        "description": "The description of the disk(s) on the plan.\n"
+                    },
+                    "diskCount": {
+                        "type": "integer",
+                        "description": "The number of disks that this plan offers.\n"
+                    },
+                    "filters": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/vultr:index/getBareMetalPlanFilter:getBareMetalPlanFilter"
+                        }
+                    },
+                    "id": {
+                        "type": "string",
+                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                    },
+                    "locations": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "monthlyCost": {
+                        "type": "integer",
+                        "description": "The price per month of the plan in USD.\n"
+                    },
+                    "ram": {
+                        "type": "integer",
+                        "description": "The amount of memory available on the plan in MB.\n"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "The type of plan it is.\n"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "bandwidth",
+                    "cpuCount",
+                    "cpuModel",
+                    "cpuThreads",
+                    "disk",
+                    "diskCount",
+                    "locations",
+                    "monthlyCost",
+                    "ram",
+                    "type",
+                    "id"
+                ]
+            }
+        },
+        "vultr:index/getBareMetalServer:getBareMetalServer": {
+            "description": "Get information about a Vultr bare metal server.\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\nGet the information for a server by `label`:\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@pulumi/vultr\";\n\nconst myServer = vultr.getBareMetalServer({\n    filters: [{\n        name: \"label\",\n        values: [\"my-server-label\"],\n    }],\n});\n```\n```python\nimport pulumi\nimport pulumi_vultr as vultr\n\nmy_server = vultr.get_bare_metal_server(filters=[vultr.GetBareMetalServerFilterArgs(\n    name=\"label\",\n    values=[\"my-server-label\"],\n)])\n```\n```csharp\nusing System.Collections.Generic;\nusing Pulumi;\nusing Vultr = Pulumi.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var myServer = Vultr.GetBareMetalServer.Invoke(new()\n    {\n        Filters = new[]\n        {\n            new Vultr.Inputs.GetBareMetalServerFilterInputArgs\n            {\n                Name = \"label\",\n                Values = new[]\n                {\n                    \"my-server-label\",\n                },\n            },\n        },\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.LookupBareMetalServer(ctx, \u0026vultr.LookupBareMetalServerArgs{\n\t\t\tFilters: []vultr.GetBareMetalServerFilter{\n\t\t\t\t{\n\t\t\t\t\tName: \"label\",\n\t\t\t\t\tValues: []string{\n\t\t\t\t\t\t\"my-server-label\",\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t},\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.VultrFunctions;\nimport com.pulumi.vultr.inputs.GetBareMetalServerArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var myServer = VultrFunctions.getBareMetalServer(GetBareMetalServerArgs.builder()\n            .filters(GetBareMetalServerFilterArgs.builder()\n                .name(\"label\")\n                .values(\"my-server-label\")\n                .build())\n            .build());\n\n    }\n}\n```\n```yaml\nvariables:\n  myServer:\n    fn::invoke:\n      Function: vultr:getBareMetalServer\n      Arguments:\n        filters:\n          - name: label\n            values:\n              - my-server-label\n```\n{{% /example %}}\n{{% /examples %}}",
+            "inputs": {
+                "description": "A collection of arguments for invoking getBareMetalServer.\n",
+                "properties": {
+                    "filters": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/vultr:index/getBareMetalServerFilter:getBareMetalServerFilter"
+                        },
+                        "description": "Query parameters for finding servers.\n",
+                        "willReplaceOnChanges": true
+                    }
+                },
+                "type": "object"
+            },
+            "outputs": {
+                "description": "A collection of values returned by getBareMetalServer.\n",
+                "properties": {
+                    "appId": {
+                        "type": "integer",
+                        "description": "The server's application ID.\n"
+                    },
+                    "cpuCount": {
+                        "type": "integer",
+                        "description": "The number of CPUs available on the server.\n"
+                    },
+                    "dateCreated": {
+                        "type": "string",
+                        "description": "The date the server was added to your Vultr account.\n"
+                    },
+                    "disk": {
+                        "type": "string",
+                        "description": "The description of the disk(s) on the server.\n"
+                    },
+                    "features": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "filters": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/vultr:index/getBareMetalServerFilter:getBareMetalServerFilter"
+                        }
+                    },
+                    "gatewayV4": {
+                        "type": "string",
+                        "description": "The server's IPv4 gateway.\n"
+                    },
+                    "id": {
+                        "type": "string",
+                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                    },
+                    "imageId": {
+                        "type": "string",
+                        "description": "The Marketplace ID for this application.\n"
+                    },
+                    "label": {
+                        "type": "string",
+                        "description": "The server's label.\n"
+                    },
+                    "macAddress": {
+                        "type": "integer"
+                    },
+                    "mainIp": {
+                        "type": "string",
+                        "description": "The server's main IP address.\n"
+                    },
+                    "netmaskV4": {
+                        "type": "string",
+                        "description": "The server's IPv4 netmask.\n"
+                    },
+                    "os": {
+                        "type": "string",
+                        "description": "The operating system of the server.\n"
+                    },
+                    "osId": {
+                        "type": "integer",
+                        "description": "The server's operating system ID.\n"
+                    },
+                    "plan": {
+                        "type": "string",
+                        "description": "The server's plan ID.\n"
+                    },
+                    "ram": {
+                        "type": "string",
+                        "description": "The amount of memory available on the server in MB.\n"
+                    },
+                    "region": {
+                        "type": "string",
+                        "description": "The region ID of the server.\n"
+                    },
+                    "status": {
+                        "type": "string",
+                        "description": "The status of the server's subscription.\n"
+                    },
+                    "tags": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "A list of tags applied to the server.\n"
+                    },
+                    "v6MainIp": {
+                        "type": "string"
+                    },
+                    "v6Network": {
+                        "type": "string"
+                    },
+                    "v6NetworkSize": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "appId",
+                    "cpuCount",
+                    "dateCreated",
+                    "disk",
+                    "features",
+                    "gatewayV4",
+                    "imageId",
+                    "label",
+                    "macAddress",
+                    "mainIp",
+                    "netmaskV4",
+                    "os",
+                    "osId",
+                    "plan",
+                    "ram",
+                    "region",
+                    "status",
+                    "tags",
+                    "v6MainIp",
+                    "v6Network",
+                    "v6NetworkSize",
+                    "id"
+                ]
+            }
+        },
+        "vultr:index/getBlockStorage:getBlockStorage": {
+            "description": "Get information about a Vultr block storage subscription.\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\nGet the information for a block storage subscription by `label`:\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@pulumi/vultr\";\n\nconst myBlockStorage = vultr.getBlockStorage({\n    filters: [{\n        name: \"label\",\n        values: [\"my-block-storage-label\"],\n    }],\n});\n```\n```python\nimport pulumi\nimport pulumi_vultr as vultr\n\nmy_block_storage = vultr.get_block_storage(filters=[vultr.GetBlockStorageFilterArgs(\n    name=\"label\",\n    values=[\"my-block-storage-label\"],\n)])\n```\n```csharp\nusing System.Collections.Generic;\nusing Pulumi;\nusing Vultr = Pulumi.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var myBlockStorage = Vultr.GetBlockStorage.Invoke(new()\n    {\n        Filters = new[]\n        {\n            new Vultr.Inputs.GetBlockStorageFilterInputArgs\n            {\n                Name = \"label\",\n                Values = new[]\n                {\n                    \"my-block-storage-label\",\n                },\n            },\n        },\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.LookupBlockStorage(ctx, \u0026vultr.LookupBlockStorageArgs{\n\t\t\tFilters: []vultr.GetBlockStorageFilter{\n\t\t\t\t{\n\t\t\t\t\tName: \"label\",\n\t\t\t\t\tValues: []string{\n\t\t\t\t\t\t\"my-block-storage-label\",\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t},\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.VultrFunctions;\nimport com.pulumi.vultr.inputs.GetBlockStorageArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var myBlockStorage = VultrFunctions.getBlockStorage(GetBlockStorageArgs.builder()\n            .filters(GetBlockStorageFilterArgs.builder()\n                .name(\"label\")\n                .values(\"my-block-storage-label\")\n                .build())\n            .build());\n\n    }\n}\n```\n```yaml\nvariables:\n  myBlockStorage:\n    fn::invoke:\n      Function: vultr:getBlockStorage\n      Arguments:\n        filters:\n          - name: label\n            values:\n              - my-block-storage-label\n```\n{{% /example %}}\n{{% /examples %}}",
+            "inputs": {
+                "description": "A collection of arguments for invoking getBlockStorage.\n",
+                "properties": {
+                    "filters": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/vultr:index/getBlockStorageFilter:getBlockStorageFilter"
+                        },
+                        "description": "Query parameters for finding block storage subscriptions.\n",
+                        "willReplaceOnChanges": true
+                    }
+                },
+                "type": "object"
+            },
+            "outputs": {
+                "description": "A collection of values returned by getBlockStorage.\n",
+                "properties": {
+                    "attachedToInstance": {
+                        "type": "string",
+                        "description": "The ID of the VPS the block storage subscription is attached to.\n"
+                    },
+                    "blockType": {
+                        "type": "string",
+                        "description": "The type of block storage volume.\n"
+                    },
+                    "cost": {
+                        "type": "integer",
+                        "description": "The cost per month of the block storage subscription in USD.\n"
+                    },
+                    "dateCreated": {
+                        "type": "string",
+                        "description": "The date the block storage subscription was added to your Vultr account.\n"
+                    },
+                    "filters": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/vultr:index/getBlockStorageFilter:getBlockStorageFilter"
+                        }
+                    },
+                    "id": {
+                        "type": "string",
+                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                    },
+                    "label": {
+                        "type": "string",
+                        "description": "The label of the block storage subscription.\n"
+                    },
+                    "mountId": {
+                        "type": "string",
+                        "description": "An ID associated with the instance, when mounted the ID can be found in /dev/disk/by-id prefixed with virtio.\n"
+                    },
+                    "region": {
+                        "type": "string",
+                        "description": "The region ID of the block storage subscription.\n"
+                    },
+                    "sizeGb": {
+                        "type": "integer",
+                        "description": "The size of the block storage subscription in GB.\n"
+                    },
+                    "status": {
+                        "type": "string",
+                        "description": "The status of the block storage subscription.\n"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "attachedToInstance",
+                    "blockType",
+                    "cost",
+                    "dateCreated",
+                    "label",
+                    "mountId",
+                    "region",
+                    "sizeGb",
+                    "status",
+                    "id"
+                ]
+            }
+        },
+        "vultr:index/getDnsDomain:getDnsDomain": {
+            "description": "Get information about a DNS domain associated with your Vultr account.\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\nGet the information for a DNS domain:\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@pulumi/vultr\";\n\nconst myDomain = vultr.getDnsDomain({\n    domain: \"example.com\",\n});\n```\n```python\nimport pulumi\nimport pulumi_vultr as vultr\n\nmy_domain = vultr.get_dns_domain(domain=\"example.com\")\n```\n```csharp\nusing System.Collections.Generic;\nusing Pulumi;\nusing Vultr = Pulumi.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var myDomain = Vultr.GetDnsDomain.Invoke(new()\n    {\n        Domain = \"example.com\",\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.LookupDnsDomain(ctx, \u0026vultr.LookupDnsDomainArgs{\n\t\t\tDomain: \"example.com\",\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.VultrFunctions;\nimport com.pulumi.vultr.inputs.GetDnsDomainArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var myDomain = VultrFunctions.getDnsDomain(GetDnsDomainArgs.builder()\n            .domain(\"example.com\")\n            .build());\n\n    }\n}\n```\n```yaml\nvariables:\n  myDomain:\n    fn::invoke:\n      Function: vultr:getDnsDomain\n      Arguments:\n        domain: example.com\n```\n{{% /example %}}\n{{% /examples %}}",
+            "inputs": {
+                "description": "A collection of arguments for invoking getDnsDomain.\n",
+                "properties": {
+                    "domain": {
+                        "type": "string",
+                        "description": "The name you're searching for.\n"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "domain"
+                ]
+            },
+            "outputs": {
+                "description": "A collection of values returned by getDnsDomain.\n",
+                "properties": {
+                    "dateCreated": {
+                        "type": "string",
+                        "description": "The date the DNS domain was added to your Vultr account.\n"
+                    },
+                    "dnsSec": {
+                        "type": "string",
+                        "description": "The Domain's DNSSEC status\n"
+                    },
+                    "domain": {
+                        "type": "string",
+                        "description": "Name of domain.\n"
+                    },
+                    "id": {
+                        "type": "string",
+                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "dateCreated",
+                    "dnsSec",
+                    "domain",
                     "id"
                 ]
             }

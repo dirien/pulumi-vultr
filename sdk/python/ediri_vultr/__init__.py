@@ -11,7 +11,13 @@ from .dns_domain import *
 from .dns_record import *
 from .firewall_group import *
 from .firewall_rule import *
+from .get_account import *
 from .get_application import *
+from .get_backup import *
+from .get_bare_metal_plan import *
+from .get_bare_metal_server import *
+from .get_block_storage import *
+from .get_dns_domain import *
 from .get_firewall_group import *
 from .get_instance import *
 from .get_instance_ipv4 import *

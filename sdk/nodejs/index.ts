@@ -35,10 +35,39 @@ export type FirewallRule = import("./firewallRule").FirewallRule;
 export const FirewallRule: typeof import("./firewallRule").FirewallRule = null as any;
 utilities.lazyLoad(exports, ["FirewallRule"], () => require("./firewallRule"));
 
+export { GetAccountResult } from "./getAccount";
+export const getAccount: typeof import("./getAccount").getAccount = null as any;
+utilities.lazyLoad(exports, ["getAccount"], () => require("./getAccount"));
+
 export { GetApplicationArgs, GetApplicationResult, GetApplicationOutputArgs } from "./getApplication";
 export const getApplication: typeof import("./getApplication").getApplication = null as any;
 export const getApplicationOutput: typeof import("./getApplication").getApplicationOutput = null as any;
 utilities.lazyLoad(exports, ["getApplication","getApplicationOutput"], () => require("./getApplication"));
+
+export { GetBackupArgs, GetBackupResult, GetBackupOutputArgs } from "./getBackup";
+export const getBackup: typeof import("./getBackup").getBackup = null as any;
+export const getBackupOutput: typeof import("./getBackup").getBackupOutput = null as any;
+utilities.lazyLoad(exports, ["getBackup","getBackupOutput"], () => require("./getBackup"));
+
+export { GetBareMetalPlanArgs, GetBareMetalPlanResult, GetBareMetalPlanOutputArgs } from "./getBareMetalPlan";
+export const getBareMetalPlan: typeof import("./getBareMetalPlan").getBareMetalPlan = null as any;
+export const getBareMetalPlanOutput: typeof import("./getBareMetalPlan").getBareMetalPlanOutput = null as any;
+utilities.lazyLoad(exports, ["getBareMetalPlan","getBareMetalPlanOutput"], () => require("./getBareMetalPlan"));
+
+export { GetBareMetalServerArgs, GetBareMetalServerResult, GetBareMetalServerOutputArgs } from "./getBareMetalServer";
+export const getBareMetalServer: typeof import("./getBareMetalServer").getBareMetalServer = null as any;
+export const getBareMetalServerOutput: typeof import("./getBareMetalServer").getBareMetalServerOutput = null as any;
+utilities.lazyLoad(exports, ["getBareMetalServer","getBareMetalServerOutput"], () => require("./getBareMetalServer"));
+
+export { GetBlockStorageArgs, GetBlockStorageResult, GetBlockStorageOutputArgs } from "./getBlockStorage";
+export const getBlockStorage: typeof import("./getBlockStorage").getBlockStorage = null as any;
+export const getBlockStorageOutput: typeof import("./getBlockStorage").getBlockStorageOutput = null as any;
+utilities.lazyLoad(exports, ["getBlockStorage","getBlockStorageOutput"], () => require("./getBlockStorage"));
+
+export { GetDnsDomainArgs, GetDnsDomainResult, GetDnsDomainOutputArgs } from "./getDnsDomain";
+export const getDnsDomain: typeof import("./getDnsDomain").getDnsDomain = null as any;
+export const getDnsDomainOutput: typeof import("./getDnsDomain").getDnsDomainOutput = null as any;
+utilities.lazyLoad(exports, ["getDnsDomain","getDnsDomainOutput"], () => require("./getDnsDomain"));
 
 export { GetFirewallGroupArgs, GetFirewallGroupResult, GetFirewallGroupOutputArgs } from "./getFirewallGroup";
 export const getFirewallGroup: typeof import("./getFirewallGroup").getFirewallGroup = null as any;

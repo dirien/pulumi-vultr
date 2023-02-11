@@ -27,6 +27,94 @@ export interface GetApplicationFilterArgs {
     values: pulumi.Input<pulumi.Input<string>[]>;
 }
 
+export interface GetBackupFilter {
+    /**
+     * Attribute name to filter with.
+     */
+    name: string;
+    /**
+     * One or more values filter with.
+     */
+    values: string[];
+}
+
+export interface GetBackupFilterArgs {
+    /**
+     * Attribute name to filter with.
+     */
+    name: pulumi.Input<string>;
+    /**
+     * One or more values filter with.
+     */
+    values: pulumi.Input<pulumi.Input<string>[]>;
+}
+
+export interface GetBareMetalPlanFilter {
+    /**
+     * Attribute name to filter with.
+     */
+    name: string;
+    /**
+     * One or more values filter with.
+     */
+    values: string[];
+}
+
+export interface GetBareMetalPlanFilterArgs {
+    /**
+     * Attribute name to filter with.
+     */
+    name: pulumi.Input<string>;
+    /**
+     * One or more values filter with.
+     */
+    values: pulumi.Input<pulumi.Input<string>[]>;
+}
+
+export interface GetBareMetalServerFilter {
+    /**
+     * Attribute name to filter with.
+     */
+    name: string;
+    /**
+     * One or more values filter with.
+     */
+    values: string[];
+}
+
+export interface GetBareMetalServerFilterArgs {
+    /**
+     * Attribute name to filter with.
+     */
+    name: pulumi.Input<string>;
+    /**
+     * One or more values filter with.
+     */
+    values: pulumi.Input<pulumi.Input<string>[]>;
+}
+
+export interface GetBlockStorageFilter {
+    /**
+     * Attribute name to filter with.
+     */
+    name: string;
+    /**
+     * One or more values filter with.
+     */
+    values: string[];
+}
+
+export interface GetBlockStorageFilterArgs {
+    /**
+     * Attribute name to filter with.
+     */
+    name: pulumi.Input<string>;
+    /**
+     * One or more values filter with.
+     */
+    values: pulumi.Input<pulumi.Input<string>[]>;
+}
+
 export interface GetFirewallGroupFilter {
     /**
      * Attribute name to filter with.
