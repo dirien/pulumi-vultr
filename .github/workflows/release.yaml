@@ -106,7 +106,7 @@ jobs:
           fi
       - if: ${{ matrix.language == 'python' && env.PUBLISH_PYPI == 'true' }}
         name: Publish package to PyPI
-        uses: pypa/gh-action-pypi-publish@c7f29f7adef1a245bd91520e94867e5c6eedddcc # tag=v1.6.4
+        uses: pypa/gh-action-pypi-publish@22b4d1f12511f2696162c08546dafbaa903448a2 # tag=v1.7.1
         with:
           user: ${{ env.PYPI_USERNAME }}
           password: ${{ env.PYPI_PASSWORD }}
