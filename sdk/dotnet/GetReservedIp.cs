@@ -23,6 +23,7 @@ namespace ediri.Vultr
         /// 
         /// ```csharp
         /// using System.Collections.Generic;
+        /// using System.Linq;
         /// using Pulumi;
         /// using Vultr = Pulumi.Vultr;
         /// 
@@ -62,6 +63,7 @@ namespace ediri.Vultr
         /// 
         /// ```csharp
         /// using System.Collections.Generic;
+        /// using System.Linq;
         /// using Pulumi;
         /// using Vultr = Pulumi.Vultr;
         /// 
