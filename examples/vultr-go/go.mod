@@ -1,6 +1,6 @@
 module vultr-go
 
-go 1.19
+go 1.20
 
 require (
 	github.com/dirien/pulumi-vultr/v2 v2.12.0

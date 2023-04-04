@@ -38,6 +38,7 @@ def readme():
 
 
 setup(name='ediri_vultr',
+      python_requires='>=3.7',
       version=VERSION,
       description="A Pulumi package for creating and managing Vultr cloud resources.",
       long_description=readme(),

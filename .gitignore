@@ -21,3 +21,4 @@ provider/**/schema-embed.json
 **/version.txt
 **/nuget
 **/dist
+sdk/java/.gradle
