@@ -170,6 +170,10 @@ namespace ediri.Vultr
             {
                 Version = Utilities.Version,
                 PluginDownloadURL = "github://api.github.com/dirien/pulumi-vultr",
+                AdditionalSecretOutputs =
+                {
+                    "kubeConfig",
+                },
             };
             var merged = CustomResourceOptions.Merge(defaultOptions, options);
             // Override the ID if one was specified for consistency with other language SDKs.
@@ -249,11 +253,21 @@ namespace ediri.Vultr
         [Input("ip")]
         public Input<string>? Ip { get; set; }
 
+        [Input("kubeConfig")]
+        private Input<string>? _kubeConfig;
+
         /// <summary>
         /// Base64 encoded Kubeconfig for this VKE cluster.
         /// </summary>
-        [Input("kubeConfig")]
-        public Input<string>? KubeConfig { get; set; }
+        public Input<string>? KubeConfig
+        {
+            get => _kubeConfig;
+            set
+            {
+                var emptySecret = Output.CreateSecret(0);
+                _kubeConfig = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
+            }
+        }
 
         /// <summary>
         /// The VKE clusters label.
