@@ -177,6 +177,8 @@ export class Kubernetes extends pulumi.CustomResource {
             resourceInputs["status"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
+        const secretOpts = { additionalSecretOutputs: ["kubeConfig"] };
+        opts = pulumi.mergeOptions(opts, secretOpts);
         super(Kubernetes.__pulumiType, name, resourceInputs, opts);
     }
 }

@@ -2616,7 +2616,8 @@
                 },
                 "kubeConfig": {
                     "type": "string",
-                    "description": "Base64 encoded Kubeconfig for this VKE cluster.\n"
+                    "description": "Base64 encoded Kubeconfig for this VKE cluster.\n",
+                    "secret": true
                 },
                 "label": {
                     "type": "string",
@@ -2671,8 +2672,7 @@
                 },
                 "version": {
                     "type": "string",
-                    "description": "The version your VKE cluster you want deployed. [See Available Version](https://www.vultr.com/api/#operation/get-kubernetes-versions)\n",
-                    "willReplaceOnChanges": true
+                    "description": "The version your VKE cluster you want deployed. [See Available Version](https://www.vultr.com/api/#operation/get-kubernetes-versions)\n"
                 }
             },
             "requiredInputs": [
@@ -2701,7 +2701,8 @@
                     },
                     "kubeConfig": {
                         "type": "string",
-                        "description": "Base64 encoded Kubeconfig for this VKE cluster.\n"
+                        "description": "Base64 encoded Kubeconfig for this VKE cluster.\n",
+                        "secret": true
                     },
                     "label": {
                         "type": "string",
@@ -2726,8 +2727,7 @@
                     },
                     "version": {
                         "type": "string",
-                        "description": "The version your VKE cluster you want deployed. [See Available Version](https://www.vultr.com/api/#operation/get-kubernetes-versions)\n",
-                        "willReplaceOnChanges": true
+                        "description": "The version your VKE cluster you want deployed. [See Available Version](https://www.vultr.com/api/#operation/get-kubernetes-versions)\n"
                     }
                 },
                 "type": "object"

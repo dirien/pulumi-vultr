@@ -133,6 +133,10 @@ func NewKubernetes(ctx *pulumi.Context,
 	if args.Version == nil {
 		return nil, errors.New("invalid value for required argument 'Version'")
 	}
+	secrets := pulumi.AdditionalSecretOutputs([]string{
+		"kubeConfig",
+	})
+	opts = append(opts, secrets)
 	opts = pkgResourceDefaultOpts(opts)
 	var resource Kubernetes
 	err := ctx.RegisterResource("vultr:index/kubernetes:Kubernetes", name, args, &resource, opts...)
