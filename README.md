@@ -2,7 +2,7 @@
 
 ![Vultr](img/logo.png)
 
-The Vultr Resource Provider lets you manage [Vultr](https://vultr.com/) resources.
+The Vultr Resource Provider lets you manage [Vultr](https://www.vultr.com/) resources.
 
 ## Installing
 
