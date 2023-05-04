@@ -14,6 +14,21 @@ import javax.annotation.Nullable;
 @CustomType
 public final class GetKubernetesResult {
     /**
+     * @return The base64 encoded public certificate used by clients to access the cluster.
+     * 
+     */
+    private String clientCertificate;
+    /**
+     * @return The base64 encoded private key used by clients to access the cluster.
+     * 
+     */
+    private String clientKey;
+    /**
+     * @return The base64 encoded public certificate for the cluster&#39;s certificate authority.
+     * 
+     */
+    private String clusterCaCertificate;
+    /**
      * @return IP range that your pods will run on in this cluster.
      * 
      */
@@ -76,6 +91,27 @@ public final class GetKubernetesResult {
     private String version;
 
     private GetKubernetesResult() {}
+    /**
+     * @return The base64 encoded public certificate used by clients to access the cluster.
+     * 
+     */
+    public String clientCertificate() {
+        return this.clientCertificate;
+    }
+    /**
+     * @return The base64 encoded private key used by clients to access the cluster.
+     * 
+     */
+    public String clientKey() {
+        return this.clientKey;
+    }
+    /**
+     * @return The base64 encoded public certificate for the cluster&#39;s certificate authority.
+     * 
+     */
+    public String clusterCaCertificate() {
+        return this.clusterCaCertificate;
+    }
     /**
      * @return IP range that your pods will run on in this cluster.
      * 
@@ -173,6 +209,9 @@ public final class GetKubernetesResult {
     }
     @CustomType.Builder
     public static final class Builder {
+        private String clientCertificate;
+        private String clientKey;
+        private String clusterCaCertificate;
         private String clusterSubnet;
         private String dateCreated;
         private String endpoint;
@@ -189,6 +228,9 @@ public final class GetKubernetesResult {
         public Builder() {}
         public Builder(GetKubernetesResult defaults) {
     	      Objects.requireNonNull(defaults);
+    	      this.clientCertificate = defaults.clientCertificate;
+    	      this.clientKey = defaults.clientKey;
+    	      this.clusterCaCertificate = defaults.clusterCaCertificate;
     	      this.clusterSubnet = defaults.clusterSubnet;
     	      this.dateCreated = defaults.dateCreated;
     	      this.endpoint = defaults.endpoint;
@@ -204,6 +246,21 @@ public final class GetKubernetesResult {
     	      this.version = defaults.version;
         }
 
+        @CustomType.Setter
+        public Builder clientCertificate(String clientCertificate) {
+            this.clientCertificate = Objects.requireNonNull(clientCertificate);
+            return this;
+        }
+        @CustomType.Setter
+        public Builder clientKey(String clientKey) {
+            this.clientKey = Objects.requireNonNull(clientKey);
+            return this;
+        }
+        @CustomType.Setter
+        public Builder clusterCaCertificate(String clusterCaCertificate) {
+            this.clusterCaCertificate = Objects.requireNonNull(clusterCaCertificate);
+            return this;
+        }
         @CustomType.Setter
         public Builder clusterSubnet(String clusterSubnet) {
             this.clusterSubnet = Objects.requireNonNull(clusterSubnet);
@@ -277,6 +334,9 @@ public final class GetKubernetesResult {
         }
         public GetKubernetesResult build() {
             final var o = new GetKubernetesResult();
+            o.clientCertificate = clientCertificate;
+            o.clientKey = clientKey;
+            o.clusterCaCertificate = clusterCaCertificate;
             o.clusterSubnet = clusterSubnet;
             o.dateCreated = dateCreated;
             o.endpoint = endpoint;

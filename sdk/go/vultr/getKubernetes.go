@@ -64,6 +64,12 @@ type LookupKubernetesArgs struct {
 
 // A collection of values returned by getKubernetes.
 type LookupKubernetesResult struct {
+	// The base64 encoded public certificate used by clients to access the cluster.
+	ClientCertificate string `pulumi:"clientCertificate"`
+	// The base64 encoded private key used by clients to access the cluster.
+	ClientKey string `pulumi:"clientKey"`
+	// The base64 encoded public certificate for the cluster's certificate authority.
+	ClusterCaCertificate string `pulumi:"clusterCaCertificate"`
 	// IP range that your pods will run on in this cluster.
 	ClusterSubnet string `pulumi:"clusterSubnet"`
 	// Date node was created.
@@ -127,6 +133,21 @@ func (o LookupKubernetesResultOutput) ToLookupKubernetesResultOutput() LookupKub
 
 func (o LookupKubernetesResultOutput) ToLookupKubernetesResultOutputWithContext(ctx context.Context) LookupKubernetesResultOutput {
 	return o
+}
+
+// The base64 encoded public certificate used by clients to access the cluster.
+func (o LookupKubernetesResultOutput) ClientCertificate() pulumi.StringOutput {
+	return o.ApplyT(func(v LookupKubernetesResult) string { return v.ClientCertificate }).(pulumi.StringOutput)
+}
+
+// The base64 encoded private key used by clients to access the cluster.
+func (o LookupKubernetesResultOutput) ClientKey() pulumi.StringOutput {
+	return o.ApplyT(func(v LookupKubernetesResult) string { return v.ClientKey }).(pulumi.StringOutput)
+}
+
+// The base64 encoded public certificate for the cluster's certificate authority.
+func (o LookupKubernetesResultOutput) ClusterCaCertificate() pulumi.StringOutput {
+	return o.ApplyT(func(v LookupKubernetesResult) string { return v.ClusterCaCertificate }).(pulumi.StringOutput)
 }
 
 // IP range that your pods will run on in this cluster.

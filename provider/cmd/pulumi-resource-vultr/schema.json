@@ -2598,6 +2598,21 @@
         "vultr:index/kubernetes:Kubernetes": {
             "description": "{{% examples %}}\n## Example Usage\n{{% example %}}\n\nCreate a new VKE cluster:\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@ediri/vultr\";\n\nconst k8 = new vultr.Kubernetes(\"k8\", {\n    label: \"tf-test\",\n    nodePools: {\n        autoScaler: true,\n        label: \"my-label\",\n        maxNodes: 2,\n        minNodes: 1,\n        nodeQuantity: 1,\n        plan: \"vc2-2c-4gb\",\n    },\n    region: \"ewr\",\n    version: \"v1.23.5+1\",\n});\n```\n```python\nimport pulumi\nimport ediri_vultr as vultr\n\nk8 = vultr.Kubernetes(\"k8\",\n    label=\"tf-test\",\n    node_pools=vultr.KubernetesNodePoolsArgs(\n        auto_scaler=True,\n        label=\"my-label\",\n        max_nodes=2,\n        min_nodes=1,\n        node_quantity=1,\n        plan=\"vc2-2c-4gb\",\n    ),\n    region=\"ewr\",\n    version=\"v1.23.5+1\")\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vultr = ediri.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var k8 = new Vultr.Kubernetes(\"k8\", new()\n    {\n        Label = \"tf-test\",\n        NodePools = new Vultr.Inputs.KubernetesNodePoolsArgs\n        {\n            AutoScaler = true,\n            Label = \"my-label\",\n            MaxNodes = 2,\n            MinNodes = 1,\n            NodeQuantity = 1,\n            Plan = \"vc2-2c-4gb\",\n        },\n        Region = \"ewr\",\n        Version = \"v1.23.5+1\",\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.NewKubernetes(ctx, \"k8\", \u0026vultr.KubernetesArgs{\n\t\t\tLabel: pulumi.String(\"tf-test\"),\n\t\t\tNodePools: \u0026vultr.KubernetesNodePoolsTypeArgs{\n\t\t\t\tAutoScaler:   pulumi.Bool(true),\n\t\t\t\tLabel:        pulumi.String(\"my-label\"),\n\t\t\t\tMaxNodes:     pulumi.Int(2),\n\t\t\t\tMinNodes:     pulumi.Int(1),\n\t\t\t\tNodeQuantity: pulumi.Int(1),\n\t\t\t\tPlan:         pulumi.String(\"vc2-2c-4gb\"),\n\t\t\t},\n\t\t\tRegion:  pulumi.String(\"ewr\"),\n\t\t\tVersion: pulumi.String(\"v1.23.5+1\"),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.Kubernetes;\nimport com.pulumi.vultr.KubernetesArgs;\nimport com.pulumi.vultr.inputs.KubernetesNodePoolsArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var k8 = new Kubernetes(\"k8\", KubernetesArgs.builder()        \n            .label(\"tf-test\")\n            .nodePools(KubernetesNodePoolsArgs.builder()\n                .autoScaler(true)\n                .label(\"my-label\")\n                .maxNodes(2)\n                .minNodes(1)\n                .nodeQuantity(1)\n                .plan(\"vc2-2c-4gb\")\n                .build())\n            .region(\"ewr\")\n            .version(\"v1.23.5+1\")\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  k8:\n    type: vultr:Kubernetes\n    properties:\n      label: tf-test\n      nodePools:\n        autoScaler: true\n        label: my-label\n        maxNodes: 2\n        minNodes: 1\n        nodeQuantity: 1\n        plan: vc2-2c-4gb\n      region: ewr\n      version: v1.23.5+1\n```\n\nA default node pool is required when first creating the resource but it can be removed at a later point so long as there is a separate `vultr.KubernetesNodePools` resource attached. For example:\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@ediri/vultr\";\n\nconst k8 = new vultr.Kubernetes(\"k8\", {\n    region: \"ewr\",\n    label: \"tf-test\",\n    version: \"v1.23.5+1\",\n});\n// This resource must be created and attached to the cluster\n// before removing the default node from the vultr_kubernetes resource\nconst np = new vultr.KubernetesNodePools(\"np\", {\n    clusterId: k8.id,\n    nodeQuantity: 1,\n    plan: \"vc2-2c-4gb\",\n    label: \"my-label\",\n    autoScaler: true,\n    minNodes: 1,\n    maxNodes: 2,\n});\n```\n```python\nimport pulumi\nimport ediri_vultr as vultr\n\nk8 = vultr.Kubernetes(\"k8\",\n    region=\"ewr\",\n    label=\"tf-test\",\n    version=\"v1.23.5+1\")\n# This resource must be created and attached to the cluster\n# before removing the default node from the vultr_kubernetes resource\nnp = vultr.KubernetesNodePools(\"np\",\n    cluster_id=k8.id,\n    node_quantity=1,\n    plan=\"vc2-2c-4gb\",\n    label=\"my-label\",\n    auto_scaler=True,\n    min_nodes=1,\n    max_nodes=2)\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vultr = ediri.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var k8 = new Vultr.Kubernetes(\"k8\", new()\n    {\n        Region = \"ewr\",\n        Label = \"tf-test\",\n        Version = \"v1.23.5+1\",\n    });\n\n    // This resource must be created and attached to the cluster\n    // before removing the default node from the vultr_kubernetes resource\n    var np = new Vultr.KubernetesNodePools(\"np\", new()\n    {\n        ClusterId = k8.Id,\n        NodeQuantity = 1,\n        Plan = \"vc2-2c-4gb\",\n        Label = \"my-label\",\n        AutoScaler = true,\n        MinNodes = 1,\n        MaxNodes = 2,\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\tk8, err := vultr.NewKubernetes(ctx, \"k8\", \u0026vultr.KubernetesArgs{\n\t\t\tRegion:  pulumi.String(\"ewr\"),\n\t\t\tLabel:   pulumi.String(\"tf-test\"),\n\t\t\tVersion: pulumi.String(\"v1.23.5+1\"),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\t_, err = vultr.NewKubernetesNodePools(ctx, \"np\", \u0026vultr.KubernetesNodePoolsArgs{\n\t\t\tClusterId:    k8.ID(),\n\t\t\tNodeQuantity: pulumi.Int(1),\n\t\t\tPlan:         pulumi.String(\"vc2-2c-4gb\"),\n\t\t\tLabel:        pulumi.String(\"my-label\"),\n\t\t\tAutoScaler:   pulumi.Bool(true),\n\t\t\tMinNodes:     pulumi.Int(1),\n\t\t\tMaxNodes:     pulumi.Int(2),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.Kubernetes;\nimport com.pulumi.vultr.KubernetesArgs;\nimport com.pulumi.vultr.KubernetesNodePools;\nimport com.pulumi.vultr.KubernetesNodePoolsArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var k8 = new Kubernetes(\"k8\", KubernetesArgs.builder()        \n            .region(\"ewr\")\n            .label(\"tf-test\")\n            .version(\"v1.23.5+1\")\n            .build());\n\n        var np = new KubernetesNodePools(\"np\", KubernetesNodePoolsArgs.builder()        \n            .clusterId(k8.id())\n            .nodeQuantity(1)\n            .plan(\"vc2-2c-4gb\")\n            .label(\"my-label\")\n            .autoScaler(true)\n            .minNodes(1)\n            .maxNodes(2)\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  k8:\n    type: vultr:Kubernetes\n    properties:\n      region: ewr\n      label: tf-test\n      version: v1.23.5+1\n  # This resource must be created and attached to the cluster\n  # before removing the default node from the vultr_kubernetes resource\n  np:\n    type: vultr:KubernetesNodePools\n    properties:\n      clusterId: ${k8.id}\n      nodeQuantity: 1\n      plan: vc2-2c-4gb\n      label: my-label\n      autoScaler: true\n      minNodes: 1\n      maxNodes: 2\n```\n\nThere is still a requirement that there be one node pool attached to the cluster but this should allow more flexibility about which node pool that is.\n{{% /example %}}\n{{% /examples %}}",
             "properties": {
+                "clientCertificate": {
+                    "type": "string",
+                    "description": "The base64 encoded public certificate used by clients to access the cluster.\n",
+                    "secret": true
+                },
+                "clientKey": {
+                    "type": "string",
+                    "description": "The base64 encoded private key used by clients to access the cluster.\n",
+                    "secret": true
+                },
+                "clusterCaCertificate": {
+                    "type": "string",
+                    "description": "The base64 encoded public certificate for the cluster's certificate authority.\n",
+                    "secret": true
+                },
                 "clusterSubnet": {
                     "type": "string",
                     "description": "IP range that your pods will run on in this cluster.\n"
@@ -2645,6 +2660,9 @@
                 }
             },
             "required": [
+                "clientCertificate",
+                "clientKey",
+                "clusterCaCertificate",
                 "clusterSubnet",
                 "dateCreated",
                 "endpoint",
@@ -2683,6 +2701,21 @@
             "stateInputs": {
                 "description": "Input properties used for looking up and filtering Kubernetes resources.\n",
                 "properties": {
+                    "clientCertificate": {
+                        "type": "string",
+                        "description": "The base64 encoded public certificate used by clients to access the cluster.\n",
+                        "secret": true
+                    },
+                    "clientKey": {
+                        "type": "string",
+                        "description": "The base64 encoded private key used by clients to access the cluster.\n",
+                        "secret": true
+                    },
+                    "clusterCaCertificate": {
+                        "type": "string",
+                        "description": "The base64 encoded public certificate for the cluster's certificate authority.\n",
+                        "secret": true
+                    },
                     "clusterSubnet": {
                         "type": "string",
                         "description": "IP range that your pods will run on in this cluster.\n"
@@ -5068,6 +5101,18 @@
             "outputs": {
                 "description": "A collection of values returned by getKubernetes.\n",
                 "properties": {
+                    "clientCertificate": {
+                        "type": "string",
+                        "description": "The base64 encoded public certificate used by clients to access the cluster.\n"
+                    },
+                    "clientKey": {
+                        "type": "string",
+                        "description": "The base64 encoded private key used by clients to access the cluster.\n"
+                    },
+                    "clusterCaCertificate": {
+                        "type": "string",
+                        "description": "The base64 encoded public certificate for the cluster's certificate authority.\n"
+                    },
                     "clusterSubnet": {
                         "type": "string",
                         "description": "IP range that your pods will run on in this cluster.\n"
@@ -5128,6 +5173,9 @@
                 },
                 "type": "object",
                 "required": [
+                    "clientCertificate",
+                    "clientKey",
+                    "clusterCaCertificate",
                     "clusterSubnet",
                     "dateCreated",
                     "endpoint",

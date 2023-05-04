@@ -93,6 +93,12 @@ import (
 type Kubernetes struct {
 	pulumi.CustomResourceState
 
+	// The base64 encoded public certificate used by clients to access the cluster.
+	ClientCertificate pulumi.StringOutput `pulumi:"clientCertificate"`
+	// The base64 encoded private key used by clients to access the cluster.
+	ClientKey pulumi.StringOutput `pulumi:"clientKey"`
+	// The base64 encoded public certificate for the cluster's certificate authority.
+	ClusterCaCertificate pulumi.StringOutput `pulumi:"clusterCaCertificate"`
 	// IP range that your pods will run on in this cluster.
 	ClusterSubnet pulumi.StringOutput `pulumi:"clusterSubnet"`
 	// Date node was created.
@@ -134,6 +140,9 @@ func NewKubernetes(ctx *pulumi.Context,
 		return nil, errors.New("invalid value for required argument 'Version'")
 	}
 	secrets := pulumi.AdditionalSecretOutputs([]string{
+		"clientCertificate",
+		"clientKey",
+		"clusterCaCertificate",
 		"kubeConfig",
 	})
 	opts = append(opts, secrets)
@@ -160,6 +169,12 @@ func GetKubernetes(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering Kubernetes resources.
 type kubernetesState struct {
+	// The base64 encoded public certificate used by clients to access the cluster.
+	ClientCertificate *string `pulumi:"clientCertificate"`
+	// The base64 encoded private key used by clients to access the cluster.
+	ClientKey *string `pulumi:"clientKey"`
+	// The base64 encoded public certificate for the cluster's certificate authority.
+	ClusterCaCertificate *string `pulumi:"clusterCaCertificate"`
 	// IP range that your pods will run on in this cluster.
 	ClusterSubnet *string `pulumi:"clusterSubnet"`
 	// Date node was created.
@@ -185,6 +200,12 @@ type kubernetesState struct {
 }
 
 type KubernetesState struct {
+	// The base64 encoded public certificate used by clients to access the cluster.
+	ClientCertificate pulumi.StringPtrInput
+	// The base64 encoded private key used by clients to access the cluster.
+	ClientKey pulumi.StringPtrInput
+	// The base64 encoded public certificate for the cluster's certificate authority.
+	ClusterCaCertificate pulumi.StringPtrInput
 	// IP range that your pods will run on in this cluster.
 	ClusterSubnet pulumi.StringPtrInput
 	// Date node was created.
@@ -321,6 +342,21 @@ func (o KubernetesOutput) ToKubernetesOutput() KubernetesOutput {
 
 func (o KubernetesOutput) ToKubernetesOutputWithContext(ctx context.Context) KubernetesOutput {
 	return o
+}
+
+// The base64 encoded public certificate used by clients to access the cluster.
+func (o KubernetesOutput) ClientCertificate() pulumi.StringOutput {
+	return o.ApplyT(func(v *Kubernetes) pulumi.StringOutput { return v.ClientCertificate }).(pulumi.StringOutput)
+}
+
+// The base64 encoded private key used by clients to access the cluster.
+func (o KubernetesOutput) ClientKey() pulumi.StringOutput {
+	return o.ApplyT(func(v *Kubernetes) pulumi.StringOutput { return v.ClientKey }).(pulumi.StringOutput)
+}
+
+// The base64 encoded public certificate for the cluster's certificate authority.
+func (o KubernetesOutput) ClusterCaCertificate() pulumi.StringOutput {
+	return o.ApplyT(func(v *Kubernetes) pulumi.StringOutput { return v.ClusterCaCertificate }).(pulumi.StringOutput)
 }
 
 // IP range that your pods will run on in this cluster.
