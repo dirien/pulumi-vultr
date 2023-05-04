@@ -110,6 +110,48 @@ import javax.annotation.Nullable;
 @ResourceType(type="vultr:index/kubernetes:Kubernetes")
 public class Kubernetes extends com.pulumi.resources.CustomResource {
     /**
+     * The base64 encoded public certificate used by clients to access the cluster.
+     * 
+     */
+    @Export(name="clientCertificate", refs={String.class}, tree="[0]")
+    private Output<String> clientCertificate;
+
+    /**
+     * @return The base64 encoded public certificate used by clients to access the cluster.
+     * 
+     */
+    public Output<String> clientCertificate() {
+        return this.clientCertificate;
+    }
+    /**
+     * The base64 encoded private key used by clients to access the cluster.
+     * 
+     */
+    @Export(name="clientKey", refs={String.class}, tree="[0]")
+    private Output<String> clientKey;
+
+    /**
+     * @return The base64 encoded private key used by clients to access the cluster.
+     * 
+     */
+    public Output<String> clientKey() {
+        return this.clientKey;
+    }
+    /**
+     * The base64 encoded public certificate for the cluster&#39;s certificate authority.
+     * 
+     */
+    @Export(name="clusterCaCertificate", refs={String.class}, tree="[0]")
+    private Output<String> clusterCaCertificate;
+
+    /**
+     * @return The base64 encoded public certificate for the cluster&#39;s certificate authority.
+     * 
+     */
+    public Output<String> clusterCaCertificate() {
+        return this.clusterCaCertificate;
+    }
+    /**
      * IP range that your pods will run on in this cluster.
      * 
      */
@@ -297,6 +339,9 @@ public class Kubernetes extends com.pulumi.resources.CustomResource {
         var defaultOptions = com.pulumi.resources.CustomResourceOptions.builder()
             .version(Utilities.getVersion())
             .additionalSecretOutputs(List.of(
+                "clientCertificate",
+                "clientKey",
+                "clusterCaCertificate",
                 "kubeConfig"
             ))
             .build();

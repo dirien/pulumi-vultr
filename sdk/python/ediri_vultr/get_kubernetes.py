@@ -23,7 +23,16 @@ class GetKubernetesResult:
     """
     A collection of values returned by getKubernetes.
     """
-    def __init__(__self__, cluster_subnet=None, date_created=None, endpoint=None, filters=None, id=None, ip=None, kube_config=None, label=None, node_pools=None, region=None, service_subnet=None, status=None, version=None):
+    def __init__(__self__, client_certificate=None, client_key=None, cluster_ca_certificate=None, cluster_subnet=None, date_created=None, endpoint=None, filters=None, id=None, ip=None, kube_config=None, label=None, node_pools=None, region=None, service_subnet=None, status=None, version=None):
+        if client_certificate and not isinstance(client_certificate, str):
+            raise TypeError("Expected argument 'client_certificate' to be a str")
+        pulumi.set(__self__, "client_certificate", client_certificate)
+        if client_key and not isinstance(client_key, str):
+            raise TypeError("Expected argument 'client_key' to be a str")
+        pulumi.set(__self__, "client_key", client_key)
+        if cluster_ca_certificate and not isinstance(cluster_ca_certificate, str):
+            raise TypeError("Expected argument 'cluster_ca_certificate' to be a str")
+        pulumi.set(__self__, "cluster_ca_certificate", cluster_ca_certificate)
         if cluster_subnet and not isinstance(cluster_subnet, str):
             raise TypeError("Expected argument 'cluster_subnet' to be a str")
         pulumi.set(__self__, "cluster_subnet", cluster_subnet)
@@ -63,6 +72,30 @@ class GetKubernetesResult:
         if version and not isinstance(version, str):
             raise TypeError("Expected argument 'version' to be a str")
         pulumi.set(__self__, "version", version)
+
+    @property
+    @pulumi.getter(name="clientCertificate")
+    def client_certificate(self) -> str:
+        """
+        The base64 encoded public certificate used by clients to access the cluster.
+        """
+        return pulumi.get(self, "client_certificate")
+
+    @property
+    @pulumi.getter(name="clientKey")
+    def client_key(self) -> str:
+        """
+        The base64 encoded private key used by clients to access the cluster.
+        """
+        return pulumi.get(self, "client_key")
+
+    @property
+    @pulumi.getter(name="clusterCaCertificate")
+    def cluster_ca_certificate(self) -> str:
+        """
+        The base64 encoded public certificate for the cluster's certificate authority.
+        """
+        return pulumi.get(self, "cluster_ca_certificate")
 
     @property
     @pulumi.getter(name="clusterSubnet")
@@ -172,6 +205,9 @@ class AwaitableGetKubernetesResult(GetKubernetesResult):
         if False:
             yield self
         return GetKubernetesResult(
+            client_certificate=self.client_certificate,
+            client_key=self.client_key,
+            cluster_ca_certificate=self.cluster_ca_certificate,
             cluster_subnet=self.cluster_subnet,
             date_created=self.date_created,
             endpoint=self.endpoint,
@@ -215,6 +251,9 @@ def get_kubernetes(filters: Optional[Sequence[pulumi.InputType['GetKubernetesFil
     __ret__ = pulumi.runtime.invoke('vultr:index/getKubernetes:getKubernetes', __args__, opts=opts, typ=GetKubernetesResult).value
 
     return AwaitableGetKubernetesResult(
+        client_certificate=__ret__.client_certificate,
+        client_key=__ret__.client_key,
+        cluster_ca_certificate=__ret__.cluster_ca_certificate,
         cluster_subnet=__ret__.cluster_subnet,
         date_created=__ret__.date_created,
         endpoint=__ret__.endpoint,

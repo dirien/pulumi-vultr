@@ -1684,10 +1684,10 @@ github.com/pulumi/pulumi-terraform-bridge/x/muxer v0.0.3 h1:1SmRVwRnrplcdBVVgoKY
 github.com/pulumi/pulumi-terraform-bridge/x/muxer v0.0.3/go.mod h1:n0TS1WsPjOfto6hyDZbXfNZQuLli2X9iDWt2nzmQJsg=
 github.com/pulumi/pulumi-yaml v1.1.1 h1:8pyBNIU8+ym0wYpjhsCqN+cutygfK1XbhY2YEeNfyXY=
 github.com/pulumi/pulumi-yaml v1.1.1/go.mod h1:GhpdS6rFpwqvUtKdA+fQy8P28iNvncng39IXh5q68vE=
-github.com/pulumi/pulumi/pkg/v3 v3.64.0 h1:QHnxdp4Xf0jm2giOZGx5oyCEp2MNfABE1Sm1CmYilv0=
-github.com/pulumi/pulumi/pkg/v3 v3.64.0/go.mod h1:FR1XZl2uEBDqYGg53AIfACXZYKS5COgoWMleb0YfD7k=
-github.com/pulumi/pulumi/sdk/v3 v3.65.1 h1:cF8n1PLqJ7O6Fj/E015XzLAixaeL3I52BvguAdlRn88=
-github.com/pulumi/pulumi/sdk/v3 v3.65.1/go.mod h1:hK2uQnf2SwwvCcaAco3l9+g5mGOkRfR7uqUaZpY/fD8=
+github.com/pulumi/pulumi/pkg/v3 v3.66.0 h1:S9hvJvxL3cfiBvQ1rK7JMkO6CMyXXZVLrIXAEgujtys=
+github.com/pulumi/pulumi/pkg/v3 v3.66.0/go.mod h1:Ns4GxBLXW8arENazM3gjRA++Gp5cPXFsF9obEEdomLU=
+github.com/pulumi/pulumi/sdk/v3 v3.66.0 h1:85qz3fTvAs0J4YoOM/1I1RK/adUptA/bYmYU/v14MRk=
+github.com/pulumi/pulumi/sdk/v3 v3.66.0/go.mod h1:hK2uQnf2SwwvCcaAco3l9+g5mGOkRfR7uqUaZpY/fD8=
 github.com/pulumi/schema-tools v0.1.2 h1:Fd9xvUjgck4NA+7/jSk7InqCUT4Kj940+EcnbQKpfZo=
 github.com/pulumi/schema-tools v0.1.2/go.mod h1:62lgj52Tzq11eqWTIaKd+EVyYAu5dEcDJxMhTjvMO/k=
 github.com/pulumi/terraform-diff-reader v0.0.0-20201211191010-ad4715e9285e h1:Dik4Qe/+xguB8JagPyXNlbOnRiXGmq/PSPQTGunYnTk=
@@ -1870,8 +1870,8 @@ github.com/vmihailenco/tagparser/v2 v2.0.0/go.mod h1:Wri+At7QHww0WTrCBeu4J6bNtoV
 github.com/vultr/govultr/v2 v2.17.2/go.mod h1:ZFOKGWmgjytfyjeyAdhQlSWwTjh2ig+X49cAp50dzXI=
 github.com/vultr/govultr/v3 v3.0.2 h1:rrYiuF9adB3rjnhp0ev+mkJXKEzuYa/AGfezYPr3EMs=
 github.com/vultr/govultr/v3 v3.0.2/go.mod h1:Pd3D6VKmQKyKWsdV1xLx4VKclEV23adMs3YoI7rh7gA=
-github.com/vultr/terraform-provider-vultr v1.3.4-0.20230413150608-3e93e4bb2524 h1:wJD6i3MMuKusPYWFHEZIAY9Mh/lnWKJ+A5di3rdevmk=
-github.com/vultr/terraform-provider-vultr v1.3.4-0.20230413150608-3e93e4bb2524/go.mod h1:PTH50XgND/AWsQKgsAkeCRvpqlEb6nOyr+tZnK1RemI=
+github.com/vultr/terraform-provider-vultr v1.3.4-0.20230428203913-13396e0cdda6 h1:5kH80e8ekTB0rcfvVOBa5yNnQL3T7wJEzFsCejCr8Eg=
+github.com/vultr/terraform-provider-vultr v1.3.4-0.20230428203913-13396e0cdda6/go.mod h1:FRs+3Y8mCsT1eD62veUWA6xIAVxgf2KCKtxU8QdHSFc=
 github.com/willf/bitset v1.1.11-0.20200630133818-d5bec3311243/go.mod h1:RjeCKbqT1RxIR/KWY6phxZiaY1IyutSBfGjNPySAYV4=
 github.com/willf/bitset v1.1.11/go.mod h1:83CECat5yLh5zVOf4P1ErAgKA5UDvKtgyUABdr3+MjI=
 github.com/xanzy/ssh-agent v0.3.0/go.mod h1:3s9xbODqPuuhK9JV1R321M/FlMZSBvE5aY6eAcqrDh0=

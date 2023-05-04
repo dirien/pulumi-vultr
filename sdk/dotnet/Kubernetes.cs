@@ -81,6 +81,24 @@ namespace ediri.Vultr
     public partial class Kubernetes : global::Pulumi.CustomResource
     {
         /// <summary>
+        /// The base64 encoded public certificate used by clients to access the cluster.
+        /// </summary>
+        [Output("clientCertificate")]
+        public Output<string> ClientCertificate { get; private set; } = null!;
+
+        /// <summary>
+        /// The base64 encoded private key used by clients to access the cluster.
+        /// </summary>
+        [Output("clientKey")]
+        public Output<string> ClientKey { get; private set; } = null!;
+
+        /// <summary>
+        /// The base64 encoded public certificate for the cluster's certificate authority.
+        /// </summary>
+        [Output("clusterCaCertificate")]
+        public Output<string> ClusterCaCertificate { get; private set; } = null!;
+
+        /// <summary>
         /// IP range that your pods will run on in this cluster.
         /// </summary>
         [Output("clusterSubnet")]
@@ -172,6 +190,9 @@ namespace ediri.Vultr
                 PluginDownloadURL = "github://api.github.com/dirien/pulumi-vultr",
                 AdditionalSecretOutputs =
                 {
+                    "clientCertificate",
+                    "clientKey",
+                    "clusterCaCertificate",
                     "kubeConfig",
                 },
             };
@@ -229,6 +250,54 @@ namespace ediri.Vultr
 
     public sealed class KubernetesState : global::Pulumi.ResourceArgs
     {
+        [Input("clientCertificate")]
+        private Input<string>? _clientCertificate;
+
+        /// <summary>
+        /// The base64 encoded public certificate used by clients to access the cluster.
+        /// </summary>
+        public Input<string>? ClientCertificate
+        {
+            get => _clientCertificate;
+            set
+            {
+                var emptySecret = Output.CreateSecret(0);
+                _clientCertificate = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
+            }
+        }
+
+        [Input("clientKey")]
+        private Input<string>? _clientKey;
+
+        /// <summary>
+        /// The base64 encoded private key used by clients to access the cluster.
+        /// </summary>
+        public Input<string>? ClientKey
+        {
+            get => _clientKey;
+            set
+            {
+                var emptySecret = Output.CreateSecret(0);
+                _clientKey = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
+            }
+        }
+
+        [Input("clusterCaCertificate")]
+        private Input<string>? _clusterCaCertificate;
+
+        /// <summary>
+        /// The base64 encoded public certificate for the cluster's certificate authority.
+        /// </summary>
+        public Input<string>? ClusterCaCertificate
+        {
+            get => _clusterCaCertificate;
+            set
+            {
+                var emptySecret = Output.CreateSecret(0);
+                _clusterCaCertificate = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
+            }
+        }
+
         /// <summary>
         /// IP range that your pods will run on in this cluster.
         /// </summary>

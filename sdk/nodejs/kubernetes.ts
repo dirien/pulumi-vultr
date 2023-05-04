@@ -85,6 +85,18 @@ export class Kubernetes extends pulumi.CustomResource {
     }
 
     /**
+     * The base64 encoded public certificate used by clients to access the cluster.
+     */
+    public /*out*/ readonly clientCertificate!: pulumi.Output<string>;
+    /**
+     * The base64 encoded private key used by clients to access the cluster.
+     */
+    public /*out*/ readonly clientKey!: pulumi.Output<string>;
+    /**
+     * The base64 encoded public certificate for the cluster's certificate authority.
+     */
+    public /*out*/ readonly clusterCaCertificate!: pulumi.Output<string>;
+    /**
      * IP range that your pods will run on in this cluster.
      */
     public /*out*/ readonly clusterSubnet!: pulumi.Output<string>;
@@ -142,6 +154,9 @@ export class Kubernetes extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as KubernetesState | undefined;
+            resourceInputs["clientCertificate"] = state ? state.clientCertificate : undefined;
+            resourceInputs["clientKey"] = state ? state.clientKey : undefined;
+            resourceInputs["clusterCaCertificate"] = state ? state.clusterCaCertificate : undefined;
             resourceInputs["clusterSubnet"] = state ? state.clusterSubnet : undefined;
             resourceInputs["dateCreated"] = state ? state.dateCreated : undefined;
             resourceInputs["endpoint"] = state ? state.endpoint : undefined;
@@ -168,6 +183,9 @@ export class Kubernetes extends pulumi.CustomResource {
             resourceInputs["nodePools"] = args ? args.nodePools : undefined;
             resourceInputs["region"] = args ? args.region : undefined;
             resourceInputs["version"] = args ? args.version : undefined;
+            resourceInputs["clientCertificate"] = undefined /*out*/;
+            resourceInputs["clientKey"] = undefined /*out*/;
+            resourceInputs["clusterCaCertificate"] = undefined /*out*/;
             resourceInputs["clusterSubnet"] = undefined /*out*/;
             resourceInputs["dateCreated"] = undefined /*out*/;
             resourceInputs["endpoint"] = undefined /*out*/;
@@ -177,7 +195,7 @@ export class Kubernetes extends pulumi.CustomResource {
             resourceInputs["status"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-        const secretOpts = { additionalSecretOutputs: ["kubeConfig"] };
+        const secretOpts = { additionalSecretOutputs: ["clientCertificate", "clientKey", "clusterCaCertificate", "kubeConfig"] };
         opts = pulumi.mergeOptions(opts, secretOpts);
         super(Kubernetes.__pulumiType, name, resourceInputs, opts);
     }
@@ -187,6 +205,18 @@ export class Kubernetes extends pulumi.CustomResource {
  * Input properties used for looking up and filtering Kubernetes resources.
  */
 export interface KubernetesState {
+    /**
+     * The base64 encoded public certificate used by clients to access the cluster.
+     */
+    clientCertificate?: pulumi.Input<string>;
+    /**
+     * The base64 encoded private key used by clients to access the cluster.
+     */
+    clientKey?: pulumi.Input<string>;
+    /**
+     * The base64 encoded public certificate for the cluster's certificate authority.
+     */
+    clusterCaCertificate?: pulumi.Input<string>;
     /**
      * IP range that your pods will run on in this cluster.
      */

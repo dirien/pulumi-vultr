@@ -139,6 +139,18 @@ namespace ediri.Vultr
     public sealed class GetKubernetesResult
     {
         /// <summary>
+        /// The base64 encoded public certificate used by clients to access the cluster.
+        /// </summary>
+        public readonly string ClientCertificate;
+        /// <summary>
+        /// The base64 encoded private key used by clients to access the cluster.
+        /// </summary>
+        public readonly string ClientKey;
+        /// <summary>
+        /// The base64 encoded public certificate for the cluster's certificate authority.
+        /// </summary>
+        public readonly string ClusterCaCertificate;
+        /// <summary>
         /// IP range that your pods will run on in this cluster.
         /// </summary>
         public readonly string ClusterSubnet;
@@ -190,6 +202,12 @@ namespace ediri.Vultr
 
         [OutputConstructor]
         private GetKubernetesResult(
+            string clientCertificate,
+
+            string clientKey,
+
+            string clusterCaCertificate,
+
             string clusterSubnet,
 
             string dateCreated,
@@ -216,6 +234,9 @@ namespace ediri.Vultr
 
             string version)
         {
+            ClientCertificate = clientCertificate;
+            ClientKey = clientKey;
+            ClusterCaCertificate = clusterCaCertificate;
             ClusterSubnet = clusterSubnet;
             DateCreated = dateCreated;
             Endpoint = endpoint;

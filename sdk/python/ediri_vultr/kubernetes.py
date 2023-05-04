@@ -85,6 +85,9 @@ class KubernetesArgs:
 @pulumi.input_type
 class _KubernetesState:
     def __init__(__self__, *,
+                 client_certificate: Optional[pulumi.Input[str]] = None,
+                 client_key: Optional[pulumi.Input[str]] = None,
+                 cluster_ca_certificate: Optional[pulumi.Input[str]] = None,
                  cluster_subnet: Optional[pulumi.Input[str]] = None,
                  date_created: Optional[pulumi.Input[str]] = None,
                  endpoint: Optional[pulumi.Input[str]] = None,
@@ -98,6 +101,9 @@ class _KubernetesState:
                  version: Optional[pulumi.Input[str]] = None):
         """
         Input properties used for looking up and filtering Kubernetes resources.
+        :param pulumi.Input[str] client_certificate: The base64 encoded public certificate used by clients to access the cluster.
+        :param pulumi.Input[str] client_key: The base64 encoded private key used by clients to access the cluster.
+        :param pulumi.Input[str] cluster_ca_certificate: The base64 encoded public certificate for the cluster's certificate authority.
         :param pulumi.Input[str] cluster_subnet: IP range that your pods will run on in this cluster.
         :param pulumi.Input[str] date_created: Date node was created.
         :param pulumi.Input[str] endpoint: Domain for your Kubernetes clusters control plane.
@@ -110,6 +116,12 @@ class _KubernetesState:
         :param pulumi.Input[str] status: Status of node.
         :param pulumi.Input[str] version: The version your VKE cluster you want deployed. [See Available Version](https://www.vultr.com/api/#operation/get-kubernetes-versions)
         """
+        if client_certificate is not None:
+            pulumi.set(__self__, "client_certificate", client_certificate)
+        if client_key is not None:
+            pulumi.set(__self__, "client_key", client_key)
+        if cluster_ca_certificate is not None:
+            pulumi.set(__self__, "cluster_ca_certificate", cluster_ca_certificate)
         if cluster_subnet is not None:
             pulumi.set(__self__, "cluster_subnet", cluster_subnet)
         if date_created is not None:
@@ -132,6 +144,42 @@ class _KubernetesState:
             pulumi.set(__self__, "status", status)
         if version is not None:
             pulumi.set(__self__, "version", version)
+
+    @property
+    @pulumi.getter(name="clientCertificate")
+    def client_certificate(self) -> Optional[pulumi.Input[str]]:
+        """
+        The base64 encoded public certificate used by clients to access the cluster.
+        """
+        return pulumi.get(self, "client_certificate")
+
+    @client_certificate.setter
+    def client_certificate(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "client_certificate", value)
+
+    @property
+    @pulumi.getter(name="clientKey")
+    def client_key(self) -> Optional[pulumi.Input[str]]:
+        """
+        The base64 encoded private key used by clients to access the cluster.
+        """
+        return pulumi.get(self, "client_key")
+
+    @client_key.setter
+    def client_key(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "client_key", value)
+
+    @property
+    @pulumi.getter(name="clusterCaCertificate")
+    def cluster_ca_certificate(self) -> Optional[pulumi.Input[str]]:
+        """
+        The base64 encoded public certificate for the cluster's certificate authority.
+        """
+        return pulumi.get(self, "cluster_ca_certificate")
+
+    @cluster_ca_certificate.setter
+    def cluster_ca_certificate(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "cluster_ca_certificate", value)
 
     @property
     @pulumi.getter(name="clusterSubnet")
@@ -421,6 +469,9 @@ class Kubernetes(pulumi.CustomResource):
             if version is None and not opts.urn:
                 raise TypeError("Missing required property 'version'")
             __props__.__dict__["version"] = version
+            __props__.__dict__["client_certificate"] = None
+            __props__.__dict__["client_key"] = None
+            __props__.__dict__["cluster_ca_certificate"] = None
             __props__.__dict__["cluster_subnet"] = None
             __props__.__dict__["date_created"] = None
             __props__.__dict__["endpoint"] = None
@@ -428,7 +479,7 @@ class Kubernetes(pulumi.CustomResource):
             __props__.__dict__["kube_config"] = None
             __props__.__dict__["service_subnet"] = None
             __props__.__dict__["status"] = None
-        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["kubeConfig"])
+        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["clientCertificate", "clientKey", "clusterCaCertificate", "kubeConfig"])
         opts = pulumi.ResourceOptions.merge(opts, secret_opts)
         super(Kubernetes, __self__).__init__(
             'vultr:index/kubernetes:Kubernetes',
@@ -440,6 +491,9 @@ class Kubernetes(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
+            client_certificate: Optional[pulumi.Input[str]] = None,
+            client_key: Optional[pulumi.Input[str]] = None,
+            cluster_ca_certificate: Optional[pulumi.Input[str]] = None,
             cluster_subnet: Optional[pulumi.Input[str]] = None,
             date_created: Optional[pulumi.Input[str]] = None,
             endpoint: Optional[pulumi.Input[str]] = None,
@@ -458,6 +512,9 @@ class Kubernetes(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] client_certificate: The base64 encoded public certificate used by clients to access the cluster.
+        :param pulumi.Input[str] client_key: The base64 encoded private key used by clients to access the cluster.
+        :param pulumi.Input[str] cluster_ca_certificate: The base64 encoded public certificate for the cluster's certificate authority.
         :param pulumi.Input[str] cluster_subnet: IP range that your pods will run on in this cluster.
         :param pulumi.Input[str] date_created: Date node was created.
         :param pulumi.Input[str] endpoint: Domain for your Kubernetes clusters control plane.
@@ -474,6 +531,9 @@ class Kubernetes(pulumi.CustomResource):
 
         __props__ = _KubernetesState.__new__(_KubernetesState)
 
+        __props__.__dict__["client_certificate"] = client_certificate
+        __props__.__dict__["client_key"] = client_key
+        __props__.__dict__["cluster_ca_certificate"] = cluster_ca_certificate
         __props__.__dict__["cluster_subnet"] = cluster_subnet
         __props__.__dict__["date_created"] = date_created
         __props__.__dict__["endpoint"] = endpoint
@@ -486,6 +546,30 @@ class Kubernetes(pulumi.CustomResource):
         __props__.__dict__["status"] = status
         __props__.__dict__["version"] = version
         return Kubernetes(resource_name, opts=opts, __props__=__props__)
+
+    @property
+    @pulumi.getter(name="clientCertificate")
+    def client_certificate(self) -> pulumi.Output[str]:
+        """
+        The base64 encoded public certificate used by clients to access the cluster.
+        """
+        return pulumi.get(self, "client_certificate")
+
+    @property
+    @pulumi.getter(name="clientKey")
+    def client_key(self) -> pulumi.Output[str]:
+        """
+        The base64 encoded private key used by clients to access the cluster.
+        """
+        return pulumi.get(self, "client_key")
+
+    @property
+    @pulumi.getter(name="clusterCaCertificate")
+    def cluster_ca_certificate(self) -> pulumi.Output[str]:
+        """
+        The base64 encoded public certificate for the cluster's certificate authority.
+        """
+        return pulumi.get(self, "cluster_ca_certificate")
 
     @property
     @pulumi.getter(name="clusterSubnet")

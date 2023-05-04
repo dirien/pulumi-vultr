@@ -17,6 +17,51 @@ public final class KubernetesState extends com.pulumi.resources.ResourceArgs {
     public static final KubernetesState Empty = new KubernetesState();
 
     /**
+     * The base64 encoded public certificate used by clients to access the cluster.
+     * 
+     */
+    @Import(name="clientCertificate")
+    private @Nullable Output<String> clientCertificate;
+
+    /**
+     * @return The base64 encoded public certificate used by clients to access the cluster.
+     * 
+     */
+    public Optional<Output<String>> clientCertificate() {
+        return Optional.ofNullable(this.clientCertificate);
+    }
+
+    /**
+     * The base64 encoded private key used by clients to access the cluster.
+     * 
+     */
+    @Import(name="clientKey")
+    private @Nullable Output<String> clientKey;
+
+    /**
+     * @return The base64 encoded private key used by clients to access the cluster.
+     * 
+     */
+    public Optional<Output<String>> clientKey() {
+        return Optional.ofNullable(this.clientKey);
+    }
+
+    /**
+     * The base64 encoded public certificate for the cluster&#39;s certificate authority.
+     * 
+     */
+    @Import(name="clusterCaCertificate")
+    private @Nullable Output<String> clusterCaCertificate;
+
+    /**
+     * @return The base64 encoded public certificate for the cluster&#39;s certificate authority.
+     * 
+     */
+    public Optional<Output<String>> clusterCaCertificate() {
+        return Optional.ofNullable(this.clusterCaCertificate);
+    }
+
+    /**
      * IP range that your pods will run on in this cluster.
      * 
      */
@@ -184,6 +229,9 @@ public final class KubernetesState extends com.pulumi.resources.ResourceArgs {
     private KubernetesState() {}
 
     private KubernetesState(KubernetesState $) {
+        this.clientCertificate = $.clientCertificate;
+        this.clientKey = $.clientKey;
+        this.clusterCaCertificate = $.clusterCaCertificate;
         this.clusterSubnet = $.clusterSubnet;
         this.dateCreated = $.dateCreated;
         this.endpoint = $.endpoint;
@@ -213,6 +261,69 @@ public final class KubernetesState extends com.pulumi.resources.ResourceArgs {
 
         public Builder(KubernetesState defaults) {
             $ = new KubernetesState(Objects.requireNonNull(defaults));
+        }
+
+        /**
+         * @param clientCertificate The base64 encoded public certificate used by clients to access the cluster.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder clientCertificate(@Nullable Output<String> clientCertificate) {
+            $.clientCertificate = clientCertificate;
+            return this;
+        }
+
+        /**
+         * @param clientCertificate The base64 encoded public certificate used by clients to access the cluster.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder clientCertificate(String clientCertificate) {
+            return clientCertificate(Output.of(clientCertificate));
+        }
+
+        /**
+         * @param clientKey The base64 encoded private key used by clients to access the cluster.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder clientKey(@Nullable Output<String> clientKey) {
+            $.clientKey = clientKey;
+            return this;
+        }
+
+        /**
+         * @param clientKey The base64 encoded private key used by clients to access the cluster.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder clientKey(String clientKey) {
+            return clientKey(Output.of(clientKey));
+        }
+
+        /**
+         * @param clusterCaCertificate The base64 encoded public certificate for the cluster&#39;s certificate authority.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder clusterCaCertificate(@Nullable Output<String> clusterCaCertificate) {
+            $.clusterCaCertificate = clusterCaCertificate;
+            return this;
+        }
+
+        /**
+         * @param clusterCaCertificate The base64 encoded public certificate for the cluster&#39;s certificate authority.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder clusterCaCertificate(String clusterCaCertificate) {
+            return clusterCaCertificate(Output.of(clusterCaCertificate));
         }
 
         /**

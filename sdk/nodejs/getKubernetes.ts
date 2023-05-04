@@ -49,6 +49,18 @@ export interface GetKubernetesArgs {
  */
 export interface GetKubernetesResult {
     /**
+     * The base64 encoded public certificate used by clients to access the cluster.
+     */
+    readonly clientCertificate: string;
+    /**
+     * The base64 encoded private key used by clients to access the cluster.
+     */
+    readonly clientKey: string;
+    /**
+     * The base64 encoded public certificate for the cluster's certificate authority.
+     */
+    readonly clusterCaCertificate: string;
+    /**
      * IP range that your pods will run on in this cluster.
      */
     readonly clusterSubnet: string;
