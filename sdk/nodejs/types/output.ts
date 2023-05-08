@@ -5,6 +5,37 @@ import * as pulumi from "@pulumi/pulumi";
 import * as inputs from "../types/input";
 import * as outputs from "../types/output";
 
+export interface DatabaseReadReplica {
+    clusterTimeZone: string;
+    databaseEngine: string;
+    databaseEngineVersion: string;
+    dateCreated: string;
+    dbname: string;
+    host: string;
+    id: string;
+    label: string;
+    latestBackup: string;
+    maintenanceDow: string;
+    maintenanceTime: string;
+    mysqlLongQueryTime: number;
+    mysqlRequirePrimaryKey: boolean;
+    mysqlSlowQueryLog: boolean;
+    mysqlSqlModes: string[];
+    password: string;
+    plan: string;
+    planDisk: number;
+    planRam: number;
+    planReplicas: number;
+    planVcpus: number;
+    port: string;
+    redisEvictionPolicy: string;
+    region: string;
+    status: string;
+    tag: string;
+    trustedIps: string[];
+    user: string;
+}
+
 export interface GetApplicationFilter {
     /**
      * Attribute name to filter with.
@@ -58,6 +89,42 @@ export interface GetBlockStorageFilter {
      * One or more values filter with.
      */
     values: string[];
+}
+
+export interface GetDatabaseFilter {
+    name: string;
+    values: string[];
+}
+
+export interface GetDatabaseReadReplica {
+    clusterTimeZone: string;
+    databaseEngine: string;
+    databaseEngineVersion: string;
+    dateCreated: string;
+    dbname: string;
+    host: string;
+    id: string;
+    label: string;
+    latestBackup: string;
+    maintenanceDow: string;
+    maintenanceTime: string;
+    mysqlLongQueryTime: number;
+    mysqlRequirePrimaryKey: boolean;
+    mysqlSlowQueryLog: boolean;
+    mysqlSqlModes: string[];
+    password: string;
+    plan: string;
+    planDisk: number;
+    planRam: number;
+    planReplicas: number;
+    planVcpus: number;
+    port: string;
+    redisEvictionPolicy: string;
+    region: string;
+    status: string;
+    tag: string;
+    trustedIps: string[];
+    user: string;
 }
 
 export interface GetFirewallGroupFilter {

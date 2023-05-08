@@ -11,6 +11,7 @@ from . import _utilities
 from . import outputs
 
 __all__ = [
+    'DatabaseReadReplica',
     'InstanceBackupsSchedule',
     'KubernetesNodePools',
     'KubernetesNodePoolsNode',
@@ -23,6 +24,8 @@ __all__ = [
     'GetBareMetalPlanFilterResult',
     'GetBareMetalServerFilterResult',
     'GetBlockStorageFilterResult',
+    'GetDatabaseFilterResult',
+    'GetDatabaseReadReplicaResult',
     'GetFirewallGroupFilterResult',
     'GetInstanceFilterResult',
     'GetInstanceIpv4FilterResult',
@@ -47,6 +50,282 @@ __all__ = [
     'GetUserFilterResult',
     'GetVpcFilterResult',
 ]
+
+@pulumi.output_type
+class DatabaseReadReplica(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "clusterTimeZone":
+            suggest = "cluster_time_zone"
+        elif key == "databaseEngine":
+            suggest = "database_engine"
+        elif key == "databaseEngineVersion":
+            suggest = "database_engine_version"
+        elif key == "dateCreated":
+            suggest = "date_created"
+        elif key == "latestBackup":
+            suggest = "latest_backup"
+        elif key == "maintenanceDow":
+            suggest = "maintenance_dow"
+        elif key == "maintenanceTime":
+            suggest = "maintenance_time"
+        elif key == "mysqlLongQueryTime":
+            suggest = "mysql_long_query_time"
+        elif key == "mysqlRequirePrimaryKey":
+            suggest = "mysql_require_primary_key"
+        elif key == "mysqlSlowQueryLog":
+            suggest = "mysql_slow_query_log"
+        elif key == "mysqlSqlModes":
+            suggest = "mysql_sql_modes"
+        elif key == "planDisk":
+            suggest = "plan_disk"
+        elif key == "planRam":
+            suggest = "plan_ram"
+        elif key == "planReplicas":
+            suggest = "plan_replicas"
+        elif key == "planVcpus":
+            suggest = "plan_vcpus"
+        elif key == "redisEvictionPolicy":
+            suggest = "redis_eviction_policy"
+        elif key == "trustedIps":
+            suggest = "trusted_ips"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in DatabaseReadReplica. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        DatabaseReadReplica.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        DatabaseReadReplica.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 label: str,
+                 region: str,
+                 cluster_time_zone: Optional[str] = None,
+                 database_engine: Optional[str] = None,
+                 database_engine_version: Optional[str] = None,
+                 date_created: Optional[str] = None,
+                 dbname: Optional[str] = None,
+                 host: Optional[str] = None,
+                 id: Optional[str] = None,
+                 latest_backup: Optional[str] = None,
+                 maintenance_dow: Optional[str] = None,
+                 maintenance_time: Optional[str] = None,
+                 mysql_long_query_time: Optional[int] = None,
+                 mysql_require_primary_key: Optional[bool] = None,
+                 mysql_slow_query_log: Optional[bool] = None,
+                 mysql_sql_modes: Optional[Sequence[str]] = None,
+                 password: Optional[str] = None,
+                 plan: Optional[str] = None,
+                 plan_disk: Optional[int] = None,
+                 plan_ram: Optional[int] = None,
+                 plan_replicas: Optional[int] = None,
+                 plan_vcpus: Optional[int] = None,
+                 port: Optional[str] = None,
+                 redis_eviction_policy: Optional[str] = None,
+                 status: Optional[str] = None,
+                 tag: Optional[str] = None,
+                 trusted_ips: Optional[Sequence[str]] = None,
+                 user: Optional[str] = None):
+        pulumi.set(__self__, "label", label)
+        pulumi.set(__self__, "region", region)
+        if cluster_time_zone is not None:
+            pulumi.set(__self__, "cluster_time_zone", cluster_time_zone)
+        if database_engine is not None:
+            pulumi.set(__self__, "database_engine", database_engine)
+        if database_engine_version is not None:
+            pulumi.set(__self__, "database_engine_version", database_engine_version)
+        if date_created is not None:
+            pulumi.set(__self__, "date_created", date_created)
+        if dbname is not None:
+            pulumi.set(__self__, "dbname", dbname)
+        if host is not None:
+            pulumi.set(__self__, "host", host)
+        if id is not None:
+            pulumi.set(__self__, "id", id)
+        if latest_backup is not None:
+            pulumi.set(__self__, "latest_backup", latest_backup)
+        if maintenance_dow is not None:
+            pulumi.set(__self__, "maintenance_dow", maintenance_dow)
+        if maintenance_time is not None:
+            pulumi.set(__self__, "maintenance_time", maintenance_time)
+        if mysql_long_query_time is not None:
+            pulumi.set(__self__, "mysql_long_query_time", mysql_long_query_time)
+        if mysql_require_primary_key is not None:
+            pulumi.set(__self__, "mysql_require_primary_key", mysql_require_primary_key)
+        if mysql_slow_query_log is not None:
+            pulumi.set(__self__, "mysql_slow_query_log", mysql_slow_query_log)
+        if mysql_sql_modes is not None:
+            pulumi.set(__self__, "mysql_sql_modes", mysql_sql_modes)
+        if password is not None:
+            pulumi.set(__self__, "password", password)
+        if plan is not None:
+            pulumi.set(__self__, "plan", plan)
+        if plan_disk is not None:
+            pulumi.set(__self__, "plan_disk", plan_disk)
+        if plan_ram is not None:
+            pulumi.set(__self__, "plan_ram", plan_ram)
+        if plan_replicas is not None:
+            pulumi.set(__self__, "plan_replicas", plan_replicas)
+        if plan_vcpus is not None:
+            pulumi.set(__self__, "plan_vcpus", plan_vcpus)
+        if port is not None:
+            pulumi.set(__self__, "port", port)
+        if redis_eviction_policy is not None:
+            pulumi.set(__self__, "redis_eviction_policy", redis_eviction_policy)
+        if status is not None:
+            pulumi.set(__self__, "status", status)
+        if tag is not None:
+            pulumi.set(__self__, "tag", tag)
+        if trusted_ips is not None:
+            pulumi.set(__self__, "trusted_ips", trusted_ips)
+        if user is not None:
+            pulumi.set(__self__, "user", user)
+
+    @property
+    @pulumi.getter
+    def label(self) -> str:
+        return pulumi.get(self, "label")
+
+    @property
+    @pulumi.getter
+    def region(self) -> str:
+        return pulumi.get(self, "region")
+
+    @property
+    @pulumi.getter(name="clusterTimeZone")
+    def cluster_time_zone(self) -> Optional[str]:
+        return pulumi.get(self, "cluster_time_zone")
+
+    @property
+    @pulumi.getter(name="databaseEngine")
+    def database_engine(self) -> Optional[str]:
+        return pulumi.get(self, "database_engine")
+
+    @property
+    @pulumi.getter(name="databaseEngineVersion")
+    def database_engine_version(self) -> Optional[str]:
+        return pulumi.get(self, "database_engine_version")
+
+    @property
+    @pulumi.getter(name="dateCreated")
+    def date_created(self) -> Optional[str]:
+        return pulumi.get(self, "date_created")
+
+    @property
+    @pulumi.getter
+    def dbname(self) -> Optional[str]:
+        return pulumi.get(self, "dbname")
+
+    @property
+    @pulumi.getter
+    def host(self) -> Optional[str]:
+        return pulumi.get(self, "host")
+
+    @property
+    @pulumi.getter
+    def id(self) -> Optional[str]:
+        return pulumi.get(self, "id")
+
+    @property
+    @pulumi.getter(name="latestBackup")
+    def latest_backup(self) -> Optional[str]:
+        return pulumi.get(self, "latest_backup")
+
+    @property
+    @pulumi.getter(name="maintenanceDow")
+    def maintenance_dow(self) -> Optional[str]:
+        return pulumi.get(self, "maintenance_dow")
+
+    @property
+    @pulumi.getter(name="maintenanceTime")
+    def maintenance_time(self) -> Optional[str]:
+        return pulumi.get(self, "maintenance_time")
+
+    @property
+    @pulumi.getter(name="mysqlLongQueryTime")
+    def mysql_long_query_time(self) -> Optional[int]:
+        return pulumi.get(self, "mysql_long_query_time")
+
+    @property
+    @pulumi.getter(name="mysqlRequirePrimaryKey")
+    def mysql_require_primary_key(self) -> Optional[bool]:
+        return pulumi.get(self, "mysql_require_primary_key")
+
+    @property
+    @pulumi.getter(name="mysqlSlowQueryLog")
+    def mysql_slow_query_log(self) -> Optional[bool]:
+        return pulumi.get(self, "mysql_slow_query_log")
+
+    @property
+    @pulumi.getter(name="mysqlSqlModes")
+    def mysql_sql_modes(self) -> Optional[Sequence[str]]:
+        return pulumi.get(self, "mysql_sql_modes")
+
+    @property
+    @pulumi.getter
+    def password(self) -> Optional[str]:
+        return pulumi.get(self, "password")
+
+    @property
+    @pulumi.getter
+    def plan(self) -> Optional[str]:
+        return pulumi.get(self, "plan")
+
+    @property
+    @pulumi.getter(name="planDisk")
+    def plan_disk(self) -> Optional[int]:
+        return pulumi.get(self, "plan_disk")
+
+    @property
+    @pulumi.getter(name="planRam")
+    def plan_ram(self) -> Optional[int]:
+        return pulumi.get(self, "plan_ram")
+
+    @property
+    @pulumi.getter(name="planReplicas")
+    def plan_replicas(self) -> Optional[int]:
+        return pulumi.get(self, "plan_replicas")
+
+    @property
+    @pulumi.getter(name="planVcpus")
+    def plan_vcpus(self) -> Optional[int]:
+        return pulumi.get(self, "plan_vcpus")
+
+    @property
+    @pulumi.getter
+    def port(self) -> Optional[str]:
+        return pulumi.get(self, "port")
+
+    @property
+    @pulumi.getter(name="redisEvictionPolicy")
+    def redis_eviction_policy(self) -> Optional[str]:
+        return pulumi.get(self, "redis_eviction_policy")
+
+    @property
+    @pulumi.getter
+    def status(self) -> Optional[str]:
+        return pulumi.get(self, "status")
+
+    @property
+    @pulumi.getter
+    def tag(self) -> Optional[str]:
+        return pulumi.get(self, "tag")
+
+    @property
+    @pulumi.getter(name="trustedIps")
+    def trusted_ips(self) -> Optional[Sequence[str]]:
+        return pulumi.get(self, "trusted_ips")
+
+    @property
+    @pulumi.getter
+    def user(self) -> Optional[str]:
+        return pulumi.get(self, "user")
+
 
 @pulumi.output_type
 class InstanceBackupsSchedule(dict):
@@ -811,6 +1090,226 @@ class GetBlockStorageFilterResult(dict):
         One or more values filter with.
         """
         return pulumi.get(self, "values")
+
+
+@pulumi.output_type
+class GetDatabaseFilterResult(dict):
+    def __init__(__self__, *,
+                 name: str,
+                 values: Sequence[str]):
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "values", values)
+
+    @property
+    @pulumi.getter
+    def name(self) -> str:
+        return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter
+    def values(self) -> Sequence[str]:
+        return pulumi.get(self, "values")
+
+
+@pulumi.output_type
+class GetDatabaseReadReplicaResult(dict):
+    def __init__(__self__, *,
+                 cluster_time_zone: str,
+                 database_engine: str,
+                 database_engine_version: str,
+                 date_created: str,
+                 dbname: str,
+                 host: str,
+                 id: str,
+                 label: str,
+                 latest_backup: str,
+                 maintenance_dow: str,
+                 maintenance_time: str,
+                 mysql_long_query_time: int,
+                 mysql_require_primary_key: bool,
+                 mysql_slow_query_log: bool,
+                 mysql_sql_modes: Sequence[str],
+                 password: str,
+                 plan: str,
+                 plan_disk: int,
+                 plan_ram: int,
+                 plan_replicas: int,
+                 plan_vcpus: int,
+                 port: str,
+                 redis_eviction_policy: str,
+                 region: str,
+                 status: str,
+                 tag: str,
+                 trusted_ips: Sequence[str],
+                 user: str):
+        pulumi.set(__self__, "cluster_time_zone", cluster_time_zone)
+        pulumi.set(__self__, "database_engine", database_engine)
+        pulumi.set(__self__, "database_engine_version", database_engine_version)
+        pulumi.set(__self__, "date_created", date_created)
+        pulumi.set(__self__, "dbname", dbname)
+        pulumi.set(__self__, "host", host)
+        pulumi.set(__self__, "id", id)
+        pulumi.set(__self__, "label", label)
+        pulumi.set(__self__, "latest_backup", latest_backup)
+        pulumi.set(__self__, "maintenance_dow", maintenance_dow)
+        pulumi.set(__self__, "maintenance_time", maintenance_time)
+        pulumi.set(__self__, "mysql_long_query_time", mysql_long_query_time)
+        pulumi.set(__self__, "mysql_require_primary_key", mysql_require_primary_key)
+        pulumi.set(__self__, "mysql_slow_query_log", mysql_slow_query_log)
+        pulumi.set(__self__, "mysql_sql_modes", mysql_sql_modes)
+        pulumi.set(__self__, "password", password)
+        pulumi.set(__self__, "plan", plan)
+        pulumi.set(__self__, "plan_disk", plan_disk)
+        pulumi.set(__self__, "plan_ram", plan_ram)
+        pulumi.set(__self__, "plan_replicas", plan_replicas)
+        pulumi.set(__self__, "plan_vcpus", plan_vcpus)
+        pulumi.set(__self__, "port", port)
+        pulumi.set(__self__, "redis_eviction_policy", redis_eviction_policy)
+        pulumi.set(__self__, "region", region)
+        pulumi.set(__self__, "status", status)
+        pulumi.set(__self__, "tag", tag)
+        pulumi.set(__self__, "trusted_ips", trusted_ips)
+        pulumi.set(__self__, "user", user)
+
+    @property
+    @pulumi.getter(name="clusterTimeZone")
+    def cluster_time_zone(self) -> str:
+        return pulumi.get(self, "cluster_time_zone")
+
+    @property
+    @pulumi.getter(name="databaseEngine")
+    def database_engine(self) -> str:
+        return pulumi.get(self, "database_engine")
+
+    @property
+    @pulumi.getter(name="databaseEngineVersion")
+    def database_engine_version(self) -> str:
+        return pulumi.get(self, "database_engine_version")
+
+    @property
+    @pulumi.getter(name="dateCreated")
+    def date_created(self) -> str:
+        return pulumi.get(self, "date_created")
+
+    @property
+    @pulumi.getter
+    def dbname(self) -> str:
+        return pulumi.get(self, "dbname")
+
+    @property
+    @pulumi.getter
+    def host(self) -> str:
+        return pulumi.get(self, "host")
+
+    @property
+    @pulumi.getter
+    def id(self) -> str:
+        return pulumi.get(self, "id")
+
+    @property
+    @pulumi.getter
+    def label(self) -> str:
+        return pulumi.get(self, "label")
+
+    @property
+    @pulumi.getter(name="latestBackup")
+    def latest_backup(self) -> str:
+        return pulumi.get(self, "latest_backup")
+
+    @property
+    @pulumi.getter(name="maintenanceDow")
+    def maintenance_dow(self) -> str:
+        return pulumi.get(self, "maintenance_dow")
+
+    @property
+    @pulumi.getter(name="maintenanceTime")
+    def maintenance_time(self) -> str:
+        return pulumi.get(self, "maintenance_time")
+
+    @property
+    @pulumi.getter(name="mysqlLongQueryTime")
+    def mysql_long_query_time(self) -> int:
+        return pulumi.get(self, "mysql_long_query_time")
+
+    @property
+    @pulumi.getter(name="mysqlRequirePrimaryKey")
+    def mysql_require_primary_key(self) -> bool:
+        return pulumi.get(self, "mysql_require_primary_key")
+
+    @property
+    @pulumi.getter(name="mysqlSlowQueryLog")
+    def mysql_slow_query_log(self) -> bool:
+        return pulumi.get(self, "mysql_slow_query_log")
+
+    @property
+    @pulumi.getter(name="mysqlSqlModes")
+    def mysql_sql_modes(self) -> Sequence[str]:
+        return pulumi.get(self, "mysql_sql_modes")
+
+    @property
+    @pulumi.getter
+    def password(self) -> str:
+        return pulumi.get(self, "password")
+
+    @property
+    @pulumi.getter
+    def plan(self) -> str:
+        return pulumi.get(self, "plan")
+
+    @property
+    @pulumi.getter(name="planDisk")
+    def plan_disk(self) -> int:
+        return pulumi.get(self, "plan_disk")
+
+    @property
+    @pulumi.getter(name="planRam")
+    def plan_ram(self) -> int:
+        return pulumi.get(self, "plan_ram")
+
+    @property
+    @pulumi.getter(name="planReplicas")
+    def plan_replicas(self) -> int:
+        return pulumi.get(self, "plan_replicas")
+
+    @property
+    @pulumi.getter(name="planVcpus")
+    def plan_vcpus(self) -> int:
+        return pulumi.get(self, "plan_vcpus")
+
+    @property
+    @pulumi.getter
+    def port(self) -> str:
+        return pulumi.get(self, "port")
+
+    @property
+    @pulumi.getter(name="redisEvictionPolicy")
+    def redis_eviction_policy(self) -> str:
+        return pulumi.get(self, "redis_eviction_policy")
+
+    @property
+    @pulumi.getter
+    def region(self) -> str:
+        return pulumi.get(self, "region")
+
+    @property
+    @pulumi.getter
+    def status(self) -> str:
+        return pulumi.get(self, "status")
+
+    @property
+    @pulumi.getter
+    def tag(self) -> str:
+        return pulumi.get(self, "tag")
+
+    @property
+    @pulumi.getter(name="trustedIps")
+    def trusted_ips(self) -> Sequence[str]:
+        return pulumi.get(self, "trusted_ips")
+
+    @property
+    @pulumi.getter
+    def user(self) -> str:
+        return pulumi.get(self, "user")
 
 
 @pulumi.output_type

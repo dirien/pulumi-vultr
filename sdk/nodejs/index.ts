@@ -15,6 +15,31 @@ export type BlockStorage = import("./blockStorage").BlockStorage;
 export const BlockStorage: typeof import("./blockStorage").BlockStorage = null as any;
 utilities.lazyLoad(exports, ["BlockStorage"], () => require("./blockStorage"));
 
+export { DatabaseArgs, DatabaseState } from "./database";
+export type Database = import("./database").Database;
+export const Database: typeof import("./database").Database = null as any;
+utilities.lazyLoad(exports, ["Database"], () => require("./database"));
+
+export { DatabaseConnectionPoolArgs, DatabaseConnectionPoolState } from "./databaseConnectionPool";
+export type DatabaseConnectionPool = import("./databaseConnectionPool").DatabaseConnectionPool;
+export const DatabaseConnectionPool: typeof import("./databaseConnectionPool").DatabaseConnectionPool = null as any;
+utilities.lazyLoad(exports, ["DatabaseConnectionPool"], () => require("./databaseConnectionPool"));
+
+export { DatabaseDbArgs, DatabaseDbState } from "./databaseDb";
+export type DatabaseDb = import("./databaseDb").DatabaseDb;
+export const DatabaseDb: typeof import("./databaseDb").DatabaseDb = null as any;
+utilities.lazyLoad(exports, ["DatabaseDb"], () => require("./databaseDb"));
+
+export { DatabaseReplicaArgs, DatabaseReplicaState } from "./databaseReplica";
+export type DatabaseReplica = import("./databaseReplica").DatabaseReplica;
+export const DatabaseReplica: typeof import("./databaseReplica").DatabaseReplica = null as any;
+utilities.lazyLoad(exports, ["DatabaseReplica"], () => require("./databaseReplica"));
+
+export { DatabaseUserArgs, DatabaseUserState } from "./databaseUser";
+export type DatabaseUser = import("./databaseUser").DatabaseUser;
+export const DatabaseUser: typeof import("./databaseUser").DatabaseUser = null as any;
+utilities.lazyLoad(exports, ["DatabaseUser"], () => require("./databaseUser"));
+
 export { DnsDomainArgs, DnsDomainState } from "./dnsDomain";
 export type DnsDomain = import("./dnsDomain").DnsDomain;
 export const DnsDomain: typeof import("./dnsDomain").DnsDomain = null as any;
@@ -63,6 +88,11 @@ export { GetBlockStorageArgs, GetBlockStorageResult, GetBlockStorageOutputArgs }
 export const getBlockStorage: typeof import("./getBlockStorage").getBlockStorage = null as any;
 export const getBlockStorageOutput: typeof import("./getBlockStorage").getBlockStorageOutput = null as any;
 utilities.lazyLoad(exports, ["getBlockStorage","getBlockStorageOutput"], () => require("./getBlockStorage"));
+
+export { GetDatabaseArgs, GetDatabaseResult, GetDatabaseOutputArgs } from "./getDatabase";
+export const getDatabase: typeof import("./getDatabase").getDatabase = null as any;
+export const getDatabaseOutput: typeof import("./getDatabase").getDatabaseOutput = null as any;
+utilities.lazyLoad(exports, ["getDatabase","getDatabaseOutput"], () => require("./getDatabase"));
 
 export { GetDnsDomainArgs, GetDnsDomainResult, GetDnsDomainOutputArgs } from "./getDnsDomain";
 export const getDnsDomain: typeof import("./getDnsDomain").getDnsDomain = null as any;
@@ -282,6 +312,16 @@ const _module = {
                 return new BareMetalServer(name, <any>undefined, { urn })
             case "vultr:index/blockStorage:BlockStorage":
                 return new BlockStorage(name, <any>undefined, { urn })
+            case "vultr:index/database:Database":
+                return new Database(name, <any>undefined, { urn })
+            case "vultr:index/databaseConnectionPool:DatabaseConnectionPool":
+                return new DatabaseConnectionPool(name, <any>undefined, { urn })
+            case "vultr:index/databaseDb:DatabaseDb":
+                return new DatabaseDb(name, <any>undefined, { urn })
+            case "vultr:index/databaseReplica:DatabaseReplica":
+                return new DatabaseReplica(name, <any>undefined, { urn })
+            case "vultr:index/databaseUser:DatabaseUser":
+                return new DatabaseUser(name, <any>undefined, { urn })
             case "vultr:index/dnsDomain:DnsDomain":
                 return new DnsDomain(name, <any>undefined, { urn })
             case "vultr:index/dnsRecord:DnsRecord":
@@ -331,6 +371,11 @@ const _module = {
 };
 pulumi.runtime.registerResourceModule("vultr", "index/bareMetalServer", _module)
 pulumi.runtime.registerResourceModule("vultr", "index/blockStorage", _module)
+pulumi.runtime.registerResourceModule("vultr", "index/database", _module)
+pulumi.runtime.registerResourceModule("vultr", "index/databaseConnectionPool", _module)
+pulumi.runtime.registerResourceModule("vultr", "index/databaseDb", _module)
+pulumi.runtime.registerResourceModule("vultr", "index/databaseReplica", _module)
+pulumi.runtime.registerResourceModule("vultr", "index/databaseUser", _module)
 pulumi.runtime.registerResourceModule("vultr", "index/dnsDomain", _module)
 pulumi.runtime.registerResourceModule("vultr", "index/dnsRecord", _module)
 pulumi.runtime.registerResourceModule("vultr", "index/firewallGroup", _module)

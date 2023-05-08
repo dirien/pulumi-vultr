@@ -5,6 +5,37 @@ import * as pulumi from "@pulumi/pulumi";
 import * as inputs from "../types/input";
 import * as outputs from "../types/output";
 
+export interface DatabaseReadReplica {
+    clusterTimeZone?: pulumi.Input<string>;
+    databaseEngine?: pulumi.Input<string>;
+    databaseEngineVersion?: pulumi.Input<string>;
+    dateCreated?: pulumi.Input<string>;
+    dbname?: pulumi.Input<string>;
+    host?: pulumi.Input<string>;
+    id?: pulumi.Input<string>;
+    label: pulumi.Input<string>;
+    latestBackup?: pulumi.Input<string>;
+    maintenanceDow?: pulumi.Input<string>;
+    maintenanceTime?: pulumi.Input<string>;
+    mysqlLongQueryTime?: pulumi.Input<number>;
+    mysqlRequirePrimaryKey?: pulumi.Input<boolean>;
+    mysqlSlowQueryLog?: pulumi.Input<boolean>;
+    mysqlSqlModes?: pulumi.Input<pulumi.Input<string>[]>;
+    password?: pulumi.Input<string>;
+    plan?: pulumi.Input<string>;
+    planDisk?: pulumi.Input<number>;
+    planRam?: pulumi.Input<number>;
+    planReplicas?: pulumi.Input<number>;
+    planVcpus?: pulumi.Input<number>;
+    port?: pulumi.Input<string>;
+    redisEvictionPolicy?: pulumi.Input<string>;
+    region: pulumi.Input<string>;
+    status?: pulumi.Input<string>;
+    tag?: pulumi.Input<string>;
+    trustedIps?: pulumi.Input<pulumi.Input<string>[]>;
+    user?: pulumi.Input<string>;
+}
+
 export interface GetApplicationFilter {
     /**
      * Attribute name to filter with.
@@ -112,6 +143,16 @@ export interface GetBlockStorageFilterArgs {
     /**
      * One or more values filter with.
      */
+    values: pulumi.Input<pulumi.Input<string>[]>;
+}
+
+export interface GetDatabaseFilter {
+    name: string;
+    values: string[];
+}
+
+export interface GetDatabaseFilterArgs {
+    name: pulumi.Input<string>;
     values: pulumi.Input<pulumi.Input<string>[]>;
 }
 

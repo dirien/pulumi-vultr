@@ -24,6 +24,16 @@ func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi
 		r = &BareMetalServer{}
 	case "vultr:index/blockStorage:BlockStorage":
 		r = &BlockStorage{}
+	case "vultr:index/database:Database":
+		r = &Database{}
+	case "vultr:index/databaseConnectionPool:DatabaseConnectionPool":
+		r = &DatabaseConnectionPool{}
+	case "vultr:index/databaseDb:DatabaseDb":
+		r = &DatabaseDb{}
+	case "vultr:index/databaseReplica:DatabaseReplica":
+		r = &DatabaseReplica{}
+	case "vultr:index/databaseUser:DatabaseUser":
+		r = &DatabaseUser{}
 	case "vultr:index/dnsDomain:DnsDomain":
 		r = &DnsDomain{}
 	case "vultr:index/dnsRecord:DnsRecord":
@@ -102,6 +112,31 @@ func init() {
 	pulumi.RegisterResourceModule(
 		"vultr",
 		"index/blockStorage",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"vultr",
+		"index/database",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"vultr",
+		"index/databaseConnectionPool",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"vultr",
+		"index/databaseDb",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"vultr",
+		"index/databaseReplica",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"vultr",
+		"index/databaseUser",
 		&module{version},
 	)
 	pulumi.RegisterResourceModule(
