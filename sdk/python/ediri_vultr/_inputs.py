@@ -10,6 +10,7 @@ from typing import Any, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 
 __all__ = [
+    'DatabaseReadReplicaArgs',
     'InstanceBackupsScheduleArgs',
     'KubernetesNodePoolsArgs',
     'KubernetesNodePoolsNodeArgs',
@@ -22,6 +23,7 @@ __all__ = [
     'GetBareMetalPlanFilterArgs',
     'GetBareMetalServerFilterArgs',
     'GetBlockStorageFilterArgs',
+    'GetDatabaseFilterArgs',
     'GetFirewallGroupFilterArgs',
     'GetInstanceFilterArgs',
     'GetInstanceIpv4FilterArgs',
@@ -44,6 +46,345 @@ __all__ = [
     'GetUserFilterArgs',
     'GetVpcFilterArgs',
 ]
+
+@pulumi.input_type
+class DatabaseReadReplicaArgs:
+    def __init__(__self__, *,
+                 label: pulumi.Input[str],
+                 region: pulumi.Input[str],
+                 cluster_time_zone: Optional[pulumi.Input[str]] = None,
+                 database_engine: Optional[pulumi.Input[str]] = None,
+                 database_engine_version: Optional[pulumi.Input[str]] = None,
+                 date_created: Optional[pulumi.Input[str]] = None,
+                 dbname: Optional[pulumi.Input[str]] = None,
+                 host: Optional[pulumi.Input[str]] = None,
+                 id: Optional[pulumi.Input[str]] = None,
+                 latest_backup: Optional[pulumi.Input[str]] = None,
+                 maintenance_dow: Optional[pulumi.Input[str]] = None,
+                 maintenance_time: Optional[pulumi.Input[str]] = None,
+                 mysql_long_query_time: Optional[pulumi.Input[int]] = None,
+                 mysql_require_primary_key: Optional[pulumi.Input[bool]] = None,
+                 mysql_slow_query_log: Optional[pulumi.Input[bool]] = None,
+                 mysql_sql_modes: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+                 password: Optional[pulumi.Input[str]] = None,
+                 plan: Optional[pulumi.Input[str]] = None,
+                 plan_disk: Optional[pulumi.Input[int]] = None,
+                 plan_ram: Optional[pulumi.Input[int]] = None,
+                 plan_replicas: Optional[pulumi.Input[int]] = None,
+                 plan_vcpus: Optional[pulumi.Input[int]] = None,
+                 port: Optional[pulumi.Input[str]] = None,
+                 redis_eviction_policy: Optional[pulumi.Input[str]] = None,
+                 status: Optional[pulumi.Input[str]] = None,
+                 tag: Optional[pulumi.Input[str]] = None,
+                 trusted_ips: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+                 user: Optional[pulumi.Input[str]] = None):
+        pulumi.set(__self__, "label", label)
+        pulumi.set(__self__, "region", region)
+        if cluster_time_zone is not None:
+            pulumi.set(__self__, "cluster_time_zone", cluster_time_zone)
+        if database_engine is not None:
+            pulumi.set(__self__, "database_engine", database_engine)
+        if database_engine_version is not None:
+            pulumi.set(__self__, "database_engine_version", database_engine_version)
+        if date_created is not None:
+            pulumi.set(__self__, "date_created", date_created)
+        if dbname is not None:
+            pulumi.set(__self__, "dbname", dbname)
+        if host is not None:
+            pulumi.set(__self__, "host", host)
+        if id is not None:
+            pulumi.set(__self__, "id", id)
+        if latest_backup is not None:
+            pulumi.set(__self__, "latest_backup", latest_backup)
+        if maintenance_dow is not None:
+            pulumi.set(__self__, "maintenance_dow", maintenance_dow)
+        if maintenance_time is not None:
+            pulumi.set(__self__, "maintenance_time", maintenance_time)
+        if mysql_long_query_time is not None:
+            pulumi.set(__self__, "mysql_long_query_time", mysql_long_query_time)
+        if mysql_require_primary_key is not None:
+            pulumi.set(__self__, "mysql_require_primary_key", mysql_require_primary_key)
+        if mysql_slow_query_log is not None:
+            pulumi.set(__self__, "mysql_slow_query_log", mysql_slow_query_log)
+        if mysql_sql_modes is not None:
+            pulumi.set(__self__, "mysql_sql_modes", mysql_sql_modes)
+        if password is not None:
+            pulumi.set(__self__, "password", password)
+        if plan is not None:
+            pulumi.set(__self__, "plan", plan)
+        if plan_disk is not None:
+            pulumi.set(__self__, "plan_disk", plan_disk)
+        if plan_ram is not None:
+            pulumi.set(__self__, "plan_ram", plan_ram)
+        if plan_replicas is not None:
+            pulumi.set(__self__, "plan_replicas", plan_replicas)
+        if plan_vcpus is not None:
+            pulumi.set(__self__, "plan_vcpus", plan_vcpus)
+        if port is not None:
+            pulumi.set(__self__, "port", port)
+        if redis_eviction_policy is not None:
+            pulumi.set(__self__, "redis_eviction_policy", redis_eviction_policy)
+        if status is not None:
+            pulumi.set(__self__, "status", status)
+        if tag is not None:
+            pulumi.set(__self__, "tag", tag)
+        if trusted_ips is not None:
+            pulumi.set(__self__, "trusted_ips", trusted_ips)
+        if user is not None:
+            pulumi.set(__self__, "user", user)
+
+    @property
+    @pulumi.getter
+    def label(self) -> pulumi.Input[str]:
+        return pulumi.get(self, "label")
+
+    @label.setter
+    def label(self, value: pulumi.Input[str]):
+        pulumi.set(self, "label", value)
+
+    @property
+    @pulumi.getter
+    def region(self) -> pulumi.Input[str]:
+        return pulumi.get(self, "region")
+
+    @region.setter
+    def region(self, value: pulumi.Input[str]):
+        pulumi.set(self, "region", value)
+
+    @property
+    @pulumi.getter(name="clusterTimeZone")
+    def cluster_time_zone(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "cluster_time_zone")
+
+    @cluster_time_zone.setter
+    def cluster_time_zone(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "cluster_time_zone", value)
+
+    @property
+    @pulumi.getter(name="databaseEngine")
+    def database_engine(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "database_engine")
+
+    @database_engine.setter
+    def database_engine(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "database_engine", value)
+
+    @property
+    @pulumi.getter(name="databaseEngineVersion")
+    def database_engine_version(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "database_engine_version")
+
+    @database_engine_version.setter
+    def database_engine_version(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "database_engine_version", value)
+
+    @property
+    @pulumi.getter(name="dateCreated")
+    def date_created(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "date_created")
+
+    @date_created.setter
+    def date_created(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "date_created", value)
+
+    @property
+    @pulumi.getter
+    def dbname(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "dbname")
+
+    @dbname.setter
+    def dbname(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "dbname", value)
+
+    @property
+    @pulumi.getter
+    def host(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "host")
+
+    @host.setter
+    def host(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "host", value)
+
+    @property
+    @pulumi.getter
+    def id(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "id")
+
+    @id.setter
+    def id(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "id", value)
+
+    @property
+    @pulumi.getter(name="latestBackup")
+    def latest_backup(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "latest_backup")
+
+    @latest_backup.setter
+    def latest_backup(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "latest_backup", value)
+
+    @property
+    @pulumi.getter(name="maintenanceDow")
+    def maintenance_dow(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "maintenance_dow")
+
+    @maintenance_dow.setter
+    def maintenance_dow(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "maintenance_dow", value)
+
+    @property
+    @pulumi.getter(name="maintenanceTime")
+    def maintenance_time(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "maintenance_time")
+
+    @maintenance_time.setter
+    def maintenance_time(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "maintenance_time", value)
+
+    @property
+    @pulumi.getter(name="mysqlLongQueryTime")
+    def mysql_long_query_time(self) -> Optional[pulumi.Input[int]]:
+        return pulumi.get(self, "mysql_long_query_time")
+
+    @mysql_long_query_time.setter
+    def mysql_long_query_time(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "mysql_long_query_time", value)
+
+    @property
+    @pulumi.getter(name="mysqlRequirePrimaryKey")
+    def mysql_require_primary_key(self) -> Optional[pulumi.Input[bool]]:
+        return pulumi.get(self, "mysql_require_primary_key")
+
+    @mysql_require_primary_key.setter
+    def mysql_require_primary_key(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "mysql_require_primary_key", value)
+
+    @property
+    @pulumi.getter(name="mysqlSlowQueryLog")
+    def mysql_slow_query_log(self) -> Optional[pulumi.Input[bool]]:
+        return pulumi.get(self, "mysql_slow_query_log")
+
+    @mysql_slow_query_log.setter
+    def mysql_slow_query_log(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "mysql_slow_query_log", value)
+
+    @property
+    @pulumi.getter(name="mysqlSqlModes")
+    def mysql_sql_modes(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        return pulumi.get(self, "mysql_sql_modes")
+
+    @mysql_sql_modes.setter
+    def mysql_sql_modes(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "mysql_sql_modes", value)
+
+    @property
+    @pulumi.getter
+    def password(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "password")
+
+    @password.setter
+    def password(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "password", value)
+
+    @property
+    @pulumi.getter
+    def plan(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "plan")
+
+    @plan.setter
+    def plan(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "plan", value)
+
+    @property
+    @pulumi.getter(name="planDisk")
+    def plan_disk(self) -> Optional[pulumi.Input[int]]:
+        return pulumi.get(self, "plan_disk")
+
+    @plan_disk.setter
+    def plan_disk(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "plan_disk", value)
+
+    @property
+    @pulumi.getter(name="planRam")
+    def plan_ram(self) -> Optional[pulumi.Input[int]]:
+        return pulumi.get(self, "plan_ram")
+
+    @plan_ram.setter
+    def plan_ram(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "plan_ram", value)
+
+    @property
+    @pulumi.getter(name="planReplicas")
+    def plan_replicas(self) -> Optional[pulumi.Input[int]]:
+        return pulumi.get(self, "plan_replicas")
+
+    @plan_replicas.setter
+    def plan_replicas(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "plan_replicas", value)
+
+    @property
+    @pulumi.getter(name="planVcpus")
+    def plan_vcpus(self) -> Optional[pulumi.Input[int]]:
+        return pulumi.get(self, "plan_vcpus")
+
+    @plan_vcpus.setter
+    def plan_vcpus(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "plan_vcpus", value)
+
+    @property
+    @pulumi.getter
+    def port(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "port")
+
+    @port.setter
+    def port(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "port", value)
+
+    @property
+    @pulumi.getter(name="redisEvictionPolicy")
+    def redis_eviction_policy(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "redis_eviction_policy")
+
+    @redis_eviction_policy.setter
+    def redis_eviction_policy(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "redis_eviction_policy", value)
+
+    @property
+    @pulumi.getter
+    def status(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "status")
+
+    @status.setter
+    def status(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "status", value)
+
+    @property
+    @pulumi.getter
+    def tag(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "tag")
+
+    @tag.setter
+    def tag(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "tag", value)
+
+    @property
+    @pulumi.getter(name="trustedIps")
+    def trusted_ips(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        return pulumi.get(self, "trusted_ips")
+
+    @trusted_ips.setter
+    def trusted_ips(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "trusted_ips", value)
+
+    @property
+    @pulumi.getter
+    def user(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "user")
+
+    @user.setter
+    def user(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "user", value)
+
 
 @pulumi.input_type
 class InstanceBackupsScheduleArgs:
@@ -873,6 +1214,33 @@ class GetBlockStorageFilterArgs:
         """
         One or more values filter with.
         """
+        return pulumi.get(self, "values")
+
+    @values.setter
+    def values(self, value: Sequence[str]):
+        pulumi.set(self, "values", value)
+
+
+@pulumi.input_type
+class GetDatabaseFilterArgs:
+    def __init__(__self__, *,
+                 name: str,
+                 values: Sequence[str]):
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "values", values)
+
+    @property
+    @pulumi.getter
+    def name(self) -> str:
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: str):
+        pulumi.set(self, "name", value)
+
+    @property
+    @pulumi.getter
+    def values(self) -> Sequence[str]:
         return pulumi.get(self, "values")
 
     @values.setter

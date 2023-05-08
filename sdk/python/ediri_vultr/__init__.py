@@ -7,6 +7,11 @@ import typing
 # Export this package's modules as members:
 from .bare_metal_server import *
 from .block_storage import *
+from .database import *
+from .database_connection_pool import *
+from .database_db import *
+from .database_replica import *
+from .database_user import *
 from .dns_domain import *
 from .dns_record import *
 from .firewall_group import *
@@ -17,6 +22,7 @@ from .get_backup import *
 from .get_bare_metal_plan import *
 from .get_bare_metal_server import *
 from .get_block_storage import *
+from .get_database import *
 from .get_dns_domain import *
 from .get_firewall_group import *
 from .get_instance import *
@@ -84,6 +90,46 @@ _utilities.register(
   "fqn": "ediri_vultr",
   "classes": {
    "vultr:index/blockStorage:BlockStorage": "BlockStorage"
+  }
+ },
+ {
+  "pkg": "vultr",
+  "mod": "index/database",
+  "fqn": "ediri_vultr",
+  "classes": {
+   "vultr:index/database:Database": "Database"
+  }
+ },
+ {
+  "pkg": "vultr",
+  "mod": "index/databaseConnectionPool",
+  "fqn": "ediri_vultr",
+  "classes": {
+   "vultr:index/databaseConnectionPool:DatabaseConnectionPool": "DatabaseConnectionPool"
+  }
+ },
+ {
+  "pkg": "vultr",
+  "mod": "index/databaseDb",
+  "fqn": "ediri_vultr",
+  "classes": {
+   "vultr:index/databaseDb:DatabaseDb": "DatabaseDb"
+  }
+ },
+ {
+  "pkg": "vultr",
+  "mod": "index/databaseReplica",
+  "fqn": "ediri_vultr",
+  "classes": {
+   "vultr:index/databaseReplica:DatabaseReplica": "DatabaseReplica"
+  }
+ },
+ {
+  "pkg": "vultr",
+  "mod": "index/databaseUser",
+  "fqn": "ediri_vultr",
+  "classes": {
+   "vultr:index/databaseUser:DatabaseUser": "DatabaseUser"
   }
  },
  {

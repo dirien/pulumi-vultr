@@ -79,6 +79,139 @@
         ]
     },
     "types": {
+        "vultr:index/DatabaseReadReplica:DatabaseReadReplica": {
+            "properties": {
+                "clusterTimeZone": {
+                    "type": "string"
+                },
+                "databaseEngine": {
+                    "type": "string"
+                },
+                "databaseEngineVersion": {
+                    "type": "string"
+                },
+                "dateCreated": {
+                    "type": "string"
+                },
+                "dbname": {
+                    "type": "string"
+                },
+                "host": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "label": {
+                    "type": "string"
+                },
+                "latestBackup": {
+                    "type": "string"
+                },
+                "maintenanceDow": {
+                    "type": "string"
+                },
+                "maintenanceTime": {
+                    "type": "string"
+                },
+                "mysqlLongQueryTime": {
+                    "type": "integer"
+                },
+                "mysqlRequirePrimaryKey": {
+                    "type": "boolean"
+                },
+                "mysqlSlowQueryLog": {
+                    "type": "boolean"
+                },
+                "mysqlSqlModes": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "password": {
+                    "type": "string"
+                },
+                "plan": {
+                    "type": "string"
+                },
+                "planDisk": {
+                    "type": "integer"
+                },
+                "planRam": {
+                    "type": "integer"
+                },
+                "planReplicas": {
+                    "type": "integer"
+                },
+                "planVcpus": {
+                    "type": "integer"
+                },
+                "port": {
+                    "type": "string"
+                },
+                "redisEvictionPolicy": {
+                    "type": "string"
+                },
+                "region": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "tag": {
+                    "type": "string"
+                },
+                "trustedIps": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "user": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "required": [
+                "label",
+                "region"
+            ],
+            "language": {
+                "nodejs": {
+                    "requiredOutputs": [
+                        "clusterTimeZone",
+                        "databaseEngine",
+                        "databaseEngineVersion",
+                        "dateCreated",
+                        "dbname",
+                        "host",
+                        "id",
+                        "label",
+                        "latestBackup",
+                        "maintenanceDow",
+                        "maintenanceTime",
+                        "mysqlLongQueryTime",
+                        "mysqlRequirePrimaryKey",
+                        "mysqlSlowQueryLog",
+                        "mysqlSqlModes",
+                        "password",
+                        "plan",
+                        "planDisk",
+                        "planRam",
+                        "planReplicas",
+                        "planVcpus",
+                        "port",
+                        "redisEvictionPolicy",
+                        "region",
+                        "status",
+                        "tag",
+                        "trustedIps",
+                        "user"
+                    ]
+                }
+            }
+        },
         "vultr:index/InstanceBackupsSchedule:InstanceBackupsSchedule": {
             "properties": {
                 "dom": {
@@ -459,6 +592,154 @@
                 "name",
                 "values"
             ]
+        },
+        "vultr:index/getDatabaseFilter:getDatabaseFilter": {
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "values": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "type": "object",
+            "required": [
+                "name",
+                "values"
+            ]
+        },
+        "vultr:index/getDatabaseReadReplica:getDatabaseReadReplica": {
+            "properties": {
+                "clusterTimeZone": {
+                    "type": "string"
+                },
+                "databaseEngine": {
+                    "type": "string"
+                },
+                "databaseEngineVersion": {
+                    "type": "string"
+                },
+                "dateCreated": {
+                    "type": "string"
+                },
+                "dbname": {
+                    "type": "string"
+                },
+                "host": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "label": {
+                    "type": "string"
+                },
+                "latestBackup": {
+                    "type": "string"
+                },
+                "maintenanceDow": {
+                    "type": "string"
+                },
+                "maintenanceTime": {
+                    "type": "string"
+                },
+                "mysqlLongQueryTime": {
+                    "type": "integer"
+                },
+                "mysqlRequirePrimaryKey": {
+                    "type": "boolean"
+                },
+                "mysqlSlowQueryLog": {
+                    "type": "boolean"
+                },
+                "mysqlSqlModes": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "password": {
+                    "type": "string"
+                },
+                "plan": {
+                    "type": "string"
+                },
+                "planDisk": {
+                    "type": "integer"
+                },
+                "planRam": {
+                    "type": "integer"
+                },
+                "planReplicas": {
+                    "type": "integer"
+                },
+                "planVcpus": {
+                    "type": "integer"
+                },
+                "port": {
+                    "type": "string"
+                },
+                "redisEvictionPolicy": {
+                    "type": "string"
+                },
+                "region": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "tag": {
+                    "type": "string"
+                },
+                "trustedIps": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "user": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "required": [
+                "clusterTimeZone",
+                "databaseEngine",
+                "databaseEngineVersion",
+                "dateCreated",
+                "dbname",
+                "host",
+                "id",
+                "label",
+                "latestBackup",
+                "maintenanceDow",
+                "maintenanceTime",
+                "mysqlLongQueryTime",
+                "mysqlRequirePrimaryKey",
+                "mysqlSlowQueryLog",
+                "mysqlSqlModes",
+                "password",
+                "plan",
+                "planDisk",
+                "planRam",
+                "planReplicas",
+                "planVcpus",
+                "port",
+                "redisEvictionPolicy",
+                "region",
+                "status",
+                "tag",
+                "trustedIps",
+                "user"
+            ],
+            "language": {
+                "nodejs": {
+                    "requiredInputs": []
+                }
+            }
         },
         "vultr:index/getFirewallGroupFilter:getFirewallGroupFilter": {
             "properties": {
@@ -1522,6 +1803,750 @@
                     "status": {
                         "type": "string",
                         "description": "Current status of your block storage.\n"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "vultr:index/database:Database": {
+            "properties": {
+                "clusterTimeZone": {
+                    "type": "string"
+                },
+                "databaseEngine": {
+                    "type": "string"
+                },
+                "databaseEngineVersion": {
+                    "type": "string"
+                },
+                "dateCreated": {
+                    "type": "string"
+                },
+                "dbname": {
+                    "type": "string"
+                },
+                "host": {
+                    "type": "string"
+                },
+                "label": {
+                    "type": "string"
+                },
+                "latestBackup": {
+                    "type": "string"
+                },
+                "maintenanceDow": {
+                    "type": "string"
+                },
+                "maintenanceTime": {
+                    "type": "string"
+                },
+                "mysqlLongQueryTime": {
+                    "type": "integer"
+                },
+                "mysqlRequirePrimaryKey": {
+                    "type": "boolean"
+                },
+                "mysqlSlowQueryLog": {
+                    "type": "boolean"
+                },
+                "mysqlSqlModes": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "password": {
+                    "type": "string"
+                },
+                "plan": {
+                    "type": "string"
+                },
+                "planDisk": {
+                    "type": "integer"
+                },
+                "planRam": {
+                    "type": "integer"
+                },
+                "planReplicas": {
+                    "type": "integer"
+                },
+                "planVcpus": {
+                    "type": "integer"
+                },
+                "port": {
+                    "type": "string"
+                },
+                "readReplicas": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/vultr:index/DatabaseReadReplica:DatabaseReadReplica"
+                    }
+                },
+                "redisEvictionPolicy": {
+                    "type": "string"
+                },
+                "region": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "tag": {
+                    "type": "string"
+                },
+                "trustedIps": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "user": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "databaseEngine",
+                "databaseEngineVersion",
+                "dateCreated",
+                "dbname",
+                "host",
+                "label",
+                "latestBackup",
+                "password",
+                "plan",
+                "planDisk",
+                "planRam",
+                "planReplicas",
+                "planVcpus",
+                "port",
+                "readReplicas",
+                "region",
+                "status",
+                "user"
+            ],
+            "inputProperties": {
+                "clusterTimeZone": {
+                    "type": "string"
+                },
+                "databaseEngine": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                },
+                "databaseEngineVersion": {
+                    "type": "string"
+                },
+                "label": {
+                    "type": "string"
+                },
+                "maintenanceDow": {
+                    "type": "string"
+                },
+                "maintenanceTime": {
+                    "type": "string"
+                },
+                "mysqlLongQueryTime": {
+                    "type": "integer"
+                },
+                "mysqlRequirePrimaryKey": {
+                    "type": "boolean"
+                },
+                "mysqlSlowQueryLog": {
+                    "type": "boolean"
+                },
+                "mysqlSqlModes": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "password": {
+                    "type": "string"
+                },
+                "plan": {
+                    "type": "string"
+                },
+                "planDisk": {
+                    "type": "integer"
+                },
+                "readReplicas": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/types/vultr:index/DatabaseReadReplica:DatabaseReadReplica"
+                    }
+                },
+                "redisEvictionPolicy": {
+                    "type": "string"
+                },
+                "region": {
+                    "type": "string"
+                },
+                "tag": {
+                    "type": "string"
+                },
+                "trustedIps": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "requiredInputs": [
+                "databaseEngine",
+                "databaseEngineVersion",
+                "label",
+                "plan",
+                "region"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering Database resources.\n",
+                "properties": {
+                    "clusterTimeZone": {
+                        "type": "string"
+                    },
+                    "databaseEngine": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "databaseEngineVersion": {
+                        "type": "string"
+                    },
+                    "dateCreated": {
+                        "type": "string"
+                    },
+                    "dbname": {
+                        "type": "string"
+                    },
+                    "host": {
+                        "type": "string"
+                    },
+                    "label": {
+                        "type": "string"
+                    },
+                    "latestBackup": {
+                        "type": "string"
+                    },
+                    "maintenanceDow": {
+                        "type": "string"
+                    },
+                    "maintenanceTime": {
+                        "type": "string"
+                    },
+                    "mysqlLongQueryTime": {
+                        "type": "integer"
+                    },
+                    "mysqlRequirePrimaryKey": {
+                        "type": "boolean"
+                    },
+                    "mysqlSlowQueryLog": {
+                        "type": "boolean"
+                    },
+                    "mysqlSqlModes": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "plan": {
+                        "type": "string"
+                    },
+                    "planDisk": {
+                        "type": "integer"
+                    },
+                    "planRam": {
+                        "type": "integer"
+                    },
+                    "planReplicas": {
+                        "type": "integer"
+                    },
+                    "planVcpus": {
+                        "type": "integer"
+                    },
+                    "port": {
+                        "type": "string"
+                    },
+                    "readReplicas": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/vultr:index/DatabaseReadReplica:DatabaseReadReplica"
+                        }
+                    },
+                    "redisEvictionPolicy": {
+                        "type": "string"
+                    },
+                    "region": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "tag": {
+                        "type": "string"
+                    },
+                    "trustedIps": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "user": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "vultr:index/databaseConnectionPool:DatabaseConnectionPool": {
+            "properties": {
+                "database": {
+                    "type": "string"
+                },
+                "databaseId": {
+                    "type": "string"
+                },
+                "mode": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "size": {
+                    "type": "integer"
+                },
+                "username": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "database",
+                "databaseId",
+                "mode",
+                "name",
+                "size",
+                "username"
+            ],
+            "inputProperties": {
+                "database": {
+                    "type": "string"
+                },
+                "databaseId": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                },
+                "mode": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                },
+                "size": {
+                    "type": "integer"
+                },
+                "username": {
+                    "type": "string"
+                }
+            },
+            "requiredInputs": [
+                "database",
+                "databaseId",
+                "mode",
+                "size",
+                "username"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering DatabaseConnectionPool resources.\n",
+                "properties": {
+                    "database": {
+                        "type": "string"
+                    },
+                    "databaseId": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "mode": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "size": {
+                        "type": "integer"
+                    },
+                    "username": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "vultr:index/databaseDb:DatabaseDb": {
+            "properties": {
+                "databaseId": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "databaseId",
+                "name"
+            ],
+            "inputProperties": {
+                "databaseId": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                },
+                "name": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                }
+            },
+            "requiredInputs": [
+                "databaseId"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering DatabaseDb resources.\n",
+                "properties": {
+                    "databaseId": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "name": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "vultr:index/databaseReplica:DatabaseReplica": {
+            "properties": {
+                "clusterTimeZone": {
+                    "type": "string"
+                },
+                "databaseEngine": {
+                    "type": "string"
+                },
+                "databaseEngineVersion": {
+                    "type": "string"
+                },
+                "databaseId": {
+                    "type": "string"
+                },
+                "dateCreated": {
+                    "type": "string"
+                },
+                "dbname": {
+                    "type": "string"
+                },
+                "host": {
+                    "type": "string"
+                },
+                "label": {
+                    "type": "string"
+                },
+                "latestBackup": {
+                    "type": "string"
+                },
+                "maintenanceDow": {
+                    "type": "string"
+                },
+                "maintenanceTime": {
+                    "type": "string"
+                },
+                "mysqlLongQueryTime": {
+                    "type": "integer"
+                },
+                "mysqlRequirePrimaryKey": {
+                    "type": "boolean"
+                },
+                "mysqlSlowQueryLog": {
+                    "type": "boolean"
+                },
+                "mysqlSqlModes": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "password": {
+                    "type": "string"
+                },
+                "plan": {
+                    "type": "string"
+                },
+                "planDisk": {
+                    "type": "integer"
+                },
+                "planRam": {
+                    "type": "integer"
+                },
+                "planReplicas": {
+                    "type": "integer"
+                },
+                "planVcpus": {
+                    "type": "integer"
+                },
+                "port": {
+                    "type": "string"
+                },
+                "redisEvictionPolicy": {
+                    "type": "string"
+                },
+                "region": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "tag": {
+                    "type": "string"
+                },
+                "trustedIps": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "user": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "clusterTimeZone",
+                "databaseEngine",
+                "databaseEngineVersion",
+                "databaseId",
+                "dateCreated",
+                "dbname",
+                "host",
+                "label",
+                "latestBackup",
+                "maintenanceDow",
+                "maintenanceTime",
+                "mysqlLongQueryTime",
+                "mysqlRequirePrimaryKey",
+                "mysqlSlowQueryLog",
+                "mysqlSqlModes",
+                "password",
+                "plan",
+                "planDisk",
+                "planRam",
+                "planReplicas",
+                "planVcpus",
+                "port",
+                "redisEvictionPolicy",
+                "region",
+                "status",
+                "tag",
+                "trustedIps",
+                "user"
+            ],
+            "inputProperties": {
+                "databaseId": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                },
+                "label": {
+                    "type": "string"
+                },
+                "mysqlLongQueryTime": {
+                    "type": "integer"
+                },
+                "mysqlRequirePrimaryKey": {
+                    "type": "boolean"
+                },
+                "mysqlSlowQueryLog": {
+                    "type": "boolean"
+                },
+                "mysqlSqlModes": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "planDisk": {
+                    "type": "integer"
+                },
+                "redisEvictionPolicy": {
+                    "type": "string"
+                },
+                "region": {
+                    "type": "string"
+                },
+                "tag": {
+                    "type": "string"
+                },
+                "trustedIps": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "requiredInputs": [
+                "databaseId",
+                "label",
+                "region"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering DatabaseReplica resources.\n",
+                "properties": {
+                    "clusterTimeZone": {
+                        "type": "string"
+                    },
+                    "databaseEngine": {
+                        "type": "string"
+                    },
+                    "databaseEngineVersion": {
+                        "type": "string"
+                    },
+                    "databaseId": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "dateCreated": {
+                        "type": "string"
+                    },
+                    "dbname": {
+                        "type": "string"
+                    },
+                    "host": {
+                        "type": "string"
+                    },
+                    "label": {
+                        "type": "string"
+                    },
+                    "latestBackup": {
+                        "type": "string"
+                    },
+                    "maintenanceDow": {
+                        "type": "string"
+                    },
+                    "maintenanceTime": {
+                        "type": "string"
+                    },
+                    "mysqlLongQueryTime": {
+                        "type": "integer"
+                    },
+                    "mysqlRequirePrimaryKey": {
+                        "type": "boolean"
+                    },
+                    "mysqlSlowQueryLog": {
+                        "type": "boolean"
+                    },
+                    "mysqlSqlModes": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "plan": {
+                        "type": "string"
+                    },
+                    "planDisk": {
+                        "type": "integer"
+                    },
+                    "planRam": {
+                        "type": "integer"
+                    },
+                    "planReplicas": {
+                        "type": "integer"
+                    },
+                    "planVcpus": {
+                        "type": "integer"
+                    },
+                    "port": {
+                        "type": "string"
+                    },
+                    "redisEvictionPolicy": {
+                        "type": "string"
+                    },
+                    "region": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "tag": {
+                        "type": "string"
+                    },
+                    "trustedIps": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "user": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "vultr:index/databaseUser:DatabaseUser": {
+            "properties": {
+                "databaseId": {
+                    "type": "string"
+                },
+                "encryption": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "databaseId",
+                "encryption",
+                "password",
+                "username"
+            ],
+            "inputProperties": {
+                "databaseId": {
+                    "type": "string",
+                    "willReplaceOnChanges": true
+                },
+                "encryption": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            },
+            "requiredInputs": [
+                "databaseId",
+                "username"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering DatabaseUser resources.\n",
+                "properties": {
+                    "databaseId": {
+                        "type": "string",
+                        "willReplaceOnChanges": true
+                    },
+                    "encryption": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "username": {
+                        "type": "string"
                     }
                 },
                 "type": "object"
@@ -4583,6 +5608,161 @@
                     "region",
                     "sizeGb",
                     "status",
+                    "id"
+                ]
+            }
+        },
+        "vultr:index/getDatabase:getDatabase": {
+            "inputs": {
+                "description": "A collection of arguments for invoking getDatabase.\n",
+                "properties": {
+                    "filters": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/vultr:index/getDatabaseFilter:getDatabaseFilter"
+                        },
+                        "willReplaceOnChanges": true
+                    }
+                },
+                "type": "object"
+            },
+            "outputs": {
+                "description": "A collection of values returned by getDatabase.\n",
+                "properties": {
+                    "clusterTimeZone": {
+                        "type": "string"
+                    },
+                    "databaseEngine": {
+                        "type": "string"
+                    },
+                    "databaseEngineVersion": {
+                        "type": "string"
+                    },
+                    "dateCreated": {
+                        "type": "string"
+                    },
+                    "dbname": {
+                        "type": "string"
+                    },
+                    "filters": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/vultr:index/getDatabaseFilter:getDatabaseFilter"
+                        }
+                    },
+                    "host": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string",
+                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                    },
+                    "label": {
+                        "type": "string"
+                    },
+                    "latestBackup": {
+                        "type": "string"
+                    },
+                    "maintenanceDow": {
+                        "type": "string"
+                    },
+                    "maintenanceTime": {
+                        "type": "string"
+                    },
+                    "mysqlLongQueryTime": {
+                        "type": "integer"
+                    },
+                    "mysqlRequirePrimaryKey": {
+                        "type": "boolean"
+                    },
+                    "mysqlSlowQueryLog": {
+                        "type": "boolean"
+                    },
+                    "mysqlSqlModes": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "plan": {
+                        "type": "string"
+                    },
+                    "planDisk": {
+                        "type": "integer"
+                    },
+                    "planRam": {
+                        "type": "integer"
+                    },
+                    "planReplicas": {
+                        "type": "integer"
+                    },
+                    "planVcpus": {
+                        "type": "integer"
+                    },
+                    "port": {
+                        "type": "string"
+                    },
+                    "readReplicas": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/vultr:index/getDatabaseReadReplica:getDatabaseReadReplica"
+                        }
+                    },
+                    "redisEvictionPolicy": {
+                        "type": "string"
+                    },
+                    "region": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "tag": {
+                        "type": "string"
+                    },
+                    "trustedIps": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "user": {
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "clusterTimeZone",
+                    "databaseEngine",
+                    "databaseEngineVersion",
+                    "dateCreated",
+                    "dbname",
+                    "host",
+                    "label",
+                    "latestBackup",
+                    "maintenanceDow",
+                    "maintenanceTime",
+                    "mysqlLongQueryTime",
+                    "mysqlRequirePrimaryKey",
+                    "mysqlSlowQueryLog",
+                    "mysqlSqlModes",
+                    "password",
+                    "plan",
+                    "planDisk",
+                    "planRam",
+                    "planReplicas",
+                    "planVcpus",
+                    "port",
+                    "readReplicas",
+                    "redisEvictionPolicy",
+                    "region",
+                    "status",
+                    "tag",
+                    "trustedIps",
+                    "user",
                     "id"
                 ]
             }

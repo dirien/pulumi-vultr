@@ -10,6 +10,262 @@ import (
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
+type DatabaseReadReplica struct {
+	ClusterTimeZone        *string  `pulumi:"clusterTimeZone"`
+	DatabaseEngine         *string  `pulumi:"databaseEngine"`
+	DatabaseEngineVersion  *string  `pulumi:"databaseEngineVersion"`
+	DateCreated            *string  `pulumi:"dateCreated"`
+	Dbname                 *string  `pulumi:"dbname"`
+	Host                   *string  `pulumi:"host"`
+	Id                     *string  `pulumi:"id"`
+	Label                  string   `pulumi:"label"`
+	LatestBackup           *string  `pulumi:"latestBackup"`
+	MaintenanceDow         *string  `pulumi:"maintenanceDow"`
+	MaintenanceTime        *string  `pulumi:"maintenanceTime"`
+	MysqlLongQueryTime     *int     `pulumi:"mysqlLongQueryTime"`
+	MysqlRequirePrimaryKey *bool    `pulumi:"mysqlRequirePrimaryKey"`
+	MysqlSlowQueryLog      *bool    `pulumi:"mysqlSlowQueryLog"`
+	MysqlSqlModes          []string `pulumi:"mysqlSqlModes"`
+	Password               *string  `pulumi:"password"`
+	Plan                   *string  `pulumi:"plan"`
+	PlanDisk               *int     `pulumi:"planDisk"`
+	PlanRam                *int     `pulumi:"planRam"`
+	PlanReplicas           *int     `pulumi:"planReplicas"`
+	PlanVcpus              *int     `pulumi:"planVcpus"`
+	Port                   *string  `pulumi:"port"`
+	RedisEvictionPolicy    *string  `pulumi:"redisEvictionPolicy"`
+	Region                 string   `pulumi:"region"`
+	Status                 *string  `pulumi:"status"`
+	Tag                    *string  `pulumi:"tag"`
+	TrustedIps             []string `pulumi:"trustedIps"`
+	User                   *string  `pulumi:"user"`
+}
+
+// DatabaseReadReplicaInput is an input type that accepts DatabaseReadReplicaArgs and DatabaseReadReplicaOutput values.
+// You can construct a concrete instance of `DatabaseReadReplicaInput` via:
+//
+//	DatabaseReadReplicaArgs{...}
+type DatabaseReadReplicaInput interface {
+	pulumi.Input
+
+	ToDatabaseReadReplicaOutput() DatabaseReadReplicaOutput
+	ToDatabaseReadReplicaOutputWithContext(context.Context) DatabaseReadReplicaOutput
+}
+
+type DatabaseReadReplicaArgs struct {
+	ClusterTimeZone        pulumi.StringPtrInput   `pulumi:"clusterTimeZone"`
+	DatabaseEngine         pulumi.StringPtrInput   `pulumi:"databaseEngine"`
+	DatabaseEngineVersion  pulumi.StringPtrInput   `pulumi:"databaseEngineVersion"`
+	DateCreated            pulumi.StringPtrInput   `pulumi:"dateCreated"`
+	Dbname                 pulumi.StringPtrInput   `pulumi:"dbname"`
+	Host                   pulumi.StringPtrInput   `pulumi:"host"`
+	Id                     pulumi.StringPtrInput   `pulumi:"id"`
+	Label                  pulumi.StringInput      `pulumi:"label"`
+	LatestBackup           pulumi.StringPtrInput   `pulumi:"latestBackup"`
+	MaintenanceDow         pulumi.StringPtrInput   `pulumi:"maintenanceDow"`
+	MaintenanceTime        pulumi.StringPtrInput   `pulumi:"maintenanceTime"`
+	MysqlLongQueryTime     pulumi.IntPtrInput      `pulumi:"mysqlLongQueryTime"`
+	MysqlRequirePrimaryKey pulumi.BoolPtrInput     `pulumi:"mysqlRequirePrimaryKey"`
+	MysqlSlowQueryLog      pulumi.BoolPtrInput     `pulumi:"mysqlSlowQueryLog"`
+	MysqlSqlModes          pulumi.StringArrayInput `pulumi:"mysqlSqlModes"`
+	Password               pulumi.StringPtrInput   `pulumi:"password"`
+	Plan                   pulumi.StringPtrInput   `pulumi:"plan"`
+	PlanDisk               pulumi.IntPtrInput      `pulumi:"planDisk"`
+	PlanRam                pulumi.IntPtrInput      `pulumi:"planRam"`
+	PlanReplicas           pulumi.IntPtrInput      `pulumi:"planReplicas"`
+	PlanVcpus              pulumi.IntPtrInput      `pulumi:"planVcpus"`
+	Port                   pulumi.StringPtrInput   `pulumi:"port"`
+	RedisEvictionPolicy    pulumi.StringPtrInput   `pulumi:"redisEvictionPolicy"`
+	Region                 pulumi.StringInput      `pulumi:"region"`
+	Status                 pulumi.StringPtrInput   `pulumi:"status"`
+	Tag                    pulumi.StringPtrInput   `pulumi:"tag"`
+	TrustedIps             pulumi.StringArrayInput `pulumi:"trustedIps"`
+	User                   pulumi.StringPtrInput   `pulumi:"user"`
+}
+
+func (DatabaseReadReplicaArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*DatabaseReadReplica)(nil)).Elem()
+}
+
+func (i DatabaseReadReplicaArgs) ToDatabaseReadReplicaOutput() DatabaseReadReplicaOutput {
+	return i.ToDatabaseReadReplicaOutputWithContext(context.Background())
+}
+
+func (i DatabaseReadReplicaArgs) ToDatabaseReadReplicaOutputWithContext(ctx context.Context) DatabaseReadReplicaOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(DatabaseReadReplicaOutput)
+}
+
+// DatabaseReadReplicaArrayInput is an input type that accepts DatabaseReadReplicaArray and DatabaseReadReplicaArrayOutput values.
+// You can construct a concrete instance of `DatabaseReadReplicaArrayInput` via:
+//
+//	DatabaseReadReplicaArray{ DatabaseReadReplicaArgs{...} }
+type DatabaseReadReplicaArrayInput interface {
+	pulumi.Input
+
+	ToDatabaseReadReplicaArrayOutput() DatabaseReadReplicaArrayOutput
+	ToDatabaseReadReplicaArrayOutputWithContext(context.Context) DatabaseReadReplicaArrayOutput
+}
+
+type DatabaseReadReplicaArray []DatabaseReadReplicaInput
+
+func (DatabaseReadReplicaArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]DatabaseReadReplica)(nil)).Elem()
+}
+
+func (i DatabaseReadReplicaArray) ToDatabaseReadReplicaArrayOutput() DatabaseReadReplicaArrayOutput {
+	return i.ToDatabaseReadReplicaArrayOutputWithContext(context.Background())
+}
+
+func (i DatabaseReadReplicaArray) ToDatabaseReadReplicaArrayOutputWithContext(ctx context.Context) DatabaseReadReplicaArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(DatabaseReadReplicaArrayOutput)
+}
+
+type DatabaseReadReplicaOutput struct{ *pulumi.OutputState }
+
+func (DatabaseReadReplicaOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*DatabaseReadReplica)(nil)).Elem()
+}
+
+func (o DatabaseReadReplicaOutput) ToDatabaseReadReplicaOutput() DatabaseReadReplicaOutput {
+	return o
+}
+
+func (o DatabaseReadReplicaOutput) ToDatabaseReadReplicaOutputWithContext(ctx context.Context) DatabaseReadReplicaOutput {
+	return o
+}
+
+func (o DatabaseReadReplicaOutput) ClusterTimeZone() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v DatabaseReadReplica) *string { return v.ClusterTimeZone }).(pulumi.StringPtrOutput)
+}
+
+func (o DatabaseReadReplicaOutput) DatabaseEngine() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v DatabaseReadReplica) *string { return v.DatabaseEngine }).(pulumi.StringPtrOutput)
+}
+
+func (o DatabaseReadReplicaOutput) DatabaseEngineVersion() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v DatabaseReadReplica) *string { return v.DatabaseEngineVersion }).(pulumi.StringPtrOutput)
+}
+
+func (o DatabaseReadReplicaOutput) DateCreated() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v DatabaseReadReplica) *string { return v.DateCreated }).(pulumi.StringPtrOutput)
+}
+
+func (o DatabaseReadReplicaOutput) Dbname() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v DatabaseReadReplica) *string { return v.Dbname }).(pulumi.StringPtrOutput)
+}
+
+func (o DatabaseReadReplicaOutput) Host() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v DatabaseReadReplica) *string { return v.Host }).(pulumi.StringPtrOutput)
+}
+
+func (o DatabaseReadReplicaOutput) Id() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v DatabaseReadReplica) *string { return v.Id }).(pulumi.StringPtrOutput)
+}
+
+func (o DatabaseReadReplicaOutput) Label() pulumi.StringOutput {
+	return o.ApplyT(func(v DatabaseReadReplica) string { return v.Label }).(pulumi.StringOutput)
+}
+
+func (o DatabaseReadReplicaOutput) LatestBackup() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v DatabaseReadReplica) *string { return v.LatestBackup }).(pulumi.StringPtrOutput)
+}
+
+func (o DatabaseReadReplicaOutput) MaintenanceDow() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v DatabaseReadReplica) *string { return v.MaintenanceDow }).(pulumi.StringPtrOutput)
+}
+
+func (o DatabaseReadReplicaOutput) MaintenanceTime() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v DatabaseReadReplica) *string { return v.MaintenanceTime }).(pulumi.StringPtrOutput)
+}
+
+func (o DatabaseReadReplicaOutput) MysqlLongQueryTime() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v DatabaseReadReplica) *int { return v.MysqlLongQueryTime }).(pulumi.IntPtrOutput)
+}
+
+func (o DatabaseReadReplicaOutput) MysqlRequirePrimaryKey() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v DatabaseReadReplica) *bool { return v.MysqlRequirePrimaryKey }).(pulumi.BoolPtrOutput)
+}
+
+func (o DatabaseReadReplicaOutput) MysqlSlowQueryLog() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v DatabaseReadReplica) *bool { return v.MysqlSlowQueryLog }).(pulumi.BoolPtrOutput)
+}
+
+func (o DatabaseReadReplicaOutput) MysqlSqlModes() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v DatabaseReadReplica) []string { return v.MysqlSqlModes }).(pulumi.StringArrayOutput)
+}
+
+func (o DatabaseReadReplicaOutput) Password() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v DatabaseReadReplica) *string { return v.Password }).(pulumi.StringPtrOutput)
+}
+
+func (o DatabaseReadReplicaOutput) Plan() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v DatabaseReadReplica) *string { return v.Plan }).(pulumi.StringPtrOutput)
+}
+
+func (o DatabaseReadReplicaOutput) PlanDisk() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v DatabaseReadReplica) *int { return v.PlanDisk }).(pulumi.IntPtrOutput)
+}
+
+func (o DatabaseReadReplicaOutput) PlanRam() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v DatabaseReadReplica) *int { return v.PlanRam }).(pulumi.IntPtrOutput)
+}
+
+func (o DatabaseReadReplicaOutput) PlanReplicas() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v DatabaseReadReplica) *int { return v.PlanReplicas }).(pulumi.IntPtrOutput)
+}
+
+func (o DatabaseReadReplicaOutput) PlanVcpus() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v DatabaseReadReplica) *int { return v.PlanVcpus }).(pulumi.IntPtrOutput)
+}
+
+func (o DatabaseReadReplicaOutput) Port() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v DatabaseReadReplica) *string { return v.Port }).(pulumi.StringPtrOutput)
+}
+
+func (o DatabaseReadReplicaOutput) RedisEvictionPolicy() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v DatabaseReadReplica) *string { return v.RedisEvictionPolicy }).(pulumi.StringPtrOutput)
+}
+
+func (o DatabaseReadReplicaOutput) Region() pulumi.StringOutput {
+	return o.ApplyT(func(v DatabaseReadReplica) string { return v.Region }).(pulumi.StringOutput)
+}
+
+func (o DatabaseReadReplicaOutput) Status() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v DatabaseReadReplica) *string { return v.Status }).(pulumi.StringPtrOutput)
+}
+
+func (o DatabaseReadReplicaOutput) Tag() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v DatabaseReadReplica) *string { return v.Tag }).(pulumi.StringPtrOutput)
+}
+
+func (o DatabaseReadReplicaOutput) TrustedIps() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v DatabaseReadReplica) []string { return v.TrustedIps }).(pulumi.StringArrayOutput)
+}
+
+func (o DatabaseReadReplicaOutput) User() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v DatabaseReadReplica) *string { return v.User }).(pulumi.StringPtrOutput)
+}
+
+type DatabaseReadReplicaArrayOutput struct{ *pulumi.OutputState }
+
+func (DatabaseReadReplicaArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]DatabaseReadReplica)(nil)).Elem()
+}
+
+func (o DatabaseReadReplicaArrayOutput) ToDatabaseReadReplicaArrayOutput() DatabaseReadReplicaArrayOutput {
+	return o
+}
+
+func (o DatabaseReadReplicaArrayOutput) ToDatabaseReadReplicaArrayOutputWithContext(ctx context.Context) DatabaseReadReplicaArrayOutput {
+	return o
+}
+
+func (o DatabaseReadReplicaArrayOutput) Index(i pulumi.IntInput) DatabaseReadReplicaOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) DatabaseReadReplica {
+		return vs[0].([]DatabaseReadReplica)[vs[1].(int)]
+	}).(DatabaseReadReplicaOutput)
+}
+
 type InstanceBackupsSchedule struct {
 	// Day of month to run. Use values between 1 and 28.
 	Dom *int `pulumi:"dom"`
@@ -1882,6 +2138,362 @@ func (o GetBlockStorageFilterArrayOutput) Index(i pulumi.IntInput) GetBlockStora
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetBlockStorageFilter {
 		return vs[0].([]GetBlockStorageFilter)[vs[1].(int)]
 	}).(GetBlockStorageFilterOutput)
+}
+
+type GetDatabaseFilter struct {
+	Name   string   `pulumi:"name"`
+	Values []string `pulumi:"values"`
+}
+
+// GetDatabaseFilterInput is an input type that accepts GetDatabaseFilterArgs and GetDatabaseFilterOutput values.
+// You can construct a concrete instance of `GetDatabaseFilterInput` via:
+//
+//	GetDatabaseFilterArgs{...}
+type GetDatabaseFilterInput interface {
+	pulumi.Input
+
+	ToGetDatabaseFilterOutput() GetDatabaseFilterOutput
+	ToGetDatabaseFilterOutputWithContext(context.Context) GetDatabaseFilterOutput
+}
+
+type GetDatabaseFilterArgs struct {
+	Name   pulumi.StringInput      `pulumi:"name"`
+	Values pulumi.StringArrayInput `pulumi:"values"`
+}
+
+func (GetDatabaseFilterArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetDatabaseFilter)(nil)).Elem()
+}
+
+func (i GetDatabaseFilterArgs) ToGetDatabaseFilterOutput() GetDatabaseFilterOutput {
+	return i.ToGetDatabaseFilterOutputWithContext(context.Background())
+}
+
+func (i GetDatabaseFilterArgs) ToGetDatabaseFilterOutputWithContext(ctx context.Context) GetDatabaseFilterOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetDatabaseFilterOutput)
+}
+
+// GetDatabaseFilterArrayInput is an input type that accepts GetDatabaseFilterArray and GetDatabaseFilterArrayOutput values.
+// You can construct a concrete instance of `GetDatabaseFilterArrayInput` via:
+//
+//	GetDatabaseFilterArray{ GetDatabaseFilterArgs{...} }
+type GetDatabaseFilterArrayInput interface {
+	pulumi.Input
+
+	ToGetDatabaseFilterArrayOutput() GetDatabaseFilterArrayOutput
+	ToGetDatabaseFilterArrayOutputWithContext(context.Context) GetDatabaseFilterArrayOutput
+}
+
+type GetDatabaseFilterArray []GetDatabaseFilterInput
+
+func (GetDatabaseFilterArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetDatabaseFilter)(nil)).Elem()
+}
+
+func (i GetDatabaseFilterArray) ToGetDatabaseFilterArrayOutput() GetDatabaseFilterArrayOutput {
+	return i.ToGetDatabaseFilterArrayOutputWithContext(context.Background())
+}
+
+func (i GetDatabaseFilterArray) ToGetDatabaseFilterArrayOutputWithContext(ctx context.Context) GetDatabaseFilterArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetDatabaseFilterArrayOutput)
+}
+
+type GetDatabaseFilterOutput struct{ *pulumi.OutputState }
+
+func (GetDatabaseFilterOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetDatabaseFilter)(nil)).Elem()
+}
+
+func (o GetDatabaseFilterOutput) ToGetDatabaseFilterOutput() GetDatabaseFilterOutput {
+	return o
+}
+
+func (o GetDatabaseFilterOutput) ToGetDatabaseFilterOutputWithContext(ctx context.Context) GetDatabaseFilterOutput {
+	return o
+}
+
+func (o GetDatabaseFilterOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v GetDatabaseFilter) string { return v.Name }).(pulumi.StringOutput)
+}
+
+func (o GetDatabaseFilterOutput) Values() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetDatabaseFilter) []string { return v.Values }).(pulumi.StringArrayOutput)
+}
+
+type GetDatabaseFilterArrayOutput struct{ *pulumi.OutputState }
+
+func (GetDatabaseFilterArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetDatabaseFilter)(nil)).Elem()
+}
+
+func (o GetDatabaseFilterArrayOutput) ToGetDatabaseFilterArrayOutput() GetDatabaseFilterArrayOutput {
+	return o
+}
+
+func (o GetDatabaseFilterArrayOutput) ToGetDatabaseFilterArrayOutputWithContext(ctx context.Context) GetDatabaseFilterArrayOutput {
+	return o
+}
+
+func (o GetDatabaseFilterArrayOutput) Index(i pulumi.IntInput) GetDatabaseFilterOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetDatabaseFilter {
+		return vs[0].([]GetDatabaseFilter)[vs[1].(int)]
+	}).(GetDatabaseFilterOutput)
+}
+
+type GetDatabaseReadReplica struct {
+	ClusterTimeZone        string   `pulumi:"clusterTimeZone"`
+	DatabaseEngine         string   `pulumi:"databaseEngine"`
+	DatabaseEngineVersion  string   `pulumi:"databaseEngineVersion"`
+	DateCreated            string   `pulumi:"dateCreated"`
+	Dbname                 string   `pulumi:"dbname"`
+	Host                   string   `pulumi:"host"`
+	Id                     string   `pulumi:"id"`
+	Label                  string   `pulumi:"label"`
+	LatestBackup           string   `pulumi:"latestBackup"`
+	MaintenanceDow         string   `pulumi:"maintenanceDow"`
+	MaintenanceTime        string   `pulumi:"maintenanceTime"`
+	MysqlLongQueryTime     int      `pulumi:"mysqlLongQueryTime"`
+	MysqlRequirePrimaryKey bool     `pulumi:"mysqlRequirePrimaryKey"`
+	MysqlSlowQueryLog      bool     `pulumi:"mysqlSlowQueryLog"`
+	MysqlSqlModes          []string `pulumi:"mysqlSqlModes"`
+	Password               string   `pulumi:"password"`
+	Plan                   string   `pulumi:"plan"`
+	PlanDisk               int      `pulumi:"planDisk"`
+	PlanRam                int      `pulumi:"planRam"`
+	PlanReplicas           int      `pulumi:"planReplicas"`
+	PlanVcpus              int      `pulumi:"planVcpus"`
+	Port                   string   `pulumi:"port"`
+	RedisEvictionPolicy    string   `pulumi:"redisEvictionPolicy"`
+	Region                 string   `pulumi:"region"`
+	Status                 string   `pulumi:"status"`
+	Tag                    string   `pulumi:"tag"`
+	TrustedIps             []string `pulumi:"trustedIps"`
+	User                   string   `pulumi:"user"`
+}
+
+// GetDatabaseReadReplicaInput is an input type that accepts GetDatabaseReadReplicaArgs and GetDatabaseReadReplicaOutput values.
+// You can construct a concrete instance of `GetDatabaseReadReplicaInput` via:
+//
+//	GetDatabaseReadReplicaArgs{...}
+type GetDatabaseReadReplicaInput interface {
+	pulumi.Input
+
+	ToGetDatabaseReadReplicaOutput() GetDatabaseReadReplicaOutput
+	ToGetDatabaseReadReplicaOutputWithContext(context.Context) GetDatabaseReadReplicaOutput
+}
+
+type GetDatabaseReadReplicaArgs struct {
+	ClusterTimeZone        pulumi.StringInput      `pulumi:"clusterTimeZone"`
+	DatabaseEngine         pulumi.StringInput      `pulumi:"databaseEngine"`
+	DatabaseEngineVersion  pulumi.StringInput      `pulumi:"databaseEngineVersion"`
+	DateCreated            pulumi.StringInput      `pulumi:"dateCreated"`
+	Dbname                 pulumi.StringInput      `pulumi:"dbname"`
+	Host                   pulumi.StringInput      `pulumi:"host"`
+	Id                     pulumi.StringInput      `pulumi:"id"`
+	Label                  pulumi.StringInput      `pulumi:"label"`
+	LatestBackup           pulumi.StringInput      `pulumi:"latestBackup"`
+	MaintenanceDow         pulumi.StringInput      `pulumi:"maintenanceDow"`
+	MaintenanceTime        pulumi.StringInput      `pulumi:"maintenanceTime"`
+	MysqlLongQueryTime     pulumi.IntInput         `pulumi:"mysqlLongQueryTime"`
+	MysqlRequirePrimaryKey pulumi.BoolInput        `pulumi:"mysqlRequirePrimaryKey"`
+	MysqlSlowQueryLog      pulumi.BoolInput        `pulumi:"mysqlSlowQueryLog"`
+	MysqlSqlModes          pulumi.StringArrayInput `pulumi:"mysqlSqlModes"`
+	Password               pulumi.StringInput      `pulumi:"password"`
+	Plan                   pulumi.StringInput      `pulumi:"plan"`
+	PlanDisk               pulumi.IntInput         `pulumi:"planDisk"`
+	PlanRam                pulumi.IntInput         `pulumi:"planRam"`
+	PlanReplicas           pulumi.IntInput         `pulumi:"planReplicas"`
+	PlanVcpus              pulumi.IntInput         `pulumi:"planVcpus"`
+	Port                   pulumi.StringInput      `pulumi:"port"`
+	RedisEvictionPolicy    pulumi.StringInput      `pulumi:"redisEvictionPolicy"`
+	Region                 pulumi.StringInput      `pulumi:"region"`
+	Status                 pulumi.StringInput      `pulumi:"status"`
+	Tag                    pulumi.StringInput      `pulumi:"tag"`
+	TrustedIps             pulumi.StringArrayInput `pulumi:"trustedIps"`
+	User                   pulumi.StringInput      `pulumi:"user"`
+}
+
+func (GetDatabaseReadReplicaArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetDatabaseReadReplica)(nil)).Elem()
+}
+
+func (i GetDatabaseReadReplicaArgs) ToGetDatabaseReadReplicaOutput() GetDatabaseReadReplicaOutput {
+	return i.ToGetDatabaseReadReplicaOutputWithContext(context.Background())
+}
+
+func (i GetDatabaseReadReplicaArgs) ToGetDatabaseReadReplicaOutputWithContext(ctx context.Context) GetDatabaseReadReplicaOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetDatabaseReadReplicaOutput)
+}
+
+// GetDatabaseReadReplicaArrayInput is an input type that accepts GetDatabaseReadReplicaArray and GetDatabaseReadReplicaArrayOutput values.
+// You can construct a concrete instance of `GetDatabaseReadReplicaArrayInput` via:
+//
+//	GetDatabaseReadReplicaArray{ GetDatabaseReadReplicaArgs{...} }
+type GetDatabaseReadReplicaArrayInput interface {
+	pulumi.Input
+
+	ToGetDatabaseReadReplicaArrayOutput() GetDatabaseReadReplicaArrayOutput
+	ToGetDatabaseReadReplicaArrayOutputWithContext(context.Context) GetDatabaseReadReplicaArrayOutput
+}
+
+type GetDatabaseReadReplicaArray []GetDatabaseReadReplicaInput
+
+func (GetDatabaseReadReplicaArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetDatabaseReadReplica)(nil)).Elem()
+}
+
+func (i GetDatabaseReadReplicaArray) ToGetDatabaseReadReplicaArrayOutput() GetDatabaseReadReplicaArrayOutput {
+	return i.ToGetDatabaseReadReplicaArrayOutputWithContext(context.Background())
+}
+
+func (i GetDatabaseReadReplicaArray) ToGetDatabaseReadReplicaArrayOutputWithContext(ctx context.Context) GetDatabaseReadReplicaArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetDatabaseReadReplicaArrayOutput)
+}
+
+type GetDatabaseReadReplicaOutput struct{ *pulumi.OutputState }
+
+func (GetDatabaseReadReplicaOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetDatabaseReadReplica)(nil)).Elem()
+}
+
+func (o GetDatabaseReadReplicaOutput) ToGetDatabaseReadReplicaOutput() GetDatabaseReadReplicaOutput {
+	return o
+}
+
+func (o GetDatabaseReadReplicaOutput) ToGetDatabaseReadReplicaOutputWithContext(ctx context.Context) GetDatabaseReadReplicaOutput {
+	return o
+}
+
+func (o GetDatabaseReadReplicaOutput) ClusterTimeZone() pulumi.StringOutput {
+	return o.ApplyT(func(v GetDatabaseReadReplica) string { return v.ClusterTimeZone }).(pulumi.StringOutput)
+}
+
+func (o GetDatabaseReadReplicaOutput) DatabaseEngine() pulumi.StringOutput {
+	return o.ApplyT(func(v GetDatabaseReadReplica) string { return v.DatabaseEngine }).(pulumi.StringOutput)
+}
+
+func (o GetDatabaseReadReplicaOutput) DatabaseEngineVersion() pulumi.StringOutput {
+	return o.ApplyT(func(v GetDatabaseReadReplica) string { return v.DatabaseEngineVersion }).(pulumi.StringOutput)
+}
+
+func (o GetDatabaseReadReplicaOutput) DateCreated() pulumi.StringOutput {
+	return o.ApplyT(func(v GetDatabaseReadReplica) string { return v.DateCreated }).(pulumi.StringOutput)
+}
+
+func (o GetDatabaseReadReplicaOutput) Dbname() pulumi.StringOutput {
+	return o.ApplyT(func(v GetDatabaseReadReplica) string { return v.Dbname }).(pulumi.StringOutput)
+}
+
+func (o GetDatabaseReadReplicaOutput) Host() pulumi.StringOutput {
+	return o.ApplyT(func(v GetDatabaseReadReplica) string { return v.Host }).(pulumi.StringOutput)
+}
+
+func (o GetDatabaseReadReplicaOutput) Id() pulumi.StringOutput {
+	return o.ApplyT(func(v GetDatabaseReadReplica) string { return v.Id }).(pulumi.StringOutput)
+}
+
+func (o GetDatabaseReadReplicaOutput) Label() pulumi.StringOutput {
+	return o.ApplyT(func(v GetDatabaseReadReplica) string { return v.Label }).(pulumi.StringOutput)
+}
+
+func (o GetDatabaseReadReplicaOutput) LatestBackup() pulumi.StringOutput {
+	return o.ApplyT(func(v GetDatabaseReadReplica) string { return v.LatestBackup }).(pulumi.StringOutput)
+}
+
+func (o GetDatabaseReadReplicaOutput) MaintenanceDow() pulumi.StringOutput {
+	return o.ApplyT(func(v GetDatabaseReadReplica) string { return v.MaintenanceDow }).(pulumi.StringOutput)
+}
+
+func (o GetDatabaseReadReplicaOutput) MaintenanceTime() pulumi.StringOutput {
+	return o.ApplyT(func(v GetDatabaseReadReplica) string { return v.MaintenanceTime }).(pulumi.StringOutput)
+}
+
+func (o GetDatabaseReadReplicaOutput) MysqlLongQueryTime() pulumi.IntOutput {
+	return o.ApplyT(func(v GetDatabaseReadReplica) int { return v.MysqlLongQueryTime }).(pulumi.IntOutput)
+}
+
+func (o GetDatabaseReadReplicaOutput) MysqlRequirePrimaryKey() pulumi.BoolOutput {
+	return o.ApplyT(func(v GetDatabaseReadReplica) bool { return v.MysqlRequirePrimaryKey }).(pulumi.BoolOutput)
+}
+
+func (o GetDatabaseReadReplicaOutput) MysqlSlowQueryLog() pulumi.BoolOutput {
+	return o.ApplyT(func(v GetDatabaseReadReplica) bool { return v.MysqlSlowQueryLog }).(pulumi.BoolOutput)
+}
+
+func (o GetDatabaseReadReplicaOutput) MysqlSqlModes() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetDatabaseReadReplica) []string { return v.MysqlSqlModes }).(pulumi.StringArrayOutput)
+}
+
+func (o GetDatabaseReadReplicaOutput) Password() pulumi.StringOutput {
+	return o.ApplyT(func(v GetDatabaseReadReplica) string { return v.Password }).(pulumi.StringOutput)
+}
+
+func (o GetDatabaseReadReplicaOutput) Plan() pulumi.StringOutput {
+	return o.ApplyT(func(v GetDatabaseReadReplica) string { return v.Plan }).(pulumi.StringOutput)
+}
+
+func (o GetDatabaseReadReplicaOutput) PlanDisk() pulumi.IntOutput {
+	return o.ApplyT(func(v GetDatabaseReadReplica) int { return v.PlanDisk }).(pulumi.IntOutput)
+}
+
+func (o GetDatabaseReadReplicaOutput) PlanRam() pulumi.IntOutput {
+	return o.ApplyT(func(v GetDatabaseReadReplica) int { return v.PlanRam }).(pulumi.IntOutput)
+}
+
+func (o GetDatabaseReadReplicaOutput) PlanReplicas() pulumi.IntOutput {
+	return o.ApplyT(func(v GetDatabaseReadReplica) int { return v.PlanReplicas }).(pulumi.IntOutput)
+}
+
+func (o GetDatabaseReadReplicaOutput) PlanVcpus() pulumi.IntOutput {
+	return o.ApplyT(func(v GetDatabaseReadReplica) int { return v.PlanVcpus }).(pulumi.IntOutput)
+}
+
+func (o GetDatabaseReadReplicaOutput) Port() pulumi.StringOutput {
+	return o.ApplyT(func(v GetDatabaseReadReplica) string { return v.Port }).(pulumi.StringOutput)
+}
+
+func (o GetDatabaseReadReplicaOutput) RedisEvictionPolicy() pulumi.StringOutput {
+	return o.ApplyT(func(v GetDatabaseReadReplica) string { return v.RedisEvictionPolicy }).(pulumi.StringOutput)
+}
+
+func (o GetDatabaseReadReplicaOutput) Region() pulumi.StringOutput {
+	return o.ApplyT(func(v GetDatabaseReadReplica) string { return v.Region }).(pulumi.StringOutput)
+}
+
+func (o GetDatabaseReadReplicaOutput) Status() pulumi.StringOutput {
+	return o.ApplyT(func(v GetDatabaseReadReplica) string { return v.Status }).(pulumi.StringOutput)
+}
+
+func (o GetDatabaseReadReplicaOutput) Tag() pulumi.StringOutput {
+	return o.ApplyT(func(v GetDatabaseReadReplica) string { return v.Tag }).(pulumi.StringOutput)
+}
+
+func (o GetDatabaseReadReplicaOutput) TrustedIps() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetDatabaseReadReplica) []string { return v.TrustedIps }).(pulumi.StringArrayOutput)
+}
+
+func (o GetDatabaseReadReplicaOutput) User() pulumi.StringOutput {
+	return o.ApplyT(func(v GetDatabaseReadReplica) string { return v.User }).(pulumi.StringOutput)
+}
+
+type GetDatabaseReadReplicaArrayOutput struct{ *pulumi.OutputState }
+
+func (GetDatabaseReadReplicaArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetDatabaseReadReplica)(nil)).Elem()
+}
+
+func (o GetDatabaseReadReplicaArrayOutput) ToGetDatabaseReadReplicaArrayOutput() GetDatabaseReadReplicaArrayOutput {
+	return o
+}
+
+func (o GetDatabaseReadReplicaArrayOutput) ToGetDatabaseReadReplicaArrayOutputWithContext(ctx context.Context) GetDatabaseReadReplicaArrayOutput {
+	return o
+}
+
+func (o GetDatabaseReadReplicaArrayOutput) Index(i pulumi.IntInput) GetDatabaseReadReplicaOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetDatabaseReadReplica {
+		return vs[0].([]GetDatabaseReadReplica)[vs[1].(int)]
+	}).(GetDatabaseReadReplicaOutput)
 }
 
 type GetFirewallGroupFilter struct {
@@ -4431,6 +5043,8 @@ func (o GetVpcFilterArrayOutput) Index(i pulumi.IntInput) GetVpcFilterOutput {
 }
 
 func init() {
+	pulumi.RegisterInputType(reflect.TypeOf((*DatabaseReadReplicaInput)(nil)).Elem(), DatabaseReadReplicaArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*DatabaseReadReplicaArrayInput)(nil)).Elem(), DatabaseReadReplicaArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*InstanceBackupsScheduleInput)(nil)).Elem(), InstanceBackupsScheduleArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*InstanceBackupsSchedulePtrInput)(nil)).Elem(), InstanceBackupsScheduleArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*KubernetesNodePoolsTypeInput)(nil)).Elem(), KubernetesNodePoolsTypeArgs{})
@@ -4455,6 +5069,10 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*GetBareMetalServerFilterArrayInput)(nil)).Elem(), GetBareMetalServerFilterArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetBlockStorageFilterInput)(nil)).Elem(), GetBlockStorageFilterArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetBlockStorageFilterArrayInput)(nil)).Elem(), GetBlockStorageFilterArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetDatabaseFilterInput)(nil)).Elem(), GetDatabaseFilterArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetDatabaseFilterArrayInput)(nil)).Elem(), GetDatabaseFilterArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetDatabaseReadReplicaInput)(nil)).Elem(), GetDatabaseReadReplicaArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetDatabaseReadReplicaArrayInput)(nil)).Elem(), GetDatabaseReadReplicaArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetFirewallGroupFilterInput)(nil)).Elem(), GetFirewallGroupFilterArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetFirewallGroupFilterArrayInput)(nil)).Elem(), GetFirewallGroupFilterArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetInstanceFilterInput)(nil)).Elem(), GetInstanceFilterArgs{})
@@ -4501,6 +5119,8 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*GetUserFilterArrayInput)(nil)).Elem(), GetUserFilterArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetVpcFilterInput)(nil)).Elem(), GetVpcFilterArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetVpcFilterArrayInput)(nil)).Elem(), GetVpcFilterArray{})
+	pulumi.RegisterOutputType(DatabaseReadReplicaOutput{})
+	pulumi.RegisterOutputType(DatabaseReadReplicaArrayOutput{})
 	pulumi.RegisterOutputType(InstanceBackupsScheduleOutput{})
 	pulumi.RegisterOutputType(InstanceBackupsSchedulePtrOutput{})
 	pulumi.RegisterOutputType(KubernetesNodePoolsTypeOutput{})
@@ -4525,6 +5145,10 @@ func init() {
 	pulumi.RegisterOutputType(GetBareMetalServerFilterArrayOutput{})
 	pulumi.RegisterOutputType(GetBlockStorageFilterOutput{})
 	pulumi.RegisterOutputType(GetBlockStorageFilterArrayOutput{})
+	pulumi.RegisterOutputType(GetDatabaseFilterOutput{})
+	pulumi.RegisterOutputType(GetDatabaseFilterArrayOutput{})
+	pulumi.RegisterOutputType(GetDatabaseReadReplicaOutput{})
+	pulumi.RegisterOutputType(GetDatabaseReadReplicaArrayOutput{})
 	pulumi.RegisterOutputType(GetFirewallGroupFilterOutput{})
 	pulumi.RegisterOutputType(GetFirewallGroupFilterArrayOutput{})
 	pulumi.RegisterOutputType(GetInstanceFilterOutput{})

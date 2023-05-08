@@ -19,6 +19,8 @@ import io.dirien.vultr.inputs.GetBareMetalServerArgs;
 import io.dirien.vultr.inputs.GetBareMetalServerPlainArgs;
 import io.dirien.vultr.inputs.GetBlockStorageArgs;
 import io.dirien.vultr.inputs.GetBlockStoragePlainArgs;
+import io.dirien.vultr.inputs.GetDatabaseArgs;
+import io.dirien.vultr.inputs.GetDatabasePlainArgs;
 import io.dirien.vultr.inputs.GetDnsDomainArgs;
 import io.dirien.vultr.inputs.GetDnsDomainPlainArgs;
 import io.dirien.vultr.inputs.GetFirewallGroupArgs;
@@ -69,6 +71,7 @@ import io.dirien.vultr.outputs.GetBackupResult;
 import io.dirien.vultr.outputs.GetBareMetalPlanResult;
 import io.dirien.vultr.outputs.GetBareMetalServerResult;
 import io.dirien.vultr.outputs.GetBlockStorageResult;
+import io.dirien.vultr.outputs.GetDatabaseResult;
 import io.dirien.vultr.outputs.GetDnsDomainResult;
 import io.dirien.vultr.outputs.GetFirewallGroupResult;
 import io.dirien.vultr.outputs.GetInstanceIpv4Result;
@@ -1569,6 +1572,24 @@ public final class VultrFunctions {
      */
     public static CompletableFuture<GetBlockStorageResult> getBlockStoragePlain(GetBlockStoragePlainArgs args, InvokeOptions options) {
         return Deployment.getInstance().invokeAsync("vultr:index/getBlockStorage:getBlockStorage", TypeShape.of(GetBlockStorageResult.class), args, Utilities.withVersion(options));
+    }
+    public static Output<GetDatabaseResult> getDatabase() {
+        return getDatabase(GetDatabaseArgs.Empty, InvokeOptions.Empty);
+    }
+    public static CompletableFuture<GetDatabaseResult> getDatabasePlain() {
+        return getDatabasePlain(GetDatabasePlainArgs.Empty, InvokeOptions.Empty);
+    }
+    public static Output<GetDatabaseResult> getDatabase(GetDatabaseArgs args) {
+        return getDatabase(args, InvokeOptions.Empty);
+    }
+    public static CompletableFuture<GetDatabaseResult> getDatabasePlain(GetDatabasePlainArgs args) {
+        return getDatabasePlain(args, InvokeOptions.Empty);
+    }
+    public static Output<GetDatabaseResult> getDatabase(GetDatabaseArgs args, InvokeOptions options) {
+        return Deployment.getInstance().invoke("vultr:index/getDatabase:getDatabase", TypeShape.of(GetDatabaseResult.class), args, Utilities.withVersion(options));
+    }
+    public static CompletableFuture<GetDatabaseResult> getDatabasePlain(GetDatabasePlainArgs args, InvokeOptions options) {
+        return Deployment.getInstance().invokeAsync("vultr:index/getDatabase:getDatabase", TypeShape.of(GetDatabaseResult.class), args, Utilities.withVersion(options));
     }
     /**
      * Get information about a DNS domain associated with your Vultr account.
