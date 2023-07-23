@@ -5,7 +5,7 @@ go 1.20
 replace github.com/hashicorp/terraform-plugin-sdk/v2 => github.com/pulumi/terraform-plugin-sdk/v2 v2.0.0-20220824175045-450992f2f5b9
 
 require (
-	github.com/pulumi/pulumi-terraform-bridge/v3 v3.53.0
+	github.com/pulumi/pulumi-terraform-bridge/v3 v3.54.0
 	github.com/pulumi/pulumi/sdk/v3 v3.75.0
 	github.com/vultr/terraform-provider-vultr v1.3.4-0.20230504200111-44600ede75c5
 )
@@ -18,7 +18,7 @@ require (
 	cloud.google.com/go/kms v1.10.1 // indirect
 	cloud.google.com/go/logging v1.7.0 // indirect
 	cloud.google.com/go/longrunning v0.4.1 // indirect
-	cloud.google.com/go/storage v1.28.1 // indirect
+	cloud.google.com/go/storage v1.29.0 // indirect
 	github.com/AlecAivazis/survey/v2 v2.0.5 // indirect
 	github.com/Azure/azure-sdk-for-go v66.0.0+incompatible // indirect
 	github.com/Azure/azure-sdk-for-go/sdk/azcore v1.1.1 // indirect
@@ -113,7 +113,7 @@ require (
 	github.com/hashicorp/go-hclog v1.5.0 // indirect
 	github.com/hashicorp/go-immutable-radix v1.3.1 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
-	github.com/hashicorp/go-plugin v1.4.9 // indirect
+	github.com/hashicorp/go-plugin v1.4.10 // indirect
 	github.com/hashicorp/go-retryablehttp v0.7.2 // indirect
 	github.com/hashicorp/go-rootcerts v1.0.2 // indirect
 	github.com/hashicorp/go-safetemp v1.0.0 // indirect
@@ -126,17 +126,17 @@ require (
 	github.com/hashicorp/golang-lru v0.5.4 // indirect
 	github.com/hashicorp/hc-install v0.5.1 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
-	github.com/hashicorp/hcl/v2 v2.16.2 // indirect
+	github.com/hashicorp/hcl/v2 v2.17.0 // indirect
 	github.com/hashicorp/hil v0.0.0-20190212132231-97b3a9cdfa93 // indirect
 	github.com/hashicorp/logutils v1.0.0 // indirect
 	github.com/hashicorp/terraform-exec v0.18.1 // indirect
 	github.com/hashicorp/terraform-json v0.16.0 // indirect
-	github.com/hashicorp/terraform-plugin-go v0.15.0 // indirect
-	github.com/hashicorp/terraform-plugin-log v0.8.0 // indirect
+	github.com/hashicorp/terraform-plugin-go v0.16.0 // indirect
+	github.com/hashicorp/terraform-plugin-log v0.9.0 // indirect
 	github.com/hashicorp/terraform-plugin-sdk v1.8.0 // indirect
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.26.1 // indirect
-	github.com/hashicorp/terraform-registry-address v0.2.0 // indirect
-	github.com/hashicorp/terraform-svchost v0.1.0 // indirect
+	github.com/hashicorp/terraform-registry-address v0.2.1 // indirect
+	github.com/hashicorp/terraform-svchost v0.1.1 // indirect
 	github.com/hashicorp/vault/api v1.8.2 // indirect
 	github.com/hashicorp/vault/sdk v0.6.1 // indirect
 	github.com/hashicorp/yamux v0.1.1 // indirect
@@ -183,7 +183,7 @@ require (
 	github.com/pulumi/pulumi-java/pkg v0.9.4 // indirect
 	github.com/pulumi/pulumi-terraform-bridge/x/muxer v0.0.4 // indirect
 	github.com/pulumi/pulumi-yaml v1.1.1 // indirect
-	github.com/pulumi/pulumi/pkg/v3 v3.73.1-0.20230623071431-db579129f4c9 // indirect
+	github.com/pulumi/pulumi/pkg/v3 v3.75.0 // indirect
 	github.com/pulumi/schema-tools v0.1.2 // indirect
 	github.com/pulumi/terraform-diff-reader v0.0.2 // indirect
 	github.com/rivo/uniseg v0.4.4 // indirect
@@ -220,15 +220,15 @@ require (
 	go.uber.org/atomic v1.9.0 // indirect
 	gocloud.dev v0.27.0 // indirect
 	gocloud.dev/secrets/hashivault v0.27.0 // indirect
-	golang.org/x/crypto v0.8.0 // indirect
+	golang.org/x/crypto v0.10.0 // indirect
 	golang.org/x/mod v0.10.0 // indirect
-	golang.org/x/net v0.9.0 // indirect
+	golang.org/x/net v0.11.0 // indirect
 	golang.org/x/oauth2 v0.7.0 // indirect
 	golang.org/x/sync v0.1.0 // indirect
-	golang.org/x/sys v0.8.0 // indirect
-	golang.org/x/term v0.7.0 // indirect
-	golang.org/x/text v0.9.0 // indirect
-	golang.org/x/time v0.1.0 // indirect
+	golang.org/x/sys v0.9.0 // indirect
+	golang.org/x/term v0.9.0 // indirect
+	golang.org/x/text v0.10.0 // indirect
+	golang.org/x/time v0.3.0 // indirect
 	golang.org/x/xerrors v0.0.0-20220907171357-04be3eba64a2 // indirect
 	google.golang.org/api v0.114.0 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
