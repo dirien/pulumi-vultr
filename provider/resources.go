@@ -81,7 +81,7 @@ func Provider() tfbridge.ProviderInfo {
 		// The GitHub Org for the provider - defaults to `terraform-providers`. Note that this
 		// should match the TF provider module's require directive, not any replace directives.
 		GitHubOrg: "vultr",
-		Config:    map[string]*tfbridge.SchemaInfo{
+		Config: map[string]*tfbridge.SchemaInfo{
 			// Add any required configuration here, or remove the example below if
 			// no additional points are required.
 			// "region": {
@@ -90,6 +90,22 @@ func Provider() tfbridge.ProviderInfo {
 			// 		EnvVars: []string{"AWS_REGION", "AWS_DEFAULT_REGION"},
 			// 	},
 			// },
+			"api_key": {
+				Default: &tfbridge.DefaultInfo{
+					EnvVars: []string{"VULTR_API_KEY"},
+				},
+				Secret: tfbridge.BoolRef(true),
+			},
+			"rate_limit": {
+				Default: &tfbridge.DefaultInfo{
+					Value: "500",
+				},
+			},
+			"retry_limit": {
+				Default: &tfbridge.DefaultInfo{
+					Value: "3",
+				},
+			},
 		},
 		PreConfigureCallback: preConfigureCallback,
 		Resources: map[string]*tfbridge.ResourceInfo{
