@@ -16,9 +16,17 @@ public final class GetDatabaseArgs extends com.pulumi.resources.InvokeArgs {
 
     public static final GetDatabaseArgs Empty = new GetDatabaseArgs();
 
+    /**
+     * Query parameters for finding databases.
+     * 
+     */
     @Import(name="filters")
     private @Nullable Output<List<GetDatabaseFilterArgs>> filters;
 
+    /**
+     * @return Query parameters for finding databases.
+     * 
+     */
     public Optional<Output<List<GetDatabaseFilterArgs>>> filters() {
         return Optional.ofNullable(this.filters);
     }
@@ -47,15 +55,33 @@ public final class GetDatabaseArgs extends com.pulumi.resources.InvokeArgs {
             $ = new GetDatabaseArgs(Objects.requireNonNull(defaults));
         }
 
+        /**
+         * @param filters Query parameters for finding databases.
+         * 
+         * @return builder
+         * 
+         */
         public Builder filters(@Nullable Output<List<GetDatabaseFilterArgs>> filters) {
             $.filters = filters;
             return this;
         }
 
+        /**
+         * @param filters Query parameters for finding databases.
+         * 
+         * @return builder
+         * 
+         */
         public Builder filters(List<GetDatabaseFilterArgs> filters) {
             return filters(Output.of(filters));
         }
 
+        /**
+         * @param filters Query parameters for finding databases.
+         * 
+         * @return builder
+         * 
+         */
         public Builder filters(GetDatabaseFilterArgs... filters) {
             return filters(List.of(filters));
         }

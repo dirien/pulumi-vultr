@@ -98,12 +98,12 @@ func Provider() tfbridge.ProviderInfo {
 			},
 			"rate_limit": {
 				Default: &tfbridge.DefaultInfo{
-					Value: "500",
+					Value: 500,
 				},
 			},
 			"retry_limit": {
 				Default: &tfbridge.DefaultInfo{
-					Value: "3",
+					Value: 3,
 				},
 			},
 		},
@@ -144,6 +144,7 @@ func Provider() tfbridge.ProviderInfo {
 			"vultr_startup_script":           {Tok: tfbridge.MakeResource(mainPkg, mainMod, "StartupScript")},
 			"vultr_user":                     {Tok: tfbridge.MakeResource(mainPkg, mainMod, "User")},
 			"vultr_vpc":                      {Tok: tfbridge.MakeResource(mainPkg, mainMod, "Vpc")},
+			"vultr_vpc2":					  {Tok: tfbridge.MakeResource(mainPkg, mainMod, "Vpc2")},	
 			"vultr_database":                 {Tok: tfbridge.MakeResource(mainPkg, mainMod, "Database")},
 			"vultr_database_connection_pool": {Tok: tfbridge.MakeResource(mainPkg, mainMod, "DatabaseConnectionPool")},
 			"vultr_database_db":              {Tok: tfbridge.MakeResource(mainPkg, mainMod, "DatabaseDb")},
@@ -182,6 +183,7 @@ func Provider() tfbridge.ProviderInfo {
 			"vultr_startup_script":         {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getStartupScript")},
 			"vultr_user":                   {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getUser")},
 			"vultr_vpc":                    {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getVpc")},
+			"vultr_vpc2":                    {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getVpc2")},
 			"vultr_database":               {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getDatabase")},
 		},
 		JavaScript: &tfbridge.JavaScriptInfo{

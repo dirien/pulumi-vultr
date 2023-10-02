@@ -16,44 +16,92 @@ public final class DatabaseConnectionPoolState extends com.pulumi.resources.Reso
 
     public static final DatabaseConnectionPoolState Empty = new DatabaseConnectionPoolState();
 
+    /**
+     * The logical database to use for the new managed database connection pool.
+     * 
+     */
     @Import(name="database")
     private @Nullable Output<String> database;
 
+    /**
+     * @return The logical database to use for the new managed database connection pool.
+     * 
+     */
     public Optional<Output<String>> database() {
         return Optional.ofNullable(this.database);
     }
 
+    /**
+     * The managed database ID you want to attach this connection pool to.
+     * 
+     */
     @Import(name="databaseId")
     private @Nullable Output<String> databaseId;
 
+    /**
+     * @return The managed database ID you want to attach this connection pool to.
+     * 
+     */
     public Optional<Output<String>> databaseId() {
         return Optional.ofNullable(this.databaseId);
     }
 
+    /**
+     * The mode to configure for the new managed database connection pool (`session`, `transaction`, `statement`).
+     * 
+     */
     @Import(name="mode")
     private @Nullable Output<String> mode;
 
+    /**
+     * @return The mode to configure for the new managed database connection pool (`session`, `transaction`, `statement`).
+     * 
+     */
     public Optional<Output<String>> mode() {
         return Optional.ofNullable(this.mode);
     }
 
+    /**
+     * The name of the new managed database connection pool.
+     * 
+     */
     @Import(name="name")
     private @Nullable Output<String> name;
 
+    /**
+     * @return The name of the new managed database connection pool.
+     * 
+     */
     public Optional<Output<String>> name() {
         return Optional.ofNullable(this.name);
     }
 
+    /**
+     * The size of the new managed database connection pool.
+     * 
+     */
     @Import(name="size")
     private @Nullable Output<Integer> size;
 
+    /**
+     * @return The size of the new managed database connection pool.
+     * 
+     */
     public Optional<Output<Integer>> size() {
         return Optional.ofNullable(this.size);
     }
 
+    /**
+     * The database user to use for the new managed database connection pool.
+     * 
+     */
     @Import(name="username")
     private @Nullable Output<String> username;
 
+    /**
+     * @return The database user to use for the new managed database connection pool.
+     * 
+     */
     public Optional<Output<String>> username() {
         return Optional.ofNullable(this.username);
     }
@@ -87,56 +135,128 @@ public final class DatabaseConnectionPoolState extends com.pulumi.resources.Reso
             $ = new DatabaseConnectionPoolState(Objects.requireNonNull(defaults));
         }
 
+        /**
+         * @param database The logical database to use for the new managed database connection pool.
+         * 
+         * @return builder
+         * 
+         */
         public Builder database(@Nullable Output<String> database) {
             $.database = database;
             return this;
         }
 
+        /**
+         * @param database The logical database to use for the new managed database connection pool.
+         * 
+         * @return builder
+         * 
+         */
         public Builder database(String database) {
             return database(Output.of(database));
         }
 
+        /**
+         * @param databaseId The managed database ID you want to attach this connection pool to.
+         * 
+         * @return builder
+         * 
+         */
         public Builder databaseId(@Nullable Output<String> databaseId) {
             $.databaseId = databaseId;
             return this;
         }
 
+        /**
+         * @param databaseId The managed database ID you want to attach this connection pool to.
+         * 
+         * @return builder
+         * 
+         */
         public Builder databaseId(String databaseId) {
             return databaseId(Output.of(databaseId));
         }
 
+        /**
+         * @param mode The mode to configure for the new managed database connection pool (`session`, `transaction`, `statement`).
+         * 
+         * @return builder
+         * 
+         */
         public Builder mode(@Nullable Output<String> mode) {
             $.mode = mode;
             return this;
         }
 
+        /**
+         * @param mode The mode to configure for the new managed database connection pool (`session`, `transaction`, `statement`).
+         * 
+         * @return builder
+         * 
+         */
         public Builder mode(String mode) {
             return mode(Output.of(mode));
         }
 
+        /**
+         * @param name The name of the new managed database connection pool.
+         * 
+         * @return builder
+         * 
+         */
         public Builder name(@Nullable Output<String> name) {
             $.name = name;
             return this;
         }
 
+        /**
+         * @param name The name of the new managed database connection pool.
+         * 
+         * @return builder
+         * 
+         */
         public Builder name(String name) {
             return name(Output.of(name));
         }
 
+        /**
+         * @param size The size of the new managed database connection pool.
+         * 
+         * @return builder
+         * 
+         */
         public Builder size(@Nullable Output<Integer> size) {
             $.size = size;
             return this;
         }
 
+        /**
+         * @param size The size of the new managed database connection pool.
+         * 
+         * @return builder
+         * 
+         */
         public Builder size(Integer size) {
             return size(Output.of(size));
         }
 
+        /**
+         * @param username The database user to use for the new managed database connection pool.
+         * 
+         * @return builder
+         * 
+         */
         public Builder username(@Nullable Output<String> username) {
             $.username = username;
             return this;
         }
 
+        /**
+         * @param username The database user to use for the new managed database connection pool.
+         * 
+         * @return builder
+         * 
+         */
         public Builder username(String username) {
             return username(Output.of(username));
         }

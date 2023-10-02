@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 
 __all__ = ['ProviderArgs', 'Provider']
@@ -14,7 +14,7 @@ __all__ = ['ProviderArgs', 'Provider']
 @pulumi.input_type
 class ProviderArgs:
     def __init__(__self__, *,
-                 api_key: pulumi.Input[str],
+                 api_key: Optional[pulumi.Input[str]] = None,
                  rate_limit: Optional[pulumi.Input[int]] = None,
                  retry_limit: Optional[pulumi.Input[int]] = None):
         """
@@ -23,22 +23,42 @@ class ProviderArgs:
         :param pulumi.Input[int] rate_limit: Allows users to set the speed of API calls to work with the Vultr Rate Limit
         :param pulumi.Input[int] retry_limit: Allows users to set the maximum number of retries allowed for a failed API call.
         """
-        pulumi.set(__self__, "api_key", api_key)
+        ProviderArgs._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            api_key=api_key,
+            rate_limit=rate_limit,
+            retry_limit=retry_limit,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             api_key: Optional[pulumi.Input[str]] = None,
+             rate_limit: Optional[pulumi.Input[int]] = None,
+             retry_limit: Optional[pulumi.Input[int]] = None,
+             opts: Optional[pulumi.ResourceOptions]=None):
+        if api_key is None:
+            api_key = _utilities.get_env('VULTR_API_KEY')
+        if api_key is not None:
+            _setter("api_key", api_key)
+        if rate_limit is None:
+            rate_limit = 500
         if rate_limit is not None:
-            pulumi.set(__self__, "rate_limit", rate_limit)
+            _setter("rate_limit", rate_limit)
+        if retry_limit is None:
+            retry_limit = 3
         if retry_limit is not None:
-            pulumi.set(__self__, "retry_limit", retry_limit)
+            _setter("retry_limit", retry_limit)
 
     @property
     @pulumi.getter(name="apiKey")
-    def api_key(self) -> pulumi.Input[str]:
+    def api_key(self) -> Optional[pulumi.Input[str]]:
         """
         The API Key that allows interaction with the API
         """
         return pulumi.get(self, "api_key")
 
     @api_key.setter
-    def api_key(self, value: pulumi.Input[str]):
+    def api_key(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "api_key", value)
 
     @property
@@ -91,7 +111,7 @@ class Provider(pulumi.ProviderResource):
     @overload
     def __init__(__self__,
                  resource_name: str,
-                 args: ProviderArgs,
+                 args: Optional[ProviderArgs] = None,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         The provider type for the vultr package. By default, resources use package-wide configuration
@@ -109,6 +129,10 @@ class Provider(pulumi.ProviderResource):
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
+            kwargs = kwargs or {}
+            def _setter(key, value):
+                kwargs[key] = value
+            ProviderArgs._configure(_setter, **kwargs)
             __self__._internal_init(resource_name, *args, **kwargs)
 
     def _internal_init(__self__,
@@ -126,11 +150,17 @@ class Provider(pulumi.ProviderResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = ProviderArgs.__new__(ProviderArgs)
 
-            if api_key is None and not opts.urn:
-                raise TypeError("Missing required property 'api_key'")
-            __props__.__dict__["api_key"] = api_key
+            if api_key is None:
+                api_key = _utilities.get_env('VULTR_API_KEY')
+            __props__.__dict__["api_key"] = None if api_key is None else pulumi.Output.secret(api_key)
+            if rate_limit is None:
+                rate_limit = 500
             __props__.__dict__["rate_limit"] = pulumi.Output.from_input(rate_limit).apply(pulumi.runtime.to_json) if rate_limit is not None else None
+            if retry_limit is None:
+                retry_limit = 3
             __props__.__dict__["retry_limit"] = pulumi.Output.from_input(retry_limit).apply(pulumi.runtime.to_json) if retry_limit is not None else None
+        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["apiKey"])
+        opts = pulumi.ResourceOptions.merge(opts, secret_opts)
         super(Provider, __self__).__init__(
             'vultr',
             resource_name,
@@ -139,7 +169,7 @@ class Provider(pulumi.ProviderResource):
 
     @property
     @pulumi.getter(name="apiKey")
-    def api_key(self) -> pulumi.Output[str]:
+    def api_key(self) -> pulumi.Output[Optional[str]]:
         """
         The API Key that allows interaction with the API
         """

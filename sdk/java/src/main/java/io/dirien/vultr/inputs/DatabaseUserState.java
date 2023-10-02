@@ -15,30 +15,62 @@ public final class DatabaseUserState extends com.pulumi.resources.ResourceArgs {
 
     public static final DatabaseUserState Empty = new DatabaseUserState();
 
+    /**
+     * The managed database ID you want to attach this user to.
+     * 
+     */
     @Import(name="databaseId")
     private @Nullable Output<String> databaseId;
 
+    /**
+     * @return The managed database ID you want to attach this user to.
+     * 
+     */
     public Optional<Output<String>> databaseId() {
         return Optional.ofNullable(this.databaseId);
     }
 
+    /**
+     * The encryption type of the new managed database user&#39;s password (MySQL engine types only - `caching_sha2_password`, `mysql_native_password`).
+     * 
+     */
     @Import(name="encryption")
     private @Nullable Output<String> encryption;
 
+    /**
+     * @return The encryption type of the new managed database user&#39;s password (MySQL engine types only - `caching_sha2_password`, `mysql_native_password`).
+     * 
+     */
     public Optional<Output<String>> encryption() {
         return Optional.ofNullable(this.encryption);
     }
 
+    /**
+     * The password of the new managed database user.
+     * 
+     */
     @Import(name="password")
     private @Nullable Output<String> password;
 
+    /**
+     * @return The password of the new managed database user.
+     * 
+     */
     public Optional<Output<String>> password() {
         return Optional.ofNullable(this.password);
     }
 
+    /**
+     * The username of the new managed database user.
+     * 
+     */
     @Import(name="username")
     private @Nullable Output<String> username;
 
+    /**
+     * @return The username of the new managed database user.
+     * 
+     */
     public Optional<Output<String>> username() {
         return Optional.ofNullable(this.username);
     }
@@ -70,38 +102,86 @@ public final class DatabaseUserState extends com.pulumi.resources.ResourceArgs {
             $ = new DatabaseUserState(Objects.requireNonNull(defaults));
         }
 
+        /**
+         * @param databaseId The managed database ID you want to attach this user to.
+         * 
+         * @return builder
+         * 
+         */
         public Builder databaseId(@Nullable Output<String> databaseId) {
             $.databaseId = databaseId;
             return this;
         }
 
+        /**
+         * @param databaseId The managed database ID you want to attach this user to.
+         * 
+         * @return builder
+         * 
+         */
         public Builder databaseId(String databaseId) {
             return databaseId(Output.of(databaseId));
         }
 
+        /**
+         * @param encryption The encryption type of the new managed database user&#39;s password (MySQL engine types only - `caching_sha2_password`, `mysql_native_password`).
+         * 
+         * @return builder
+         * 
+         */
         public Builder encryption(@Nullable Output<String> encryption) {
             $.encryption = encryption;
             return this;
         }
 
+        /**
+         * @param encryption The encryption type of the new managed database user&#39;s password (MySQL engine types only - `caching_sha2_password`, `mysql_native_password`).
+         * 
+         * @return builder
+         * 
+         */
         public Builder encryption(String encryption) {
             return encryption(Output.of(encryption));
         }
 
+        /**
+         * @param password The password of the new managed database user.
+         * 
+         * @return builder
+         * 
+         */
         public Builder password(@Nullable Output<String> password) {
             $.password = password;
             return this;
         }
 
+        /**
+         * @param password The password of the new managed database user.
+         * 
+         * @return builder
+         * 
+         */
         public Builder password(String password) {
             return password(Output.of(password));
         }
 
+        /**
+         * @param username The username of the new managed database user.
+         * 
+         * @return builder
+         * 
+         */
         public Builder username(@Nullable Output<String> username) {
             $.username = username;
             return this;
         }
 
+        /**
+         * @param username The username of the new managed database user.
+         * 
+         * @return builder
+         * 
+         */
         public Builder username(String username) {
             return username(Output.of(username));
         }

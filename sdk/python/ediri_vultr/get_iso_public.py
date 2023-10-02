@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -119,11 +119,11 @@ def get_iso_public(filters: Optional[Sequence[pulumi.InputType['GetIsoPublicFilt
     __ret__ = pulumi.runtime.invoke('vultr:index/getIsoPublic:getIsoPublic', __args__, opts=opts, typ=GetIsoPublicResult).value
 
     return AwaitableGetIsoPublicResult(
-        description=__ret__.description,
-        filters=__ret__.filters,
-        id=__ret__.id,
-        md5sum=__ret__.md5sum,
-        name=__ret__.name)
+        description=pulumi.get(__ret__, 'description'),
+        filters=pulumi.get(__ret__, 'filters'),
+        id=pulumi.get(__ret__, 'id'),
+        md5sum=pulumi.get(__ret__, 'md5sum'),
+        name=pulumi.get(__ret__, 'name'))
 
 
 @_utilities.lift_output_func(get_iso_public)

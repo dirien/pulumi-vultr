@@ -7,8 +7,9 @@ import (
 	"context"
 	"reflect"
 
-	"errors"
+	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 )
 
 // The provider type for the vultr package. By default, resources use package-wide configuration
@@ -19,20 +20,35 @@ type Provider struct {
 	pulumi.ProviderResourceState
 
 	// The API Key that allows interaction with the API
-	ApiKey pulumi.StringOutput `pulumi:"apiKey"`
+	ApiKey pulumi.StringPtrOutput `pulumi:"apiKey"`
 }
 
 // NewProvider registers a new resource with the given unique name, arguments, and options.
 func NewProvider(ctx *pulumi.Context,
 	name string, args *ProviderArgs, opts ...pulumi.ResourceOption) (*Provider, error) {
 	if args == nil {
-		return nil, errors.New("missing one or more required arguments")
+		args = &ProviderArgs{}
 	}
 
 	if args.ApiKey == nil {
-		return nil, errors.New("invalid value for required argument 'ApiKey'")
+		if d := internal.GetEnvOrDefault(nil, nil, "VULTR_API_KEY"); d != nil {
+			args.ApiKey = pulumi.StringPtr(d.(string))
+		}
 	}
-	opts = pkgResourceDefaultOpts(opts)
+	if args.RateLimit == nil {
+		args.RateLimit = pulumi.IntPtr(500)
+	}
+	if args.RetryLimit == nil {
+		args.RetryLimit = pulumi.IntPtr(3)
+	}
+	if args.ApiKey != nil {
+		args.ApiKey = pulumi.ToSecret(args.ApiKey).(pulumi.StringPtrInput)
+	}
+	secrets := pulumi.AdditionalSecretOutputs([]string{
+		"apiKey",
+	})
+	opts = append(opts, secrets)
+	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource Provider
 	err := ctx.RegisterResource("pulumi:providers:vultr", name, args, &resource, opts...)
 	if err != nil {
@@ -43,7 +59,7 @@ func NewProvider(ctx *pulumi.Context,
 
 type providerArgs struct {
 	// The API Key that allows interaction with the API
-	ApiKey string `pulumi:"apiKey"`
+	ApiKey *string `pulumi:"apiKey"`
 	// Allows users to set the speed of API calls to work with the Vultr Rate Limit
 	RateLimit *int `pulumi:"rateLimit"`
 	// Allows users to set the maximum number of retries allowed for a failed API call.
@@ -53,7 +69,7 @@ type providerArgs struct {
 // The set of arguments for constructing a Provider resource.
 type ProviderArgs struct {
 	// The API Key that allows interaction with the API
-	ApiKey pulumi.StringInput
+	ApiKey pulumi.StringPtrInput
 	// Allows users to set the speed of API calls to work with the Vultr Rate Limit
 	RateLimit pulumi.IntPtrInput
 	// Allows users to set the maximum number of retries allowed for a failed API call.
@@ -83,6 +99,12 @@ func (i *Provider) ToProviderOutputWithContext(ctx context.Context) ProviderOutp
 	return pulumi.ToOutputWithContext(ctx, i).(ProviderOutput)
 }
 
+func (i *Provider) ToOutput(ctx context.Context) pulumix.Output[*Provider] {
+	return pulumix.Output[*Provider]{
+		OutputState: i.ToProviderOutputWithContext(ctx).OutputState,
+	}
+}
+
 type ProviderOutput struct{ *pulumi.OutputState }
 
 func (ProviderOutput) ElementType() reflect.Type {
@@ -97,9 +119,15 @@ func (o ProviderOutput) ToProviderOutputWithContext(ctx context.Context) Provide
 	return o
 }
 
+func (o ProviderOutput) ToOutput(ctx context.Context) pulumix.Output[*Provider] {
+	return pulumix.Output[*Provider]{
+		OutputState: o.OutputState,
+	}
+}
+
 // The API Key that allows interaction with the API
-func (o ProviderOutput) ApiKey() pulumi.StringOutput {
-	return o.ApplyT(func(v *Provider) pulumi.StringOutput { return v.ApiKey }).(pulumi.StringOutput)
+func (o ProviderOutput) ApiKey() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Provider) pulumi.StringPtrOutput { return v.ApiKey }).(pulumi.StringPtrOutput)
 }
 
 func init() {

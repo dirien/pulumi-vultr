@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 
 __all__ = ['FirewallRuleArgs', 'FirewallRule']
@@ -33,17 +33,40 @@ class FirewallRuleArgs:
         :param pulumi.Input[str] port: TCP/UDP only. This field can be a specific port or a colon separated port range.
         :param pulumi.Input[str] source: Possible values ("", cloudflare)
         """
-        pulumi.set(__self__, "firewall_group_id", firewall_group_id)
-        pulumi.set(__self__, "ip_type", ip_type)
-        pulumi.set(__self__, "protocol", protocol)
-        pulumi.set(__self__, "subnet", subnet)
-        pulumi.set(__self__, "subnet_size", subnet_size)
+        FirewallRuleArgs._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            firewall_group_id=firewall_group_id,
+            ip_type=ip_type,
+            protocol=protocol,
+            subnet=subnet,
+            subnet_size=subnet_size,
+            notes=notes,
+            port=port,
+            source=source,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             firewall_group_id: pulumi.Input[str],
+             ip_type: pulumi.Input[str],
+             protocol: pulumi.Input[str],
+             subnet: pulumi.Input[str],
+             subnet_size: pulumi.Input[int],
+             notes: Optional[pulumi.Input[str]] = None,
+             port: Optional[pulumi.Input[str]] = None,
+             source: Optional[pulumi.Input[str]] = None,
+             opts: Optional[pulumi.ResourceOptions]=None):
+        _setter("firewall_group_id", firewall_group_id)
+        _setter("ip_type", ip_type)
+        _setter("protocol", protocol)
+        _setter("subnet", subnet)
+        _setter("subnet_size", subnet_size)
         if notes is not None:
-            pulumi.set(__self__, "notes", notes)
+            _setter("notes", notes)
         if port is not None:
-            pulumi.set(__self__, "port", port)
+            _setter("port", port)
         if source is not None:
-            pulumi.set(__self__, "source", source)
+            _setter("source", source)
 
     @property
     @pulumi.getter(name="firewallGroupId")
@@ -164,22 +187,45 @@ class _FirewallRuleState:
         :param pulumi.Input[str] subnet: IP address that you want to define for this firewall rule.
         :param pulumi.Input[int] subnet_size: The number of bits for the subnet in CIDR notation. Example: 32.
         """
+        _FirewallRuleState._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            firewall_group_id=firewall_group_id,
+            ip_type=ip_type,
+            notes=notes,
+            port=port,
+            protocol=protocol,
+            source=source,
+            subnet=subnet,
+            subnet_size=subnet_size,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             firewall_group_id: Optional[pulumi.Input[str]] = None,
+             ip_type: Optional[pulumi.Input[str]] = None,
+             notes: Optional[pulumi.Input[str]] = None,
+             port: Optional[pulumi.Input[str]] = None,
+             protocol: Optional[pulumi.Input[str]] = None,
+             source: Optional[pulumi.Input[str]] = None,
+             subnet: Optional[pulumi.Input[str]] = None,
+             subnet_size: Optional[pulumi.Input[int]] = None,
+             opts: Optional[pulumi.ResourceOptions]=None):
         if firewall_group_id is not None:
-            pulumi.set(__self__, "firewall_group_id", firewall_group_id)
+            _setter("firewall_group_id", firewall_group_id)
         if ip_type is not None:
-            pulumi.set(__self__, "ip_type", ip_type)
+            _setter("ip_type", ip_type)
         if notes is not None:
-            pulumi.set(__self__, "notes", notes)
+            _setter("notes", notes)
         if port is not None:
-            pulumi.set(__self__, "port", port)
+            _setter("port", port)
         if protocol is not None:
-            pulumi.set(__self__, "protocol", protocol)
+            _setter("protocol", protocol)
         if source is not None:
-            pulumi.set(__self__, "source", source)
+            _setter("source", source)
         if subnet is not None:
-            pulumi.set(__self__, "subnet", subnet)
+            _setter("subnet", subnet)
         if subnet_size is not None:
-            pulumi.set(__self__, "subnet_size", subnet_size)
+            _setter("subnet_size", subnet_size)
 
     @property
     @pulumi.getter(name="firewallGroupId")
@@ -379,6 +425,10 @@ class FirewallRule(pulumi.CustomResource):
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
+            kwargs = kwargs or {}
+            def _setter(key, value):
+                kwargs[key] = value
+            FirewallRuleArgs._configure(_setter, **kwargs)
             __self__._internal_init(resource_name, *args, **kwargs)
 
     def _internal_init(__self__,

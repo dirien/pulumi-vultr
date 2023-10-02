@@ -249,6 +249,12 @@ namespace ediri.Vultr
         [Output("v6NetworkSize")]
         public Output<int> V6NetworkSize { get; private set; } = null!;
 
+        /// <summary>
+        /// A list of VPC 2.0 IDs to be attached to the server.
+        /// </summary>
+        [Output("vpc2Ids")]
+        public Output<ImmutableArray<string>> Vpc2Ids { get; private set; } = null!;
+
 
         /// <summary>
         /// Create a BareMetalServer resource with the given unique name, arguments, and options.
@@ -401,6 +407,18 @@ namespace ediri.Vultr
         /// </summary>
         [Input("userData")]
         public Input<string>? UserData { get; set; }
+
+        [Input("vpc2Ids")]
+        private InputList<string>? _vpc2Ids;
+
+        /// <summary>
+        /// A list of VPC 2.0 IDs to be attached to the server.
+        /// </summary>
+        public InputList<string> Vpc2Ids
+        {
+            get => _vpc2Ids ?? (_vpc2Ids = new InputList<string>());
+            set => _vpc2Ids = value;
+        }
 
         public BareMetalServerArgs()
         {
@@ -605,6 +623,18 @@ namespace ediri.Vultr
         /// </summary>
         [Input("v6NetworkSize")]
         public Input<int>? V6NetworkSize { get; set; }
+
+        [Input("vpc2Ids")]
+        private InputList<string>? _vpc2Ids;
+
+        /// <summary>
+        /// A list of VPC 2.0 IDs to be attached to the server.
+        /// </summary>
+        public InputList<string> Vpc2Ids
+        {
+            get => _vpc2Ids ?? (_vpc2Ids = new InputList<string>());
+            set => _vpc2Ids = value;
+        }
 
         public BareMetalServerState()
         {

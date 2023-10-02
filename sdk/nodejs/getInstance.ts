@@ -168,6 +168,10 @@ export interface GetInstanceResult {
      * The number of virtual CPUs available on the server.
      */
     readonly vcpuCount: number;
+    /**
+     * A list of VPC 2.0 IDs attached to the server.
+     */
+    readonly vpc2Ids: string[];
     readonly vpcIds: string[];
 }
 /**

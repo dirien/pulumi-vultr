@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 
 __all__ = ['DatabaseDbArgs', 'DatabaseDb']
@@ -18,14 +18,30 @@ class DatabaseDbArgs:
                  name: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a DatabaseDb resource.
+        :param pulumi.Input[str] database_id: The managed database ID you want to attach this logical DB to.
+        :param pulumi.Input[str] name: The name of the new managed database logical DB.
         """
-        pulumi.set(__self__, "database_id", database_id)
+        DatabaseDbArgs._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            database_id=database_id,
+            name=name,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             database_id: pulumi.Input[str],
+             name: Optional[pulumi.Input[str]] = None,
+             opts: Optional[pulumi.ResourceOptions]=None):
+        _setter("database_id", database_id)
         if name is not None:
-            pulumi.set(__self__, "name", name)
+            _setter("name", name)
 
     @property
     @pulumi.getter(name="databaseId")
     def database_id(self) -> pulumi.Input[str]:
+        """
+        The managed database ID you want to attach this logical DB to.
+        """
         return pulumi.get(self, "database_id")
 
     @database_id.setter
@@ -35,6 +51,9 @@ class DatabaseDbArgs:
     @property
     @pulumi.getter
     def name(self) -> Optional[pulumi.Input[str]]:
+        """
+        The name of the new managed database logical DB.
+        """
         return pulumi.get(self, "name")
 
     @name.setter
@@ -49,15 +68,31 @@ class _DatabaseDbState:
                  name: Optional[pulumi.Input[str]] = None):
         """
         Input properties used for looking up and filtering DatabaseDb resources.
+        :param pulumi.Input[str] database_id: The managed database ID you want to attach this logical DB to.
+        :param pulumi.Input[str] name: The name of the new managed database logical DB.
         """
+        _DatabaseDbState._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            database_id=database_id,
+            name=name,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             database_id: Optional[pulumi.Input[str]] = None,
+             name: Optional[pulumi.Input[str]] = None,
+             opts: Optional[pulumi.ResourceOptions]=None):
         if database_id is not None:
-            pulumi.set(__self__, "database_id", database_id)
+            _setter("database_id", database_id)
         if name is not None:
-            pulumi.set(__self__, "name", name)
+            _setter("name", name)
 
     @property
     @pulumi.getter(name="databaseId")
     def database_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        The managed database ID you want to attach this logical DB to.
+        """
         return pulumi.get(self, "database_id")
 
     @database_id.setter
@@ -67,6 +102,9 @@ class _DatabaseDbState:
     @property
     @pulumi.getter
     def name(self) -> Optional[pulumi.Input[str]]:
+        """
+        The name of the new managed database logical DB.
+        """
         return pulumi.get(self, "name")
 
     @name.setter
@@ -83,9 +121,23 @@ class DatabaseDb(pulumi.CustomResource):
                  name: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
-        Create a DatabaseDb resource with the given unique name, props, and options.
+        Provides a Vultr database DB resource. This can be used to create, read, and delete logical DBs for a managed database on your Vultr account.
+
+        ## Example Usage
+
+        Create a new database DB:
+
+        ```python
+        import pulumi
+        import ediri_vultr as vultr
+
+        my_database_db = vultr.DatabaseDb("myDatabaseDb", database_id=vultr_database["my_database"]["id"])
+        ```
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] database_id: The managed database ID you want to attach this logical DB to.
+        :param pulumi.Input[str] name: The name of the new managed database logical DB.
         """
         ...
     @overload
@@ -94,7 +146,19 @@ class DatabaseDb(pulumi.CustomResource):
                  args: DatabaseDbArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
-        Create a DatabaseDb resource with the given unique name, props, and options.
+        Provides a Vultr database DB resource. This can be used to create, read, and delete logical DBs for a managed database on your Vultr account.
+
+        ## Example Usage
+
+        Create a new database DB:
+
+        ```python
+        import pulumi
+        import ediri_vultr as vultr
+
+        my_database_db = vultr.DatabaseDb("myDatabaseDb", database_id=vultr_database["my_database"]["id"])
+        ```
+
         :param str resource_name: The name of the resource.
         :param DatabaseDbArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -105,6 +169,10 @@ class DatabaseDb(pulumi.CustomResource):
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
+            kwargs = kwargs or {}
+            def _setter(key, value):
+                kwargs[key] = value
+            DatabaseDbArgs._configure(_setter, **kwargs)
             __self__._internal_init(resource_name, *args, **kwargs)
 
     def _internal_init(__self__,
@@ -144,6 +212,8 @@ class DatabaseDb(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] database_id: The managed database ID you want to attach this logical DB to.
+        :param pulumi.Input[str] name: The name of the new managed database logical DB.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -156,10 +226,16 @@ class DatabaseDb(pulumi.CustomResource):
     @property
     @pulumi.getter(name="databaseId")
     def database_id(self) -> pulumi.Output[str]:
+        """
+        The managed database ID you want to attach this logical DB to.
+        """
         return pulumi.get(self, "database_id")
 
     @property
     @pulumi.getter
     def name(self) -> pulumi.Output[str]:
+        """
+        The name of the new managed database logical DB.
+        """
         return pulumi.get(self, "name")
 

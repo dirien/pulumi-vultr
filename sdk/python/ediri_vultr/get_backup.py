@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -92,9 +92,9 @@ def get_backup(filters: Optional[Sequence[pulumi.InputType['GetBackupFilterArgs'
     __ret__ = pulumi.runtime.invoke('vultr:index/getBackup:getBackup', __args__, opts=opts, typ=GetBackupResult).value
 
     return AwaitableGetBackupResult(
-        backups=__ret__.backups,
-        filters=__ret__.filters,
-        id=__ret__.id)
+        backups=pulumi.get(__ret__, 'backups'),
+        filters=pulumi.get(__ret__, 'filters'),
+        id=pulumi.get(__ret__, 'id'))
 
 
 @_utilities.lift_output_func(get_backup)

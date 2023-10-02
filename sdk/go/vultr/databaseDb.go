@@ -8,14 +8,47 @@ import (
 	"reflect"
 
 	"errors"
+	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 )
 
+// Provides a Vultr database DB resource. This can be used to create, read, and delete logical DBs for a managed database on your Vultr account.
+//
+// ## Example Usage
+//
+// Create a new database DB:
+//
+// ```go
+// package main
+//
+// import (
+//
+//	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr"
+//	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+//
+// )
+//
+//	func main() {
+//		pulumi.Run(func(ctx *pulumi.Context) error {
+//			_, err := vultr.NewDatabaseDb(ctx, "myDatabaseDb", &vultr.DatabaseDbArgs{
+//				DatabaseId: pulumi.Any(vultr_database.My_database.Id),
+//			})
+//			if err != nil {
+//				return err
+//			}
+//			return nil
+//		})
+//	}
+//
+// ```
 type DatabaseDb struct {
 	pulumi.CustomResourceState
 
+	// The managed database ID you want to attach this logical DB to.
 	DatabaseId pulumi.StringOutput `pulumi:"databaseId"`
-	Name       pulumi.StringOutput `pulumi:"name"`
+	// The name of the new managed database logical DB.
+	Name pulumi.StringOutput `pulumi:"name"`
 }
 
 // NewDatabaseDb registers a new resource with the given unique name, arguments, and options.
@@ -28,7 +61,7 @@ func NewDatabaseDb(ctx *pulumi.Context,
 	if args.DatabaseId == nil {
 		return nil, errors.New("invalid value for required argument 'DatabaseId'")
 	}
-	opts = pkgResourceDefaultOpts(opts)
+	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource DatabaseDb
 	err := ctx.RegisterResource("vultr:index/databaseDb:DatabaseDb", name, args, &resource, opts...)
 	if err != nil {
@@ -51,13 +84,17 @@ func GetDatabaseDb(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering DatabaseDb resources.
 type databaseDbState struct {
+	// The managed database ID you want to attach this logical DB to.
 	DatabaseId *string `pulumi:"databaseId"`
-	Name       *string `pulumi:"name"`
+	// The name of the new managed database logical DB.
+	Name *string `pulumi:"name"`
 }
 
 type DatabaseDbState struct {
+	// The managed database ID you want to attach this logical DB to.
 	DatabaseId pulumi.StringPtrInput
-	Name       pulumi.StringPtrInput
+	// The name of the new managed database logical DB.
+	Name pulumi.StringPtrInput
 }
 
 func (DatabaseDbState) ElementType() reflect.Type {
@@ -65,14 +102,18 @@ func (DatabaseDbState) ElementType() reflect.Type {
 }
 
 type databaseDbArgs struct {
-	DatabaseId string  `pulumi:"databaseId"`
-	Name       *string `pulumi:"name"`
+	// The managed database ID you want to attach this logical DB to.
+	DatabaseId string `pulumi:"databaseId"`
+	// The name of the new managed database logical DB.
+	Name *string `pulumi:"name"`
 }
 
 // The set of arguments for constructing a DatabaseDb resource.
 type DatabaseDbArgs struct {
+	// The managed database ID you want to attach this logical DB to.
 	DatabaseId pulumi.StringInput
-	Name       pulumi.StringPtrInput
+	// The name of the new managed database logical DB.
+	Name pulumi.StringPtrInput
 }
 
 func (DatabaseDbArgs) ElementType() reflect.Type {
@@ -96,6 +137,12 @@ func (i *DatabaseDb) ToDatabaseDbOutput() DatabaseDbOutput {
 
 func (i *DatabaseDb) ToDatabaseDbOutputWithContext(ctx context.Context) DatabaseDbOutput {
 	return pulumi.ToOutputWithContext(ctx, i).(DatabaseDbOutput)
+}
+
+func (i *DatabaseDb) ToOutput(ctx context.Context) pulumix.Output[*DatabaseDb] {
+	return pulumix.Output[*DatabaseDb]{
+		OutputState: i.ToDatabaseDbOutputWithContext(ctx).OutputState,
+	}
 }
 
 // DatabaseDbArrayInput is an input type that accepts DatabaseDbArray and DatabaseDbArrayOutput values.
@@ -123,6 +170,12 @@ func (i DatabaseDbArray) ToDatabaseDbArrayOutputWithContext(ctx context.Context)
 	return pulumi.ToOutputWithContext(ctx, i).(DatabaseDbArrayOutput)
 }
 
+func (i DatabaseDbArray) ToOutput(ctx context.Context) pulumix.Output[[]*DatabaseDb] {
+	return pulumix.Output[[]*DatabaseDb]{
+		OutputState: i.ToDatabaseDbArrayOutputWithContext(ctx).OutputState,
+	}
+}
+
 // DatabaseDbMapInput is an input type that accepts DatabaseDbMap and DatabaseDbMapOutput values.
 // You can construct a concrete instance of `DatabaseDbMapInput` via:
 //
@@ -148,6 +201,12 @@ func (i DatabaseDbMap) ToDatabaseDbMapOutputWithContext(ctx context.Context) Dat
 	return pulumi.ToOutputWithContext(ctx, i).(DatabaseDbMapOutput)
 }
 
+func (i DatabaseDbMap) ToOutput(ctx context.Context) pulumix.Output[map[string]*DatabaseDb] {
+	return pulumix.Output[map[string]*DatabaseDb]{
+		OutputState: i.ToDatabaseDbMapOutputWithContext(ctx).OutputState,
+	}
+}
+
 type DatabaseDbOutput struct{ *pulumi.OutputState }
 
 func (DatabaseDbOutput) ElementType() reflect.Type {
@@ -162,10 +221,18 @@ func (o DatabaseDbOutput) ToDatabaseDbOutputWithContext(ctx context.Context) Dat
 	return o
 }
 
+func (o DatabaseDbOutput) ToOutput(ctx context.Context) pulumix.Output[*DatabaseDb] {
+	return pulumix.Output[*DatabaseDb]{
+		OutputState: o.OutputState,
+	}
+}
+
+// The managed database ID you want to attach this logical DB to.
 func (o DatabaseDbOutput) DatabaseId() pulumi.StringOutput {
 	return o.ApplyT(func(v *DatabaseDb) pulumi.StringOutput { return v.DatabaseId }).(pulumi.StringOutput)
 }
 
+// The name of the new managed database logical DB.
 func (o DatabaseDbOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *DatabaseDb) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
@@ -182,6 +249,12 @@ func (o DatabaseDbArrayOutput) ToDatabaseDbArrayOutput() DatabaseDbArrayOutput {
 
 func (o DatabaseDbArrayOutput) ToDatabaseDbArrayOutputWithContext(ctx context.Context) DatabaseDbArrayOutput {
 	return o
+}
+
+func (o DatabaseDbArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]*DatabaseDb] {
+	return pulumix.Output[[]*DatabaseDb]{
+		OutputState: o.OutputState,
+	}
 }
 
 func (o DatabaseDbArrayOutput) Index(i pulumi.IntInput) DatabaseDbOutput {
@@ -202,6 +275,12 @@ func (o DatabaseDbMapOutput) ToDatabaseDbMapOutput() DatabaseDbMapOutput {
 
 func (o DatabaseDbMapOutput) ToDatabaseDbMapOutputWithContext(ctx context.Context) DatabaseDbMapOutput {
 	return o
+}
+
+func (o DatabaseDbMapOutput) ToOutput(ctx context.Context) pulumix.Output[map[string]*DatabaseDb] {
+	return pulumix.Output[map[string]*DatabaseDb]{
+		OutputState: o.OutputState,
+	}
 }
 
 func (o DatabaseDbMapOutput) MapIndex(k pulumi.StringInput) DatabaseDbOutput {

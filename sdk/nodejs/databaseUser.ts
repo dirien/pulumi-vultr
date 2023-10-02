@@ -4,6 +4,24 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "./utilities";
 
+/**
+ * Provides a Vultr database user resource. This can be used to create, read, modify, and delete users for a managed database on your Vultr account.
+ *
+ * ## Example Usage
+ *
+ * Create a new database user:
+ *
+ * ```typescript
+ * import * as pulumi from "@pulumi/pulumi";
+ * import * as vultr from "@ediri/vultr";
+ *
+ * const myDatabaseUser = new vultr.DatabaseUser("myDatabaseUser", {
+ *     databaseId: vultr_database.my_database.id,
+ *     username: "my_database_user",
+ *     password: "randomTestPW40298",
+ * });
+ * ```
+ */
 export class DatabaseUser extends pulumi.CustomResource {
     /**
      * Get an existing DatabaseUser resource's state with the given name, ID, and optional extra
@@ -32,9 +50,21 @@ export class DatabaseUser extends pulumi.CustomResource {
         return obj['__pulumiType'] === DatabaseUser.__pulumiType;
     }
 
+    /**
+     * The managed database ID you want to attach this user to.
+     */
     public readonly databaseId!: pulumi.Output<string>;
+    /**
+     * The encryption type of the new managed database user's password (MySQL engine types only - `cachingSha2Password`, `mysqlNativePassword`).
+     */
     public readonly encryption!: pulumi.Output<string>;
+    /**
+     * The password of the new managed database user.
+     */
     public readonly password!: pulumi.Output<string>;
+    /**
+     * The username of the new managed database user.
+     */
     public readonly username!: pulumi.Output<string>;
 
     /**
@@ -76,9 +106,21 @@ export class DatabaseUser extends pulumi.CustomResource {
  * Input properties used for looking up and filtering DatabaseUser resources.
  */
 export interface DatabaseUserState {
+    /**
+     * The managed database ID you want to attach this user to.
+     */
     databaseId?: pulumi.Input<string>;
+    /**
+     * The encryption type of the new managed database user's password (MySQL engine types only - `cachingSha2Password`, `mysqlNativePassword`).
+     */
     encryption?: pulumi.Input<string>;
+    /**
+     * The password of the new managed database user.
+     */
     password?: pulumi.Input<string>;
+    /**
+     * The username of the new managed database user.
+     */
     username?: pulumi.Input<string>;
 }
 
@@ -86,8 +128,20 @@ export interface DatabaseUserState {
  * The set of arguments for constructing a DatabaseUser resource.
  */
 export interface DatabaseUserArgs {
+    /**
+     * The managed database ID you want to attach this user to.
+     */
     databaseId: pulumi.Input<string>;
+    /**
+     * The encryption type of the new managed database user's password (MySQL engine types only - `cachingSha2Password`, `mysqlNativePassword`).
+     */
     encryption?: pulumi.Input<string>;
+    /**
+     * The password of the new managed database user.
+     */
     password?: pulumi.Input<string>;
+    /**
+     * The username of the new managed database user.
+     */
     username: pulumi.Input<string>;
 }

@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 from . import outputs
 
@@ -48,6 +48,7 @@ __all__ = [
     'GetSshKeyFilterResult',
     'GetStartupScriptFilterResult',
     'GetUserFilterResult',
+    'GetVpc2FilterResult',
     'GetVpcFilterResult',
 ]
 
@@ -90,6 +91,8 @@ class DatabaseReadReplica(dict):
             suggest = "redis_eviction_policy"
         elif key == "trustedIps":
             suggest = "trusted_ips"
+        elif key == "vpcId":
+            suggest = "vpc_id"
 
         if suggest:
             pulumi.log.warn(f"Key '{key}' not found in DatabaseReadReplica. Access the value via the '{suggest}' property getter instead.")
@@ -130,201 +133,388 @@ class DatabaseReadReplica(dict):
                  status: Optional[str] = None,
                  tag: Optional[str] = None,
                  trusted_ips: Optional[Sequence[str]] = None,
-                 user: Optional[str] = None):
-        pulumi.set(__self__, "label", label)
-        pulumi.set(__self__, "region", region)
+                 user: Optional[str] = None,
+                 vpc_id: Optional[str] = None):
+        """
+        :param str label: A label for the managed database.
+        :param str region: The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
+        :param str cluster_time_zone: The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
+        :param str database_engine: The database engine of the new managed database.
+        :param str database_engine_version: The database engine version of the new managed database.
+        :param str date_created: The date the managed database was added to your Vultr account.
+        :param str dbname: The managed database's default logical database.
+        :param str host: The hostname assigned to the managed database.
+        :param str id: The ID of the managed database.
+        :param str latest_backup: The date of the latest backup available on the managed database.
+        :param str maintenance_dow: The preferred maintenance day of week for the managed database.
+        :param str maintenance_time: The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).
+        :param int mysql_long_query_time: The configuration value for the long query time (in seconds) on the managed database (MySQL engine types only).
+        :param bool mysql_require_primary_key: The configuration value for whether primary keys are required on the managed database (MySQL engine types only).
+        :param bool mysql_slow_query_log: The configuration value for slow query logging on the managed database (MySQL engine types only).
+        :param Sequence[str] mysql_sql_modes: A list of SQL modes to configure for the managed database (MySQL engine types only - `ALLOW_INVALID_DATES`, `ANSI`, `ANSI_QUOTES`, `ERROR_FOR_DIVISION_BY_ZERO`, `HIGH_NOT_PRECEDENCE`, `IGNORE_SPACE`, `NO_AUTO_VALUE_ON_ZERO`, `NO_DIR_IN_CREATE`, `NO_ENGINE_SUBSTITUTION`, `NO_UNSIGNED_SUBTRACTION`, `NO_ZERO_DATE`, `NO_ZERO_IN_DATE`, `ONLY_FULL_GROUP_BY`, `PIPES_AS_CONCAT`, `REAL_AS_FLOAT`, `STRICT_ALL_TABLES`, `STRICT_TRANS_TABLES`, `TIME_TRUNCATE_FRACTIONAL`, `TRADITIONAL`).
+        :param str password: The password for the managed database's primary admin user.
+        :param str plan: The ID of the plan that you want the managed database to subscribe to. [See List Managed Database Plans](https://www.vultr.com/api/#tag/managed-databases/operation/list-database-plans)
+        :param int plan_disk: The description of the disk(s) on the managed database.
+        :param int plan_ram: The amount of memory available on the managed database in MB.
+        :param int plan_replicas: The number of standby nodes available on the managed database.
+        :param int plan_vcpus: The number of virtual CPUs available on the managed database.
+        :param str port: The connection port for the managed database.
+        :param str redis_eviction_policy: The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
+        :param str status: The current status of the managed database (poweroff, rebuilding, rebalancing, running).
+        :param str tag: The tag to assign to the managed database.
+        :param Sequence[str] trusted_ips: A list of allowed IP addresses for the managed database.
+        :param str user: The primary admin user for the managed database.
+        """
+        DatabaseReadReplica._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            label=label,
+            region=region,
+            cluster_time_zone=cluster_time_zone,
+            database_engine=database_engine,
+            database_engine_version=database_engine_version,
+            date_created=date_created,
+            dbname=dbname,
+            host=host,
+            id=id,
+            latest_backup=latest_backup,
+            maintenance_dow=maintenance_dow,
+            maintenance_time=maintenance_time,
+            mysql_long_query_time=mysql_long_query_time,
+            mysql_require_primary_key=mysql_require_primary_key,
+            mysql_slow_query_log=mysql_slow_query_log,
+            mysql_sql_modes=mysql_sql_modes,
+            password=password,
+            plan=plan,
+            plan_disk=plan_disk,
+            plan_ram=plan_ram,
+            plan_replicas=plan_replicas,
+            plan_vcpus=plan_vcpus,
+            port=port,
+            redis_eviction_policy=redis_eviction_policy,
+            status=status,
+            tag=tag,
+            trusted_ips=trusted_ips,
+            user=user,
+            vpc_id=vpc_id,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             label: str,
+             region: str,
+             cluster_time_zone: Optional[str] = None,
+             database_engine: Optional[str] = None,
+             database_engine_version: Optional[str] = None,
+             date_created: Optional[str] = None,
+             dbname: Optional[str] = None,
+             host: Optional[str] = None,
+             id: Optional[str] = None,
+             latest_backup: Optional[str] = None,
+             maintenance_dow: Optional[str] = None,
+             maintenance_time: Optional[str] = None,
+             mysql_long_query_time: Optional[int] = None,
+             mysql_require_primary_key: Optional[bool] = None,
+             mysql_slow_query_log: Optional[bool] = None,
+             mysql_sql_modes: Optional[Sequence[str]] = None,
+             password: Optional[str] = None,
+             plan: Optional[str] = None,
+             plan_disk: Optional[int] = None,
+             plan_ram: Optional[int] = None,
+             plan_replicas: Optional[int] = None,
+             plan_vcpus: Optional[int] = None,
+             port: Optional[str] = None,
+             redis_eviction_policy: Optional[str] = None,
+             status: Optional[str] = None,
+             tag: Optional[str] = None,
+             trusted_ips: Optional[Sequence[str]] = None,
+             user: Optional[str] = None,
+             vpc_id: Optional[str] = None,
+             opts: Optional[pulumi.ResourceOptions]=None):
+        _setter("label", label)
+        _setter("region", region)
         if cluster_time_zone is not None:
-            pulumi.set(__self__, "cluster_time_zone", cluster_time_zone)
+            _setter("cluster_time_zone", cluster_time_zone)
         if database_engine is not None:
-            pulumi.set(__self__, "database_engine", database_engine)
+            _setter("database_engine", database_engine)
         if database_engine_version is not None:
-            pulumi.set(__self__, "database_engine_version", database_engine_version)
+            _setter("database_engine_version", database_engine_version)
         if date_created is not None:
-            pulumi.set(__self__, "date_created", date_created)
+            _setter("date_created", date_created)
         if dbname is not None:
-            pulumi.set(__self__, "dbname", dbname)
+            _setter("dbname", dbname)
         if host is not None:
-            pulumi.set(__self__, "host", host)
+            _setter("host", host)
         if id is not None:
-            pulumi.set(__self__, "id", id)
+            _setter("id", id)
         if latest_backup is not None:
-            pulumi.set(__self__, "latest_backup", latest_backup)
+            _setter("latest_backup", latest_backup)
         if maintenance_dow is not None:
-            pulumi.set(__self__, "maintenance_dow", maintenance_dow)
+            _setter("maintenance_dow", maintenance_dow)
         if maintenance_time is not None:
-            pulumi.set(__self__, "maintenance_time", maintenance_time)
+            _setter("maintenance_time", maintenance_time)
         if mysql_long_query_time is not None:
-            pulumi.set(__self__, "mysql_long_query_time", mysql_long_query_time)
+            _setter("mysql_long_query_time", mysql_long_query_time)
         if mysql_require_primary_key is not None:
-            pulumi.set(__self__, "mysql_require_primary_key", mysql_require_primary_key)
+            _setter("mysql_require_primary_key", mysql_require_primary_key)
         if mysql_slow_query_log is not None:
-            pulumi.set(__self__, "mysql_slow_query_log", mysql_slow_query_log)
+            _setter("mysql_slow_query_log", mysql_slow_query_log)
         if mysql_sql_modes is not None:
-            pulumi.set(__self__, "mysql_sql_modes", mysql_sql_modes)
+            _setter("mysql_sql_modes", mysql_sql_modes)
         if password is not None:
-            pulumi.set(__self__, "password", password)
+            _setter("password", password)
         if plan is not None:
-            pulumi.set(__self__, "plan", plan)
+            _setter("plan", plan)
         if plan_disk is not None:
-            pulumi.set(__self__, "plan_disk", plan_disk)
+            _setter("plan_disk", plan_disk)
         if plan_ram is not None:
-            pulumi.set(__self__, "plan_ram", plan_ram)
+            _setter("plan_ram", plan_ram)
         if plan_replicas is not None:
-            pulumi.set(__self__, "plan_replicas", plan_replicas)
+            _setter("plan_replicas", plan_replicas)
         if plan_vcpus is not None:
-            pulumi.set(__self__, "plan_vcpus", plan_vcpus)
+            _setter("plan_vcpus", plan_vcpus)
         if port is not None:
-            pulumi.set(__self__, "port", port)
+            _setter("port", port)
         if redis_eviction_policy is not None:
-            pulumi.set(__self__, "redis_eviction_policy", redis_eviction_policy)
+            _setter("redis_eviction_policy", redis_eviction_policy)
         if status is not None:
-            pulumi.set(__self__, "status", status)
+            _setter("status", status)
         if tag is not None:
-            pulumi.set(__self__, "tag", tag)
+            _setter("tag", tag)
         if trusted_ips is not None:
-            pulumi.set(__self__, "trusted_ips", trusted_ips)
+            _setter("trusted_ips", trusted_ips)
         if user is not None:
-            pulumi.set(__self__, "user", user)
+            _setter("user", user)
+        if vpc_id is not None:
+            _setter("vpc_id", vpc_id)
 
     @property
     @pulumi.getter
     def label(self) -> str:
+        """
+        A label for the managed database.
+        """
         return pulumi.get(self, "label")
 
     @property
     @pulumi.getter
     def region(self) -> str:
+        """
+        The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
+        """
         return pulumi.get(self, "region")
 
     @property
     @pulumi.getter(name="clusterTimeZone")
     def cluster_time_zone(self) -> Optional[str]:
+        """
+        The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
+        """
         return pulumi.get(self, "cluster_time_zone")
 
     @property
     @pulumi.getter(name="databaseEngine")
     def database_engine(self) -> Optional[str]:
+        """
+        The database engine of the new managed database.
+        """
         return pulumi.get(self, "database_engine")
 
     @property
     @pulumi.getter(name="databaseEngineVersion")
     def database_engine_version(self) -> Optional[str]:
+        """
+        The database engine version of the new managed database.
+        """
         return pulumi.get(self, "database_engine_version")
 
     @property
     @pulumi.getter(name="dateCreated")
     def date_created(self) -> Optional[str]:
+        """
+        The date the managed database was added to your Vultr account.
+        """
         return pulumi.get(self, "date_created")
 
     @property
     @pulumi.getter
     def dbname(self) -> Optional[str]:
+        """
+        The managed database's default logical database.
+        """
         return pulumi.get(self, "dbname")
 
     @property
     @pulumi.getter
     def host(self) -> Optional[str]:
+        """
+        The hostname assigned to the managed database.
+        """
         return pulumi.get(self, "host")
 
     @property
     @pulumi.getter
     def id(self) -> Optional[str]:
+        """
+        The ID of the managed database.
+        """
         return pulumi.get(self, "id")
 
     @property
     @pulumi.getter(name="latestBackup")
     def latest_backup(self) -> Optional[str]:
+        """
+        The date of the latest backup available on the managed database.
+        """
         return pulumi.get(self, "latest_backup")
 
     @property
     @pulumi.getter(name="maintenanceDow")
     def maintenance_dow(self) -> Optional[str]:
+        """
+        The preferred maintenance day of week for the managed database.
+        """
         return pulumi.get(self, "maintenance_dow")
 
     @property
     @pulumi.getter(name="maintenanceTime")
     def maintenance_time(self) -> Optional[str]:
+        """
+        The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).
+        """
         return pulumi.get(self, "maintenance_time")
 
     @property
     @pulumi.getter(name="mysqlLongQueryTime")
     def mysql_long_query_time(self) -> Optional[int]:
+        """
+        The configuration value for the long query time (in seconds) on the managed database (MySQL engine types only).
+        """
         return pulumi.get(self, "mysql_long_query_time")
 
     @property
     @pulumi.getter(name="mysqlRequirePrimaryKey")
     def mysql_require_primary_key(self) -> Optional[bool]:
+        """
+        The configuration value for whether primary keys are required on the managed database (MySQL engine types only).
+        """
         return pulumi.get(self, "mysql_require_primary_key")
 
     @property
     @pulumi.getter(name="mysqlSlowQueryLog")
     def mysql_slow_query_log(self) -> Optional[bool]:
+        """
+        The configuration value for slow query logging on the managed database (MySQL engine types only).
+        """
         return pulumi.get(self, "mysql_slow_query_log")
 
     @property
     @pulumi.getter(name="mysqlSqlModes")
     def mysql_sql_modes(self) -> Optional[Sequence[str]]:
+        """
+        A list of SQL modes to configure for the managed database (MySQL engine types only - `ALLOW_INVALID_DATES`, `ANSI`, `ANSI_QUOTES`, `ERROR_FOR_DIVISION_BY_ZERO`, `HIGH_NOT_PRECEDENCE`, `IGNORE_SPACE`, `NO_AUTO_VALUE_ON_ZERO`, `NO_DIR_IN_CREATE`, `NO_ENGINE_SUBSTITUTION`, `NO_UNSIGNED_SUBTRACTION`, `NO_ZERO_DATE`, `NO_ZERO_IN_DATE`, `ONLY_FULL_GROUP_BY`, `PIPES_AS_CONCAT`, `REAL_AS_FLOAT`, `STRICT_ALL_TABLES`, `STRICT_TRANS_TABLES`, `TIME_TRUNCATE_FRACTIONAL`, `TRADITIONAL`).
+        """
         return pulumi.get(self, "mysql_sql_modes")
 
     @property
     @pulumi.getter
     def password(self) -> Optional[str]:
+        """
+        The password for the managed database's primary admin user.
+        """
         return pulumi.get(self, "password")
 
     @property
     @pulumi.getter
     def plan(self) -> Optional[str]:
+        """
+        The ID of the plan that you want the managed database to subscribe to. [See List Managed Database Plans](https://www.vultr.com/api/#tag/managed-databases/operation/list-database-plans)
+        """
         return pulumi.get(self, "plan")
 
     @property
     @pulumi.getter(name="planDisk")
     def plan_disk(self) -> Optional[int]:
+        """
+        The description of the disk(s) on the managed database.
+        """
         return pulumi.get(self, "plan_disk")
 
     @property
     @pulumi.getter(name="planRam")
     def plan_ram(self) -> Optional[int]:
+        """
+        The amount of memory available on the managed database in MB.
+        """
         return pulumi.get(self, "plan_ram")
 
     @property
     @pulumi.getter(name="planReplicas")
     def plan_replicas(self) -> Optional[int]:
+        """
+        The number of standby nodes available on the managed database.
+        """
         return pulumi.get(self, "plan_replicas")
 
     @property
     @pulumi.getter(name="planVcpus")
     def plan_vcpus(self) -> Optional[int]:
+        """
+        The number of virtual CPUs available on the managed database.
+        """
         return pulumi.get(self, "plan_vcpus")
 
     @property
     @pulumi.getter
     def port(self) -> Optional[str]:
+        """
+        The connection port for the managed database.
+        """
         return pulumi.get(self, "port")
 
     @property
     @pulumi.getter(name="redisEvictionPolicy")
     def redis_eviction_policy(self) -> Optional[str]:
+        """
+        The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
+        """
         return pulumi.get(self, "redis_eviction_policy")
 
     @property
     @pulumi.getter
     def status(self) -> Optional[str]:
+        """
+        The current status of the managed database (poweroff, rebuilding, rebalancing, running).
+        """
         return pulumi.get(self, "status")
 
     @property
     @pulumi.getter
     def tag(self) -> Optional[str]:
+        """
+        The tag to assign to the managed database.
+        """
         return pulumi.get(self, "tag")
 
     @property
     @pulumi.getter(name="trustedIps")
     def trusted_ips(self) -> Optional[Sequence[str]]:
+        """
+        A list of allowed IP addresses for the managed database.
+        """
         return pulumi.get(self, "trusted_ips")
 
     @property
     @pulumi.getter
     def user(self) -> Optional[str]:
+        """
+        The primary admin user for the managed database.
+        """
         return pulumi.get(self, "user")
+
+    @property
+    @pulumi.getter(name="vpcId")
+    def vpc_id(self) -> Optional[str]:
+        return pulumi.get(self, "vpc_id")
 
 
 @pulumi.output_type
@@ -340,13 +530,28 @@ class InstanceBackupsSchedule(dict):
         :param int dow: Day of week to run. `1 = Sunday`, `2 = Monday`, `3 = Tuesday`, `4 = Wednesday`, `5 = Thursday`, `6 = Friday`, `7 = Saturday`
         :param int hour: Hour of day to run in UTC.
         """
-        pulumi.set(__self__, "type", type)
+        InstanceBackupsSchedule._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            type=type,
+            dom=dom,
+            dow=dow,
+            hour=hour,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             type: str,
+             dom: Optional[int] = None,
+             dow: Optional[int] = None,
+             hour: Optional[int] = None,
+             opts: Optional[pulumi.ResourceOptions]=None):
+        _setter("type", type)
         if dom is not None:
-            pulumi.set(__self__, "dom", dom)
+            _setter("dom", dom)
         if dow is not None:
-            pulumi.set(__self__, "dow", dow)
+            _setter("dow", dow)
         if hour is not None:
-            pulumi.set(__self__, "hour", hour)
+            _setter("hour", hour)
 
     @property
     @pulumi.getter
@@ -437,27 +642,58 @@ class KubernetesNodePools(dict):
         :param str status: Status of node.
         :param str tag: Tag for node pool.
         """
-        pulumi.set(__self__, "label", label)
-        pulumi.set(__self__, "node_quantity", node_quantity)
-        pulumi.set(__self__, "plan", plan)
+        KubernetesNodePools._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            label=label,
+            node_quantity=node_quantity,
+            plan=plan,
+            auto_scaler=auto_scaler,
+            date_created=date_created,
+            date_updated=date_updated,
+            id=id,
+            max_nodes=max_nodes,
+            min_nodes=min_nodes,
+            nodes=nodes,
+            status=status,
+            tag=tag,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             label: str,
+             node_quantity: int,
+             plan: str,
+             auto_scaler: Optional[bool] = None,
+             date_created: Optional[str] = None,
+             date_updated: Optional[str] = None,
+             id: Optional[str] = None,
+             max_nodes: Optional[int] = None,
+             min_nodes: Optional[int] = None,
+             nodes: Optional[Sequence['outputs.KubernetesNodePoolsNode']] = None,
+             status: Optional[str] = None,
+             tag: Optional[str] = None,
+             opts: Optional[pulumi.ResourceOptions]=None):
+        _setter("label", label)
+        _setter("node_quantity", node_quantity)
+        _setter("plan", plan)
         if auto_scaler is not None:
-            pulumi.set(__self__, "auto_scaler", auto_scaler)
+            _setter("auto_scaler", auto_scaler)
         if date_created is not None:
-            pulumi.set(__self__, "date_created", date_created)
+            _setter("date_created", date_created)
         if date_updated is not None:
-            pulumi.set(__self__, "date_updated", date_updated)
+            _setter("date_updated", date_updated)
         if id is not None:
-            pulumi.set(__self__, "id", id)
+            _setter("id", id)
         if max_nodes is not None:
-            pulumi.set(__self__, "max_nodes", max_nodes)
+            _setter("max_nodes", max_nodes)
         if min_nodes is not None:
-            pulumi.set(__self__, "min_nodes", min_nodes)
+            _setter("min_nodes", min_nodes)
         if nodes is not None:
-            pulumi.set(__self__, "nodes", nodes)
+            _setter("nodes", nodes)
         if status is not None:
-            pulumi.set(__self__, "status", status)
+            _setter("status", status)
         if tag is not None:
-            pulumi.set(__self__, "tag", tag)
+            _setter("tag", tag)
 
     @property
     @pulumi.getter
@@ -586,14 +822,29 @@ class KubernetesNodePoolsNode(dict):
         :param str label: The label to be used as a prefix for nodes in this node pool.
         :param str status: Status of node.
         """
+        KubernetesNodePoolsNode._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            date_created=date_created,
+            id=id,
+            label=label,
+            status=status,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             date_created: Optional[str] = None,
+             id: Optional[str] = None,
+             label: Optional[str] = None,
+             status: Optional[str] = None,
+             opts: Optional[pulumi.ResourceOptions]=None):
         if date_created is not None:
-            pulumi.set(__self__, "date_created", date_created)
+            _setter("date_created", date_created)
         if id is not None:
-            pulumi.set(__self__, "id", id)
+            _setter("id", id)
         if label is not None:
-            pulumi.set(__self__, "label", label)
+            _setter("label", label)
         if status is not None:
-            pulumi.set(__self__, "status", status)
+            _setter("status", status)
 
     @property
     @pulumi.getter(name="dateCreated")
@@ -658,11 +909,26 @@ class LoadBalancerFirewallRule(dict):
         :param str source: IP address with subnet that is allowed through the firewall. You may also pass in `cloudflare` which will allow only CloudFlares IP range.
         :param str id: The load balancer ID.
         """
-        pulumi.set(__self__, "ip_type", ip_type)
-        pulumi.set(__self__, "port", port)
-        pulumi.set(__self__, "source", source)
+        LoadBalancerFirewallRule._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            ip_type=ip_type,
+            port=port,
+            source=source,
+            id=id,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             ip_type: str,
+             port: int,
+             source: str,
+             id: Optional[str] = None,
+             opts: Optional[pulumi.ResourceOptions]=None):
+        _setter("ip_type", ip_type)
+        _setter("port", port)
+        _setter("source", source)
         if id is not None:
-            pulumi.set(__self__, "id", id)
+            _setter("id", id)
 
     @property
     @pulumi.getter(name="ipType")
@@ -736,12 +1002,29 @@ class LoadBalancerForwardingRule(dict):
         :param int frontend_port: Port on load balancer side.
         :param str frontend_protocol: Protocol on load balancer side. Possible values: "http", "https", "tcp".
         """
-        pulumi.set(__self__, "backend_port", backend_port)
-        pulumi.set(__self__, "backend_protocol", backend_protocol)
-        pulumi.set(__self__, "frontend_port", frontend_port)
-        pulumi.set(__self__, "frontend_protocol", frontend_protocol)
+        LoadBalancerForwardingRule._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            backend_port=backend_port,
+            backend_protocol=backend_protocol,
+            frontend_port=frontend_port,
+            frontend_protocol=frontend_protocol,
+            rule_id=rule_id,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             backend_port: int,
+             backend_protocol: str,
+             frontend_port: int,
+             frontend_protocol: str,
+             rule_id: Optional[str] = None,
+             opts: Optional[pulumi.ResourceOptions]=None):
+        _setter("backend_port", backend_port)
+        _setter("backend_protocol", backend_protocol)
+        _setter("frontend_port", frontend_port)
+        _setter("frontend_protocol", frontend_protocol)
         if rule_id is not None:
-            pulumi.set(__self__, "rule_id", rule_id)
+            _setter("rule_id", rule_id)
 
     @property
     @pulumi.getter(name="backendPort")
@@ -807,46 +1090,55 @@ class LoadBalancerHealthCheck(dict):
         return super().get(key, default)
 
     def __init__(__self__, *,
-                 check_interval: int,
-                 healthy_threshold: int,
                  port: int,
                  protocol: str,
-                 response_timeout: int,
-                 unhealthy_threshold: int,
-                 path: Optional[str] = None):
+                 check_interval: Optional[int] = None,
+                 healthy_threshold: Optional[int] = None,
+                 path: Optional[str] = None,
+                 response_timeout: Optional[int] = None,
+                 unhealthy_threshold: Optional[int] = None):
         """
-        :param int check_interval: Time in seconds to perform health check. Default value is 15.
-        :param int healthy_threshold: Number of failed attempts encountered before failover. Default value is 5.
         :param int port: The assigned port (integer) on the attached instances that the load balancer should check against. Default value is `80`.
         :param str protocol: The protocol used to traffic requests to the load balancer. Possible values are `http`, or `tcp`. Default value is `http`.
+        :param int check_interval: Time in seconds to perform health check. Default value is 15.
+        :param int healthy_threshold: Number of failed attempts encountered before failover. Default value is 5.
+        :param str path: The path on the attached instances that the load balancer should check against. Default value is `/`
         :param int response_timeout: Time in seconds to wait for a health check response. Default value is 5.
         :param int unhealthy_threshold: Number of failed attempts encountered before failover. Default value is 5.
-        :param str path: The path on the attached instances that the load balancer should check against. Default value is `/`
         """
-        pulumi.set(__self__, "check_interval", check_interval)
-        pulumi.set(__self__, "healthy_threshold", healthy_threshold)
-        pulumi.set(__self__, "port", port)
-        pulumi.set(__self__, "protocol", protocol)
-        pulumi.set(__self__, "response_timeout", response_timeout)
-        pulumi.set(__self__, "unhealthy_threshold", unhealthy_threshold)
+        LoadBalancerHealthCheck._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            port=port,
+            protocol=protocol,
+            check_interval=check_interval,
+            healthy_threshold=healthy_threshold,
+            path=path,
+            response_timeout=response_timeout,
+            unhealthy_threshold=unhealthy_threshold,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             port: int,
+             protocol: str,
+             check_interval: Optional[int] = None,
+             healthy_threshold: Optional[int] = None,
+             path: Optional[str] = None,
+             response_timeout: Optional[int] = None,
+             unhealthy_threshold: Optional[int] = None,
+             opts: Optional[pulumi.ResourceOptions]=None):
+        _setter("port", port)
+        _setter("protocol", protocol)
+        if check_interval is not None:
+            _setter("check_interval", check_interval)
+        if healthy_threshold is not None:
+            _setter("healthy_threshold", healthy_threshold)
         if path is not None:
-            pulumi.set(__self__, "path", path)
-
-    @property
-    @pulumi.getter(name="checkInterval")
-    def check_interval(self) -> int:
-        """
-        Time in seconds to perform health check. Default value is 15.
-        """
-        return pulumi.get(self, "check_interval")
-
-    @property
-    @pulumi.getter(name="healthyThreshold")
-    def healthy_threshold(self) -> int:
-        """
-        Number of failed attempts encountered before failover. Default value is 5.
-        """
-        return pulumi.get(self, "healthy_threshold")
+            _setter("path", path)
+        if response_timeout is not None:
+            _setter("response_timeout", response_timeout)
+        if unhealthy_threshold is not None:
+            _setter("unhealthy_threshold", unhealthy_threshold)
 
     @property
     @pulumi.getter
@@ -865,20 +1157,20 @@ class LoadBalancerHealthCheck(dict):
         return pulumi.get(self, "protocol")
 
     @property
-    @pulumi.getter(name="responseTimeout")
-    def response_timeout(self) -> int:
+    @pulumi.getter(name="checkInterval")
+    def check_interval(self) -> Optional[int]:
         """
-        Time in seconds to wait for a health check response. Default value is 5.
+        Time in seconds to perform health check. Default value is 15.
         """
-        return pulumi.get(self, "response_timeout")
+        return pulumi.get(self, "check_interval")
 
     @property
-    @pulumi.getter(name="unhealthyThreshold")
-    def unhealthy_threshold(self) -> int:
+    @pulumi.getter(name="healthyThreshold")
+    def healthy_threshold(self) -> Optional[int]:
         """
         Number of failed attempts encountered before failover. Default value is 5.
         """
-        return pulumi.get(self, "unhealthy_threshold")
+        return pulumi.get(self, "healthy_threshold")
 
     @property
     @pulumi.getter
@@ -887,6 +1179,22 @@ class LoadBalancerHealthCheck(dict):
         The path on the attached instances that the load balancer should check against. Default value is `/`
         """
         return pulumi.get(self, "path")
+
+    @property
+    @pulumi.getter(name="responseTimeout")
+    def response_timeout(self) -> Optional[int]:
+        """
+        Time in seconds to wait for a health check response. Default value is 5.
+        """
+        return pulumi.get(self, "response_timeout")
+
+    @property
+    @pulumi.getter(name="unhealthyThreshold")
+    def unhealthy_threshold(self) -> Optional[int]:
+        """
+        Number of failed attempts encountered before failover. Default value is 5.
+        """
+        return pulumi.get(self, "unhealthy_threshold")
 
 
 @pulumi.output_type
@@ -917,10 +1225,23 @@ class LoadBalancerSsl(dict):
         :param str private_key: The SSL certificates private key.
         :param str chain: The SSL certificate chain.
         """
-        pulumi.set(__self__, "certificate", certificate)
-        pulumi.set(__self__, "private_key", private_key)
+        LoadBalancerSsl._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            certificate=certificate,
+            private_key=private_key,
+            chain=chain,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             certificate: str,
+             private_key: str,
+             chain: Optional[str] = None,
+             opts: Optional[pulumi.ResourceOptions]=None):
+        _setter("certificate", certificate)
+        _setter("private_key", private_key)
         if chain is not None:
-            pulumi.set(__self__, "chain", chain)
+            _setter("chain", chain)
 
     @property
     @pulumi.getter
@@ -956,8 +1277,19 @@ class GetApplicationFilterResult(dict):
         :param str name: Attribute name to filter with.
         :param Sequence[str] values: One or more values filter with.
         """
-        pulumi.set(__self__, "name", name)
-        pulumi.set(__self__, "values", values)
+        GetApplicationFilterResult._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            name=name,
+            values=values,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             name: str,
+             values: Sequence[str],
+             opts: Optional[pulumi.ResourceOptions]=None):
+        _setter("name", name)
+        _setter("values", values)
 
     @property
     @pulumi.getter
@@ -985,8 +1317,19 @@ class GetBackupFilterResult(dict):
         :param str name: Attribute name to filter with.
         :param Sequence[str] values: One or more values filter with.
         """
-        pulumi.set(__self__, "name", name)
-        pulumi.set(__self__, "values", values)
+        GetBackupFilterResult._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            name=name,
+            values=values,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             name: str,
+             values: Sequence[str],
+             opts: Optional[pulumi.ResourceOptions]=None):
+        _setter("name", name)
+        _setter("values", values)
 
     @property
     @pulumi.getter
@@ -1014,8 +1357,19 @@ class GetBareMetalPlanFilterResult(dict):
         :param str name: Attribute name to filter with.
         :param Sequence[str] values: One or more values filter with.
         """
-        pulumi.set(__self__, "name", name)
-        pulumi.set(__self__, "values", values)
+        GetBareMetalPlanFilterResult._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            name=name,
+            values=values,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             name: str,
+             values: Sequence[str],
+             opts: Optional[pulumi.ResourceOptions]=None):
+        _setter("name", name)
+        _setter("values", values)
 
     @property
     @pulumi.getter
@@ -1043,8 +1397,19 @@ class GetBareMetalServerFilterResult(dict):
         :param str name: Attribute name to filter with.
         :param Sequence[str] values: One or more values filter with.
         """
-        pulumi.set(__self__, "name", name)
-        pulumi.set(__self__, "values", values)
+        GetBareMetalServerFilterResult._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            name=name,
+            values=values,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             name: str,
+             values: Sequence[str],
+             opts: Optional[pulumi.ResourceOptions]=None):
+        _setter("name", name)
+        _setter("values", values)
 
     @property
     @pulumi.getter
@@ -1072,8 +1437,19 @@ class GetBlockStorageFilterResult(dict):
         :param str name: Attribute name to filter with.
         :param Sequence[str] values: One or more values filter with.
         """
-        pulumi.set(__self__, "name", name)
-        pulumi.set(__self__, "values", values)
+        GetBlockStorageFilterResult._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            name=name,
+            values=values,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             name: str,
+             values: Sequence[str],
+             opts: Optional[pulumi.ResourceOptions]=None):
+        _setter("name", name)
+        _setter("values", values)
 
     @property
     @pulumi.getter
@@ -1097,17 +1473,38 @@ class GetDatabaseFilterResult(dict):
     def __init__(__self__, *,
                  name: str,
                  values: Sequence[str]):
-        pulumi.set(__self__, "name", name)
-        pulumi.set(__self__, "values", values)
+        """
+        :param str name: Attribute name to filter with.
+        :param Sequence[str] values: One or more values filter with.
+        """
+        GetDatabaseFilterResult._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            name=name,
+            values=values,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             name: str,
+             values: Sequence[str],
+             opts: Optional[pulumi.ResourceOptions]=None):
+        _setter("name", name)
+        _setter("values", values)
 
     @property
     @pulumi.getter
     def name(self) -> str:
+        """
+        Attribute name to filter with.
+        """
         return pulumi.get(self, "name")
 
     @property
     @pulumi.getter
     def values(self) -> Sequence[str]:
+        """
+        One or more values filter with.
+        """
         return pulumi.get(self, "values")
 
 
@@ -1141,64 +1538,178 @@ class GetDatabaseReadReplicaResult(dict):
                  status: str,
                  tag: str,
                  trusted_ips: Sequence[str],
-                 user: str):
-        pulumi.set(__self__, "cluster_time_zone", cluster_time_zone)
-        pulumi.set(__self__, "database_engine", database_engine)
-        pulumi.set(__self__, "database_engine_version", database_engine_version)
-        pulumi.set(__self__, "date_created", date_created)
-        pulumi.set(__self__, "dbname", dbname)
-        pulumi.set(__self__, "host", host)
-        pulumi.set(__self__, "id", id)
-        pulumi.set(__self__, "label", label)
-        pulumi.set(__self__, "latest_backup", latest_backup)
-        pulumi.set(__self__, "maintenance_dow", maintenance_dow)
-        pulumi.set(__self__, "maintenance_time", maintenance_time)
-        pulumi.set(__self__, "mysql_long_query_time", mysql_long_query_time)
-        pulumi.set(__self__, "mysql_require_primary_key", mysql_require_primary_key)
-        pulumi.set(__self__, "mysql_slow_query_log", mysql_slow_query_log)
-        pulumi.set(__self__, "mysql_sql_modes", mysql_sql_modes)
-        pulumi.set(__self__, "password", password)
-        pulumi.set(__self__, "plan", plan)
-        pulumi.set(__self__, "plan_disk", plan_disk)
-        pulumi.set(__self__, "plan_ram", plan_ram)
-        pulumi.set(__self__, "plan_replicas", plan_replicas)
-        pulumi.set(__self__, "plan_vcpus", plan_vcpus)
-        pulumi.set(__self__, "port", port)
-        pulumi.set(__self__, "redis_eviction_policy", redis_eviction_policy)
-        pulumi.set(__self__, "region", region)
-        pulumi.set(__self__, "status", status)
-        pulumi.set(__self__, "tag", tag)
-        pulumi.set(__self__, "trusted_ips", trusted_ips)
-        pulumi.set(__self__, "user", user)
+                 user: str,
+                 vpc_id: str):
+        """
+        :param str cluster_time_zone: The configured time zone for the Managed Database in TZ database format.
+        :param str database_engine: The database engine of the managed database.
+        :param str database_engine_version: The database engine version of the managed database.
+        :param str date_created: The date the managed database was added to your Vultr account.
+        :param str dbname: The managed database's default logical database.
+        :param str host: The hostname assigned to the managed database.
+        :param str label: The managed database's label.
+        :param str latest_backup: The date of the latest backup available on the managed database.
+        :param str maintenance_dow: The preferred maintenance day of week for the managed database.
+        :param str maintenance_time: The preferred maintenance time for the managed database.
+        :param int mysql_long_query_time: The configuration value for the long query time (in seconds) on the managed database (MySQL engine types only).
+        :param bool mysql_require_primary_key: The configuration value for whether primary keys are required on the managed database (MySQL engine types only).
+        :param bool mysql_slow_query_log: The configuration value for slow query logging on the managed database (MySQL engine types only).
+        :param Sequence[str] mysql_sql_modes: A list of SQL modes currently configured for the managed database (MySQL engine types only).
+        :param str password: The password for the managed database's primary admin user.
+        :param str plan: The managed database's plan ID.
+        :param int plan_disk: The description of the disk(s) on the managed database.
+        :param int plan_ram: The amount of memory available on the managed database in MB.
+        :param int plan_replicas: The number of standby nodes available on the managed database.
+        :param int plan_vcpus: The number of virtual CPUs available on the managed database.
+        :param str port: The connection port for the managed database.
+        :param str redis_eviction_policy: The configuration value for the data eviction policy on the managed database (Redis engine types only).
+        :param str region: The region ID of the managed database.
+        :param str status: The current status of the managed database (poweroff, rebuilding, rebalancing, running).
+        :param str tag: The managed database's tag.
+        :param Sequence[str] trusted_ips: A list of allowed IP addresses for the managed database.
+        :param str user: The primary admin user for the managed database.
+        """
+        GetDatabaseReadReplicaResult._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            cluster_time_zone=cluster_time_zone,
+            database_engine=database_engine,
+            database_engine_version=database_engine_version,
+            date_created=date_created,
+            dbname=dbname,
+            host=host,
+            id=id,
+            label=label,
+            latest_backup=latest_backup,
+            maintenance_dow=maintenance_dow,
+            maintenance_time=maintenance_time,
+            mysql_long_query_time=mysql_long_query_time,
+            mysql_require_primary_key=mysql_require_primary_key,
+            mysql_slow_query_log=mysql_slow_query_log,
+            mysql_sql_modes=mysql_sql_modes,
+            password=password,
+            plan=plan,
+            plan_disk=plan_disk,
+            plan_ram=plan_ram,
+            plan_replicas=plan_replicas,
+            plan_vcpus=plan_vcpus,
+            port=port,
+            redis_eviction_policy=redis_eviction_policy,
+            region=region,
+            status=status,
+            tag=tag,
+            trusted_ips=trusted_ips,
+            user=user,
+            vpc_id=vpc_id,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             cluster_time_zone: str,
+             database_engine: str,
+             database_engine_version: str,
+             date_created: str,
+             dbname: str,
+             host: str,
+             id: str,
+             label: str,
+             latest_backup: str,
+             maintenance_dow: str,
+             maintenance_time: str,
+             mysql_long_query_time: int,
+             mysql_require_primary_key: bool,
+             mysql_slow_query_log: bool,
+             mysql_sql_modes: Sequence[str],
+             password: str,
+             plan: str,
+             plan_disk: int,
+             plan_ram: int,
+             plan_replicas: int,
+             plan_vcpus: int,
+             port: str,
+             redis_eviction_policy: str,
+             region: str,
+             status: str,
+             tag: str,
+             trusted_ips: Sequence[str],
+             user: str,
+             vpc_id: str,
+             opts: Optional[pulumi.ResourceOptions]=None):
+        _setter("cluster_time_zone", cluster_time_zone)
+        _setter("database_engine", database_engine)
+        _setter("database_engine_version", database_engine_version)
+        _setter("date_created", date_created)
+        _setter("dbname", dbname)
+        _setter("host", host)
+        _setter("id", id)
+        _setter("label", label)
+        _setter("latest_backup", latest_backup)
+        _setter("maintenance_dow", maintenance_dow)
+        _setter("maintenance_time", maintenance_time)
+        _setter("mysql_long_query_time", mysql_long_query_time)
+        _setter("mysql_require_primary_key", mysql_require_primary_key)
+        _setter("mysql_slow_query_log", mysql_slow_query_log)
+        _setter("mysql_sql_modes", mysql_sql_modes)
+        _setter("password", password)
+        _setter("plan", plan)
+        _setter("plan_disk", plan_disk)
+        _setter("plan_ram", plan_ram)
+        _setter("plan_replicas", plan_replicas)
+        _setter("plan_vcpus", plan_vcpus)
+        _setter("port", port)
+        _setter("redis_eviction_policy", redis_eviction_policy)
+        _setter("region", region)
+        _setter("status", status)
+        _setter("tag", tag)
+        _setter("trusted_ips", trusted_ips)
+        _setter("user", user)
+        _setter("vpc_id", vpc_id)
 
     @property
     @pulumi.getter(name="clusterTimeZone")
     def cluster_time_zone(self) -> str:
+        """
+        The configured time zone for the Managed Database in TZ database format.
+        """
         return pulumi.get(self, "cluster_time_zone")
 
     @property
     @pulumi.getter(name="databaseEngine")
     def database_engine(self) -> str:
+        """
+        The database engine of the managed database.
+        """
         return pulumi.get(self, "database_engine")
 
     @property
     @pulumi.getter(name="databaseEngineVersion")
     def database_engine_version(self) -> str:
+        """
+        The database engine version of the managed database.
+        """
         return pulumi.get(self, "database_engine_version")
 
     @property
     @pulumi.getter(name="dateCreated")
     def date_created(self) -> str:
+        """
+        The date the managed database was added to your Vultr account.
+        """
         return pulumi.get(self, "date_created")
 
     @property
     @pulumi.getter
     def dbname(self) -> str:
+        """
+        The managed database's default logical database.
+        """
         return pulumi.get(self, "dbname")
 
     @property
     @pulumi.getter
     def host(self) -> str:
+        """
+        The hostname assigned to the managed database.
+        """
         return pulumi.get(self, "host")
 
     @property
@@ -1209,107 +1720,175 @@ class GetDatabaseReadReplicaResult(dict):
     @property
     @pulumi.getter
     def label(self) -> str:
+        """
+        The managed database's label.
+        """
         return pulumi.get(self, "label")
 
     @property
     @pulumi.getter(name="latestBackup")
     def latest_backup(self) -> str:
+        """
+        The date of the latest backup available on the managed database.
+        """
         return pulumi.get(self, "latest_backup")
 
     @property
     @pulumi.getter(name="maintenanceDow")
     def maintenance_dow(self) -> str:
+        """
+        The preferred maintenance day of week for the managed database.
+        """
         return pulumi.get(self, "maintenance_dow")
 
     @property
     @pulumi.getter(name="maintenanceTime")
     def maintenance_time(self) -> str:
+        """
+        The preferred maintenance time for the managed database.
+        """
         return pulumi.get(self, "maintenance_time")
 
     @property
     @pulumi.getter(name="mysqlLongQueryTime")
     def mysql_long_query_time(self) -> int:
+        """
+        The configuration value for the long query time (in seconds) on the managed database (MySQL engine types only).
+        """
         return pulumi.get(self, "mysql_long_query_time")
 
     @property
     @pulumi.getter(name="mysqlRequirePrimaryKey")
     def mysql_require_primary_key(self) -> bool:
+        """
+        The configuration value for whether primary keys are required on the managed database (MySQL engine types only).
+        """
         return pulumi.get(self, "mysql_require_primary_key")
 
     @property
     @pulumi.getter(name="mysqlSlowQueryLog")
     def mysql_slow_query_log(self) -> bool:
+        """
+        The configuration value for slow query logging on the managed database (MySQL engine types only).
+        """
         return pulumi.get(self, "mysql_slow_query_log")
 
     @property
     @pulumi.getter(name="mysqlSqlModes")
     def mysql_sql_modes(self) -> Sequence[str]:
+        """
+        A list of SQL modes currently configured for the managed database (MySQL engine types only).
+        """
         return pulumi.get(self, "mysql_sql_modes")
 
     @property
     @pulumi.getter
     def password(self) -> str:
+        """
+        The password for the managed database's primary admin user.
+        """
         return pulumi.get(self, "password")
 
     @property
     @pulumi.getter
     def plan(self) -> str:
+        """
+        The managed database's plan ID.
+        """
         return pulumi.get(self, "plan")
 
     @property
     @pulumi.getter(name="planDisk")
     def plan_disk(self) -> int:
+        """
+        The description of the disk(s) on the managed database.
+        """
         return pulumi.get(self, "plan_disk")
 
     @property
     @pulumi.getter(name="planRam")
     def plan_ram(self) -> int:
+        """
+        The amount of memory available on the managed database in MB.
+        """
         return pulumi.get(self, "plan_ram")
 
     @property
     @pulumi.getter(name="planReplicas")
     def plan_replicas(self) -> int:
+        """
+        The number of standby nodes available on the managed database.
+        """
         return pulumi.get(self, "plan_replicas")
 
     @property
     @pulumi.getter(name="planVcpus")
     def plan_vcpus(self) -> int:
+        """
+        The number of virtual CPUs available on the managed database.
+        """
         return pulumi.get(self, "plan_vcpus")
 
     @property
     @pulumi.getter
     def port(self) -> str:
+        """
+        The connection port for the managed database.
+        """
         return pulumi.get(self, "port")
 
     @property
     @pulumi.getter(name="redisEvictionPolicy")
     def redis_eviction_policy(self) -> str:
+        """
+        The configuration value for the data eviction policy on the managed database (Redis engine types only).
+        """
         return pulumi.get(self, "redis_eviction_policy")
 
     @property
     @pulumi.getter
     def region(self) -> str:
+        """
+        The region ID of the managed database.
+        """
         return pulumi.get(self, "region")
 
     @property
     @pulumi.getter
     def status(self) -> str:
+        """
+        The current status of the managed database (poweroff, rebuilding, rebalancing, running).
+        """
         return pulumi.get(self, "status")
 
     @property
     @pulumi.getter
     def tag(self) -> str:
+        """
+        The managed database's tag.
+        """
         return pulumi.get(self, "tag")
 
     @property
     @pulumi.getter(name="trustedIps")
     def trusted_ips(self) -> Sequence[str]:
+        """
+        A list of allowed IP addresses for the managed database.
+        """
         return pulumi.get(self, "trusted_ips")
 
     @property
     @pulumi.getter
     def user(self) -> str:
+        """
+        The primary admin user for the managed database.
+        """
         return pulumi.get(self, "user")
+
+    @property
+    @pulumi.getter(name="vpcId")
+    def vpc_id(self) -> str:
+        return pulumi.get(self, "vpc_id")
 
 
 @pulumi.output_type
@@ -1321,8 +1900,19 @@ class GetFirewallGroupFilterResult(dict):
         :param str name: Attribute name to filter with.
         :param Sequence[str] values: One or more values filter with.
         """
-        pulumi.set(__self__, "name", name)
-        pulumi.set(__self__, "values", values)
+        GetFirewallGroupFilterResult._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            name=name,
+            values=values,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             name: str,
+             values: Sequence[str],
+             opts: Optional[pulumi.ResourceOptions]=None):
+        _setter("name", name)
+        _setter("values", values)
 
     @property
     @pulumi.getter
@@ -1350,8 +1940,19 @@ class GetInstanceFilterResult(dict):
         :param str name: Attribute name to filter with.
         :param Sequence[str] values: One or more values filter with.
         """
-        pulumi.set(__self__, "name", name)
-        pulumi.set(__self__, "values", values)
+        GetInstanceFilterResult._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            name=name,
+            values=values,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             name: str,
+             values: Sequence[str],
+             opts: Optional[pulumi.ResourceOptions]=None):
+        _setter("name", name)
+        _setter("values", values)
 
     @property
     @pulumi.getter
@@ -1379,8 +1980,19 @@ class GetInstanceIpv4FilterResult(dict):
         :param str name: Attribute name to filter with.
         :param Sequence[str] values: One or more values to filter with.
         """
-        pulumi.set(__self__, "name", name)
-        pulumi.set(__self__, "values", values)
+        GetInstanceIpv4FilterResult._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            name=name,
+            values=values,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             name: str,
+             values: Sequence[str],
+             opts: Optional[pulumi.ResourceOptions]=None):
+        _setter("name", name)
+        _setter("values", values)
 
     @property
     @pulumi.getter
@@ -1408,8 +2020,19 @@ class GetIsoPrivateFilterResult(dict):
         :param str name: Attribute name to filter with.
         :param Sequence[str] values: One or more values filter with.
         """
-        pulumi.set(__self__, "name", name)
-        pulumi.set(__self__, "values", values)
+        GetIsoPrivateFilterResult._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            name=name,
+            values=values,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             name: str,
+             values: Sequence[str],
+             opts: Optional[pulumi.ResourceOptions]=None):
+        _setter("name", name)
+        _setter("values", values)
 
     @property
     @pulumi.getter
@@ -1437,8 +2060,19 @@ class GetIsoPublicFilterResult(dict):
         :param str name: Attribute name to filter with.
         :param Sequence[str] values: One or more values filter with.
         """
-        pulumi.set(__self__, "name", name)
-        pulumi.set(__self__, "values", values)
+        GetIsoPublicFilterResult._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            name=name,
+            values=values,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             name: str,
+             values: Sequence[str],
+             opts: Optional[pulumi.ResourceOptions]=None):
+        _setter("name", name)
+        _setter("values", values)
 
     @property
     @pulumi.getter
@@ -1466,8 +2100,19 @@ class GetKubernetesFilterResult(dict):
         :param str name: Attribute name to filter with.
         :param Sequence[str] values: One or more values filter with.
         """
-        pulumi.set(__self__, "name", name)
-        pulumi.set(__self__, "values", values)
+        GetKubernetesFilterResult._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            name=name,
+            values=values,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             name: str,
+             values: Sequence[str],
+             opts: Optional[pulumi.ResourceOptions]=None):
+        _setter("name", name)
+        _setter("values", values)
 
     @property
     @pulumi.getter
@@ -1515,21 +2160,52 @@ class GetKubernetesNodePoolResult(dict):
         :param int max_nodes: The maximum number of nodes used by the auto scaler.
         :param int min_nodes: The minimum number of nodes used by the auto scaler.
         """
-        pulumi.set(__self__, "date_created", date_created)
-        pulumi.set(__self__, "date_updated", date_updated)
-        pulumi.set(__self__, "id", id)
-        pulumi.set(__self__, "label", label)
-        pulumi.set(__self__, "node_quantity", node_quantity)
-        pulumi.set(__self__, "nodes", nodes)
-        pulumi.set(__self__, "plan", plan)
-        pulumi.set(__self__, "status", status)
-        pulumi.set(__self__, "tag", tag)
+        GetKubernetesNodePoolResult._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            date_created=date_created,
+            date_updated=date_updated,
+            id=id,
+            label=label,
+            node_quantity=node_quantity,
+            nodes=nodes,
+            plan=plan,
+            status=status,
+            tag=tag,
+            auto_scaler=auto_scaler,
+            max_nodes=max_nodes,
+            min_nodes=min_nodes,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             date_created: str,
+             date_updated: str,
+             id: str,
+             label: str,
+             node_quantity: int,
+             nodes: Sequence['outputs.GetKubernetesNodePoolNodeResult'],
+             plan: str,
+             status: str,
+             tag: str,
+             auto_scaler: Optional[bool] = None,
+             max_nodes: Optional[int] = None,
+             min_nodes: Optional[int] = None,
+             opts: Optional[pulumi.ResourceOptions]=None):
+        _setter("date_created", date_created)
+        _setter("date_updated", date_updated)
+        _setter("id", id)
+        _setter("label", label)
+        _setter("node_quantity", node_quantity)
+        _setter("nodes", nodes)
+        _setter("plan", plan)
+        _setter("status", status)
+        _setter("tag", tag)
         if auto_scaler is not None:
-            pulumi.set(__self__, "auto_scaler", auto_scaler)
+            _setter("auto_scaler", auto_scaler)
         if max_nodes is not None:
-            pulumi.set(__self__, "max_nodes", max_nodes)
+            _setter("max_nodes", max_nodes)
         if min_nodes is not None:
-            pulumi.set(__self__, "min_nodes", min_nodes)
+            _setter("min_nodes", min_nodes)
 
     @property
     @pulumi.getter(name="dateCreated")
@@ -1641,10 +2317,25 @@ class GetKubernetesNodePoolNodeResult(dict):
         :param str label: Label of node.
         :param str status: Status of node.
         """
-        pulumi.set(__self__, "date_created", date_created)
-        pulumi.set(__self__, "id", id)
-        pulumi.set(__self__, "label", label)
-        pulumi.set(__self__, "status", status)
+        GetKubernetesNodePoolNodeResult._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            date_created=date_created,
+            id=id,
+            label=label,
+            status=status,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             date_created: str,
+             id: str,
+             label: str,
+             status: str,
+             opts: Optional[pulumi.ResourceOptions]=None):
+        _setter("date_created", date_created)
+        _setter("id", id)
+        _setter("label", label)
+        _setter("status", status)
 
     @property
     @pulumi.getter(name="dateCreated")
@@ -1688,8 +2379,19 @@ class GetLoadBalancerFilterResult(dict):
         :param str name: Attribute name to filter with.
         :param Sequence[str] values: One or more values filter with.
         """
-        pulumi.set(__self__, "name", name)
-        pulumi.set(__self__, "values", values)
+        GetLoadBalancerFilterResult._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            name=name,
+            values=values,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             name: str,
+             values: Sequence[str],
+             opts: Optional[pulumi.ResourceOptions]=None):
+        _setter("name", name)
+        _setter("values", values)
 
     @property
     @pulumi.getter
@@ -1717,8 +2419,19 @@ class GetObjectStorageClusterFilterResult(dict):
         :param str name: Attribute name to filter with.
         :param Sequence[str] values: One or more values filter with.
         """
-        pulumi.set(__self__, "name", name)
-        pulumi.set(__self__, "values", values)
+        GetObjectStorageClusterFilterResult._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            name=name,
+            values=values,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             name: str,
+             values: Sequence[str],
+             opts: Optional[pulumi.ResourceOptions]=None):
+        _setter("name", name)
+        _setter("values", values)
 
     @property
     @pulumi.getter
@@ -1746,8 +2459,19 @@ class GetObjectStorageFilterResult(dict):
         :param str name: Attribute name to filter with.
         :param Sequence[str] values: One or more values filter with.
         """
-        pulumi.set(__self__, "name", name)
-        pulumi.set(__self__, "values", values)
+        GetObjectStorageFilterResult._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            name=name,
+            values=values,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             name: str,
+             values: Sequence[str],
+             opts: Optional[pulumi.ResourceOptions]=None):
+        _setter("name", name)
+        _setter("values", values)
 
     @property
     @pulumi.getter
@@ -1775,8 +2499,19 @@ class GetOsFilterResult(dict):
         :param str name: Attribute name to filter with.
         :param Sequence[str] values: One or more values filter with.
         """
-        pulumi.set(__self__, "name", name)
-        pulumi.set(__self__, "values", values)
+        GetOsFilterResult._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            name=name,
+            values=values,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             name: str,
+             values: Sequence[str],
+             opts: Optional[pulumi.ResourceOptions]=None):
+        _setter("name", name)
+        _setter("values", values)
 
     @property
     @pulumi.getter
@@ -1804,8 +2539,19 @@ class GetPlanFilterResult(dict):
         :param str name: Attribute name to filter with.
         :param Sequence[str] values: One or more values filter with.
         """
-        pulumi.set(__self__, "name", name)
-        pulumi.set(__self__, "values", values)
+        GetPlanFilterResult._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            name=name,
+            values=values,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             name: str,
+             values: Sequence[str],
+             opts: Optional[pulumi.ResourceOptions]=None):
+        _setter("name", name)
+        _setter("values", values)
 
     @property
     @pulumi.getter
@@ -1833,8 +2579,19 @@ class GetPrivateNetworkFilterResult(dict):
         :param str name: Attribute name to filter with.
         :param Sequence[str] values: One or more values filter with.
         """
-        pulumi.set(__self__, "name", name)
-        pulumi.set(__self__, "values", values)
+        GetPrivateNetworkFilterResult._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            name=name,
+            values=values,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             name: str,
+             values: Sequence[str],
+             opts: Optional[pulumi.ResourceOptions]=None):
+        _setter("name", name)
+        _setter("values", values)
 
     @property
     @pulumi.getter
@@ -1862,8 +2619,19 @@ class GetRegionFilterResult(dict):
         :param str name: Attribute name to filter with.
         :param Sequence[str] values: One or more values filter with.
         """
-        pulumi.set(__self__, "name", name)
-        pulumi.set(__self__, "values", values)
+        GetRegionFilterResult._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            name=name,
+            values=values,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             name: str,
+             values: Sequence[str],
+             opts: Optional[pulumi.ResourceOptions]=None):
+        _setter("name", name)
+        _setter("values", values)
 
     @property
     @pulumi.getter
@@ -1891,8 +2659,19 @@ class GetReservedIpFilterResult(dict):
         :param str name: Attribute name to filter with.
         :param Sequence[str] values: One or more values filter with.
         """
-        pulumi.set(__self__, "name", name)
-        pulumi.set(__self__, "values", values)
+        GetReservedIpFilterResult._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            name=name,
+            values=values,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             name: str,
+             values: Sequence[str],
+             opts: Optional[pulumi.ResourceOptions]=None):
+        _setter("name", name)
+        _setter("values", values)
 
     @property
     @pulumi.getter
@@ -1920,8 +2699,19 @@ class GetReverseIpv4FilterResult(dict):
         :param str name: Attribute name to filter with.
         :param Sequence[str] values: One or more values to filter with.
         """
-        pulumi.set(__self__, "name", name)
-        pulumi.set(__self__, "values", values)
+        GetReverseIpv4FilterResult._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            name=name,
+            values=values,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             name: str,
+             values: Sequence[str],
+             opts: Optional[pulumi.ResourceOptions]=None):
+        _setter("name", name)
+        _setter("values", values)
 
     @property
     @pulumi.getter
@@ -1949,8 +2739,19 @@ class GetReverseIpv6FilterResult(dict):
         :param str name: Attribute name to filter with.
         :param Sequence[str] values: One or more values to filter with.
         """
-        pulumi.set(__self__, "name", name)
-        pulumi.set(__self__, "values", values)
+        GetReverseIpv6FilterResult._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            name=name,
+            values=values,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             name: str,
+             values: Sequence[str],
+             opts: Optional[pulumi.ResourceOptions]=None):
+        _setter("name", name)
+        _setter("values", values)
 
     @property
     @pulumi.getter
@@ -1978,8 +2779,19 @@ class GetSnapshotFilterResult(dict):
         :param str name: Attribute name to filter with.
         :param Sequence[str] values: One or more values filter with.
         """
-        pulumi.set(__self__, "name", name)
-        pulumi.set(__self__, "values", values)
+        GetSnapshotFilterResult._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            name=name,
+            values=values,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             name: str,
+             values: Sequence[str],
+             opts: Optional[pulumi.ResourceOptions]=None):
+        _setter("name", name)
+        _setter("values", values)
 
     @property
     @pulumi.getter
@@ -2007,8 +2819,19 @@ class GetSshKeyFilterResult(dict):
         :param str name: Attribute name to filter with.
         :param Sequence[str] values: One or more values filter with.
         """
-        pulumi.set(__self__, "name", name)
-        pulumi.set(__self__, "values", values)
+        GetSshKeyFilterResult._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            name=name,
+            values=values,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             name: str,
+             values: Sequence[str],
+             opts: Optional[pulumi.ResourceOptions]=None):
+        _setter("name", name)
+        _setter("values", values)
 
     @property
     @pulumi.getter
@@ -2036,8 +2859,19 @@ class GetStartupScriptFilterResult(dict):
         :param str name: Attribute name to filter with.
         :param Sequence[str] values: One or more values filter with.
         """
-        pulumi.set(__self__, "name", name)
-        pulumi.set(__self__, "values", values)
+        GetStartupScriptFilterResult._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            name=name,
+            values=values,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             name: str,
+             values: Sequence[str],
+             opts: Optional[pulumi.ResourceOptions]=None):
+        _setter("name", name)
+        _setter("values", values)
 
     @property
     @pulumi.getter
@@ -2065,8 +2899,59 @@ class GetUserFilterResult(dict):
         :param str name: Attribute name to filter with.
         :param Sequence[str] values: One or more values filter with.
         """
-        pulumi.set(__self__, "name", name)
-        pulumi.set(__self__, "values", values)
+        GetUserFilterResult._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            name=name,
+            values=values,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             name: str,
+             values: Sequence[str],
+             opts: Optional[pulumi.ResourceOptions]=None):
+        _setter("name", name)
+        _setter("values", values)
+
+    @property
+    @pulumi.getter
+    def name(self) -> str:
+        """
+        Attribute name to filter with.
+        """
+        return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter
+    def values(self) -> Sequence[str]:
+        """
+        One or more values filter with.
+        """
+        return pulumi.get(self, "values")
+
+
+@pulumi.output_type
+class GetVpc2FilterResult(dict):
+    def __init__(__self__, *,
+                 name: str,
+                 values: Sequence[str]):
+        """
+        :param str name: Attribute name to filter with.
+        :param Sequence[str] values: One or more values filter with.
+        """
+        GetVpc2FilterResult._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            name=name,
+            values=values,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             name: str,
+             values: Sequence[str],
+             opts: Optional[pulumi.ResourceOptions]=None):
+        _setter("name", name)
+        _setter("values", values)
 
     @property
     @pulumi.getter
@@ -2094,8 +2979,19 @@ class GetVpcFilterResult(dict):
         :param str name: Attribute name to filter with.
         :param Sequence[str] values: One or more values filter with.
         """
-        pulumi.set(__self__, "name", name)
-        pulumi.set(__self__, "values", values)
+        GetVpcFilterResult._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            name=name,
+            values=values,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             name: str,
+             values: Sequence[str],
+             opts: Optional[pulumi.ResourceOptions]=None):
+        _setter("name", name)
+        _setter("values", values)
 
     @property
     @pulumi.getter

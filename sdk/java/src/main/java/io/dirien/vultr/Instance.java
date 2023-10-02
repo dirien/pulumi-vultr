@@ -674,6 +674,20 @@ public class Instance extends com.pulumi.resources.CustomResource {
         return this.vcpuCount;
     }
     /**
+     * A list of VPC 2.0 IDs to be attached to the server.
+     * 
+     */
+    @Export(name="vpc2Ids", refs={List.class,String.class}, tree="[0,1]")
+    private Output</* @Nullable */ List<String>> vpc2Ids;
+
+    /**
+     * @return A list of VPC 2.0 IDs to be attached to the server.
+     * 
+     */
+    public Output<Optional<List<String>>> vpc2Ids() {
+        return Codegen.optional(this.vpc2Ids);
+    }
+    /**
      * A list of VPC IDs to be attached to the server.
      * 
      */

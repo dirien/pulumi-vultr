@@ -14,16 +14,32 @@ public final class GetDatabaseFilterArgs extends com.pulumi.resources.ResourceAr
 
     public static final GetDatabaseFilterArgs Empty = new GetDatabaseFilterArgs();
 
+    /**
+     * Attribute name to filter with.
+     * 
+     */
     @Import(name="name", required=true)
     private Output<String> name;
 
+    /**
+     * @return Attribute name to filter with.
+     * 
+     */
     public Output<String> name() {
         return this.name;
     }
 
+    /**
+     * One or more values filter with.
+     * 
+     */
     @Import(name="values", required=true)
     private Output<List<String>> values;
 
+    /**
+     * @return One or more values filter with.
+     * 
+     */
     public Output<List<String>> values() {
         return this.values;
     }
@@ -53,24 +69,54 @@ public final class GetDatabaseFilterArgs extends com.pulumi.resources.ResourceAr
             $ = new GetDatabaseFilterArgs(Objects.requireNonNull(defaults));
         }
 
+        /**
+         * @param name Attribute name to filter with.
+         * 
+         * @return builder
+         * 
+         */
         public Builder name(Output<String> name) {
             $.name = name;
             return this;
         }
 
+        /**
+         * @param name Attribute name to filter with.
+         * 
+         * @return builder
+         * 
+         */
         public Builder name(String name) {
             return name(Output.of(name));
         }
 
+        /**
+         * @param values One or more values filter with.
+         * 
+         * @return builder
+         * 
+         */
         public Builder values(Output<List<String>> values) {
             $.values = values;
             return this;
         }
 
+        /**
+         * @param values One or more values filter with.
+         * 
+         * @return builder
+         * 
+         */
         public Builder values(List<String> values) {
             return values(Output.of(values));
         }
 
+        /**
+         * @param values One or more values filter with.
+         * 
+         * @return builder
+         * 
+         */
         public Builder values(String... values) {
             return values(List.of(values));
         }

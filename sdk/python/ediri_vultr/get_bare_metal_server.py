@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -23,7 +23,7 @@ class GetBareMetalServerResult:
     """
     A collection of values returned by getBareMetalServer.
     """
-    def __init__(__self__, app_id=None, cpu_count=None, date_created=None, disk=None, features=None, filters=None, gateway_v4=None, id=None, image_id=None, label=None, mac_address=None, main_ip=None, netmask_v4=None, os=None, os_id=None, plan=None, ram=None, region=None, status=None, tags=None, v6_main_ip=None, v6_network=None, v6_network_size=None):
+    def __init__(__self__, app_id=None, cpu_count=None, date_created=None, disk=None, features=None, filters=None, gateway_v4=None, id=None, image_id=None, label=None, mac_address=None, main_ip=None, netmask_v4=None, os=None, os_id=None, plan=None, ram=None, region=None, status=None, tags=None, v6_main_ip=None, v6_network=None, v6_network_size=None, vpc2_ids=None):
         if app_id and not isinstance(app_id, int):
             raise TypeError("Expected argument 'app_id' to be a int")
         pulumi.set(__self__, "app_id", app_id)
@@ -93,6 +93,9 @@ class GetBareMetalServerResult:
         if v6_network_size and not isinstance(v6_network_size, int):
             raise TypeError("Expected argument 'v6_network_size' to be a int")
         pulumi.set(__self__, "v6_network_size", v6_network_size)
+        if vpc2_ids and not isinstance(vpc2_ids, list):
+            raise TypeError("Expected argument 'vpc2_ids' to be a list")
+        pulumi.set(__self__, "vpc2_ids", vpc2_ids)
 
     @property
     @pulumi.getter(name="appId")
@@ -260,6 +263,14 @@ class GetBareMetalServerResult:
     def v6_network_size(self) -> int:
         return pulumi.get(self, "v6_network_size")
 
+    @property
+    @pulumi.getter(name="vpc2Ids")
+    def vpc2_ids(self) -> Sequence[str]:
+        """
+        A list of VPC 2.0 IDs attached to the server.
+        """
+        return pulumi.get(self, "vpc2_ids")
+
 
 class AwaitableGetBareMetalServerResult(GetBareMetalServerResult):
     # pylint: disable=using-constant-test
@@ -289,7 +300,8 @@ class AwaitableGetBareMetalServerResult(GetBareMetalServerResult):
             tags=self.tags,
             v6_main_ip=self.v6_main_ip,
             v6_network=self.v6_network,
-            v6_network_size=self.v6_network_size)
+            v6_network_size=self.v6_network_size,
+            vpc2_ids=self.vpc2_ids)
 
 
 def get_bare_metal_server(filters: Optional[Sequence[pulumi.InputType['GetBareMetalServerFilterArgs']]] = None,
@@ -320,29 +332,30 @@ def get_bare_metal_server(filters: Optional[Sequence[pulumi.InputType['GetBareMe
     __ret__ = pulumi.runtime.invoke('vultr:index/getBareMetalServer:getBareMetalServer', __args__, opts=opts, typ=GetBareMetalServerResult).value
 
     return AwaitableGetBareMetalServerResult(
-        app_id=__ret__.app_id,
-        cpu_count=__ret__.cpu_count,
-        date_created=__ret__.date_created,
-        disk=__ret__.disk,
-        features=__ret__.features,
-        filters=__ret__.filters,
-        gateway_v4=__ret__.gateway_v4,
-        id=__ret__.id,
-        image_id=__ret__.image_id,
-        label=__ret__.label,
-        mac_address=__ret__.mac_address,
-        main_ip=__ret__.main_ip,
-        netmask_v4=__ret__.netmask_v4,
-        os=__ret__.os,
-        os_id=__ret__.os_id,
-        plan=__ret__.plan,
-        ram=__ret__.ram,
-        region=__ret__.region,
-        status=__ret__.status,
-        tags=__ret__.tags,
-        v6_main_ip=__ret__.v6_main_ip,
-        v6_network=__ret__.v6_network,
-        v6_network_size=__ret__.v6_network_size)
+        app_id=pulumi.get(__ret__, 'app_id'),
+        cpu_count=pulumi.get(__ret__, 'cpu_count'),
+        date_created=pulumi.get(__ret__, 'date_created'),
+        disk=pulumi.get(__ret__, 'disk'),
+        features=pulumi.get(__ret__, 'features'),
+        filters=pulumi.get(__ret__, 'filters'),
+        gateway_v4=pulumi.get(__ret__, 'gateway_v4'),
+        id=pulumi.get(__ret__, 'id'),
+        image_id=pulumi.get(__ret__, 'image_id'),
+        label=pulumi.get(__ret__, 'label'),
+        mac_address=pulumi.get(__ret__, 'mac_address'),
+        main_ip=pulumi.get(__ret__, 'main_ip'),
+        netmask_v4=pulumi.get(__ret__, 'netmask_v4'),
+        os=pulumi.get(__ret__, 'os'),
+        os_id=pulumi.get(__ret__, 'os_id'),
+        plan=pulumi.get(__ret__, 'plan'),
+        ram=pulumi.get(__ret__, 'ram'),
+        region=pulumi.get(__ret__, 'region'),
+        status=pulumi.get(__ret__, 'status'),
+        tags=pulumi.get(__ret__, 'tags'),
+        v6_main_ip=pulumi.get(__ret__, 'v6_main_ip'),
+        v6_network=pulumi.get(__ret__, 'v6_network'),
+        v6_network_size=pulumi.get(__ret__, 'v6_network_size'),
+        vpc2_ids=pulumi.get(__ret__, 'vpc2_ids'))
 
 
 @_utilities.lift_output_func(get_bare_metal_server)

@@ -8,7 +8,9 @@ import (
 	"reflect"
 
 	"errors"
+	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 )
 
 // Provides a Vultr SSH key resource. This can be used to create, read, modify, and delete SSH keys.
@@ -71,7 +73,7 @@ func NewSSHKey(ctx *pulumi.Context,
 	if args.SshKey == nil {
 		return nil, errors.New("invalid value for required argument 'SshKey'")
 	}
-	opts = pkgResourceDefaultOpts(opts)
+	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource SSHKey
 	err := ctx.RegisterResource("vultr:index/sSHKey:SSHKey", name, args, &resource, opts...)
 	if err != nil {
@@ -153,6 +155,12 @@ func (i *SSHKey) ToSSHKeyOutputWithContext(ctx context.Context) SSHKeyOutput {
 	return pulumi.ToOutputWithContext(ctx, i).(SSHKeyOutput)
 }
 
+func (i *SSHKey) ToOutput(ctx context.Context) pulumix.Output[*SSHKey] {
+	return pulumix.Output[*SSHKey]{
+		OutputState: i.ToSSHKeyOutputWithContext(ctx).OutputState,
+	}
+}
+
 // SSHKeyArrayInput is an input type that accepts SSHKeyArray and SSHKeyArrayOutput values.
 // You can construct a concrete instance of `SSHKeyArrayInput` via:
 //
@@ -176,6 +184,12 @@ func (i SSHKeyArray) ToSSHKeyArrayOutput() SSHKeyArrayOutput {
 
 func (i SSHKeyArray) ToSSHKeyArrayOutputWithContext(ctx context.Context) SSHKeyArrayOutput {
 	return pulumi.ToOutputWithContext(ctx, i).(SSHKeyArrayOutput)
+}
+
+func (i SSHKeyArray) ToOutput(ctx context.Context) pulumix.Output[[]*SSHKey] {
+	return pulumix.Output[[]*SSHKey]{
+		OutputState: i.ToSSHKeyArrayOutputWithContext(ctx).OutputState,
+	}
 }
 
 // SSHKeyMapInput is an input type that accepts SSHKeyMap and SSHKeyMapOutput values.
@@ -203,6 +217,12 @@ func (i SSHKeyMap) ToSSHKeyMapOutputWithContext(ctx context.Context) SSHKeyMapOu
 	return pulumi.ToOutputWithContext(ctx, i).(SSHKeyMapOutput)
 }
 
+func (i SSHKeyMap) ToOutput(ctx context.Context) pulumix.Output[map[string]*SSHKey] {
+	return pulumix.Output[map[string]*SSHKey]{
+		OutputState: i.ToSSHKeyMapOutputWithContext(ctx).OutputState,
+	}
+}
+
 type SSHKeyOutput struct{ *pulumi.OutputState }
 
 func (SSHKeyOutput) ElementType() reflect.Type {
@@ -215,6 +235,12 @@ func (o SSHKeyOutput) ToSSHKeyOutput() SSHKeyOutput {
 
 func (o SSHKeyOutput) ToSSHKeyOutputWithContext(ctx context.Context) SSHKeyOutput {
 	return o
+}
+
+func (o SSHKeyOutput) ToOutput(ctx context.Context) pulumix.Output[*SSHKey] {
+	return pulumix.Output[*SSHKey]{
+		OutputState: o.OutputState,
+	}
 }
 
 // The date the SSH key was added to your Vultr account.
@@ -246,6 +272,12 @@ func (o SSHKeyArrayOutput) ToSSHKeyArrayOutputWithContext(ctx context.Context) S
 	return o
 }
 
+func (o SSHKeyArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]*SSHKey] {
+	return pulumix.Output[[]*SSHKey]{
+		OutputState: o.OutputState,
+	}
+}
+
 func (o SSHKeyArrayOutput) Index(i pulumi.IntInput) SSHKeyOutput {
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) *SSHKey {
 		return vs[0].([]*SSHKey)[vs[1].(int)]
@@ -264,6 +296,12 @@ func (o SSHKeyMapOutput) ToSSHKeyMapOutput() SSHKeyMapOutput {
 
 func (o SSHKeyMapOutput) ToSSHKeyMapOutputWithContext(ctx context.Context) SSHKeyMapOutput {
 	return o
+}
+
+func (o SSHKeyMapOutput) ToOutput(ctx context.Context) pulumix.Output[map[string]*SSHKey] {
+	return pulumix.Output[map[string]*SSHKey]{
+		OutputState: o.OutputState,
+	}
 }
 
 func (o SSHKeyMapOutput) MapIndex(k pulumi.StringInput) SSHKeyOutput {

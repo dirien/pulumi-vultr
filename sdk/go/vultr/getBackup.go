@@ -7,7 +7,9 @@ import (
 	"context"
 	"reflect"
 
+	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 )
 
 // Get information about a Vultr backup. This data source provides a list of backups which contain the description, size, status, and the creation date for your Vultr backup.
@@ -47,7 +49,7 @@ import (
 //
 // ```
 func GetBackup(ctx *pulumi.Context, args *GetBackupArgs, opts ...pulumi.InvokeOption) (*GetBackupResult, error) {
-	opts = pkgInvokeDefaultOpts(opts)
+	opts = internal.PkgInvokeDefaultOpts(opts)
 	var rv GetBackupResult
 	err := ctx.Invoke("vultr:index/getBackup:getBackup", args, &rv, opts...)
 	if err != nil {
@@ -106,6 +108,12 @@ func (o GetBackupResultOutput) ToGetBackupResultOutput() GetBackupResultOutput {
 
 func (o GetBackupResultOutput) ToGetBackupResultOutputWithContext(ctx context.Context) GetBackupResultOutput {
 	return o
+}
+
+func (o GetBackupResultOutput) ToOutput(ctx context.Context) pulumix.Output[GetBackupResult] {
+	return pulumix.Output[GetBackupResult]{
+		OutputState: o.OutputState,
+	}
 }
 
 func (o GetBackupResultOutput) Backups() pulumi.MapArrayOutput {

@@ -10,13 +10,29 @@ import java.util.Objects;
 
 @CustomType
 public final class GetDatabaseFilter {
+    /**
+     * @return Attribute name to filter with.
+     * 
+     */
     private String name;
+    /**
+     * @return One or more values filter with.
+     * 
+     */
     private List<String> values;
 
     private GetDatabaseFilter() {}
+    /**
+     * @return Attribute name to filter with.
+     * 
+     */
     public String name() {
         return this.name;
     }
+    /**
+     * @return One or more values filter with.
+     * 
+     */
     public List<String> values() {
         return this.values;
     }

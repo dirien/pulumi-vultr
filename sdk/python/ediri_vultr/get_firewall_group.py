@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -155,14 +155,14 @@ def get_firewall_group(filters: Optional[Sequence[pulumi.InputType['GetFirewallG
     __ret__ = pulumi.runtime.invoke('vultr:index/getFirewallGroup:getFirewallGroup', __args__, opts=opts, typ=GetFirewallGroupResult).value
 
     return AwaitableGetFirewallGroupResult(
-        date_created=__ret__.date_created,
-        date_modified=__ret__.date_modified,
-        description=__ret__.description,
-        filters=__ret__.filters,
-        id=__ret__.id,
-        instance_count=__ret__.instance_count,
-        max_rule_count=__ret__.max_rule_count,
-        rule_count=__ret__.rule_count)
+        date_created=pulumi.get(__ret__, 'date_created'),
+        date_modified=pulumi.get(__ret__, 'date_modified'),
+        description=pulumi.get(__ret__, 'description'),
+        filters=pulumi.get(__ret__, 'filters'),
+        id=pulumi.get(__ret__, 'id'),
+        instance_count=pulumi.get(__ret__, 'instance_count'),
+        max_rule_count=pulumi.get(__ret__, 'max_rule_count'),
+        rule_count=pulumi.get(__ret__, 'rule_count'))
 
 
 @_utilities.lift_output_func(get_firewall_group)

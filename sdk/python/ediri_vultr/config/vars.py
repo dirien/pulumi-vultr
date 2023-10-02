@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
 
 import types
@@ -20,19 +20,19 @@ class _ExportableConfig(types.ModuleType):
         """
         The API Key that allows interaction with the API
         """
-        return __config__.get('apiKey')
+        return __config__.get('apiKey') or _utilities.get_env('VULTR_API_KEY')
 
     @property
-    def rate_limit(self) -> Optional[int]:
+    def rate_limit(self) -> int:
         """
         Allows users to set the speed of API calls to work with the Vultr Rate Limit
         """
-        return __config__.get_int('rateLimit')
+        return __config__.get_int('rateLimit') or 500
 
     @property
-    def retry_limit(self) -> Optional[int]:
+    def retry_limit(self) -> int:
         """
         Allows users to set the maximum number of retries allowed for a failed API call.
         """
-        return __config__.get_int('retryLimit')
+        return __config__.get_int('retryLimit') or 3
 

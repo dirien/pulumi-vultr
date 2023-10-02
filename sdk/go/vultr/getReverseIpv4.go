@@ -7,7 +7,9 @@ import (
 	"context"
 	"reflect"
 
+	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 )
 
 // Get information about a Vultr Reverse IPv4.
@@ -47,7 +49,7 @@ import (
 //
 // ```
 func LookupReverseIpv4(ctx *pulumi.Context, args *LookupReverseIpv4Args, opts ...pulumi.InvokeOption) (*LookupReverseIpv4Result, error) {
-	opts = pkgInvokeDefaultOpts(opts)
+	opts = internal.PkgInvokeDefaultOpts(opts)
 	var rv LookupReverseIpv4Result
 	err := ctx.Invoke("vultr:index/getReverseIpv4:getReverseIpv4", args, &rv, opts...)
 	if err != nil {
@@ -115,6 +117,12 @@ func (o LookupReverseIpv4ResultOutput) ToLookupReverseIpv4ResultOutput() LookupR
 
 func (o LookupReverseIpv4ResultOutput) ToLookupReverseIpv4ResultOutputWithContext(ctx context.Context) LookupReverseIpv4ResultOutput {
 	return o
+}
+
+func (o LookupReverseIpv4ResultOutput) ToOutput(ctx context.Context) pulumix.Output[LookupReverseIpv4Result] {
+	return pulumix.Output[LookupReverseIpv4Result]{
+		OutputState: o.OutputState,
+	}
 }
 
 func (o LookupReverseIpv4ResultOutput) Filters() GetReverseIpv4FilterArrayOutput {

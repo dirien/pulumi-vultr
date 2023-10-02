@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -23,7 +23,7 @@ class GetDatabaseResult:
     """
     A collection of values returned by getDatabase.
     """
-    def __init__(__self__, cluster_time_zone=None, database_engine=None, database_engine_version=None, date_created=None, dbname=None, filters=None, host=None, id=None, label=None, latest_backup=None, maintenance_dow=None, maintenance_time=None, mysql_long_query_time=None, mysql_require_primary_key=None, mysql_slow_query_log=None, mysql_sql_modes=None, password=None, plan=None, plan_disk=None, plan_ram=None, plan_replicas=None, plan_vcpus=None, port=None, read_replicas=None, redis_eviction_policy=None, region=None, status=None, tag=None, trusted_ips=None, user=None):
+    def __init__(__self__, cluster_time_zone=None, database_engine=None, database_engine_version=None, date_created=None, dbname=None, filters=None, host=None, id=None, label=None, latest_backup=None, maintenance_dow=None, maintenance_time=None, mysql_long_query_time=None, mysql_require_primary_key=None, mysql_slow_query_log=None, mysql_sql_modes=None, password=None, plan=None, plan_disk=None, plan_ram=None, plan_replicas=None, plan_vcpus=None, port=None, read_replicas=None, redis_eviction_policy=None, region=None, status=None, tag=None, trusted_ips=None, user=None, vpc_id=None):
         if cluster_time_zone and not isinstance(cluster_time_zone, str):
             raise TypeError("Expected argument 'cluster_time_zone' to be a str")
         pulumi.set(__self__, "cluster_time_zone", cluster_time_zone)
@@ -114,30 +114,48 @@ class GetDatabaseResult:
         if user and not isinstance(user, str):
             raise TypeError("Expected argument 'user' to be a str")
         pulumi.set(__self__, "user", user)
+        if vpc_id and not isinstance(vpc_id, str):
+            raise TypeError("Expected argument 'vpc_id' to be a str")
+        pulumi.set(__self__, "vpc_id", vpc_id)
 
     @property
     @pulumi.getter(name="clusterTimeZone")
     def cluster_time_zone(self) -> str:
+        """
+        The configured time zone for the Managed Database in TZ database format.
+        """
         return pulumi.get(self, "cluster_time_zone")
 
     @property
     @pulumi.getter(name="databaseEngine")
     def database_engine(self) -> str:
+        """
+        The database engine of the managed database.
+        """
         return pulumi.get(self, "database_engine")
 
     @property
     @pulumi.getter(name="databaseEngineVersion")
     def database_engine_version(self) -> str:
+        """
+        The database engine version of the managed database.
+        """
         return pulumi.get(self, "database_engine_version")
 
     @property
     @pulumi.getter(name="dateCreated")
     def date_created(self) -> str:
+        """
+        The date the managed database was added to your Vultr account.
+        """
         return pulumi.get(self, "date_created")
 
     @property
     @pulumi.getter
     def dbname(self) -> str:
+        """
+        The managed database's default logical database.
+        """
         return pulumi.get(self, "dbname")
 
     @property
@@ -148,6 +166,9 @@ class GetDatabaseResult:
     @property
     @pulumi.getter
     def host(self) -> str:
+        """
+        The hostname assigned to the managed database.
+        """
         return pulumi.get(self, "host")
 
     @property
@@ -161,112 +182,183 @@ class GetDatabaseResult:
     @property
     @pulumi.getter
     def label(self) -> str:
+        """
+        The managed database's label.
+        """
         return pulumi.get(self, "label")
 
     @property
     @pulumi.getter(name="latestBackup")
     def latest_backup(self) -> str:
+        """
+        The date of the latest backup available on the managed database.
+        """
         return pulumi.get(self, "latest_backup")
 
     @property
     @pulumi.getter(name="maintenanceDow")
     def maintenance_dow(self) -> str:
+        """
+        The preferred maintenance day of week for the managed database.
+        """
         return pulumi.get(self, "maintenance_dow")
 
     @property
     @pulumi.getter(name="maintenanceTime")
     def maintenance_time(self) -> str:
+        """
+        The preferred maintenance time for the managed database.
+        """
         return pulumi.get(self, "maintenance_time")
 
     @property
     @pulumi.getter(name="mysqlLongQueryTime")
     def mysql_long_query_time(self) -> int:
+        """
+        The configuration value for the long query time (in seconds) on the managed database (MySQL engine types only).
+        """
         return pulumi.get(self, "mysql_long_query_time")
 
     @property
     @pulumi.getter(name="mysqlRequirePrimaryKey")
     def mysql_require_primary_key(self) -> bool:
+        """
+        The configuration value for whether primary keys are required on the managed database (MySQL engine types only).
+        """
         return pulumi.get(self, "mysql_require_primary_key")
 
     @property
     @pulumi.getter(name="mysqlSlowQueryLog")
     def mysql_slow_query_log(self) -> bool:
+        """
+        The configuration value for slow query logging on the managed database (MySQL engine types only).
+        """
         return pulumi.get(self, "mysql_slow_query_log")
 
     @property
     @pulumi.getter(name="mysqlSqlModes")
     def mysql_sql_modes(self) -> Sequence[str]:
+        """
+        A list of SQL modes currently configured for the managed database (MySQL engine types only).
+        """
         return pulumi.get(self, "mysql_sql_modes")
 
     @property
     @pulumi.getter
     def password(self) -> str:
+        """
+        The password for the managed database's primary admin user.
+        """
         return pulumi.get(self, "password")
 
     @property
     @pulumi.getter
     def plan(self) -> str:
+        """
+        The managed database's plan ID.
+        """
         return pulumi.get(self, "plan")
 
     @property
     @pulumi.getter(name="planDisk")
     def plan_disk(self) -> int:
+        """
+        The description of the disk(s) on the managed database.
+        """
         return pulumi.get(self, "plan_disk")
 
     @property
     @pulumi.getter(name="planRam")
     def plan_ram(self) -> int:
+        """
+        The amount of memory available on the managed database in MB.
+        """
         return pulumi.get(self, "plan_ram")
 
     @property
     @pulumi.getter(name="planReplicas")
     def plan_replicas(self) -> int:
+        """
+        The number of standby nodes available on the managed database.
+        """
         return pulumi.get(self, "plan_replicas")
 
     @property
     @pulumi.getter(name="planVcpus")
     def plan_vcpus(self) -> int:
+        """
+        The number of virtual CPUs available on the managed database.
+        """
         return pulumi.get(self, "plan_vcpus")
 
     @property
     @pulumi.getter
     def port(self) -> str:
+        """
+        The connection port for the managed database.
+        """
         return pulumi.get(self, "port")
 
     @property
     @pulumi.getter(name="readReplicas")
     def read_replicas(self) -> Sequence['outputs.GetDatabaseReadReplicaResult']:
+        """
+        A list of read replicas attached to the managed database.
+        """
         return pulumi.get(self, "read_replicas")
 
     @property
     @pulumi.getter(name="redisEvictionPolicy")
     def redis_eviction_policy(self) -> str:
+        """
+        The configuration value for the data eviction policy on the managed database (Redis engine types only).
+        """
         return pulumi.get(self, "redis_eviction_policy")
 
     @property
     @pulumi.getter
     def region(self) -> str:
+        """
+        The region ID of the managed database.
+        """
         return pulumi.get(self, "region")
 
     @property
     @pulumi.getter
     def status(self) -> str:
+        """
+        The current status of the managed database (poweroff, rebuilding, rebalancing, running).
+        """
         return pulumi.get(self, "status")
 
     @property
     @pulumi.getter
     def tag(self) -> str:
+        """
+        The managed database's tag.
+        """
         return pulumi.get(self, "tag")
 
     @property
     @pulumi.getter(name="trustedIps")
     def trusted_ips(self) -> Sequence[str]:
+        """
+        A list of allowed IP addresses for the managed database.
+        """
         return pulumi.get(self, "trusted_ips")
 
     @property
     @pulumi.getter
     def user(self) -> str:
+        """
+        The primary admin user for the managed database.
+        """
         return pulumi.get(self, "user")
+
+    @property
+    @pulumi.getter(name="vpcId")
+    def vpc_id(self) -> str:
+        return pulumi.get(self, "vpc_id")
 
 
 class AwaitableGetDatabaseResult(GetDatabaseResult):
@@ -304,13 +396,31 @@ class AwaitableGetDatabaseResult(GetDatabaseResult):
             status=self.status,
             tag=self.tag,
             trusted_ips=self.trusted_ips,
-            user=self.user)
+            user=self.user,
+            vpc_id=self.vpc_id)
 
 
 def get_database(filters: Optional[Sequence[pulumi.InputType['GetDatabaseFilterArgs']]] = None,
                  opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetDatabaseResult:
     """
-    Use this data source to access information about an existing resource.
+    Get information about a Vultr database.
+
+    ## Example Usage
+
+    Get the information for a database by `label`:
+
+    ```python
+    import pulumi
+    import pulumi_vultr as vultr
+
+    my_database = vultr.get_database(filters=[vultr.GetDatabaseFilterArgs(
+        name="label",
+        values=["my-database-label"],
+    )])
+    ```
+
+
+    :param Sequence[pulumi.InputType['GetDatabaseFilterArgs']] filters: Query parameters for finding databases.
     """
     __args__ = dict()
     __args__['filters'] = filters
@@ -318,42 +428,60 @@ def get_database(filters: Optional[Sequence[pulumi.InputType['GetDatabaseFilterA
     __ret__ = pulumi.runtime.invoke('vultr:index/getDatabase:getDatabase', __args__, opts=opts, typ=GetDatabaseResult).value
 
     return AwaitableGetDatabaseResult(
-        cluster_time_zone=__ret__.cluster_time_zone,
-        database_engine=__ret__.database_engine,
-        database_engine_version=__ret__.database_engine_version,
-        date_created=__ret__.date_created,
-        dbname=__ret__.dbname,
-        filters=__ret__.filters,
-        host=__ret__.host,
-        id=__ret__.id,
-        label=__ret__.label,
-        latest_backup=__ret__.latest_backup,
-        maintenance_dow=__ret__.maintenance_dow,
-        maintenance_time=__ret__.maintenance_time,
-        mysql_long_query_time=__ret__.mysql_long_query_time,
-        mysql_require_primary_key=__ret__.mysql_require_primary_key,
-        mysql_slow_query_log=__ret__.mysql_slow_query_log,
-        mysql_sql_modes=__ret__.mysql_sql_modes,
-        password=__ret__.password,
-        plan=__ret__.plan,
-        plan_disk=__ret__.plan_disk,
-        plan_ram=__ret__.plan_ram,
-        plan_replicas=__ret__.plan_replicas,
-        plan_vcpus=__ret__.plan_vcpus,
-        port=__ret__.port,
-        read_replicas=__ret__.read_replicas,
-        redis_eviction_policy=__ret__.redis_eviction_policy,
-        region=__ret__.region,
-        status=__ret__.status,
-        tag=__ret__.tag,
-        trusted_ips=__ret__.trusted_ips,
-        user=__ret__.user)
+        cluster_time_zone=pulumi.get(__ret__, 'cluster_time_zone'),
+        database_engine=pulumi.get(__ret__, 'database_engine'),
+        database_engine_version=pulumi.get(__ret__, 'database_engine_version'),
+        date_created=pulumi.get(__ret__, 'date_created'),
+        dbname=pulumi.get(__ret__, 'dbname'),
+        filters=pulumi.get(__ret__, 'filters'),
+        host=pulumi.get(__ret__, 'host'),
+        id=pulumi.get(__ret__, 'id'),
+        label=pulumi.get(__ret__, 'label'),
+        latest_backup=pulumi.get(__ret__, 'latest_backup'),
+        maintenance_dow=pulumi.get(__ret__, 'maintenance_dow'),
+        maintenance_time=pulumi.get(__ret__, 'maintenance_time'),
+        mysql_long_query_time=pulumi.get(__ret__, 'mysql_long_query_time'),
+        mysql_require_primary_key=pulumi.get(__ret__, 'mysql_require_primary_key'),
+        mysql_slow_query_log=pulumi.get(__ret__, 'mysql_slow_query_log'),
+        mysql_sql_modes=pulumi.get(__ret__, 'mysql_sql_modes'),
+        password=pulumi.get(__ret__, 'password'),
+        plan=pulumi.get(__ret__, 'plan'),
+        plan_disk=pulumi.get(__ret__, 'plan_disk'),
+        plan_ram=pulumi.get(__ret__, 'plan_ram'),
+        plan_replicas=pulumi.get(__ret__, 'plan_replicas'),
+        plan_vcpus=pulumi.get(__ret__, 'plan_vcpus'),
+        port=pulumi.get(__ret__, 'port'),
+        read_replicas=pulumi.get(__ret__, 'read_replicas'),
+        redis_eviction_policy=pulumi.get(__ret__, 'redis_eviction_policy'),
+        region=pulumi.get(__ret__, 'region'),
+        status=pulumi.get(__ret__, 'status'),
+        tag=pulumi.get(__ret__, 'tag'),
+        trusted_ips=pulumi.get(__ret__, 'trusted_ips'),
+        user=pulumi.get(__ret__, 'user'),
+        vpc_id=pulumi.get(__ret__, 'vpc_id'))
 
 
 @_utilities.lift_output_func(get_database)
 def get_database_output(filters: Optional[pulumi.Input[Optional[Sequence[pulumi.InputType['GetDatabaseFilterArgs']]]]] = None,
                         opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetDatabaseResult]:
     """
-    Use this data source to access information about an existing resource.
+    Get information about a Vultr database.
+
+    ## Example Usage
+
+    Get the information for a database by `label`:
+
+    ```python
+    import pulumi
+    import pulumi_vultr as vultr
+
+    my_database = vultr.get_database(filters=[vultr.GetDatabaseFilterArgs(
+        name="label",
+        values=["my-database-label"],
+    )])
+    ```
+
+
+    :param Sequence[pulumi.InputType['GetDatabaseFilterArgs']] filters: Query parameters for finding databases.
     """
     ...

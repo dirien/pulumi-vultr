@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -200,18 +200,18 @@ def get_bare_metal_plan(filters: Optional[Sequence[pulumi.InputType['GetBareMeta
     __ret__ = pulumi.runtime.invoke('vultr:index/getBareMetalPlan:getBareMetalPlan', __args__, opts=opts, typ=GetBareMetalPlanResult).value
 
     return AwaitableGetBareMetalPlanResult(
-        bandwidth=__ret__.bandwidth,
-        cpu_count=__ret__.cpu_count,
-        cpu_model=__ret__.cpu_model,
-        cpu_threads=__ret__.cpu_threads,
-        disk=__ret__.disk,
-        disk_count=__ret__.disk_count,
-        filters=__ret__.filters,
-        id=__ret__.id,
-        locations=__ret__.locations,
-        monthly_cost=__ret__.monthly_cost,
-        ram=__ret__.ram,
-        type=__ret__.type)
+        bandwidth=pulumi.get(__ret__, 'bandwidth'),
+        cpu_count=pulumi.get(__ret__, 'cpu_count'),
+        cpu_model=pulumi.get(__ret__, 'cpu_model'),
+        cpu_threads=pulumi.get(__ret__, 'cpu_threads'),
+        disk=pulumi.get(__ret__, 'disk'),
+        disk_count=pulumi.get(__ret__, 'disk_count'),
+        filters=pulumi.get(__ret__, 'filters'),
+        id=pulumi.get(__ret__, 'id'),
+        locations=pulumi.get(__ret__, 'locations'),
+        monthly_cost=pulumi.get(__ret__, 'monthly_cost'),
+        ram=pulumi.get(__ret__, 'ram'),
+        type=pulumi.get(__ret__, 'type'))
 
 
 @_utilities.lift_output_func(get_bare_metal_plan)

@@ -8,40 +8,148 @@ import (
 	"reflect"
 
 	"errors"
+	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 )
 
+// Provides a Vultr database resource. This can be used to create, read, modify, and delete managed databases on your Vultr account.
+//
+// ## Example Usage
+//
+// Create a new database:
+//
+// ```go
+// package main
+//
+// import (
+//
+//	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr"
+//	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+//
+// )
+//
+//	func main() {
+//		pulumi.Run(func(ctx *pulumi.Context) error {
+//			_, err := vultr.NewDatabase(ctx, "myDatabase", &vultr.DatabaseArgs{
+//				DatabaseEngine:        pulumi.String("pg"),
+//				DatabaseEngineVersion: pulumi.String("15"),
+//				Label:                 pulumi.String("my_database_label"),
+//				Plan:                  pulumi.String("vultr-dbaas-startup-cc-1-55-2"),
+//				Region:                pulumi.String("ewr"),
+//			})
+//			if err != nil {
+//				return err
+//			}
+//			return nil
+//		})
+//	}
+//
+// ```
+//
+// Create a new database with options:
+//
+// ```go
+// package main
+//
+// import (
+//
+//	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr"
+//	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+//
+// )
+//
+//	func main() {
+//		pulumi.Run(func(ctx *pulumi.Context) error {
+//			_, err := vultr.NewDatabase(ctx, "myDatabase", &vultr.DatabaseArgs{
+//				ClusterTimeZone:       pulumi.String("America/New_York"),
+//				DatabaseEngine:        pulumi.String("pg"),
+//				DatabaseEngineVersion: pulumi.String("15"),
+//				Label:                 pulumi.String("my_database_label"),
+//				MaintenanceDow:        pulumi.String("sunday"),
+//				MaintenanceTime:       pulumi.String("01:00"),
+//				Plan:                  pulumi.String("vultr-dbaas-startup-cc-1-55-2"),
+//				Region:                pulumi.String("ewr"),
+//				Tag:                   pulumi.String("some tag"),
+//			})
+//			if err != nil {
+//				return err
+//			}
+//			return nil
+//		})
+//	}
+//
+// ```
+//
+// ## Import
+//
+// Database can be imported using the database `ID`, e.g.
+//
+// ```sh
+//
+//	$ pulumi import vultr:index/database:Database my_database b6a859c5-b299-49dd-8888-b1abbc517d08
+//
+// ```
 type Database struct {
 	pulumi.CustomResourceState
 
-	ClusterTimeZone        pulumi.StringPtrOutput         `pulumi:"clusterTimeZone"`
-	DatabaseEngine         pulumi.StringOutput            `pulumi:"databaseEngine"`
-	DatabaseEngineVersion  pulumi.StringOutput            `pulumi:"databaseEngineVersion"`
-	DateCreated            pulumi.StringOutput            `pulumi:"dateCreated"`
-	Dbname                 pulumi.StringOutput            `pulumi:"dbname"`
-	Host                   pulumi.StringOutput            `pulumi:"host"`
-	Label                  pulumi.StringOutput            `pulumi:"label"`
-	LatestBackup           pulumi.StringOutput            `pulumi:"latestBackup"`
-	MaintenanceDow         pulumi.StringPtrOutput         `pulumi:"maintenanceDow"`
-	MaintenanceTime        pulumi.StringPtrOutput         `pulumi:"maintenanceTime"`
-	MysqlLongQueryTime     pulumi.IntPtrOutput            `pulumi:"mysqlLongQueryTime"`
-	MysqlRequirePrimaryKey pulumi.BoolPtrOutput           `pulumi:"mysqlRequirePrimaryKey"`
-	MysqlSlowQueryLog      pulumi.BoolPtrOutput           `pulumi:"mysqlSlowQueryLog"`
-	MysqlSqlModes          pulumi.StringArrayOutput       `pulumi:"mysqlSqlModes"`
-	Password               pulumi.StringOutput            `pulumi:"password"`
-	Plan                   pulumi.StringOutput            `pulumi:"plan"`
-	PlanDisk               pulumi.IntOutput               `pulumi:"planDisk"`
-	PlanRam                pulumi.IntOutput               `pulumi:"planRam"`
-	PlanReplicas           pulumi.IntOutput               `pulumi:"planReplicas"`
-	PlanVcpus              pulumi.IntOutput               `pulumi:"planVcpus"`
-	Port                   pulumi.StringOutput            `pulumi:"port"`
-	ReadReplicas           DatabaseReadReplicaArrayOutput `pulumi:"readReplicas"`
-	RedisEvictionPolicy    pulumi.StringPtrOutput         `pulumi:"redisEvictionPolicy"`
-	Region                 pulumi.StringOutput            `pulumi:"region"`
-	Status                 pulumi.StringOutput            `pulumi:"status"`
-	Tag                    pulumi.StringPtrOutput         `pulumi:"tag"`
-	TrustedIps             pulumi.StringArrayOutput       `pulumi:"trustedIps"`
-	User                   pulumi.StringOutput            `pulumi:"user"`
+	// The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
+	ClusterTimeZone pulumi.StringPtrOutput `pulumi:"clusterTimeZone"`
+	// The database engine of the new managed database.
+	DatabaseEngine pulumi.StringOutput `pulumi:"databaseEngine"`
+	// The database engine version of the new managed database.
+	DatabaseEngineVersion pulumi.StringOutput `pulumi:"databaseEngineVersion"`
+	// The date the managed database was added to your Vultr account.
+	DateCreated pulumi.StringOutput `pulumi:"dateCreated"`
+	// The managed database's default logical database.
+	Dbname pulumi.StringOutput `pulumi:"dbname"`
+	// The hostname assigned to the managed database.
+	Host pulumi.StringOutput `pulumi:"host"`
+	// A label for the managed database.
+	Label pulumi.StringOutput `pulumi:"label"`
+	// The date of the latest backup available on the managed database.
+	LatestBackup pulumi.StringOutput `pulumi:"latestBackup"`
+	// The preferred maintenance day of week for the managed database.
+	MaintenanceDow pulumi.StringPtrOutput `pulumi:"maintenanceDow"`
+	// The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).
+	MaintenanceTime pulumi.StringPtrOutput `pulumi:"maintenanceTime"`
+	// The configuration value for the long query time (in seconds) on the managed database (MySQL engine types only).
+	MysqlLongQueryTime pulumi.IntPtrOutput `pulumi:"mysqlLongQueryTime"`
+	// The configuration value for whether primary keys are required on the managed database (MySQL engine types only).
+	MysqlRequirePrimaryKey pulumi.BoolPtrOutput `pulumi:"mysqlRequirePrimaryKey"`
+	// The configuration value for slow query logging on the managed database (MySQL engine types only).
+	MysqlSlowQueryLog pulumi.BoolPtrOutput `pulumi:"mysqlSlowQueryLog"`
+	// A list of SQL modes to configure for the managed database (MySQL engine types only - `ALLOW_INVALID_DATES`, `ANSI`, `ANSI_QUOTES`, `ERROR_FOR_DIVISION_BY_ZERO`, `HIGH_NOT_PRECEDENCE`, `IGNORE_SPACE`, `NO_AUTO_VALUE_ON_ZERO`, `NO_DIR_IN_CREATE`, `NO_ENGINE_SUBSTITUTION`, `NO_UNSIGNED_SUBTRACTION`, `NO_ZERO_DATE`, `NO_ZERO_IN_DATE`, `ONLY_FULL_GROUP_BY`, `PIPES_AS_CONCAT`, `REAL_AS_FLOAT`, `STRICT_ALL_TABLES`, `STRICT_TRANS_TABLES`, `TIME_TRUNCATE_FRACTIONAL`, `TRADITIONAL`).
+	MysqlSqlModes pulumi.StringArrayOutput `pulumi:"mysqlSqlModes"`
+	// The password for the managed database's primary admin user.
+	Password pulumi.StringOutput `pulumi:"password"`
+	// The ID of the plan that you want the managed database to subscribe to. [See List Managed Database Plans](https://www.vultr.com/api/#tag/managed-databases/operation/list-database-plans)
+	Plan pulumi.StringOutput `pulumi:"plan"`
+	// The description of the disk(s) on the managed database.
+	PlanDisk pulumi.IntOutput `pulumi:"planDisk"`
+	// The amount of memory available on the managed database in MB.
+	PlanRam pulumi.IntOutput `pulumi:"planRam"`
+	// The number of standby nodes available on the managed database.
+	PlanReplicas pulumi.IntOutput `pulumi:"planReplicas"`
+	// The number of virtual CPUs available on the managed database.
+	PlanVcpus pulumi.IntOutput `pulumi:"planVcpus"`
+	// The connection port for the managed database.
+	Port pulumi.StringOutput `pulumi:"port"`
+	// A list of read replicas attached to the managed database.
+	ReadReplicas DatabaseReadReplicaArrayOutput `pulumi:"readReplicas"`
+	// The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
+	RedisEvictionPolicy pulumi.StringPtrOutput `pulumi:"redisEvictionPolicy"`
+	// The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
+	Region pulumi.StringOutput `pulumi:"region"`
+	// The current status of the managed database (poweroff, rebuilding, rebalancing, running).
+	Status pulumi.StringOutput `pulumi:"status"`
+	// The tag to assign to the managed database.
+	Tag pulumi.StringPtrOutput `pulumi:"tag"`
+	// A list of allowed IP addresses for the managed database.
+	TrustedIps pulumi.StringArrayOutput `pulumi:"trustedIps"`
+	// The primary admin user for the managed database.
+	User  pulumi.StringOutput    `pulumi:"user"`
+	VpcId pulumi.StringPtrOutput `pulumi:"vpcId"`
 }
 
 // NewDatabase registers a new resource with the given unique name, arguments, and options.
@@ -66,7 +174,7 @@ func NewDatabase(ctx *pulumi.Context,
 	if args.Region == nil {
 		return nil, errors.New("invalid value for required argument 'Region'")
 	}
-	opts = pkgResourceDefaultOpts(opts)
+	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource Database
 	err := ctx.RegisterResource("vultr:index/database:Database", name, args, &resource, opts...)
 	if err != nil {
@@ -89,65 +197,123 @@ func GetDatabase(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering Database resources.
 type databaseState struct {
-	ClusterTimeZone        *string               `pulumi:"clusterTimeZone"`
-	DatabaseEngine         *string               `pulumi:"databaseEngine"`
-	DatabaseEngineVersion  *string               `pulumi:"databaseEngineVersion"`
-	DateCreated            *string               `pulumi:"dateCreated"`
-	Dbname                 *string               `pulumi:"dbname"`
-	Host                   *string               `pulumi:"host"`
-	Label                  *string               `pulumi:"label"`
-	LatestBackup           *string               `pulumi:"latestBackup"`
-	MaintenanceDow         *string               `pulumi:"maintenanceDow"`
-	MaintenanceTime        *string               `pulumi:"maintenanceTime"`
-	MysqlLongQueryTime     *int                  `pulumi:"mysqlLongQueryTime"`
-	MysqlRequirePrimaryKey *bool                 `pulumi:"mysqlRequirePrimaryKey"`
-	MysqlSlowQueryLog      *bool                 `pulumi:"mysqlSlowQueryLog"`
-	MysqlSqlModes          []string              `pulumi:"mysqlSqlModes"`
-	Password               *string               `pulumi:"password"`
-	Plan                   *string               `pulumi:"plan"`
-	PlanDisk               *int                  `pulumi:"planDisk"`
-	PlanRam                *int                  `pulumi:"planRam"`
-	PlanReplicas           *int                  `pulumi:"planReplicas"`
-	PlanVcpus              *int                  `pulumi:"planVcpus"`
-	Port                   *string               `pulumi:"port"`
-	ReadReplicas           []DatabaseReadReplica `pulumi:"readReplicas"`
-	RedisEvictionPolicy    *string               `pulumi:"redisEvictionPolicy"`
-	Region                 *string               `pulumi:"region"`
-	Status                 *string               `pulumi:"status"`
-	Tag                    *string               `pulumi:"tag"`
-	TrustedIps             []string              `pulumi:"trustedIps"`
-	User                   *string               `pulumi:"user"`
+	// The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
+	ClusterTimeZone *string `pulumi:"clusterTimeZone"`
+	// The database engine of the new managed database.
+	DatabaseEngine *string `pulumi:"databaseEngine"`
+	// The database engine version of the new managed database.
+	DatabaseEngineVersion *string `pulumi:"databaseEngineVersion"`
+	// The date the managed database was added to your Vultr account.
+	DateCreated *string `pulumi:"dateCreated"`
+	// The managed database's default logical database.
+	Dbname *string `pulumi:"dbname"`
+	// The hostname assigned to the managed database.
+	Host *string `pulumi:"host"`
+	// A label for the managed database.
+	Label *string `pulumi:"label"`
+	// The date of the latest backup available on the managed database.
+	LatestBackup *string `pulumi:"latestBackup"`
+	// The preferred maintenance day of week for the managed database.
+	MaintenanceDow *string `pulumi:"maintenanceDow"`
+	// The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).
+	MaintenanceTime *string `pulumi:"maintenanceTime"`
+	// The configuration value for the long query time (in seconds) on the managed database (MySQL engine types only).
+	MysqlLongQueryTime *int `pulumi:"mysqlLongQueryTime"`
+	// The configuration value for whether primary keys are required on the managed database (MySQL engine types only).
+	MysqlRequirePrimaryKey *bool `pulumi:"mysqlRequirePrimaryKey"`
+	// The configuration value for slow query logging on the managed database (MySQL engine types only).
+	MysqlSlowQueryLog *bool `pulumi:"mysqlSlowQueryLog"`
+	// A list of SQL modes to configure for the managed database (MySQL engine types only - `ALLOW_INVALID_DATES`, `ANSI`, `ANSI_QUOTES`, `ERROR_FOR_DIVISION_BY_ZERO`, `HIGH_NOT_PRECEDENCE`, `IGNORE_SPACE`, `NO_AUTO_VALUE_ON_ZERO`, `NO_DIR_IN_CREATE`, `NO_ENGINE_SUBSTITUTION`, `NO_UNSIGNED_SUBTRACTION`, `NO_ZERO_DATE`, `NO_ZERO_IN_DATE`, `ONLY_FULL_GROUP_BY`, `PIPES_AS_CONCAT`, `REAL_AS_FLOAT`, `STRICT_ALL_TABLES`, `STRICT_TRANS_TABLES`, `TIME_TRUNCATE_FRACTIONAL`, `TRADITIONAL`).
+	MysqlSqlModes []string `pulumi:"mysqlSqlModes"`
+	// The password for the managed database's primary admin user.
+	Password *string `pulumi:"password"`
+	// The ID of the plan that you want the managed database to subscribe to. [See List Managed Database Plans](https://www.vultr.com/api/#tag/managed-databases/operation/list-database-plans)
+	Plan *string `pulumi:"plan"`
+	// The description of the disk(s) on the managed database.
+	PlanDisk *int `pulumi:"planDisk"`
+	// The amount of memory available on the managed database in MB.
+	PlanRam *int `pulumi:"planRam"`
+	// The number of standby nodes available on the managed database.
+	PlanReplicas *int `pulumi:"planReplicas"`
+	// The number of virtual CPUs available on the managed database.
+	PlanVcpus *int `pulumi:"planVcpus"`
+	// The connection port for the managed database.
+	Port *string `pulumi:"port"`
+	// A list of read replicas attached to the managed database.
+	ReadReplicas []DatabaseReadReplica `pulumi:"readReplicas"`
+	// The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
+	RedisEvictionPolicy *string `pulumi:"redisEvictionPolicy"`
+	// The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
+	Region *string `pulumi:"region"`
+	// The current status of the managed database (poweroff, rebuilding, rebalancing, running).
+	Status *string `pulumi:"status"`
+	// The tag to assign to the managed database.
+	Tag *string `pulumi:"tag"`
+	// A list of allowed IP addresses for the managed database.
+	TrustedIps []string `pulumi:"trustedIps"`
+	// The primary admin user for the managed database.
+	User  *string `pulumi:"user"`
+	VpcId *string `pulumi:"vpcId"`
 }
 
 type DatabaseState struct {
-	ClusterTimeZone        pulumi.StringPtrInput
-	DatabaseEngine         pulumi.StringPtrInput
-	DatabaseEngineVersion  pulumi.StringPtrInput
-	DateCreated            pulumi.StringPtrInput
-	Dbname                 pulumi.StringPtrInput
-	Host                   pulumi.StringPtrInput
-	Label                  pulumi.StringPtrInput
-	LatestBackup           pulumi.StringPtrInput
-	MaintenanceDow         pulumi.StringPtrInput
-	MaintenanceTime        pulumi.StringPtrInput
-	MysqlLongQueryTime     pulumi.IntPtrInput
+	// The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
+	ClusterTimeZone pulumi.StringPtrInput
+	// The database engine of the new managed database.
+	DatabaseEngine pulumi.StringPtrInput
+	// The database engine version of the new managed database.
+	DatabaseEngineVersion pulumi.StringPtrInput
+	// The date the managed database was added to your Vultr account.
+	DateCreated pulumi.StringPtrInput
+	// The managed database's default logical database.
+	Dbname pulumi.StringPtrInput
+	// The hostname assigned to the managed database.
+	Host pulumi.StringPtrInput
+	// A label for the managed database.
+	Label pulumi.StringPtrInput
+	// The date of the latest backup available on the managed database.
+	LatestBackup pulumi.StringPtrInput
+	// The preferred maintenance day of week for the managed database.
+	MaintenanceDow pulumi.StringPtrInput
+	// The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).
+	MaintenanceTime pulumi.StringPtrInput
+	// The configuration value for the long query time (in seconds) on the managed database (MySQL engine types only).
+	MysqlLongQueryTime pulumi.IntPtrInput
+	// The configuration value for whether primary keys are required on the managed database (MySQL engine types only).
 	MysqlRequirePrimaryKey pulumi.BoolPtrInput
-	MysqlSlowQueryLog      pulumi.BoolPtrInput
-	MysqlSqlModes          pulumi.StringArrayInput
-	Password               pulumi.StringPtrInput
-	Plan                   pulumi.StringPtrInput
-	PlanDisk               pulumi.IntPtrInput
-	PlanRam                pulumi.IntPtrInput
-	PlanReplicas           pulumi.IntPtrInput
-	PlanVcpus              pulumi.IntPtrInput
-	Port                   pulumi.StringPtrInput
-	ReadReplicas           DatabaseReadReplicaArrayInput
-	RedisEvictionPolicy    pulumi.StringPtrInput
-	Region                 pulumi.StringPtrInput
-	Status                 pulumi.StringPtrInput
-	Tag                    pulumi.StringPtrInput
-	TrustedIps             pulumi.StringArrayInput
-	User                   pulumi.StringPtrInput
+	// The configuration value for slow query logging on the managed database (MySQL engine types only).
+	MysqlSlowQueryLog pulumi.BoolPtrInput
+	// A list of SQL modes to configure for the managed database (MySQL engine types only - `ALLOW_INVALID_DATES`, `ANSI`, `ANSI_QUOTES`, `ERROR_FOR_DIVISION_BY_ZERO`, `HIGH_NOT_PRECEDENCE`, `IGNORE_SPACE`, `NO_AUTO_VALUE_ON_ZERO`, `NO_DIR_IN_CREATE`, `NO_ENGINE_SUBSTITUTION`, `NO_UNSIGNED_SUBTRACTION`, `NO_ZERO_DATE`, `NO_ZERO_IN_DATE`, `ONLY_FULL_GROUP_BY`, `PIPES_AS_CONCAT`, `REAL_AS_FLOAT`, `STRICT_ALL_TABLES`, `STRICT_TRANS_TABLES`, `TIME_TRUNCATE_FRACTIONAL`, `TRADITIONAL`).
+	MysqlSqlModes pulumi.StringArrayInput
+	// The password for the managed database's primary admin user.
+	Password pulumi.StringPtrInput
+	// The ID of the plan that you want the managed database to subscribe to. [See List Managed Database Plans](https://www.vultr.com/api/#tag/managed-databases/operation/list-database-plans)
+	Plan pulumi.StringPtrInput
+	// The description of the disk(s) on the managed database.
+	PlanDisk pulumi.IntPtrInput
+	// The amount of memory available on the managed database in MB.
+	PlanRam pulumi.IntPtrInput
+	// The number of standby nodes available on the managed database.
+	PlanReplicas pulumi.IntPtrInput
+	// The number of virtual CPUs available on the managed database.
+	PlanVcpus pulumi.IntPtrInput
+	// The connection port for the managed database.
+	Port pulumi.StringPtrInput
+	// A list of read replicas attached to the managed database.
+	ReadReplicas DatabaseReadReplicaArrayInput
+	// The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
+	RedisEvictionPolicy pulumi.StringPtrInput
+	// The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
+	Region pulumi.StringPtrInput
+	// The current status of the managed database (poweroff, rebuilding, rebalancing, running).
+	Status pulumi.StringPtrInput
+	// The tag to assign to the managed database.
+	Tag pulumi.StringPtrInput
+	// A list of allowed IP addresses for the managed database.
+	TrustedIps pulumi.StringArrayInput
+	// The primary admin user for the managed database.
+	User  pulumi.StringPtrInput
+	VpcId pulumi.StringPtrInput
 }
 
 func (DatabaseState) ElementType() reflect.Type {
@@ -155,46 +321,84 @@ func (DatabaseState) ElementType() reflect.Type {
 }
 
 type databaseArgs struct {
-	ClusterTimeZone        *string               `pulumi:"clusterTimeZone"`
-	DatabaseEngine         string                `pulumi:"databaseEngine"`
-	DatabaseEngineVersion  string                `pulumi:"databaseEngineVersion"`
-	Label                  string                `pulumi:"label"`
-	MaintenanceDow         *string               `pulumi:"maintenanceDow"`
-	MaintenanceTime        *string               `pulumi:"maintenanceTime"`
-	MysqlLongQueryTime     *int                  `pulumi:"mysqlLongQueryTime"`
-	MysqlRequirePrimaryKey *bool                 `pulumi:"mysqlRequirePrimaryKey"`
-	MysqlSlowQueryLog      *bool                 `pulumi:"mysqlSlowQueryLog"`
-	MysqlSqlModes          []string              `pulumi:"mysqlSqlModes"`
-	Password               *string               `pulumi:"password"`
-	Plan                   string                `pulumi:"plan"`
-	PlanDisk               *int                  `pulumi:"planDisk"`
-	ReadReplicas           []DatabaseReadReplica `pulumi:"readReplicas"`
-	RedisEvictionPolicy    *string               `pulumi:"redisEvictionPolicy"`
-	Region                 string                `pulumi:"region"`
-	Tag                    *string               `pulumi:"tag"`
-	TrustedIps             []string              `pulumi:"trustedIps"`
+	// The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
+	ClusterTimeZone *string `pulumi:"clusterTimeZone"`
+	// The database engine of the new managed database.
+	DatabaseEngine string `pulumi:"databaseEngine"`
+	// The database engine version of the new managed database.
+	DatabaseEngineVersion string `pulumi:"databaseEngineVersion"`
+	// A label for the managed database.
+	Label string `pulumi:"label"`
+	// The preferred maintenance day of week for the managed database.
+	MaintenanceDow *string `pulumi:"maintenanceDow"`
+	// The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).
+	MaintenanceTime *string `pulumi:"maintenanceTime"`
+	// The configuration value for the long query time (in seconds) on the managed database (MySQL engine types only).
+	MysqlLongQueryTime *int `pulumi:"mysqlLongQueryTime"`
+	// The configuration value for whether primary keys are required on the managed database (MySQL engine types only).
+	MysqlRequirePrimaryKey *bool `pulumi:"mysqlRequirePrimaryKey"`
+	// The configuration value for slow query logging on the managed database (MySQL engine types only).
+	MysqlSlowQueryLog *bool `pulumi:"mysqlSlowQueryLog"`
+	// A list of SQL modes to configure for the managed database (MySQL engine types only - `ALLOW_INVALID_DATES`, `ANSI`, `ANSI_QUOTES`, `ERROR_FOR_DIVISION_BY_ZERO`, `HIGH_NOT_PRECEDENCE`, `IGNORE_SPACE`, `NO_AUTO_VALUE_ON_ZERO`, `NO_DIR_IN_CREATE`, `NO_ENGINE_SUBSTITUTION`, `NO_UNSIGNED_SUBTRACTION`, `NO_ZERO_DATE`, `NO_ZERO_IN_DATE`, `ONLY_FULL_GROUP_BY`, `PIPES_AS_CONCAT`, `REAL_AS_FLOAT`, `STRICT_ALL_TABLES`, `STRICT_TRANS_TABLES`, `TIME_TRUNCATE_FRACTIONAL`, `TRADITIONAL`).
+	MysqlSqlModes []string `pulumi:"mysqlSqlModes"`
+	// The password for the managed database's primary admin user.
+	Password *string `pulumi:"password"`
+	// The ID of the plan that you want the managed database to subscribe to. [See List Managed Database Plans](https://www.vultr.com/api/#tag/managed-databases/operation/list-database-plans)
+	Plan string `pulumi:"plan"`
+	// The description of the disk(s) on the managed database.
+	PlanDisk *int `pulumi:"planDisk"`
+	// A list of read replicas attached to the managed database.
+	ReadReplicas []DatabaseReadReplica `pulumi:"readReplicas"`
+	// The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
+	RedisEvictionPolicy *string `pulumi:"redisEvictionPolicy"`
+	// The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
+	Region string `pulumi:"region"`
+	// The tag to assign to the managed database.
+	Tag *string `pulumi:"tag"`
+	// A list of allowed IP addresses for the managed database.
+	TrustedIps []string `pulumi:"trustedIps"`
+	VpcId      *string  `pulumi:"vpcId"`
 }
 
 // The set of arguments for constructing a Database resource.
 type DatabaseArgs struct {
-	ClusterTimeZone        pulumi.StringPtrInput
-	DatabaseEngine         pulumi.StringInput
-	DatabaseEngineVersion  pulumi.StringInput
-	Label                  pulumi.StringInput
-	MaintenanceDow         pulumi.StringPtrInput
-	MaintenanceTime        pulumi.StringPtrInput
-	MysqlLongQueryTime     pulumi.IntPtrInput
+	// The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
+	ClusterTimeZone pulumi.StringPtrInput
+	// The database engine of the new managed database.
+	DatabaseEngine pulumi.StringInput
+	// The database engine version of the new managed database.
+	DatabaseEngineVersion pulumi.StringInput
+	// A label for the managed database.
+	Label pulumi.StringInput
+	// The preferred maintenance day of week for the managed database.
+	MaintenanceDow pulumi.StringPtrInput
+	// The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).
+	MaintenanceTime pulumi.StringPtrInput
+	// The configuration value for the long query time (in seconds) on the managed database (MySQL engine types only).
+	MysqlLongQueryTime pulumi.IntPtrInput
+	// The configuration value for whether primary keys are required on the managed database (MySQL engine types only).
 	MysqlRequirePrimaryKey pulumi.BoolPtrInput
-	MysqlSlowQueryLog      pulumi.BoolPtrInput
-	MysqlSqlModes          pulumi.StringArrayInput
-	Password               pulumi.StringPtrInput
-	Plan                   pulumi.StringInput
-	PlanDisk               pulumi.IntPtrInput
-	ReadReplicas           DatabaseReadReplicaArrayInput
-	RedisEvictionPolicy    pulumi.StringPtrInput
-	Region                 pulumi.StringInput
-	Tag                    pulumi.StringPtrInput
-	TrustedIps             pulumi.StringArrayInput
+	// The configuration value for slow query logging on the managed database (MySQL engine types only).
+	MysqlSlowQueryLog pulumi.BoolPtrInput
+	// A list of SQL modes to configure for the managed database (MySQL engine types only - `ALLOW_INVALID_DATES`, `ANSI`, `ANSI_QUOTES`, `ERROR_FOR_DIVISION_BY_ZERO`, `HIGH_NOT_PRECEDENCE`, `IGNORE_SPACE`, `NO_AUTO_VALUE_ON_ZERO`, `NO_DIR_IN_CREATE`, `NO_ENGINE_SUBSTITUTION`, `NO_UNSIGNED_SUBTRACTION`, `NO_ZERO_DATE`, `NO_ZERO_IN_DATE`, `ONLY_FULL_GROUP_BY`, `PIPES_AS_CONCAT`, `REAL_AS_FLOAT`, `STRICT_ALL_TABLES`, `STRICT_TRANS_TABLES`, `TIME_TRUNCATE_FRACTIONAL`, `TRADITIONAL`).
+	MysqlSqlModes pulumi.StringArrayInput
+	// The password for the managed database's primary admin user.
+	Password pulumi.StringPtrInput
+	// The ID of the plan that you want the managed database to subscribe to. [See List Managed Database Plans](https://www.vultr.com/api/#tag/managed-databases/operation/list-database-plans)
+	Plan pulumi.StringInput
+	// The description of the disk(s) on the managed database.
+	PlanDisk pulumi.IntPtrInput
+	// A list of read replicas attached to the managed database.
+	ReadReplicas DatabaseReadReplicaArrayInput
+	// The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
+	RedisEvictionPolicy pulumi.StringPtrInput
+	// The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
+	Region pulumi.StringInput
+	// The tag to assign to the managed database.
+	Tag pulumi.StringPtrInput
+	// A list of allowed IP addresses for the managed database.
+	TrustedIps pulumi.StringArrayInput
+	VpcId      pulumi.StringPtrInput
 }
 
 func (DatabaseArgs) ElementType() reflect.Type {
@@ -218,6 +422,12 @@ func (i *Database) ToDatabaseOutput() DatabaseOutput {
 
 func (i *Database) ToDatabaseOutputWithContext(ctx context.Context) DatabaseOutput {
 	return pulumi.ToOutputWithContext(ctx, i).(DatabaseOutput)
+}
+
+func (i *Database) ToOutput(ctx context.Context) pulumix.Output[*Database] {
+	return pulumix.Output[*Database]{
+		OutputState: i.ToDatabaseOutputWithContext(ctx).OutputState,
+	}
 }
 
 // DatabaseArrayInput is an input type that accepts DatabaseArray and DatabaseArrayOutput values.
@@ -245,6 +455,12 @@ func (i DatabaseArray) ToDatabaseArrayOutputWithContext(ctx context.Context) Dat
 	return pulumi.ToOutputWithContext(ctx, i).(DatabaseArrayOutput)
 }
 
+func (i DatabaseArray) ToOutput(ctx context.Context) pulumix.Output[[]*Database] {
+	return pulumix.Output[[]*Database]{
+		OutputState: i.ToDatabaseArrayOutputWithContext(ctx).OutputState,
+	}
+}
+
 // DatabaseMapInput is an input type that accepts DatabaseMap and DatabaseMapOutput values.
 // You can construct a concrete instance of `DatabaseMapInput` via:
 //
@@ -270,6 +486,12 @@ func (i DatabaseMap) ToDatabaseMapOutputWithContext(ctx context.Context) Databas
 	return pulumi.ToOutputWithContext(ctx, i).(DatabaseMapOutput)
 }
 
+func (i DatabaseMap) ToOutput(ctx context.Context) pulumix.Output[map[string]*Database] {
+	return pulumix.Output[map[string]*Database]{
+		OutputState: i.ToDatabaseMapOutputWithContext(ctx).OutputState,
+	}
+}
+
 type DatabaseOutput struct{ *pulumi.OutputState }
 
 func (DatabaseOutput) ElementType() reflect.Type {
@@ -284,116 +506,154 @@ func (o DatabaseOutput) ToDatabaseOutputWithContext(ctx context.Context) Databas
 	return o
 }
 
+func (o DatabaseOutput) ToOutput(ctx context.Context) pulumix.Output[*Database] {
+	return pulumix.Output[*Database]{
+		OutputState: o.OutputState,
+	}
+}
+
+// The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
 func (o DatabaseOutput) ClusterTimeZone() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Database) pulumi.StringPtrOutput { return v.ClusterTimeZone }).(pulumi.StringPtrOutput)
 }
 
+// The database engine of the new managed database.
 func (o DatabaseOutput) DatabaseEngine() pulumi.StringOutput {
 	return o.ApplyT(func(v *Database) pulumi.StringOutput { return v.DatabaseEngine }).(pulumi.StringOutput)
 }
 
+// The database engine version of the new managed database.
 func (o DatabaseOutput) DatabaseEngineVersion() pulumi.StringOutput {
 	return o.ApplyT(func(v *Database) pulumi.StringOutput { return v.DatabaseEngineVersion }).(pulumi.StringOutput)
 }
 
+// The date the managed database was added to your Vultr account.
 func (o DatabaseOutput) DateCreated() pulumi.StringOutput {
 	return o.ApplyT(func(v *Database) pulumi.StringOutput { return v.DateCreated }).(pulumi.StringOutput)
 }
 
+// The managed database's default logical database.
 func (o DatabaseOutput) Dbname() pulumi.StringOutput {
 	return o.ApplyT(func(v *Database) pulumi.StringOutput { return v.Dbname }).(pulumi.StringOutput)
 }
 
+// The hostname assigned to the managed database.
 func (o DatabaseOutput) Host() pulumi.StringOutput {
 	return o.ApplyT(func(v *Database) pulumi.StringOutput { return v.Host }).(pulumi.StringOutput)
 }
 
+// A label for the managed database.
 func (o DatabaseOutput) Label() pulumi.StringOutput {
 	return o.ApplyT(func(v *Database) pulumi.StringOutput { return v.Label }).(pulumi.StringOutput)
 }
 
+// The date of the latest backup available on the managed database.
 func (o DatabaseOutput) LatestBackup() pulumi.StringOutput {
 	return o.ApplyT(func(v *Database) pulumi.StringOutput { return v.LatestBackup }).(pulumi.StringOutput)
 }
 
+// The preferred maintenance day of week for the managed database.
 func (o DatabaseOutput) MaintenanceDow() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Database) pulumi.StringPtrOutput { return v.MaintenanceDow }).(pulumi.StringPtrOutput)
 }
 
+// The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).
 func (o DatabaseOutput) MaintenanceTime() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Database) pulumi.StringPtrOutput { return v.MaintenanceTime }).(pulumi.StringPtrOutput)
 }
 
+// The configuration value for the long query time (in seconds) on the managed database (MySQL engine types only).
 func (o DatabaseOutput) MysqlLongQueryTime() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *Database) pulumi.IntPtrOutput { return v.MysqlLongQueryTime }).(pulumi.IntPtrOutput)
 }
 
+// The configuration value for whether primary keys are required on the managed database (MySQL engine types only).
 func (o DatabaseOutput) MysqlRequirePrimaryKey() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *Database) pulumi.BoolPtrOutput { return v.MysqlRequirePrimaryKey }).(pulumi.BoolPtrOutput)
 }
 
+// The configuration value for slow query logging on the managed database (MySQL engine types only).
 func (o DatabaseOutput) MysqlSlowQueryLog() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *Database) pulumi.BoolPtrOutput { return v.MysqlSlowQueryLog }).(pulumi.BoolPtrOutput)
 }
 
+// A list of SQL modes to configure for the managed database (MySQL engine types only - `ALLOW_INVALID_DATES`, `ANSI`, `ANSI_QUOTES`, `ERROR_FOR_DIVISION_BY_ZERO`, `HIGH_NOT_PRECEDENCE`, `IGNORE_SPACE`, `NO_AUTO_VALUE_ON_ZERO`, `NO_DIR_IN_CREATE`, `NO_ENGINE_SUBSTITUTION`, `NO_UNSIGNED_SUBTRACTION`, `NO_ZERO_DATE`, `NO_ZERO_IN_DATE`, `ONLY_FULL_GROUP_BY`, `PIPES_AS_CONCAT`, `REAL_AS_FLOAT`, `STRICT_ALL_TABLES`, `STRICT_TRANS_TABLES`, `TIME_TRUNCATE_FRACTIONAL`, `TRADITIONAL`).
 func (o DatabaseOutput) MysqlSqlModes() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v *Database) pulumi.StringArrayOutput { return v.MysqlSqlModes }).(pulumi.StringArrayOutput)
 }
 
+// The password for the managed database's primary admin user.
 func (o DatabaseOutput) Password() pulumi.StringOutput {
 	return o.ApplyT(func(v *Database) pulumi.StringOutput { return v.Password }).(pulumi.StringOutput)
 }
 
+// The ID of the plan that you want the managed database to subscribe to. [See List Managed Database Plans](https://www.vultr.com/api/#tag/managed-databases/operation/list-database-plans)
 func (o DatabaseOutput) Plan() pulumi.StringOutput {
 	return o.ApplyT(func(v *Database) pulumi.StringOutput { return v.Plan }).(pulumi.StringOutput)
 }
 
+// The description of the disk(s) on the managed database.
 func (o DatabaseOutput) PlanDisk() pulumi.IntOutput {
 	return o.ApplyT(func(v *Database) pulumi.IntOutput { return v.PlanDisk }).(pulumi.IntOutput)
 }
 
+// The amount of memory available on the managed database in MB.
 func (o DatabaseOutput) PlanRam() pulumi.IntOutput {
 	return o.ApplyT(func(v *Database) pulumi.IntOutput { return v.PlanRam }).(pulumi.IntOutput)
 }
 
+// The number of standby nodes available on the managed database.
 func (o DatabaseOutput) PlanReplicas() pulumi.IntOutput {
 	return o.ApplyT(func(v *Database) pulumi.IntOutput { return v.PlanReplicas }).(pulumi.IntOutput)
 }
 
+// The number of virtual CPUs available on the managed database.
 func (o DatabaseOutput) PlanVcpus() pulumi.IntOutput {
 	return o.ApplyT(func(v *Database) pulumi.IntOutput { return v.PlanVcpus }).(pulumi.IntOutput)
 }
 
+// The connection port for the managed database.
 func (o DatabaseOutput) Port() pulumi.StringOutput {
 	return o.ApplyT(func(v *Database) pulumi.StringOutput { return v.Port }).(pulumi.StringOutput)
 }
 
+// A list of read replicas attached to the managed database.
 func (o DatabaseOutput) ReadReplicas() DatabaseReadReplicaArrayOutput {
 	return o.ApplyT(func(v *Database) DatabaseReadReplicaArrayOutput { return v.ReadReplicas }).(DatabaseReadReplicaArrayOutput)
 }
 
+// The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
 func (o DatabaseOutput) RedisEvictionPolicy() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Database) pulumi.StringPtrOutput { return v.RedisEvictionPolicy }).(pulumi.StringPtrOutput)
 }
 
+// The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
 func (o DatabaseOutput) Region() pulumi.StringOutput {
 	return o.ApplyT(func(v *Database) pulumi.StringOutput { return v.Region }).(pulumi.StringOutput)
 }
 
+// The current status of the managed database (poweroff, rebuilding, rebalancing, running).
 func (o DatabaseOutput) Status() pulumi.StringOutput {
 	return o.ApplyT(func(v *Database) pulumi.StringOutput { return v.Status }).(pulumi.StringOutput)
 }
 
+// The tag to assign to the managed database.
 func (o DatabaseOutput) Tag() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Database) pulumi.StringPtrOutput { return v.Tag }).(pulumi.StringPtrOutput)
 }
 
+// A list of allowed IP addresses for the managed database.
 func (o DatabaseOutput) TrustedIps() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v *Database) pulumi.StringArrayOutput { return v.TrustedIps }).(pulumi.StringArrayOutput)
 }
 
+// The primary admin user for the managed database.
 func (o DatabaseOutput) User() pulumi.StringOutput {
 	return o.ApplyT(func(v *Database) pulumi.StringOutput { return v.User }).(pulumi.StringOutput)
+}
+
+func (o DatabaseOutput) VpcId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Database) pulumi.StringPtrOutput { return v.VpcId }).(pulumi.StringPtrOutput)
 }
 
 type DatabaseArrayOutput struct{ *pulumi.OutputState }
@@ -408,6 +668,12 @@ func (o DatabaseArrayOutput) ToDatabaseArrayOutput() DatabaseArrayOutput {
 
 func (o DatabaseArrayOutput) ToDatabaseArrayOutputWithContext(ctx context.Context) DatabaseArrayOutput {
 	return o
+}
+
+func (o DatabaseArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]*Database] {
+	return pulumix.Output[[]*Database]{
+		OutputState: o.OutputState,
+	}
 }
 
 func (o DatabaseArrayOutput) Index(i pulumi.IntInput) DatabaseOutput {
@@ -428,6 +694,12 @@ func (o DatabaseMapOutput) ToDatabaseMapOutput() DatabaseMapOutput {
 
 func (o DatabaseMapOutput) ToDatabaseMapOutputWithContext(ctx context.Context) DatabaseMapOutput {
 	return o
+}
+
+func (o DatabaseMapOutput) ToOutput(ctx context.Context) pulumix.Output[map[string]*Database] {
+	return pulumix.Output[map[string]*Database]{
+		OutputState: o.OutputState,
+	}
 }
 
 func (o DatabaseMapOutput) MapIndex(k pulumi.StringInput) DatabaseOutput {

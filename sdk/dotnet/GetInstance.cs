@@ -258,6 +258,10 @@ namespace ediri.Vultr
         /// The number of virtual CPUs available on the server.
         /// </summary>
         public readonly int VcpuCount;
+        /// <summary>
+        /// A list of VPC 2.0 IDs attached to the server.
+        /// </summary>
+        public readonly ImmutableArray<string> Vpc2Ids;
         public readonly ImmutableArray<string> VpcIds;
 
         [OutputConstructor]
@@ -328,6 +332,8 @@ namespace ediri.Vultr
 
             int vcpuCount,
 
+            ImmutableArray<string> vpc2Ids,
+
             ImmutableArray<string> vpcIds)
         {
             AllowedBandwidth = allowedBandwidth;
@@ -363,6 +369,7 @@ namespace ediri.Vultr
             V6Network = v6Network;
             V6NetworkSize = v6NetworkSize;
             VcpuCount = vcpuCount;
+            Vpc2Ids = vpc2Ids;
             VpcIds = vpcIds;
         }
     }

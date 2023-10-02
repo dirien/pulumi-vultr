@@ -7,7 +7,9 @@ import (
 	"context"
 	"reflect"
 
+	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 )
 
 // Get information about an Object Storage subscription on Vultr.
@@ -47,7 +49,7 @@ import (
 //
 // ```
 func LookupObjectStorage(ctx *pulumi.Context, args *LookupObjectStorageArgs, opts ...pulumi.InvokeOption) (*LookupObjectStorageResult, error) {
-	opts = pkgInvokeDefaultOpts(opts)
+	opts = internal.PkgInvokeDefaultOpts(opts)
 	var rv LookupObjectStorageResult
 	err := ctx.Invoke("vultr:index/getObjectStorage:getObjectStorage", args, &rv, opts...)
 	if err != nil {
@@ -123,6 +125,12 @@ func (o LookupObjectStorageResultOutput) ToLookupObjectStorageResultOutput() Loo
 
 func (o LookupObjectStorageResultOutput) ToLookupObjectStorageResultOutputWithContext(ctx context.Context) LookupObjectStorageResultOutput {
 	return o
+}
+
+func (o LookupObjectStorageResultOutput) ToOutput(ctx context.Context) pulumix.Output[LookupObjectStorageResult] {
+	return pulumix.Output[LookupObjectStorageResult]{
+		OutputState: o.OutputState,
+	}
 }
 
 // The identifying cluster ID.

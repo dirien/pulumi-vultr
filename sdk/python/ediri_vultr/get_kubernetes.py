@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -251,22 +251,22 @@ def get_kubernetes(filters: Optional[Sequence[pulumi.InputType['GetKubernetesFil
     __ret__ = pulumi.runtime.invoke('vultr:index/getKubernetes:getKubernetes', __args__, opts=opts, typ=GetKubernetesResult).value
 
     return AwaitableGetKubernetesResult(
-        client_certificate=__ret__.client_certificate,
-        client_key=__ret__.client_key,
-        cluster_ca_certificate=__ret__.cluster_ca_certificate,
-        cluster_subnet=__ret__.cluster_subnet,
-        date_created=__ret__.date_created,
-        endpoint=__ret__.endpoint,
-        filters=__ret__.filters,
-        id=__ret__.id,
-        ip=__ret__.ip,
-        kube_config=__ret__.kube_config,
-        label=__ret__.label,
-        node_pools=__ret__.node_pools,
-        region=__ret__.region,
-        service_subnet=__ret__.service_subnet,
-        status=__ret__.status,
-        version=__ret__.version)
+        client_certificate=pulumi.get(__ret__, 'client_certificate'),
+        client_key=pulumi.get(__ret__, 'client_key'),
+        cluster_ca_certificate=pulumi.get(__ret__, 'cluster_ca_certificate'),
+        cluster_subnet=pulumi.get(__ret__, 'cluster_subnet'),
+        date_created=pulumi.get(__ret__, 'date_created'),
+        endpoint=pulumi.get(__ret__, 'endpoint'),
+        filters=pulumi.get(__ret__, 'filters'),
+        id=pulumi.get(__ret__, 'id'),
+        ip=pulumi.get(__ret__, 'ip'),
+        kube_config=pulumi.get(__ret__, 'kube_config'),
+        label=pulumi.get(__ret__, 'label'),
+        node_pools=pulumi.get(__ret__, 'node_pools'),
+        region=pulumi.get(__ret__, 'region'),
+        service_subnet=pulumi.get(__ret__, 'service_subnet'),
+        status=pulumi.get(__ret__, 'status'),
+        version=pulumi.get(__ret__, 'version'))
 
 
 @_utilities.lift_output_func(get_kubernetes)

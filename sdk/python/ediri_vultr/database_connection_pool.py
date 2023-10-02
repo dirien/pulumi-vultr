@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 
 __all__ = ['DatabaseConnectionPoolArgs', 'DatabaseConnectionPool']
@@ -22,18 +22,46 @@ class DatabaseConnectionPoolArgs:
                  name: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a DatabaseConnectionPool resource.
+        :param pulumi.Input[str] database: The logical database to use for the new managed database connection pool.
+        :param pulumi.Input[str] database_id: The managed database ID you want to attach this connection pool to.
+        :param pulumi.Input[str] mode: The mode to configure for the new managed database connection pool (`session`, `transaction`, `statement`).
+        :param pulumi.Input[int] size: The size of the new managed database connection pool.
+        :param pulumi.Input[str] username: The database user to use for the new managed database connection pool.
+        :param pulumi.Input[str] name: The name of the new managed database connection pool.
         """
-        pulumi.set(__self__, "database", database)
-        pulumi.set(__self__, "database_id", database_id)
-        pulumi.set(__self__, "mode", mode)
-        pulumi.set(__self__, "size", size)
-        pulumi.set(__self__, "username", username)
+        DatabaseConnectionPoolArgs._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            database=database,
+            database_id=database_id,
+            mode=mode,
+            size=size,
+            username=username,
+            name=name,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             database: pulumi.Input[str],
+             database_id: pulumi.Input[str],
+             mode: pulumi.Input[str],
+             size: pulumi.Input[int],
+             username: pulumi.Input[str],
+             name: Optional[pulumi.Input[str]] = None,
+             opts: Optional[pulumi.ResourceOptions]=None):
+        _setter("database", database)
+        _setter("database_id", database_id)
+        _setter("mode", mode)
+        _setter("size", size)
+        _setter("username", username)
         if name is not None:
-            pulumi.set(__self__, "name", name)
+            _setter("name", name)
 
     @property
     @pulumi.getter
     def database(self) -> pulumi.Input[str]:
+        """
+        The logical database to use for the new managed database connection pool.
+        """
         return pulumi.get(self, "database")
 
     @database.setter
@@ -43,6 +71,9 @@ class DatabaseConnectionPoolArgs:
     @property
     @pulumi.getter(name="databaseId")
     def database_id(self) -> pulumi.Input[str]:
+        """
+        The managed database ID you want to attach this connection pool to.
+        """
         return pulumi.get(self, "database_id")
 
     @database_id.setter
@@ -52,6 +83,9 @@ class DatabaseConnectionPoolArgs:
     @property
     @pulumi.getter
     def mode(self) -> pulumi.Input[str]:
+        """
+        The mode to configure for the new managed database connection pool (`session`, `transaction`, `statement`).
+        """
         return pulumi.get(self, "mode")
 
     @mode.setter
@@ -61,6 +95,9 @@ class DatabaseConnectionPoolArgs:
     @property
     @pulumi.getter
     def size(self) -> pulumi.Input[int]:
+        """
+        The size of the new managed database connection pool.
+        """
         return pulumi.get(self, "size")
 
     @size.setter
@@ -70,6 +107,9 @@ class DatabaseConnectionPoolArgs:
     @property
     @pulumi.getter
     def username(self) -> pulumi.Input[str]:
+        """
+        The database user to use for the new managed database connection pool.
+        """
         return pulumi.get(self, "username")
 
     @username.setter
@@ -79,6 +119,9 @@ class DatabaseConnectionPoolArgs:
     @property
     @pulumi.getter
     def name(self) -> Optional[pulumi.Input[str]]:
+        """
+        The name of the new managed database connection pool.
+        """
         return pulumi.get(self, "name")
 
     @name.setter
@@ -97,23 +140,51 @@ class _DatabaseConnectionPoolState:
                  username: Optional[pulumi.Input[str]] = None):
         """
         Input properties used for looking up and filtering DatabaseConnectionPool resources.
+        :param pulumi.Input[str] database: The logical database to use for the new managed database connection pool.
+        :param pulumi.Input[str] database_id: The managed database ID you want to attach this connection pool to.
+        :param pulumi.Input[str] mode: The mode to configure for the new managed database connection pool (`session`, `transaction`, `statement`).
+        :param pulumi.Input[str] name: The name of the new managed database connection pool.
+        :param pulumi.Input[int] size: The size of the new managed database connection pool.
+        :param pulumi.Input[str] username: The database user to use for the new managed database connection pool.
         """
+        _DatabaseConnectionPoolState._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            database=database,
+            database_id=database_id,
+            mode=mode,
+            name=name,
+            size=size,
+            username=username,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             database: Optional[pulumi.Input[str]] = None,
+             database_id: Optional[pulumi.Input[str]] = None,
+             mode: Optional[pulumi.Input[str]] = None,
+             name: Optional[pulumi.Input[str]] = None,
+             size: Optional[pulumi.Input[int]] = None,
+             username: Optional[pulumi.Input[str]] = None,
+             opts: Optional[pulumi.ResourceOptions]=None):
         if database is not None:
-            pulumi.set(__self__, "database", database)
+            _setter("database", database)
         if database_id is not None:
-            pulumi.set(__self__, "database_id", database_id)
+            _setter("database_id", database_id)
         if mode is not None:
-            pulumi.set(__self__, "mode", mode)
+            _setter("mode", mode)
         if name is not None:
-            pulumi.set(__self__, "name", name)
+            _setter("name", name)
         if size is not None:
-            pulumi.set(__self__, "size", size)
+            _setter("size", size)
         if username is not None:
-            pulumi.set(__self__, "username", username)
+            _setter("username", username)
 
     @property
     @pulumi.getter
     def database(self) -> Optional[pulumi.Input[str]]:
+        """
+        The logical database to use for the new managed database connection pool.
+        """
         return pulumi.get(self, "database")
 
     @database.setter
@@ -123,6 +194,9 @@ class _DatabaseConnectionPoolState:
     @property
     @pulumi.getter(name="databaseId")
     def database_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        The managed database ID you want to attach this connection pool to.
+        """
         return pulumi.get(self, "database_id")
 
     @database_id.setter
@@ -132,6 +206,9 @@ class _DatabaseConnectionPoolState:
     @property
     @pulumi.getter
     def mode(self) -> Optional[pulumi.Input[str]]:
+        """
+        The mode to configure for the new managed database connection pool (`session`, `transaction`, `statement`).
+        """
         return pulumi.get(self, "mode")
 
     @mode.setter
@@ -141,6 +218,9 @@ class _DatabaseConnectionPoolState:
     @property
     @pulumi.getter
     def name(self) -> Optional[pulumi.Input[str]]:
+        """
+        The name of the new managed database connection pool.
+        """
         return pulumi.get(self, "name")
 
     @name.setter
@@ -150,6 +230,9 @@ class _DatabaseConnectionPoolState:
     @property
     @pulumi.getter
     def size(self) -> Optional[pulumi.Input[int]]:
+        """
+        The size of the new managed database connection pool.
+        """
         return pulumi.get(self, "size")
 
     @size.setter
@@ -159,6 +242,9 @@ class _DatabaseConnectionPoolState:
     @property
     @pulumi.getter
     def username(self) -> Optional[pulumi.Input[str]]:
+        """
+        The database user to use for the new managed database connection pool.
+        """
         return pulumi.get(self, "username")
 
     @username.setter
@@ -179,9 +265,32 @@ class DatabaseConnectionPool(pulumi.CustomResource):
                  username: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
-        Create a DatabaseConnectionPool resource with the given unique name, props, and options.
+        Provides a Vultr database connection pool resource. This can be used to create, read, modify, and delete connection pools for a PostgreSQL managed database on your Vultr account.
+
+        ## Example Usage
+
+        Create a new database connection pool:
+
+        ```python
+        import pulumi
+        import ediri_vultr as vultr
+
+        my_database_connection_pool = vultr.DatabaseConnectionPool("myDatabaseConnectionPool",
+            database_id=vultr_database["my_database"]["id"],
+            database="defaultdb",
+            username="vultradmin",
+            mode="transaction",
+            size=3)
+        ```
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] database: The logical database to use for the new managed database connection pool.
+        :param pulumi.Input[str] database_id: The managed database ID you want to attach this connection pool to.
+        :param pulumi.Input[str] mode: The mode to configure for the new managed database connection pool (`session`, `transaction`, `statement`).
+        :param pulumi.Input[str] name: The name of the new managed database connection pool.
+        :param pulumi.Input[int] size: The size of the new managed database connection pool.
+        :param pulumi.Input[str] username: The database user to use for the new managed database connection pool.
         """
         ...
     @overload
@@ -190,7 +299,24 @@ class DatabaseConnectionPool(pulumi.CustomResource):
                  args: DatabaseConnectionPoolArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
-        Create a DatabaseConnectionPool resource with the given unique name, props, and options.
+        Provides a Vultr database connection pool resource. This can be used to create, read, modify, and delete connection pools for a PostgreSQL managed database on your Vultr account.
+
+        ## Example Usage
+
+        Create a new database connection pool:
+
+        ```python
+        import pulumi
+        import ediri_vultr as vultr
+
+        my_database_connection_pool = vultr.DatabaseConnectionPool("myDatabaseConnectionPool",
+            database_id=vultr_database["my_database"]["id"],
+            database="defaultdb",
+            username="vultradmin",
+            mode="transaction",
+            size=3)
+        ```
+
         :param str resource_name: The name of the resource.
         :param DatabaseConnectionPoolArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -201,6 +327,10 @@ class DatabaseConnectionPool(pulumi.CustomResource):
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
+            kwargs = kwargs or {}
+            def _setter(key, value):
+                kwargs[key] = value
+            DatabaseConnectionPoolArgs._configure(_setter, **kwargs)
             __self__._internal_init(resource_name, *args, **kwargs)
 
     def _internal_init(__self__,
@@ -260,6 +390,12 @@ class DatabaseConnectionPool(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] database: The logical database to use for the new managed database connection pool.
+        :param pulumi.Input[str] database_id: The managed database ID you want to attach this connection pool to.
+        :param pulumi.Input[str] mode: The mode to configure for the new managed database connection pool (`session`, `transaction`, `statement`).
+        :param pulumi.Input[str] name: The name of the new managed database connection pool.
+        :param pulumi.Input[int] size: The size of the new managed database connection pool.
+        :param pulumi.Input[str] username: The database user to use for the new managed database connection pool.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -276,30 +412,48 @@ class DatabaseConnectionPool(pulumi.CustomResource):
     @property
     @pulumi.getter
     def database(self) -> pulumi.Output[str]:
+        """
+        The logical database to use for the new managed database connection pool.
+        """
         return pulumi.get(self, "database")
 
     @property
     @pulumi.getter(name="databaseId")
     def database_id(self) -> pulumi.Output[str]:
+        """
+        The managed database ID you want to attach this connection pool to.
+        """
         return pulumi.get(self, "database_id")
 
     @property
     @pulumi.getter
     def mode(self) -> pulumi.Output[str]:
+        """
+        The mode to configure for the new managed database connection pool (`session`, `transaction`, `statement`).
+        """
         return pulumi.get(self, "mode")
 
     @property
     @pulumi.getter
     def name(self) -> pulumi.Output[str]:
+        """
+        The name of the new managed database connection pool.
+        """
         return pulumi.get(self, "name")
 
     @property
     @pulumi.getter
     def size(self) -> pulumi.Output[int]:
+        """
+        The size of the new managed database connection pool.
+        """
         return pulumi.get(self, "size")
 
     @property
     @pulumi.getter
     def username(self) -> pulumi.Output[str]:
+        """
+        The database user to use for the new managed database connection pool.
+        """
         return pulumi.get(self, "username")
 

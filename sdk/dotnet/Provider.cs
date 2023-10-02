@@ -23,7 +23,7 @@ namespace ediri.Vultr
         /// The API Key that allows interaction with the API
         /// </summary>
         [Output("apiKey")]
-        public Output<string> ApiKey { get; private set; } = null!;
+        public Output<string?> ApiKey { get; private set; } = null!;
 
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace ediri.Vultr
         /// <param name="name">The unique name of the resource</param>
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
-        public Provider(string name, ProviderArgs args, CustomResourceOptions? options = null)
+        public Provider(string name, ProviderArgs? args = null, CustomResourceOptions? options = null)
             : base("vultr", name, args ?? new ProviderArgs(), MakeResourceOptions(options, ""))
         {
         }
@@ -44,6 +44,10 @@ namespace ediri.Vultr
             {
                 Version = Utilities.Version,
                 PluginDownloadURL = "github://api.github.com/dirien/pulumi-vultr",
+                AdditionalSecretOutputs =
+                {
+                    "apiKey",
+                },
             };
             var merged = CustomResourceOptions.Merge(defaultOptions, options);
             // Override the ID if one was specified for consistency with other language SDKs.
@@ -54,11 +58,21 @@ namespace ediri.Vultr
 
     public sealed class ProviderArgs : global::Pulumi.ResourceArgs
     {
+        [Input("apiKey")]
+        private Input<string>? _apiKey;
+
         /// <summary>
         /// The API Key that allows interaction with the API
         /// </summary>
-        [Input("apiKey", required: true)]
-        public Input<string> ApiKey { get; set; } = null!;
+        public Input<string>? ApiKey
+        {
+            get => _apiKey;
+            set
+            {
+                var emptySecret = Output.CreateSecret(0);
+                _apiKey = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
+            }
+        }
 
         /// <summary>
         /// Allows users to set the speed of API calls to work with the Vultr Rate Limit
@@ -74,6 +88,9 @@ namespace ediri.Vultr
 
         public ProviderArgs()
         {
+            ApiKey = Utilities.GetEnv("VULTR_API_KEY");
+            RateLimit = 500;
+            RetryLimit = 3;
         }
         public static new ProviderArgs Empty => new ProviderArgs();
     }

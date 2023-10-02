@@ -32,7 +32,7 @@ namespace ediri.Vultr
 
         private static readonly global::Pulumi.Config __config = new global::Pulumi.Config("vultr");
 
-        private static readonly __Value<string?> _apiKey = new __Value<string?>(() => __config.Get("apiKey"));
+        private static readonly __Value<string?> _apiKey = new __Value<string?>(() => __config.Get("apiKey") ?? Utilities.GetEnv("VULTR_API_KEY"));
         /// <summary>
         /// The API Key that allows interaction with the API
         /// </summary>
@@ -42,7 +42,7 @@ namespace ediri.Vultr
             set => _apiKey.Set(value);
         }
 
-        private static readonly __Value<int?> _rateLimit = new __Value<int?>(() => __config.GetInt32("rateLimit"));
+        private static readonly __Value<int?> _rateLimit = new __Value<int?>(() => __config.GetInt32("rateLimit") ?? 500);
         /// <summary>
         /// Allows users to set the speed of API calls to work with the Vultr Rate Limit
         /// </summary>
@@ -52,7 +52,7 @@ namespace ediri.Vultr
             set => _rateLimit.Set(value);
         }
 
-        private static readonly __Value<int?> _retryLimit = new __Value<int?>(() => __config.GetInt32("retryLimit"));
+        private static readonly __Value<int?> _retryLimit = new __Value<int?>(() => __config.GetInt32("retryLimit") ?? 3);
         /// <summary>
         /// Allows users to set the maximum number of retries allowed for a failed API call.
         /// </summary>

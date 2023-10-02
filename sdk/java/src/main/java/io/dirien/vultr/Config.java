@@ -16,20 +16,20 @@ public final class Config {
  * 
  */
     public String apiKey() {
-        return Codegen.stringProp("apiKey").config(config).require();
+        return Codegen.stringProp("apiKey").config(config).env("VULTR_API_KEY").require();
     }
 /**
  * Allows users to set the speed of API calls to work with the Vultr Rate Limit
  * 
  */
     public Optional<Integer> rateLimit() {
-        return Codegen.integerProp("rateLimit").config(config).get();
+        return Codegen.integerProp("rateLimit").config(config).def(500).get();
     }
 /**
  * Allows users to set the maximum number of retries allowed for a failed API call.
  * 
  */
     public Optional<Integer> retryLimit() {
-        return Codegen.integerProp("retryLimit").config(config).get();
+        return Codegen.integerProp("retryLimit").config(config).def(3).get();
     }
 }

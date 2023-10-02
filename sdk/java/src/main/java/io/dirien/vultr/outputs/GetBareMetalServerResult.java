@@ -104,6 +104,11 @@ public final class GetBareMetalServerResult {
     private String v6MainIp;
     private String v6Network;
     private Integer v6NetworkSize;
+    /**
+     * @return A list of VPC 2.0 IDs attached to the server.
+     * 
+     */
+    private List<String> vpc2Ids;
 
     private GetBareMetalServerResult() {}
     /**
@@ -243,6 +248,13 @@ public final class GetBareMetalServerResult {
     public Integer v6NetworkSize() {
         return this.v6NetworkSize;
     }
+    /**
+     * @return A list of VPC 2.0 IDs attached to the server.
+     * 
+     */
+    public List<String> vpc2Ids() {
+        return this.vpc2Ids;
+    }
 
     public static Builder builder() {
         return new Builder();
@@ -276,6 +288,7 @@ public final class GetBareMetalServerResult {
         private String v6MainIp;
         private String v6Network;
         private Integer v6NetworkSize;
+        private List<String> vpc2Ids;
         public Builder() {}
         public Builder(GetBareMetalServerResult defaults) {
     	      Objects.requireNonNull(defaults);
@@ -302,6 +315,7 @@ public final class GetBareMetalServerResult {
     	      this.v6MainIp = defaults.v6MainIp;
     	      this.v6Network = defaults.v6Network;
     	      this.v6NetworkSize = defaults.v6NetworkSize;
+    	      this.vpc2Ids = defaults.vpc2Ids;
         }
 
         @CustomType.Setter
@@ -428,6 +442,14 @@ public final class GetBareMetalServerResult {
             this.v6NetworkSize = Objects.requireNonNull(v6NetworkSize);
             return this;
         }
+        @CustomType.Setter
+        public Builder vpc2Ids(List<String> vpc2Ids) {
+            this.vpc2Ids = Objects.requireNonNull(vpc2Ids);
+            return this;
+        }
+        public Builder vpc2Ids(String... vpc2Ids) {
+            return vpc2Ids(List.of(vpc2Ids));
+        }
         public GetBareMetalServerResult build() {
             final var o = new GetBareMetalServerResult();
             o.appId = appId;
@@ -453,6 +475,7 @@ public final class GetBareMetalServerResult {
             o.v6MainIp = v6MainIp;
             o.v6Network = v6Network;
             o.v6NetworkSize = v6NetworkSize;
+            o.vpc2Ids = vpc2Ids;
             return o;
         }
     }

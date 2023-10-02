@@ -7,7 +7,9 @@ import (
 	"context"
 	"reflect"
 
+	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 )
 
 // Get information about an ISO file uploaded to your Vultr account.
@@ -47,7 +49,7 @@ import (
 //
 // ```
 func LookupIsoPrivate(ctx *pulumi.Context, args *LookupIsoPrivateArgs, opts ...pulumi.InvokeOption) (*LookupIsoPrivateResult, error) {
-	opts = pkgInvokeDefaultOpts(opts)
+	opts = internal.PkgInvokeDefaultOpts(opts)
 	var rv LookupIsoPrivateResult
 	err := ctx.Invoke("vultr:index/getIsoPrivate:getIsoPrivate", args, &rv, opts...)
 	if err != nil {
@@ -117,6 +119,12 @@ func (o LookupIsoPrivateResultOutput) ToLookupIsoPrivateResultOutput() LookupIso
 
 func (o LookupIsoPrivateResultOutput) ToLookupIsoPrivateResultOutputWithContext(ctx context.Context) LookupIsoPrivateResultOutput {
 	return o
+}
+
+func (o LookupIsoPrivateResultOutput) ToOutput(ctx context.Context) pulumix.Output[LookupIsoPrivateResult] {
+	return pulumix.Output[LookupIsoPrivateResult]{
+		OutputState: o.OutputState,
+	}
 }
 
 // The date the ISO file was added to your Vultr account.

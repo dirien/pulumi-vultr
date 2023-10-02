@@ -17,11 +17,11 @@ namespace ediri.Vultr.Outputs
         /// <summary>
         /// Time in seconds to perform health check. Default value is 15.
         /// </summary>
-        public readonly int CheckInterval;
+        public readonly int? CheckInterval;
         /// <summary>
         /// Number of failed attempts encountered before failover. Default value is 5.
         /// </summary>
-        public readonly int HealthyThreshold;
+        public readonly int? HealthyThreshold;
         /// <summary>
         /// The path on the attached instances that the load balancer should check against. Default value is `/`
         /// </summary>
@@ -37,17 +37,17 @@ namespace ediri.Vultr.Outputs
         /// <summary>
         /// Time in seconds to wait for a health check response. Default value is 5.
         /// </summary>
-        public readonly int ResponseTimeout;
+        public readonly int? ResponseTimeout;
         /// <summary>
         /// Number of failed attempts encountered before failover. Default value is 5.
         /// </summary>
-        public readonly int UnhealthyThreshold;
+        public readonly int? UnhealthyThreshold;
 
         [OutputConstructor]
         private LoadBalancerHealthCheck(
-            int checkInterval,
+            int? checkInterval,
 
-            int healthyThreshold,
+            int? healthyThreshold,
 
             string? path,
 
@@ -55,9 +55,9 @@ namespace ediri.Vultr.Outputs
 
             string protocol,
 
-            int responseTimeout,
+            int? responseTimeout,
 
-            int unhealthyThreshold)
+            int? unhealthyThreshold)
         {
             CheckInterval = checkInterval;
             HealthyThreshold = healthyThreshold;

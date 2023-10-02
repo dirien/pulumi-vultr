@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 
 __all__ = ['FirewallGroupArgs', 'FirewallGroup']
@@ -19,8 +19,17 @@ class FirewallGroupArgs:
         The set of arguments for constructing a FirewallGroup resource.
         :param pulumi.Input[str] description: Description of the firewall group.
         """
+        FirewallGroupArgs._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            description=description,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             description: Optional[pulumi.Input[str]] = None,
+             opts: Optional[pulumi.ResourceOptions]=None):
         if description is not None:
-            pulumi.set(__self__, "description", description)
+            _setter("description", description)
 
     @property
     @pulumi.getter
@@ -53,18 +62,37 @@ class _FirewallGroupState:
         :param pulumi.Input[int] max_rule_count: The number of max firewall rules this group can have.
         :param pulumi.Input[int] rule_count: The number of firewall rules this group currently has.
         """
+        _FirewallGroupState._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            date_created=date_created,
+            date_modified=date_modified,
+            description=description,
+            instance_count=instance_count,
+            max_rule_count=max_rule_count,
+            rule_count=rule_count,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             date_created: Optional[pulumi.Input[str]] = None,
+             date_modified: Optional[pulumi.Input[str]] = None,
+             description: Optional[pulumi.Input[str]] = None,
+             instance_count: Optional[pulumi.Input[int]] = None,
+             max_rule_count: Optional[pulumi.Input[int]] = None,
+             rule_count: Optional[pulumi.Input[int]] = None,
+             opts: Optional[pulumi.ResourceOptions]=None):
         if date_created is not None:
-            pulumi.set(__self__, "date_created", date_created)
+            _setter("date_created", date_created)
         if date_modified is not None:
-            pulumi.set(__self__, "date_modified", date_modified)
+            _setter("date_modified", date_modified)
         if description is not None:
-            pulumi.set(__self__, "description", description)
+            _setter("description", description)
         if instance_count is not None:
-            pulumi.set(__self__, "instance_count", instance_count)
+            _setter("instance_count", instance_count)
         if max_rule_count is not None:
-            pulumi.set(__self__, "max_rule_count", max_rule_count)
+            _setter("max_rule_count", max_rule_count)
         if rule_count is not None:
-            pulumi.set(__self__, "rule_count", rule_count)
+            _setter("rule_count", rule_count)
 
     @property
     @pulumi.getter(name="dateCreated")
@@ -210,6 +238,10 @@ class FirewallGroup(pulumi.CustomResource):
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
+            kwargs = kwargs or {}
+            def _setter(key, value):
+                kwargs[key] = value
+            FirewallGroupArgs._configure(_setter, **kwargs)
             __self__._internal_init(resource_name, *args, **kwargs)
 
     def _internal_init(__self__,

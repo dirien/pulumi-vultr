@@ -5,6 +5,7 @@ package io.dirien.vultr;
 
 import com.pulumi.core.Output;
 import com.pulumi.core.annotations.Import;
+import com.pulumi.core.internal.Codegen;
 import java.lang.Integer;
 import java.lang.String;
 import java.util.Objects;
@@ -20,15 +21,15 @@ public final class ProviderArgs extends com.pulumi.resources.ResourceArgs {
      * The API Key that allows interaction with the API
      * 
      */
-    @Import(name="apiKey", required=true)
-    private Output<String> apiKey;
+    @Import(name="apiKey")
+    private @Nullable Output<String> apiKey;
 
     /**
      * @return The API Key that allows interaction with the API
      * 
      */
-    public Output<String> apiKey() {
-        return this.apiKey;
+    public Optional<Output<String>> apiKey() {
+        return Optional.ofNullable(this.apiKey);
     }
 
     /**
@@ -93,7 +94,7 @@ public final class ProviderArgs extends com.pulumi.resources.ResourceArgs {
          * @return builder
          * 
          */
-        public Builder apiKey(Output<String> apiKey) {
+        public Builder apiKey(@Nullable Output<String> apiKey) {
             $.apiKey = apiKey;
             return this;
         }
@@ -151,7 +152,9 @@ public final class ProviderArgs extends com.pulumi.resources.ResourceArgs {
         }
 
         public ProviderArgs build() {
-            $.apiKey = Objects.requireNonNull($.apiKey, "expected parameter 'apiKey' to be non-null");
+            $.apiKey = Codegen.stringProp("apiKey").secret().arg($.apiKey).env("VULTR_API_KEY").getNullable();
+            $.rateLimit = Codegen.integerProp("rateLimit").output().arg($.rateLimit).def(500).getNullable();
+            $.retryLimit = Codegen.integerProp("retryLimit").output().arg($.retryLimit).def(3).getNullable();
             return $;
         }
     }

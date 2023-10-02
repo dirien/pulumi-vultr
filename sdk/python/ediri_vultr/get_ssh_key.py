@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -119,11 +119,11 @@ def get_ssh_key(filters: Optional[Sequence[pulumi.InputType['GetSshKeyFilterArgs
     __ret__ = pulumi.runtime.invoke('vultr:index/getSshKey:getSshKey', __args__, opts=opts, typ=GetSshKeyResult).value
 
     return AwaitableGetSshKeyResult(
-        date_created=__ret__.date_created,
-        filters=__ret__.filters,
-        id=__ret__.id,
-        name=__ret__.name,
-        ssh_key=__ret__.ssh_key)
+        date_created=pulumi.get(__ret__, 'date_created'),
+        filters=pulumi.get(__ret__, 'filters'),
+        id=pulumi.get(__ret__, 'id'),
+        name=pulumi.get(__ret__, 'name'),
+        ssh_key=pulumi.get(__ret__, 'ssh_key'))
 
 
 @_utilities.lift_output_func(get_ssh_key)

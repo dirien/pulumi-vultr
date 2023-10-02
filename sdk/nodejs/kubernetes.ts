@@ -125,7 +125,7 @@ export class Kubernetes extends pulumi.CustomResource {
      */
     public readonly nodePools!: pulumi.Output<outputs.KubernetesNodePools | undefined>;
     /**
-     * The region your VKE cluster will be deployed in. Currently, supported values are `ewr` and `lax`
+     * The region your VKE cluster will be deployed in.
      */
     public readonly region!: pulumi.Output<string>;
     /**
@@ -246,7 +246,7 @@ export interface KubernetesState {
      */
     nodePools?: pulumi.Input<inputs.KubernetesNodePools>;
     /**
-     * The region your VKE cluster will be deployed in. Currently, supported values are `ewr` and `lax`
+     * The region your VKE cluster will be deployed in.
      */
     region?: pulumi.Input<string>;
     /**
@@ -276,7 +276,7 @@ export interface KubernetesArgs {
      */
     nodePools?: pulumi.Input<inputs.KubernetesNodePools>;
     /**
-     * The region your VKE cluster will be deployed in. Currently, supported values are `ewr` and `lax`
+     * The region your VKE cluster will be deployed in.
      */
     region: pulumi.Input<string>;
     /**

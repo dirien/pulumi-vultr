@@ -8,18 +8,59 @@ import (
 	"reflect"
 
 	"errors"
+	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 )
 
+// Provides a Vultr database connection pool resource. This can be used to create, read, modify, and delete connection pools for a PostgreSQL managed database on your Vultr account.
+//
+// ## Example Usage
+//
+// Create a new database connection pool:
+//
+// ```go
+// package main
+//
+// import (
+//
+//	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr"
+//	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+//
+// )
+//
+//	func main() {
+//		pulumi.Run(func(ctx *pulumi.Context) error {
+//			_, err := vultr.NewDatabaseConnectionPool(ctx, "myDatabaseConnectionPool", &vultr.DatabaseConnectionPoolArgs{
+//				DatabaseId: pulumi.Any(vultr_database.My_database.Id),
+//				Database:   pulumi.String("defaultdb"),
+//				Username:   pulumi.String("vultradmin"),
+//				Mode:       pulumi.String("transaction"),
+//				Size:       pulumi.Int(3),
+//			})
+//			if err != nil {
+//				return err
+//			}
+//			return nil
+//		})
+//	}
+//
+// ```
 type DatabaseConnectionPool struct {
 	pulumi.CustomResourceState
 
-	Database   pulumi.StringOutput `pulumi:"database"`
+	// The logical database to use for the new managed database connection pool.
+	Database pulumi.StringOutput `pulumi:"database"`
+	// The managed database ID you want to attach this connection pool to.
 	DatabaseId pulumi.StringOutput `pulumi:"databaseId"`
-	Mode       pulumi.StringOutput `pulumi:"mode"`
-	Name       pulumi.StringOutput `pulumi:"name"`
-	Size       pulumi.IntOutput    `pulumi:"size"`
-	Username   pulumi.StringOutput `pulumi:"username"`
+	// The mode to configure for the new managed database connection pool (`session`, `transaction`, `statement`).
+	Mode pulumi.StringOutput `pulumi:"mode"`
+	// The name of the new managed database connection pool.
+	Name pulumi.StringOutput `pulumi:"name"`
+	// The size of the new managed database connection pool.
+	Size pulumi.IntOutput `pulumi:"size"`
+	// The database user to use for the new managed database connection pool.
+	Username pulumi.StringOutput `pulumi:"username"`
 }
 
 // NewDatabaseConnectionPool registers a new resource with the given unique name, arguments, and options.
@@ -44,7 +85,7 @@ func NewDatabaseConnectionPool(ctx *pulumi.Context,
 	if args.Username == nil {
 		return nil, errors.New("invalid value for required argument 'Username'")
 	}
-	opts = pkgResourceDefaultOpts(opts)
+	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource DatabaseConnectionPool
 	err := ctx.RegisterResource("vultr:index/databaseConnectionPool:DatabaseConnectionPool", name, args, &resource, opts...)
 	if err != nil {
@@ -67,21 +108,33 @@ func GetDatabaseConnectionPool(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering DatabaseConnectionPool resources.
 type databaseConnectionPoolState struct {
-	Database   *string `pulumi:"database"`
+	// The logical database to use for the new managed database connection pool.
+	Database *string `pulumi:"database"`
+	// The managed database ID you want to attach this connection pool to.
 	DatabaseId *string `pulumi:"databaseId"`
-	Mode       *string `pulumi:"mode"`
-	Name       *string `pulumi:"name"`
-	Size       *int    `pulumi:"size"`
-	Username   *string `pulumi:"username"`
+	// The mode to configure for the new managed database connection pool (`session`, `transaction`, `statement`).
+	Mode *string `pulumi:"mode"`
+	// The name of the new managed database connection pool.
+	Name *string `pulumi:"name"`
+	// The size of the new managed database connection pool.
+	Size *int `pulumi:"size"`
+	// The database user to use for the new managed database connection pool.
+	Username *string `pulumi:"username"`
 }
 
 type DatabaseConnectionPoolState struct {
-	Database   pulumi.StringPtrInput
+	// The logical database to use for the new managed database connection pool.
+	Database pulumi.StringPtrInput
+	// The managed database ID you want to attach this connection pool to.
 	DatabaseId pulumi.StringPtrInput
-	Mode       pulumi.StringPtrInput
-	Name       pulumi.StringPtrInput
-	Size       pulumi.IntPtrInput
-	Username   pulumi.StringPtrInput
+	// The mode to configure for the new managed database connection pool (`session`, `transaction`, `statement`).
+	Mode pulumi.StringPtrInput
+	// The name of the new managed database connection pool.
+	Name pulumi.StringPtrInput
+	// The size of the new managed database connection pool.
+	Size pulumi.IntPtrInput
+	// The database user to use for the new managed database connection pool.
+	Username pulumi.StringPtrInput
 }
 
 func (DatabaseConnectionPoolState) ElementType() reflect.Type {
@@ -89,22 +142,34 @@ func (DatabaseConnectionPoolState) ElementType() reflect.Type {
 }
 
 type databaseConnectionPoolArgs struct {
-	Database   string  `pulumi:"database"`
-	DatabaseId string  `pulumi:"databaseId"`
-	Mode       string  `pulumi:"mode"`
-	Name       *string `pulumi:"name"`
-	Size       int     `pulumi:"size"`
-	Username   string  `pulumi:"username"`
+	// The logical database to use for the new managed database connection pool.
+	Database string `pulumi:"database"`
+	// The managed database ID you want to attach this connection pool to.
+	DatabaseId string `pulumi:"databaseId"`
+	// The mode to configure for the new managed database connection pool (`session`, `transaction`, `statement`).
+	Mode string `pulumi:"mode"`
+	// The name of the new managed database connection pool.
+	Name *string `pulumi:"name"`
+	// The size of the new managed database connection pool.
+	Size int `pulumi:"size"`
+	// The database user to use for the new managed database connection pool.
+	Username string `pulumi:"username"`
 }
 
 // The set of arguments for constructing a DatabaseConnectionPool resource.
 type DatabaseConnectionPoolArgs struct {
-	Database   pulumi.StringInput
+	// The logical database to use for the new managed database connection pool.
+	Database pulumi.StringInput
+	// The managed database ID you want to attach this connection pool to.
 	DatabaseId pulumi.StringInput
-	Mode       pulumi.StringInput
-	Name       pulumi.StringPtrInput
-	Size       pulumi.IntInput
-	Username   pulumi.StringInput
+	// The mode to configure for the new managed database connection pool (`session`, `transaction`, `statement`).
+	Mode pulumi.StringInput
+	// The name of the new managed database connection pool.
+	Name pulumi.StringPtrInput
+	// The size of the new managed database connection pool.
+	Size pulumi.IntInput
+	// The database user to use for the new managed database connection pool.
+	Username pulumi.StringInput
 }
 
 func (DatabaseConnectionPoolArgs) ElementType() reflect.Type {
@@ -128,6 +193,12 @@ func (i *DatabaseConnectionPool) ToDatabaseConnectionPoolOutput() DatabaseConnec
 
 func (i *DatabaseConnectionPool) ToDatabaseConnectionPoolOutputWithContext(ctx context.Context) DatabaseConnectionPoolOutput {
 	return pulumi.ToOutputWithContext(ctx, i).(DatabaseConnectionPoolOutput)
+}
+
+func (i *DatabaseConnectionPool) ToOutput(ctx context.Context) pulumix.Output[*DatabaseConnectionPool] {
+	return pulumix.Output[*DatabaseConnectionPool]{
+		OutputState: i.ToDatabaseConnectionPoolOutputWithContext(ctx).OutputState,
+	}
 }
 
 // DatabaseConnectionPoolArrayInput is an input type that accepts DatabaseConnectionPoolArray and DatabaseConnectionPoolArrayOutput values.
@@ -155,6 +226,12 @@ func (i DatabaseConnectionPoolArray) ToDatabaseConnectionPoolArrayOutputWithCont
 	return pulumi.ToOutputWithContext(ctx, i).(DatabaseConnectionPoolArrayOutput)
 }
 
+func (i DatabaseConnectionPoolArray) ToOutput(ctx context.Context) pulumix.Output[[]*DatabaseConnectionPool] {
+	return pulumix.Output[[]*DatabaseConnectionPool]{
+		OutputState: i.ToDatabaseConnectionPoolArrayOutputWithContext(ctx).OutputState,
+	}
+}
+
 // DatabaseConnectionPoolMapInput is an input type that accepts DatabaseConnectionPoolMap and DatabaseConnectionPoolMapOutput values.
 // You can construct a concrete instance of `DatabaseConnectionPoolMapInput` via:
 //
@@ -180,6 +257,12 @@ func (i DatabaseConnectionPoolMap) ToDatabaseConnectionPoolMapOutputWithContext(
 	return pulumi.ToOutputWithContext(ctx, i).(DatabaseConnectionPoolMapOutput)
 }
 
+func (i DatabaseConnectionPoolMap) ToOutput(ctx context.Context) pulumix.Output[map[string]*DatabaseConnectionPool] {
+	return pulumix.Output[map[string]*DatabaseConnectionPool]{
+		OutputState: i.ToDatabaseConnectionPoolMapOutputWithContext(ctx).OutputState,
+	}
+}
+
 type DatabaseConnectionPoolOutput struct{ *pulumi.OutputState }
 
 func (DatabaseConnectionPoolOutput) ElementType() reflect.Type {
@@ -194,26 +277,38 @@ func (o DatabaseConnectionPoolOutput) ToDatabaseConnectionPoolOutputWithContext(
 	return o
 }
 
+func (o DatabaseConnectionPoolOutput) ToOutput(ctx context.Context) pulumix.Output[*DatabaseConnectionPool] {
+	return pulumix.Output[*DatabaseConnectionPool]{
+		OutputState: o.OutputState,
+	}
+}
+
+// The logical database to use for the new managed database connection pool.
 func (o DatabaseConnectionPoolOutput) Database() pulumi.StringOutput {
 	return o.ApplyT(func(v *DatabaseConnectionPool) pulumi.StringOutput { return v.Database }).(pulumi.StringOutput)
 }
 
+// The managed database ID you want to attach this connection pool to.
 func (o DatabaseConnectionPoolOutput) DatabaseId() pulumi.StringOutput {
 	return o.ApplyT(func(v *DatabaseConnectionPool) pulumi.StringOutput { return v.DatabaseId }).(pulumi.StringOutput)
 }
 
+// The mode to configure for the new managed database connection pool (`session`, `transaction`, `statement`).
 func (o DatabaseConnectionPoolOutput) Mode() pulumi.StringOutput {
 	return o.ApplyT(func(v *DatabaseConnectionPool) pulumi.StringOutput { return v.Mode }).(pulumi.StringOutput)
 }
 
+// The name of the new managed database connection pool.
 func (o DatabaseConnectionPoolOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *DatabaseConnectionPool) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
 
+// The size of the new managed database connection pool.
 func (o DatabaseConnectionPoolOutput) Size() pulumi.IntOutput {
 	return o.ApplyT(func(v *DatabaseConnectionPool) pulumi.IntOutput { return v.Size }).(pulumi.IntOutput)
 }
 
+// The database user to use for the new managed database connection pool.
 func (o DatabaseConnectionPoolOutput) Username() pulumi.StringOutput {
 	return o.ApplyT(func(v *DatabaseConnectionPool) pulumi.StringOutput { return v.Username }).(pulumi.StringOutput)
 }
@@ -230,6 +325,12 @@ func (o DatabaseConnectionPoolArrayOutput) ToDatabaseConnectionPoolArrayOutput()
 
 func (o DatabaseConnectionPoolArrayOutput) ToDatabaseConnectionPoolArrayOutputWithContext(ctx context.Context) DatabaseConnectionPoolArrayOutput {
 	return o
+}
+
+func (o DatabaseConnectionPoolArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]*DatabaseConnectionPool] {
+	return pulumix.Output[[]*DatabaseConnectionPool]{
+		OutputState: o.OutputState,
+	}
 }
 
 func (o DatabaseConnectionPoolArrayOutput) Index(i pulumi.IntInput) DatabaseConnectionPoolOutput {
@@ -250,6 +351,12 @@ func (o DatabaseConnectionPoolMapOutput) ToDatabaseConnectionPoolMapOutput() Dat
 
 func (o DatabaseConnectionPoolMapOutput) ToDatabaseConnectionPoolMapOutputWithContext(ctx context.Context) DatabaseConnectionPoolMapOutput {
 	return o
+}
+
+func (o DatabaseConnectionPoolMapOutput) ToOutput(ctx context.Context) pulumix.Output[map[string]*DatabaseConnectionPool] {
+	return pulumix.Output[map[string]*DatabaseConnectionPool]{
+		OutputState: o.OutputState,
+	}
 }
 
 func (o DatabaseConnectionPoolMapOutput) MapIndex(k pulumi.StringInput) DatabaseConnectionPoolOutput {

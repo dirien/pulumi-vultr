@@ -8,40 +8,103 @@ import (
 	"reflect"
 
 	"errors"
+	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 )
 
+// Provides a Vultr database replica resource. This can be used to create, read, modify, and delete managed database read replicas on your Vultr account.
+//
+// ## Example Usage
+//
+// Create a new database replica:
+//
+// ```go
+// package main
+//
+// import (
+//
+//	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr"
+//	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+//
+// )
+//
+//	func main() {
+//		pulumi.Run(func(ctx *pulumi.Context) error {
+//			_, err := vultr.NewDatabaseReplica(ctx, "myDatabaseReplica", &vultr.DatabaseReplicaArgs{
+//				DatabaseId: pulumi.Any(vultr_database.My_database.Id),
+//				Region:     pulumi.String("sea"),
+//				Label:      pulumi.String("my_database_replica_label"),
+//				Tag:        pulumi.String("test tag"),
+//			})
+//			if err != nil {
+//				return err
+//			}
+//			return nil
+//		})
+//	}
+//
+// ```
 type DatabaseReplica struct {
 	pulumi.CustomResourceState
 
-	ClusterTimeZone        pulumi.StringOutput      `pulumi:"clusterTimeZone"`
-	DatabaseEngine         pulumi.StringOutput      `pulumi:"databaseEngine"`
-	DatabaseEngineVersion  pulumi.StringOutput      `pulumi:"databaseEngineVersion"`
-	DatabaseId             pulumi.StringOutput      `pulumi:"databaseId"`
-	DateCreated            pulumi.StringOutput      `pulumi:"dateCreated"`
-	Dbname                 pulumi.StringOutput      `pulumi:"dbname"`
-	Host                   pulumi.StringOutput      `pulumi:"host"`
-	Label                  pulumi.StringOutput      `pulumi:"label"`
-	LatestBackup           pulumi.StringOutput      `pulumi:"latestBackup"`
-	MaintenanceDow         pulumi.StringOutput      `pulumi:"maintenanceDow"`
-	MaintenanceTime        pulumi.StringOutput      `pulumi:"maintenanceTime"`
-	MysqlLongQueryTime     pulumi.IntOutput         `pulumi:"mysqlLongQueryTime"`
-	MysqlRequirePrimaryKey pulumi.BoolOutput        `pulumi:"mysqlRequirePrimaryKey"`
-	MysqlSlowQueryLog      pulumi.BoolOutput        `pulumi:"mysqlSlowQueryLog"`
-	MysqlSqlModes          pulumi.StringArrayOutput `pulumi:"mysqlSqlModes"`
-	Password               pulumi.StringOutput      `pulumi:"password"`
-	Plan                   pulumi.StringOutput      `pulumi:"plan"`
-	PlanDisk               pulumi.IntOutput         `pulumi:"planDisk"`
-	PlanRam                pulumi.IntOutput         `pulumi:"planRam"`
-	PlanReplicas           pulumi.IntOutput         `pulumi:"planReplicas"`
-	PlanVcpus              pulumi.IntOutput         `pulumi:"planVcpus"`
-	Port                   pulumi.StringOutput      `pulumi:"port"`
-	RedisEvictionPolicy    pulumi.StringOutput      `pulumi:"redisEvictionPolicy"`
-	Region                 pulumi.StringOutput      `pulumi:"region"`
-	Status                 pulumi.StringOutput      `pulumi:"status"`
-	Tag                    pulumi.StringOutput      `pulumi:"tag"`
-	TrustedIps             pulumi.StringArrayOutput `pulumi:"trustedIps"`
-	User                   pulumi.StringOutput      `pulumi:"user"`
+	// The configured time zone for the managed database read replica in TZ database format.
+	ClusterTimeZone pulumi.StringOutput `pulumi:"clusterTimeZone"`
+	// The database engine of the managed database read replica.
+	DatabaseEngine pulumi.StringOutput `pulumi:"databaseEngine"`
+	// The database engine version of the managed database read replica.
+	DatabaseEngineVersion pulumi.StringOutput `pulumi:"databaseEngineVersion"`
+	// The managed database ID you want to attach this replica to.
+	DatabaseId pulumi.StringOutput `pulumi:"databaseId"`
+	// The date the managed database read replica was added to your Vultr account.
+	DateCreated pulumi.StringOutput `pulumi:"dateCreated"`
+	// The managed database read replica's default logical database.
+	Dbname pulumi.StringOutput `pulumi:"dbname"`
+	// The hostname assigned to the managed database read replica.
+	Host pulumi.StringOutput `pulumi:"host"`
+	// A label for the managed database read replica.
+	Label pulumi.StringOutput `pulumi:"label"`
+	// The date of the latest backup available on the managed database read replica.
+	LatestBackup pulumi.StringOutput `pulumi:"latestBackup"`
+	// The preferred maintenance day of week for the managed database read replica.
+	MaintenanceDow pulumi.StringOutput `pulumi:"maintenanceDow"`
+	// The preferred maintenance time for the managed database read replica.
+	MaintenanceTime pulumi.StringOutput `pulumi:"maintenanceTime"`
+	// The configuration value for the long query time (in seconds) on the managed database read replica (MySQL engine types only).
+	MysqlLongQueryTime pulumi.IntOutput `pulumi:"mysqlLongQueryTime"`
+	// The configuration value for whether primary keys are required on the managed database read replica (MySQL engine types only).
+	MysqlRequirePrimaryKey pulumi.BoolOutput `pulumi:"mysqlRequirePrimaryKey"`
+	// The configuration value for slow query logging on the managed database read replica (MySQL engine types only).
+	MysqlSlowQueryLog pulumi.BoolOutput `pulumi:"mysqlSlowQueryLog"`
+	// A list of SQL modes currently configured for the managed database read replica (MySQL engine types only).
+	MysqlSqlModes pulumi.StringArrayOutput `pulumi:"mysqlSqlModes"`
+	// The password for the managed database read replica's primary admin user.
+	Password pulumi.StringOutput `pulumi:"password"`
+	// The managed database read replica's plan ID.
+	Plan pulumi.StringOutput `pulumi:"plan"`
+	// The description of the disk(s) on the managed database read replica.
+	PlanDisk pulumi.IntOutput `pulumi:"planDisk"`
+	// The amount of memory available on the managed database read replica in MB.
+	PlanRam pulumi.IntOutput `pulumi:"planRam"`
+	// The number of standby nodes available on the managed database read replica.
+	PlanReplicas pulumi.IntOutput `pulumi:"planReplicas"`
+	// The number of virtual CPUs available on the managed database read replica.
+	PlanVcpus pulumi.IntOutput `pulumi:"planVcpus"`
+	// The connection port for the managed database read replica.
+	Port pulumi.StringOutput `pulumi:"port"`
+	// The configuration value for the data eviction policy on the managed database read replica (Redis engine types only).
+	RedisEvictionPolicy pulumi.StringOutput `pulumi:"redisEvictionPolicy"`
+	// The ID of the region that the managed database read replica is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
+	Region pulumi.StringOutput `pulumi:"region"`
+	// The current status of the managed database read replica (poweroff, rebuilding, rebalancing, running).
+	Status pulumi.StringOutput `pulumi:"status"`
+	// The tag to assign to the managed database read replica.
+	Tag pulumi.StringOutput `pulumi:"tag"`
+	// A list of allowed IP addresses for the managed database read replica.
+	TrustedIps pulumi.StringArrayOutput `pulumi:"trustedIps"`
+	// The primary admin user for the managed database read replica.
+	User  pulumi.StringOutput `pulumi:"user"`
+	VpcId pulumi.StringOutput `pulumi:"vpcId"`
 }
 
 // NewDatabaseReplica registers a new resource with the given unique name, arguments, and options.
@@ -60,7 +123,7 @@ func NewDatabaseReplica(ctx *pulumi.Context,
 	if args.Region == nil {
 		return nil, errors.New("invalid value for required argument 'Region'")
 	}
-	opts = pkgResourceDefaultOpts(opts)
+	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource DatabaseReplica
 	err := ctx.RegisterResource("vultr:index/databaseReplica:DatabaseReplica", name, args, &resource, opts...)
 	if err != nil {
@@ -83,65 +146,123 @@ func GetDatabaseReplica(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering DatabaseReplica resources.
 type databaseReplicaState struct {
-	ClusterTimeZone        *string  `pulumi:"clusterTimeZone"`
-	DatabaseEngine         *string  `pulumi:"databaseEngine"`
-	DatabaseEngineVersion  *string  `pulumi:"databaseEngineVersion"`
-	DatabaseId             *string  `pulumi:"databaseId"`
-	DateCreated            *string  `pulumi:"dateCreated"`
-	Dbname                 *string  `pulumi:"dbname"`
-	Host                   *string  `pulumi:"host"`
-	Label                  *string  `pulumi:"label"`
-	LatestBackup           *string  `pulumi:"latestBackup"`
-	MaintenanceDow         *string  `pulumi:"maintenanceDow"`
-	MaintenanceTime        *string  `pulumi:"maintenanceTime"`
-	MysqlLongQueryTime     *int     `pulumi:"mysqlLongQueryTime"`
-	MysqlRequirePrimaryKey *bool    `pulumi:"mysqlRequirePrimaryKey"`
-	MysqlSlowQueryLog      *bool    `pulumi:"mysqlSlowQueryLog"`
-	MysqlSqlModes          []string `pulumi:"mysqlSqlModes"`
-	Password               *string  `pulumi:"password"`
-	Plan                   *string  `pulumi:"plan"`
-	PlanDisk               *int     `pulumi:"planDisk"`
-	PlanRam                *int     `pulumi:"planRam"`
-	PlanReplicas           *int     `pulumi:"planReplicas"`
-	PlanVcpus              *int     `pulumi:"planVcpus"`
-	Port                   *string  `pulumi:"port"`
-	RedisEvictionPolicy    *string  `pulumi:"redisEvictionPolicy"`
-	Region                 *string  `pulumi:"region"`
-	Status                 *string  `pulumi:"status"`
-	Tag                    *string  `pulumi:"tag"`
-	TrustedIps             []string `pulumi:"trustedIps"`
-	User                   *string  `pulumi:"user"`
+	// The configured time zone for the managed database read replica in TZ database format.
+	ClusterTimeZone *string `pulumi:"clusterTimeZone"`
+	// The database engine of the managed database read replica.
+	DatabaseEngine *string `pulumi:"databaseEngine"`
+	// The database engine version of the managed database read replica.
+	DatabaseEngineVersion *string `pulumi:"databaseEngineVersion"`
+	// The managed database ID you want to attach this replica to.
+	DatabaseId *string `pulumi:"databaseId"`
+	// The date the managed database read replica was added to your Vultr account.
+	DateCreated *string `pulumi:"dateCreated"`
+	// The managed database read replica's default logical database.
+	Dbname *string `pulumi:"dbname"`
+	// The hostname assigned to the managed database read replica.
+	Host *string `pulumi:"host"`
+	// A label for the managed database read replica.
+	Label *string `pulumi:"label"`
+	// The date of the latest backup available on the managed database read replica.
+	LatestBackup *string `pulumi:"latestBackup"`
+	// The preferred maintenance day of week for the managed database read replica.
+	MaintenanceDow *string `pulumi:"maintenanceDow"`
+	// The preferred maintenance time for the managed database read replica.
+	MaintenanceTime *string `pulumi:"maintenanceTime"`
+	// The configuration value for the long query time (in seconds) on the managed database read replica (MySQL engine types only).
+	MysqlLongQueryTime *int `pulumi:"mysqlLongQueryTime"`
+	// The configuration value for whether primary keys are required on the managed database read replica (MySQL engine types only).
+	MysqlRequirePrimaryKey *bool `pulumi:"mysqlRequirePrimaryKey"`
+	// The configuration value for slow query logging on the managed database read replica (MySQL engine types only).
+	MysqlSlowQueryLog *bool `pulumi:"mysqlSlowQueryLog"`
+	// A list of SQL modes currently configured for the managed database read replica (MySQL engine types only).
+	MysqlSqlModes []string `pulumi:"mysqlSqlModes"`
+	// The password for the managed database read replica's primary admin user.
+	Password *string `pulumi:"password"`
+	// The managed database read replica's plan ID.
+	Plan *string `pulumi:"plan"`
+	// The description of the disk(s) on the managed database read replica.
+	PlanDisk *int `pulumi:"planDisk"`
+	// The amount of memory available on the managed database read replica in MB.
+	PlanRam *int `pulumi:"planRam"`
+	// The number of standby nodes available on the managed database read replica.
+	PlanReplicas *int `pulumi:"planReplicas"`
+	// The number of virtual CPUs available on the managed database read replica.
+	PlanVcpus *int `pulumi:"planVcpus"`
+	// The connection port for the managed database read replica.
+	Port *string `pulumi:"port"`
+	// The configuration value for the data eviction policy on the managed database read replica (Redis engine types only).
+	RedisEvictionPolicy *string `pulumi:"redisEvictionPolicy"`
+	// The ID of the region that the managed database read replica is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
+	Region *string `pulumi:"region"`
+	// The current status of the managed database read replica (poweroff, rebuilding, rebalancing, running).
+	Status *string `pulumi:"status"`
+	// The tag to assign to the managed database read replica.
+	Tag *string `pulumi:"tag"`
+	// A list of allowed IP addresses for the managed database read replica.
+	TrustedIps []string `pulumi:"trustedIps"`
+	// The primary admin user for the managed database read replica.
+	User  *string `pulumi:"user"`
+	VpcId *string `pulumi:"vpcId"`
 }
 
 type DatabaseReplicaState struct {
-	ClusterTimeZone        pulumi.StringPtrInput
-	DatabaseEngine         pulumi.StringPtrInput
-	DatabaseEngineVersion  pulumi.StringPtrInput
-	DatabaseId             pulumi.StringPtrInput
-	DateCreated            pulumi.StringPtrInput
-	Dbname                 pulumi.StringPtrInput
-	Host                   pulumi.StringPtrInput
-	Label                  pulumi.StringPtrInput
-	LatestBackup           pulumi.StringPtrInput
-	MaintenanceDow         pulumi.StringPtrInput
-	MaintenanceTime        pulumi.StringPtrInput
-	MysqlLongQueryTime     pulumi.IntPtrInput
+	// The configured time zone for the managed database read replica in TZ database format.
+	ClusterTimeZone pulumi.StringPtrInput
+	// The database engine of the managed database read replica.
+	DatabaseEngine pulumi.StringPtrInput
+	// The database engine version of the managed database read replica.
+	DatabaseEngineVersion pulumi.StringPtrInput
+	// The managed database ID you want to attach this replica to.
+	DatabaseId pulumi.StringPtrInput
+	// The date the managed database read replica was added to your Vultr account.
+	DateCreated pulumi.StringPtrInput
+	// The managed database read replica's default logical database.
+	Dbname pulumi.StringPtrInput
+	// The hostname assigned to the managed database read replica.
+	Host pulumi.StringPtrInput
+	// A label for the managed database read replica.
+	Label pulumi.StringPtrInput
+	// The date of the latest backup available on the managed database read replica.
+	LatestBackup pulumi.StringPtrInput
+	// The preferred maintenance day of week for the managed database read replica.
+	MaintenanceDow pulumi.StringPtrInput
+	// The preferred maintenance time for the managed database read replica.
+	MaintenanceTime pulumi.StringPtrInput
+	// The configuration value for the long query time (in seconds) on the managed database read replica (MySQL engine types only).
+	MysqlLongQueryTime pulumi.IntPtrInput
+	// The configuration value for whether primary keys are required on the managed database read replica (MySQL engine types only).
 	MysqlRequirePrimaryKey pulumi.BoolPtrInput
-	MysqlSlowQueryLog      pulumi.BoolPtrInput
-	MysqlSqlModes          pulumi.StringArrayInput
-	Password               pulumi.StringPtrInput
-	Plan                   pulumi.StringPtrInput
-	PlanDisk               pulumi.IntPtrInput
-	PlanRam                pulumi.IntPtrInput
-	PlanReplicas           pulumi.IntPtrInput
-	PlanVcpus              pulumi.IntPtrInput
-	Port                   pulumi.StringPtrInput
-	RedisEvictionPolicy    pulumi.StringPtrInput
-	Region                 pulumi.StringPtrInput
-	Status                 pulumi.StringPtrInput
-	Tag                    pulumi.StringPtrInput
-	TrustedIps             pulumi.StringArrayInput
-	User                   pulumi.StringPtrInput
+	// The configuration value for slow query logging on the managed database read replica (MySQL engine types only).
+	MysqlSlowQueryLog pulumi.BoolPtrInput
+	// A list of SQL modes currently configured for the managed database read replica (MySQL engine types only).
+	MysqlSqlModes pulumi.StringArrayInput
+	// The password for the managed database read replica's primary admin user.
+	Password pulumi.StringPtrInput
+	// The managed database read replica's plan ID.
+	Plan pulumi.StringPtrInput
+	// The description of the disk(s) on the managed database read replica.
+	PlanDisk pulumi.IntPtrInput
+	// The amount of memory available on the managed database read replica in MB.
+	PlanRam pulumi.IntPtrInput
+	// The number of standby nodes available on the managed database read replica.
+	PlanReplicas pulumi.IntPtrInput
+	// The number of virtual CPUs available on the managed database read replica.
+	PlanVcpus pulumi.IntPtrInput
+	// The connection port for the managed database read replica.
+	Port pulumi.StringPtrInput
+	// The configuration value for the data eviction policy on the managed database read replica (Redis engine types only).
+	RedisEvictionPolicy pulumi.StringPtrInput
+	// The ID of the region that the managed database read replica is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
+	Region pulumi.StringPtrInput
+	// The current status of the managed database read replica (poweroff, rebuilding, rebalancing, running).
+	Status pulumi.StringPtrInput
+	// The tag to assign to the managed database read replica.
+	Tag pulumi.StringPtrInput
+	// A list of allowed IP addresses for the managed database read replica.
+	TrustedIps pulumi.StringArrayInput
+	// The primary admin user for the managed database read replica.
+	User  pulumi.StringPtrInput
+	VpcId pulumi.StringPtrInput
 }
 
 func (DatabaseReplicaState) ElementType() reflect.Type {
@@ -149,32 +270,54 @@ func (DatabaseReplicaState) ElementType() reflect.Type {
 }
 
 type databaseReplicaArgs struct {
-	DatabaseId             string   `pulumi:"databaseId"`
-	Label                  string   `pulumi:"label"`
-	MysqlLongQueryTime     *int     `pulumi:"mysqlLongQueryTime"`
-	MysqlRequirePrimaryKey *bool    `pulumi:"mysqlRequirePrimaryKey"`
-	MysqlSlowQueryLog      *bool    `pulumi:"mysqlSlowQueryLog"`
-	MysqlSqlModes          []string `pulumi:"mysqlSqlModes"`
-	PlanDisk               *int     `pulumi:"planDisk"`
-	RedisEvictionPolicy    *string  `pulumi:"redisEvictionPolicy"`
-	Region                 string   `pulumi:"region"`
-	Tag                    *string  `pulumi:"tag"`
-	TrustedIps             []string `pulumi:"trustedIps"`
+	// The managed database ID you want to attach this replica to.
+	DatabaseId string `pulumi:"databaseId"`
+	// A label for the managed database read replica.
+	Label string `pulumi:"label"`
+	// The configuration value for the long query time (in seconds) on the managed database read replica (MySQL engine types only).
+	MysqlLongQueryTime *int `pulumi:"mysqlLongQueryTime"`
+	// The configuration value for whether primary keys are required on the managed database read replica (MySQL engine types only).
+	MysqlRequirePrimaryKey *bool `pulumi:"mysqlRequirePrimaryKey"`
+	// The configuration value for slow query logging on the managed database read replica (MySQL engine types only).
+	MysqlSlowQueryLog *bool `pulumi:"mysqlSlowQueryLog"`
+	// A list of SQL modes currently configured for the managed database read replica (MySQL engine types only).
+	MysqlSqlModes []string `pulumi:"mysqlSqlModes"`
+	// The description of the disk(s) on the managed database read replica.
+	PlanDisk *int `pulumi:"planDisk"`
+	// The configuration value for the data eviction policy on the managed database read replica (Redis engine types only).
+	RedisEvictionPolicy *string `pulumi:"redisEvictionPolicy"`
+	// The ID of the region that the managed database read replica is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
+	Region string `pulumi:"region"`
+	// The tag to assign to the managed database read replica.
+	Tag *string `pulumi:"tag"`
+	// A list of allowed IP addresses for the managed database read replica.
+	TrustedIps []string `pulumi:"trustedIps"`
 }
 
 // The set of arguments for constructing a DatabaseReplica resource.
 type DatabaseReplicaArgs struct {
-	DatabaseId             pulumi.StringInput
-	Label                  pulumi.StringInput
-	MysqlLongQueryTime     pulumi.IntPtrInput
+	// The managed database ID you want to attach this replica to.
+	DatabaseId pulumi.StringInput
+	// A label for the managed database read replica.
+	Label pulumi.StringInput
+	// The configuration value for the long query time (in seconds) on the managed database read replica (MySQL engine types only).
+	MysqlLongQueryTime pulumi.IntPtrInput
+	// The configuration value for whether primary keys are required on the managed database read replica (MySQL engine types only).
 	MysqlRequirePrimaryKey pulumi.BoolPtrInput
-	MysqlSlowQueryLog      pulumi.BoolPtrInput
-	MysqlSqlModes          pulumi.StringArrayInput
-	PlanDisk               pulumi.IntPtrInput
-	RedisEvictionPolicy    pulumi.StringPtrInput
-	Region                 pulumi.StringInput
-	Tag                    pulumi.StringPtrInput
-	TrustedIps             pulumi.StringArrayInput
+	// The configuration value for slow query logging on the managed database read replica (MySQL engine types only).
+	MysqlSlowQueryLog pulumi.BoolPtrInput
+	// A list of SQL modes currently configured for the managed database read replica (MySQL engine types only).
+	MysqlSqlModes pulumi.StringArrayInput
+	// The description of the disk(s) on the managed database read replica.
+	PlanDisk pulumi.IntPtrInput
+	// The configuration value for the data eviction policy on the managed database read replica (Redis engine types only).
+	RedisEvictionPolicy pulumi.StringPtrInput
+	// The ID of the region that the managed database read replica is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
+	Region pulumi.StringInput
+	// The tag to assign to the managed database read replica.
+	Tag pulumi.StringPtrInput
+	// A list of allowed IP addresses for the managed database read replica.
+	TrustedIps pulumi.StringArrayInput
 }
 
 func (DatabaseReplicaArgs) ElementType() reflect.Type {
@@ -198,6 +341,12 @@ func (i *DatabaseReplica) ToDatabaseReplicaOutput() DatabaseReplicaOutput {
 
 func (i *DatabaseReplica) ToDatabaseReplicaOutputWithContext(ctx context.Context) DatabaseReplicaOutput {
 	return pulumi.ToOutputWithContext(ctx, i).(DatabaseReplicaOutput)
+}
+
+func (i *DatabaseReplica) ToOutput(ctx context.Context) pulumix.Output[*DatabaseReplica] {
+	return pulumix.Output[*DatabaseReplica]{
+		OutputState: i.ToDatabaseReplicaOutputWithContext(ctx).OutputState,
+	}
 }
 
 // DatabaseReplicaArrayInput is an input type that accepts DatabaseReplicaArray and DatabaseReplicaArrayOutput values.
@@ -225,6 +374,12 @@ func (i DatabaseReplicaArray) ToDatabaseReplicaArrayOutputWithContext(ctx contex
 	return pulumi.ToOutputWithContext(ctx, i).(DatabaseReplicaArrayOutput)
 }
 
+func (i DatabaseReplicaArray) ToOutput(ctx context.Context) pulumix.Output[[]*DatabaseReplica] {
+	return pulumix.Output[[]*DatabaseReplica]{
+		OutputState: i.ToDatabaseReplicaArrayOutputWithContext(ctx).OutputState,
+	}
+}
+
 // DatabaseReplicaMapInput is an input type that accepts DatabaseReplicaMap and DatabaseReplicaMapOutput values.
 // You can construct a concrete instance of `DatabaseReplicaMapInput` via:
 //
@@ -250,6 +405,12 @@ func (i DatabaseReplicaMap) ToDatabaseReplicaMapOutputWithContext(ctx context.Co
 	return pulumi.ToOutputWithContext(ctx, i).(DatabaseReplicaMapOutput)
 }
 
+func (i DatabaseReplicaMap) ToOutput(ctx context.Context) pulumix.Output[map[string]*DatabaseReplica] {
+	return pulumix.Output[map[string]*DatabaseReplica]{
+		OutputState: i.ToDatabaseReplicaMapOutputWithContext(ctx).OutputState,
+	}
+}
+
 type DatabaseReplicaOutput struct{ *pulumi.OutputState }
 
 func (DatabaseReplicaOutput) ElementType() reflect.Type {
@@ -264,116 +425,154 @@ func (o DatabaseReplicaOutput) ToDatabaseReplicaOutputWithContext(ctx context.Co
 	return o
 }
 
+func (o DatabaseReplicaOutput) ToOutput(ctx context.Context) pulumix.Output[*DatabaseReplica] {
+	return pulumix.Output[*DatabaseReplica]{
+		OutputState: o.OutputState,
+	}
+}
+
+// The configured time zone for the managed database read replica in TZ database format.
 func (o DatabaseReplicaOutput) ClusterTimeZone() pulumi.StringOutput {
 	return o.ApplyT(func(v *DatabaseReplica) pulumi.StringOutput { return v.ClusterTimeZone }).(pulumi.StringOutput)
 }
 
+// The database engine of the managed database read replica.
 func (o DatabaseReplicaOutput) DatabaseEngine() pulumi.StringOutput {
 	return o.ApplyT(func(v *DatabaseReplica) pulumi.StringOutput { return v.DatabaseEngine }).(pulumi.StringOutput)
 }
 
+// The database engine version of the managed database read replica.
 func (o DatabaseReplicaOutput) DatabaseEngineVersion() pulumi.StringOutput {
 	return o.ApplyT(func(v *DatabaseReplica) pulumi.StringOutput { return v.DatabaseEngineVersion }).(pulumi.StringOutput)
 }
 
+// The managed database ID you want to attach this replica to.
 func (o DatabaseReplicaOutput) DatabaseId() pulumi.StringOutput {
 	return o.ApplyT(func(v *DatabaseReplica) pulumi.StringOutput { return v.DatabaseId }).(pulumi.StringOutput)
 }
 
+// The date the managed database read replica was added to your Vultr account.
 func (o DatabaseReplicaOutput) DateCreated() pulumi.StringOutput {
 	return o.ApplyT(func(v *DatabaseReplica) pulumi.StringOutput { return v.DateCreated }).(pulumi.StringOutput)
 }
 
+// The managed database read replica's default logical database.
 func (o DatabaseReplicaOutput) Dbname() pulumi.StringOutput {
 	return o.ApplyT(func(v *DatabaseReplica) pulumi.StringOutput { return v.Dbname }).(pulumi.StringOutput)
 }
 
+// The hostname assigned to the managed database read replica.
 func (o DatabaseReplicaOutput) Host() pulumi.StringOutput {
 	return o.ApplyT(func(v *DatabaseReplica) pulumi.StringOutput { return v.Host }).(pulumi.StringOutput)
 }
 
+// A label for the managed database read replica.
 func (o DatabaseReplicaOutput) Label() pulumi.StringOutput {
 	return o.ApplyT(func(v *DatabaseReplica) pulumi.StringOutput { return v.Label }).(pulumi.StringOutput)
 }
 
+// The date of the latest backup available on the managed database read replica.
 func (o DatabaseReplicaOutput) LatestBackup() pulumi.StringOutput {
 	return o.ApplyT(func(v *DatabaseReplica) pulumi.StringOutput { return v.LatestBackup }).(pulumi.StringOutput)
 }
 
+// The preferred maintenance day of week for the managed database read replica.
 func (o DatabaseReplicaOutput) MaintenanceDow() pulumi.StringOutput {
 	return o.ApplyT(func(v *DatabaseReplica) pulumi.StringOutput { return v.MaintenanceDow }).(pulumi.StringOutput)
 }
 
+// The preferred maintenance time for the managed database read replica.
 func (o DatabaseReplicaOutput) MaintenanceTime() pulumi.StringOutput {
 	return o.ApplyT(func(v *DatabaseReplica) pulumi.StringOutput { return v.MaintenanceTime }).(pulumi.StringOutput)
 }
 
+// The configuration value for the long query time (in seconds) on the managed database read replica (MySQL engine types only).
 func (o DatabaseReplicaOutput) MysqlLongQueryTime() pulumi.IntOutput {
 	return o.ApplyT(func(v *DatabaseReplica) pulumi.IntOutput { return v.MysqlLongQueryTime }).(pulumi.IntOutput)
 }
 
+// The configuration value for whether primary keys are required on the managed database read replica (MySQL engine types only).
 func (o DatabaseReplicaOutput) MysqlRequirePrimaryKey() pulumi.BoolOutput {
 	return o.ApplyT(func(v *DatabaseReplica) pulumi.BoolOutput { return v.MysqlRequirePrimaryKey }).(pulumi.BoolOutput)
 }
 
+// The configuration value for slow query logging on the managed database read replica (MySQL engine types only).
 func (o DatabaseReplicaOutput) MysqlSlowQueryLog() pulumi.BoolOutput {
 	return o.ApplyT(func(v *DatabaseReplica) pulumi.BoolOutput { return v.MysqlSlowQueryLog }).(pulumi.BoolOutput)
 }
 
+// A list of SQL modes currently configured for the managed database read replica (MySQL engine types only).
 func (o DatabaseReplicaOutput) MysqlSqlModes() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v *DatabaseReplica) pulumi.StringArrayOutput { return v.MysqlSqlModes }).(pulumi.StringArrayOutput)
 }
 
+// The password for the managed database read replica's primary admin user.
 func (o DatabaseReplicaOutput) Password() pulumi.StringOutput {
 	return o.ApplyT(func(v *DatabaseReplica) pulumi.StringOutput { return v.Password }).(pulumi.StringOutput)
 }
 
+// The managed database read replica's plan ID.
 func (o DatabaseReplicaOutput) Plan() pulumi.StringOutput {
 	return o.ApplyT(func(v *DatabaseReplica) pulumi.StringOutput { return v.Plan }).(pulumi.StringOutput)
 }
 
+// The description of the disk(s) on the managed database read replica.
 func (o DatabaseReplicaOutput) PlanDisk() pulumi.IntOutput {
 	return o.ApplyT(func(v *DatabaseReplica) pulumi.IntOutput { return v.PlanDisk }).(pulumi.IntOutput)
 }
 
+// The amount of memory available on the managed database read replica in MB.
 func (o DatabaseReplicaOutput) PlanRam() pulumi.IntOutput {
 	return o.ApplyT(func(v *DatabaseReplica) pulumi.IntOutput { return v.PlanRam }).(pulumi.IntOutput)
 }
 
+// The number of standby nodes available on the managed database read replica.
 func (o DatabaseReplicaOutput) PlanReplicas() pulumi.IntOutput {
 	return o.ApplyT(func(v *DatabaseReplica) pulumi.IntOutput { return v.PlanReplicas }).(pulumi.IntOutput)
 }
 
+// The number of virtual CPUs available on the managed database read replica.
 func (o DatabaseReplicaOutput) PlanVcpus() pulumi.IntOutput {
 	return o.ApplyT(func(v *DatabaseReplica) pulumi.IntOutput { return v.PlanVcpus }).(pulumi.IntOutput)
 }
 
+// The connection port for the managed database read replica.
 func (o DatabaseReplicaOutput) Port() pulumi.StringOutput {
 	return o.ApplyT(func(v *DatabaseReplica) pulumi.StringOutput { return v.Port }).(pulumi.StringOutput)
 }
 
+// The configuration value for the data eviction policy on the managed database read replica (Redis engine types only).
 func (o DatabaseReplicaOutput) RedisEvictionPolicy() pulumi.StringOutput {
 	return o.ApplyT(func(v *DatabaseReplica) pulumi.StringOutput { return v.RedisEvictionPolicy }).(pulumi.StringOutput)
 }
 
+// The ID of the region that the managed database read replica is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
 func (o DatabaseReplicaOutput) Region() pulumi.StringOutput {
 	return o.ApplyT(func(v *DatabaseReplica) pulumi.StringOutput { return v.Region }).(pulumi.StringOutput)
 }
 
+// The current status of the managed database read replica (poweroff, rebuilding, rebalancing, running).
 func (o DatabaseReplicaOutput) Status() pulumi.StringOutput {
 	return o.ApplyT(func(v *DatabaseReplica) pulumi.StringOutput { return v.Status }).(pulumi.StringOutput)
 }
 
+// The tag to assign to the managed database read replica.
 func (o DatabaseReplicaOutput) Tag() pulumi.StringOutput {
 	return o.ApplyT(func(v *DatabaseReplica) pulumi.StringOutput { return v.Tag }).(pulumi.StringOutput)
 }
 
+// A list of allowed IP addresses for the managed database read replica.
 func (o DatabaseReplicaOutput) TrustedIps() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v *DatabaseReplica) pulumi.StringArrayOutput { return v.TrustedIps }).(pulumi.StringArrayOutput)
 }
 
+// The primary admin user for the managed database read replica.
 func (o DatabaseReplicaOutput) User() pulumi.StringOutput {
 	return o.ApplyT(func(v *DatabaseReplica) pulumi.StringOutput { return v.User }).(pulumi.StringOutput)
+}
+
+func (o DatabaseReplicaOutput) VpcId() pulumi.StringOutput {
+	return o.ApplyT(func(v *DatabaseReplica) pulumi.StringOutput { return v.VpcId }).(pulumi.StringOutput)
 }
 
 type DatabaseReplicaArrayOutput struct{ *pulumi.OutputState }
@@ -388,6 +587,12 @@ func (o DatabaseReplicaArrayOutput) ToDatabaseReplicaArrayOutput() DatabaseRepli
 
 func (o DatabaseReplicaArrayOutput) ToDatabaseReplicaArrayOutputWithContext(ctx context.Context) DatabaseReplicaArrayOutput {
 	return o
+}
+
+func (o DatabaseReplicaArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]*DatabaseReplica] {
+	return pulumix.Output[[]*DatabaseReplica]{
+		OutputState: o.OutputState,
+	}
 }
 
 func (o DatabaseReplicaArrayOutput) Index(i pulumi.IntInput) DatabaseReplicaOutput {
@@ -408,6 +613,12 @@ func (o DatabaseReplicaMapOutput) ToDatabaseReplicaMapOutput() DatabaseReplicaMa
 
 func (o DatabaseReplicaMapOutput) ToDatabaseReplicaMapOutputWithContext(ctx context.Context) DatabaseReplicaMapOutput {
 	return o
+}
+
+func (o DatabaseReplicaMapOutput) ToOutput(ctx context.Context) pulumix.Output[map[string]*DatabaseReplica] {
+	return pulumix.Output[map[string]*DatabaseReplica]{
+		OutputState: o.OutputState,
+	}
 }
 
 func (o DatabaseReplicaMapOutput) MapIndex(k pulumi.StringInput) DatabaseReplicaOutput {

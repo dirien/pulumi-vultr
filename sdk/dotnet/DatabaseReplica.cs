@@ -10,92 +10,205 @@ using Pulumi;
 
 namespace ediri.Vultr
 {
+    /// <summary>
+    /// Provides a Vultr database replica resource. This can be used to create, read, modify, and delete managed database read replicas on your Vultr account.
+    /// 
+    /// ## Example Usage
+    /// 
+    /// Create a new database replica:
+    /// 
+    /// ```csharp
+    /// using System.Collections.Generic;
+    /// using System.Linq;
+    /// using Pulumi;
+    /// using Vultr = ediri.Vultr;
+    /// 
+    /// return await Deployment.RunAsync(() =&gt; 
+    /// {
+    ///     var myDatabaseReplica = new Vultr.DatabaseReplica("myDatabaseReplica", new()
+    ///     {
+    ///         DatabaseId = vultr_database.My_database.Id,
+    ///         Region = "sea",
+    ///         Label = "my_database_replica_label",
+    ///         Tag = "test tag",
+    ///     });
+    /// 
+    /// });
+    /// ```
+    /// </summary>
     [VultrResourceType("vultr:index/databaseReplica:DatabaseReplica")]
     public partial class DatabaseReplica : global::Pulumi.CustomResource
     {
+        /// <summary>
+        /// The configured time zone for the managed database read replica in TZ database format.
+        /// </summary>
         [Output("clusterTimeZone")]
         public Output<string> ClusterTimeZone { get; private set; } = null!;
 
+        /// <summary>
+        /// The database engine of the managed database read replica.
+        /// </summary>
         [Output("databaseEngine")]
         public Output<string> DatabaseEngine { get; private set; } = null!;
 
+        /// <summary>
+        /// The database engine version of the managed database read replica.
+        /// </summary>
         [Output("databaseEngineVersion")]
         public Output<string> DatabaseEngineVersion { get; private set; } = null!;
 
+        /// <summary>
+        /// The managed database ID you want to attach this replica to.
+        /// </summary>
         [Output("databaseId")]
         public Output<string> DatabaseId { get; private set; } = null!;
 
+        /// <summary>
+        /// The date the managed database read replica was added to your Vultr account.
+        /// </summary>
         [Output("dateCreated")]
         public Output<string> DateCreated { get; private set; } = null!;
 
+        /// <summary>
+        /// The managed database read replica's default logical database.
+        /// </summary>
         [Output("dbname")]
         public Output<string> Dbname { get; private set; } = null!;
 
+        /// <summary>
+        /// The hostname assigned to the managed database read replica.
+        /// </summary>
         [Output("host")]
         public Output<string> Host { get; private set; } = null!;
 
+        /// <summary>
+        /// A label for the managed database read replica.
+        /// </summary>
         [Output("label")]
         public Output<string> Label { get; private set; } = null!;
 
+        /// <summary>
+        /// The date of the latest backup available on the managed database read replica.
+        /// </summary>
         [Output("latestBackup")]
         public Output<string> LatestBackup { get; private set; } = null!;
 
+        /// <summary>
+        /// The preferred maintenance day of week for the managed database read replica.
+        /// </summary>
         [Output("maintenanceDow")]
         public Output<string> MaintenanceDow { get; private set; } = null!;
 
+        /// <summary>
+        /// The preferred maintenance time for the managed database read replica.
+        /// </summary>
         [Output("maintenanceTime")]
         public Output<string> MaintenanceTime { get; private set; } = null!;
 
+        /// <summary>
+        /// The configuration value for the long query time (in seconds) on the managed database read replica (MySQL engine types only).
+        /// </summary>
         [Output("mysqlLongQueryTime")]
         public Output<int> MysqlLongQueryTime { get; private set; } = null!;
 
+        /// <summary>
+        /// The configuration value for whether primary keys are required on the managed database read replica (MySQL engine types only).
+        /// </summary>
         [Output("mysqlRequirePrimaryKey")]
         public Output<bool> MysqlRequirePrimaryKey { get; private set; } = null!;
 
+        /// <summary>
+        /// The configuration value for slow query logging on the managed database read replica (MySQL engine types only).
+        /// </summary>
         [Output("mysqlSlowQueryLog")]
         public Output<bool> MysqlSlowQueryLog { get; private set; } = null!;
 
+        /// <summary>
+        /// A list of SQL modes currently configured for the managed database read replica (MySQL engine types only).
+        /// </summary>
         [Output("mysqlSqlModes")]
         public Output<ImmutableArray<string>> MysqlSqlModes { get; private set; } = null!;
 
+        /// <summary>
+        /// The password for the managed database read replica's primary admin user.
+        /// </summary>
         [Output("password")]
         public Output<string> Password { get; private set; } = null!;
 
+        /// <summary>
+        /// The managed database read replica's plan ID.
+        /// </summary>
         [Output("plan")]
         public Output<string> Plan { get; private set; } = null!;
 
+        /// <summary>
+        /// The description of the disk(s) on the managed database read replica.
+        /// </summary>
         [Output("planDisk")]
         public Output<int> PlanDisk { get; private set; } = null!;
 
+        /// <summary>
+        /// The amount of memory available on the managed database read replica in MB.
+        /// </summary>
         [Output("planRam")]
         public Output<int> PlanRam { get; private set; } = null!;
 
+        /// <summary>
+        /// The number of standby nodes available on the managed database read replica.
+        /// </summary>
         [Output("planReplicas")]
         public Output<int> PlanReplicas { get; private set; } = null!;
 
+        /// <summary>
+        /// The number of virtual CPUs available on the managed database read replica.
+        /// </summary>
         [Output("planVcpus")]
         public Output<int> PlanVcpus { get; private set; } = null!;
 
+        /// <summary>
+        /// The connection port for the managed database read replica.
+        /// </summary>
         [Output("port")]
         public Output<string> Port { get; private set; } = null!;
 
+        /// <summary>
+        /// The configuration value for the data eviction policy on the managed database read replica (Redis engine types only).
+        /// </summary>
         [Output("redisEvictionPolicy")]
         public Output<string> RedisEvictionPolicy { get; private set; } = null!;
 
+        /// <summary>
+        /// The ID of the region that the managed database read replica is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
+        /// </summary>
         [Output("region")]
         public Output<string> Region { get; private set; } = null!;
 
+        /// <summary>
+        /// The current status of the managed database read replica (poweroff, rebuilding, rebalancing, running).
+        /// </summary>
         [Output("status")]
         public Output<string> Status { get; private set; } = null!;
 
+        /// <summary>
+        /// The tag to assign to the managed database read replica.
+        /// </summary>
         [Output("tag")]
         public Output<string> Tag { get; private set; } = null!;
 
+        /// <summary>
+        /// A list of allowed IP addresses for the managed database read replica.
+        /// </summary>
         [Output("trustedIps")]
         public Output<ImmutableArray<string>> TrustedIps { get; private set; } = null!;
 
+        /// <summary>
+        /// The primary admin user for the managed database read replica.
+        /// </summary>
         [Output("user")]
         public Output<string> User { get; private set; } = null!;
+
+        [Output("vpcId")]
+        public Output<string> VpcId { get; private set; } = null!;
 
 
         /// <summary>
@@ -144,43 +257,78 @@ namespace ediri.Vultr
 
     public sealed class DatabaseReplicaArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// The managed database ID you want to attach this replica to.
+        /// </summary>
         [Input("databaseId", required: true)]
         public Input<string> DatabaseId { get; set; } = null!;
 
+        /// <summary>
+        /// A label for the managed database read replica.
+        /// </summary>
         [Input("label", required: true)]
         public Input<string> Label { get; set; } = null!;
 
+        /// <summary>
+        /// The configuration value for the long query time (in seconds) on the managed database read replica (MySQL engine types only).
+        /// </summary>
         [Input("mysqlLongQueryTime")]
         public Input<int>? MysqlLongQueryTime { get; set; }
 
+        /// <summary>
+        /// The configuration value for whether primary keys are required on the managed database read replica (MySQL engine types only).
+        /// </summary>
         [Input("mysqlRequirePrimaryKey")]
         public Input<bool>? MysqlRequirePrimaryKey { get; set; }
 
+        /// <summary>
+        /// The configuration value for slow query logging on the managed database read replica (MySQL engine types only).
+        /// </summary>
         [Input("mysqlSlowQueryLog")]
         public Input<bool>? MysqlSlowQueryLog { get; set; }
 
         [Input("mysqlSqlModes")]
         private InputList<string>? _mysqlSqlModes;
+
+        /// <summary>
+        /// A list of SQL modes currently configured for the managed database read replica (MySQL engine types only).
+        /// </summary>
         public InputList<string> MysqlSqlModes
         {
             get => _mysqlSqlModes ?? (_mysqlSqlModes = new InputList<string>());
             set => _mysqlSqlModes = value;
         }
 
+        /// <summary>
+        /// The description of the disk(s) on the managed database read replica.
+        /// </summary>
         [Input("planDisk")]
         public Input<int>? PlanDisk { get; set; }
 
+        /// <summary>
+        /// The configuration value for the data eviction policy on the managed database read replica (Redis engine types only).
+        /// </summary>
         [Input("redisEvictionPolicy")]
         public Input<string>? RedisEvictionPolicy { get; set; }
 
+        /// <summary>
+        /// The ID of the region that the managed database read replica is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
+        /// </summary>
         [Input("region", required: true)]
         public Input<string> Region { get; set; } = null!;
 
+        /// <summary>
+        /// The tag to assign to the managed database read replica.
+        /// </summary>
         [Input("tag")]
         public Input<string>? Tag { get; set; }
 
         [Input("trustedIps")]
         private InputList<string>? _trustedIps;
+
+        /// <summary>
+        /// A list of allowed IP addresses for the managed database read replica.
+        /// </summary>
         public InputList<string> TrustedIps
         {
             get => _trustedIps ?? (_trustedIps = new InputList<string>());
@@ -195,99 +343,188 @@ namespace ediri.Vultr
 
     public sealed class DatabaseReplicaState : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// The configured time zone for the managed database read replica in TZ database format.
+        /// </summary>
         [Input("clusterTimeZone")]
         public Input<string>? ClusterTimeZone { get; set; }
 
+        /// <summary>
+        /// The database engine of the managed database read replica.
+        /// </summary>
         [Input("databaseEngine")]
         public Input<string>? DatabaseEngine { get; set; }
 
+        /// <summary>
+        /// The database engine version of the managed database read replica.
+        /// </summary>
         [Input("databaseEngineVersion")]
         public Input<string>? DatabaseEngineVersion { get; set; }
 
+        /// <summary>
+        /// The managed database ID you want to attach this replica to.
+        /// </summary>
         [Input("databaseId")]
         public Input<string>? DatabaseId { get; set; }
 
+        /// <summary>
+        /// The date the managed database read replica was added to your Vultr account.
+        /// </summary>
         [Input("dateCreated")]
         public Input<string>? DateCreated { get; set; }
 
+        /// <summary>
+        /// The managed database read replica's default logical database.
+        /// </summary>
         [Input("dbname")]
         public Input<string>? Dbname { get; set; }
 
+        /// <summary>
+        /// The hostname assigned to the managed database read replica.
+        /// </summary>
         [Input("host")]
         public Input<string>? Host { get; set; }
 
+        /// <summary>
+        /// A label for the managed database read replica.
+        /// </summary>
         [Input("label")]
         public Input<string>? Label { get; set; }
 
+        /// <summary>
+        /// The date of the latest backup available on the managed database read replica.
+        /// </summary>
         [Input("latestBackup")]
         public Input<string>? LatestBackup { get; set; }
 
+        /// <summary>
+        /// The preferred maintenance day of week for the managed database read replica.
+        /// </summary>
         [Input("maintenanceDow")]
         public Input<string>? MaintenanceDow { get; set; }
 
+        /// <summary>
+        /// The preferred maintenance time for the managed database read replica.
+        /// </summary>
         [Input("maintenanceTime")]
         public Input<string>? MaintenanceTime { get; set; }
 
+        /// <summary>
+        /// The configuration value for the long query time (in seconds) on the managed database read replica (MySQL engine types only).
+        /// </summary>
         [Input("mysqlLongQueryTime")]
         public Input<int>? MysqlLongQueryTime { get; set; }
 
+        /// <summary>
+        /// The configuration value for whether primary keys are required on the managed database read replica (MySQL engine types only).
+        /// </summary>
         [Input("mysqlRequirePrimaryKey")]
         public Input<bool>? MysqlRequirePrimaryKey { get; set; }
 
+        /// <summary>
+        /// The configuration value for slow query logging on the managed database read replica (MySQL engine types only).
+        /// </summary>
         [Input("mysqlSlowQueryLog")]
         public Input<bool>? MysqlSlowQueryLog { get; set; }
 
         [Input("mysqlSqlModes")]
         private InputList<string>? _mysqlSqlModes;
+
+        /// <summary>
+        /// A list of SQL modes currently configured for the managed database read replica (MySQL engine types only).
+        /// </summary>
         public InputList<string> MysqlSqlModes
         {
             get => _mysqlSqlModes ?? (_mysqlSqlModes = new InputList<string>());
             set => _mysqlSqlModes = value;
         }
 
+        /// <summary>
+        /// The password for the managed database read replica's primary admin user.
+        /// </summary>
         [Input("password")]
         public Input<string>? Password { get; set; }
 
+        /// <summary>
+        /// The managed database read replica's plan ID.
+        /// </summary>
         [Input("plan")]
         public Input<string>? Plan { get; set; }
 
+        /// <summary>
+        /// The description of the disk(s) on the managed database read replica.
+        /// </summary>
         [Input("planDisk")]
         public Input<int>? PlanDisk { get; set; }
 
+        /// <summary>
+        /// The amount of memory available on the managed database read replica in MB.
+        /// </summary>
         [Input("planRam")]
         public Input<int>? PlanRam { get; set; }
 
+        /// <summary>
+        /// The number of standby nodes available on the managed database read replica.
+        /// </summary>
         [Input("planReplicas")]
         public Input<int>? PlanReplicas { get; set; }
 
+        /// <summary>
+        /// The number of virtual CPUs available on the managed database read replica.
+        /// </summary>
         [Input("planVcpus")]
         public Input<int>? PlanVcpus { get; set; }
 
+        /// <summary>
+        /// The connection port for the managed database read replica.
+        /// </summary>
         [Input("port")]
         public Input<string>? Port { get; set; }
 
+        /// <summary>
+        /// The configuration value for the data eviction policy on the managed database read replica (Redis engine types only).
+        /// </summary>
         [Input("redisEvictionPolicy")]
         public Input<string>? RedisEvictionPolicy { get; set; }
 
+        /// <summary>
+        /// The ID of the region that the managed database read replica is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
+        /// </summary>
         [Input("region")]
         public Input<string>? Region { get; set; }
 
+        /// <summary>
+        /// The current status of the managed database read replica (poweroff, rebuilding, rebalancing, running).
+        /// </summary>
         [Input("status")]
         public Input<string>? Status { get; set; }
 
+        /// <summary>
+        /// The tag to assign to the managed database read replica.
+        /// </summary>
         [Input("tag")]
         public Input<string>? Tag { get; set; }
 
         [Input("trustedIps")]
         private InputList<string>? _trustedIps;
+
+        /// <summary>
+        /// A list of allowed IP addresses for the managed database read replica.
+        /// </summary>
         public InputList<string> TrustedIps
         {
             get => _trustedIps ?? (_trustedIps = new InputList<string>());
             set => _trustedIps = value;
         }
 
+        /// <summary>
+        /// The primary admin user for the managed database read replica.
+        /// </summary>
         [Input("user")]
         public Input<string>? User { get; set; }
+
+        [Input("vpcId")]
+        public Input<string>? VpcId { get; set; }
 
         public DatabaseReplicaState()
         {

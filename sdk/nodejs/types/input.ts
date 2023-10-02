@@ -6,34 +6,119 @@ import * as inputs from "../types/input";
 import * as outputs from "../types/output";
 
 export interface DatabaseReadReplica {
+    /**
+     * The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
+     */
     clusterTimeZone?: pulumi.Input<string>;
+    /**
+     * The database engine of the new managed database.
+     */
     databaseEngine?: pulumi.Input<string>;
+    /**
+     * The database engine version of the new managed database.
+     */
     databaseEngineVersion?: pulumi.Input<string>;
+    /**
+     * The date the managed database was added to your Vultr account.
+     */
     dateCreated?: pulumi.Input<string>;
+    /**
+     * The managed database's default logical database.
+     */
     dbname?: pulumi.Input<string>;
+    /**
+     * The hostname assigned to the managed database.
+     */
     host?: pulumi.Input<string>;
+    /**
+     * The ID of the managed database.
+     */
     id?: pulumi.Input<string>;
+    /**
+     * A label for the managed database.
+     */
     label: pulumi.Input<string>;
+    /**
+     * The date of the latest backup available on the managed database.
+     */
     latestBackup?: pulumi.Input<string>;
+    /**
+     * The preferred maintenance day of week for the managed database.
+     */
     maintenanceDow?: pulumi.Input<string>;
+    /**
+     * The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).
+     */
     maintenanceTime?: pulumi.Input<string>;
+    /**
+     * The configuration value for the long query time (in seconds) on the managed database (MySQL engine types only).
+     */
     mysqlLongQueryTime?: pulumi.Input<number>;
+    /**
+     * The configuration value for whether primary keys are required on the managed database (MySQL engine types only).
+     */
     mysqlRequirePrimaryKey?: pulumi.Input<boolean>;
+    /**
+     * The configuration value for slow query logging on the managed database (MySQL engine types only).
+     */
     mysqlSlowQueryLog?: pulumi.Input<boolean>;
+    /**
+     * A list of SQL modes to configure for the managed database (MySQL engine types only - `ALLOW_INVALID_DATES`, `ANSI`, `ANSI_QUOTES`, `ERROR_FOR_DIVISION_BY_ZERO`, `HIGH_NOT_PRECEDENCE`, `IGNORE_SPACE`, `NO_AUTO_VALUE_ON_ZERO`, `NO_DIR_IN_CREATE`, `NO_ENGINE_SUBSTITUTION`, `NO_UNSIGNED_SUBTRACTION`, `NO_ZERO_DATE`, `NO_ZERO_IN_DATE`, `ONLY_FULL_GROUP_BY`, `PIPES_AS_CONCAT`, `REAL_AS_FLOAT`, `STRICT_ALL_TABLES`, `STRICT_TRANS_TABLES`, `TIME_TRUNCATE_FRACTIONAL`, `TRADITIONAL`).
+     */
     mysqlSqlModes?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * The password for the managed database's primary admin user.
+     */
     password?: pulumi.Input<string>;
+    /**
+     * The ID of the plan that you want the managed database to subscribe to. [See List Managed Database Plans](https://www.vultr.com/api/#tag/managed-databases/operation/list-database-plans)
+     */
     plan?: pulumi.Input<string>;
+    /**
+     * The description of the disk(s) on the managed database.
+     */
     planDisk?: pulumi.Input<number>;
+    /**
+     * The amount of memory available on the managed database in MB.
+     */
     planRam?: pulumi.Input<number>;
+    /**
+     * The number of standby nodes available on the managed database.
+     */
     planReplicas?: pulumi.Input<number>;
+    /**
+     * The number of virtual CPUs available on the managed database.
+     */
     planVcpus?: pulumi.Input<number>;
+    /**
+     * The connection port for the managed database.
+     */
     port?: pulumi.Input<string>;
+    /**
+     * The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
+     */
     redisEvictionPolicy?: pulumi.Input<string>;
+    /**
+     * The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
+     */
     region: pulumi.Input<string>;
+    /**
+     * The current status of the managed database (poweroff, rebuilding, rebalancing, running).
+     */
     status?: pulumi.Input<string>;
+    /**
+     * The tag to assign to the managed database.
+     */
     tag?: pulumi.Input<string>;
+    /**
+     * A list of allowed IP addresses for the managed database.
+     */
     trustedIps?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * The primary admin user for the managed database.
+     */
     user?: pulumi.Input<string>;
+    vpcId?: pulumi.Input<string>;
 }
 
 export interface GetApplicationFilter {
@@ -147,12 +232,24 @@ export interface GetBlockStorageFilterArgs {
 }
 
 export interface GetDatabaseFilter {
+    /**
+     * Attribute name to filter with.
+     */
     name: string;
+    /**
+     * One or more values filter with.
+     */
     values: string[];
 }
 
 export interface GetDatabaseFilterArgs {
+    /**
+     * Attribute name to filter with.
+     */
     name: pulumi.Input<string>;
+    /**
+     * One or more values filter with.
+     */
     values: pulumi.Input<pulumi.Input<string>[]>;
 }
 
@@ -596,6 +693,28 @@ export interface GetUserFilterArgs {
     values: pulumi.Input<pulumi.Input<string>[]>;
 }
 
+export interface GetVpc2Filter {
+    /**
+     * Attribute name to filter with.
+     */
+    name: string;
+    /**
+     * One or more values filter with.
+     */
+    values: string[];
+}
+
+export interface GetVpc2FilterArgs {
+    /**
+     * Attribute name to filter with.
+     */
+    name: pulumi.Input<string>;
+    /**
+     * One or more values filter with.
+     */
+    values: pulumi.Input<pulumi.Input<string>[]>;
+}
+
 export interface GetVpcFilter {
     /**
      * Attribute name to filter with.
@@ -750,11 +869,11 @@ export interface LoadBalancerHealthCheck {
     /**
      * Time in seconds to perform health check. Default value is 15.
      */
-    checkInterval: pulumi.Input<number>;
+    checkInterval?: pulumi.Input<number>;
     /**
      * Number of failed attempts encountered before failover. Default value is 5.
      */
-    healthyThreshold: pulumi.Input<number>;
+    healthyThreshold?: pulumi.Input<number>;
     /**
      * The path on the attached instances that the load balancer should check against. Default value is `/`
      */
@@ -770,11 +889,11 @@ export interface LoadBalancerHealthCheck {
     /**
      * Time in seconds to wait for a health check response. Default value is 5.
      */
-    responseTimeout: pulumi.Input<number>;
+    responseTimeout?: pulumi.Input<number>;
     /**
      * Number of failed attempts encountered before failover. Default value is 5.
      */
-    unhealthyThreshold: pulumi.Input<number>;
+    unhealthyThreshold?: pulumi.Input<number>;
 }
 
 export interface LoadBalancerSsl {

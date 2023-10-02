@@ -13,7 +13,7 @@ const __config = new pulumi.Config("vultr");
 export declare const apiKey: string | undefined;
 Object.defineProperty(exports, "apiKey", {
     get() {
-        return __config.get("apiKey");
+        return __config.get("apiKey") ?? utilities.getEnv("VULTR_API_KEY");
     },
     enumerable: true,
 });
@@ -21,10 +21,10 @@ Object.defineProperty(exports, "apiKey", {
 /**
  * Allows users to set the speed of API calls to work with the Vultr Rate Limit
  */
-export declare const rateLimit: number | undefined;
+export declare const rateLimit: number;
 Object.defineProperty(exports, "rateLimit", {
     get() {
-        return __config.getObject<number>("rateLimit");
+        return __config.getObject<number>("rateLimit") ?? 500;
     },
     enumerable: true,
 });
@@ -32,10 +32,10 @@ Object.defineProperty(exports, "rateLimit", {
 /**
  * Allows users to set the maximum number of retries allowed for a failed API call.
  */
-export declare const retryLimit: number | undefined;
+export declare const retryLimit: number;
 Object.defineProperty(exports, "retryLimit", {
     get() {
-        return __config.getObject<number>("retryLimit");
+        return __config.getObject<number>("retryLimit") ?? 3;
     },
     enumerable: true,
 });

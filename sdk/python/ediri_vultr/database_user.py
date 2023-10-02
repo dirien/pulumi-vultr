@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 
 __all__ = ['DatabaseUserArgs', 'DatabaseUser']
@@ -20,17 +20,39 @@ class DatabaseUserArgs:
                  password: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a DatabaseUser resource.
+        :param pulumi.Input[str] database_id: The managed database ID you want to attach this user to.
+        :param pulumi.Input[str] username: The username of the new managed database user.
+        :param pulumi.Input[str] encryption: The encryption type of the new managed database user's password (MySQL engine types only - `caching_sha2_password`, `mysql_native_password`).
+        :param pulumi.Input[str] password: The password of the new managed database user.
         """
-        pulumi.set(__self__, "database_id", database_id)
-        pulumi.set(__self__, "username", username)
+        DatabaseUserArgs._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            database_id=database_id,
+            username=username,
+            encryption=encryption,
+            password=password,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             database_id: pulumi.Input[str],
+             username: pulumi.Input[str],
+             encryption: Optional[pulumi.Input[str]] = None,
+             password: Optional[pulumi.Input[str]] = None,
+             opts: Optional[pulumi.ResourceOptions]=None):
+        _setter("database_id", database_id)
+        _setter("username", username)
         if encryption is not None:
-            pulumi.set(__self__, "encryption", encryption)
+            _setter("encryption", encryption)
         if password is not None:
-            pulumi.set(__self__, "password", password)
+            _setter("password", password)
 
     @property
     @pulumi.getter(name="databaseId")
     def database_id(self) -> pulumi.Input[str]:
+        """
+        The managed database ID you want to attach this user to.
+        """
         return pulumi.get(self, "database_id")
 
     @database_id.setter
@@ -40,6 +62,9 @@ class DatabaseUserArgs:
     @property
     @pulumi.getter
     def username(self) -> pulumi.Input[str]:
+        """
+        The username of the new managed database user.
+        """
         return pulumi.get(self, "username")
 
     @username.setter
@@ -49,6 +74,9 @@ class DatabaseUserArgs:
     @property
     @pulumi.getter
     def encryption(self) -> Optional[pulumi.Input[str]]:
+        """
+        The encryption type of the new managed database user's password (MySQL engine types only - `caching_sha2_password`, `mysql_native_password`).
+        """
         return pulumi.get(self, "encryption")
 
     @encryption.setter
@@ -58,6 +86,9 @@ class DatabaseUserArgs:
     @property
     @pulumi.getter
     def password(self) -> Optional[pulumi.Input[str]]:
+        """
+        The password of the new managed database user.
+        """
         return pulumi.get(self, "password")
 
     @password.setter
@@ -74,19 +105,41 @@ class _DatabaseUserState:
                  username: Optional[pulumi.Input[str]] = None):
         """
         Input properties used for looking up and filtering DatabaseUser resources.
+        :param pulumi.Input[str] database_id: The managed database ID you want to attach this user to.
+        :param pulumi.Input[str] encryption: The encryption type of the new managed database user's password (MySQL engine types only - `caching_sha2_password`, `mysql_native_password`).
+        :param pulumi.Input[str] password: The password of the new managed database user.
+        :param pulumi.Input[str] username: The username of the new managed database user.
         """
+        _DatabaseUserState._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            database_id=database_id,
+            encryption=encryption,
+            password=password,
+            username=username,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             database_id: Optional[pulumi.Input[str]] = None,
+             encryption: Optional[pulumi.Input[str]] = None,
+             password: Optional[pulumi.Input[str]] = None,
+             username: Optional[pulumi.Input[str]] = None,
+             opts: Optional[pulumi.ResourceOptions]=None):
         if database_id is not None:
-            pulumi.set(__self__, "database_id", database_id)
+            _setter("database_id", database_id)
         if encryption is not None:
-            pulumi.set(__self__, "encryption", encryption)
+            _setter("encryption", encryption)
         if password is not None:
-            pulumi.set(__self__, "password", password)
+            _setter("password", password)
         if username is not None:
-            pulumi.set(__self__, "username", username)
+            _setter("username", username)
 
     @property
     @pulumi.getter(name="databaseId")
     def database_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        The managed database ID you want to attach this user to.
+        """
         return pulumi.get(self, "database_id")
 
     @database_id.setter
@@ -96,6 +149,9 @@ class _DatabaseUserState:
     @property
     @pulumi.getter
     def encryption(self) -> Optional[pulumi.Input[str]]:
+        """
+        The encryption type of the new managed database user's password (MySQL engine types only - `caching_sha2_password`, `mysql_native_password`).
+        """
         return pulumi.get(self, "encryption")
 
     @encryption.setter
@@ -105,6 +161,9 @@ class _DatabaseUserState:
     @property
     @pulumi.getter
     def password(self) -> Optional[pulumi.Input[str]]:
+        """
+        The password of the new managed database user.
+        """
         return pulumi.get(self, "password")
 
     @password.setter
@@ -114,6 +173,9 @@ class _DatabaseUserState:
     @property
     @pulumi.getter
     def username(self) -> Optional[pulumi.Input[str]]:
+        """
+        The username of the new managed database user.
+        """
         return pulumi.get(self, "username")
 
     @username.setter
@@ -132,9 +194,28 @@ class DatabaseUser(pulumi.CustomResource):
                  username: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
-        Create a DatabaseUser resource with the given unique name, props, and options.
+        Provides a Vultr database user resource. This can be used to create, read, modify, and delete users for a managed database on your Vultr account.
+
+        ## Example Usage
+
+        Create a new database user:
+
+        ```python
+        import pulumi
+        import ediri_vultr as vultr
+
+        my_database_user = vultr.DatabaseUser("myDatabaseUser",
+            database_id=vultr_database["my_database"]["id"],
+            username="my_database_user",
+            password="randomTestPW40298")
+        ```
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] database_id: The managed database ID you want to attach this user to.
+        :param pulumi.Input[str] encryption: The encryption type of the new managed database user's password (MySQL engine types only - `caching_sha2_password`, `mysql_native_password`).
+        :param pulumi.Input[str] password: The password of the new managed database user.
+        :param pulumi.Input[str] username: The username of the new managed database user.
         """
         ...
     @overload
@@ -143,7 +224,22 @@ class DatabaseUser(pulumi.CustomResource):
                  args: DatabaseUserArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
-        Create a DatabaseUser resource with the given unique name, props, and options.
+        Provides a Vultr database user resource. This can be used to create, read, modify, and delete users for a managed database on your Vultr account.
+
+        ## Example Usage
+
+        Create a new database user:
+
+        ```python
+        import pulumi
+        import ediri_vultr as vultr
+
+        my_database_user = vultr.DatabaseUser("myDatabaseUser",
+            database_id=vultr_database["my_database"]["id"],
+            username="my_database_user",
+            password="randomTestPW40298")
+        ```
+
         :param str resource_name: The name of the resource.
         :param DatabaseUserArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -154,6 +250,10 @@ class DatabaseUser(pulumi.CustomResource):
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
+            kwargs = kwargs or {}
+            def _setter(key, value):
+                kwargs[key] = value
+            DatabaseUserArgs._configure(_setter, **kwargs)
             __self__._internal_init(resource_name, *args, **kwargs)
 
     def _internal_init(__self__,
@@ -201,6 +301,10 @@ class DatabaseUser(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] database_id: The managed database ID you want to attach this user to.
+        :param pulumi.Input[str] encryption: The encryption type of the new managed database user's password (MySQL engine types only - `caching_sha2_password`, `mysql_native_password`).
+        :param pulumi.Input[str] password: The password of the new managed database user.
+        :param pulumi.Input[str] username: The username of the new managed database user.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -215,20 +319,32 @@ class DatabaseUser(pulumi.CustomResource):
     @property
     @pulumi.getter(name="databaseId")
     def database_id(self) -> pulumi.Output[str]:
+        """
+        The managed database ID you want to attach this user to.
+        """
         return pulumi.get(self, "database_id")
 
     @property
     @pulumi.getter
     def encryption(self) -> pulumi.Output[str]:
+        """
+        The encryption type of the new managed database user's password (MySQL engine types only - `caching_sha2_password`, `mysql_native_password`).
+        """
         return pulumi.get(self, "encryption")
 
     @property
     @pulumi.getter
     def password(self) -> pulumi.Output[str]:
+        """
+        The password of the new managed database user.
+        """
         return pulumi.get(self, "password")
 
     @property
     @pulumi.getter
     def username(self) -> pulumi.Output[str]:
+        """
+        The username of the new managed database user.
+        """
         return pulumi.get(self, "username")
 

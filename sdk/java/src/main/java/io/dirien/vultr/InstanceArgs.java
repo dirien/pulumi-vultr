@@ -343,6 +343,21 @@ public final class InstanceArgs extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
+     * A list of VPC 2.0 IDs to be attached to the server.
+     * 
+     */
+    @Import(name="vpc2Ids")
+    private @Nullable Output<List<String>> vpc2Ids;
+
+    /**
+     * @return A list of VPC 2.0 IDs to be attached to the server.
+     * 
+     */
+    public Optional<Output<List<String>>> vpc2Ids() {
+        return Optional.ofNullable(this.vpc2Ids);
+    }
+
+    /**
      * A list of VPC IDs to be attached to the server.
      * 
      */
@@ -381,6 +396,7 @@ public final class InstanceArgs extends com.pulumi.resources.ResourceArgs {
         this.sshKeyIds = $.sshKeyIds;
         this.tags = $.tags;
         this.userData = $.userData;
+        this.vpc2Ids = $.vpc2Ids;
         this.vpcIds = $.vpcIds;
     }
 
@@ -883,6 +899,37 @@ public final class InstanceArgs extends com.pulumi.resources.ResourceArgs {
          */
         public Builder userData(String userData) {
             return userData(Output.of(userData));
+        }
+
+        /**
+         * @param vpc2Ids A list of VPC 2.0 IDs to be attached to the server.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder vpc2Ids(@Nullable Output<List<String>> vpc2Ids) {
+            $.vpc2Ids = vpc2Ids;
+            return this;
+        }
+
+        /**
+         * @param vpc2Ids A list of VPC 2.0 IDs to be attached to the server.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder vpc2Ids(List<String> vpc2Ids) {
+            return vpc2Ids(Output.of(vpc2Ids));
+        }
+
+        /**
+         * @param vpc2Ids A list of VPC 2.0 IDs to be attached to the server.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder vpc2Ids(String... vpc2Ids) {
+            return vpc2Ids(List.of(vpc2Ids));
         }
 
         /**

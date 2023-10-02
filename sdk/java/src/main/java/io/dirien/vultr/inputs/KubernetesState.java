@@ -167,14 +167,14 @@ public final class KubernetesState extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
-     * The region your VKE cluster will be deployed in. Currently, supported values are `ewr` and `lax`
+     * The region your VKE cluster will be deployed in.
      * 
      */
     @Import(name="region")
     private @Nullable Output<String> region;
 
     /**
-     * @return The region your VKE cluster will be deployed in. Currently, supported values are `ewr` and `lax`
+     * @return The region your VKE cluster will be deployed in.
      * 
      */
     public Optional<Output<String>> region() {
@@ -474,7 +474,7 @@ public final class KubernetesState extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param region The region your VKE cluster will be deployed in. Currently, supported values are `ewr` and `lax`
+         * @param region The region your VKE cluster will be deployed in.
          * 
          * @return builder
          * 
@@ -485,7 +485,7 @@ public final class KubernetesState extends com.pulumi.resources.ResourceArgs {
         }
 
         /**
-         * @param region The region your VKE cluster will be deployed in. Currently, supported values are `ewr` and `lax`
+         * @param region The region your VKE cluster will be deployed in.
          * 
          * @return builder
          * 

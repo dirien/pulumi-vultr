@@ -321,6 +321,12 @@ namespace ediri.Vultr
         public Output<int> VcpuCount { get; private set; } = null!;
 
         /// <summary>
+        /// A list of VPC 2.0 IDs to be attached to the server.
+        /// </summary>
+        [Output("vpc2Ids")]
+        public Output<ImmutableArray<string>> Vpc2Ids { get; private set; } = null!;
+
+        /// <summary>
         /// A list of VPC IDs to be attached to the server.
         /// </summary>
         [Output("vpcIds")]
@@ -521,6 +527,18 @@ namespace ediri.Vultr
         /// </summary>
         [Input("userData")]
         public Input<string>? UserData { get; set; }
+
+        [Input("vpc2Ids")]
+        private InputList<string>? _vpc2Ids;
+
+        /// <summary>
+        /// A list of VPC 2.0 IDs to be attached to the server.
+        /// </summary>
+        public InputList<string> Vpc2Ids
+        {
+            get => _vpc2Ids ?? (_vpc2Ids = new InputList<string>());
+            set => _vpc2Ids = value;
+        }
 
         [Input("vpcIds")]
         private InputList<string>? _vpcIds;
@@ -816,6 +834,18 @@ namespace ediri.Vultr
         /// </summary>
         [Input("vcpuCount")]
         public Input<int>? VcpuCount { get; set; }
+
+        [Input("vpc2Ids")]
+        private InputList<string>? _vpc2Ids;
+
+        /// <summary>
+        /// A list of VPC 2.0 IDs to be attached to the server.
+        /// </summary>
+        public InputList<string> Vpc2Ids
+        {
+            get => _vpc2Ids ?? (_vpc2Ids = new InputList<string>());
+            set => _vpc2Ids = value;
+        }
 
         [Input("vpcIds")]
         private InputList<string>? _vpcIds;

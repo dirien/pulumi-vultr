@@ -246,6 +246,10 @@ export class Instance extends pulumi.CustomResource {
      */
     public /*out*/ readonly vcpuCount!: pulumi.Output<number>;
     /**
+     * A list of VPC 2.0 IDs to be attached to the server.
+     */
+    public readonly vpc2Ids!: pulumi.Output<string[] | undefined>;
+    /**
      * A list of VPC IDs to be attached to the server.
      */
     public readonly vpcIds!: pulumi.Output<string[]>;
@@ -303,6 +307,7 @@ export class Instance extends pulumi.CustomResource {
             resourceInputs["v6Network"] = state ? state.v6Network : undefined;
             resourceInputs["v6NetworkSize"] = state ? state.v6NetworkSize : undefined;
             resourceInputs["vcpuCount"] = state ? state.vcpuCount : undefined;
+            resourceInputs["vpc2Ids"] = state ? state.vpc2Ids : undefined;
             resourceInputs["vpcIds"] = state ? state.vpcIds : undefined;
         } else {
             const args = argsOrState as InstanceArgs | undefined;
@@ -333,6 +338,7 @@ export class Instance extends pulumi.CustomResource {
             resourceInputs["sshKeyIds"] = args ? args.sshKeyIds : undefined;
             resourceInputs["tags"] = args ? args.tags : undefined;
             resourceInputs["userData"] = args ? args.userData : undefined;
+            resourceInputs["vpc2Ids"] = args ? args.vpc2Ids : undefined;
             resourceInputs["vpcIds"] = args ? args.vpcIds : undefined;
             resourceInputs["allowedBandwidth"] = undefined /*out*/;
             resourceInputs["dateCreated"] = undefined /*out*/;
@@ -528,6 +534,10 @@ export interface InstanceState {
      */
     vcpuCount?: pulumi.Input<number>;
     /**
+     * A list of VPC 2.0 IDs to be attached to the server.
+     */
+    vpc2Ids?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
      * A list of VPC IDs to be attached to the server.
      */
     vpcIds?: pulumi.Input<pulumi.Input<string>[]>;
@@ -623,6 +633,10 @@ export interface InstanceArgs {
      * Generic data store, which some provisioning tools and cloud operating systems use as a configuration file. It is generally consumed only once after an instance has been launched, but individual needs may vary.
      */
     userData?: pulumi.Input<string>;
+    /**
+     * A list of VPC 2.0 IDs to be attached to the server.
+     */
+    vpc2Ids?: pulumi.Input<pulumi.Input<string>[]>;
     /**
      * A list of VPC IDs to be attached to the server.
      */

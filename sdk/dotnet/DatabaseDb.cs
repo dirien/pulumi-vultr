@@ -10,12 +10,41 @@ using Pulumi;
 
 namespace ediri.Vultr
 {
+    /// <summary>
+    /// Provides a Vultr database DB resource. This can be used to create, read, and delete logical DBs for a managed database on your Vultr account.
+    /// 
+    /// ## Example Usage
+    /// 
+    /// Create a new database DB:
+    /// 
+    /// ```csharp
+    /// using System.Collections.Generic;
+    /// using System.Linq;
+    /// using Pulumi;
+    /// using Vultr = ediri.Vultr;
+    /// 
+    /// return await Deployment.RunAsync(() =&gt; 
+    /// {
+    ///     var myDatabaseDb = new Vultr.DatabaseDb("myDatabaseDb", new()
+    ///     {
+    ///         DatabaseId = vultr_database.My_database.Id,
+    ///     });
+    /// 
+    /// });
+    /// ```
+    /// </summary>
     [VultrResourceType("vultr:index/databaseDb:DatabaseDb")]
     public partial class DatabaseDb : global::Pulumi.CustomResource
     {
+        /// <summary>
+        /// The managed database ID you want to attach this logical DB to.
+        /// </summary>
         [Output("databaseId")]
         public Output<string> DatabaseId { get; private set; } = null!;
 
+        /// <summary>
+        /// The name of the new managed database logical DB.
+        /// </summary>
         [Output("name")]
         public Output<string> Name { get; private set; } = null!;
 
@@ -66,9 +95,15 @@ namespace ediri.Vultr
 
     public sealed class DatabaseDbArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// The managed database ID you want to attach this logical DB to.
+        /// </summary>
         [Input("databaseId", required: true)]
         public Input<string> DatabaseId { get; set; } = null!;
 
+        /// <summary>
+        /// The name of the new managed database logical DB.
+        /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
 
@@ -80,9 +115,15 @@ namespace ediri.Vultr
 
     public sealed class DatabaseDbState : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// The managed database ID you want to attach this logical DB to.
+        /// </summary>
         [Input("databaseId")]
         public Input<string>? DatabaseId { get; set; }
 
+        /// <summary>
+        /// The name of the new managed database logical DB.
+        /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
 

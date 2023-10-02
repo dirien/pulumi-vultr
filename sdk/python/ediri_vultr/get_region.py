@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -131,12 +131,12 @@ def get_region(filters: Optional[Sequence[pulumi.InputType['GetRegionFilterArgs'
     __ret__ = pulumi.runtime.invoke('vultr:index/getRegion:getRegion', __args__, opts=opts, typ=GetRegionResult).value
 
     return AwaitableGetRegionResult(
-        city=__ret__.city,
-        continent=__ret__.continent,
-        country=__ret__.country,
-        filters=__ret__.filters,
-        id=__ret__.id,
-        options=__ret__.options)
+        city=pulumi.get(__ret__, 'city'),
+        continent=pulumi.get(__ret__, 'continent'),
+        country=pulumi.get(__ret__, 'country'),
+        filters=pulumi.get(__ret__, 'filters'),
+        id=pulumi.get(__ret__, 'id'),
+        options=pulumi.get(__ret__, 'options'))
 
 
 @_utilities.lift_output_func(get_region)

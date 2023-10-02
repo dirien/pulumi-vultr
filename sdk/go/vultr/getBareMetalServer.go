@@ -7,7 +7,9 @@ import (
 	"context"
 	"reflect"
 
+	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 )
 
 // Get information about a Vultr bare metal server.
@@ -47,7 +49,7 @@ import (
 //
 // ```
 func LookupBareMetalServer(ctx *pulumi.Context, args *LookupBareMetalServerArgs, opts ...pulumi.InvokeOption) (*LookupBareMetalServerResult, error) {
-	opts = pkgInvokeDefaultOpts(opts)
+	opts = internal.PkgInvokeDefaultOpts(opts)
 	var rv LookupBareMetalServerResult
 	err := ctx.Invoke("vultr:index/getBareMetalServer:getBareMetalServer", args, &rv, opts...)
 	if err != nil {
@@ -104,6 +106,8 @@ type LookupBareMetalServerResult struct {
 	V6MainIp      string   `pulumi:"v6MainIp"`
 	V6Network     string   `pulumi:"v6Network"`
 	V6NetworkSize int      `pulumi:"v6NetworkSize"`
+	// A list of VPC 2.0 IDs attached to the server.
+	Vpc2Ids []string `pulumi:"vpc2Ids"`
 }
 
 func LookupBareMetalServerOutput(ctx *pulumi.Context, args LookupBareMetalServerOutputArgs, opts ...pulumi.InvokeOption) LookupBareMetalServerResultOutput {
@@ -142,6 +146,12 @@ func (o LookupBareMetalServerResultOutput) ToLookupBareMetalServerResultOutput()
 
 func (o LookupBareMetalServerResultOutput) ToLookupBareMetalServerResultOutputWithContext(ctx context.Context) LookupBareMetalServerResultOutput {
 	return o
+}
+
+func (o LookupBareMetalServerResultOutput) ToOutput(ctx context.Context) pulumix.Output[LookupBareMetalServerResult] {
+	return pulumix.Output[LookupBareMetalServerResult]{
+		OutputState: o.OutputState,
+	}
 }
 
 // The server's application ID.
@@ -251,6 +261,11 @@ func (o LookupBareMetalServerResultOutput) V6Network() pulumi.StringOutput {
 
 func (o LookupBareMetalServerResultOutput) V6NetworkSize() pulumi.IntOutput {
 	return o.ApplyT(func(v LookupBareMetalServerResult) int { return v.V6NetworkSize }).(pulumi.IntOutput)
+}
+
+// A list of VPC 2.0 IDs attached to the server.
+func (o LookupBareMetalServerResultOutput) Vpc2Ids() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v LookupBareMetalServerResult) []string { return v.Vpc2Ids }).(pulumi.StringArrayOutput)
 }
 
 func init() {

@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -155,14 +155,14 @@ def get_snapshot(filters: Optional[Sequence[pulumi.InputType['GetSnapshotFilterA
     __ret__ = pulumi.runtime.invoke('vultr:index/getSnapshot:getSnapshot', __args__, opts=opts, typ=GetSnapshotResult).value
 
     return AwaitableGetSnapshotResult(
-        app_id=__ret__.app_id,
-        date_created=__ret__.date_created,
-        description=__ret__.description,
-        filters=__ret__.filters,
-        id=__ret__.id,
-        os_id=__ret__.os_id,
-        size=__ret__.size,
-        status=__ret__.status)
+        app_id=pulumi.get(__ret__, 'app_id'),
+        date_created=pulumi.get(__ret__, 'date_created'),
+        description=pulumi.get(__ret__, 'description'),
+        filters=pulumi.get(__ret__, 'filters'),
+        id=pulumi.get(__ret__, 'id'),
+        os_id=pulumi.get(__ret__, 'os_id'),
+        size=pulumi.get(__ret__, 'size'),
+        status=pulumi.get(__ret__, 'status'))
 
 
 @_utilities.lift_output_func(get_snapshot)

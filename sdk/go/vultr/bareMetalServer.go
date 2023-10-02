@@ -8,7 +8,9 @@ import (
 	"reflect"
 
 	"errors"
+	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 )
 
 // Provides a Vultr bare metal server resource. This can be used to create, read, modify, and delete bare metal servers on your Vultr account.
@@ -149,6 +151,8 @@ type BareMetalServer struct {
 	V6Network pulumi.StringOutput `pulumi:"v6Network"`
 	// The IPv6 network size in bits.
 	V6NetworkSize pulumi.IntOutput `pulumi:"v6NetworkSize"`
+	// A list of VPC 2.0 IDs to be attached to the server.
+	Vpc2Ids pulumi.StringArrayOutput `pulumi:"vpc2Ids"`
 }
 
 // NewBareMetalServer registers a new resource with the given unique name, arguments, and options.
@@ -168,7 +172,7 @@ func NewBareMetalServer(ctx *pulumi.Context,
 		"defaultPassword",
 	})
 	opts = append(opts, secrets)
-	opts = pkgResourceDefaultOpts(opts)
+	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource BareMetalServer
 	err := ctx.RegisterResource("vultr:index/bareMetalServer:BareMetalServer", name, args, &resource, opts...)
 	if err != nil {
@@ -249,6 +253,8 @@ type bareMetalServerState struct {
 	V6Network *string `pulumi:"v6Network"`
 	// The IPv6 network size in bits.
 	V6NetworkSize *int `pulumi:"v6NetworkSize"`
+	// A list of VPC 2.0 IDs to be attached to the server.
+	Vpc2Ids []string `pulumi:"vpc2Ids"`
 }
 
 type BareMetalServerState struct {
@@ -310,6 +316,8 @@ type BareMetalServerState struct {
 	V6Network pulumi.StringPtrInput
 	// The IPv6 network size in bits.
 	V6NetworkSize pulumi.IntPtrInput
+	// A list of VPC 2.0 IDs to be attached to the server.
+	Vpc2Ids pulumi.StringArrayInput
 }
 
 func (BareMetalServerState) ElementType() reflect.Type {
@@ -347,6 +355,8 @@ type bareMetalServerArgs struct {
 	Tags []string `pulumi:"tags"`
 	// Generic data store, which some provisioning tools and cloud operating systems use as a configuration file. It is generally consumed only once after an instance has been launched, but individual needs may vary.
 	UserData *string `pulumi:"userData"`
+	// A list of VPC 2.0 IDs to be attached to the server.
+	Vpc2Ids []string `pulumi:"vpc2Ids"`
 }
 
 // The set of arguments for constructing a BareMetalServer resource.
@@ -381,6 +391,8 @@ type BareMetalServerArgs struct {
 	Tags pulumi.StringArrayInput
 	// Generic data store, which some provisioning tools and cloud operating systems use as a configuration file. It is generally consumed only once after an instance has been launched, but individual needs may vary.
 	UserData pulumi.StringPtrInput
+	// A list of VPC 2.0 IDs to be attached to the server.
+	Vpc2Ids pulumi.StringArrayInput
 }
 
 func (BareMetalServerArgs) ElementType() reflect.Type {
@@ -404,6 +416,12 @@ func (i *BareMetalServer) ToBareMetalServerOutput() BareMetalServerOutput {
 
 func (i *BareMetalServer) ToBareMetalServerOutputWithContext(ctx context.Context) BareMetalServerOutput {
 	return pulumi.ToOutputWithContext(ctx, i).(BareMetalServerOutput)
+}
+
+func (i *BareMetalServer) ToOutput(ctx context.Context) pulumix.Output[*BareMetalServer] {
+	return pulumix.Output[*BareMetalServer]{
+		OutputState: i.ToBareMetalServerOutputWithContext(ctx).OutputState,
+	}
 }
 
 // BareMetalServerArrayInput is an input type that accepts BareMetalServerArray and BareMetalServerArrayOutput values.
@@ -431,6 +449,12 @@ func (i BareMetalServerArray) ToBareMetalServerArrayOutputWithContext(ctx contex
 	return pulumi.ToOutputWithContext(ctx, i).(BareMetalServerArrayOutput)
 }
 
+func (i BareMetalServerArray) ToOutput(ctx context.Context) pulumix.Output[[]*BareMetalServer] {
+	return pulumix.Output[[]*BareMetalServer]{
+		OutputState: i.ToBareMetalServerArrayOutputWithContext(ctx).OutputState,
+	}
+}
+
 // BareMetalServerMapInput is an input type that accepts BareMetalServerMap and BareMetalServerMapOutput values.
 // You can construct a concrete instance of `BareMetalServerMapInput` via:
 //
@@ -456,6 +480,12 @@ func (i BareMetalServerMap) ToBareMetalServerMapOutputWithContext(ctx context.Co
 	return pulumi.ToOutputWithContext(ctx, i).(BareMetalServerMapOutput)
 }
 
+func (i BareMetalServerMap) ToOutput(ctx context.Context) pulumix.Output[map[string]*BareMetalServer] {
+	return pulumix.Output[map[string]*BareMetalServer]{
+		OutputState: i.ToBareMetalServerMapOutputWithContext(ctx).OutputState,
+	}
+}
+
 type BareMetalServerOutput struct{ *pulumi.OutputState }
 
 func (BareMetalServerOutput) ElementType() reflect.Type {
@@ -468,6 +498,12 @@ func (o BareMetalServerOutput) ToBareMetalServerOutput() BareMetalServerOutput {
 
 func (o BareMetalServerOutput) ToBareMetalServerOutputWithContext(ctx context.Context) BareMetalServerOutput {
 	return o
+}
+
+func (o BareMetalServerOutput) ToOutput(ctx context.Context) pulumix.Output[*BareMetalServer] {
+	return pulumix.Output[*BareMetalServer]{
+		OutputState: o.OutputState,
+	}
 }
 
 // Whether an activation email will be sent when the server is ready.
@@ -615,6 +651,11 @@ func (o BareMetalServerOutput) V6NetworkSize() pulumi.IntOutput {
 	return o.ApplyT(func(v *BareMetalServer) pulumi.IntOutput { return v.V6NetworkSize }).(pulumi.IntOutput)
 }
 
+// A list of VPC 2.0 IDs to be attached to the server.
+func (o BareMetalServerOutput) Vpc2Ids() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *BareMetalServer) pulumi.StringArrayOutput { return v.Vpc2Ids }).(pulumi.StringArrayOutput)
+}
+
 type BareMetalServerArrayOutput struct{ *pulumi.OutputState }
 
 func (BareMetalServerArrayOutput) ElementType() reflect.Type {
@@ -627,6 +668,12 @@ func (o BareMetalServerArrayOutput) ToBareMetalServerArrayOutput() BareMetalServ
 
 func (o BareMetalServerArrayOutput) ToBareMetalServerArrayOutputWithContext(ctx context.Context) BareMetalServerArrayOutput {
 	return o
+}
+
+func (o BareMetalServerArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]*BareMetalServer] {
+	return pulumix.Output[[]*BareMetalServer]{
+		OutputState: o.OutputState,
+	}
 }
 
 func (o BareMetalServerArrayOutput) Index(i pulumi.IntInput) BareMetalServerOutput {
@@ -647,6 +694,12 @@ func (o BareMetalServerMapOutput) ToBareMetalServerMapOutput() BareMetalServerMa
 
 func (o BareMetalServerMapOutput) ToBareMetalServerMapOutputWithContext(ctx context.Context) BareMetalServerMapOutput {
 	return o
+}
+
+func (o BareMetalServerMapOutput) ToOutput(ctx context.Context) pulumix.Output[map[string]*BareMetalServer] {
+	return pulumix.Output[map[string]*BareMetalServer]{
+		OutputState: o.OutputState,
+	}
 }
 
 func (o BareMetalServerMapOutput) MapIndex(k pulumi.StringInput) BareMetalServerOutput {

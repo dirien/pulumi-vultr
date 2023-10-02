@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -23,15 +23,30 @@ class KubernetesArgs:
         """
         The set of arguments for constructing a Kubernetes resource.
         :param pulumi.Input[str] label: The VKE clusters label.
-        :param pulumi.Input[str] region: The region your VKE cluster will be deployed in. Currently, supported values are `ewr` and `lax`
+        :param pulumi.Input[str] region: The region your VKE cluster will be deployed in.
         :param pulumi.Input[str] version: The version your VKE cluster you want deployed. [See Available Version](https://www.vultr.com/api/#operation/get-kubernetes-versions)
         :param pulumi.Input['KubernetesNodePoolsArgs'] node_pools: Contains the default node pool that was deployed.
         """
-        pulumi.set(__self__, "label", label)
-        pulumi.set(__self__, "region", region)
-        pulumi.set(__self__, "version", version)
+        KubernetesArgs._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            label=label,
+            region=region,
+            version=version,
+            node_pools=node_pools,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             label: pulumi.Input[str],
+             region: pulumi.Input[str],
+             version: pulumi.Input[str],
+             node_pools: Optional[pulumi.Input['KubernetesNodePoolsArgs']] = None,
+             opts: Optional[pulumi.ResourceOptions]=None):
+        _setter("label", label)
+        _setter("region", region)
+        _setter("version", version)
         if node_pools is not None:
-            pulumi.set(__self__, "node_pools", node_pools)
+            _setter("node_pools", node_pools)
 
     @property
     @pulumi.getter
@@ -49,7 +64,7 @@ class KubernetesArgs:
     @pulumi.getter
     def region(self) -> pulumi.Input[str]:
         """
-        The region your VKE cluster will be deployed in. Currently, supported values are `ewr` and `lax`
+        The region your VKE cluster will be deployed in.
         """
         return pulumi.get(self, "region")
 
@@ -111,39 +126,74 @@ class _KubernetesState:
         :param pulumi.Input[str] kube_config: Base64 encoded Kubeconfig for this VKE cluster.
         :param pulumi.Input[str] label: The VKE clusters label.
         :param pulumi.Input['KubernetesNodePoolsArgs'] node_pools: Contains the default node pool that was deployed.
-        :param pulumi.Input[str] region: The region your VKE cluster will be deployed in. Currently, supported values are `ewr` and `lax`
+        :param pulumi.Input[str] region: The region your VKE cluster will be deployed in.
         :param pulumi.Input[str] service_subnet: IP range that services will run on this cluster.
         :param pulumi.Input[str] status: Status of node.
         :param pulumi.Input[str] version: The version your VKE cluster you want deployed. [See Available Version](https://www.vultr.com/api/#operation/get-kubernetes-versions)
         """
+        _KubernetesState._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            client_certificate=client_certificate,
+            client_key=client_key,
+            cluster_ca_certificate=cluster_ca_certificate,
+            cluster_subnet=cluster_subnet,
+            date_created=date_created,
+            endpoint=endpoint,
+            ip=ip,
+            kube_config=kube_config,
+            label=label,
+            node_pools=node_pools,
+            region=region,
+            service_subnet=service_subnet,
+            status=status,
+            version=version,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             client_certificate: Optional[pulumi.Input[str]] = None,
+             client_key: Optional[pulumi.Input[str]] = None,
+             cluster_ca_certificate: Optional[pulumi.Input[str]] = None,
+             cluster_subnet: Optional[pulumi.Input[str]] = None,
+             date_created: Optional[pulumi.Input[str]] = None,
+             endpoint: Optional[pulumi.Input[str]] = None,
+             ip: Optional[pulumi.Input[str]] = None,
+             kube_config: Optional[pulumi.Input[str]] = None,
+             label: Optional[pulumi.Input[str]] = None,
+             node_pools: Optional[pulumi.Input['KubernetesNodePoolsArgs']] = None,
+             region: Optional[pulumi.Input[str]] = None,
+             service_subnet: Optional[pulumi.Input[str]] = None,
+             status: Optional[pulumi.Input[str]] = None,
+             version: Optional[pulumi.Input[str]] = None,
+             opts: Optional[pulumi.ResourceOptions]=None):
         if client_certificate is not None:
-            pulumi.set(__self__, "client_certificate", client_certificate)
+            _setter("client_certificate", client_certificate)
         if client_key is not None:
-            pulumi.set(__self__, "client_key", client_key)
+            _setter("client_key", client_key)
         if cluster_ca_certificate is not None:
-            pulumi.set(__self__, "cluster_ca_certificate", cluster_ca_certificate)
+            _setter("cluster_ca_certificate", cluster_ca_certificate)
         if cluster_subnet is not None:
-            pulumi.set(__self__, "cluster_subnet", cluster_subnet)
+            _setter("cluster_subnet", cluster_subnet)
         if date_created is not None:
-            pulumi.set(__self__, "date_created", date_created)
+            _setter("date_created", date_created)
         if endpoint is not None:
-            pulumi.set(__self__, "endpoint", endpoint)
+            _setter("endpoint", endpoint)
         if ip is not None:
-            pulumi.set(__self__, "ip", ip)
+            _setter("ip", ip)
         if kube_config is not None:
-            pulumi.set(__self__, "kube_config", kube_config)
+            _setter("kube_config", kube_config)
         if label is not None:
-            pulumi.set(__self__, "label", label)
+            _setter("label", label)
         if node_pools is not None:
-            pulumi.set(__self__, "node_pools", node_pools)
+            _setter("node_pools", node_pools)
         if region is not None:
-            pulumi.set(__self__, "region", region)
+            _setter("region", region)
         if service_subnet is not None:
-            pulumi.set(__self__, "service_subnet", service_subnet)
+            _setter("service_subnet", service_subnet)
         if status is not None:
-            pulumi.set(__self__, "status", status)
+            _setter("status", status)
         if version is not None:
-            pulumi.set(__self__, "version", version)
+            _setter("version", version)
 
     @property
     @pulumi.getter(name="clientCertificate")
@@ -269,7 +319,7 @@ class _KubernetesState:
     @pulumi.getter
     def region(self) -> Optional[pulumi.Input[str]]:
         """
-        The region your VKE cluster will be deployed in. Currently, supported values are `ewr` and `lax`
+        The region your VKE cluster will be deployed in.
         """
         return pulumi.get(self, "region")
 
@@ -375,7 +425,7 @@ class Kubernetes(pulumi.CustomResource):
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[str] label: The VKE clusters label.
         :param pulumi.Input[pulumi.InputType['KubernetesNodePoolsArgs']] node_pools: Contains the default node pool that was deployed.
-        :param pulumi.Input[str] region: The region your VKE cluster will be deployed in. Currently, supported values are `ewr` and `lax`
+        :param pulumi.Input[str] region: The region your VKE cluster will be deployed in.
         :param pulumi.Input[str] version: The version your VKE cluster you want deployed. [See Available Version](https://www.vultr.com/api/#operation/get-kubernetes-versions)
         """
         ...
@@ -441,6 +491,10 @@ class Kubernetes(pulumi.CustomResource):
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
+            kwargs = kwargs or {}
+            def _setter(key, value):
+                kwargs[key] = value
+            KubernetesArgs._configure(_setter, **kwargs)
             __self__._internal_init(resource_name, *args, **kwargs)
 
     def _internal_init(__self__,
@@ -462,6 +516,11 @@ class Kubernetes(pulumi.CustomResource):
             if label is None and not opts.urn:
                 raise TypeError("Missing required property 'label'")
             __props__.__dict__["label"] = label
+            if not isinstance(node_pools, KubernetesNodePoolsArgs):
+                node_pools = node_pools or {}
+                def _setter(key, value):
+                    node_pools[key] = value
+                KubernetesNodePoolsArgs._configure(_setter, **node_pools)
             __props__.__dict__["node_pools"] = node_pools
             if region is None and not opts.urn:
                 raise TypeError("Missing required property 'region'")
@@ -522,7 +581,7 @@ class Kubernetes(pulumi.CustomResource):
         :param pulumi.Input[str] kube_config: Base64 encoded Kubeconfig for this VKE cluster.
         :param pulumi.Input[str] label: The VKE clusters label.
         :param pulumi.Input[pulumi.InputType['KubernetesNodePoolsArgs']] node_pools: Contains the default node pool that was deployed.
-        :param pulumi.Input[str] region: The region your VKE cluster will be deployed in. Currently, supported values are `ewr` and `lax`
+        :param pulumi.Input[str] region: The region your VKE cluster will be deployed in.
         :param pulumi.Input[str] service_subnet: IP range that services will run on this cluster.
         :param pulumi.Input[str] status: Status of node.
         :param pulumi.Input[str] version: The version your VKE cluster you want deployed. [See Available Version](https://www.vultr.com/api/#operation/get-kubernetes-versions)
@@ -631,7 +690,7 @@ class Kubernetes(pulumi.CustomResource):
     @pulumi.getter
     def region(self) -> pulumi.Output[str]:
         """
-        The region your VKE cluster will be deployed in. Currently, supported values are `ewr` and `lax`
+        The region your VKE cluster will be deployed in.
         """
         return pulumi.get(self, "region")
 

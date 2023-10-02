@@ -18,25 +18,27 @@
     },
     "language": {
         "csharp": {
-            "compatibility": "tfbridge20",
-            "namespaces": null,
             "packageReferences": {
                 "Pulumi": "3.*"
             },
+            "compatibility": "tfbridge20",
             "rootNamespace": "ediri"
         },
         "go": {
-            "generateExtraInputTypes": true,
+            "importBasePath": "github.com/dirien/pulumi-vultr/sdk/v2/go/vultr",
             "generateResourceContainerTypes": true,
-            "importBasePath": "github.com/dirien/pulumi-vultr/sdk/v2/go/vultr"
+            "generateExtraInputTypes": true
         },
         "java": {
             "basePackage": "io.dirien",
             "buildFiles": "",
-            "gradleNexusPublishPluginVersion": ""
+            "gradleNexusPublishPluginVersion": "",
+            "gradleTest": ""
         },
         "nodejs": {
-            "compatibility": "tfbridge20",
+            "packageName": "@ediri/vultr",
+            "packageDescription": "A Pulumi package for creating and managing Vultr cloud resources.",
+            "readme": "\u003e This provider is a derived work of the [Terraform Provider](https://github.com/vultr/terraform-provider-vultr)\n\u003e distributed under [MPL 2.0](https://www.mozilla.org/en-US/MPL/2.0/). If you encounter a bug or missing feature,\n\u003e first check the [`pulumi-vultr` repo](https://github.com/dirien/pulumi-vultr/issues); however, if that doesn't turn up anything,\n\u003e please consult the source [`terraform-provider-vultr` repo](https://github.com/vultr/terraform-provider-vultr/issues).",
             "dependencies": {
                 "@pulumi/pulumi": "^3.0.0"
             },
@@ -44,34 +46,40 @@
                 "@types/mime": "^2.0.0",
                 "@types/node": "^10.0.0"
             },
-            "disableUnionOutputTypes": true,
-            "packageDescription": "A Pulumi package for creating and managing Vultr cloud resources.",
-            "packageName": "@ediri/vultr",
-            "readme": "\u003e This provider is a derived work of the [Terraform Provider](https://github.com/vultr/terraform-provider-vultr)\n\u003e distributed under [MPL 2.0](https://www.mozilla.org/en-US/MPL/2.0/). If you encounter a bug or missing feature,\n\u003e first check the [`pulumi-vultr` repo](https://github.com/dirien/pulumi-vultr/issues); however, if that doesn't turn up anything,\n\u003e please consult the source [`terraform-provider-vultr` repo](https://github.com/vultr/terraform-provider-vultr/issues).",
-            "typescriptVersion": ""
+            "compatibility": "tfbridge20",
+            "disableUnionOutputTypes": true
         },
         "python": {
-            "compatibility": "tfbridge20",
             "packageName": "ediri_vultr",
-            "readme": "\u003e This provider is a derived work of the [Terraform Provider](https://github.com/vultr/terraform-provider-vultr)\n\u003e distributed under [MPL 2.0](https://www.mozilla.org/en-US/MPL/2.0/). If you encounter a bug or missing feature,\n\u003e first check the [`pulumi-vultr` repo](https://github.com/dirien/pulumi-vultr/issues); however, if that doesn't turn up anything,\n\u003e please consult the source [`terraform-provider-vultr` repo](https://github.com/vultr/terraform-provider-vultr/issues).",
             "requires": {
                 "pulumi": "\u003e=3.0.0,\u003c4.0.0"
-            }
+            },
+            "readme": "\u003e This provider is a derived work of the [Terraform Provider](https://github.com/vultr/terraform-provider-vultr)\n\u003e distributed under [MPL 2.0](https://www.mozilla.org/en-US/MPL/2.0/). If you encounter a bug or missing feature,\n\u003e first check the [`pulumi-vultr` repo](https://github.com/dirien/pulumi-vultr/issues); however, if that doesn't turn up anything,\n\u003e please consult the source [`terraform-provider-vultr` repo](https://github.com/vultr/terraform-provider-vultr/issues).",
+            "compatibility": "tfbridge20",
+            "pyproject": {}
         }
     },
     "config": {
         "variables": {
             "apiKey": {
                 "type": "string",
-                "description": "The API Key that allows interaction with the API\n"
+                "description": "The API Key that allows interaction with the API\n",
+                "defaultInfo": {
+                    "environment": [
+                        "VULTR_API_KEY"
+                    ]
+                },
+                "secret": true
             },
             "rateLimit": {
                 "type": "integer",
-                "description": "Allows users to set the speed of API calls to work with the Vultr Rate Limit\n"
+                "description": "Allows users to set the speed of API calls to work with the Vultr Rate Limit\n",
+                "default": 500
             },
             "retryLimit": {
                 "type": "integer",
-                "description": "Allows users to set the maximum number of retries allowed for a failed API call.\n"
+                "description": "Allows users to set the maximum number of retries allowed for a failed API call.\n",
+                "default": 3
             }
         },
         "defaults": [
@@ -82,93 +90,124 @@
         "vultr:index/DatabaseReadReplica:DatabaseReadReplica": {
             "properties": {
                 "clusterTimeZone": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).\n"
                 },
                 "databaseEngine": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The database engine of the new managed database.\n"
                 },
                 "databaseEngineVersion": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The database engine version of the new managed database.\n"
                 },
                 "dateCreated": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The date the managed database was added to your Vultr account.\n"
                 },
                 "dbname": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The managed database's default logical database.\n"
                 },
                 "host": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The hostname assigned to the managed database.\n"
                 },
                 "id": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The ID of the managed database.\n"
                 },
                 "label": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "A label for the managed database.\n"
                 },
                 "latestBackup": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The date of the latest backup available on the managed database.\n"
                 },
                 "maintenanceDow": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The preferred maintenance day of week for the managed database.\n"
                 },
                 "maintenanceTime": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).\n"
                 },
                 "mysqlLongQueryTime": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description": "The configuration value for the long query time (in seconds) on the managed database (MySQL engine types only).\n"
                 },
                 "mysqlRequirePrimaryKey": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "The configuration value for whether primary keys are required on the managed database (MySQL engine types only).\n"
                 },
                 "mysqlSlowQueryLog": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "The configuration value for slow query logging on the managed database (MySQL engine types only).\n"
                 },
                 "mysqlSqlModes": {
                     "type": "array",
                     "items": {
                         "type": "string"
-                    }
+                    },
+                    "description": "A list of SQL modes to configure for the managed database (MySQL engine types only - `ALLOW_INVALID_DATES`, `ANSI`, `ANSI_QUOTES`, `ERROR_FOR_DIVISION_BY_ZERO`, `HIGH_NOT_PRECEDENCE`, `IGNORE_SPACE`, `NO_AUTO_VALUE_ON_ZERO`, `NO_DIR_IN_CREATE`, `NO_ENGINE_SUBSTITUTION`, `NO_UNSIGNED_SUBTRACTION`, `NO_ZERO_DATE`, `NO_ZERO_IN_DATE`, `ONLY_FULL_GROUP_BY`, `PIPES_AS_CONCAT`, `REAL_AS_FLOAT`, `STRICT_ALL_TABLES`, `STRICT_TRANS_TABLES`, `TIME_TRUNCATE_FRACTIONAL`, `TRADITIONAL`).\n"
                 },
                 "password": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The password for the managed database's primary admin user.\n"
                 },
                 "plan": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The ID of the plan that you want the managed database to subscribe to. [See List Managed Database Plans](https://www.vultr.com/api/#tag/managed-databases/operation/list-database-plans)\n"
                 },
                 "planDisk": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description": "The description of the disk(s) on the managed database.\n"
                 },
                 "planRam": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description": "The amount of memory available on the managed database in MB.\n"
                 },
                 "planReplicas": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description": "The number of standby nodes available on the managed database.\n"
                 },
                 "planVcpus": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description": "The number of virtual CPUs available on the managed database.\n"
                 },
                 "port": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The connection port for the managed database.\n"
                 },
                 "redisEvictionPolicy": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).\n"
                 },
                 "region": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)\n"
                 },
                 "status": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The current status of the managed database (poweroff, rebuilding, rebalancing, running).\n"
                 },
                 "tag": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The tag to assign to the managed database.\n"
                 },
                 "trustedIps": {
                     "type": "array",
                     "items": {
                         "type": "string"
-                    }
+                    },
+                    "description": "A list of allowed IP addresses for the managed database.\n"
                 },
                 "user": {
+                    "type": "string",
+                    "description": "The primary admin user for the managed database.\n"
+                },
+                "vpcId": {
                     "type": "string"
                 }
             },
@@ -207,7 +246,8 @@
                         "status",
                         "tag",
                         "trustedIps",
-                        "user"
+                        "user",
+                        "vpcId"
                     ]
                 }
             }
@@ -463,12 +503,8 @@
             },
             "type": "object",
             "required": [
-                "checkInterval",
-                "healthyThreshold",
                 "port",
-                "protocol",
-                "responseTimeout",
-                "unhealthyThreshold"
+                "protocol"
             ]
         },
         "vultr:index/LoadBalancerSsl:LoadBalancerSsl": {
@@ -596,13 +632,15 @@
         "vultr:index/getDatabaseFilter:getDatabaseFilter": {
             "properties": {
                 "name": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Attribute name to filter with.\n"
                 },
                 "values": {
                     "type": "array",
                     "items": {
                         "type": "string"
-                    }
+                    },
+                    "description": "One or more values filter with.\n"
                 }
             },
             "type": "object",
@@ -614,93 +652,123 @@
         "vultr:index/getDatabaseReadReplica:getDatabaseReadReplica": {
             "properties": {
                 "clusterTimeZone": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The configured time zone for the Managed Database in TZ database format.\n"
                 },
                 "databaseEngine": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The database engine of the managed database.\n"
                 },
                 "databaseEngineVersion": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The database engine version of the managed database.\n"
                 },
                 "dateCreated": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The date the managed database was added to your Vultr account.\n"
                 },
                 "dbname": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The managed database's default logical database.\n"
                 },
                 "host": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The hostname assigned to the managed database.\n"
                 },
                 "id": {
                     "type": "string"
                 },
                 "label": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The managed database's label.\n"
                 },
                 "latestBackup": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The date of the latest backup available on the managed database.\n"
                 },
                 "maintenanceDow": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The preferred maintenance day of week for the managed database.\n"
                 },
                 "maintenanceTime": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The preferred maintenance time for the managed database.\n"
                 },
                 "mysqlLongQueryTime": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description": "The configuration value for the long query time (in seconds) on the managed database (MySQL engine types only).\n"
                 },
                 "mysqlRequirePrimaryKey": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "The configuration value for whether primary keys are required on the managed database (MySQL engine types only).\n"
                 },
                 "mysqlSlowQueryLog": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "The configuration value for slow query logging on the managed database (MySQL engine types only).\n"
                 },
                 "mysqlSqlModes": {
                     "type": "array",
                     "items": {
                         "type": "string"
-                    }
+                    },
+                    "description": "A list of SQL modes currently configured for the managed database (MySQL engine types only).\n"
                 },
                 "password": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The password for the managed database's primary admin user.\n"
                 },
                 "plan": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The managed database's plan ID.\n"
                 },
                 "planDisk": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description": "The description of the disk(s) on the managed database.\n"
                 },
                 "planRam": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description": "The amount of memory available on the managed database in MB.\n"
                 },
                 "planReplicas": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description": "The number of standby nodes available on the managed database.\n"
                 },
                 "planVcpus": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description": "The number of virtual CPUs available on the managed database.\n"
                 },
                 "port": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The connection port for the managed database.\n"
                 },
                 "redisEvictionPolicy": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The configuration value for the data eviction policy on the managed database (Redis engine types only).\n"
                 },
                 "region": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The region ID of the managed database.\n"
                 },
                 "status": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The current status of the managed database (poweroff, rebuilding, rebalancing, running).\n"
                 },
                 "tag": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The managed database's tag.\n"
                 },
                 "trustedIps": {
                     "type": "array",
                     "items": {
                         "type": "string"
-                    }
+                    },
+                    "description": "A list of allowed IP addresses for the managed database.\n"
                 },
                 "user": {
+                    "type": "string",
+                    "description": "The primary admin user for the managed database.\n"
+                },
+                "vpcId": {
                     "type": "string"
                 }
             },
@@ -733,7 +801,8 @@
                 "status",
                 "tag",
                 "trustedIps",
-                "user"
+                "user",
+                "vpcId"
             ],
             "language": {
                 "nodejs": {
@@ -1245,6 +1314,26 @@
                 "values"
             ]
         },
+        "vultr:index/getVpc2Filter:getVpc2Filter": {
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Attribute name to filter with.\n"
+                },
+                "values": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "One or more values filter with.\n"
+                }
+            },
+            "type": "object",
+            "required": [
+                "name",
+                "values"
+            ]
+        },
         "vultr:index/getVpcFilter:getVpcFilter": {
             "properties": {
                 "name": {
@@ -1271,7 +1360,8 @@
         "properties": {
             "apiKey": {
                 "type": "string",
-                "description": "The API Key that allows interaction with the API\n"
+                "description": "The API Key that allows interaction with the API\n",
+                "secret": true
             },
             "rateLimit": {
                 "type": "integer",
@@ -1282,26 +1372,28 @@
                 "description": "Allows users to set the maximum number of retries allowed for a failed API call.\n"
             }
         },
-        "required": [
-            "apiKey"
-        ],
         "inputProperties": {
             "apiKey": {
                 "type": "string",
-                "description": "The API Key that allows interaction with the API\n"
+                "description": "The API Key that allows interaction with the API\n",
+                "defaultInfo": {
+                    "environment": [
+                        "VULTR_API_KEY"
+                    ]
+                },
+                "secret": true
             },
             "rateLimit": {
                 "type": "integer",
-                "description": "Allows users to set the speed of API calls to work with the Vultr Rate Limit\n"
+                "description": "Allows users to set the speed of API calls to work with the Vultr Rate Limit\n",
+                "default": 500
             },
             "retryLimit": {
                 "type": "integer",
-                "description": "Allows users to set the maximum number of retries allowed for a failed API call.\n"
+                "description": "Allows users to set the maximum number of retries allowed for a failed API call.\n",
+                "default": 3
             }
-        },
-        "requiredInputs": [
-            "apiKey"
-        ]
+        }
     },
     "resources": {
         "vultr:index/bareMetalServer:BareMetalServer": {
@@ -1429,6 +1521,13 @@
                 "v6NetworkSize": {
                     "type": "integer",
                     "description": "The IPv6 network size in bits.\n"
+                },
+                "vpc2Ids": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "A list of VPC 2.0 IDs to be attached to the server.\n"
                 }
             },
             "required": [
@@ -1529,6 +1628,13 @@
                     "type": "string",
                     "description": "Generic data store, which some provisioning tools and cloud operating systems use as a configuration file. It is generally consumed only once after an instance has been launched, but individual needs may vary.\n",
                     "willReplaceOnChanges": true
+                },
+                "vpc2Ids": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "A list of VPC 2.0 IDs to be attached to the server.\n"
                 }
             },
             "requiredInputs": [
@@ -1669,6 +1775,13 @@
                     "v6NetworkSize": {
                         "type": "integer",
                         "description": "The IPv6 network size in bits.\n"
+                    },
+                    "vpc2Ids": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "A list of VPC 2.0 IDs to be attached to the server.\n"
                     }
                 },
                 "type": "object"
@@ -1809,98 +1922,130 @@
             }
         },
         "vultr:index/database:Database": {
+            "description": "Provides a Vultr database resource. This can be used to create, read, modify, and delete managed databases on your Vultr account.\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\nCreate a new database:\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@ediri/vultr\";\n\nconst myDatabase = new vultr.Database(\"myDatabase\", {\n    databaseEngine: \"pg\",\n    databaseEngineVersion: \"15\",\n    label: \"my_database_label\",\n    plan: \"vultr-dbaas-startup-cc-1-55-2\",\n    region: \"ewr\",\n});\n```\n```python\nimport pulumi\nimport ediri_vultr as vultr\n\nmy_database = vultr.Database(\"myDatabase\",\n    database_engine=\"pg\",\n    database_engine_version=\"15\",\n    label=\"my_database_label\",\n    plan=\"vultr-dbaas-startup-cc-1-55-2\",\n    region=\"ewr\")\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vultr = ediri.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var myDatabase = new Vultr.Database(\"myDatabase\", new()\n    {\n        DatabaseEngine = \"pg\",\n        DatabaseEngineVersion = \"15\",\n        Label = \"my_database_label\",\n        Plan = \"vultr-dbaas-startup-cc-1-55-2\",\n        Region = \"ewr\",\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.NewDatabase(ctx, \"myDatabase\", \u0026vultr.DatabaseArgs{\n\t\t\tDatabaseEngine:        pulumi.String(\"pg\"),\n\t\t\tDatabaseEngineVersion: pulumi.String(\"15\"),\n\t\t\tLabel:                 pulumi.String(\"my_database_label\"),\n\t\t\tPlan:                  pulumi.String(\"vultr-dbaas-startup-cc-1-55-2\"),\n\t\t\tRegion:                pulumi.String(\"ewr\"),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.Database;\nimport com.pulumi.vultr.DatabaseArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var myDatabase = new Database(\"myDatabase\", DatabaseArgs.builder()        \n            .databaseEngine(\"pg\")\n            .databaseEngineVersion(\"15\")\n            .label(\"my_database_label\")\n            .plan(\"vultr-dbaas-startup-cc-1-55-2\")\n            .region(\"ewr\")\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  myDatabase:\n    type: vultr:Database\n    properties:\n      databaseEngine: pg\n      databaseEngineVersion: '15'\n      label: my_database_label\n      plan: vultr-dbaas-startup-cc-1-55-2\n      region: ewr\n```\n\nCreate a new database with options:\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@ediri/vultr\";\n\nconst myDatabase = new vultr.Database(\"myDatabase\", {\n    clusterTimeZone: \"America/New_York\",\n    databaseEngine: \"pg\",\n    databaseEngineVersion: \"15\",\n    label: \"my_database_label\",\n    maintenanceDow: \"sunday\",\n    maintenanceTime: \"01:00\",\n    plan: \"vultr-dbaas-startup-cc-1-55-2\",\n    region: \"ewr\",\n    tag: \"some tag\",\n});\n```\n```python\nimport pulumi\nimport ediri_vultr as vultr\n\nmy_database = vultr.Database(\"myDatabase\",\n    cluster_time_zone=\"America/New_York\",\n    database_engine=\"pg\",\n    database_engine_version=\"15\",\n    label=\"my_database_label\",\n    maintenance_dow=\"sunday\",\n    maintenance_time=\"01:00\",\n    plan=\"vultr-dbaas-startup-cc-1-55-2\",\n    region=\"ewr\",\n    tag=\"some tag\")\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vultr = ediri.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var myDatabase = new Vultr.Database(\"myDatabase\", new()\n    {\n        ClusterTimeZone = \"America/New_York\",\n        DatabaseEngine = \"pg\",\n        DatabaseEngineVersion = \"15\",\n        Label = \"my_database_label\",\n        MaintenanceDow = \"sunday\",\n        MaintenanceTime = \"01:00\",\n        Plan = \"vultr-dbaas-startup-cc-1-55-2\",\n        Region = \"ewr\",\n        Tag = \"some tag\",\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.NewDatabase(ctx, \"myDatabase\", \u0026vultr.DatabaseArgs{\n\t\t\tClusterTimeZone:       pulumi.String(\"America/New_York\"),\n\t\t\tDatabaseEngine:        pulumi.String(\"pg\"),\n\t\t\tDatabaseEngineVersion: pulumi.String(\"15\"),\n\t\t\tLabel:                 pulumi.String(\"my_database_label\"),\n\t\t\tMaintenanceDow:        pulumi.String(\"sunday\"),\n\t\t\tMaintenanceTime:       pulumi.String(\"01:00\"),\n\t\t\tPlan:                  pulumi.String(\"vultr-dbaas-startup-cc-1-55-2\"),\n\t\t\tRegion:                pulumi.String(\"ewr\"),\n\t\t\tTag:                   pulumi.String(\"some tag\"),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.Database;\nimport com.pulumi.vultr.DatabaseArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var myDatabase = new Database(\"myDatabase\", DatabaseArgs.builder()        \n            .clusterTimeZone(\"America/New_York\")\n            .databaseEngine(\"pg\")\n            .databaseEngineVersion(\"15\")\n            .label(\"my_database_label\")\n            .maintenanceDow(\"sunday\")\n            .maintenanceTime(\"01:00\")\n            .plan(\"vultr-dbaas-startup-cc-1-55-2\")\n            .region(\"ewr\")\n            .tag(\"some tag\")\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  myDatabase:\n    type: vultr:Database\n    properties:\n      clusterTimeZone: America/New_York\n      databaseEngine: pg\n      databaseEngineVersion: '15'\n      label: my_database_label\n      maintenanceDow: sunday\n      maintenanceTime: 01:00\n      plan: vultr-dbaas-startup-cc-1-55-2\n      region: ewr\n      tag: some tag\n```\n{{% /example %}}\n{{% /examples %}}\n\n## Import\n\nDatabase can be imported using the database `ID`, e.g.\n\n```sh\n $ pulumi import vultr:index/database:Database my_database b6a859c5-b299-49dd-8888-b1abbc517d08\n```\n\n ",
             "properties": {
                 "clusterTimeZone": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).\n"
                 },
                 "databaseEngine": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The database engine of the new managed database.\n"
                 },
                 "databaseEngineVersion": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The database engine version of the new managed database.\n"
                 },
                 "dateCreated": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The date the managed database was added to your Vultr account.\n"
                 },
                 "dbname": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The managed database's default logical database.\n"
                 },
                 "host": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The hostname assigned to the managed database.\n"
                 },
                 "label": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "A label for the managed database.\n"
                 },
                 "latestBackup": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The date of the latest backup available on the managed database.\n"
                 },
                 "maintenanceDow": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The preferred maintenance day of week for the managed database.\n"
                 },
                 "maintenanceTime": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).\n"
                 },
                 "mysqlLongQueryTime": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description": "The configuration value for the long query time (in seconds) on the managed database (MySQL engine types only).\n"
                 },
                 "mysqlRequirePrimaryKey": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "The configuration value for whether primary keys are required on the managed database (MySQL engine types only).\n"
                 },
                 "mysqlSlowQueryLog": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "The configuration value for slow query logging on the managed database (MySQL engine types only).\n"
                 },
                 "mysqlSqlModes": {
                     "type": "array",
                     "items": {
                         "type": "string"
-                    }
+                    },
+                    "description": "A list of SQL modes to configure for the managed database (MySQL engine types only - `ALLOW_INVALID_DATES`, `ANSI`, `ANSI_QUOTES`, `ERROR_FOR_DIVISION_BY_ZERO`, `HIGH_NOT_PRECEDENCE`, `IGNORE_SPACE`, `NO_AUTO_VALUE_ON_ZERO`, `NO_DIR_IN_CREATE`, `NO_ENGINE_SUBSTITUTION`, `NO_UNSIGNED_SUBTRACTION`, `NO_ZERO_DATE`, `NO_ZERO_IN_DATE`, `ONLY_FULL_GROUP_BY`, `PIPES_AS_CONCAT`, `REAL_AS_FLOAT`, `STRICT_ALL_TABLES`, `STRICT_TRANS_TABLES`, `TIME_TRUNCATE_FRACTIONAL`, `TRADITIONAL`).\n"
                 },
                 "password": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The password for the managed database's primary admin user.\n"
                 },
                 "plan": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The ID of the plan that you want the managed database to subscribe to. [See List Managed Database Plans](https://www.vultr.com/api/#tag/managed-databases/operation/list-database-plans)\n"
                 },
                 "planDisk": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description": "The description of the disk(s) on the managed database.\n"
                 },
                 "planRam": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description": "The amount of memory available on the managed database in MB.\n"
                 },
                 "planReplicas": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description": "The number of standby nodes available on the managed database.\n"
                 },
                 "planVcpus": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description": "The number of virtual CPUs available on the managed database.\n"
                 },
                 "port": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The connection port for the managed database.\n"
                 },
                 "readReplicas": {
                     "type": "array",
                     "items": {
                         "$ref": "#/types/vultr:index/DatabaseReadReplica:DatabaseReadReplica"
-                    }
+                    },
+                    "description": "A list of read replicas attached to the managed database.\n"
                 },
                 "redisEvictionPolicy": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).\n"
                 },
                 "region": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)\n"
                 },
                 "status": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The current status of the managed database (poweroff, rebuilding, rebalancing, running).\n"
                 },
                 "tag": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The tag to assign to the managed database.\n"
                 },
                 "trustedIps": {
                     "type": "array",
                     "items": {
                         "type": "string"
-                    }
+                    },
+                    "description": "A list of allowed IP addresses for the managed database.\n"
                 },
                 "user": {
+                    "type": "string",
+                    "description": "The primary admin user for the managed database.\n"
+                },
+                "vpcId": {
                     "type": "string"
                 }
             },
@@ -1926,68 +2071,89 @@
             ],
             "inputProperties": {
                 "clusterTimeZone": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).\n"
                 },
                 "databaseEngine": {
                     "type": "string",
+                    "description": "The database engine of the new managed database.\n",
                     "willReplaceOnChanges": true
                 },
                 "databaseEngineVersion": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The database engine version of the new managed database.\n"
                 },
                 "label": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "A label for the managed database.\n"
                 },
                 "maintenanceDow": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The preferred maintenance day of week for the managed database.\n"
                 },
                 "maintenanceTime": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).\n"
                 },
                 "mysqlLongQueryTime": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description": "The configuration value for the long query time (in seconds) on the managed database (MySQL engine types only).\n"
                 },
                 "mysqlRequirePrimaryKey": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "The configuration value for whether primary keys are required on the managed database (MySQL engine types only).\n"
                 },
                 "mysqlSlowQueryLog": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "The configuration value for slow query logging on the managed database (MySQL engine types only).\n"
                 },
                 "mysqlSqlModes": {
                     "type": "array",
                     "items": {
                         "type": "string"
-                    }
+                    },
+                    "description": "A list of SQL modes to configure for the managed database (MySQL engine types only - `ALLOW_INVALID_DATES`, `ANSI`, `ANSI_QUOTES`, `ERROR_FOR_DIVISION_BY_ZERO`, `HIGH_NOT_PRECEDENCE`, `IGNORE_SPACE`, `NO_AUTO_VALUE_ON_ZERO`, `NO_DIR_IN_CREATE`, `NO_ENGINE_SUBSTITUTION`, `NO_UNSIGNED_SUBTRACTION`, `NO_ZERO_DATE`, `NO_ZERO_IN_DATE`, `ONLY_FULL_GROUP_BY`, `PIPES_AS_CONCAT`, `REAL_AS_FLOAT`, `STRICT_ALL_TABLES`, `STRICT_TRANS_TABLES`, `TIME_TRUNCATE_FRACTIONAL`, `TRADITIONAL`).\n"
                 },
                 "password": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The password for the managed database's primary admin user.\n"
                 },
                 "plan": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The ID of the plan that you want the managed database to subscribe to. [See List Managed Database Plans](https://www.vultr.com/api/#tag/managed-databases/operation/list-database-plans)\n"
                 },
                 "planDisk": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description": "The description of the disk(s) on the managed database.\n"
                 },
                 "readReplicas": {
                     "type": "array",
                     "items": {
                         "$ref": "#/types/vultr:index/DatabaseReadReplica:DatabaseReadReplica"
-                    }
+                    },
+                    "description": "A list of read replicas attached to the managed database.\n"
                 },
                 "redisEvictionPolicy": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).\n"
                 },
                 "region": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)\n"
                 },
                 "tag": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The tag to assign to the managed database.\n"
                 },
                 "trustedIps": {
                     "type": "array",
                     "items": {
                         "type": "string"
-                    }
+                    },
+                    "description": "A list of allowed IP addresses for the managed database.\n"
+                },
+                "vpcId": {
+                    "type": "string"
                 }
             },
             "requiredInputs": [
@@ -2001,97 +2167,128 @@
                 "description": "Input properties used for looking up and filtering Database resources.\n",
                 "properties": {
                     "clusterTimeZone": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).\n"
                     },
                     "databaseEngine": {
                         "type": "string",
+                        "description": "The database engine of the new managed database.\n",
                         "willReplaceOnChanges": true
                     },
                     "databaseEngineVersion": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The database engine version of the new managed database.\n"
                     },
                     "dateCreated": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The date the managed database was added to your Vultr account.\n"
                     },
                     "dbname": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The managed database's default logical database.\n"
                     },
                     "host": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The hostname assigned to the managed database.\n"
                     },
                     "label": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "A label for the managed database.\n"
                     },
                     "latestBackup": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The date of the latest backup available on the managed database.\n"
                     },
                     "maintenanceDow": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The preferred maintenance day of week for the managed database.\n"
                     },
                     "maintenanceTime": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).\n"
                     },
                     "mysqlLongQueryTime": {
-                        "type": "integer"
+                        "type": "integer",
+                        "description": "The configuration value for the long query time (in seconds) on the managed database (MySQL engine types only).\n"
                     },
                     "mysqlRequirePrimaryKey": {
-                        "type": "boolean"
+                        "type": "boolean",
+                        "description": "The configuration value for whether primary keys are required on the managed database (MySQL engine types only).\n"
                     },
                     "mysqlSlowQueryLog": {
-                        "type": "boolean"
+                        "type": "boolean",
+                        "description": "The configuration value for slow query logging on the managed database (MySQL engine types only).\n"
                     },
                     "mysqlSqlModes": {
                         "type": "array",
                         "items": {
                             "type": "string"
-                        }
+                        },
+                        "description": "A list of SQL modes to configure for the managed database (MySQL engine types only - `ALLOW_INVALID_DATES`, `ANSI`, `ANSI_QUOTES`, `ERROR_FOR_DIVISION_BY_ZERO`, `HIGH_NOT_PRECEDENCE`, `IGNORE_SPACE`, `NO_AUTO_VALUE_ON_ZERO`, `NO_DIR_IN_CREATE`, `NO_ENGINE_SUBSTITUTION`, `NO_UNSIGNED_SUBTRACTION`, `NO_ZERO_DATE`, `NO_ZERO_IN_DATE`, `ONLY_FULL_GROUP_BY`, `PIPES_AS_CONCAT`, `REAL_AS_FLOAT`, `STRICT_ALL_TABLES`, `STRICT_TRANS_TABLES`, `TIME_TRUNCATE_FRACTIONAL`, `TRADITIONAL`).\n"
                     },
                     "password": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The password for the managed database's primary admin user.\n"
                     },
                     "plan": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The ID of the plan that you want the managed database to subscribe to. [See List Managed Database Plans](https://www.vultr.com/api/#tag/managed-databases/operation/list-database-plans)\n"
                     },
                     "planDisk": {
-                        "type": "integer"
+                        "type": "integer",
+                        "description": "The description of the disk(s) on the managed database.\n"
                     },
                     "planRam": {
-                        "type": "integer"
+                        "type": "integer",
+                        "description": "The amount of memory available on the managed database in MB.\n"
                     },
                     "planReplicas": {
-                        "type": "integer"
+                        "type": "integer",
+                        "description": "The number of standby nodes available on the managed database.\n"
                     },
                     "planVcpus": {
-                        "type": "integer"
+                        "type": "integer",
+                        "description": "The number of virtual CPUs available on the managed database.\n"
                     },
                     "port": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The connection port for the managed database.\n"
                     },
                     "readReplicas": {
                         "type": "array",
                         "items": {
                             "$ref": "#/types/vultr:index/DatabaseReadReplica:DatabaseReadReplica"
-                        }
+                        },
+                        "description": "A list of read replicas attached to the managed database.\n"
                     },
                     "redisEvictionPolicy": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).\n"
                     },
                     "region": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)\n"
                     },
                     "status": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The current status of the managed database (poweroff, rebuilding, rebalancing, running).\n"
                     },
                     "tag": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The tag to assign to the managed database.\n"
                     },
                     "trustedIps": {
                         "type": "array",
                         "items": {
                             "type": "string"
-                        }
+                        },
+                        "description": "A list of allowed IP addresses for the managed database.\n"
                     },
                     "user": {
+                        "type": "string",
+                        "description": "The primary admin user for the managed database.\n"
+                    },
+                    "vpcId": {
                         "type": "string"
                     }
                 },
@@ -2099,24 +2296,31 @@
             }
         },
         "vultr:index/databaseConnectionPool:DatabaseConnectionPool": {
+            "description": "Provides a Vultr database connection pool resource. This can be used to create, read, modify, and delete connection pools for a PostgreSQL managed database on your Vultr account.\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\nCreate a new database connection pool:\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@ediri/vultr\";\n\nconst myDatabaseConnectionPool = new vultr.DatabaseConnectionPool(\"myDatabaseConnectionPool\", {\n    databaseId: vultr_database.my_database.id,\n    database: \"defaultdb\",\n    username: \"vultradmin\",\n    mode: \"transaction\",\n    size: 3,\n});\n```\n```python\nimport pulumi\nimport ediri_vultr as vultr\n\nmy_database_connection_pool = vultr.DatabaseConnectionPool(\"myDatabaseConnectionPool\",\n    database_id=vultr_database[\"my_database\"][\"id\"],\n    database=\"defaultdb\",\n    username=\"vultradmin\",\n    mode=\"transaction\",\n    size=3)\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vultr = ediri.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var myDatabaseConnectionPool = new Vultr.DatabaseConnectionPool(\"myDatabaseConnectionPool\", new()\n    {\n        DatabaseId = vultr_database.My_database.Id,\n        Database = \"defaultdb\",\n        Username = \"vultradmin\",\n        Mode = \"transaction\",\n        Size = 3,\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.NewDatabaseConnectionPool(ctx, \"myDatabaseConnectionPool\", \u0026vultr.DatabaseConnectionPoolArgs{\n\t\t\tDatabaseId: pulumi.Any(vultr_database.My_database.Id),\n\t\t\tDatabase:   pulumi.String(\"defaultdb\"),\n\t\t\tUsername:   pulumi.String(\"vultradmin\"),\n\t\t\tMode:       pulumi.String(\"transaction\"),\n\t\t\tSize:       pulumi.Int(3),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.DatabaseConnectionPool;\nimport com.pulumi.vultr.DatabaseConnectionPoolArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var myDatabaseConnectionPool = new DatabaseConnectionPool(\"myDatabaseConnectionPool\", DatabaseConnectionPoolArgs.builder()        \n            .databaseId(vultr_database.my_database().id())\n            .database(\"defaultdb\")\n            .username(\"vultradmin\")\n            .mode(\"transaction\")\n            .size(\"3\")\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  myDatabaseConnectionPool:\n    type: vultr:DatabaseConnectionPool\n    properties:\n      databaseId: ${vultr_database.my_database.id}\n      database: defaultdb\n      username: vultradmin\n      mode: transaction\n      size: '3'\n```\n{{% /example %}}\n{{% /examples %}}",
             "properties": {
                 "database": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The logical database to use for the new managed database connection pool.\n"
                 },
                 "databaseId": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The managed database ID you want to attach this connection pool to.\n"
                 },
                 "mode": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The mode to configure for the new managed database connection pool (`session`, `transaction`, `statement`).\n"
                 },
                 "name": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The name of the new managed database connection pool.\n"
                 },
                 "size": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description": "The size of the new managed database connection pool.\n"
                 },
                 "username": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The database user to use for the new managed database connection pool.\n"
                 }
             },
             "required": [
@@ -2129,24 +2333,30 @@
             ],
             "inputProperties": {
                 "database": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The logical database to use for the new managed database connection pool.\n"
                 },
                 "databaseId": {
                     "type": "string",
+                    "description": "The managed database ID you want to attach this connection pool to.\n",
                     "willReplaceOnChanges": true
                 },
                 "mode": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The mode to configure for the new managed database connection pool (`session`, `transaction`, `statement`).\n"
                 },
                 "name": {
                     "type": "string",
+                    "description": "The name of the new managed database connection pool.\n",
                     "willReplaceOnChanges": true
                 },
                 "size": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description": "The size of the new managed database connection pool.\n"
                 },
                 "username": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The database user to use for the new managed database connection pool.\n"
                 }
             },
             "requiredInputs": [
@@ -2160,36 +2370,45 @@
                 "description": "Input properties used for looking up and filtering DatabaseConnectionPool resources.\n",
                 "properties": {
                     "database": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The logical database to use for the new managed database connection pool.\n"
                     },
                     "databaseId": {
                         "type": "string",
+                        "description": "The managed database ID you want to attach this connection pool to.\n",
                         "willReplaceOnChanges": true
                     },
                     "mode": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The mode to configure for the new managed database connection pool (`session`, `transaction`, `statement`).\n"
                     },
                     "name": {
                         "type": "string",
+                        "description": "The name of the new managed database connection pool.\n",
                         "willReplaceOnChanges": true
                     },
                     "size": {
-                        "type": "integer"
+                        "type": "integer",
+                        "description": "The size of the new managed database connection pool.\n"
                     },
                     "username": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The database user to use for the new managed database connection pool.\n"
                     }
                 },
                 "type": "object"
             }
         },
         "vultr:index/databaseDb:DatabaseDb": {
+            "description": "Provides a Vultr database DB resource. This can be used to create, read, and delete logical DBs for a managed database on your Vultr account.\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\nCreate a new database DB:\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@ediri/vultr\";\n\nconst myDatabaseDb = new vultr.DatabaseDb(\"myDatabaseDb\", {databaseId: vultr_database.my_database.id});\n```\n```python\nimport pulumi\nimport ediri_vultr as vultr\n\nmy_database_db = vultr.DatabaseDb(\"myDatabaseDb\", database_id=vultr_database[\"my_database\"][\"id\"])\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vultr = ediri.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var myDatabaseDb = new Vultr.DatabaseDb(\"myDatabaseDb\", new()\n    {\n        DatabaseId = vultr_database.My_database.Id,\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.NewDatabaseDb(ctx, \"myDatabaseDb\", \u0026vultr.DatabaseDbArgs{\n\t\t\tDatabaseId: pulumi.Any(vultr_database.My_database.Id),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.DatabaseDb;\nimport com.pulumi.vultr.DatabaseDbArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var myDatabaseDb = new DatabaseDb(\"myDatabaseDb\", DatabaseDbArgs.builder()        \n            .databaseId(vultr_database.my_database().id())\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  myDatabaseDb:\n    type: vultr:DatabaseDb\n    properties:\n      databaseId: ${vultr_database.my_database.id}\n```\n{{% /example %}}\n{{% /examples %}}",
             "properties": {
                 "databaseId": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The managed database ID you want to attach this logical DB to.\n"
                 },
                 "name": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The name of the new managed database logical DB.\n"
                 }
             },
             "required": [
@@ -2199,10 +2418,12 @@
             "inputProperties": {
                 "databaseId": {
                     "type": "string",
+                    "description": "The managed database ID you want to attach this logical DB to.\n",
                     "willReplaceOnChanges": true
                 },
                 "name": {
                     "type": "string",
+                    "description": "The name of the new managed database logical DB.\n",
                     "willReplaceOnChanges": true
                 }
             },
@@ -2214,10 +2435,12 @@
                 "properties": {
                     "databaseId": {
                         "type": "string",
+                        "description": "The managed database ID you want to attach this logical DB to.\n",
                         "willReplaceOnChanges": true
                     },
                     "name": {
                         "type": "string",
+                        "description": "The name of the new managed database logical DB.\n",
                         "willReplaceOnChanges": true
                     }
                 },
@@ -2225,95 +2448,127 @@
             }
         },
         "vultr:index/databaseReplica:DatabaseReplica": {
+            "description": "Provides a Vultr database replica resource. This can be used to create, read, modify, and delete managed database read replicas on your Vultr account.\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\nCreate a new database replica:\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@ediri/vultr\";\n\nconst myDatabaseReplica = new vultr.DatabaseReplica(\"myDatabaseReplica\", {\n    databaseId: vultr_database.my_database.id,\n    region: \"sea\",\n    label: \"my_database_replica_label\",\n    tag: \"test tag\",\n});\n```\n```python\nimport pulumi\nimport ediri_vultr as vultr\n\nmy_database_replica = vultr.DatabaseReplica(\"myDatabaseReplica\",\n    database_id=vultr_database[\"my_database\"][\"id\"],\n    region=\"sea\",\n    label=\"my_database_replica_label\",\n    tag=\"test tag\")\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vultr = ediri.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var myDatabaseReplica = new Vultr.DatabaseReplica(\"myDatabaseReplica\", new()\n    {\n        DatabaseId = vultr_database.My_database.Id,\n        Region = \"sea\",\n        Label = \"my_database_replica_label\",\n        Tag = \"test tag\",\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.NewDatabaseReplica(ctx, \"myDatabaseReplica\", \u0026vultr.DatabaseReplicaArgs{\n\t\t\tDatabaseId: pulumi.Any(vultr_database.My_database.Id),\n\t\t\tRegion:     pulumi.String(\"sea\"),\n\t\t\tLabel:      pulumi.String(\"my_database_replica_label\"),\n\t\t\tTag:        pulumi.String(\"test tag\"),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.DatabaseReplica;\nimport com.pulumi.vultr.DatabaseReplicaArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var myDatabaseReplica = new DatabaseReplica(\"myDatabaseReplica\", DatabaseReplicaArgs.builder()        \n            .databaseId(vultr_database.my_database().id())\n            .region(\"sea\")\n            .label(\"my_database_replica_label\")\n            .tag(\"test tag\")\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  myDatabaseReplica:\n    type: vultr:DatabaseReplica\n    properties:\n      databaseId: ${vultr_database.my_database.id}\n      region: sea\n      label: my_database_replica_label\n      tag: test tag\n```\n{{% /example %}}\n{{% /examples %}}",
             "properties": {
                 "clusterTimeZone": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The configured time zone for the managed database read replica in TZ database format.\n"
                 },
                 "databaseEngine": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The database engine of the managed database read replica.\n"
                 },
                 "databaseEngineVersion": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The database engine version of the managed database read replica.\n"
                 },
                 "databaseId": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The managed database ID you want to attach this replica to.\n"
                 },
                 "dateCreated": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The date the managed database read replica was added to your Vultr account.\n"
                 },
                 "dbname": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The managed database read replica's default logical database.\n"
                 },
                 "host": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The hostname assigned to the managed database read replica.\n"
                 },
                 "label": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "A label for the managed database read replica.\n"
                 },
                 "latestBackup": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The date of the latest backup available on the managed database read replica.\n"
                 },
                 "maintenanceDow": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The preferred maintenance day of week for the managed database read replica.\n"
                 },
                 "maintenanceTime": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The preferred maintenance time for the managed database read replica.\n"
                 },
                 "mysqlLongQueryTime": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description": "The configuration value for the long query time (in seconds) on the managed database read replica (MySQL engine types only).\n"
                 },
                 "mysqlRequirePrimaryKey": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "The configuration value for whether primary keys are required on the managed database read replica (MySQL engine types only).\n"
                 },
                 "mysqlSlowQueryLog": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "The configuration value for slow query logging on the managed database read replica (MySQL engine types only).\n"
                 },
                 "mysqlSqlModes": {
                     "type": "array",
                     "items": {
                         "type": "string"
-                    }
+                    },
+                    "description": "A list of SQL modes currently configured for the managed database read replica (MySQL engine types only).\n"
                 },
                 "password": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The password for the managed database read replica's primary admin user.\n"
                 },
                 "plan": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The managed database read replica's plan ID.\n"
                 },
                 "planDisk": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description": "The description of the disk(s) on the managed database read replica.\n"
                 },
                 "planRam": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description": "The amount of memory available on the managed database read replica in MB.\n"
                 },
                 "planReplicas": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description": "The number of standby nodes available on the managed database read replica.\n"
                 },
                 "planVcpus": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description": "The number of virtual CPUs available on the managed database read replica.\n"
                 },
                 "port": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The connection port for the managed database read replica.\n"
                 },
                 "redisEvictionPolicy": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The configuration value for the data eviction policy on the managed database read replica (Redis engine types only).\n"
                 },
                 "region": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The ID of the region that the managed database read replica is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)\n"
                 },
                 "status": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The current status of the managed database read replica (poweroff, rebuilding, rebalancing, running).\n"
                 },
                 "tag": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The tag to assign to the managed database read replica.\n"
                 },
                 "trustedIps": {
                     "type": "array",
                     "items": {
                         "type": "string"
-                    }
+                    },
+                    "description": "A list of allowed IP addresses for the managed database read replica.\n"
                 },
                 "user": {
+                    "type": "string",
+                    "description": "The primary admin user for the managed database read replica.\n"
+                },
+                "vpcId": {
                     "type": "string"
                 }
             },
@@ -2345,48 +2600,60 @@
                 "status",
                 "tag",
                 "trustedIps",
-                "user"
+                "user",
+                "vpcId"
             ],
             "inputProperties": {
                 "databaseId": {
                     "type": "string",
+                    "description": "The managed database ID you want to attach this replica to.\n",
                     "willReplaceOnChanges": true
                 },
                 "label": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "A label for the managed database read replica.\n"
                 },
                 "mysqlLongQueryTime": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description": "The configuration value for the long query time (in seconds) on the managed database read replica (MySQL engine types only).\n"
                 },
                 "mysqlRequirePrimaryKey": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "The configuration value for whether primary keys are required on the managed database read replica (MySQL engine types only).\n"
                 },
                 "mysqlSlowQueryLog": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "The configuration value for slow query logging on the managed database read replica (MySQL engine types only).\n"
                 },
                 "mysqlSqlModes": {
                     "type": "array",
                     "items": {
                         "type": "string"
-                    }
+                    },
+                    "description": "A list of SQL modes currently configured for the managed database read replica (MySQL engine types only).\n"
                 },
                 "planDisk": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description": "The description of the disk(s) on the managed database read replica.\n"
                 },
                 "redisEvictionPolicy": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The configuration value for the data eviction policy on the managed database read replica (Redis engine types only).\n"
                 },
                 "region": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The ID of the region that the managed database read replica is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)\n"
                 },
                 "tag": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The tag to assign to the managed database read replica.\n"
                 },
                 "trustedIps": {
                     "type": "array",
                     "items": {
                         "type": "string"
-                    }
+                    },
+                    "description": "A list of allowed IP addresses for the managed database read replica.\n"
                 }
             },
             "requiredInputs": [
@@ -2398,94 +2665,125 @@
                 "description": "Input properties used for looking up and filtering DatabaseReplica resources.\n",
                 "properties": {
                     "clusterTimeZone": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The configured time zone for the managed database read replica in TZ database format.\n"
                     },
                     "databaseEngine": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The database engine of the managed database read replica.\n"
                     },
                     "databaseEngineVersion": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The database engine version of the managed database read replica.\n"
                     },
                     "databaseId": {
                         "type": "string",
+                        "description": "The managed database ID you want to attach this replica to.\n",
                         "willReplaceOnChanges": true
                     },
                     "dateCreated": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The date the managed database read replica was added to your Vultr account.\n"
                     },
                     "dbname": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The managed database read replica's default logical database.\n"
                     },
                     "host": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The hostname assigned to the managed database read replica.\n"
                     },
                     "label": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "A label for the managed database read replica.\n"
                     },
                     "latestBackup": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The date of the latest backup available on the managed database read replica.\n"
                     },
                     "maintenanceDow": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The preferred maintenance day of week for the managed database read replica.\n"
                     },
                     "maintenanceTime": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The preferred maintenance time for the managed database read replica.\n"
                     },
                     "mysqlLongQueryTime": {
-                        "type": "integer"
+                        "type": "integer",
+                        "description": "The configuration value for the long query time (in seconds) on the managed database read replica (MySQL engine types only).\n"
                     },
                     "mysqlRequirePrimaryKey": {
-                        "type": "boolean"
+                        "type": "boolean",
+                        "description": "The configuration value for whether primary keys are required on the managed database read replica (MySQL engine types only).\n"
                     },
                     "mysqlSlowQueryLog": {
-                        "type": "boolean"
+                        "type": "boolean",
+                        "description": "The configuration value for slow query logging on the managed database read replica (MySQL engine types only).\n"
                     },
                     "mysqlSqlModes": {
                         "type": "array",
                         "items": {
                             "type": "string"
-                        }
+                        },
+                        "description": "A list of SQL modes currently configured for the managed database read replica (MySQL engine types only).\n"
                     },
                     "password": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The password for the managed database read replica's primary admin user.\n"
                     },
                     "plan": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The managed database read replica's plan ID.\n"
                     },
                     "planDisk": {
-                        "type": "integer"
+                        "type": "integer",
+                        "description": "The description of the disk(s) on the managed database read replica.\n"
                     },
                     "planRam": {
-                        "type": "integer"
+                        "type": "integer",
+                        "description": "The amount of memory available on the managed database read replica in MB.\n"
                     },
                     "planReplicas": {
-                        "type": "integer"
+                        "type": "integer",
+                        "description": "The number of standby nodes available on the managed database read replica.\n"
                     },
                     "planVcpus": {
-                        "type": "integer"
+                        "type": "integer",
+                        "description": "The number of virtual CPUs available on the managed database read replica.\n"
                     },
                     "port": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The connection port for the managed database read replica.\n"
                     },
                     "redisEvictionPolicy": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The configuration value for the data eviction policy on the managed database read replica (Redis engine types only).\n"
                     },
                     "region": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The ID of the region that the managed database read replica is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)\n"
                     },
                     "status": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The current status of the managed database read replica (poweroff, rebuilding, rebalancing, running).\n"
                     },
                     "tag": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The tag to assign to the managed database read replica.\n"
                     },
                     "trustedIps": {
                         "type": "array",
                         "items": {
                             "type": "string"
-                        }
+                        },
+                        "description": "A list of allowed IP addresses for the managed database read replica.\n"
                     },
                     "user": {
+                        "type": "string",
+                        "description": "The primary admin user for the managed database read replica.\n"
+                    },
+                    "vpcId": {
                         "type": "string"
                     }
                 },
@@ -2493,18 +2791,23 @@
             }
         },
         "vultr:index/databaseUser:DatabaseUser": {
+            "description": "Provides a Vultr database user resource. This can be used to create, read, modify, and delete users for a managed database on your Vultr account.\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\nCreate a new database user:\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@ediri/vultr\";\n\nconst myDatabaseUser = new vultr.DatabaseUser(\"myDatabaseUser\", {\n    databaseId: vultr_database.my_database.id,\n    username: \"my_database_user\",\n    password: \"randomTestPW40298\",\n});\n```\n```python\nimport pulumi\nimport ediri_vultr as vultr\n\nmy_database_user = vultr.DatabaseUser(\"myDatabaseUser\",\n    database_id=vultr_database[\"my_database\"][\"id\"],\n    username=\"my_database_user\",\n    password=\"randomTestPW40298\")\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vultr = ediri.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var myDatabaseUser = new Vultr.DatabaseUser(\"myDatabaseUser\", new()\n    {\n        DatabaseId = vultr_database.My_database.Id,\n        Username = \"my_database_user\",\n        Password = \"randomTestPW40298\",\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.NewDatabaseUser(ctx, \"myDatabaseUser\", \u0026vultr.DatabaseUserArgs{\n\t\t\tDatabaseId: pulumi.Any(vultr_database.My_database.Id),\n\t\t\tUsername:   pulumi.String(\"my_database_user\"),\n\t\t\tPassword:   pulumi.String(\"randomTestPW40298\"),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.DatabaseUser;\nimport com.pulumi.vultr.DatabaseUserArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var myDatabaseUser = new DatabaseUser(\"myDatabaseUser\", DatabaseUserArgs.builder()        \n            .databaseId(vultr_database.my_database().id())\n            .username(\"my_database_user\")\n            .password(\"randomTestPW40298\")\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  myDatabaseUser:\n    type: vultr:DatabaseUser\n    properties:\n      databaseId: ${vultr_database.my_database.id}\n      username: my_database_user\n      password: randomTestPW40298\n```\n{{% /example %}}\n{{% /examples %}}",
             "properties": {
                 "databaseId": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The managed database ID you want to attach this user to.\n"
                 },
                 "encryption": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The encryption type of the new managed database user's password (MySQL engine types only - `caching_sha2_password`, `mysql_native_password`).\n"
                 },
                 "password": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The password of the new managed database user.\n"
                 },
                 "username": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The username of the new managed database user.\n"
                 }
             },
             "required": [
@@ -2516,16 +2819,20 @@
             "inputProperties": {
                 "databaseId": {
                     "type": "string",
+                    "description": "The managed database ID you want to attach this user to.\n",
                     "willReplaceOnChanges": true
                 },
                 "encryption": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The encryption type of the new managed database user's password (MySQL engine types only - `caching_sha2_password`, `mysql_native_password`).\n"
                 },
                 "password": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The password of the new managed database user.\n"
                 },
                 "username": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The username of the new managed database user.\n"
                 }
             },
             "requiredInputs": [
@@ -2537,16 +2844,20 @@
                 "properties": {
                     "databaseId": {
                         "type": "string",
+                        "description": "The managed database ID you want to attach this user to.\n",
                         "willReplaceOnChanges": true
                     },
                     "encryption": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The encryption type of the new managed database user's password (MySQL engine types only - `caching_sha2_password`, `mysql_native_password`).\n"
                     },
                     "password": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The password of the new managed database user.\n"
                     },
                     "username": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The username of the new managed database user.\n"
                     }
                 },
                 "type": "object"
@@ -3108,6 +3419,13 @@
                     "type": "integer",
                     "description": "The number of virtual CPUs available on the server.\n"
                 },
+                "vpc2Ids": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "A list of VPC 2.0 IDs to be attached to the server.\n"
+                },
                 "vpcIds": {
                     "type": "array",
                     "items": {
@@ -3255,6 +3573,13 @@
                     "type": "string",
                     "description": "Generic data store, which some provisioning tools and cloud operating systems use as a configuration file. It is generally consumed only once after an instance has been launched, but individual needs may vary.\n",
                     "willReplaceOnChanges": true
+                },
+                "vpc2Ids": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "A list of VPC 2.0 IDs to be attached to the server.\n"
                 },
                 "vpcIds": {
                     "type": "array",
@@ -3454,6 +3779,13 @@
                     "vcpuCount": {
                         "type": "integer",
                         "description": "The number of virtual CPUs available on the server.\n"
+                    },
+                    "vpc2Ids": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "A list of VPC 2.0 IDs to be attached to the server.\n"
                     },
                     "vpcIds": {
                         "type": "array",
@@ -3669,7 +4001,7 @@
                 },
                 "region": {
                     "type": "string",
-                    "description": "The region your VKE cluster will be deployed in. Currently, supported values are `ewr` and `lax`\n"
+                    "description": "The region your VKE cluster will be deployed in.\n"
                 },
                 "serviceSubnet": {
                     "type": "string",
@@ -3710,7 +4042,7 @@
                 },
                 "region": {
                     "type": "string",
-                    "description": "The region your VKE cluster will be deployed in. Currently, supported values are `ewr` and `lax`\n",
+                    "description": "The region your VKE cluster will be deployed in.\n",
                     "willReplaceOnChanges": true
                 },
                 "version": {
@@ -3772,7 +4104,7 @@
                     },
                     "region": {
                         "type": "string",
-                        "description": "The region your VKE cluster will be deployed in. Currently, supported values are `ewr` and `lax`\n",
+                        "description": "The region your VKE cluster will be deployed in.\n",
                         "willReplaceOnChanges": true
                     },
                     "serviceSubnet": {
@@ -5049,6 +5381,102 @@
                 "type": "object"
             }
         },
+        "vultr:index/vpc2:Vpc2": {
+            "description": "Provides a Vultr VPC 2.0 resource. This can be used to create, read, and delete VPCs 2.0 on your Vultr account.\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\nCreate a new VPC 2.0 with an automatically generated CIDR block:\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@ediri/vultr\";\n\nconst myVpc2 = new vultr.Vpc2(\"myVpc2\", {\n    description: \"my vpc2\",\n    region: \"ewr\",\n});\n```\n```python\nimport pulumi\nimport ediri_vultr as vultr\n\nmy_vpc2 = vultr.Vpc2(\"myVpc2\",\n    description=\"my vpc2\",\n    region=\"ewr\")\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vultr = ediri.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var myVpc2 = new Vultr.Vpc2(\"myVpc2\", new()\n    {\n        Description = \"my vpc2\",\n        Region = \"ewr\",\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.NewVpc2(ctx, \"myVpc2\", \u0026vultr.Vpc2Args{\n\t\t\tDescription: pulumi.String(\"my vpc2\"),\n\t\t\tRegion:      pulumi.String(\"ewr\"),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.Vpc2;\nimport com.pulumi.vultr.Vpc2Args;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var myVpc2 = new Vpc2(\"myVpc2\", Vpc2Args.builder()        \n            .description(\"my vpc2\")\n            .region(\"ewr\")\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  myVpc2:\n    type: vultr:Vpc2\n    properties:\n      description: my vpc2\n      region: ewr\n```\n\nCreate a new VPC 2.0 with a specified CIDR block:\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@ediri/vultr\";\n\nconst myVpc2 = new vultr.Vpc2(\"myVpc2\", {\n    description: \"my private vpc2\",\n    ipBlock: \"10.0.0.0\",\n    prefixLength: 24,\n    region: \"ewr\",\n});\n```\n```python\nimport pulumi\nimport ediri_vultr as vultr\n\nmy_vpc2 = vultr.Vpc2(\"myVpc2\",\n    description=\"my private vpc2\",\n    ip_block=\"10.0.0.0\",\n    prefix_length=24,\n    region=\"ewr\")\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vultr = ediri.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var myVpc2 = new Vultr.Vpc2(\"myVpc2\", new()\n    {\n        Description = \"my private vpc2\",\n        IpBlock = \"10.0.0.0\",\n        PrefixLength = 24,\n        Region = \"ewr\",\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.NewVpc2(ctx, \"myVpc2\", \u0026vultr.Vpc2Args{\n\t\t\tDescription:  pulumi.String(\"my private vpc2\"),\n\t\t\tIpBlock:      pulumi.String(\"10.0.0.0\"),\n\t\t\tPrefixLength: pulumi.Int(24),\n\t\t\tRegion:       pulumi.String(\"ewr\"),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.Vpc2;\nimport com.pulumi.vultr.Vpc2Args;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var myVpc2 = new Vpc2(\"myVpc2\", Vpc2Args.builder()        \n            .description(\"my private vpc2\")\n            .ipBlock(\"10.0.0.0\")\n            .prefixLength(24)\n            .region(\"ewr\")\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  myVpc2:\n    type: vultr:Vpc2\n    properties:\n      description: my private vpc2\n      ipBlock: 10.0.0.0\n      prefixLength: 24\n      region: ewr\n```\n{{% /example %}}\n{{% /examples %}}\n\n## Import\n\nVPCs 2.0 can be imported using the VPC 2.0 `ID`, e.g.\n\n```sh\n $ pulumi import vultr:index/vpc2:Vpc2 my_vpc2 0e04f918-575e-41cb-86f6-d729b354a5a1\n```\n\n ",
+            "properties": {
+                "dateCreated": {
+                    "type": "string",
+                    "description": "The date that the VPC 2.0 was added to your Vultr account.\n"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "The description you want to give your VPC 2.0.\n"
+                },
+                "ipBlock": {
+                    "type": "string",
+                    "description": "The IPv4 subnet to be used when attaching instances to this VPC 2.0.\n"
+                },
+                "ipType": {
+                    "type": "string",
+                    "description": "Accepted values: `v4`.\n"
+                },
+                "prefixLength": {
+                    "type": "integer",
+                    "description": "The number of bits for the netmask in CIDR notation. Example: 32\n"
+                },
+                "region": {
+                    "type": "string",
+                    "description": "The region ID that you want the VPC 2.0 to be created in.\n"
+                }
+            },
+            "required": [
+                "dateCreated",
+                "region"
+            ],
+            "inputProperties": {
+                "description": {
+                    "type": "string",
+                    "description": "The description you want to give your VPC 2.0.\n"
+                },
+                "ipBlock": {
+                    "type": "string",
+                    "description": "The IPv4 subnet to be used when attaching instances to this VPC 2.0.\n",
+                    "willReplaceOnChanges": true
+                },
+                "ipType": {
+                    "type": "string",
+                    "description": "Accepted values: `v4`.\n",
+                    "willReplaceOnChanges": true
+                },
+                "prefixLength": {
+                    "type": "integer",
+                    "description": "The number of bits for the netmask in CIDR notation. Example: 32\n",
+                    "willReplaceOnChanges": true
+                },
+                "region": {
+                    "type": "string",
+                    "description": "The region ID that you want the VPC 2.0 to be created in.\n",
+                    "willReplaceOnChanges": true
+                }
+            },
+            "requiredInputs": [
+                "region"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering Vpc2 resources.\n",
+                "properties": {
+                    "dateCreated": {
+                        "type": "string",
+                        "description": "The date that the VPC 2.0 was added to your Vultr account.\n"
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "The description you want to give your VPC 2.0.\n"
+                    },
+                    "ipBlock": {
+                        "type": "string",
+                        "description": "The IPv4 subnet to be used when attaching instances to this VPC 2.0.\n",
+                        "willReplaceOnChanges": true
+                    },
+                    "ipType": {
+                        "type": "string",
+                        "description": "Accepted values: `v4`.\n",
+                        "willReplaceOnChanges": true
+                    },
+                    "prefixLength": {
+                        "type": "integer",
+                        "description": "The number of bits for the netmask in CIDR notation. Example: 32\n",
+                        "willReplaceOnChanges": true
+                    },
+                    "region": {
+                        "type": "string",
+                        "description": "The region ID that you want the VPC 2.0 to be created in.\n",
+                        "willReplaceOnChanges": true
+                    }
+                },
+                "type": "object"
+            }
+        },
         "vultr:index/vpc:Vpc": {
             "description": "Provides a Vultr VPC resource. This can be used to create, read, and delete VPCs on your Vultr account.\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\nCreate a new VPC with an automatically generated CIDR block:\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@ediri/vultr\";\n\nconst myVpc = new vultr.Vpc(\"myVpc\", {\n    description: \"my vpc\",\n    region: \"ewr\",\n});\n```\n```python\nimport pulumi\nimport ediri_vultr as vultr\n\nmy_vpc = vultr.Vpc(\"myVpc\",\n    description=\"my vpc\",\n    region=\"ewr\")\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vultr = ediri.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var myVpc = new Vultr.Vpc(\"myVpc\", new()\n    {\n        Description = \"my vpc\",\n        Region = \"ewr\",\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.NewVpc(ctx, \"myVpc\", \u0026vultr.VpcArgs{\n\t\t\tDescription: pulumi.String(\"my vpc\"),\n\t\t\tRegion:      pulumi.String(\"ewr\"),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.Vpc;\nimport com.pulumi.vultr.VpcArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var myVpc = new Vpc(\"myVpc\", VpcArgs.builder()        \n            .description(\"my vpc\")\n            .region(\"ewr\")\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  myVpc:\n    type: vultr:Vpc\n    properties:\n      description: my vpc\n      region: ewr\n```\n\nCreate a new VPC with a specified CIDR block:\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@ediri/vultr\";\n\nconst myVpc = new vultr.Vpc(\"myVpc\", {\n    description: \"my private vpc\",\n    region: \"ewr\",\n    v4Subnet: \"10.0.0.0\",\n    v4SubnetMask: 24,\n});\n```\n```python\nimport pulumi\nimport ediri_vultr as vultr\n\nmy_vpc = vultr.Vpc(\"myVpc\",\n    description=\"my private vpc\",\n    region=\"ewr\",\n    v4_subnet=\"10.0.0.0\",\n    v4_subnet_mask=24)\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vultr = ediri.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var myVpc = new Vultr.Vpc(\"myVpc\", new()\n    {\n        Description = \"my private vpc\",\n        Region = \"ewr\",\n        V4Subnet = \"10.0.0.0\",\n        V4SubnetMask = 24,\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.NewVpc(ctx, \"myVpc\", \u0026vultr.VpcArgs{\n\t\t\tDescription:  pulumi.String(\"my private vpc\"),\n\t\t\tRegion:       pulumi.String(\"ewr\"),\n\t\t\tV4Subnet:     pulumi.String(\"10.0.0.0\"),\n\t\t\tV4SubnetMask: pulumi.Int(24),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.Vpc;\nimport com.pulumi.vultr.VpcArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var myVpc = new Vpc(\"myVpc\", VpcArgs.builder()        \n            .description(\"my private vpc\")\n            .region(\"ewr\")\n            .v4Subnet(\"10.0.0.0\")\n            .v4SubnetMask(24)\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  myVpc:\n    type: vultr:Vpc\n    properties:\n      description: my private vpc\n      region: ewr\n      v4Subnet: 10.0.0.0\n      v4SubnetMask: 24\n```\n{{% /example %}}\n{{% /examples %}}\n\n## Import\n\nVPCs can be imported using the VPC `ID`, e.g.\n\n```sh\n $ pulumi import vultr:index/vpc:Vpc my_vpc 0e04f918-575e-41cb-86f6-d729b354a5a1\n```\n\n ",
             "properties": {
@@ -5502,6 +5930,13 @@
                     },
                     "v6NetworkSize": {
                         "type": "integer"
+                    },
+                    "vpc2Ids": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "A list of VPC 2.0 IDs attached to the server.\n"
                     }
                 },
                 "type": "object",
@@ -5527,6 +5962,7 @@
                     "v6MainIp",
                     "v6Network",
                     "v6NetworkSize",
+                    "vpc2Ids",
                     "id"
                 ]
             }
@@ -5613,6 +6049,7 @@
             }
         },
         "vultr:index/getDatabase:getDatabase": {
+            "description": "Get information about a Vultr database.\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\nGet the information for a database by `label`:\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@pulumi/vultr\";\n\nconst myDatabase = vultr.getDatabase({\n    filters: [{\n        name: \"label\",\n        values: [\"my-database-label\"],\n    }],\n});\n```\n```python\nimport pulumi\nimport pulumi_vultr as vultr\n\nmy_database = vultr.get_database(filters=[vultr.GetDatabaseFilterArgs(\n    name=\"label\",\n    values=[\"my-database-label\"],\n)])\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vultr = Pulumi.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var myDatabase = Vultr.GetDatabase.Invoke(new()\n    {\n        Filters = new[]\n        {\n            new Vultr.Inputs.GetDatabaseFilterInputArgs\n            {\n                Name = \"label\",\n                Values = new[]\n                {\n                    \"my-database-label\",\n                },\n            },\n        },\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.LookupDatabase(ctx, \u0026vultr.LookupDatabaseArgs{\n\t\t\tFilters: []vultr.GetDatabaseFilter{\n\t\t\t\t{\n\t\t\t\t\tName: \"label\",\n\t\t\t\t\tValues: []string{\n\t\t\t\t\t\t\"my-database-label\",\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t},\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.VultrFunctions;\nimport com.pulumi.vultr.inputs.GetDatabaseArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var myDatabase = VultrFunctions.getDatabase(GetDatabaseArgs.builder()\n            .filters(GetDatabaseFilterArgs.builder()\n                .name(\"label\")\n                .values(\"my-database-label\")\n                .build())\n            .build());\n\n    }\n}\n```\n```yaml\nvariables:\n  myDatabase:\n    fn::invoke:\n      Function: vultr:getDatabase\n      Arguments:\n        filters:\n          - name: label\n            values:\n              - my-database-label\n```\n{{% /example %}}\n{{% /examples %}}",
             "inputs": {
                 "description": "A collection of arguments for invoking getDatabase.\n",
                 "properties": {
@@ -5621,6 +6058,7 @@
                         "items": {
                             "$ref": "#/types/vultr:index/getDatabaseFilter:getDatabaseFilter"
                         },
+                        "description": "Query parameters for finding databases.\n",
                         "willReplaceOnChanges": true
                     }
                 },
@@ -5630,19 +6068,24 @@
                 "description": "A collection of values returned by getDatabase.\n",
                 "properties": {
                     "clusterTimeZone": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The configured time zone for the Managed Database in TZ database format.\n"
                     },
                     "databaseEngine": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The database engine of the managed database.\n"
                     },
                     "databaseEngineVersion": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The database engine version of the managed database.\n"
                     },
                     "dateCreated": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The date the managed database was added to your Vultr account.\n"
                     },
                     "dbname": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The managed database's default logical database.\n"
                     },
                     "filters": {
                         "type": "array",
@@ -5651,85 +6094,111 @@
                         }
                     },
                     "host": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The hostname assigned to the managed database.\n"
                     },
                     "id": {
                         "type": "string",
                         "description": "The provider-assigned unique ID for this managed resource.\n"
                     },
                     "label": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The managed database's label.\n"
                     },
                     "latestBackup": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The date of the latest backup available on the managed database.\n"
                     },
                     "maintenanceDow": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The preferred maintenance day of week for the managed database.\n"
                     },
                     "maintenanceTime": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The preferred maintenance time for the managed database.\n"
                     },
                     "mysqlLongQueryTime": {
-                        "type": "integer"
+                        "type": "integer",
+                        "description": "The configuration value for the long query time (in seconds) on the managed database (MySQL engine types only).\n"
                     },
                     "mysqlRequirePrimaryKey": {
-                        "type": "boolean"
+                        "type": "boolean",
+                        "description": "The configuration value for whether primary keys are required on the managed database (MySQL engine types only).\n"
                     },
                     "mysqlSlowQueryLog": {
-                        "type": "boolean"
+                        "type": "boolean",
+                        "description": "The configuration value for slow query logging on the managed database (MySQL engine types only).\n"
                     },
                     "mysqlSqlModes": {
                         "type": "array",
                         "items": {
                             "type": "string"
-                        }
+                        },
+                        "description": "A list of SQL modes currently configured for the managed database (MySQL engine types only).\n"
                     },
                     "password": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The password for the managed database's primary admin user.\n"
                     },
                     "plan": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The managed database's plan ID.\n"
                     },
                     "planDisk": {
-                        "type": "integer"
+                        "type": "integer",
+                        "description": "The description of the disk(s) on the managed database.\n"
                     },
                     "planRam": {
-                        "type": "integer"
+                        "type": "integer",
+                        "description": "The amount of memory available on the managed database in MB.\n"
                     },
                     "planReplicas": {
-                        "type": "integer"
+                        "type": "integer",
+                        "description": "The number of standby nodes available on the managed database.\n"
                     },
                     "planVcpus": {
-                        "type": "integer"
+                        "type": "integer",
+                        "description": "The number of virtual CPUs available on the managed database.\n"
                     },
                     "port": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The connection port for the managed database.\n"
                     },
                     "readReplicas": {
                         "type": "array",
                         "items": {
                             "$ref": "#/types/vultr:index/getDatabaseReadReplica:getDatabaseReadReplica"
-                        }
+                        },
+                        "description": "A list of read replicas attached to the managed database.\n"
                     },
                     "redisEvictionPolicy": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The configuration value for the data eviction policy on the managed database (Redis engine types only).\n"
                     },
                     "region": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The region ID of the managed database.\n"
                     },
                     "status": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The current status of the managed database (poweroff, rebuilding, rebalancing, running).\n"
                     },
                     "tag": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The managed database's tag.\n"
                     },
                     "trustedIps": {
                         "type": "array",
                         "items": {
                             "type": "string"
-                        }
+                        },
+                        "description": "A list of allowed IP addresses for the managed database.\n"
                     },
                     "user": {
+                        "type": "string",
+                        "description": "The primary admin user for the managed database.\n"
+                    },
+                    "vpcId": {
                         "type": "string"
                     }
                 },
@@ -5763,6 +6232,7 @@
                     "tag",
                     "trustedIps",
                     "user",
+                    "vpcId",
                     "id"
                 ]
             }
@@ -6039,6 +6509,13 @@
                         "type": "integer",
                         "description": "The number of virtual CPUs available on the server.\n"
                     },
+                    "vpc2Ids": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "A list of VPC 2.0 IDs attached to the server.\n"
+                    },
                     "vpcIds": {
                         "type": "array",
                         "items": {
@@ -6079,6 +6556,7 @@
                     "v6Network",
                     "v6NetworkSize",
                     "vcpuCount",
+                    "vpc2Ids",
                     "vpcIds",
                     "id"
                 ]
@@ -7317,6 +7795,67 @@
                     "apiEnabled",
                     "email",
                     "name",
+                    "id"
+                ]
+            }
+        },
+        "vultr:index/getVpc2:getVpc2": {
+            "description": "Get information about a Vultr VPC 2.0.\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\nGet the information for a VPC 2.0 by `description`:\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@pulumi/vultr\";\n\nconst myVpc2 = vultr.getVpc2({\n    filters: [{\n        name: \"description\",\n        values: [\"my-vpc2-description\"],\n    }],\n});\n```\n```python\nimport pulumi\nimport pulumi_vultr as vultr\n\nmy_vpc2 = vultr.get_vpc2(filters=[vultr.GetVpc2FilterArgs(\n    name=\"description\",\n    values=[\"my-vpc2-description\"],\n)])\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vultr = Pulumi.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var myVpc2 = Vultr.GetVpc2.Invoke(new()\n    {\n        Filters = new[]\n        {\n            new Vultr.Inputs.GetVpc2FilterInputArgs\n            {\n                Name = \"description\",\n                Values = new[]\n                {\n                    \"my-vpc2-description\",\n                },\n            },\n        },\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.LookupVpc2(ctx, \u0026vultr.LookupVpc2Args{\n\t\t\tFilters: []vultr.GetVpc2Filter{\n\t\t\t\t{\n\t\t\t\t\tName: \"description\",\n\t\t\t\t\tValues: []string{\n\t\t\t\t\t\t\"my-vpc2-description\",\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t},\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.VultrFunctions;\nimport com.pulumi.vultr.inputs.GetVpc2Args;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var myVpc2 = VultrFunctions.getVpc2(GetVpc2Args.builder()\n            .filters(GetVpc2FilterArgs.builder()\n                .name(\"description\")\n                .values(\"my-vpc2-description\")\n                .build())\n            .build());\n\n    }\n}\n```\n```yaml\nvariables:\n  myVpc2:\n    fn::invoke:\n      Function: vultr:getVpc2\n      Arguments:\n        filters:\n          - name: description\n            values:\n              - my-vpc2-description\n```\n{{% /example %}}\n{{% /examples %}}",
+            "inputs": {
+                "description": "A collection of arguments for invoking getVpc2.\n",
+                "properties": {
+                    "filters": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/vultr:index/getVpc2Filter:getVpc2Filter"
+                        },
+                        "description": "Query parameters for finding VPCs 2.0.\n",
+                        "willReplaceOnChanges": true
+                    }
+                },
+                "type": "object"
+            },
+            "outputs": {
+                "description": "A collection of values returned by getVpc2.\n",
+                "properties": {
+                    "dateCreated": {
+                        "type": "string",
+                        "description": "The date the VPC 2.0 was added to your Vultr account.\n"
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "The VPC 2.0's description.\n"
+                    },
+                    "filters": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/vultr:index/getVpc2Filter:getVpc2Filter"
+                        }
+                    },
+                    "id": {
+                        "type": "string",
+                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                    },
+                    "ipBlock": {
+                        "type": "string",
+                        "description": "The IPv4 network address. For example: 10.1.1.0.\n"
+                    },
+                    "prefixLength": {
+                        "type": "integer",
+                        "description": "The number of bits for the netmask in CIDR notation. Example: 20\n"
+                    },
+                    "region": {
+                        "type": "string",
+                        "description": "The ID of the region that the VPC 2.0 is in.\n"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "dateCreated",
+                    "description",
+                    "ipBlock",
+                    "prefixLength",
+                    "region",
                     "id"
                 ]
             }

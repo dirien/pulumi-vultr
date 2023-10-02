@@ -8,7 +8,9 @@ import (
 	"reflect"
 
 	"errors"
+	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 )
 
 // Provides a Vultr instance resource. This can be used to create, read, modify, and delete instances on your Vultr account.
@@ -177,6 +179,8 @@ type Instance struct {
 	V6NetworkSize pulumi.IntOutput `pulumi:"v6NetworkSize"`
 	// The number of virtual CPUs available on the server.
 	VcpuCount pulumi.IntOutput `pulumi:"vcpuCount"`
+	// A list of VPC 2.0 IDs to be attached to the server.
+	Vpc2Ids pulumi.StringArrayOutput `pulumi:"vpc2Ids"`
 	// A list of VPC IDs to be attached to the server.
 	VpcIds pulumi.StringArrayOutput `pulumi:"vpcIds"`
 }
@@ -198,7 +202,7 @@ func NewInstance(ctx *pulumi.Context,
 		"defaultPassword",
 	})
 	opts = append(opts, secrets)
-	opts = pkgResourceDefaultOpts(opts)
+	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource Instance
 	err := ctx.RegisterResource("vultr:index/instance:Instance", name, args, &resource, opts...)
 	if err != nil {
@@ -303,6 +307,8 @@ type instanceState struct {
 	V6NetworkSize *int `pulumi:"v6NetworkSize"`
 	// The number of virtual CPUs available on the server.
 	VcpuCount *int `pulumi:"vcpuCount"`
+	// A list of VPC 2.0 IDs to be attached to the server.
+	Vpc2Ids []string `pulumi:"vpc2Ids"`
 	// A list of VPC IDs to be attached to the server.
 	VpcIds []string `pulumi:"vpcIds"`
 }
@@ -390,6 +396,8 @@ type InstanceState struct {
 	V6NetworkSize pulumi.IntPtrInput
 	// The number of virtual CPUs available on the server.
 	VcpuCount pulumi.IntPtrInput
+	// A list of VPC 2.0 IDs to be attached to the server.
+	Vpc2Ids pulumi.StringArrayInput
 	// A list of VPC IDs to be attached to the server.
 	VpcIds pulumi.StringArrayInput
 }
@@ -443,6 +451,8 @@ type instanceArgs struct {
 	Tags []string `pulumi:"tags"`
 	// Generic data store, which some provisioning tools and cloud operating systems use as a configuration file. It is generally consumed only once after an instance has been launched, but individual needs may vary.
 	UserData *string `pulumi:"userData"`
+	// A list of VPC 2.0 IDs to be attached to the server.
+	Vpc2Ids []string `pulumi:"vpc2Ids"`
 	// A list of VPC IDs to be attached to the server.
 	VpcIds []string `pulumi:"vpcIds"`
 }
@@ -493,6 +503,8 @@ type InstanceArgs struct {
 	Tags pulumi.StringArrayInput
 	// Generic data store, which some provisioning tools and cloud operating systems use as a configuration file. It is generally consumed only once after an instance has been launched, but individual needs may vary.
 	UserData pulumi.StringPtrInput
+	// A list of VPC 2.0 IDs to be attached to the server.
+	Vpc2Ids pulumi.StringArrayInput
 	// A list of VPC IDs to be attached to the server.
 	VpcIds pulumi.StringArrayInput
 }
@@ -520,6 +532,12 @@ func (i *Instance) ToInstanceOutputWithContext(ctx context.Context) InstanceOutp
 	return pulumi.ToOutputWithContext(ctx, i).(InstanceOutput)
 }
 
+func (i *Instance) ToOutput(ctx context.Context) pulumix.Output[*Instance] {
+	return pulumix.Output[*Instance]{
+		OutputState: i.ToInstanceOutputWithContext(ctx).OutputState,
+	}
+}
+
 // InstanceArrayInput is an input type that accepts InstanceArray and InstanceArrayOutput values.
 // You can construct a concrete instance of `InstanceArrayInput` via:
 //
@@ -543,6 +561,12 @@ func (i InstanceArray) ToInstanceArrayOutput() InstanceArrayOutput {
 
 func (i InstanceArray) ToInstanceArrayOutputWithContext(ctx context.Context) InstanceArrayOutput {
 	return pulumi.ToOutputWithContext(ctx, i).(InstanceArrayOutput)
+}
+
+func (i InstanceArray) ToOutput(ctx context.Context) pulumix.Output[[]*Instance] {
+	return pulumix.Output[[]*Instance]{
+		OutputState: i.ToInstanceArrayOutputWithContext(ctx).OutputState,
+	}
 }
 
 // InstanceMapInput is an input type that accepts InstanceMap and InstanceMapOutput values.
@@ -570,6 +594,12 @@ func (i InstanceMap) ToInstanceMapOutputWithContext(ctx context.Context) Instanc
 	return pulumi.ToOutputWithContext(ctx, i).(InstanceMapOutput)
 }
 
+func (i InstanceMap) ToOutput(ctx context.Context) pulumix.Output[map[string]*Instance] {
+	return pulumix.Output[map[string]*Instance]{
+		OutputState: i.ToInstanceMapOutputWithContext(ctx).OutputState,
+	}
+}
+
 type InstanceOutput struct{ *pulumi.OutputState }
 
 func (InstanceOutput) ElementType() reflect.Type {
@@ -582,6 +612,12 @@ func (o InstanceOutput) ToInstanceOutput() InstanceOutput {
 
 func (o InstanceOutput) ToInstanceOutputWithContext(ctx context.Context) InstanceOutput {
 	return o
+}
+
+func (o InstanceOutput) ToOutput(ctx context.Context) pulumix.Output[*Instance] {
+	return pulumix.Output[*Instance]{
+		OutputState: o.OutputState,
+	}
 }
 
 // Whether an activation email will be sent when the server is ready.
@@ -786,6 +822,11 @@ func (o InstanceOutput) VcpuCount() pulumi.IntOutput {
 	return o.ApplyT(func(v *Instance) pulumi.IntOutput { return v.VcpuCount }).(pulumi.IntOutput)
 }
 
+// A list of VPC 2.0 IDs to be attached to the server.
+func (o InstanceOutput) Vpc2Ids() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *Instance) pulumi.StringArrayOutput { return v.Vpc2Ids }).(pulumi.StringArrayOutput)
+}
+
 // A list of VPC IDs to be attached to the server.
 func (o InstanceOutput) VpcIds() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v *Instance) pulumi.StringArrayOutput { return v.VpcIds }).(pulumi.StringArrayOutput)
@@ -803,6 +844,12 @@ func (o InstanceArrayOutput) ToInstanceArrayOutput() InstanceArrayOutput {
 
 func (o InstanceArrayOutput) ToInstanceArrayOutputWithContext(ctx context.Context) InstanceArrayOutput {
 	return o
+}
+
+func (o InstanceArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]*Instance] {
+	return pulumix.Output[[]*Instance]{
+		OutputState: o.OutputState,
+	}
 }
 
 func (o InstanceArrayOutput) Index(i pulumi.IntInput) InstanceOutput {
@@ -823,6 +870,12 @@ func (o InstanceMapOutput) ToInstanceMapOutput() InstanceMapOutput {
 
 func (o InstanceMapOutput) ToInstanceMapOutputWithContext(ctx context.Context) InstanceMapOutput {
 	return o
+}
+
+func (o InstanceMapOutput) ToOutput(ctx context.Context) pulumix.Output[map[string]*Instance] {
+	return pulumix.Output[map[string]*Instance]{
+		OutputState: o.OutputState,
+	}
 }
 
 func (o InstanceMapOutput) MapIndex(k pulumi.StringInput) InstanceOutput {

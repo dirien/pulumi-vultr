@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -45,33 +45,66 @@ class LoadBalancerArgs:
         :param pulumi.Input[bool] ssl_redirect: Boolean value that indicates if HTTP calls will be redirected to HTTPS.
         :param pulumi.Input[str] vpc: A VPC ID that the load balancer should be attached to.
         """
-        pulumi.set(__self__, "forwarding_rules", forwarding_rules)
-        pulumi.set(__self__, "region", region)
+        LoadBalancerArgs._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            forwarding_rules=forwarding_rules,
+            region=region,
+            attached_instances=attached_instances,
+            balancing_algorithm=balancing_algorithm,
+            cookie_name=cookie_name,
+            firewall_rules=firewall_rules,
+            health_check=health_check,
+            label=label,
+            private_network=private_network,
+            proxy_protocol=proxy_protocol,
+            ssl=ssl,
+            ssl_redirect=ssl_redirect,
+            vpc=vpc,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             forwarding_rules: pulumi.Input[Sequence[pulumi.Input['LoadBalancerForwardingRuleArgs']]],
+             region: pulumi.Input[str],
+             attached_instances: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+             balancing_algorithm: Optional[pulumi.Input[str]] = None,
+             cookie_name: Optional[pulumi.Input[str]] = None,
+             firewall_rules: Optional[pulumi.Input[Sequence[pulumi.Input['LoadBalancerFirewallRuleArgs']]]] = None,
+             health_check: Optional[pulumi.Input['LoadBalancerHealthCheckArgs']] = None,
+             label: Optional[pulumi.Input[str]] = None,
+             private_network: Optional[pulumi.Input[str]] = None,
+             proxy_protocol: Optional[pulumi.Input[bool]] = None,
+             ssl: Optional[pulumi.Input['LoadBalancerSslArgs']] = None,
+             ssl_redirect: Optional[pulumi.Input[bool]] = None,
+             vpc: Optional[pulumi.Input[str]] = None,
+             opts: Optional[pulumi.ResourceOptions]=None):
+        _setter("forwarding_rules", forwarding_rules)
+        _setter("region", region)
         if attached_instances is not None:
-            pulumi.set(__self__, "attached_instances", attached_instances)
+            _setter("attached_instances", attached_instances)
         if balancing_algorithm is not None:
-            pulumi.set(__self__, "balancing_algorithm", balancing_algorithm)
+            _setter("balancing_algorithm", balancing_algorithm)
         if cookie_name is not None:
-            pulumi.set(__self__, "cookie_name", cookie_name)
+            _setter("cookie_name", cookie_name)
         if firewall_rules is not None:
-            pulumi.set(__self__, "firewall_rules", firewall_rules)
+            _setter("firewall_rules", firewall_rules)
         if health_check is not None:
-            pulumi.set(__self__, "health_check", health_check)
+            _setter("health_check", health_check)
         if label is not None:
-            pulumi.set(__self__, "label", label)
+            _setter("label", label)
         if private_network is not None:
             warnings.warn("""private_network is deprecated and should no longer be used. Instead, use vpc""", DeprecationWarning)
             pulumi.log.warn("""private_network is deprecated: private_network is deprecated and should no longer be used. Instead, use vpc""")
         if private_network is not None:
-            pulumi.set(__self__, "private_network", private_network)
+            _setter("private_network", private_network)
         if proxy_protocol is not None:
-            pulumi.set(__self__, "proxy_protocol", proxy_protocol)
+            _setter("proxy_protocol", proxy_protocol)
         if ssl is not None:
-            pulumi.set(__self__, "ssl", ssl)
+            _setter("ssl", ssl)
         if ssl_redirect is not None:
-            pulumi.set(__self__, "ssl_redirect", ssl_redirect)
+            _setter("ssl_redirect", ssl_redirect)
         if vpc is not None:
-            pulumi.set(__self__, "vpc", vpc)
+            _setter("vpc", vpc)
 
     @property
     @pulumi.getter(name="forwardingRules")
@@ -175,6 +208,9 @@ class LoadBalancerArgs:
         """
         A private network ID that the load balancer should be attached to.
         """
+        warnings.warn("""private_network is deprecated and should no longer be used. Instead, use vpc""", DeprecationWarning)
+        pulumi.log.warn("""private_network is deprecated: private_network is deprecated and should no longer be used. Instead, use vpc""")
+
         return pulumi.get(self, "private_network")
 
     @private_network.setter
@@ -270,43 +306,84 @@ class _LoadBalancerState:
         :param pulumi.Input[str] status: Current status for the load balancer
         :param pulumi.Input[str] vpc: A VPC ID that the load balancer should be attached to.
         """
+        _LoadBalancerState._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            attached_instances=attached_instances,
+            balancing_algorithm=balancing_algorithm,
+            cookie_name=cookie_name,
+            firewall_rules=firewall_rules,
+            forwarding_rules=forwarding_rules,
+            has_ssl=has_ssl,
+            health_check=health_check,
+            ipv4=ipv4,
+            ipv6=ipv6,
+            label=label,
+            private_network=private_network,
+            proxy_protocol=proxy_protocol,
+            region=region,
+            ssl=ssl,
+            ssl_redirect=ssl_redirect,
+            status=status,
+            vpc=vpc,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             attached_instances: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+             balancing_algorithm: Optional[pulumi.Input[str]] = None,
+             cookie_name: Optional[pulumi.Input[str]] = None,
+             firewall_rules: Optional[pulumi.Input[Sequence[pulumi.Input['LoadBalancerFirewallRuleArgs']]]] = None,
+             forwarding_rules: Optional[pulumi.Input[Sequence[pulumi.Input['LoadBalancerForwardingRuleArgs']]]] = None,
+             has_ssl: Optional[pulumi.Input[bool]] = None,
+             health_check: Optional[pulumi.Input['LoadBalancerHealthCheckArgs']] = None,
+             ipv4: Optional[pulumi.Input[str]] = None,
+             ipv6: Optional[pulumi.Input[str]] = None,
+             label: Optional[pulumi.Input[str]] = None,
+             private_network: Optional[pulumi.Input[str]] = None,
+             proxy_protocol: Optional[pulumi.Input[bool]] = None,
+             region: Optional[pulumi.Input[str]] = None,
+             ssl: Optional[pulumi.Input['LoadBalancerSslArgs']] = None,
+             ssl_redirect: Optional[pulumi.Input[bool]] = None,
+             status: Optional[pulumi.Input[str]] = None,
+             vpc: Optional[pulumi.Input[str]] = None,
+             opts: Optional[pulumi.ResourceOptions]=None):
         if attached_instances is not None:
-            pulumi.set(__self__, "attached_instances", attached_instances)
+            _setter("attached_instances", attached_instances)
         if balancing_algorithm is not None:
-            pulumi.set(__self__, "balancing_algorithm", balancing_algorithm)
+            _setter("balancing_algorithm", balancing_algorithm)
         if cookie_name is not None:
-            pulumi.set(__self__, "cookie_name", cookie_name)
+            _setter("cookie_name", cookie_name)
         if firewall_rules is not None:
-            pulumi.set(__self__, "firewall_rules", firewall_rules)
+            _setter("firewall_rules", firewall_rules)
         if forwarding_rules is not None:
-            pulumi.set(__self__, "forwarding_rules", forwarding_rules)
+            _setter("forwarding_rules", forwarding_rules)
         if has_ssl is not None:
-            pulumi.set(__self__, "has_ssl", has_ssl)
+            _setter("has_ssl", has_ssl)
         if health_check is not None:
-            pulumi.set(__self__, "health_check", health_check)
+            _setter("health_check", health_check)
         if ipv4 is not None:
-            pulumi.set(__self__, "ipv4", ipv4)
+            _setter("ipv4", ipv4)
         if ipv6 is not None:
-            pulumi.set(__self__, "ipv6", ipv6)
+            _setter("ipv6", ipv6)
         if label is not None:
-            pulumi.set(__self__, "label", label)
+            _setter("label", label)
         if private_network is not None:
             warnings.warn("""private_network is deprecated and should no longer be used. Instead, use vpc""", DeprecationWarning)
             pulumi.log.warn("""private_network is deprecated: private_network is deprecated and should no longer be used. Instead, use vpc""")
         if private_network is not None:
-            pulumi.set(__self__, "private_network", private_network)
+            _setter("private_network", private_network)
         if proxy_protocol is not None:
-            pulumi.set(__self__, "proxy_protocol", proxy_protocol)
+            _setter("proxy_protocol", proxy_protocol)
         if region is not None:
-            pulumi.set(__self__, "region", region)
+            _setter("region", region)
         if ssl is not None:
-            pulumi.set(__self__, "ssl", ssl)
+            _setter("ssl", ssl)
         if ssl_redirect is not None:
-            pulumi.set(__self__, "ssl_redirect", ssl_redirect)
+            _setter("ssl_redirect", ssl_redirect)
         if status is not None:
-            pulumi.set(__self__, "status", status)
+            _setter("status", status)
         if vpc is not None:
-            pulumi.set(__self__, "vpc", vpc)
+            _setter("vpc", vpc)
 
     @property
     @pulumi.getter(name="attachedInstances")
@@ -434,6 +511,9 @@ class _LoadBalancerState:
         """
         A private network ID that the load balancer should be attached to.
         """
+        warnings.warn("""private_network is deprecated and should no longer be used. Instead, use vpc""", DeprecationWarning)
+        pulumi.log.warn("""private_network is deprecated: private_network is deprecated and should no longer be used. Instead, use vpc""")
+
         return pulumi.get(self, "private_network")
 
     @private_network.setter
@@ -644,6 +724,10 @@ class LoadBalancer(pulumi.CustomResource):
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
+            kwargs = kwargs or {}
+            def _setter(key, value):
+                kwargs[key] = value
+            LoadBalancerArgs._configure(_setter, **kwargs)
             __self__._internal_init(resource_name, *args, **kwargs)
 
     def _internal_init(__self__,
@@ -678,16 +762,23 @@ class LoadBalancer(pulumi.CustomResource):
             if forwarding_rules is None and not opts.urn:
                 raise TypeError("Missing required property 'forwarding_rules'")
             __props__.__dict__["forwarding_rules"] = forwarding_rules
+            if not isinstance(health_check, LoadBalancerHealthCheckArgs):
+                health_check = health_check or {}
+                def _setter(key, value):
+                    health_check[key] = value
+                LoadBalancerHealthCheckArgs._configure(_setter, **health_check)
             __props__.__dict__["health_check"] = health_check
             __props__.__dict__["label"] = label
-            if private_network is not None and not opts.urn:
-                warnings.warn("""private_network is deprecated and should no longer be used. Instead, use vpc""", DeprecationWarning)
-                pulumi.log.warn("""private_network is deprecated: private_network is deprecated and should no longer be used. Instead, use vpc""")
             __props__.__dict__["private_network"] = private_network
             __props__.__dict__["proxy_protocol"] = proxy_protocol
             if region is None and not opts.urn:
                 raise TypeError("Missing required property 'region'")
             __props__.__dict__["region"] = region
+            if not isinstance(ssl, LoadBalancerSslArgs):
+                ssl = ssl or {}
+                def _setter(key, value):
+                    ssl[key] = value
+                LoadBalancerSslArgs._configure(_setter, **ssl)
             __props__.__dict__["ssl"] = ssl
             __props__.__dict__["ssl_redirect"] = ssl_redirect
             __props__.__dict__["vpc"] = vpc
@@ -856,6 +947,9 @@ class LoadBalancer(pulumi.CustomResource):
         """
         A private network ID that the load balancer should be attached to.
         """
+        warnings.warn("""private_network is deprecated and should no longer be used. Instead, use vpc""", DeprecationWarning)
+        pulumi.log.warn("""private_network is deprecated: private_network is deprecated and should no longer be used. Instead, use vpc""")
+
         return pulumi.get(self, "private_network")
 
     @property

@@ -7,7 +7,9 @@ import (
 	"context"
 	"reflect"
 
+	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 )
 
 // Get information about an ISO file offered in the Vultr ISO library.
@@ -47,7 +49,7 @@ import (
 //
 // ```
 func GetIsoPublic(ctx *pulumi.Context, args *GetIsoPublicArgs, opts ...pulumi.InvokeOption) (*GetIsoPublicResult, error) {
-	opts = pkgInvokeDefaultOpts(opts)
+	opts = internal.PkgInvokeDefaultOpts(opts)
 	var rv GetIsoPublicResult
 	err := ctx.Invoke("vultr:index/getIsoPublic:getIsoPublic", args, &rv, opts...)
 	if err != nil {
@@ -111,6 +113,12 @@ func (o GetIsoPublicResultOutput) ToGetIsoPublicResultOutput() GetIsoPublicResul
 
 func (o GetIsoPublicResultOutput) ToGetIsoPublicResultOutputWithContext(ctx context.Context) GetIsoPublicResultOutput {
 	return o
+}
+
+func (o GetIsoPublicResultOutput) ToOutput(ctx context.Context) pulumix.Output[GetIsoPublicResult] {
+	return pulumix.Output[GetIsoPublicResult]{
+		OutputState: o.OutputState,
+	}
 }
 
 // The description of the ISO file.

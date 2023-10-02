@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -23,7 +23,7 @@ class GetInstanceResult:
     """
     A collection of values returned by getInstance.
     """
-    def __init__(__self__, allowed_bandwidth=None, app_id=None, backups=None, backups_schedule=None, date_created=None, disk=None, features=None, filters=None, firewall_group_id=None, gateway_v4=None, hostname=None, id=None, image_id=None, internal_ip=None, kvm=None, label=None, location=None, main_ip=None, netmask_v4=None, os=None, os_id=None, plan=None, power_status=None, private_network_ids=None, ram=None, region=None, server_status=None, status=None, tags=None, v6_main_ip=None, v6_network=None, v6_network_size=None, vcpu_count=None, vpc_ids=None):
+    def __init__(__self__, allowed_bandwidth=None, app_id=None, backups=None, backups_schedule=None, date_created=None, disk=None, features=None, filters=None, firewall_group_id=None, gateway_v4=None, hostname=None, id=None, image_id=None, internal_ip=None, kvm=None, label=None, location=None, main_ip=None, netmask_v4=None, os=None, os_id=None, plan=None, power_status=None, private_network_ids=None, ram=None, region=None, server_status=None, status=None, tags=None, v6_main_ip=None, v6_network=None, v6_network_size=None, vcpu_count=None, vpc2_ids=None, vpc_ids=None):
         if allowed_bandwidth and not isinstance(allowed_bandwidth, int):
             raise TypeError("Expected argument 'allowed_bandwidth' to be a int")
         pulumi.set(__self__, "allowed_bandwidth", allowed_bandwidth)
@@ -123,6 +123,9 @@ class GetInstanceResult:
         if vcpu_count and not isinstance(vcpu_count, int):
             raise TypeError("Expected argument 'vcpu_count' to be a int")
         pulumi.set(__self__, "vcpu_count", vcpu_count)
+        if vpc2_ids and not isinstance(vpc2_ids, list):
+            raise TypeError("Expected argument 'vpc2_ids' to be a list")
+        pulumi.set(__self__, "vpc2_ids", vpc2_ids)
         if vpc_ids and not isinstance(vpc_ids, list):
             raise TypeError("Expected argument 'vpc_ids' to be a list")
         pulumi.set(__self__, "vpc_ids", vpc_ids)
@@ -380,6 +383,14 @@ class GetInstanceResult:
         return pulumi.get(self, "vcpu_count")
 
     @property
+    @pulumi.getter(name="vpc2Ids")
+    def vpc2_ids(self) -> Sequence[str]:
+        """
+        A list of VPC 2.0 IDs attached to the server.
+        """
+        return pulumi.get(self, "vpc2_ids")
+
+    @property
     @pulumi.getter(name="vpcIds")
     def vpc_ids(self) -> Sequence[str]:
         return pulumi.get(self, "vpc_ids")
@@ -424,6 +435,7 @@ class AwaitableGetInstanceResult(GetInstanceResult):
             v6_network=self.v6_network,
             v6_network_size=self.v6_network_size,
             vcpu_count=self.vcpu_count,
+            vpc2_ids=self.vpc2_ids,
             vpc_ids=self.vpc_ids)
 
 
@@ -455,40 +467,41 @@ def get_instance(filters: Optional[Sequence[pulumi.InputType['GetInstanceFilterA
     __ret__ = pulumi.runtime.invoke('vultr:index/getInstance:getInstance', __args__, opts=opts, typ=GetInstanceResult).value
 
     return AwaitableGetInstanceResult(
-        allowed_bandwidth=__ret__.allowed_bandwidth,
-        app_id=__ret__.app_id,
-        backups=__ret__.backups,
-        backups_schedule=__ret__.backups_schedule,
-        date_created=__ret__.date_created,
-        disk=__ret__.disk,
-        features=__ret__.features,
-        filters=__ret__.filters,
-        firewall_group_id=__ret__.firewall_group_id,
-        gateway_v4=__ret__.gateway_v4,
-        hostname=__ret__.hostname,
-        id=__ret__.id,
-        image_id=__ret__.image_id,
-        internal_ip=__ret__.internal_ip,
-        kvm=__ret__.kvm,
-        label=__ret__.label,
-        location=__ret__.location,
-        main_ip=__ret__.main_ip,
-        netmask_v4=__ret__.netmask_v4,
-        os=__ret__.os,
-        os_id=__ret__.os_id,
-        plan=__ret__.plan,
-        power_status=__ret__.power_status,
-        private_network_ids=__ret__.private_network_ids,
-        ram=__ret__.ram,
-        region=__ret__.region,
-        server_status=__ret__.server_status,
-        status=__ret__.status,
-        tags=__ret__.tags,
-        v6_main_ip=__ret__.v6_main_ip,
-        v6_network=__ret__.v6_network,
-        v6_network_size=__ret__.v6_network_size,
-        vcpu_count=__ret__.vcpu_count,
-        vpc_ids=__ret__.vpc_ids)
+        allowed_bandwidth=pulumi.get(__ret__, 'allowed_bandwidth'),
+        app_id=pulumi.get(__ret__, 'app_id'),
+        backups=pulumi.get(__ret__, 'backups'),
+        backups_schedule=pulumi.get(__ret__, 'backups_schedule'),
+        date_created=pulumi.get(__ret__, 'date_created'),
+        disk=pulumi.get(__ret__, 'disk'),
+        features=pulumi.get(__ret__, 'features'),
+        filters=pulumi.get(__ret__, 'filters'),
+        firewall_group_id=pulumi.get(__ret__, 'firewall_group_id'),
+        gateway_v4=pulumi.get(__ret__, 'gateway_v4'),
+        hostname=pulumi.get(__ret__, 'hostname'),
+        id=pulumi.get(__ret__, 'id'),
+        image_id=pulumi.get(__ret__, 'image_id'),
+        internal_ip=pulumi.get(__ret__, 'internal_ip'),
+        kvm=pulumi.get(__ret__, 'kvm'),
+        label=pulumi.get(__ret__, 'label'),
+        location=pulumi.get(__ret__, 'location'),
+        main_ip=pulumi.get(__ret__, 'main_ip'),
+        netmask_v4=pulumi.get(__ret__, 'netmask_v4'),
+        os=pulumi.get(__ret__, 'os'),
+        os_id=pulumi.get(__ret__, 'os_id'),
+        plan=pulumi.get(__ret__, 'plan'),
+        power_status=pulumi.get(__ret__, 'power_status'),
+        private_network_ids=pulumi.get(__ret__, 'private_network_ids'),
+        ram=pulumi.get(__ret__, 'ram'),
+        region=pulumi.get(__ret__, 'region'),
+        server_status=pulumi.get(__ret__, 'server_status'),
+        status=pulumi.get(__ret__, 'status'),
+        tags=pulumi.get(__ret__, 'tags'),
+        v6_main_ip=pulumi.get(__ret__, 'v6_main_ip'),
+        v6_network=pulumi.get(__ret__, 'v6_network'),
+        v6_network_size=pulumi.get(__ret__, 'v6_network_size'),
+        vcpu_count=pulumi.get(__ret__, 'vcpu_count'),
+        vpc2_ids=pulumi.get(__ret__, 'vpc2_ids'),
+        vpc_ids=pulumi.get(__ret__, 'vpc_ids'))
 
 
 @_utilities.lift_output_func(get_instance)

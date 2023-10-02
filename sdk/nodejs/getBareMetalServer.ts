@@ -122,6 +122,10 @@ export interface GetBareMetalServerResult {
     readonly v6MainIp: string;
     readonly v6Network: string;
     readonly v6NetworkSize: number;
+    /**
+     * A list of VPC 2.0 IDs attached to the server.
+     */
+    readonly vpc2Ids: string[];
 }
 /**
  * Get information about a Vultr bare metal server.

@@ -164,6 +164,11 @@ public final class GetInstanceResult {
      * 
      */
     private Integer vcpuCount;
+    /**
+     * @return A list of VPC 2.0 IDs attached to the server.
+     * 
+     */
+    private List<String> vpc2Ids;
     private List<String> vpcIds;
 
     private GetInstanceResult() {}
@@ -382,6 +387,13 @@ public final class GetInstanceResult {
     public Integer vcpuCount() {
         return this.vcpuCount;
     }
+    /**
+     * @return A list of VPC 2.0 IDs attached to the server.
+     * 
+     */
+    public List<String> vpc2Ids() {
+        return this.vpc2Ids;
+    }
     public List<String> vpcIds() {
         return this.vpcIds;
     }
@@ -428,6 +440,7 @@ public final class GetInstanceResult {
         private String v6Network;
         private Integer v6NetworkSize;
         private Integer vcpuCount;
+        private List<String> vpc2Ids;
         private List<String> vpcIds;
         public Builder() {}
         public Builder(GetInstanceResult defaults) {
@@ -465,6 +478,7 @@ public final class GetInstanceResult {
     	      this.v6Network = defaults.v6Network;
     	      this.v6NetworkSize = defaults.v6NetworkSize;
     	      this.vcpuCount = defaults.vcpuCount;
+    	      this.vpc2Ids = defaults.vpc2Ids;
     	      this.vpcIds = defaults.vpcIds;
         }
 
@@ -646,6 +660,14 @@ public final class GetInstanceResult {
             return this;
         }
         @CustomType.Setter
+        public Builder vpc2Ids(List<String> vpc2Ids) {
+            this.vpc2Ids = Objects.requireNonNull(vpc2Ids);
+            return this;
+        }
+        public Builder vpc2Ids(String... vpc2Ids) {
+            return vpc2Ids(List.of(vpc2Ids));
+        }
+        @CustomType.Setter
         public Builder vpcIds(List<String> vpcIds) {
             this.vpcIds = Objects.requireNonNull(vpcIds);
             return this;
@@ -688,6 +710,7 @@ public final class GetInstanceResult {
             o.v6Network = v6Network;
             o.v6NetworkSize = v6NetworkSize;
             o.vcpuCount = vcpuCount;
+            o.vpc2Ids = vpc2Ids;
             o.vpcIds = vpcIds;
             return o;
         }

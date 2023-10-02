@@ -7,7 +7,9 @@ import (
 	"context"
 	"reflect"
 
+	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 )
 
 // Get information about a Vultr VPC.
@@ -47,7 +49,7 @@ import (
 //
 // ```
 func LookupVpc(ctx *pulumi.Context, args *LookupVpcArgs, opts ...pulumi.InvokeOption) (*LookupVpcResult, error) {
-	opts = pkgInvokeDefaultOpts(opts)
+	opts = internal.PkgInvokeDefaultOpts(opts)
 	var rv LookupVpcResult
 	err := ctx.Invoke("vultr:index/getVpc:getVpc", args, &rv, opts...)
 	if err != nil {
@@ -115,6 +117,12 @@ func (o LookupVpcResultOutput) ToLookupVpcResultOutput() LookupVpcResultOutput {
 
 func (o LookupVpcResultOutput) ToLookupVpcResultOutputWithContext(ctx context.Context) LookupVpcResultOutput {
 	return o
+}
+
+func (o LookupVpcResultOutput) ToOutput(ctx context.Context) pulumix.Output[LookupVpcResult] {
+	return pulumix.Output[LookupVpcResult]{
+		OutputState: o.OutputState,
+	}
 }
 
 // The date the VPC was added to your Vultr account.

@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 
 __all__ = [
@@ -147,11 +147,11 @@ def get_account(opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetAcco
     __ret__ = pulumi.runtime.invoke('vultr:index/getAccount:getAccount', __args__, opts=opts, typ=GetAccountResult).value
 
     return AwaitableGetAccountResult(
-        acls=__ret__.acls,
-        balance=__ret__.balance,
-        email=__ret__.email,
-        id=__ret__.id,
-        last_payment_amount=__ret__.last_payment_amount,
-        last_payment_date=__ret__.last_payment_date,
-        name=__ret__.name,
-        pending_charges=__ret__.pending_charges)
+        acls=pulumi.get(__ret__, 'acls'),
+        balance=pulumi.get(__ret__, 'balance'),
+        email=pulumi.get(__ret__, 'email'),
+        id=pulumi.get(__ret__, 'id'),
+        last_payment_amount=pulumi.get(__ret__, 'last_payment_amount'),
+        last_payment_date=pulumi.get(__ret__, 'last_payment_date'),
+        name=pulumi.get(__ret__, 'name'),
+        pending_charges=pulumi.get(__ret__, 'pending_charges'))
