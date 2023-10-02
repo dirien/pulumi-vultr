@@ -62,7 +62,8 @@ utilities.lazyLoad(exports, ["FirewallRule"], () => require("./firewallRule"));
 
 export { GetAccountResult } from "./getAccount";
 export const getAccount: typeof import("./getAccount").getAccount = null as any;
-utilities.lazyLoad(exports, ["getAccount"], () => require("./getAccount"));
+export const getAccountOutput: typeof import("./getAccount").getAccountOutput = null as any;
+utilities.lazyLoad(exports, ["getAccount","getAccountOutput"], () => require("./getAccount"));
 
 export { GetApplicationArgs, GetApplicationResult, GetApplicationOutputArgs } from "./getApplication";
 export const getApplication: typeof import("./getApplication").getApplication = null as any;
@@ -204,6 +205,11 @@ export const getVpc: typeof import("./getVpc").getVpc = null as any;
 export const getVpcOutput: typeof import("./getVpc").getVpcOutput = null as any;
 utilities.lazyLoad(exports, ["getVpc","getVpcOutput"], () => require("./getVpc"));
 
+export { GetVpc2Args, GetVpc2Result, GetVpc2OutputArgs } from "./getVpc2";
+export const getVpc2: typeof import("./getVpc2").getVpc2 = null as any;
+export const getVpc2Output: typeof import("./getVpc2").getVpc2Output = null as any;
+utilities.lazyLoad(exports, ["getVpc2","getVpc2Output"], () => require("./getVpc2"));
+
 export { InstanceArgs, InstanceState } from "./instance";
 export type Instance = import("./instance").Instance;
 export const Instance: typeof import("./instance").Instance = null as any;
@@ -294,6 +300,11 @@ export type Vpc = import("./vpc").Vpc;
 export const Vpc: typeof import("./vpc").Vpc = null as any;
 utilities.lazyLoad(exports, ["Vpc"], () => require("./vpc"));
 
+export { Vpc2Args, Vpc2State } from "./vpc2";
+export type Vpc2 = import("./vpc2").Vpc2;
+export const Vpc2: typeof import("./vpc2").Vpc2 = null as any;
+utilities.lazyLoad(exports, ["Vpc2"], () => require("./vpc2"));
+
 
 // Export sub-modules:
 import * as config from "./config";
@@ -362,6 +373,8 @@ const _module = {
                 return new StartupScript(name, <any>undefined, { urn })
             case "vultr:index/user:User":
                 return new User(name, <any>undefined, { urn })
+            case "vultr:index/vpc2:Vpc2":
+                return new Vpc2(name, <any>undefined, { urn })
             case "vultr:index/vpc:Vpc":
                 return new Vpc(name, <any>undefined, { urn })
             default:
@@ -397,6 +410,7 @@ pulumi.runtime.registerResourceModule("vultr", "index/snapshotFromUrl", _module)
 pulumi.runtime.registerResourceModule("vultr", "index/startupScript", _module)
 pulumi.runtime.registerResourceModule("vultr", "index/user", _module)
 pulumi.runtime.registerResourceModule("vultr", "index/vpc", _module)
+pulumi.runtime.registerResourceModule("vultr", "index/vpc2", _module)
 pulumi.runtime.registerResourcePackage("vultr", {
     version: utilities.getVersion(),
     constructProvider: (name: string, type: string, urn: string): pulumi.ProviderResource => {

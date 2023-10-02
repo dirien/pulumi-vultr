@@ -12,9 +12,83 @@ namespace ediri.Vultr
 {
     public static class GetDatabase
     {
+        /// <summary>
+        /// Get information about a Vultr database.
+        /// 
+        /// {{% examples %}}
+        /// ## Example Usage
+        /// {{% example %}}
+        /// 
+        /// Get the information for a database by `label`:
+        /// 
+        /// ```csharp
+        /// using System.Collections.Generic;
+        /// using System.Linq;
+        /// using Pulumi;
+        /// using Vultr = Pulumi.Vultr;
+        /// 
+        /// return await Deployment.RunAsync(() =&gt; 
+        /// {
+        ///     var myDatabase = Vultr.GetDatabase.Invoke(new()
+        ///     {
+        ///         Filters = new[]
+        ///         {
+        ///             new Vultr.Inputs.GetDatabaseFilterInputArgs
+        ///             {
+        ///                 Name = "label",
+        ///                 Values = new[]
+        ///                 {
+        ///                     "my-database-label",
+        ///                 },
+        ///             },
+        ///         },
+        ///     });
+        /// 
+        /// });
+        /// ```
+        /// {{% /example %}}
+        /// {{% /examples %}}
+        /// </summary>
         public static Task<GetDatabaseResult> InvokeAsync(GetDatabaseArgs? args = null, InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetDatabaseResult>("vultr:index/getDatabase:getDatabase", args ?? new GetDatabaseArgs(), options.WithDefaults());
 
+        /// <summary>
+        /// Get information about a Vultr database.
+        /// 
+        /// {{% examples %}}
+        /// ## Example Usage
+        /// {{% example %}}
+        /// 
+        /// Get the information for a database by `label`:
+        /// 
+        /// ```csharp
+        /// using System.Collections.Generic;
+        /// using System.Linq;
+        /// using Pulumi;
+        /// using Vultr = Pulumi.Vultr;
+        /// 
+        /// return await Deployment.RunAsync(() =&gt; 
+        /// {
+        ///     var myDatabase = Vultr.GetDatabase.Invoke(new()
+        ///     {
+        ///         Filters = new[]
+        ///         {
+        ///             new Vultr.Inputs.GetDatabaseFilterInputArgs
+        ///             {
+        ///                 Name = "label",
+        ///                 Values = new[]
+        ///                 {
+        ///                     "my-database-label",
+        ///                 },
+        ///             },
+        ///         },
+        ///     });
+        /// 
+        /// });
+        /// ```
+        /// {{% /example %}}
+        /// {{% /examples %}}
+        /// </summary>
         public static Output<GetDatabaseResult> Invoke(GetDatabaseInvokeArgs? args = null, InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.Invoke<GetDatabaseResult>("vultr:index/getDatabase:getDatabase", args ?? new GetDatabaseInvokeArgs(), options.WithDefaults());
     }
@@ -24,6 +98,10 @@ namespace ediri.Vultr
     {
         [Input("filters")]
         private List<Inputs.GetDatabaseFilterArgs>? _filters;
+
+        /// <summary>
+        /// Query parameters for finding databases.
+        /// </summary>
         public List<Inputs.GetDatabaseFilterArgs> Filters
         {
             get => _filters ?? (_filters = new List<Inputs.GetDatabaseFilterArgs>());
@@ -40,6 +118,10 @@ namespace ediri.Vultr
     {
         [Input("filters")]
         private InputList<Inputs.GetDatabaseFilterInputArgs>? _filters;
+
+        /// <summary>
+        /// Query parameters for finding databases.
+        /// </summary>
         public InputList<Inputs.GetDatabaseFilterInputArgs> Filters
         {
             get => _filters ?? (_filters = new InputList<Inputs.GetDatabaseFilterInputArgs>());
@@ -56,39 +138,124 @@ namespace ediri.Vultr
     [OutputType]
     public sealed class GetDatabaseResult
     {
+        /// <summary>
+        /// The configured time zone for the Managed Database in TZ database format.
+        /// </summary>
         public readonly string ClusterTimeZone;
+        /// <summary>
+        /// The database engine of the managed database.
+        /// </summary>
         public readonly string DatabaseEngine;
+        /// <summary>
+        /// The database engine version of the managed database.
+        /// </summary>
         public readonly string DatabaseEngineVersion;
+        /// <summary>
+        /// The date the managed database was added to your Vultr account.
+        /// </summary>
         public readonly string DateCreated;
+        /// <summary>
+        /// The managed database's default logical database.
+        /// </summary>
         public readonly string Dbname;
         public readonly ImmutableArray<Outputs.GetDatabaseFilterResult> Filters;
+        /// <summary>
+        /// The hostname assigned to the managed database.
+        /// </summary>
         public readonly string Host;
         /// <summary>
         /// The provider-assigned unique ID for this managed resource.
         /// </summary>
         public readonly string Id;
+        /// <summary>
+        /// The managed database's label.
+        /// </summary>
         public readonly string Label;
+        /// <summary>
+        /// The date of the latest backup available on the managed database.
+        /// </summary>
         public readonly string LatestBackup;
+        /// <summary>
+        /// The preferred maintenance day of week for the managed database.
+        /// </summary>
         public readonly string MaintenanceDow;
+        /// <summary>
+        /// The preferred maintenance time for the managed database.
+        /// </summary>
         public readonly string MaintenanceTime;
+        /// <summary>
+        /// The configuration value for the long query time (in seconds) on the managed database (MySQL engine types only).
+        /// </summary>
         public readonly int MysqlLongQueryTime;
+        /// <summary>
+        /// The configuration value for whether primary keys are required on the managed database (MySQL engine types only).
+        /// </summary>
         public readonly bool MysqlRequirePrimaryKey;
+        /// <summary>
+        /// The configuration value for slow query logging on the managed database (MySQL engine types only).
+        /// </summary>
         public readonly bool MysqlSlowQueryLog;
+        /// <summary>
+        /// A list of SQL modes currently configured for the managed database (MySQL engine types only).
+        /// </summary>
         public readonly ImmutableArray<string> MysqlSqlModes;
+        /// <summary>
+        /// The password for the managed database's primary admin user.
+        /// </summary>
         public readonly string Password;
+        /// <summary>
+        /// The managed database's plan ID.
+        /// </summary>
         public readonly string Plan;
+        /// <summary>
+        /// The description of the disk(s) on the managed database.
+        /// </summary>
         public readonly int PlanDisk;
+        /// <summary>
+        /// The amount of memory available on the managed database in MB.
+        /// </summary>
         public readonly int PlanRam;
+        /// <summary>
+        /// The number of standby nodes available on the managed database.
+        /// </summary>
         public readonly int PlanReplicas;
+        /// <summary>
+        /// The number of virtual CPUs available on the managed database.
+        /// </summary>
         public readonly int PlanVcpus;
+        /// <summary>
+        /// The connection port for the managed database.
+        /// </summary>
         public readonly string Port;
+        /// <summary>
+        /// A list of read replicas attached to the managed database.
+        /// </summary>
         public readonly ImmutableArray<Outputs.GetDatabaseReadReplicaResult> ReadReplicas;
+        /// <summary>
+        /// The configuration value for the data eviction policy on the managed database (Redis engine types only).
+        /// </summary>
         public readonly string RedisEvictionPolicy;
+        /// <summary>
+        /// The region ID of the managed database.
+        /// </summary>
         public readonly string Region;
+        /// <summary>
+        /// The current status of the managed database (poweroff, rebuilding, rebalancing, running).
+        /// </summary>
         public readonly string Status;
+        /// <summary>
+        /// The managed database's tag.
+        /// </summary>
         public readonly string Tag;
+        /// <summary>
+        /// A list of allowed IP addresses for the managed database.
+        /// </summary>
         public readonly ImmutableArray<string> TrustedIps;
+        /// <summary>
+        /// The primary admin user for the managed database.
+        /// </summary>
         public readonly string User;
+        public readonly string VpcId;
 
         [OutputConstructor]
         private GetDatabaseResult(
@@ -150,7 +317,9 @@ namespace ediri.Vultr
 
             ImmutableArray<string> trustedIps,
 
-            string user)
+            string user,
+
+            string vpcId)
         {
             ClusterTimeZone = clusterTimeZone;
             DatabaseEngine = databaseEngine;
@@ -182,6 +351,7 @@ namespace ediri.Vultr
             Tag = tag;
             TrustedIps = trustedIps;
             User = user;
+            VpcId = vpcId;
         }
     }
 }

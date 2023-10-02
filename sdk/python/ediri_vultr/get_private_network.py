@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -143,13 +143,13 @@ def get_private_network(filters: Optional[Sequence[pulumi.InputType['GetPrivateN
     __ret__ = pulumi.runtime.invoke('vultr:index/getPrivateNetwork:getPrivateNetwork', __args__, opts=opts, typ=GetPrivateNetworkResult).value
 
     return AwaitableGetPrivateNetworkResult(
-        date_created=__ret__.date_created,
-        description=__ret__.description,
-        filters=__ret__.filters,
-        id=__ret__.id,
-        region=__ret__.region,
-        v4_subnet=__ret__.v4_subnet,
-        v4_subnet_mask=__ret__.v4_subnet_mask)
+        date_created=pulumi.get(__ret__, 'date_created'),
+        description=pulumi.get(__ret__, 'description'),
+        filters=pulumi.get(__ret__, 'filters'),
+        id=pulumi.get(__ret__, 'id'),
+        region=pulumi.get(__ret__, 'region'),
+        v4_subnet=pulumi.get(__ret__, 'v4_subnet'),
+        v4_subnet_mask=pulumi.get(__ret__, 'v4_subnet_mask'))
 
 
 @_utilities.lift_output_func(get_private_network)

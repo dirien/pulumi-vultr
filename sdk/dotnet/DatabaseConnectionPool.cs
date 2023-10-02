@@ -10,24 +10,69 @@ using Pulumi;
 
 namespace ediri.Vultr
 {
+    /// <summary>
+    /// Provides a Vultr database connection pool resource. This can be used to create, read, modify, and delete connection pools for a PostgreSQL managed database on your Vultr account.
+    /// 
+    /// ## Example Usage
+    /// 
+    /// Create a new database connection pool:
+    /// 
+    /// ```csharp
+    /// using System.Collections.Generic;
+    /// using System.Linq;
+    /// using Pulumi;
+    /// using Vultr = ediri.Vultr;
+    /// 
+    /// return await Deployment.RunAsync(() =&gt; 
+    /// {
+    ///     var myDatabaseConnectionPool = new Vultr.DatabaseConnectionPool("myDatabaseConnectionPool", new()
+    ///     {
+    ///         DatabaseId = vultr_database.My_database.Id,
+    ///         Database = "defaultdb",
+    ///         Username = "vultradmin",
+    ///         Mode = "transaction",
+    ///         Size = 3,
+    ///     });
+    /// 
+    /// });
+    /// ```
+    /// </summary>
     [VultrResourceType("vultr:index/databaseConnectionPool:DatabaseConnectionPool")]
     public partial class DatabaseConnectionPool : global::Pulumi.CustomResource
     {
+        /// <summary>
+        /// The logical database to use for the new managed database connection pool.
+        /// </summary>
         [Output("database")]
         public Output<string> Database { get; private set; } = null!;
 
+        /// <summary>
+        /// The managed database ID you want to attach this connection pool to.
+        /// </summary>
         [Output("databaseId")]
         public Output<string> DatabaseId { get; private set; } = null!;
 
+        /// <summary>
+        /// The mode to configure for the new managed database connection pool (`session`, `transaction`, `statement`).
+        /// </summary>
         [Output("mode")]
         public Output<string> Mode { get; private set; } = null!;
 
+        /// <summary>
+        /// The name of the new managed database connection pool.
+        /// </summary>
         [Output("name")]
         public Output<string> Name { get; private set; } = null!;
 
+        /// <summary>
+        /// The size of the new managed database connection pool.
+        /// </summary>
         [Output("size")]
         public Output<int> Size { get; private set; } = null!;
 
+        /// <summary>
+        /// The database user to use for the new managed database connection pool.
+        /// </summary>
         [Output("username")]
         public Output<string> Username { get; private set; } = null!;
 
@@ -78,21 +123,39 @@ namespace ediri.Vultr
 
     public sealed class DatabaseConnectionPoolArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// The logical database to use for the new managed database connection pool.
+        /// </summary>
         [Input("database", required: true)]
         public Input<string> Database { get; set; } = null!;
 
+        /// <summary>
+        /// The managed database ID you want to attach this connection pool to.
+        /// </summary>
         [Input("databaseId", required: true)]
         public Input<string> DatabaseId { get; set; } = null!;
 
+        /// <summary>
+        /// The mode to configure for the new managed database connection pool (`session`, `transaction`, `statement`).
+        /// </summary>
         [Input("mode", required: true)]
         public Input<string> Mode { get; set; } = null!;
 
+        /// <summary>
+        /// The name of the new managed database connection pool.
+        /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
 
+        /// <summary>
+        /// The size of the new managed database connection pool.
+        /// </summary>
         [Input("size", required: true)]
         public Input<int> Size { get; set; } = null!;
 
+        /// <summary>
+        /// The database user to use for the new managed database connection pool.
+        /// </summary>
         [Input("username", required: true)]
         public Input<string> Username { get; set; } = null!;
 
@@ -104,21 +167,39 @@ namespace ediri.Vultr
 
     public sealed class DatabaseConnectionPoolState : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// The logical database to use for the new managed database connection pool.
+        /// </summary>
         [Input("database")]
         public Input<string>? Database { get; set; }
 
+        /// <summary>
+        /// The managed database ID you want to attach this connection pool to.
+        /// </summary>
         [Input("databaseId")]
         public Input<string>? DatabaseId { get; set; }
 
+        /// <summary>
+        /// The mode to configure for the new managed database connection pool (`session`, `transaction`, `statement`).
+        /// </summary>
         [Input("mode")]
         public Input<string>? Mode { get; set; }
 
+        /// <summary>
+        /// The name of the new managed database connection pool.
+        /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
 
+        /// <summary>
+        /// The size of the new managed database connection pool.
+        /// </summary>
         [Input("size")]
         public Input<int>? Size { get; set; }
 
+        /// <summary>
+        /// The database user to use for the new managed database connection pool.
+        /// </summary>
         [Input("username")]
         public Input<string>? Username { get; set; }
 

@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 
 __all__ = ['ReverseIpv4Args', 'ReverseIpv4']
@@ -24,9 +24,22 @@ class ReverseIpv4Args:
         :param pulumi.Input[str] ip: The IPv4 address used in the reverse DNS record.
         :param pulumi.Input[str] reverse: The hostname used in the IPv4 reverse DNS record.
         """
-        pulumi.set(__self__, "instance_id", instance_id)
-        pulumi.set(__self__, "ip", ip)
-        pulumi.set(__self__, "reverse", reverse)
+        ReverseIpv4Args._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            instance_id=instance_id,
+            ip=ip,
+            reverse=reverse,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             instance_id: pulumi.Input[str],
+             ip: pulumi.Input[str],
+             reverse: pulumi.Input[str],
+             opts: Optional[pulumi.ResourceOptions]=None):
+        _setter("instance_id", instance_id)
+        _setter("ip", ip)
+        _setter("reverse", reverse)
 
     @property
     @pulumi.getter(name="instanceId")
@@ -83,16 +96,33 @@ class _ReverseIpv4State:
         :param pulumi.Input[str] netmask: The IPv4 netmask in dot-decimal notation.
         :param pulumi.Input[str] reverse: The hostname used in the IPv4 reverse DNS record.
         """
+        _ReverseIpv4State._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            gateway=gateway,
+            instance_id=instance_id,
+            ip=ip,
+            netmask=netmask,
+            reverse=reverse,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             gateway: Optional[pulumi.Input[str]] = None,
+             instance_id: Optional[pulumi.Input[str]] = None,
+             ip: Optional[pulumi.Input[str]] = None,
+             netmask: Optional[pulumi.Input[str]] = None,
+             reverse: Optional[pulumi.Input[str]] = None,
+             opts: Optional[pulumi.ResourceOptions]=None):
         if gateway is not None:
-            pulumi.set(__self__, "gateway", gateway)
+            _setter("gateway", gateway)
         if instance_id is not None:
-            pulumi.set(__self__, "instance_id", instance_id)
+            _setter("instance_id", instance_id)
         if ip is not None:
-            pulumi.set(__self__, "ip", ip)
+            _setter("ip", ip)
         if netmask is not None:
-            pulumi.set(__self__, "netmask", netmask)
+            _setter("netmask", netmask)
         if reverse is not None:
-            pulumi.set(__self__, "reverse", reverse)
+            _setter("reverse", reverse)
 
     @property
     @pulumi.getter
@@ -236,6 +266,10 @@ class ReverseIpv4(pulumi.CustomResource):
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
+            kwargs = kwargs or {}
+            def _setter(key, value):
+                kwargs[key] = value
+            ReverseIpv4Args._configure(_setter, **kwargs)
             __self__._internal_init(resource_name, *args, **kwargs)
 
     def _internal_init(__self__,

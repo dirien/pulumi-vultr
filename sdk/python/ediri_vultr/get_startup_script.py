@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -143,13 +143,13 @@ def get_startup_script(filters: Optional[Sequence[pulumi.InputType['GetStartupSc
     __ret__ = pulumi.runtime.invoke('vultr:index/getStartupScript:getStartupScript', __args__, opts=opts, typ=GetStartupScriptResult).value
 
     return AwaitableGetStartupScriptResult(
-        date_created=__ret__.date_created,
-        date_modified=__ret__.date_modified,
-        filters=__ret__.filters,
-        id=__ret__.id,
-        name=__ret__.name,
-        script=__ret__.script,
-        type=__ret__.type)
+        date_created=pulumi.get(__ret__, 'date_created'),
+        date_modified=pulumi.get(__ret__, 'date_modified'),
+        filters=pulumi.get(__ret__, 'filters'),
+        id=pulumi.get(__ret__, 'id'),
+        name=pulumi.get(__ret__, 'name'),
+        script=pulumi.get(__ret__, 'script'),
+        type=pulumi.get(__ret__, 'type'))
 
 
 @_utilities.lift_output_func(get_startup_script)

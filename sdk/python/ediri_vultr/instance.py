@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -37,6 +37,7 @@ class InstanceArgs:
                  ssh_key_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  user_data: Optional[pulumi.Input[str]] = None,
+                 vpc2_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  vpc_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
         """
         The set of arguments for constructing a Instance resource.
@@ -61,53 +62,109 @@ class InstanceArgs:
         :param pulumi.Input[Sequence[pulumi.Input[str]]] ssh_key_ids: A list of SSH key IDs to apply to the server on install (only valid for Linux/FreeBSD).
         :param pulumi.Input[Sequence[pulumi.Input[str]]] tags: A list of tags to apply to the instance.
         :param pulumi.Input[str] user_data: Generic data store, which some provisioning tools and cloud operating systems use as a configuration file. It is generally consumed only once after an instance has been launched, but individual needs may vary.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] vpc2_ids: A list of VPC 2.0 IDs to be attached to the server.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] vpc_ids: A list of VPC IDs to be attached to the server.
         """
-        pulumi.set(__self__, "plan", plan)
-        pulumi.set(__self__, "region", region)
+        InstanceArgs._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            plan=plan,
+            region=region,
+            activation_email=activation_email,
+            app_id=app_id,
+            backups=backups,
+            backups_schedule=backups_schedule,
+            ddos_protection=ddos_protection,
+            enable_ipv6=enable_ipv6,
+            firewall_group_id=firewall_group_id,
+            hostname=hostname,
+            image_id=image_id,
+            iso_id=iso_id,
+            label=label,
+            os_id=os_id,
+            private_network_ids=private_network_ids,
+            reserved_ip_id=reserved_ip_id,
+            script_id=script_id,
+            snapshot_id=snapshot_id,
+            ssh_key_ids=ssh_key_ids,
+            tags=tags,
+            user_data=user_data,
+            vpc2_ids=vpc2_ids,
+            vpc_ids=vpc_ids,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             plan: pulumi.Input[str],
+             region: pulumi.Input[str],
+             activation_email: Optional[pulumi.Input[bool]] = None,
+             app_id: Optional[pulumi.Input[int]] = None,
+             backups: Optional[pulumi.Input[str]] = None,
+             backups_schedule: Optional[pulumi.Input['InstanceBackupsScheduleArgs']] = None,
+             ddos_protection: Optional[pulumi.Input[bool]] = None,
+             enable_ipv6: Optional[pulumi.Input[bool]] = None,
+             firewall_group_id: Optional[pulumi.Input[str]] = None,
+             hostname: Optional[pulumi.Input[str]] = None,
+             image_id: Optional[pulumi.Input[str]] = None,
+             iso_id: Optional[pulumi.Input[str]] = None,
+             label: Optional[pulumi.Input[str]] = None,
+             os_id: Optional[pulumi.Input[int]] = None,
+             private_network_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+             reserved_ip_id: Optional[pulumi.Input[str]] = None,
+             script_id: Optional[pulumi.Input[str]] = None,
+             snapshot_id: Optional[pulumi.Input[str]] = None,
+             ssh_key_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+             tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+             user_data: Optional[pulumi.Input[str]] = None,
+             vpc2_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+             vpc_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+             opts: Optional[pulumi.ResourceOptions]=None):
+        _setter("plan", plan)
+        _setter("region", region)
         if activation_email is not None:
-            pulumi.set(__self__, "activation_email", activation_email)
+            _setter("activation_email", activation_email)
         if app_id is not None:
-            pulumi.set(__self__, "app_id", app_id)
+            _setter("app_id", app_id)
         if backups is not None:
-            pulumi.set(__self__, "backups", backups)
+            _setter("backups", backups)
         if backups_schedule is not None:
-            pulumi.set(__self__, "backups_schedule", backups_schedule)
+            _setter("backups_schedule", backups_schedule)
         if ddos_protection is not None:
-            pulumi.set(__self__, "ddos_protection", ddos_protection)
+            _setter("ddos_protection", ddos_protection)
         if enable_ipv6 is not None:
-            pulumi.set(__self__, "enable_ipv6", enable_ipv6)
+            _setter("enable_ipv6", enable_ipv6)
         if firewall_group_id is not None:
-            pulumi.set(__self__, "firewall_group_id", firewall_group_id)
+            _setter("firewall_group_id", firewall_group_id)
         if hostname is not None:
-            pulumi.set(__self__, "hostname", hostname)
+            _setter("hostname", hostname)
         if image_id is not None:
-            pulumi.set(__self__, "image_id", image_id)
+            _setter("image_id", image_id)
         if iso_id is not None:
-            pulumi.set(__self__, "iso_id", iso_id)
+            _setter("iso_id", iso_id)
         if label is not None:
-            pulumi.set(__self__, "label", label)
+            _setter("label", label)
         if os_id is not None:
-            pulumi.set(__self__, "os_id", os_id)
+            _setter("os_id", os_id)
         if private_network_ids is not None:
             warnings.warn("""private_network_ids has been deprecated and should no longer be used. Instead, use vpc_ids""", DeprecationWarning)
             pulumi.log.warn("""private_network_ids is deprecated: private_network_ids has been deprecated and should no longer be used. Instead, use vpc_ids""")
         if private_network_ids is not None:
-            pulumi.set(__self__, "private_network_ids", private_network_ids)
+            _setter("private_network_ids", private_network_ids)
         if reserved_ip_id is not None:
-            pulumi.set(__self__, "reserved_ip_id", reserved_ip_id)
+            _setter("reserved_ip_id", reserved_ip_id)
         if script_id is not None:
-            pulumi.set(__self__, "script_id", script_id)
+            _setter("script_id", script_id)
         if snapshot_id is not None:
-            pulumi.set(__self__, "snapshot_id", snapshot_id)
+            _setter("snapshot_id", snapshot_id)
         if ssh_key_ids is not None:
-            pulumi.set(__self__, "ssh_key_ids", ssh_key_ids)
+            _setter("ssh_key_ids", ssh_key_ids)
         if tags is not None:
-            pulumi.set(__self__, "tags", tags)
+            _setter("tags", tags)
         if user_data is not None:
-            pulumi.set(__self__, "user_data", user_data)
+            _setter("user_data", user_data)
+        if vpc2_ids is not None:
+            _setter("vpc2_ids", vpc2_ids)
         if vpc_ids is not None:
-            pulumi.set(__self__, "vpc_ids", vpc_ids)
+            _setter("vpc_ids", vpc_ids)
 
     @property
     @pulumi.getter
@@ -283,6 +340,9 @@ class InstanceArgs:
         """
         (Deprecated: use `vpc_ids` instead) A list of private network IDs to be attached to the server.
         """
+        warnings.warn("""private_network_ids has been deprecated and should no longer be used. Instead, use vpc_ids""", DeprecationWarning)
+        pulumi.log.warn("""private_network_ids is deprecated: private_network_ids has been deprecated and should no longer be used. Instead, use vpc_ids""")
+
         return pulumi.get(self, "private_network_ids")
 
     @private_network_ids.setter
@@ -362,6 +422,18 @@ class InstanceArgs:
         pulumi.set(self, "user_data", value)
 
     @property
+    @pulumi.getter(name="vpc2Ids")
+    def vpc2_ids(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        A list of VPC 2.0 IDs to be attached to the server.
+        """
+        return pulumi.get(self, "vpc2_ids")
+
+    @vpc2_ids.setter
+    def vpc2_ids(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "vpc2_ids", value)
+
+    @property
     @pulumi.getter(name="vpcIds")
     def vpc_ids(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
         """
@@ -417,6 +489,7 @@ class _InstanceState:
                  v6_network: Optional[pulumi.Input[str]] = None,
                  v6_network_size: Optional[pulumi.Input[int]] = None,
                  vcpu_count: Optional[pulumi.Input[int]] = None,
+                 vpc2_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  vpc_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
         """
         Input properties used for looking up and filtering Instance resources.
@@ -460,93 +533,187 @@ class _InstanceState:
         :param pulumi.Input[str] v6_network: The IPv6 subnet.
         :param pulumi.Input[int] v6_network_size: The IPv6 network size in bits.
         :param pulumi.Input[int] vcpu_count: The number of virtual CPUs available on the server.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] vpc2_ids: A list of VPC 2.0 IDs to be attached to the server.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] vpc_ids: A list of VPC IDs to be attached to the server.
         """
+        _InstanceState._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            activation_email=activation_email,
+            allowed_bandwidth=allowed_bandwidth,
+            app_id=app_id,
+            backups=backups,
+            backups_schedule=backups_schedule,
+            date_created=date_created,
+            ddos_protection=ddos_protection,
+            default_password=default_password,
+            disk=disk,
+            enable_ipv6=enable_ipv6,
+            features=features,
+            firewall_group_id=firewall_group_id,
+            gateway_v4=gateway_v4,
+            hostname=hostname,
+            image_id=image_id,
+            internal_ip=internal_ip,
+            iso_id=iso_id,
+            kvm=kvm,
+            label=label,
+            main_ip=main_ip,
+            netmask_v4=netmask_v4,
+            os=os,
+            os_id=os_id,
+            plan=plan,
+            power_status=power_status,
+            private_network_ids=private_network_ids,
+            ram=ram,
+            region=region,
+            reserved_ip_id=reserved_ip_id,
+            script_id=script_id,
+            server_status=server_status,
+            snapshot_id=snapshot_id,
+            ssh_key_ids=ssh_key_ids,
+            status=status,
+            tags=tags,
+            user_data=user_data,
+            v6_main_ip=v6_main_ip,
+            v6_network=v6_network,
+            v6_network_size=v6_network_size,
+            vcpu_count=vcpu_count,
+            vpc2_ids=vpc2_ids,
+            vpc_ids=vpc_ids,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             activation_email: Optional[pulumi.Input[bool]] = None,
+             allowed_bandwidth: Optional[pulumi.Input[int]] = None,
+             app_id: Optional[pulumi.Input[int]] = None,
+             backups: Optional[pulumi.Input[str]] = None,
+             backups_schedule: Optional[pulumi.Input['InstanceBackupsScheduleArgs']] = None,
+             date_created: Optional[pulumi.Input[str]] = None,
+             ddos_protection: Optional[pulumi.Input[bool]] = None,
+             default_password: Optional[pulumi.Input[str]] = None,
+             disk: Optional[pulumi.Input[int]] = None,
+             enable_ipv6: Optional[pulumi.Input[bool]] = None,
+             features: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+             firewall_group_id: Optional[pulumi.Input[str]] = None,
+             gateway_v4: Optional[pulumi.Input[str]] = None,
+             hostname: Optional[pulumi.Input[str]] = None,
+             image_id: Optional[pulumi.Input[str]] = None,
+             internal_ip: Optional[pulumi.Input[str]] = None,
+             iso_id: Optional[pulumi.Input[str]] = None,
+             kvm: Optional[pulumi.Input[str]] = None,
+             label: Optional[pulumi.Input[str]] = None,
+             main_ip: Optional[pulumi.Input[str]] = None,
+             netmask_v4: Optional[pulumi.Input[str]] = None,
+             os: Optional[pulumi.Input[str]] = None,
+             os_id: Optional[pulumi.Input[int]] = None,
+             plan: Optional[pulumi.Input[str]] = None,
+             power_status: Optional[pulumi.Input[str]] = None,
+             private_network_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+             ram: Optional[pulumi.Input[int]] = None,
+             region: Optional[pulumi.Input[str]] = None,
+             reserved_ip_id: Optional[pulumi.Input[str]] = None,
+             script_id: Optional[pulumi.Input[str]] = None,
+             server_status: Optional[pulumi.Input[str]] = None,
+             snapshot_id: Optional[pulumi.Input[str]] = None,
+             ssh_key_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+             status: Optional[pulumi.Input[str]] = None,
+             tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+             user_data: Optional[pulumi.Input[str]] = None,
+             v6_main_ip: Optional[pulumi.Input[str]] = None,
+             v6_network: Optional[pulumi.Input[str]] = None,
+             v6_network_size: Optional[pulumi.Input[int]] = None,
+             vcpu_count: Optional[pulumi.Input[int]] = None,
+             vpc2_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+             vpc_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
+             opts: Optional[pulumi.ResourceOptions]=None):
         if activation_email is not None:
-            pulumi.set(__self__, "activation_email", activation_email)
+            _setter("activation_email", activation_email)
         if allowed_bandwidth is not None:
-            pulumi.set(__self__, "allowed_bandwidth", allowed_bandwidth)
+            _setter("allowed_bandwidth", allowed_bandwidth)
         if app_id is not None:
-            pulumi.set(__self__, "app_id", app_id)
+            _setter("app_id", app_id)
         if backups is not None:
-            pulumi.set(__self__, "backups", backups)
+            _setter("backups", backups)
         if backups_schedule is not None:
-            pulumi.set(__self__, "backups_schedule", backups_schedule)
+            _setter("backups_schedule", backups_schedule)
         if date_created is not None:
-            pulumi.set(__self__, "date_created", date_created)
+            _setter("date_created", date_created)
         if ddos_protection is not None:
-            pulumi.set(__self__, "ddos_protection", ddos_protection)
+            _setter("ddos_protection", ddos_protection)
         if default_password is not None:
-            pulumi.set(__self__, "default_password", default_password)
+            _setter("default_password", default_password)
         if disk is not None:
-            pulumi.set(__self__, "disk", disk)
+            _setter("disk", disk)
         if enable_ipv6 is not None:
-            pulumi.set(__self__, "enable_ipv6", enable_ipv6)
+            _setter("enable_ipv6", enable_ipv6)
         if features is not None:
-            pulumi.set(__self__, "features", features)
+            _setter("features", features)
         if firewall_group_id is not None:
-            pulumi.set(__self__, "firewall_group_id", firewall_group_id)
+            _setter("firewall_group_id", firewall_group_id)
         if gateway_v4 is not None:
-            pulumi.set(__self__, "gateway_v4", gateway_v4)
+            _setter("gateway_v4", gateway_v4)
         if hostname is not None:
-            pulumi.set(__self__, "hostname", hostname)
+            _setter("hostname", hostname)
         if image_id is not None:
-            pulumi.set(__self__, "image_id", image_id)
+            _setter("image_id", image_id)
         if internal_ip is not None:
-            pulumi.set(__self__, "internal_ip", internal_ip)
+            _setter("internal_ip", internal_ip)
         if iso_id is not None:
-            pulumi.set(__self__, "iso_id", iso_id)
+            _setter("iso_id", iso_id)
         if kvm is not None:
-            pulumi.set(__self__, "kvm", kvm)
+            _setter("kvm", kvm)
         if label is not None:
-            pulumi.set(__self__, "label", label)
+            _setter("label", label)
         if main_ip is not None:
-            pulumi.set(__self__, "main_ip", main_ip)
+            _setter("main_ip", main_ip)
         if netmask_v4 is not None:
-            pulumi.set(__self__, "netmask_v4", netmask_v4)
+            _setter("netmask_v4", netmask_v4)
         if os is not None:
-            pulumi.set(__self__, "os", os)
+            _setter("os", os)
         if os_id is not None:
-            pulumi.set(__self__, "os_id", os_id)
+            _setter("os_id", os_id)
         if plan is not None:
-            pulumi.set(__self__, "plan", plan)
+            _setter("plan", plan)
         if power_status is not None:
-            pulumi.set(__self__, "power_status", power_status)
+            _setter("power_status", power_status)
         if private_network_ids is not None:
             warnings.warn("""private_network_ids has been deprecated and should no longer be used. Instead, use vpc_ids""", DeprecationWarning)
             pulumi.log.warn("""private_network_ids is deprecated: private_network_ids has been deprecated and should no longer be used. Instead, use vpc_ids""")
         if private_network_ids is not None:
-            pulumi.set(__self__, "private_network_ids", private_network_ids)
+            _setter("private_network_ids", private_network_ids)
         if ram is not None:
-            pulumi.set(__self__, "ram", ram)
+            _setter("ram", ram)
         if region is not None:
-            pulumi.set(__self__, "region", region)
+            _setter("region", region)
         if reserved_ip_id is not None:
-            pulumi.set(__self__, "reserved_ip_id", reserved_ip_id)
+            _setter("reserved_ip_id", reserved_ip_id)
         if script_id is not None:
-            pulumi.set(__self__, "script_id", script_id)
+            _setter("script_id", script_id)
         if server_status is not None:
-            pulumi.set(__self__, "server_status", server_status)
+            _setter("server_status", server_status)
         if snapshot_id is not None:
-            pulumi.set(__self__, "snapshot_id", snapshot_id)
+            _setter("snapshot_id", snapshot_id)
         if ssh_key_ids is not None:
-            pulumi.set(__self__, "ssh_key_ids", ssh_key_ids)
+            _setter("ssh_key_ids", ssh_key_ids)
         if status is not None:
-            pulumi.set(__self__, "status", status)
+            _setter("status", status)
         if tags is not None:
-            pulumi.set(__self__, "tags", tags)
+            _setter("tags", tags)
         if user_data is not None:
-            pulumi.set(__self__, "user_data", user_data)
+            _setter("user_data", user_data)
         if v6_main_ip is not None:
-            pulumi.set(__self__, "v6_main_ip", v6_main_ip)
+            _setter("v6_main_ip", v6_main_ip)
         if v6_network is not None:
-            pulumi.set(__self__, "v6_network", v6_network)
+            _setter("v6_network", v6_network)
         if v6_network_size is not None:
-            pulumi.set(__self__, "v6_network_size", v6_network_size)
+            _setter("v6_network_size", v6_network_size)
         if vcpu_count is not None:
-            pulumi.set(__self__, "vcpu_count", vcpu_count)
+            _setter("vcpu_count", vcpu_count)
+        if vpc2_ids is not None:
+            _setter("vpc2_ids", vpc2_ids)
         if vpc_ids is not None:
-            pulumi.set(__self__, "vpc_ids", vpc_ids)
+            _setter("vpc_ids", vpc_ids)
 
     @property
     @pulumi.getter(name="activationEmail")
@@ -854,6 +1021,9 @@ class _InstanceState:
         """
         (Deprecated: use `vpc_ids` instead) A list of private network IDs to be attached to the server.
         """
+        warnings.warn("""private_network_ids has been deprecated and should no longer be used. Instead, use vpc_ids""", DeprecationWarning)
+        pulumi.log.warn("""private_network_ids is deprecated: private_network_ids has been deprecated and should no longer be used. Instead, use vpc_ids""")
+
         return pulumi.get(self, "private_network_ids")
 
     @private_network_ids.setter
@@ -1029,6 +1199,18 @@ class _InstanceState:
         pulumi.set(self, "vcpu_count", value)
 
     @property
+    @pulumi.getter(name="vpc2Ids")
+    def vpc2_ids(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
+        """
+        A list of VPC 2.0 IDs to be attached to the server.
+        """
+        return pulumi.get(self, "vpc2_ids")
+
+    @vpc2_ids.setter
+    def vpc2_ids(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
+        pulumi.set(self, "vpc2_ids", value)
+
+    @property
     @pulumi.getter(name="vpcIds")
     def vpc_ids(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
         """
@@ -1067,6 +1249,7 @@ class Instance(pulumi.CustomResource):
                  ssh_key_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  user_data: Optional[pulumi.Input[str]] = None,
+                 vpc2_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  vpc_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  __props__=None):
         """
@@ -1139,6 +1322,7 @@ class Instance(pulumi.CustomResource):
         :param pulumi.Input[Sequence[pulumi.Input[str]]] ssh_key_ids: A list of SSH key IDs to apply to the server on install (only valid for Linux/FreeBSD).
         :param pulumi.Input[Sequence[pulumi.Input[str]]] tags: A list of tags to apply to the instance.
         :param pulumi.Input[str] user_data: Generic data store, which some provisioning tools and cloud operating systems use as a configuration file. It is generally consumed only once after an instance has been launched, but individual needs may vary.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] vpc2_ids: A list of VPC 2.0 IDs to be attached to the server.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] vpc_ids: A list of VPC IDs to be attached to the server.
         """
         ...
@@ -1204,6 +1388,10 @@ class Instance(pulumi.CustomResource):
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
+            kwargs = kwargs or {}
+            def _setter(key, value):
+                kwargs[key] = value
+            InstanceArgs._configure(_setter, **kwargs)
             __self__._internal_init(resource_name, *args, **kwargs)
 
     def _internal_init(__self__,
@@ -1230,6 +1418,7 @@ class Instance(pulumi.CustomResource):
                  ssh_key_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  user_data: Optional[pulumi.Input[str]] = None,
+                 vpc2_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  vpc_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
@@ -1243,6 +1432,11 @@ class Instance(pulumi.CustomResource):
             __props__.__dict__["activation_email"] = activation_email
             __props__.__dict__["app_id"] = app_id
             __props__.__dict__["backups"] = backups
+            if not isinstance(backups_schedule, InstanceBackupsScheduleArgs):
+                backups_schedule = backups_schedule or {}
+                def _setter(key, value):
+                    backups_schedule[key] = value
+                InstanceBackupsScheduleArgs._configure(_setter, **backups_schedule)
             __props__.__dict__["backups_schedule"] = backups_schedule
             __props__.__dict__["ddos_protection"] = ddos_protection
             __props__.__dict__["enable_ipv6"] = enable_ipv6
@@ -1255,9 +1449,6 @@ class Instance(pulumi.CustomResource):
             if plan is None and not opts.urn:
                 raise TypeError("Missing required property 'plan'")
             __props__.__dict__["plan"] = plan
-            if private_network_ids is not None and not opts.urn:
-                warnings.warn("""private_network_ids has been deprecated and should no longer be used. Instead, use vpc_ids""", DeprecationWarning)
-                pulumi.log.warn("""private_network_ids is deprecated: private_network_ids has been deprecated and should no longer be used. Instead, use vpc_ids""")
             __props__.__dict__["private_network_ids"] = private_network_ids
             if region is None and not opts.urn:
                 raise TypeError("Missing required property 'region'")
@@ -1268,6 +1459,7 @@ class Instance(pulumi.CustomResource):
             __props__.__dict__["ssh_key_ids"] = ssh_key_ids
             __props__.__dict__["tags"] = tags
             __props__.__dict__["user_data"] = user_data
+            __props__.__dict__["vpc2_ids"] = vpc2_ids
             __props__.__dict__["vpc_ids"] = vpc_ids
             __props__.__dict__["allowed_bandwidth"] = None
             __props__.__dict__["date_created"] = None
@@ -1340,6 +1532,7 @@ class Instance(pulumi.CustomResource):
             v6_network: Optional[pulumi.Input[str]] = None,
             v6_network_size: Optional[pulumi.Input[int]] = None,
             vcpu_count: Optional[pulumi.Input[int]] = None,
+            vpc2_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
             vpc_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None) -> 'Instance':
         """
         Get an existing Instance resource's state with the given name, id, and optional extra
@@ -1388,6 +1581,7 @@ class Instance(pulumi.CustomResource):
         :param pulumi.Input[str] v6_network: The IPv6 subnet.
         :param pulumi.Input[int] v6_network_size: The IPv6 network size in bits.
         :param pulumi.Input[int] vcpu_count: The number of virtual CPUs available on the server.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] vpc2_ids: A list of VPC 2.0 IDs to be attached to the server.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] vpc_ids: A list of VPC IDs to be attached to the server.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
@@ -1434,6 +1628,7 @@ class Instance(pulumi.CustomResource):
         __props__.__dict__["v6_network"] = v6_network
         __props__.__dict__["v6_network_size"] = v6_network_size
         __props__.__dict__["vcpu_count"] = vcpu_count
+        __props__.__dict__["vpc2_ids"] = vpc2_ids
         __props__.__dict__["vpc_ids"] = vpc_ids
         return Instance(resource_name, opts=opts, __props__=__props__)
 
@@ -1643,6 +1838,9 @@ class Instance(pulumi.CustomResource):
         """
         (Deprecated: use `vpc_ids` instead) A list of private network IDs to be attached to the server.
         """
+        warnings.warn("""private_network_ids has been deprecated and should no longer be used. Instead, use vpc_ids""", DeprecationWarning)
+        pulumi.log.warn("""private_network_ids is deprecated: private_network_ids has been deprecated and should no longer be used. Instead, use vpc_ids""")
+
         return pulumi.get(self, "private_network_ids")
 
     @property
@@ -1756,6 +1954,14 @@ class Instance(pulumi.CustomResource):
         The number of virtual CPUs available on the server.
         """
         return pulumi.get(self, "vcpu_count")
+
+    @property
+    @pulumi.getter(name="vpc2Ids")
+    def vpc2_ids(self) -> pulumi.Output[Optional[Sequence[str]]]:
+        """
+        A list of VPC 2.0 IDs to be attached to the server.
+        """
+        return pulumi.get(self, "vpc2_ids")
 
     @property
     @pulumi.getter(name="vpcIds")

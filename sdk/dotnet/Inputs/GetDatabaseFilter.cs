@@ -13,11 +13,18 @@ namespace ediri.Vultr.Inputs
 
     public sealed class GetDatabaseFilterArgs : global::Pulumi.InvokeArgs
     {
+        /// <summary>
+        /// Attribute name to filter with.
+        /// </summary>
         [Input("name", required: true)]
         public string Name { get; set; } = null!;
 
         [Input("values", required: true)]
         private List<string>? _values;
+
+        /// <summary>
+        /// One or more values filter with.
+        /// </summary>
         public List<string> Values
         {
             get => _values ?? (_values = new List<string>());

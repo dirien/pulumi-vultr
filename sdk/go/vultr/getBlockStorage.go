@@ -7,7 +7,9 @@ import (
 	"context"
 	"reflect"
 
+	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 )
 
 // Get information about a Vultr block storage subscription.
@@ -47,7 +49,7 @@ import (
 //
 // ```
 func LookupBlockStorage(ctx *pulumi.Context, args *LookupBlockStorageArgs, opts ...pulumi.InvokeOption) (*LookupBlockStorageResult, error) {
-	opts = pkgInvokeDefaultOpts(opts)
+	opts = internal.PkgInvokeDefaultOpts(opts)
 	var rv LookupBlockStorageResult
 	err := ctx.Invoke("vultr:index/getBlockStorage:getBlockStorage", args, &rv, opts...)
 	if err != nil {
@@ -123,6 +125,12 @@ func (o LookupBlockStorageResultOutput) ToLookupBlockStorageResultOutput() Looku
 
 func (o LookupBlockStorageResultOutput) ToLookupBlockStorageResultOutputWithContext(ctx context.Context) LookupBlockStorageResultOutput {
 	return o
+}
+
+func (o LookupBlockStorageResultOutput) ToOutput(ctx context.Context) pulumix.Output[LookupBlockStorageResult] {
+	return pulumix.Output[LookupBlockStorageResult]{
+		OutputState: o.OutputState,
+	}
 }
 
 // The ID of the VPS the block storage subscription is attached to.

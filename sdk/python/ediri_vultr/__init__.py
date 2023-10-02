@@ -45,6 +45,7 @@ from .get_ssh_key import *
 from .get_startup_script import *
 from .get_user import *
 from .get_vpc import *
+from .get_vpc2 import *
 from .instance import *
 from .instance_ipv4 import *
 from .iso_private import *
@@ -63,6 +64,7 @@ from .ssh_key import *
 from .startup_script import *
 from .user import *
 from .vpc import *
+from .vpc2 import *
 from ._inputs import *
 from . import outputs
 
@@ -298,6 +300,14 @@ _utilities.register(
   "fqn": "ediri_vultr",
   "classes": {
    "vultr:index/vpc:Vpc": "Vpc"
+  }
+ },
+ {
+  "pkg": "vultr",
+  "mod": "index/vpc2",
+  "fqn": "ediri_vultr",
+  "classes": {
+   "vultr:index/vpc2:Vpc2": "Vpc2"
   }
  }
 ]

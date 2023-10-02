@@ -14,7 +14,13 @@ namespace ediri.Vultr.Outputs
     [OutputType]
     public sealed class GetDatabaseFilterResult
     {
+        /// <summary>
+        /// Attribute name to filter with.
+        /// </summary>
         public readonly string Name;
+        /// <summary>
+        /// One or more values filter with.
+        /// </summary>
         public readonly ImmutableArray<string> Values;
 
         [OutputConstructor]

@@ -4,6 +4,25 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "./utilities";
 
+/**
+ * Provides a Vultr database replica resource. This can be used to create, read, modify, and delete managed database read replicas on your Vultr account.
+ *
+ * ## Example Usage
+ *
+ * Create a new database replica:
+ *
+ * ```typescript
+ * import * as pulumi from "@pulumi/pulumi";
+ * import * as vultr from "@ediri/vultr";
+ *
+ * const myDatabaseReplica = new vultr.DatabaseReplica("myDatabaseReplica", {
+ *     databaseId: vultr_database.my_database.id,
+ *     region: "sea",
+ *     label: "my_database_replica_label",
+ *     tag: "test tag",
+ * });
+ * ```
+ */
 export class DatabaseReplica extends pulumi.CustomResource {
     /**
      * Get an existing DatabaseReplica resource's state with the given name, ID, and optional extra
@@ -32,34 +51,119 @@ export class DatabaseReplica extends pulumi.CustomResource {
         return obj['__pulumiType'] === DatabaseReplica.__pulumiType;
     }
 
+    /**
+     * The configured time zone for the managed database read replica in TZ database format.
+     */
     public /*out*/ readonly clusterTimeZone!: pulumi.Output<string>;
+    /**
+     * The database engine of the managed database read replica.
+     */
     public /*out*/ readonly databaseEngine!: pulumi.Output<string>;
+    /**
+     * The database engine version of the managed database read replica.
+     */
     public /*out*/ readonly databaseEngineVersion!: pulumi.Output<string>;
+    /**
+     * The managed database ID you want to attach this replica to.
+     */
     public readonly databaseId!: pulumi.Output<string>;
+    /**
+     * The date the managed database read replica was added to your Vultr account.
+     */
     public /*out*/ readonly dateCreated!: pulumi.Output<string>;
+    /**
+     * The managed database read replica's default logical database.
+     */
     public /*out*/ readonly dbname!: pulumi.Output<string>;
+    /**
+     * The hostname assigned to the managed database read replica.
+     */
     public /*out*/ readonly host!: pulumi.Output<string>;
+    /**
+     * A label for the managed database read replica.
+     */
     public readonly label!: pulumi.Output<string>;
+    /**
+     * The date of the latest backup available on the managed database read replica.
+     */
     public /*out*/ readonly latestBackup!: pulumi.Output<string>;
+    /**
+     * The preferred maintenance day of week for the managed database read replica.
+     */
     public /*out*/ readonly maintenanceDow!: pulumi.Output<string>;
+    /**
+     * The preferred maintenance time for the managed database read replica.
+     */
     public /*out*/ readonly maintenanceTime!: pulumi.Output<string>;
+    /**
+     * The configuration value for the long query time (in seconds) on the managed database read replica (MySQL engine types only).
+     */
     public readonly mysqlLongQueryTime!: pulumi.Output<number>;
+    /**
+     * The configuration value for whether primary keys are required on the managed database read replica (MySQL engine types only).
+     */
     public readonly mysqlRequirePrimaryKey!: pulumi.Output<boolean>;
+    /**
+     * The configuration value for slow query logging on the managed database read replica (MySQL engine types only).
+     */
     public readonly mysqlSlowQueryLog!: pulumi.Output<boolean>;
+    /**
+     * A list of SQL modes currently configured for the managed database read replica (MySQL engine types only).
+     */
     public readonly mysqlSqlModes!: pulumi.Output<string[]>;
+    /**
+     * The password for the managed database read replica's primary admin user.
+     */
     public /*out*/ readonly password!: pulumi.Output<string>;
+    /**
+     * The managed database read replica's plan ID.
+     */
     public /*out*/ readonly plan!: pulumi.Output<string>;
+    /**
+     * The description of the disk(s) on the managed database read replica.
+     */
     public readonly planDisk!: pulumi.Output<number>;
+    /**
+     * The amount of memory available on the managed database read replica in MB.
+     */
     public /*out*/ readonly planRam!: pulumi.Output<number>;
+    /**
+     * The number of standby nodes available on the managed database read replica.
+     */
     public /*out*/ readonly planReplicas!: pulumi.Output<number>;
+    /**
+     * The number of virtual CPUs available on the managed database read replica.
+     */
     public /*out*/ readonly planVcpus!: pulumi.Output<number>;
+    /**
+     * The connection port for the managed database read replica.
+     */
     public /*out*/ readonly port!: pulumi.Output<string>;
+    /**
+     * The configuration value for the data eviction policy on the managed database read replica (Redis engine types only).
+     */
     public readonly redisEvictionPolicy!: pulumi.Output<string>;
+    /**
+     * The ID of the region that the managed database read replica is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
+     */
     public readonly region!: pulumi.Output<string>;
+    /**
+     * The current status of the managed database read replica (poweroff, rebuilding, rebalancing, running).
+     */
     public /*out*/ readonly status!: pulumi.Output<string>;
+    /**
+     * The tag to assign to the managed database read replica.
+     */
     public readonly tag!: pulumi.Output<string>;
+    /**
+     * A list of allowed IP addresses for the managed database read replica.
+     */
     public readonly trustedIps!: pulumi.Output<string[]>;
+    /**
+     * The primary admin user for the managed database read replica.
+     */
     public /*out*/ readonly user!: pulumi.Output<string>;
+    public /*out*/ readonly vpcId!: pulumi.Output<string>;
 
     /**
      * Create a DatabaseReplica resource with the given unique name, arguments, and options.
@@ -102,6 +206,7 @@ export class DatabaseReplica extends pulumi.CustomResource {
             resourceInputs["tag"] = state ? state.tag : undefined;
             resourceInputs["trustedIps"] = state ? state.trustedIps : undefined;
             resourceInputs["user"] = state ? state.user : undefined;
+            resourceInputs["vpcId"] = state ? state.vpcId : undefined;
         } else {
             const args = argsOrState as DatabaseReplicaArgs | undefined;
             if ((!args || args.databaseId === undefined) && !opts.urn) {
@@ -141,6 +246,7 @@ export class DatabaseReplica extends pulumi.CustomResource {
             resourceInputs["port"] = undefined /*out*/;
             resourceInputs["status"] = undefined /*out*/;
             resourceInputs["user"] = undefined /*out*/;
+            resourceInputs["vpcId"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(DatabaseReplica.__pulumiType, name, resourceInputs, opts);
@@ -151,49 +257,167 @@ export class DatabaseReplica extends pulumi.CustomResource {
  * Input properties used for looking up and filtering DatabaseReplica resources.
  */
 export interface DatabaseReplicaState {
+    /**
+     * The configured time zone for the managed database read replica in TZ database format.
+     */
     clusterTimeZone?: pulumi.Input<string>;
+    /**
+     * The database engine of the managed database read replica.
+     */
     databaseEngine?: pulumi.Input<string>;
+    /**
+     * The database engine version of the managed database read replica.
+     */
     databaseEngineVersion?: pulumi.Input<string>;
+    /**
+     * The managed database ID you want to attach this replica to.
+     */
     databaseId?: pulumi.Input<string>;
+    /**
+     * The date the managed database read replica was added to your Vultr account.
+     */
     dateCreated?: pulumi.Input<string>;
+    /**
+     * The managed database read replica's default logical database.
+     */
     dbname?: pulumi.Input<string>;
+    /**
+     * The hostname assigned to the managed database read replica.
+     */
     host?: pulumi.Input<string>;
+    /**
+     * A label for the managed database read replica.
+     */
     label?: pulumi.Input<string>;
+    /**
+     * The date of the latest backup available on the managed database read replica.
+     */
     latestBackup?: pulumi.Input<string>;
+    /**
+     * The preferred maintenance day of week for the managed database read replica.
+     */
     maintenanceDow?: pulumi.Input<string>;
+    /**
+     * The preferred maintenance time for the managed database read replica.
+     */
     maintenanceTime?: pulumi.Input<string>;
+    /**
+     * The configuration value for the long query time (in seconds) on the managed database read replica (MySQL engine types only).
+     */
     mysqlLongQueryTime?: pulumi.Input<number>;
+    /**
+     * The configuration value for whether primary keys are required on the managed database read replica (MySQL engine types only).
+     */
     mysqlRequirePrimaryKey?: pulumi.Input<boolean>;
+    /**
+     * The configuration value for slow query logging on the managed database read replica (MySQL engine types only).
+     */
     mysqlSlowQueryLog?: pulumi.Input<boolean>;
+    /**
+     * A list of SQL modes currently configured for the managed database read replica (MySQL engine types only).
+     */
     mysqlSqlModes?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * The password for the managed database read replica's primary admin user.
+     */
     password?: pulumi.Input<string>;
+    /**
+     * The managed database read replica's plan ID.
+     */
     plan?: pulumi.Input<string>;
+    /**
+     * The description of the disk(s) on the managed database read replica.
+     */
     planDisk?: pulumi.Input<number>;
+    /**
+     * The amount of memory available on the managed database read replica in MB.
+     */
     planRam?: pulumi.Input<number>;
+    /**
+     * The number of standby nodes available on the managed database read replica.
+     */
     planReplicas?: pulumi.Input<number>;
+    /**
+     * The number of virtual CPUs available on the managed database read replica.
+     */
     planVcpus?: pulumi.Input<number>;
+    /**
+     * The connection port for the managed database read replica.
+     */
     port?: pulumi.Input<string>;
+    /**
+     * The configuration value for the data eviction policy on the managed database read replica (Redis engine types only).
+     */
     redisEvictionPolicy?: pulumi.Input<string>;
+    /**
+     * The ID of the region that the managed database read replica is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
+     */
     region?: pulumi.Input<string>;
+    /**
+     * The current status of the managed database read replica (poweroff, rebuilding, rebalancing, running).
+     */
     status?: pulumi.Input<string>;
+    /**
+     * The tag to assign to the managed database read replica.
+     */
     tag?: pulumi.Input<string>;
+    /**
+     * A list of allowed IP addresses for the managed database read replica.
+     */
     trustedIps?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * The primary admin user for the managed database read replica.
+     */
     user?: pulumi.Input<string>;
+    vpcId?: pulumi.Input<string>;
 }
 
 /**
  * The set of arguments for constructing a DatabaseReplica resource.
  */
 export interface DatabaseReplicaArgs {
+    /**
+     * The managed database ID you want to attach this replica to.
+     */
     databaseId: pulumi.Input<string>;
+    /**
+     * A label for the managed database read replica.
+     */
     label: pulumi.Input<string>;
+    /**
+     * The configuration value for the long query time (in seconds) on the managed database read replica (MySQL engine types only).
+     */
     mysqlLongQueryTime?: pulumi.Input<number>;
+    /**
+     * The configuration value for whether primary keys are required on the managed database read replica (MySQL engine types only).
+     */
     mysqlRequirePrimaryKey?: pulumi.Input<boolean>;
+    /**
+     * The configuration value for slow query logging on the managed database read replica (MySQL engine types only).
+     */
     mysqlSlowQueryLog?: pulumi.Input<boolean>;
+    /**
+     * A list of SQL modes currently configured for the managed database read replica (MySQL engine types only).
+     */
     mysqlSqlModes?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * The description of the disk(s) on the managed database read replica.
+     */
     planDisk?: pulumi.Input<number>;
+    /**
+     * The configuration value for the data eviction policy on the managed database read replica (Redis engine types only).
+     */
     redisEvictionPolicy?: pulumi.Input<string>;
+    /**
+     * The ID of the region that the managed database read replica is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
+     */
     region: pulumi.Input<string>;
+    /**
+     * The tag to assign to the managed database read replica.
+     */
     tag?: pulumi.Input<string>;
+    /**
+     * A list of allowed IP addresses for the managed database read replica.
+     */
     trustedIps?: pulumi.Input<pulumi.Input<string>[]>;
 }

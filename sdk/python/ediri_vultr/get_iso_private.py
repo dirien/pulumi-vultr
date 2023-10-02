@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -155,14 +155,14 @@ def get_iso_private(filters: Optional[Sequence[pulumi.InputType['GetIsoPrivateFi
     __ret__ = pulumi.runtime.invoke('vultr:index/getIsoPrivate:getIsoPrivate', __args__, opts=opts, typ=GetIsoPrivateResult).value
 
     return AwaitableGetIsoPrivateResult(
-        date_created=__ret__.date_created,
-        filename=__ret__.filename,
-        filters=__ret__.filters,
-        id=__ret__.id,
-        md5sum=__ret__.md5sum,
-        sha512sum=__ret__.sha512sum,
-        size=__ret__.size,
-        status=__ret__.status)
+        date_created=pulumi.get(__ret__, 'date_created'),
+        filename=pulumi.get(__ret__, 'filename'),
+        filters=pulumi.get(__ret__, 'filters'),
+        id=pulumi.get(__ret__, 'id'),
+        md5sum=pulumi.get(__ret__, 'md5sum'),
+        sha512sum=pulumi.get(__ret__, 'sha512sum'),
+        size=pulumi.get(__ret__, 'size'),
+        status=pulumi.get(__ret__, 'status'))
 
 
 @_utilities.lift_output_func(get_iso_private)

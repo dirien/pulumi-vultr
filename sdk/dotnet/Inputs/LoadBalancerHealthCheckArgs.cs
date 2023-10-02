@@ -16,14 +16,14 @@ namespace ediri.Vultr.Inputs
         /// <summary>
         /// Time in seconds to perform health check. Default value is 15.
         /// </summary>
-        [Input("checkInterval", required: true)]
-        public Input<int> CheckInterval { get; set; } = null!;
+        [Input("checkInterval")]
+        public Input<int>? CheckInterval { get; set; }
 
         /// <summary>
         /// Number of failed attempts encountered before failover. Default value is 5.
         /// </summary>
-        [Input("healthyThreshold", required: true)]
-        public Input<int> HealthyThreshold { get; set; } = null!;
+        [Input("healthyThreshold")]
+        public Input<int>? HealthyThreshold { get; set; }
 
         /// <summary>
         /// The path on the attached instances that the load balancer should check against. Default value is `/`
@@ -46,14 +46,14 @@ namespace ediri.Vultr.Inputs
         /// <summary>
         /// Time in seconds to wait for a health check response. Default value is 5.
         /// </summary>
-        [Input("responseTimeout", required: true)]
-        public Input<int> ResponseTimeout { get; set; } = null!;
+        [Input("responseTimeout")]
+        public Input<int>? ResponseTimeout { get; set; }
 
         /// <summary>
         /// Number of failed attempts encountered before failover. Default value is 5.
         /// </summary>
-        [Input("unhealthyThreshold", required: true)]
-        public Input<int> UnhealthyThreshold { get; set; } = null!;
+        [Input("unhealthyThreshold")]
+        public Input<int>? UnhealthyThreshold { get; set; }
 
         public LoadBalancerHealthCheckArgs()
         {

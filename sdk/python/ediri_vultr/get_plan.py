@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -200,18 +200,18 @@ def get_plan(filters: Optional[Sequence[pulumi.InputType['GetPlanFilterArgs']]] 
     __ret__ = pulumi.runtime.invoke('vultr:index/getPlan:getPlan', __args__, opts=opts, typ=GetPlanResult).value
 
     return AwaitableGetPlanResult(
-        bandwidth=__ret__.bandwidth,
-        disk=__ret__.disk,
-        disk_count=__ret__.disk_count,
-        filters=__ret__.filters,
-        gpu_type=__ret__.gpu_type,
-        gpu_vram=__ret__.gpu_vram,
-        id=__ret__.id,
-        locations=__ret__.locations,
-        monthly_cost=__ret__.monthly_cost,
-        ram=__ret__.ram,
-        type=__ret__.type,
-        vcpu_count=__ret__.vcpu_count)
+        bandwidth=pulumi.get(__ret__, 'bandwidth'),
+        disk=pulumi.get(__ret__, 'disk'),
+        disk_count=pulumi.get(__ret__, 'disk_count'),
+        filters=pulumi.get(__ret__, 'filters'),
+        gpu_type=pulumi.get(__ret__, 'gpu_type'),
+        gpu_vram=pulumi.get(__ret__, 'gpu_vram'),
+        id=pulumi.get(__ret__, 'id'),
+        locations=pulumi.get(__ret__, 'locations'),
+        monthly_cost=pulumi.get(__ret__, 'monthly_cost'),
+        ram=pulumi.get(__ret__, 'ram'),
+        type=pulumi.get(__ret__, 'type'),
+        vcpu_count=pulumi.get(__ret__, 'vcpu_count'))
 
 
 @_utilities.lift_output_func(get_plan)

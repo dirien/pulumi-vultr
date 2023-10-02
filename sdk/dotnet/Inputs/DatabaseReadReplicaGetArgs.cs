@@ -13,99 +13,188 @@ namespace ediri.Vultr.Inputs
 
     public sealed class DatabaseReadReplicaGetArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
+        /// </summary>
         [Input("clusterTimeZone")]
         public Input<string>? ClusterTimeZone { get; set; }
 
+        /// <summary>
+        /// The database engine of the new managed database.
+        /// </summary>
         [Input("databaseEngine")]
         public Input<string>? DatabaseEngine { get; set; }
 
+        /// <summary>
+        /// The database engine version of the new managed database.
+        /// </summary>
         [Input("databaseEngineVersion")]
         public Input<string>? DatabaseEngineVersion { get; set; }
 
+        /// <summary>
+        /// The date the managed database was added to your Vultr account.
+        /// </summary>
         [Input("dateCreated")]
         public Input<string>? DateCreated { get; set; }
 
+        /// <summary>
+        /// The managed database's default logical database.
+        /// </summary>
         [Input("dbname")]
         public Input<string>? Dbname { get; set; }
 
+        /// <summary>
+        /// The hostname assigned to the managed database.
+        /// </summary>
         [Input("host")]
         public Input<string>? Host { get; set; }
 
+        /// <summary>
+        /// The ID of the managed database.
+        /// </summary>
         [Input("id")]
         public Input<string>? Id { get; set; }
 
+        /// <summary>
+        /// A label for the managed database.
+        /// </summary>
         [Input("label", required: true)]
         public Input<string> Label { get; set; } = null!;
 
+        /// <summary>
+        /// The date of the latest backup available on the managed database.
+        /// </summary>
         [Input("latestBackup")]
         public Input<string>? LatestBackup { get; set; }
 
+        /// <summary>
+        /// The preferred maintenance day of week for the managed database.
+        /// </summary>
         [Input("maintenanceDow")]
         public Input<string>? MaintenanceDow { get; set; }
 
+        /// <summary>
+        /// The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).
+        /// </summary>
         [Input("maintenanceTime")]
         public Input<string>? MaintenanceTime { get; set; }
 
+        /// <summary>
+        /// The configuration value for the long query time (in seconds) on the managed database (MySQL engine types only).
+        /// </summary>
         [Input("mysqlLongQueryTime")]
         public Input<int>? MysqlLongQueryTime { get; set; }
 
+        /// <summary>
+        /// The configuration value for whether primary keys are required on the managed database (MySQL engine types only).
+        /// </summary>
         [Input("mysqlRequirePrimaryKey")]
         public Input<bool>? MysqlRequirePrimaryKey { get; set; }
 
+        /// <summary>
+        /// The configuration value for slow query logging on the managed database (MySQL engine types only).
+        /// </summary>
         [Input("mysqlSlowQueryLog")]
         public Input<bool>? MysqlSlowQueryLog { get; set; }
 
         [Input("mysqlSqlModes")]
         private InputList<string>? _mysqlSqlModes;
+
+        /// <summary>
+        /// A list of SQL modes to configure for the managed database (MySQL engine types only - `ALLOW_INVALID_DATES`, `ANSI`, `ANSI_QUOTES`, `ERROR_FOR_DIVISION_BY_ZERO`, `HIGH_NOT_PRECEDENCE`, `IGNORE_SPACE`, `NO_AUTO_VALUE_ON_ZERO`, `NO_DIR_IN_CREATE`, `NO_ENGINE_SUBSTITUTION`, `NO_UNSIGNED_SUBTRACTION`, `NO_ZERO_DATE`, `NO_ZERO_IN_DATE`, `ONLY_FULL_GROUP_BY`, `PIPES_AS_CONCAT`, `REAL_AS_FLOAT`, `STRICT_ALL_TABLES`, `STRICT_TRANS_TABLES`, `TIME_TRUNCATE_FRACTIONAL`, `TRADITIONAL`).
+        /// </summary>
         public InputList<string> MysqlSqlModes
         {
             get => _mysqlSqlModes ?? (_mysqlSqlModes = new InputList<string>());
             set => _mysqlSqlModes = value;
         }
 
+        /// <summary>
+        /// The password for the managed database's primary admin user.
+        /// </summary>
         [Input("password")]
         public Input<string>? Password { get; set; }
 
+        /// <summary>
+        /// The ID of the plan that you want the managed database to subscribe to. [See List Managed Database Plans](https://www.vultr.com/api/#tag/managed-databases/operation/list-database-plans)
+        /// </summary>
         [Input("plan")]
         public Input<string>? Plan { get; set; }
 
+        /// <summary>
+        /// The description of the disk(s) on the managed database.
+        /// </summary>
         [Input("planDisk")]
         public Input<int>? PlanDisk { get; set; }
 
+        /// <summary>
+        /// The amount of memory available on the managed database in MB.
+        /// </summary>
         [Input("planRam")]
         public Input<int>? PlanRam { get; set; }
 
+        /// <summary>
+        /// The number of standby nodes available on the managed database.
+        /// </summary>
         [Input("planReplicas")]
         public Input<int>? PlanReplicas { get; set; }
 
+        /// <summary>
+        /// The number of virtual CPUs available on the managed database.
+        /// </summary>
         [Input("planVcpus")]
         public Input<int>? PlanVcpus { get; set; }
 
+        /// <summary>
+        /// The connection port for the managed database.
+        /// </summary>
         [Input("port")]
         public Input<string>? Port { get; set; }
 
+        /// <summary>
+        /// The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
+        /// </summary>
         [Input("redisEvictionPolicy")]
         public Input<string>? RedisEvictionPolicy { get; set; }
 
+        /// <summary>
+        /// The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
+        /// </summary>
         [Input("region", required: true)]
         public Input<string> Region { get; set; } = null!;
 
+        /// <summary>
+        /// The current status of the managed database (poweroff, rebuilding, rebalancing, running).
+        /// </summary>
         [Input("status")]
         public Input<string>? Status { get; set; }
 
+        /// <summary>
+        /// The tag to assign to the managed database.
+        /// </summary>
         [Input("tag")]
         public Input<string>? Tag { get; set; }
 
         [Input("trustedIps")]
         private InputList<string>? _trustedIps;
+
+        /// <summary>
+        /// A list of allowed IP addresses for the managed database.
+        /// </summary>
         public InputList<string> TrustedIps
         {
             get => _trustedIps ?? (_trustedIps = new InputList<string>());
             set => _trustedIps = value;
         }
 
+        /// <summary>
+        /// The primary admin user for the managed database.
+        /// </summary>
         [Input("user")]
         public Input<string>? User { get; set; }
+
+        [Input("vpcId")]
+        public Input<string>? VpcId { get; set; }
 
         public DatabaseReadReplicaGetArgs()
         {

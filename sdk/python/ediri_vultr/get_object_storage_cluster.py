@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -119,11 +119,11 @@ def get_object_storage_cluster(filters: Optional[Sequence[pulumi.InputType['GetO
     __ret__ = pulumi.runtime.invoke('vultr:index/getObjectStorageCluster:getObjectStorageCluster', __args__, opts=opts, typ=GetObjectStorageClusterResult).value
 
     return AwaitableGetObjectStorageClusterResult(
-        deploy=__ret__.deploy,
-        filters=__ret__.filters,
-        hostname=__ret__.hostname,
-        id=__ret__.id,
-        region=__ret__.region)
+        deploy=pulumi.get(__ret__, 'deploy'),
+        filters=pulumi.get(__ret__, 'filters'),
+        hostname=pulumi.get(__ret__, 'hostname'),
+        id=pulumi.get(__ret__, 'id'),
+        region=pulumi.get(__ret__, 'region'))
 
 
 @_utilities.lift_output_func(get_object_storage_cluster)

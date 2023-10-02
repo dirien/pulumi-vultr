@@ -13,29 +13,99 @@ import io.dirien.vultr.inputs.DatabaseUserState;
 import java.lang.String;
 import javax.annotation.Nullable;
 
+/**
+ * Provides a Vultr database user resource. This can be used to create, read, modify, and delete users for a managed database on your Vultr account.
+ * 
+ * ## Example Usage
+ * 
+ * Create a new database user:
+ * ```java
+ * package generated_program;
+ * 
+ * import com.pulumi.Context;
+ * import com.pulumi.Pulumi;
+ * import com.pulumi.core.Output;
+ * import com.pulumi.vultr.DatabaseUser;
+ * import com.pulumi.vultr.DatabaseUserArgs;
+ * import java.util.List;
+ * import java.util.ArrayList;
+ * import java.util.Map;
+ * import java.io.File;
+ * import java.nio.file.Files;
+ * import java.nio.file.Paths;
+ * 
+ * public class App {
+ *     public static void main(String[] args) {
+ *         Pulumi.run(App::stack);
+ *     }
+ * 
+ *     public static void stack(Context ctx) {
+ *         var myDatabaseUser = new DatabaseUser(&#34;myDatabaseUser&#34;, DatabaseUserArgs.builder()        
+ *             .databaseId(vultr_database.my_database().id())
+ *             .username(&#34;my_database_user&#34;)
+ *             .password(&#34;randomTestPW40298&#34;)
+ *             .build());
+ * 
+ *     }
+ * }
+ * ```
+ * 
+ */
 @ResourceType(type="vultr:index/databaseUser:DatabaseUser")
 public class DatabaseUser extends com.pulumi.resources.CustomResource {
+    /**
+     * The managed database ID you want to attach this user to.
+     * 
+     */
     @Export(name="databaseId", refs={String.class}, tree="[0]")
     private Output<String> databaseId;
 
+    /**
+     * @return The managed database ID you want to attach this user to.
+     * 
+     */
     public Output<String> databaseId() {
         return this.databaseId;
     }
+    /**
+     * The encryption type of the new managed database user&#39;s password (MySQL engine types only - `caching_sha2_password`, `mysql_native_password`).
+     * 
+     */
     @Export(name="encryption", refs={String.class}, tree="[0]")
     private Output<String> encryption;
 
+    /**
+     * @return The encryption type of the new managed database user&#39;s password (MySQL engine types only - `caching_sha2_password`, `mysql_native_password`).
+     * 
+     */
     public Output<String> encryption() {
         return this.encryption;
     }
+    /**
+     * The password of the new managed database user.
+     * 
+     */
     @Export(name="password", refs={String.class}, tree="[0]")
     private Output<String> password;
 
+    /**
+     * @return The password of the new managed database user.
+     * 
+     */
     public Output<String> password() {
         return this.password;
     }
+    /**
+     * The username of the new managed database user.
+     * 
+     */
     @Export(name="username", refs={String.class}, tree="[0]")
     private Output<String> username;
 
+    /**
+     * @return The username of the new managed database user.
+     * 
+     */
     public Output<String> username() {
         return this.username;
     }

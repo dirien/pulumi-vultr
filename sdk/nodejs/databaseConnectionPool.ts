@@ -4,6 +4,26 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "./utilities";
 
+/**
+ * Provides a Vultr database connection pool resource. This can be used to create, read, modify, and delete connection pools for a PostgreSQL managed database on your Vultr account.
+ *
+ * ## Example Usage
+ *
+ * Create a new database connection pool:
+ *
+ * ```typescript
+ * import * as pulumi from "@pulumi/pulumi";
+ * import * as vultr from "@ediri/vultr";
+ *
+ * const myDatabaseConnectionPool = new vultr.DatabaseConnectionPool("myDatabaseConnectionPool", {
+ *     databaseId: vultr_database.my_database.id,
+ *     database: "defaultdb",
+ *     username: "vultradmin",
+ *     mode: "transaction",
+ *     size: 3,
+ * });
+ * ```
+ */
 export class DatabaseConnectionPool extends pulumi.CustomResource {
     /**
      * Get an existing DatabaseConnectionPool resource's state with the given name, ID, and optional extra
@@ -32,11 +52,29 @@ export class DatabaseConnectionPool extends pulumi.CustomResource {
         return obj['__pulumiType'] === DatabaseConnectionPool.__pulumiType;
     }
 
+    /**
+     * The logical database to use for the new managed database connection pool.
+     */
     public readonly database!: pulumi.Output<string>;
+    /**
+     * The managed database ID you want to attach this connection pool to.
+     */
     public readonly databaseId!: pulumi.Output<string>;
+    /**
+     * The mode to configure for the new managed database connection pool (`session`, `transaction`, `statement`).
+     */
     public readonly mode!: pulumi.Output<string>;
+    /**
+     * The name of the new managed database connection pool.
+     */
     public readonly name!: pulumi.Output<string>;
+    /**
+     * The size of the new managed database connection pool.
+     */
     public readonly size!: pulumi.Output<number>;
+    /**
+     * The database user to use for the new managed database connection pool.
+     */
     public readonly username!: pulumi.Output<string>;
 
     /**
@@ -91,11 +129,29 @@ export class DatabaseConnectionPool extends pulumi.CustomResource {
  * Input properties used for looking up and filtering DatabaseConnectionPool resources.
  */
 export interface DatabaseConnectionPoolState {
+    /**
+     * The logical database to use for the new managed database connection pool.
+     */
     database?: pulumi.Input<string>;
+    /**
+     * The managed database ID you want to attach this connection pool to.
+     */
     databaseId?: pulumi.Input<string>;
+    /**
+     * The mode to configure for the new managed database connection pool (`session`, `transaction`, `statement`).
+     */
     mode?: pulumi.Input<string>;
+    /**
+     * The name of the new managed database connection pool.
+     */
     name?: pulumi.Input<string>;
+    /**
+     * The size of the new managed database connection pool.
+     */
     size?: pulumi.Input<number>;
+    /**
+     * The database user to use for the new managed database connection pool.
+     */
     username?: pulumi.Input<string>;
 }
 
@@ -103,10 +159,28 @@ export interface DatabaseConnectionPoolState {
  * The set of arguments for constructing a DatabaseConnectionPool resource.
  */
 export interface DatabaseConnectionPoolArgs {
+    /**
+     * The logical database to use for the new managed database connection pool.
+     */
     database: pulumi.Input<string>;
+    /**
+     * The managed database ID you want to attach this connection pool to.
+     */
     databaseId: pulumi.Input<string>;
+    /**
+     * The mode to configure for the new managed database connection pool (`session`, `transaction`, `statement`).
+     */
     mode: pulumi.Input<string>;
+    /**
+     * The name of the new managed database connection pool.
+     */
     name?: pulumi.Input<string>;
+    /**
+     * The size of the new managed database connection pool.
+     */
     size: pulumi.Input<number>;
+    /**
+     * The database user to use for the new managed database connection pool.
+     */
     username: pulumi.Input<string>;
 }

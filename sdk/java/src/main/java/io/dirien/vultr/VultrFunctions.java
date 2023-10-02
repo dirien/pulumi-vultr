@@ -63,6 +63,8 @@ import io.dirien.vultr.inputs.GetStartupScriptArgs;
 import io.dirien.vultr.inputs.GetStartupScriptPlainArgs;
 import io.dirien.vultr.inputs.GetUserArgs;
 import io.dirien.vultr.inputs.GetUserPlainArgs;
+import io.dirien.vultr.inputs.GetVpc2Args;
+import io.dirien.vultr.inputs.GetVpc2PlainArgs;
 import io.dirien.vultr.inputs.GetVpcArgs;
 import io.dirien.vultr.inputs.GetVpcPlainArgs;
 import io.dirien.vultr.outputs.GetAccountResult;
@@ -93,6 +95,7 @@ import io.dirien.vultr.outputs.GetSnapshotResult;
 import io.dirien.vultr.outputs.GetSshKeyResult;
 import io.dirien.vultr.outputs.GetStartupScriptResult;
 import io.dirien.vultr.outputs.GetUserResult;
+import io.dirien.vultr.outputs.GetVpc2Result;
 import io.dirien.vultr.outputs.GetVpcResult;
 import java.util.concurrent.CompletableFuture;
 
@@ -1573,21 +1576,255 @@ public final class VultrFunctions {
     public static CompletableFuture<GetBlockStorageResult> getBlockStoragePlain(GetBlockStoragePlainArgs args, InvokeOptions options) {
         return Deployment.getInstance().invokeAsync("vultr:index/getBlockStorage:getBlockStorage", TypeShape.of(GetBlockStorageResult.class), args, Utilities.withVersion(options));
     }
+    /**
+     * Get information about a Vultr database.
+     * 
+     * ## Example Usage
+     * 
+     * Get the information for a database by `label`:
+     * ```java
+     * package generated_program;
+     * 
+     * import com.pulumi.Context;
+     * import com.pulumi.Pulumi;
+     * import com.pulumi.core.Output;
+     * import com.pulumi.vultr.VultrFunctions;
+     * import com.pulumi.vultr.inputs.GetDatabaseArgs;
+     * import java.util.List;
+     * import java.util.ArrayList;
+     * import java.util.Map;
+     * import java.io.File;
+     * import java.nio.file.Files;
+     * import java.nio.file.Paths;
+     * 
+     * public class App {
+     *     public static void main(String[] args) {
+     *         Pulumi.run(App::stack);
+     *     }
+     * 
+     *     public static void stack(Context ctx) {
+     *         final var myDatabase = VultrFunctions.getDatabase(GetDatabaseArgs.builder()
+     *             .filters(GetDatabaseFilterArgs.builder()
+     *                 .name(&#34;label&#34;)
+     *                 .values(&#34;my-database-label&#34;)
+     *                 .build())
+     *             .build());
+     * 
+     *     }
+     * }
+     * ```
+     * 
+     */
     public static Output<GetDatabaseResult> getDatabase() {
         return getDatabase(GetDatabaseArgs.Empty, InvokeOptions.Empty);
     }
+    /**
+     * Get information about a Vultr database.
+     * 
+     * ## Example Usage
+     * 
+     * Get the information for a database by `label`:
+     * ```java
+     * package generated_program;
+     * 
+     * import com.pulumi.Context;
+     * import com.pulumi.Pulumi;
+     * import com.pulumi.core.Output;
+     * import com.pulumi.vultr.VultrFunctions;
+     * import com.pulumi.vultr.inputs.GetDatabaseArgs;
+     * import java.util.List;
+     * import java.util.ArrayList;
+     * import java.util.Map;
+     * import java.io.File;
+     * import java.nio.file.Files;
+     * import java.nio.file.Paths;
+     * 
+     * public class App {
+     *     public static void main(String[] args) {
+     *         Pulumi.run(App::stack);
+     *     }
+     * 
+     *     public static void stack(Context ctx) {
+     *         final var myDatabase = VultrFunctions.getDatabase(GetDatabaseArgs.builder()
+     *             .filters(GetDatabaseFilterArgs.builder()
+     *                 .name(&#34;label&#34;)
+     *                 .values(&#34;my-database-label&#34;)
+     *                 .build())
+     *             .build());
+     * 
+     *     }
+     * }
+     * ```
+     * 
+     */
     public static CompletableFuture<GetDatabaseResult> getDatabasePlain() {
         return getDatabasePlain(GetDatabasePlainArgs.Empty, InvokeOptions.Empty);
     }
+    /**
+     * Get information about a Vultr database.
+     * 
+     * ## Example Usage
+     * 
+     * Get the information for a database by `label`:
+     * ```java
+     * package generated_program;
+     * 
+     * import com.pulumi.Context;
+     * import com.pulumi.Pulumi;
+     * import com.pulumi.core.Output;
+     * import com.pulumi.vultr.VultrFunctions;
+     * import com.pulumi.vultr.inputs.GetDatabaseArgs;
+     * import java.util.List;
+     * import java.util.ArrayList;
+     * import java.util.Map;
+     * import java.io.File;
+     * import java.nio.file.Files;
+     * import java.nio.file.Paths;
+     * 
+     * public class App {
+     *     public static void main(String[] args) {
+     *         Pulumi.run(App::stack);
+     *     }
+     * 
+     *     public static void stack(Context ctx) {
+     *         final var myDatabase = VultrFunctions.getDatabase(GetDatabaseArgs.builder()
+     *             .filters(GetDatabaseFilterArgs.builder()
+     *                 .name(&#34;label&#34;)
+     *                 .values(&#34;my-database-label&#34;)
+     *                 .build())
+     *             .build());
+     * 
+     *     }
+     * }
+     * ```
+     * 
+     */
     public static Output<GetDatabaseResult> getDatabase(GetDatabaseArgs args) {
         return getDatabase(args, InvokeOptions.Empty);
     }
+    /**
+     * Get information about a Vultr database.
+     * 
+     * ## Example Usage
+     * 
+     * Get the information for a database by `label`:
+     * ```java
+     * package generated_program;
+     * 
+     * import com.pulumi.Context;
+     * import com.pulumi.Pulumi;
+     * import com.pulumi.core.Output;
+     * import com.pulumi.vultr.VultrFunctions;
+     * import com.pulumi.vultr.inputs.GetDatabaseArgs;
+     * import java.util.List;
+     * import java.util.ArrayList;
+     * import java.util.Map;
+     * import java.io.File;
+     * import java.nio.file.Files;
+     * import java.nio.file.Paths;
+     * 
+     * public class App {
+     *     public static void main(String[] args) {
+     *         Pulumi.run(App::stack);
+     *     }
+     * 
+     *     public static void stack(Context ctx) {
+     *         final var myDatabase = VultrFunctions.getDatabase(GetDatabaseArgs.builder()
+     *             .filters(GetDatabaseFilterArgs.builder()
+     *                 .name(&#34;label&#34;)
+     *                 .values(&#34;my-database-label&#34;)
+     *                 .build())
+     *             .build());
+     * 
+     *     }
+     * }
+     * ```
+     * 
+     */
     public static CompletableFuture<GetDatabaseResult> getDatabasePlain(GetDatabasePlainArgs args) {
         return getDatabasePlain(args, InvokeOptions.Empty);
     }
+    /**
+     * Get information about a Vultr database.
+     * 
+     * ## Example Usage
+     * 
+     * Get the information for a database by `label`:
+     * ```java
+     * package generated_program;
+     * 
+     * import com.pulumi.Context;
+     * import com.pulumi.Pulumi;
+     * import com.pulumi.core.Output;
+     * import com.pulumi.vultr.VultrFunctions;
+     * import com.pulumi.vultr.inputs.GetDatabaseArgs;
+     * import java.util.List;
+     * import java.util.ArrayList;
+     * import java.util.Map;
+     * import java.io.File;
+     * import java.nio.file.Files;
+     * import java.nio.file.Paths;
+     * 
+     * public class App {
+     *     public static void main(String[] args) {
+     *         Pulumi.run(App::stack);
+     *     }
+     * 
+     *     public static void stack(Context ctx) {
+     *         final var myDatabase = VultrFunctions.getDatabase(GetDatabaseArgs.builder()
+     *             .filters(GetDatabaseFilterArgs.builder()
+     *                 .name(&#34;label&#34;)
+     *                 .values(&#34;my-database-label&#34;)
+     *                 .build())
+     *             .build());
+     * 
+     *     }
+     * }
+     * ```
+     * 
+     */
     public static Output<GetDatabaseResult> getDatabase(GetDatabaseArgs args, InvokeOptions options) {
         return Deployment.getInstance().invoke("vultr:index/getDatabase:getDatabase", TypeShape.of(GetDatabaseResult.class), args, Utilities.withVersion(options));
     }
+    /**
+     * Get information about a Vultr database.
+     * 
+     * ## Example Usage
+     * 
+     * Get the information for a database by `label`:
+     * ```java
+     * package generated_program;
+     * 
+     * import com.pulumi.Context;
+     * import com.pulumi.Pulumi;
+     * import com.pulumi.core.Output;
+     * import com.pulumi.vultr.VultrFunctions;
+     * import com.pulumi.vultr.inputs.GetDatabaseArgs;
+     * import java.util.List;
+     * import java.util.ArrayList;
+     * import java.util.Map;
+     * import java.io.File;
+     * import java.nio.file.Files;
+     * import java.nio.file.Paths;
+     * 
+     * public class App {
+     *     public static void main(String[] args) {
+     *         Pulumi.run(App::stack);
+     *     }
+     * 
+     *     public static void stack(Context ctx) {
+     *         final var myDatabase = VultrFunctions.getDatabase(GetDatabaseArgs.builder()
+     *             .filters(GetDatabaseFilterArgs.builder()
+     *                 .name(&#34;label&#34;)
+     *                 .values(&#34;my-database-label&#34;)
+     *                 .build())
+     *             .build());
+     * 
+     *     }
+     * }
+     * ```
+     * 
+     */
     public static CompletableFuture<GetDatabaseResult> getDatabasePlain(GetDatabasePlainArgs args, InvokeOptions options) {
         return Deployment.getInstance().invokeAsync("vultr:index/getDatabase:getDatabase", TypeShape.of(GetDatabaseResult.class), args, Utilities.withVersion(options));
     }
@@ -6984,6 +7221,258 @@ public final class VultrFunctions {
      */
     public static CompletableFuture<GetUserResult> getUserPlain(GetUserPlainArgs args, InvokeOptions options) {
         return Deployment.getInstance().invokeAsync("vultr:index/getUser:getUser", TypeShape.of(GetUserResult.class), args, Utilities.withVersion(options));
+    }
+    /**
+     * Get information about a Vultr VPC 2.0.
+     * 
+     * ## Example Usage
+     * 
+     * Get the information for a VPC 2.0 by `description`:
+     * ```java
+     * package generated_program;
+     * 
+     * import com.pulumi.Context;
+     * import com.pulumi.Pulumi;
+     * import com.pulumi.core.Output;
+     * import com.pulumi.vultr.VultrFunctions;
+     * import com.pulumi.vultr.inputs.GetVpc2Args;
+     * import java.util.List;
+     * import java.util.ArrayList;
+     * import java.util.Map;
+     * import java.io.File;
+     * import java.nio.file.Files;
+     * import java.nio.file.Paths;
+     * 
+     * public class App {
+     *     public static void main(String[] args) {
+     *         Pulumi.run(App::stack);
+     *     }
+     * 
+     *     public static void stack(Context ctx) {
+     *         final var myVpc2 = VultrFunctions.getVpc2(GetVpc2Args.builder()
+     *             .filters(GetVpc2FilterArgs.builder()
+     *                 .name(&#34;description&#34;)
+     *                 .values(&#34;my-vpc2-description&#34;)
+     *                 .build())
+     *             .build());
+     * 
+     *     }
+     * }
+     * ```
+     * 
+     */
+    public static Output<GetVpc2Result> getVpc2() {
+        return getVpc2(GetVpc2Args.Empty, InvokeOptions.Empty);
+    }
+    /**
+     * Get information about a Vultr VPC 2.0.
+     * 
+     * ## Example Usage
+     * 
+     * Get the information for a VPC 2.0 by `description`:
+     * ```java
+     * package generated_program;
+     * 
+     * import com.pulumi.Context;
+     * import com.pulumi.Pulumi;
+     * import com.pulumi.core.Output;
+     * import com.pulumi.vultr.VultrFunctions;
+     * import com.pulumi.vultr.inputs.GetVpc2Args;
+     * import java.util.List;
+     * import java.util.ArrayList;
+     * import java.util.Map;
+     * import java.io.File;
+     * import java.nio.file.Files;
+     * import java.nio.file.Paths;
+     * 
+     * public class App {
+     *     public static void main(String[] args) {
+     *         Pulumi.run(App::stack);
+     *     }
+     * 
+     *     public static void stack(Context ctx) {
+     *         final var myVpc2 = VultrFunctions.getVpc2(GetVpc2Args.builder()
+     *             .filters(GetVpc2FilterArgs.builder()
+     *                 .name(&#34;description&#34;)
+     *                 .values(&#34;my-vpc2-description&#34;)
+     *                 .build())
+     *             .build());
+     * 
+     *     }
+     * }
+     * ```
+     * 
+     */
+    public static CompletableFuture<GetVpc2Result> getVpc2Plain() {
+        return getVpc2Plain(GetVpc2PlainArgs.Empty, InvokeOptions.Empty);
+    }
+    /**
+     * Get information about a Vultr VPC 2.0.
+     * 
+     * ## Example Usage
+     * 
+     * Get the information for a VPC 2.0 by `description`:
+     * ```java
+     * package generated_program;
+     * 
+     * import com.pulumi.Context;
+     * import com.pulumi.Pulumi;
+     * import com.pulumi.core.Output;
+     * import com.pulumi.vultr.VultrFunctions;
+     * import com.pulumi.vultr.inputs.GetVpc2Args;
+     * import java.util.List;
+     * import java.util.ArrayList;
+     * import java.util.Map;
+     * import java.io.File;
+     * import java.nio.file.Files;
+     * import java.nio.file.Paths;
+     * 
+     * public class App {
+     *     public static void main(String[] args) {
+     *         Pulumi.run(App::stack);
+     *     }
+     * 
+     *     public static void stack(Context ctx) {
+     *         final var myVpc2 = VultrFunctions.getVpc2(GetVpc2Args.builder()
+     *             .filters(GetVpc2FilterArgs.builder()
+     *                 .name(&#34;description&#34;)
+     *                 .values(&#34;my-vpc2-description&#34;)
+     *                 .build())
+     *             .build());
+     * 
+     *     }
+     * }
+     * ```
+     * 
+     */
+    public static Output<GetVpc2Result> getVpc2(GetVpc2Args args) {
+        return getVpc2(args, InvokeOptions.Empty);
+    }
+    /**
+     * Get information about a Vultr VPC 2.0.
+     * 
+     * ## Example Usage
+     * 
+     * Get the information for a VPC 2.0 by `description`:
+     * ```java
+     * package generated_program;
+     * 
+     * import com.pulumi.Context;
+     * import com.pulumi.Pulumi;
+     * import com.pulumi.core.Output;
+     * import com.pulumi.vultr.VultrFunctions;
+     * import com.pulumi.vultr.inputs.GetVpc2Args;
+     * import java.util.List;
+     * import java.util.ArrayList;
+     * import java.util.Map;
+     * import java.io.File;
+     * import java.nio.file.Files;
+     * import java.nio.file.Paths;
+     * 
+     * public class App {
+     *     public static void main(String[] args) {
+     *         Pulumi.run(App::stack);
+     *     }
+     * 
+     *     public static void stack(Context ctx) {
+     *         final var myVpc2 = VultrFunctions.getVpc2(GetVpc2Args.builder()
+     *             .filters(GetVpc2FilterArgs.builder()
+     *                 .name(&#34;description&#34;)
+     *                 .values(&#34;my-vpc2-description&#34;)
+     *                 .build())
+     *             .build());
+     * 
+     *     }
+     * }
+     * ```
+     * 
+     */
+    public static CompletableFuture<GetVpc2Result> getVpc2Plain(GetVpc2PlainArgs args) {
+        return getVpc2Plain(args, InvokeOptions.Empty);
+    }
+    /**
+     * Get information about a Vultr VPC 2.0.
+     * 
+     * ## Example Usage
+     * 
+     * Get the information for a VPC 2.0 by `description`:
+     * ```java
+     * package generated_program;
+     * 
+     * import com.pulumi.Context;
+     * import com.pulumi.Pulumi;
+     * import com.pulumi.core.Output;
+     * import com.pulumi.vultr.VultrFunctions;
+     * import com.pulumi.vultr.inputs.GetVpc2Args;
+     * import java.util.List;
+     * import java.util.ArrayList;
+     * import java.util.Map;
+     * import java.io.File;
+     * import java.nio.file.Files;
+     * import java.nio.file.Paths;
+     * 
+     * public class App {
+     *     public static void main(String[] args) {
+     *         Pulumi.run(App::stack);
+     *     }
+     * 
+     *     public static void stack(Context ctx) {
+     *         final var myVpc2 = VultrFunctions.getVpc2(GetVpc2Args.builder()
+     *             .filters(GetVpc2FilterArgs.builder()
+     *                 .name(&#34;description&#34;)
+     *                 .values(&#34;my-vpc2-description&#34;)
+     *                 .build())
+     *             .build());
+     * 
+     *     }
+     * }
+     * ```
+     * 
+     */
+    public static Output<GetVpc2Result> getVpc2(GetVpc2Args args, InvokeOptions options) {
+        return Deployment.getInstance().invoke("vultr:index/getVpc2:getVpc2", TypeShape.of(GetVpc2Result.class), args, Utilities.withVersion(options));
+    }
+    /**
+     * Get information about a Vultr VPC 2.0.
+     * 
+     * ## Example Usage
+     * 
+     * Get the information for a VPC 2.0 by `description`:
+     * ```java
+     * package generated_program;
+     * 
+     * import com.pulumi.Context;
+     * import com.pulumi.Pulumi;
+     * import com.pulumi.core.Output;
+     * import com.pulumi.vultr.VultrFunctions;
+     * import com.pulumi.vultr.inputs.GetVpc2Args;
+     * import java.util.List;
+     * import java.util.ArrayList;
+     * import java.util.Map;
+     * import java.io.File;
+     * import java.nio.file.Files;
+     * import java.nio.file.Paths;
+     * 
+     * public class App {
+     *     public static void main(String[] args) {
+     *         Pulumi.run(App::stack);
+     *     }
+     * 
+     *     public static void stack(Context ctx) {
+     *         final var myVpc2 = VultrFunctions.getVpc2(GetVpc2Args.builder()
+     *             .filters(GetVpc2FilterArgs.builder()
+     *                 .name(&#34;description&#34;)
+     *                 .values(&#34;my-vpc2-description&#34;)
+     *                 .build())
+     *             .build());
+     * 
+     *     }
+     * }
+     * ```
+     * 
+     */
+    public static CompletableFuture<GetVpc2Result> getVpc2Plain(GetVpc2PlainArgs args, InvokeOptions options) {
+        return Deployment.getInstance().invokeAsync("vultr:index/getVpc2:getVpc2", TypeShape.of(GetVpc2Result.class), args, Utilities.withVersion(options));
     }
     /**
      * Get information about a Vultr VPC.

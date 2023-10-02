@@ -15,16 +15,32 @@ public final class DatabaseDbArgs extends com.pulumi.resources.ResourceArgs {
 
     public static final DatabaseDbArgs Empty = new DatabaseDbArgs();
 
+    /**
+     * The managed database ID you want to attach this logical DB to.
+     * 
+     */
     @Import(name="databaseId", required=true)
     private Output<String> databaseId;
 
+    /**
+     * @return The managed database ID you want to attach this logical DB to.
+     * 
+     */
     public Output<String> databaseId() {
         return this.databaseId;
     }
 
+    /**
+     * The name of the new managed database logical DB.
+     * 
+     */
     @Import(name="name")
     private @Nullable Output<String> name;
 
+    /**
+     * @return The name of the new managed database logical DB.
+     * 
+     */
     public Optional<Output<String>> name() {
         return Optional.ofNullable(this.name);
     }
@@ -54,20 +70,44 @@ public final class DatabaseDbArgs extends com.pulumi.resources.ResourceArgs {
             $ = new DatabaseDbArgs(Objects.requireNonNull(defaults));
         }
 
+        /**
+         * @param databaseId The managed database ID you want to attach this logical DB to.
+         * 
+         * @return builder
+         * 
+         */
         public Builder databaseId(Output<String> databaseId) {
             $.databaseId = databaseId;
             return this;
         }
 
+        /**
+         * @param databaseId The managed database ID you want to attach this logical DB to.
+         * 
+         * @return builder
+         * 
+         */
         public Builder databaseId(String databaseId) {
             return databaseId(Output.of(databaseId));
         }
 
+        /**
+         * @param name The name of the new managed database logical DB.
+         * 
+         * @return builder
+         * 
+         */
         public Builder name(@Nullable Output<String> name) {
             $.name = name;
             return this;
         }
 
+        /**
+         * @param name The name of the new managed database logical DB.
+         * 
+         * @return builder
+         * 
+         */
         public Builder name(String name) {
             return name(Output.of(name));
         }

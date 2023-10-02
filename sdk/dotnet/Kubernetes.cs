@@ -141,7 +141,7 @@ namespace ediri.Vultr
         public Output<Outputs.KubernetesNodePools?> NodePools { get; private set; } = null!;
 
         /// <summary>
-        /// The region your VKE cluster will be deployed in. Currently, supported values are `ewr` and `lax`
+        /// The region your VKE cluster will be deployed in.
         /// </summary>
         [Output("region")]
         public Output<string> Region { get; private set; } = null!;
@@ -231,7 +231,7 @@ namespace ediri.Vultr
         public Input<Inputs.KubernetesNodePoolsArgs>? NodePools { get; set; }
 
         /// <summary>
-        /// The region your VKE cluster will be deployed in. Currently, supported values are `ewr` and `lax`
+        /// The region your VKE cluster will be deployed in.
         /// </summary>
         [Input("region", required: true)]
         public Input<string> Region { get; set; } = null!;
@@ -351,7 +351,7 @@ namespace ediri.Vultr
         public Input<Inputs.KubernetesNodePoolsGetArgs>? NodePools { get; set; }
 
         /// <summary>
-        /// The region your VKE cluster will be deployed in. Currently, supported values are `ewr` and `lax`
+        /// The region your VKE cluster will be deployed in.
         /// </summary>
         [Input("region")]
         public Input<string>? Region { get; set; }

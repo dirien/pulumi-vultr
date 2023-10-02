@@ -4,21 +4,44 @@
 package config
 
 import (
+	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config"
 )
 
+var _ = internal.GetEnvOrDefault
+
 // The API Key that allows interaction with the API
 func GetApiKey(ctx *pulumi.Context) string {
-	return config.Get(ctx, "vultr:apiKey")
+	v, err := config.Try(ctx, "vultr:apiKey")
+	if err == nil {
+		return v
+	}
+	var value string
+	if d := internal.GetEnvOrDefault(nil, nil, "VULTR_API_KEY"); d != nil {
+		value = d.(string)
+	}
+	return value
 }
 
 // Allows users to set the speed of API calls to work with the Vultr Rate Limit
 func GetRateLimit(ctx *pulumi.Context) int {
-	return config.GetInt(ctx, "vultr:rateLimit")
+	v, err := config.TryInt(ctx, "vultr:rateLimit")
+	if err == nil {
+		return v
+	}
+	var value int
+	value = 500
+	return value
 }
 
 // Allows users to set the maximum number of retries allowed for a failed API call.
 func GetRetryLimit(ctx *pulumi.Context) int {
-	return config.GetInt(ctx, "vultr:retryLimit")
+	v, err := config.TryInt(ctx, "vultr:retryLimit")
+	if err == nil {
+		return v
+	}
+	var value int
+	value = 3
+	return value
 }

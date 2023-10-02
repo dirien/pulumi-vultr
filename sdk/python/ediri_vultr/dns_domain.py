@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 
 __all__ = ['DnsDomainArgs', 'DnsDomain']
@@ -23,11 +23,24 @@ class DnsDomainArgs:
         :param pulumi.Input[str] dns_sec: The Domain's DNSSEC status. Valid options are `enabled` or `disabled`. Note `disabled` is default
         :param pulumi.Input[str] ip: Instance IP you want associated to domain. If omitted this will create a domain with no records.
         """
-        pulumi.set(__self__, "domain", domain)
+        DnsDomainArgs._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            domain=domain,
+            dns_sec=dns_sec,
+            ip=ip,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             domain: pulumi.Input[str],
+             dns_sec: Optional[pulumi.Input[str]] = None,
+             ip: Optional[pulumi.Input[str]] = None,
+             opts: Optional[pulumi.ResourceOptions]=None):
+        _setter("domain", domain)
         if dns_sec is not None:
-            pulumi.set(__self__, "dns_sec", dns_sec)
+            _setter("dns_sec", dns_sec)
         if ip is not None:
-            pulumi.set(__self__, "ip", ip)
+            _setter("ip", ip)
 
     @property
     @pulumi.getter
@@ -80,14 +93,29 @@ class _DnsDomainState:
         :param pulumi.Input[str] domain: Name of domain.
         :param pulumi.Input[str] ip: Instance IP you want associated to domain. If omitted this will create a domain with no records.
         """
+        _DnsDomainState._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            date_created=date_created,
+            dns_sec=dns_sec,
+            domain=domain,
+            ip=ip,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             date_created: Optional[pulumi.Input[str]] = None,
+             dns_sec: Optional[pulumi.Input[str]] = None,
+             domain: Optional[pulumi.Input[str]] = None,
+             ip: Optional[pulumi.Input[str]] = None,
+             opts: Optional[pulumi.ResourceOptions]=None):
         if date_created is not None:
-            pulumi.set(__self__, "date_created", date_created)
+            _setter("date_created", date_created)
         if dns_sec is not None:
-            pulumi.set(__self__, "dns_sec", dns_sec)
+            _setter("dns_sec", dns_sec)
         if domain is not None:
-            pulumi.set(__self__, "domain", domain)
+            _setter("domain", domain)
         if ip is not None:
-            pulumi.set(__self__, "ip", ip)
+            _setter("ip", ip)
 
     @property
     @pulumi.getter(name="dateCreated")
@@ -217,6 +245,10 @@ class DnsDomain(pulumi.CustomResource):
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
+            kwargs = kwargs or {}
+            def _setter(key, value):
+                kwargs[key] = value
+            DnsDomainArgs._configure(_setter, **kwargs)
             __self__._internal_init(resource_name, *args, **kwargs)
 
     def _internal_init(__self__,

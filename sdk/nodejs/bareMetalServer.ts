@@ -193,6 +193,10 @@ export class BareMetalServer extends pulumi.CustomResource {
      * The IPv6 network size in bits.
      */
     public /*out*/ readonly v6NetworkSize!: pulumi.Output<number>;
+    /**
+     * A list of VPC 2.0 IDs to be attached to the server.
+     */
+    public readonly vpc2Ids!: pulumi.Output<string[] | undefined>;
 
     /**
      * Create a BareMetalServer resource with the given unique name, arguments, and options.
@@ -236,6 +240,7 @@ export class BareMetalServer extends pulumi.CustomResource {
             resourceInputs["v6MainIp"] = state ? state.v6MainIp : undefined;
             resourceInputs["v6Network"] = state ? state.v6Network : undefined;
             resourceInputs["v6NetworkSize"] = state ? state.v6NetworkSize : undefined;
+            resourceInputs["vpc2Ids"] = state ? state.vpc2Ids : undefined;
         } else {
             const args = argsOrState as BareMetalServerArgs | undefined;
             if ((!args || args.plan === undefined) && !opts.urn) {
@@ -259,6 +264,7 @@ export class BareMetalServer extends pulumi.CustomResource {
             resourceInputs["sshKeyIds"] = args ? args.sshKeyIds : undefined;
             resourceInputs["tags"] = args ? args.tags : undefined;
             resourceInputs["userData"] = args ? args.userData : undefined;
+            resourceInputs["vpc2Ids"] = args ? args.vpc2Ids : undefined;
             resourceInputs["cpuCount"] = undefined /*out*/;
             resourceInputs["dateCreated"] = undefined /*out*/;
             resourceInputs["defaultPassword"] = undefined /*out*/;
@@ -401,6 +407,10 @@ export interface BareMetalServerState {
      * The IPv6 network size in bits.
      */
     v6NetworkSize?: pulumi.Input<number>;
+    /**
+     * A list of VPC 2.0 IDs to be attached to the server.
+     */
+    vpc2Ids?: pulumi.Input<pulumi.Input<string>[]>;
 }
 
 /**
@@ -467,4 +477,8 @@ export interface BareMetalServerArgs {
      * Generic data store, which some provisioning tools and cloud operating systems use as a configuration file. It is generally consumed only once after an instance has been launched, but individual needs may vary.
      */
     userData?: pulumi.Input<string>;
+    /**
+     * A list of VPC 2.0 IDs to be attached to the server.
+     */
+    vpc2Ids?: pulumi.Input<pulumi.Input<string>[]>;
 }

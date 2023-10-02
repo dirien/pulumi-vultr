@@ -212,6 +212,10 @@ namespace ediri.Vultr
         public readonly string V6MainIp;
         public readonly string V6Network;
         public readonly int V6NetworkSize;
+        /// <summary>
+        /// A list of VPC 2.0 IDs attached to the server.
+        /// </summary>
+        public readonly ImmutableArray<string> Vpc2Ids;
 
         [OutputConstructor]
         private GetBareMetalServerResult(
@@ -259,7 +263,9 @@ namespace ediri.Vultr
 
             string v6Network,
 
-            int v6NetworkSize)
+            int v6NetworkSize,
+
+            ImmutableArray<string> vpc2Ids)
         {
             AppId = appId;
             CpuCount = cpuCount;
@@ -284,6 +290,7 @@ namespace ediri.Vultr
             V6MainIp = v6MainIp;
             V6Network = v6Network;
             V6NetworkSize = v6NetworkSize;
+            Vpc2Ids = vpc2Ids;
         }
     }
 }

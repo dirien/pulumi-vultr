@@ -13,17 +13,69 @@ import io.dirien.vultr.inputs.DatabaseDbState;
 import java.lang.String;
 import javax.annotation.Nullable;
 
+/**
+ * Provides a Vultr database DB resource. This can be used to create, read, and delete logical DBs for a managed database on your Vultr account.
+ * 
+ * ## Example Usage
+ * 
+ * Create a new database DB:
+ * ```java
+ * package generated_program;
+ * 
+ * import com.pulumi.Context;
+ * import com.pulumi.Pulumi;
+ * import com.pulumi.core.Output;
+ * import com.pulumi.vultr.DatabaseDb;
+ * import com.pulumi.vultr.DatabaseDbArgs;
+ * import java.util.List;
+ * import java.util.ArrayList;
+ * import java.util.Map;
+ * import java.io.File;
+ * import java.nio.file.Files;
+ * import java.nio.file.Paths;
+ * 
+ * public class App {
+ *     public static void main(String[] args) {
+ *         Pulumi.run(App::stack);
+ *     }
+ * 
+ *     public static void stack(Context ctx) {
+ *         var myDatabaseDb = new DatabaseDb(&#34;myDatabaseDb&#34;, DatabaseDbArgs.builder()        
+ *             .databaseId(vultr_database.my_database().id())
+ *             .build());
+ * 
+ *     }
+ * }
+ * ```
+ * 
+ */
 @ResourceType(type="vultr:index/databaseDb:DatabaseDb")
 public class DatabaseDb extends com.pulumi.resources.CustomResource {
+    /**
+     * The managed database ID you want to attach this logical DB to.
+     * 
+     */
     @Export(name="databaseId", refs={String.class}, tree="[0]")
     private Output<String> databaseId;
 
+    /**
+     * @return The managed database ID you want to attach this logical DB to.
+     * 
+     */
     public Output<String> databaseId() {
         return this.databaseId;
     }
+    /**
+     * The name of the new managed database logical DB.
+     * 
+     */
     @Export(name="name", refs={String.class}, tree="[0]")
     private Output<String> name;
 
+    /**
+     * @return The name of the new managed database logical DB.
+     * 
+     */
     public Output<String> name() {
         return this.name;
     }

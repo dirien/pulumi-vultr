@@ -250,14 +250,14 @@ public class Kubernetes extends com.pulumi.resources.CustomResource {
         return Codegen.optional(this.nodePools);
     }
     /**
-     * The region your VKE cluster will be deployed in. Currently, supported values are `ewr` and `lax`
+     * The region your VKE cluster will be deployed in.
      * 
      */
     @Export(name="region", refs={String.class}, tree="[0]")
     private Output<String> region;
 
     /**
-     * @return The region your VKE cluster will be deployed in. Currently, supported values are `ewr` and `lax`
+     * @return The region your VKE cluster will be deployed in.
      * 
      */
     public Output<String> region() {

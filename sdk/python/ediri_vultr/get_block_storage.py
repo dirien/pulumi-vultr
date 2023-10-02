@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -191,17 +191,17 @@ def get_block_storage(filters: Optional[Sequence[pulumi.InputType['GetBlockStora
     __ret__ = pulumi.runtime.invoke('vultr:index/getBlockStorage:getBlockStorage', __args__, opts=opts, typ=GetBlockStorageResult).value
 
     return AwaitableGetBlockStorageResult(
-        attached_to_instance=__ret__.attached_to_instance,
-        block_type=__ret__.block_type,
-        cost=__ret__.cost,
-        date_created=__ret__.date_created,
-        filters=__ret__.filters,
-        id=__ret__.id,
-        label=__ret__.label,
-        mount_id=__ret__.mount_id,
-        region=__ret__.region,
-        size_gb=__ret__.size_gb,
-        status=__ret__.status)
+        attached_to_instance=pulumi.get(__ret__, 'attached_to_instance'),
+        block_type=pulumi.get(__ret__, 'block_type'),
+        cost=pulumi.get(__ret__, 'cost'),
+        date_created=pulumi.get(__ret__, 'date_created'),
+        filters=pulumi.get(__ret__, 'filters'),
+        id=pulumi.get(__ret__, 'id'),
+        label=pulumi.get(__ret__, 'label'),
+        mount_id=pulumi.get(__ret__, 'mount_id'),
+        region=pulumi.get(__ret__, 'region'),
+        size_gb=pulumi.get(__ret__, 'size_gb'),
+        status=pulumi.get(__ret__, 'status'))
 
 
 @_utilities.lift_output_func(get_block_storage)

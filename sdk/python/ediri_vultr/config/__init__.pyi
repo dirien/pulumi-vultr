@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
 from .. import _utilities
 
 apiKey: Optional[str]
@@ -14,12 +14,12 @@ apiKey: Optional[str]
 The API Key that allows interaction with the API
 """
 
-rateLimit: Optional[int]
+rateLimit: int
 """
 Allows users to set the speed of API calls to work with the Vultr Rate Limit
 """
 
-retryLimit: Optional[int]
+retryLimit: int
 """
 Allows users to set the maximum number of retries allowed for a failed API call.
 """

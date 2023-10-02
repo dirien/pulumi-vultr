@@ -18,200 +18,431 @@ public final class DatabaseReadReplicaArgs extends com.pulumi.resources.Resource
 
     public static final DatabaseReadReplicaArgs Empty = new DatabaseReadReplicaArgs();
 
+    /**
+     * The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
+     * 
+     */
     @Import(name="clusterTimeZone")
     private @Nullable Output<String> clusterTimeZone;
 
+    /**
+     * @return The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
+     * 
+     */
     public Optional<Output<String>> clusterTimeZone() {
         return Optional.ofNullable(this.clusterTimeZone);
     }
 
+    /**
+     * The database engine of the new managed database.
+     * 
+     */
     @Import(name="databaseEngine")
     private @Nullable Output<String> databaseEngine;
 
+    /**
+     * @return The database engine of the new managed database.
+     * 
+     */
     public Optional<Output<String>> databaseEngine() {
         return Optional.ofNullable(this.databaseEngine);
     }
 
+    /**
+     * The database engine version of the new managed database.
+     * 
+     */
     @Import(name="databaseEngineVersion")
     private @Nullable Output<String> databaseEngineVersion;
 
+    /**
+     * @return The database engine version of the new managed database.
+     * 
+     */
     public Optional<Output<String>> databaseEngineVersion() {
         return Optional.ofNullable(this.databaseEngineVersion);
     }
 
+    /**
+     * The date the managed database was added to your Vultr account.
+     * 
+     */
     @Import(name="dateCreated")
     private @Nullable Output<String> dateCreated;
 
+    /**
+     * @return The date the managed database was added to your Vultr account.
+     * 
+     */
     public Optional<Output<String>> dateCreated() {
         return Optional.ofNullable(this.dateCreated);
     }
 
+    /**
+     * The managed database&#39;s default logical database.
+     * 
+     */
     @Import(name="dbname")
     private @Nullable Output<String> dbname;
 
+    /**
+     * @return The managed database&#39;s default logical database.
+     * 
+     */
     public Optional<Output<String>> dbname() {
         return Optional.ofNullable(this.dbname);
     }
 
+    /**
+     * The hostname assigned to the managed database.
+     * 
+     */
     @Import(name="host")
     private @Nullable Output<String> host;
 
+    /**
+     * @return The hostname assigned to the managed database.
+     * 
+     */
     public Optional<Output<String>> host() {
         return Optional.ofNullable(this.host);
     }
 
+    /**
+     * The ID of the managed database.
+     * 
+     */
     @Import(name="id")
     private @Nullable Output<String> id;
 
+    /**
+     * @return The ID of the managed database.
+     * 
+     */
     public Optional<Output<String>> id() {
         return Optional.ofNullable(this.id);
     }
 
+    /**
+     * A label for the managed database.
+     * 
+     */
     @Import(name="label", required=true)
     private Output<String> label;
 
+    /**
+     * @return A label for the managed database.
+     * 
+     */
     public Output<String> label() {
         return this.label;
     }
 
+    /**
+     * The date of the latest backup available on the managed database.
+     * 
+     */
     @Import(name="latestBackup")
     private @Nullable Output<String> latestBackup;
 
+    /**
+     * @return The date of the latest backup available on the managed database.
+     * 
+     */
     public Optional<Output<String>> latestBackup() {
         return Optional.ofNullable(this.latestBackup);
     }
 
+    /**
+     * The preferred maintenance day of week for the managed database.
+     * 
+     */
     @Import(name="maintenanceDow")
     private @Nullable Output<String> maintenanceDow;
 
+    /**
+     * @return The preferred maintenance day of week for the managed database.
+     * 
+     */
     public Optional<Output<String>> maintenanceDow() {
         return Optional.ofNullable(this.maintenanceDow);
     }
 
+    /**
+     * The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).
+     * 
+     */
     @Import(name="maintenanceTime")
     private @Nullable Output<String> maintenanceTime;
 
+    /**
+     * @return The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).
+     * 
+     */
     public Optional<Output<String>> maintenanceTime() {
         return Optional.ofNullable(this.maintenanceTime);
     }
 
+    /**
+     * The configuration value for the long query time (in seconds) on the managed database (MySQL engine types only).
+     * 
+     */
     @Import(name="mysqlLongQueryTime")
     private @Nullable Output<Integer> mysqlLongQueryTime;
 
+    /**
+     * @return The configuration value for the long query time (in seconds) on the managed database (MySQL engine types only).
+     * 
+     */
     public Optional<Output<Integer>> mysqlLongQueryTime() {
         return Optional.ofNullable(this.mysqlLongQueryTime);
     }
 
+    /**
+     * The configuration value for whether primary keys are required on the managed database (MySQL engine types only).
+     * 
+     */
     @Import(name="mysqlRequirePrimaryKey")
     private @Nullable Output<Boolean> mysqlRequirePrimaryKey;
 
+    /**
+     * @return The configuration value for whether primary keys are required on the managed database (MySQL engine types only).
+     * 
+     */
     public Optional<Output<Boolean>> mysqlRequirePrimaryKey() {
         return Optional.ofNullable(this.mysqlRequirePrimaryKey);
     }
 
+    /**
+     * The configuration value for slow query logging on the managed database (MySQL engine types only).
+     * 
+     */
     @Import(name="mysqlSlowQueryLog")
     private @Nullable Output<Boolean> mysqlSlowQueryLog;
 
+    /**
+     * @return The configuration value for slow query logging on the managed database (MySQL engine types only).
+     * 
+     */
     public Optional<Output<Boolean>> mysqlSlowQueryLog() {
         return Optional.ofNullable(this.mysqlSlowQueryLog);
     }
 
+    /**
+     * A list of SQL modes to configure for the managed database (MySQL engine types only - `ALLOW_INVALID_DATES`, `ANSI`, `ANSI_QUOTES`, `ERROR_FOR_DIVISION_BY_ZERO`, `HIGH_NOT_PRECEDENCE`, `IGNORE_SPACE`, `NO_AUTO_VALUE_ON_ZERO`, `NO_DIR_IN_CREATE`, `NO_ENGINE_SUBSTITUTION`, `NO_UNSIGNED_SUBTRACTION`, `NO_ZERO_DATE`, `NO_ZERO_IN_DATE`, `ONLY_FULL_GROUP_BY`, `PIPES_AS_CONCAT`, `REAL_AS_FLOAT`, `STRICT_ALL_TABLES`, `STRICT_TRANS_TABLES`, `TIME_TRUNCATE_FRACTIONAL`, `TRADITIONAL`).
+     * 
+     */
     @Import(name="mysqlSqlModes")
     private @Nullable Output<List<String>> mysqlSqlModes;
 
+    /**
+     * @return A list of SQL modes to configure for the managed database (MySQL engine types only - `ALLOW_INVALID_DATES`, `ANSI`, `ANSI_QUOTES`, `ERROR_FOR_DIVISION_BY_ZERO`, `HIGH_NOT_PRECEDENCE`, `IGNORE_SPACE`, `NO_AUTO_VALUE_ON_ZERO`, `NO_DIR_IN_CREATE`, `NO_ENGINE_SUBSTITUTION`, `NO_UNSIGNED_SUBTRACTION`, `NO_ZERO_DATE`, `NO_ZERO_IN_DATE`, `ONLY_FULL_GROUP_BY`, `PIPES_AS_CONCAT`, `REAL_AS_FLOAT`, `STRICT_ALL_TABLES`, `STRICT_TRANS_TABLES`, `TIME_TRUNCATE_FRACTIONAL`, `TRADITIONAL`).
+     * 
+     */
     public Optional<Output<List<String>>> mysqlSqlModes() {
         return Optional.ofNullable(this.mysqlSqlModes);
     }
 
+    /**
+     * The password for the managed database&#39;s primary admin user.
+     * 
+     */
     @Import(name="password")
     private @Nullable Output<String> password;
 
+    /**
+     * @return The password for the managed database&#39;s primary admin user.
+     * 
+     */
     public Optional<Output<String>> password() {
         return Optional.ofNullable(this.password);
     }
 
+    /**
+     * The ID of the plan that you want the managed database to subscribe to. [See List Managed Database Plans](https://www.vultr.com/api/#tag/managed-databases/operation/list-database-plans)
+     * 
+     */
     @Import(name="plan")
     private @Nullable Output<String> plan;
 
+    /**
+     * @return The ID of the plan that you want the managed database to subscribe to. [See List Managed Database Plans](https://www.vultr.com/api/#tag/managed-databases/operation/list-database-plans)
+     * 
+     */
     public Optional<Output<String>> plan() {
         return Optional.ofNullable(this.plan);
     }
 
+    /**
+     * The description of the disk(s) on the managed database.
+     * 
+     */
     @Import(name="planDisk")
     private @Nullable Output<Integer> planDisk;
 
+    /**
+     * @return The description of the disk(s) on the managed database.
+     * 
+     */
     public Optional<Output<Integer>> planDisk() {
         return Optional.ofNullable(this.planDisk);
     }
 
+    /**
+     * The amount of memory available on the managed database in MB.
+     * 
+     */
     @Import(name="planRam")
     private @Nullable Output<Integer> planRam;
 
+    /**
+     * @return The amount of memory available on the managed database in MB.
+     * 
+     */
     public Optional<Output<Integer>> planRam() {
         return Optional.ofNullable(this.planRam);
     }
 
+    /**
+     * The number of standby nodes available on the managed database.
+     * 
+     */
     @Import(name="planReplicas")
     private @Nullable Output<Integer> planReplicas;
 
+    /**
+     * @return The number of standby nodes available on the managed database.
+     * 
+     */
     public Optional<Output<Integer>> planReplicas() {
         return Optional.ofNullable(this.planReplicas);
     }
 
+    /**
+     * The number of virtual CPUs available on the managed database.
+     * 
+     */
     @Import(name="planVcpus")
     private @Nullable Output<Integer> planVcpus;
 
+    /**
+     * @return The number of virtual CPUs available on the managed database.
+     * 
+     */
     public Optional<Output<Integer>> planVcpus() {
         return Optional.ofNullable(this.planVcpus);
     }
 
+    /**
+     * The connection port for the managed database.
+     * 
+     */
     @Import(name="port")
     private @Nullable Output<String> port;
 
+    /**
+     * @return The connection port for the managed database.
+     * 
+     */
     public Optional<Output<String>> port() {
         return Optional.ofNullable(this.port);
     }
 
+    /**
+     * The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
+     * 
+     */
     @Import(name="redisEvictionPolicy")
     private @Nullable Output<String> redisEvictionPolicy;
 
+    /**
+     * @return The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
+     * 
+     */
     public Optional<Output<String>> redisEvictionPolicy() {
         return Optional.ofNullable(this.redisEvictionPolicy);
     }
 
+    /**
+     * The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
+     * 
+     */
     @Import(name="region", required=true)
     private Output<String> region;
 
+    /**
+     * @return The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
+     * 
+     */
     public Output<String> region() {
         return this.region;
     }
 
+    /**
+     * The current status of the managed database (poweroff, rebuilding, rebalancing, running).
+     * 
+     */
     @Import(name="status")
     private @Nullable Output<String> status;
 
+    /**
+     * @return The current status of the managed database (poweroff, rebuilding, rebalancing, running).
+     * 
+     */
     public Optional<Output<String>> status() {
         return Optional.ofNullable(this.status);
     }
 
+    /**
+     * The tag to assign to the managed database.
+     * 
+     */
     @Import(name="tag")
     private @Nullable Output<String> tag;
 
+    /**
+     * @return The tag to assign to the managed database.
+     * 
+     */
     public Optional<Output<String>> tag() {
         return Optional.ofNullable(this.tag);
     }
 
+    /**
+     * A list of allowed IP addresses for the managed database.
+     * 
+     */
     @Import(name="trustedIps")
     private @Nullable Output<List<String>> trustedIps;
 
+    /**
+     * @return A list of allowed IP addresses for the managed database.
+     * 
+     */
     public Optional<Output<List<String>>> trustedIps() {
         return Optional.ofNullable(this.trustedIps);
     }
 
+    /**
+     * The primary admin user for the managed database.
+     * 
+     */
     @Import(name="user")
     private @Nullable Output<String> user;
 
+    /**
+     * @return The primary admin user for the managed database.
+     * 
+     */
     public Optional<Output<String>> user() {
         return Optional.ofNullable(this.user);
+    }
+
+    @Import(name="vpcId")
+    private @Nullable Output<String> vpcId;
+
+    public Optional<Output<String>> vpcId() {
+        return Optional.ofNullable(this.vpcId);
     }
 
     private DatabaseReadReplicaArgs() {}
@@ -245,6 +476,7 @@ public final class DatabaseReadReplicaArgs extends com.pulumi.resources.Resource
         this.tag = $.tag;
         this.trustedIps = $.trustedIps;
         this.user = $.user;
+        this.vpcId = $.vpcId;
     }
 
     public static Builder builder() {
@@ -265,264 +497,621 @@ public final class DatabaseReadReplicaArgs extends com.pulumi.resources.Resource
             $ = new DatabaseReadReplicaArgs(Objects.requireNonNull(defaults));
         }
 
+        /**
+         * @param clusterTimeZone The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
+         * 
+         * @return builder
+         * 
+         */
         public Builder clusterTimeZone(@Nullable Output<String> clusterTimeZone) {
             $.clusterTimeZone = clusterTimeZone;
             return this;
         }
 
+        /**
+         * @param clusterTimeZone The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
+         * 
+         * @return builder
+         * 
+         */
         public Builder clusterTimeZone(String clusterTimeZone) {
             return clusterTimeZone(Output.of(clusterTimeZone));
         }
 
+        /**
+         * @param databaseEngine The database engine of the new managed database.
+         * 
+         * @return builder
+         * 
+         */
         public Builder databaseEngine(@Nullable Output<String> databaseEngine) {
             $.databaseEngine = databaseEngine;
             return this;
         }
 
+        /**
+         * @param databaseEngine The database engine of the new managed database.
+         * 
+         * @return builder
+         * 
+         */
         public Builder databaseEngine(String databaseEngine) {
             return databaseEngine(Output.of(databaseEngine));
         }
 
+        /**
+         * @param databaseEngineVersion The database engine version of the new managed database.
+         * 
+         * @return builder
+         * 
+         */
         public Builder databaseEngineVersion(@Nullable Output<String> databaseEngineVersion) {
             $.databaseEngineVersion = databaseEngineVersion;
             return this;
         }
 
+        /**
+         * @param databaseEngineVersion The database engine version of the new managed database.
+         * 
+         * @return builder
+         * 
+         */
         public Builder databaseEngineVersion(String databaseEngineVersion) {
             return databaseEngineVersion(Output.of(databaseEngineVersion));
         }
 
+        /**
+         * @param dateCreated The date the managed database was added to your Vultr account.
+         * 
+         * @return builder
+         * 
+         */
         public Builder dateCreated(@Nullable Output<String> dateCreated) {
             $.dateCreated = dateCreated;
             return this;
         }
 
+        /**
+         * @param dateCreated The date the managed database was added to your Vultr account.
+         * 
+         * @return builder
+         * 
+         */
         public Builder dateCreated(String dateCreated) {
             return dateCreated(Output.of(dateCreated));
         }
 
+        /**
+         * @param dbname The managed database&#39;s default logical database.
+         * 
+         * @return builder
+         * 
+         */
         public Builder dbname(@Nullable Output<String> dbname) {
             $.dbname = dbname;
             return this;
         }
 
+        /**
+         * @param dbname The managed database&#39;s default logical database.
+         * 
+         * @return builder
+         * 
+         */
         public Builder dbname(String dbname) {
             return dbname(Output.of(dbname));
         }
 
+        /**
+         * @param host The hostname assigned to the managed database.
+         * 
+         * @return builder
+         * 
+         */
         public Builder host(@Nullable Output<String> host) {
             $.host = host;
             return this;
         }
 
+        /**
+         * @param host The hostname assigned to the managed database.
+         * 
+         * @return builder
+         * 
+         */
         public Builder host(String host) {
             return host(Output.of(host));
         }
 
+        /**
+         * @param id The ID of the managed database.
+         * 
+         * @return builder
+         * 
+         */
         public Builder id(@Nullable Output<String> id) {
             $.id = id;
             return this;
         }
 
+        /**
+         * @param id The ID of the managed database.
+         * 
+         * @return builder
+         * 
+         */
         public Builder id(String id) {
             return id(Output.of(id));
         }
 
+        /**
+         * @param label A label for the managed database.
+         * 
+         * @return builder
+         * 
+         */
         public Builder label(Output<String> label) {
             $.label = label;
             return this;
         }
 
+        /**
+         * @param label A label for the managed database.
+         * 
+         * @return builder
+         * 
+         */
         public Builder label(String label) {
             return label(Output.of(label));
         }
 
+        /**
+         * @param latestBackup The date of the latest backup available on the managed database.
+         * 
+         * @return builder
+         * 
+         */
         public Builder latestBackup(@Nullable Output<String> latestBackup) {
             $.latestBackup = latestBackup;
             return this;
         }
 
+        /**
+         * @param latestBackup The date of the latest backup available on the managed database.
+         * 
+         * @return builder
+         * 
+         */
         public Builder latestBackup(String latestBackup) {
             return latestBackup(Output.of(latestBackup));
         }
 
+        /**
+         * @param maintenanceDow The preferred maintenance day of week for the managed database.
+         * 
+         * @return builder
+         * 
+         */
         public Builder maintenanceDow(@Nullable Output<String> maintenanceDow) {
             $.maintenanceDow = maintenanceDow;
             return this;
         }
 
+        /**
+         * @param maintenanceDow The preferred maintenance day of week for the managed database.
+         * 
+         * @return builder
+         * 
+         */
         public Builder maintenanceDow(String maintenanceDow) {
             return maintenanceDow(Output.of(maintenanceDow));
         }
 
+        /**
+         * @param maintenanceTime The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).
+         * 
+         * @return builder
+         * 
+         */
         public Builder maintenanceTime(@Nullable Output<String> maintenanceTime) {
             $.maintenanceTime = maintenanceTime;
             return this;
         }
 
+        /**
+         * @param maintenanceTime The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).
+         * 
+         * @return builder
+         * 
+         */
         public Builder maintenanceTime(String maintenanceTime) {
             return maintenanceTime(Output.of(maintenanceTime));
         }
 
+        /**
+         * @param mysqlLongQueryTime The configuration value for the long query time (in seconds) on the managed database (MySQL engine types only).
+         * 
+         * @return builder
+         * 
+         */
         public Builder mysqlLongQueryTime(@Nullable Output<Integer> mysqlLongQueryTime) {
             $.mysqlLongQueryTime = mysqlLongQueryTime;
             return this;
         }
 
+        /**
+         * @param mysqlLongQueryTime The configuration value for the long query time (in seconds) on the managed database (MySQL engine types only).
+         * 
+         * @return builder
+         * 
+         */
         public Builder mysqlLongQueryTime(Integer mysqlLongQueryTime) {
             return mysqlLongQueryTime(Output.of(mysqlLongQueryTime));
         }
 
+        /**
+         * @param mysqlRequirePrimaryKey The configuration value for whether primary keys are required on the managed database (MySQL engine types only).
+         * 
+         * @return builder
+         * 
+         */
         public Builder mysqlRequirePrimaryKey(@Nullable Output<Boolean> mysqlRequirePrimaryKey) {
             $.mysqlRequirePrimaryKey = mysqlRequirePrimaryKey;
             return this;
         }
 
+        /**
+         * @param mysqlRequirePrimaryKey The configuration value for whether primary keys are required on the managed database (MySQL engine types only).
+         * 
+         * @return builder
+         * 
+         */
         public Builder mysqlRequirePrimaryKey(Boolean mysqlRequirePrimaryKey) {
             return mysqlRequirePrimaryKey(Output.of(mysqlRequirePrimaryKey));
         }
 
+        /**
+         * @param mysqlSlowQueryLog The configuration value for slow query logging on the managed database (MySQL engine types only).
+         * 
+         * @return builder
+         * 
+         */
         public Builder mysqlSlowQueryLog(@Nullable Output<Boolean> mysqlSlowQueryLog) {
             $.mysqlSlowQueryLog = mysqlSlowQueryLog;
             return this;
         }
 
+        /**
+         * @param mysqlSlowQueryLog The configuration value for slow query logging on the managed database (MySQL engine types only).
+         * 
+         * @return builder
+         * 
+         */
         public Builder mysqlSlowQueryLog(Boolean mysqlSlowQueryLog) {
             return mysqlSlowQueryLog(Output.of(mysqlSlowQueryLog));
         }
 
+        /**
+         * @param mysqlSqlModes A list of SQL modes to configure for the managed database (MySQL engine types only - `ALLOW_INVALID_DATES`, `ANSI`, `ANSI_QUOTES`, `ERROR_FOR_DIVISION_BY_ZERO`, `HIGH_NOT_PRECEDENCE`, `IGNORE_SPACE`, `NO_AUTO_VALUE_ON_ZERO`, `NO_DIR_IN_CREATE`, `NO_ENGINE_SUBSTITUTION`, `NO_UNSIGNED_SUBTRACTION`, `NO_ZERO_DATE`, `NO_ZERO_IN_DATE`, `ONLY_FULL_GROUP_BY`, `PIPES_AS_CONCAT`, `REAL_AS_FLOAT`, `STRICT_ALL_TABLES`, `STRICT_TRANS_TABLES`, `TIME_TRUNCATE_FRACTIONAL`, `TRADITIONAL`).
+         * 
+         * @return builder
+         * 
+         */
         public Builder mysqlSqlModes(@Nullable Output<List<String>> mysqlSqlModes) {
             $.mysqlSqlModes = mysqlSqlModes;
             return this;
         }
 
+        /**
+         * @param mysqlSqlModes A list of SQL modes to configure for the managed database (MySQL engine types only - `ALLOW_INVALID_DATES`, `ANSI`, `ANSI_QUOTES`, `ERROR_FOR_DIVISION_BY_ZERO`, `HIGH_NOT_PRECEDENCE`, `IGNORE_SPACE`, `NO_AUTO_VALUE_ON_ZERO`, `NO_DIR_IN_CREATE`, `NO_ENGINE_SUBSTITUTION`, `NO_UNSIGNED_SUBTRACTION`, `NO_ZERO_DATE`, `NO_ZERO_IN_DATE`, `ONLY_FULL_GROUP_BY`, `PIPES_AS_CONCAT`, `REAL_AS_FLOAT`, `STRICT_ALL_TABLES`, `STRICT_TRANS_TABLES`, `TIME_TRUNCATE_FRACTIONAL`, `TRADITIONAL`).
+         * 
+         * @return builder
+         * 
+         */
         public Builder mysqlSqlModes(List<String> mysqlSqlModes) {
             return mysqlSqlModes(Output.of(mysqlSqlModes));
         }
 
+        /**
+         * @param mysqlSqlModes A list of SQL modes to configure for the managed database (MySQL engine types only - `ALLOW_INVALID_DATES`, `ANSI`, `ANSI_QUOTES`, `ERROR_FOR_DIVISION_BY_ZERO`, `HIGH_NOT_PRECEDENCE`, `IGNORE_SPACE`, `NO_AUTO_VALUE_ON_ZERO`, `NO_DIR_IN_CREATE`, `NO_ENGINE_SUBSTITUTION`, `NO_UNSIGNED_SUBTRACTION`, `NO_ZERO_DATE`, `NO_ZERO_IN_DATE`, `ONLY_FULL_GROUP_BY`, `PIPES_AS_CONCAT`, `REAL_AS_FLOAT`, `STRICT_ALL_TABLES`, `STRICT_TRANS_TABLES`, `TIME_TRUNCATE_FRACTIONAL`, `TRADITIONAL`).
+         * 
+         * @return builder
+         * 
+         */
         public Builder mysqlSqlModes(String... mysqlSqlModes) {
             return mysqlSqlModes(List.of(mysqlSqlModes));
         }
 
+        /**
+         * @param password The password for the managed database&#39;s primary admin user.
+         * 
+         * @return builder
+         * 
+         */
         public Builder password(@Nullable Output<String> password) {
             $.password = password;
             return this;
         }
 
+        /**
+         * @param password The password for the managed database&#39;s primary admin user.
+         * 
+         * @return builder
+         * 
+         */
         public Builder password(String password) {
             return password(Output.of(password));
         }
 
+        /**
+         * @param plan The ID of the plan that you want the managed database to subscribe to. [See List Managed Database Plans](https://www.vultr.com/api/#tag/managed-databases/operation/list-database-plans)
+         * 
+         * @return builder
+         * 
+         */
         public Builder plan(@Nullable Output<String> plan) {
             $.plan = plan;
             return this;
         }
 
+        /**
+         * @param plan The ID of the plan that you want the managed database to subscribe to. [See List Managed Database Plans](https://www.vultr.com/api/#tag/managed-databases/operation/list-database-plans)
+         * 
+         * @return builder
+         * 
+         */
         public Builder plan(String plan) {
             return plan(Output.of(plan));
         }
 
+        /**
+         * @param planDisk The description of the disk(s) on the managed database.
+         * 
+         * @return builder
+         * 
+         */
         public Builder planDisk(@Nullable Output<Integer> planDisk) {
             $.planDisk = planDisk;
             return this;
         }
 
+        /**
+         * @param planDisk The description of the disk(s) on the managed database.
+         * 
+         * @return builder
+         * 
+         */
         public Builder planDisk(Integer planDisk) {
             return planDisk(Output.of(planDisk));
         }
 
+        /**
+         * @param planRam The amount of memory available on the managed database in MB.
+         * 
+         * @return builder
+         * 
+         */
         public Builder planRam(@Nullable Output<Integer> planRam) {
             $.planRam = planRam;
             return this;
         }
 
+        /**
+         * @param planRam The amount of memory available on the managed database in MB.
+         * 
+         * @return builder
+         * 
+         */
         public Builder planRam(Integer planRam) {
             return planRam(Output.of(planRam));
         }
 
+        /**
+         * @param planReplicas The number of standby nodes available on the managed database.
+         * 
+         * @return builder
+         * 
+         */
         public Builder planReplicas(@Nullable Output<Integer> planReplicas) {
             $.planReplicas = planReplicas;
             return this;
         }
 
+        /**
+         * @param planReplicas The number of standby nodes available on the managed database.
+         * 
+         * @return builder
+         * 
+         */
         public Builder planReplicas(Integer planReplicas) {
             return planReplicas(Output.of(planReplicas));
         }
 
+        /**
+         * @param planVcpus The number of virtual CPUs available on the managed database.
+         * 
+         * @return builder
+         * 
+         */
         public Builder planVcpus(@Nullable Output<Integer> planVcpus) {
             $.planVcpus = planVcpus;
             return this;
         }
 
+        /**
+         * @param planVcpus The number of virtual CPUs available on the managed database.
+         * 
+         * @return builder
+         * 
+         */
         public Builder planVcpus(Integer planVcpus) {
             return planVcpus(Output.of(planVcpus));
         }
 
+        /**
+         * @param port The connection port for the managed database.
+         * 
+         * @return builder
+         * 
+         */
         public Builder port(@Nullable Output<String> port) {
             $.port = port;
             return this;
         }
 
+        /**
+         * @param port The connection port for the managed database.
+         * 
+         * @return builder
+         * 
+         */
         public Builder port(String port) {
             return port(Output.of(port));
         }
 
+        /**
+         * @param redisEvictionPolicy The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
+         * 
+         * @return builder
+         * 
+         */
         public Builder redisEvictionPolicy(@Nullable Output<String> redisEvictionPolicy) {
             $.redisEvictionPolicy = redisEvictionPolicy;
             return this;
         }
 
+        /**
+         * @param redisEvictionPolicy The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
+         * 
+         * @return builder
+         * 
+         */
         public Builder redisEvictionPolicy(String redisEvictionPolicy) {
             return redisEvictionPolicy(Output.of(redisEvictionPolicy));
         }
 
+        /**
+         * @param region The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
+         * 
+         * @return builder
+         * 
+         */
         public Builder region(Output<String> region) {
             $.region = region;
             return this;
         }
 
+        /**
+         * @param region The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
+         * 
+         * @return builder
+         * 
+         */
         public Builder region(String region) {
             return region(Output.of(region));
         }
 
+        /**
+         * @param status The current status of the managed database (poweroff, rebuilding, rebalancing, running).
+         * 
+         * @return builder
+         * 
+         */
         public Builder status(@Nullable Output<String> status) {
             $.status = status;
             return this;
         }
 
+        /**
+         * @param status The current status of the managed database (poweroff, rebuilding, rebalancing, running).
+         * 
+         * @return builder
+         * 
+         */
         public Builder status(String status) {
             return status(Output.of(status));
         }
 
+        /**
+         * @param tag The tag to assign to the managed database.
+         * 
+         * @return builder
+         * 
+         */
         public Builder tag(@Nullable Output<String> tag) {
             $.tag = tag;
             return this;
         }
 
+        /**
+         * @param tag The tag to assign to the managed database.
+         * 
+         * @return builder
+         * 
+         */
         public Builder tag(String tag) {
             return tag(Output.of(tag));
         }
 
+        /**
+         * @param trustedIps A list of allowed IP addresses for the managed database.
+         * 
+         * @return builder
+         * 
+         */
         public Builder trustedIps(@Nullable Output<List<String>> trustedIps) {
             $.trustedIps = trustedIps;
             return this;
         }
 
+        /**
+         * @param trustedIps A list of allowed IP addresses for the managed database.
+         * 
+         * @return builder
+         * 
+         */
         public Builder trustedIps(List<String> trustedIps) {
             return trustedIps(Output.of(trustedIps));
         }
 
+        /**
+         * @param trustedIps A list of allowed IP addresses for the managed database.
+         * 
+         * @return builder
+         * 
+         */
         public Builder trustedIps(String... trustedIps) {
             return trustedIps(List.of(trustedIps));
         }
 
+        /**
+         * @param user The primary admin user for the managed database.
+         * 
+         * @return builder
+         * 
+         */
         public Builder user(@Nullable Output<String> user) {
             $.user = user;
             return this;
         }
 
+        /**
+         * @param user The primary admin user for the managed database.
+         * 
+         * @return builder
+         * 
+         */
         public Builder user(String user) {
             return user(Output.of(user));
+        }
+
+        public Builder vpcId(@Nullable Output<String> vpcId) {
+            $.vpcId = vpcId;
+            return this;
+        }
+
+        public Builder vpcId(String vpcId) {
+            return vpcId(Output.of(vpcId));
         }
 
         public DatabaseReadReplicaArgs build() {

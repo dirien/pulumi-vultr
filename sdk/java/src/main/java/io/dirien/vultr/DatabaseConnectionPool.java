@@ -14,41 +14,129 @@ import java.lang.Integer;
 import java.lang.String;
 import javax.annotation.Nullable;
 
+/**
+ * Provides a Vultr database connection pool resource. This can be used to create, read, modify, and delete connection pools for a PostgreSQL managed database on your Vultr account.
+ * 
+ * ## Example Usage
+ * 
+ * Create a new database connection pool:
+ * ```java
+ * package generated_program;
+ * 
+ * import com.pulumi.Context;
+ * import com.pulumi.Pulumi;
+ * import com.pulumi.core.Output;
+ * import com.pulumi.vultr.DatabaseConnectionPool;
+ * import com.pulumi.vultr.DatabaseConnectionPoolArgs;
+ * import java.util.List;
+ * import java.util.ArrayList;
+ * import java.util.Map;
+ * import java.io.File;
+ * import java.nio.file.Files;
+ * import java.nio.file.Paths;
+ * 
+ * public class App {
+ *     public static void main(String[] args) {
+ *         Pulumi.run(App::stack);
+ *     }
+ * 
+ *     public static void stack(Context ctx) {
+ *         var myDatabaseConnectionPool = new DatabaseConnectionPool(&#34;myDatabaseConnectionPool&#34;, DatabaseConnectionPoolArgs.builder()        
+ *             .databaseId(vultr_database.my_database().id())
+ *             .database(&#34;defaultdb&#34;)
+ *             .username(&#34;vultradmin&#34;)
+ *             .mode(&#34;transaction&#34;)
+ *             .size(&#34;3&#34;)
+ *             .build());
+ * 
+ *     }
+ * }
+ * ```
+ * 
+ */
 @ResourceType(type="vultr:index/databaseConnectionPool:DatabaseConnectionPool")
 public class DatabaseConnectionPool extends com.pulumi.resources.CustomResource {
+    /**
+     * The logical database to use for the new managed database connection pool.
+     * 
+     */
     @Export(name="database", refs={String.class}, tree="[0]")
     private Output<String> database;
 
+    /**
+     * @return The logical database to use for the new managed database connection pool.
+     * 
+     */
     public Output<String> database() {
         return this.database;
     }
+    /**
+     * The managed database ID you want to attach this connection pool to.
+     * 
+     */
     @Export(name="databaseId", refs={String.class}, tree="[0]")
     private Output<String> databaseId;
 
+    /**
+     * @return The managed database ID you want to attach this connection pool to.
+     * 
+     */
     public Output<String> databaseId() {
         return this.databaseId;
     }
+    /**
+     * The mode to configure for the new managed database connection pool (`session`, `transaction`, `statement`).
+     * 
+     */
     @Export(name="mode", refs={String.class}, tree="[0]")
     private Output<String> mode;
 
+    /**
+     * @return The mode to configure for the new managed database connection pool (`session`, `transaction`, `statement`).
+     * 
+     */
     public Output<String> mode() {
         return this.mode;
     }
+    /**
+     * The name of the new managed database connection pool.
+     * 
+     */
     @Export(name="name", refs={String.class}, tree="[0]")
     private Output<String> name;
 
+    /**
+     * @return The name of the new managed database connection pool.
+     * 
+     */
     public Output<String> name() {
         return this.name;
     }
+    /**
+     * The size of the new managed database connection pool.
+     * 
+     */
     @Export(name="size", refs={Integer.class}, tree="[0]")
     private Output<Integer> size;
 
+    /**
+     * @return The size of the new managed database connection pool.
+     * 
+     */
     public Output<Integer> size() {
         return this.size;
     }
+    /**
+     * The database user to use for the new managed database connection pool.
+     * 
+     */
     @Export(name="username", refs={String.class}, tree="[0]")
     private Output<String> username;
 
+    /**
+     * @return The database user to use for the new managed database connection pool.
+     * 
+     */
     public Output<String> username() {
         return this.username;
     }

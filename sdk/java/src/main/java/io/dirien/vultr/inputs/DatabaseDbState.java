@@ -15,16 +15,32 @@ public final class DatabaseDbState extends com.pulumi.resources.ResourceArgs {
 
     public static final DatabaseDbState Empty = new DatabaseDbState();
 
+    /**
+     * The managed database ID you want to attach this logical DB to.
+     * 
+     */
     @Import(name="databaseId")
     private @Nullable Output<String> databaseId;
 
+    /**
+     * @return The managed database ID you want to attach this logical DB to.
+     * 
+     */
     public Optional<Output<String>> databaseId() {
         return Optional.ofNullable(this.databaseId);
     }
 
+    /**
+     * The name of the new managed database logical DB.
+     * 
+     */
     @Import(name="name")
     private @Nullable Output<String> name;
 
+    /**
+     * @return The name of the new managed database logical DB.
+     * 
+     */
     public Optional<Output<String>> name() {
         return Optional.ofNullable(this.name);
     }
@@ -54,20 +70,44 @@ public final class DatabaseDbState extends com.pulumi.resources.ResourceArgs {
             $ = new DatabaseDbState(Objects.requireNonNull(defaults));
         }
 
+        /**
+         * @param databaseId The managed database ID you want to attach this logical DB to.
+         * 
+         * @return builder
+         * 
+         */
         public Builder databaseId(@Nullable Output<String> databaseId) {
             $.databaseId = databaseId;
             return this;
         }
 
+        /**
+         * @param databaseId The managed database ID you want to attach this logical DB to.
+         * 
+         * @return builder
+         * 
+         */
         public Builder databaseId(String databaseId) {
             return databaseId(Output.of(databaseId));
         }
 
+        /**
+         * @param name The name of the new managed database logical DB.
+         * 
+         * @return builder
+         * 
+         */
         public Builder name(@Nullable Output<String> name) {
             $.name = name;
             return this;
         }
 
+        /**
+         * @param name The name of the new managed database logical DB.
+         * 
+         * @return builder
+         * 
+         */
         public Builder name(String name) {
             return name(Output.of(name));
         }

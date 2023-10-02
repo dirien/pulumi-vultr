@@ -453,6 +453,21 @@ public final class BareMetalServerState extends com.pulumi.resources.ResourceArg
         return Optional.ofNullable(this.v6NetworkSize);
     }
 
+    /**
+     * A list of VPC 2.0 IDs to be attached to the server.
+     * 
+     */
+    @Import(name="vpc2Ids")
+    private @Nullable Output<List<String>> vpc2Ids;
+
+    /**
+     * @return A list of VPC 2.0 IDs to be attached to the server.
+     * 
+     */
+    public Optional<Output<List<String>>> vpc2Ids() {
+        return Optional.ofNullable(this.vpc2Ids);
+    }
+
     private BareMetalServerState() {}
 
     private BareMetalServerState(BareMetalServerState $) {
@@ -485,6 +500,7 @@ public final class BareMetalServerState extends com.pulumi.resources.ResourceArg
         this.v6MainIp = $.v6MainIp;
         this.v6Network = $.v6Network;
         this.v6NetworkSize = $.v6NetworkSize;
+        this.vpc2Ids = $.vpc2Ids;
     }
 
     public static Builder builder() {
@@ -1132,6 +1148,37 @@ public final class BareMetalServerState extends com.pulumi.resources.ResourceArg
          */
         public Builder v6NetworkSize(Integer v6NetworkSize) {
             return v6NetworkSize(Output.of(v6NetworkSize));
+        }
+
+        /**
+         * @param vpc2Ids A list of VPC 2.0 IDs to be attached to the server.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder vpc2Ids(@Nullable Output<List<String>> vpc2Ids) {
+            $.vpc2Ids = vpc2Ids;
+            return this;
+        }
+
+        /**
+         * @param vpc2Ids A list of VPC 2.0 IDs to be attached to the server.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder vpc2Ids(List<String> vpc2Ids) {
+            return vpc2Ids(Output.of(vpc2Ids));
+        }
+
+        /**
+         * @param vpc2Ids A list of VPC 2.0 IDs to be attached to the server.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder vpc2Ids(String... vpc2Ids) {
+            return vpc2Ids(List.of(vpc2Ids));
         }
 
         public BareMetalServerState build() {

@@ -7,7 +7,9 @@ import (
 	"context"
 	"reflect"
 
+	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 )
 
 // Get information about a Vultr instance.
@@ -47,7 +49,7 @@ import (
 //
 // ```
 func LookupInstance(ctx *pulumi.Context, args *LookupInstanceArgs, opts ...pulumi.InvokeOption) (*LookupInstanceResult, error) {
-	opts = pkgInvokeDefaultOpts(opts)
+	opts = internal.PkgInvokeDefaultOpts(opts)
 	var rv LookupInstanceResult
 	err := ctx.Invoke("vultr:index/getInstance:getInstance", args, &rv, opts...)
 	if err != nil {
@@ -125,8 +127,10 @@ type LookupInstanceResult struct {
 	// The IPv6 network size in bits.
 	V6NetworkSize int `pulumi:"v6NetworkSize"`
 	// The number of virtual CPUs available on the server.
-	VcpuCount int      `pulumi:"vcpuCount"`
-	VpcIds    []string `pulumi:"vpcIds"`
+	VcpuCount int `pulumi:"vcpuCount"`
+	// A list of VPC 2.0 IDs attached to the server.
+	Vpc2Ids []string `pulumi:"vpc2Ids"`
+	VpcIds  []string `pulumi:"vpcIds"`
 }
 
 func LookupInstanceOutput(ctx *pulumi.Context, args LookupInstanceOutputArgs, opts ...pulumi.InvokeOption) LookupInstanceResultOutput {
@@ -165,6 +169,12 @@ func (o LookupInstanceResultOutput) ToLookupInstanceResultOutput() LookupInstanc
 
 func (o LookupInstanceResultOutput) ToLookupInstanceResultOutputWithContext(ctx context.Context) LookupInstanceResultOutput {
 	return o
+}
+
+func (o LookupInstanceResultOutput) ToOutput(ctx context.Context) pulumix.Output[LookupInstanceResult] {
+	return pulumix.Output[LookupInstanceResult]{
+		OutputState: o.OutputState,
+	}
 }
 
 // The server's allowed bandwidth usage in GB.
@@ -326,6 +336,11 @@ func (o LookupInstanceResultOutput) V6NetworkSize() pulumi.IntOutput {
 // The number of virtual CPUs available on the server.
 func (o LookupInstanceResultOutput) VcpuCount() pulumi.IntOutput {
 	return o.ApplyT(func(v LookupInstanceResult) int { return v.VcpuCount }).(pulumi.IntOutput)
+}
+
+// A list of VPC 2.0 IDs attached to the server.
+func (o LookupInstanceResultOutput) Vpc2Ids() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v LookupInstanceResult) []string { return v.Vpc2Ids }).(pulumi.StringArrayOutput)
 }
 
 func (o LookupInstanceResultOutput) VpcIds() pulumi.StringArrayOutput {

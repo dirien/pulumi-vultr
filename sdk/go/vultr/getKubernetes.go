@@ -7,7 +7,9 @@ import (
 	"context"
 	"reflect"
 
+	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 )
 
 // Get information about a Vultr Kubernetes Engine (VKE) Cluster.
@@ -47,7 +49,7 @@ import (
 //
 // ```
 func LookupKubernetes(ctx *pulumi.Context, args *LookupKubernetesArgs, opts ...pulumi.InvokeOption) (*LookupKubernetesResult, error) {
-	opts = pkgInvokeDefaultOpts(opts)
+	opts = internal.PkgInvokeDefaultOpts(opts)
 	var rv LookupKubernetesResult
 	err := ctx.Invoke("vultr:index/getKubernetes:getKubernetes", args, &rv, opts...)
 	if err != nil {
@@ -133,6 +135,12 @@ func (o LookupKubernetesResultOutput) ToLookupKubernetesResultOutput() LookupKub
 
 func (o LookupKubernetesResultOutput) ToLookupKubernetesResultOutputWithContext(ctx context.Context) LookupKubernetesResultOutput {
 	return o
+}
+
+func (o LookupKubernetesResultOutput) ToOutput(ctx context.Context) pulumix.Output[LookupKubernetesResult] {
+	return pulumix.Output[LookupKubernetesResult]{
+		OutputState: o.OutputState,
+	}
 }
 
 // The base64 encoded public certificate used by clients to access the cluster.

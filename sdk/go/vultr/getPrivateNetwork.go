@@ -7,7 +7,9 @@ import (
 	"context"
 	"reflect"
 
+	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 )
 
 // Get information about a Vultr private network.
@@ -47,7 +49,7 @@ import (
 //
 // ```
 func LookupPrivateNetwork(ctx *pulumi.Context, args *LookupPrivateNetworkArgs, opts ...pulumi.InvokeOption) (*LookupPrivateNetworkResult, error) {
-	opts = pkgInvokeDefaultOpts(opts)
+	opts = internal.PkgInvokeDefaultOpts(opts)
 	var rv LookupPrivateNetworkResult
 	err := ctx.Invoke("vultr:index/getPrivateNetwork:getPrivateNetwork", args, &rv, opts...)
 	if err != nil {
@@ -115,6 +117,12 @@ func (o LookupPrivateNetworkResultOutput) ToLookupPrivateNetworkResultOutput() L
 
 func (o LookupPrivateNetworkResultOutput) ToLookupPrivateNetworkResultOutputWithContext(ctx context.Context) LookupPrivateNetworkResultOutput {
 	return o
+}
+
+func (o LookupPrivateNetworkResultOutput) ToOutput(ctx context.Context) pulumix.Output[LookupPrivateNetworkResult] {
+	return pulumix.Output[LookupPrivateNetworkResult]{
+		OutputState: o.OutputState,
+	}
 }
 
 // The date the private network was added to your Vultr account.

@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -155,14 +155,14 @@ def get_reserved_ip(filters: Optional[Sequence[pulumi.InputType['GetReservedIpFi
     __ret__ = pulumi.runtime.invoke('vultr:index/getReservedIp:getReservedIp', __args__, opts=opts, typ=GetReservedIpResult).value
 
     return AwaitableGetReservedIpResult(
-        filters=__ret__.filters,
-        id=__ret__.id,
-        instance_id=__ret__.instance_id,
-        ip_type=__ret__.ip_type,
-        label=__ret__.label,
-        region=__ret__.region,
-        subnet=__ret__.subnet,
-        subnet_size=__ret__.subnet_size)
+        filters=pulumi.get(__ret__, 'filters'),
+        id=pulumi.get(__ret__, 'id'),
+        instance_id=pulumi.get(__ret__, 'instance_id'),
+        ip_type=pulumi.get(__ret__, 'ip_type'),
+        label=pulumi.get(__ret__, 'label'),
+        region=pulumi.get(__ret__, 'region'),
+        subnet=pulumi.get(__ret__, 'subnet'),
+        subnet_size=pulumi.get(__ret__, 'subnet_size'))
 
 
 @_utilities.lift_output_func(get_reserved_ip)

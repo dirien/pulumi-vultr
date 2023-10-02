@@ -8,16 +8,53 @@ import (
 	"reflect"
 
 	"errors"
+	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 )
 
+// Provides a Vultr database user resource. This can be used to create, read, modify, and delete users for a managed database on your Vultr account.
+//
+// ## Example Usage
+//
+// Create a new database user:
+//
+// ```go
+// package main
+//
+// import (
+//
+//	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr"
+//	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+//
+// )
+//
+//	func main() {
+//		pulumi.Run(func(ctx *pulumi.Context) error {
+//			_, err := vultr.NewDatabaseUser(ctx, "myDatabaseUser", &vultr.DatabaseUserArgs{
+//				DatabaseId: pulumi.Any(vultr_database.My_database.Id),
+//				Username:   pulumi.String("my_database_user"),
+//				Password:   pulumi.String("randomTestPW40298"),
+//			})
+//			if err != nil {
+//				return err
+//			}
+//			return nil
+//		})
+//	}
+//
+// ```
 type DatabaseUser struct {
 	pulumi.CustomResourceState
 
+	// The managed database ID you want to attach this user to.
 	DatabaseId pulumi.StringOutput `pulumi:"databaseId"`
+	// The encryption type of the new managed database user's password (MySQL engine types only - `cachingSha2Password`, `mysqlNativePassword`).
 	Encryption pulumi.StringOutput `pulumi:"encryption"`
-	Password   pulumi.StringOutput `pulumi:"password"`
-	Username   pulumi.StringOutput `pulumi:"username"`
+	// The password of the new managed database user.
+	Password pulumi.StringOutput `pulumi:"password"`
+	// The username of the new managed database user.
+	Username pulumi.StringOutput `pulumi:"username"`
 }
 
 // NewDatabaseUser registers a new resource with the given unique name, arguments, and options.
@@ -33,7 +70,7 @@ func NewDatabaseUser(ctx *pulumi.Context,
 	if args.Username == nil {
 		return nil, errors.New("invalid value for required argument 'Username'")
 	}
-	opts = pkgResourceDefaultOpts(opts)
+	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource DatabaseUser
 	err := ctx.RegisterResource("vultr:index/databaseUser:DatabaseUser", name, args, &resource, opts...)
 	if err != nil {
@@ -56,17 +93,25 @@ func GetDatabaseUser(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering DatabaseUser resources.
 type databaseUserState struct {
+	// The managed database ID you want to attach this user to.
 	DatabaseId *string `pulumi:"databaseId"`
+	// The encryption type of the new managed database user's password (MySQL engine types only - `cachingSha2Password`, `mysqlNativePassword`).
 	Encryption *string `pulumi:"encryption"`
-	Password   *string `pulumi:"password"`
-	Username   *string `pulumi:"username"`
+	// The password of the new managed database user.
+	Password *string `pulumi:"password"`
+	// The username of the new managed database user.
+	Username *string `pulumi:"username"`
 }
 
 type DatabaseUserState struct {
+	// The managed database ID you want to attach this user to.
 	DatabaseId pulumi.StringPtrInput
+	// The encryption type of the new managed database user's password (MySQL engine types only - `cachingSha2Password`, `mysqlNativePassword`).
 	Encryption pulumi.StringPtrInput
-	Password   pulumi.StringPtrInput
-	Username   pulumi.StringPtrInput
+	// The password of the new managed database user.
+	Password pulumi.StringPtrInput
+	// The username of the new managed database user.
+	Username pulumi.StringPtrInput
 }
 
 func (DatabaseUserState) ElementType() reflect.Type {
@@ -74,18 +119,26 @@ func (DatabaseUserState) ElementType() reflect.Type {
 }
 
 type databaseUserArgs struct {
-	DatabaseId string  `pulumi:"databaseId"`
+	// The managed database ID you want to attach this user to.
+	DatabaseId string `pulumi:"databaseId"`
+	// The encryption type of the new managed database user's password (MySQL engine types only - `cachingSha2Password`, `mysqlNativePassword`).
 	Encryption *string `pulumi:"encryption"`
-	Password   *string `pulumi:"password"`
-	Username   string  `pulumi:"username"`
+	// The password of the new managed database user.
+	Password *string `pulumi:"password"`
+	// The username of the new managed database user.
+	Username string `pulumi:"username"`
 }
 
 // The set of arguments for constructing a DatabaseUser resource.
 type DatabaseUserArgs struct {
+	// The managed database ID you want to attach this user to.
 	DatabaseId pulumi.StringInput
+	// The encryption type of the new managed database user's password (MySQL engine types only - `cachingSha2Password`, `mysqlNativePassword`).
 	Encryption pulumi.StringPtrInput
-	Password   pulumi.StringPtrInput
-	Username   pulumi.StringInput
+	// The password of the new managed database user.
+	Password pulumi.StringPtrInput
+	// The username of the new managed database user.
+	Username pulumi.StringInput
 }
 
 func (DatabaseUserArgs) ElementType() reflect.Type {
@@ -109,6 +162,12 @@ func (i *DatabaseUser) ToDatabaseUserOutput() DatabaseUserOutput {
 
 func (i *DatabaseUser) ToDatabaseUserOutputWithContext(ctx context.Context) DatabaseUserOutput {
 	return pulumi.ToOutputWithContext(ctx, i).(DatabaseUserOutput)
+}
+
+func (i *DatabaseUser) ToOutput(ctx context.Context) pulumix.Output[*DatabaseUser] {
+	return pulumix.Output[*DatabaseUser]{
+		OutputState: i.ToDatabaseUserOutputWithContext(ctx).OutputState,
+	}
 }
 
 // DatabaseUserArrayInput is an input type that accepts DatabaseUserArray and DatabaseUserArrayOutput values.
@@ -136,6 +195,12 @@ func (i DatabaseUserArray) ToDatabaseUserArrayOutputWithContext(ctx context.Cont
 	return pulumi.ToOutputWithContext(ctx, i).(DatabaseUserArrayOutput)
 }
 
+func (i DatabaseUserArray) ToOutput(ctx context.Context) pulumix.Output[[]*DatabaseUser] {
+	return pulumix.Output[[]*DatabaseUser]{
+		OutputState: i.ToDatabaseUserArrayOutputWithContext(ctx).OutputState,
+	}
+}
+
 // DatabaseUserMapInput is an input type that accepts DatabaseUserMap and DatabaseUserMapOutput values.
 // You can construct a concrete instance of `DatabaseUserMapInput` via:
 //
@@ -161,6 +226,12 @@ func (i DatabaseUserMap) ToDatabaseUserMapOutputWithContext(ctx context.Context)
 	return pulumi.ToOutputWithContext(ctx, i).(DatabaseUserMapOutput)
 }
 
+func (i DatabaseUserMap) ToOutput(ctx context.Context) pulumix.Output[map[string]*DatabaseUser] {
+	return pulumix.Output[map[string]*DatabaseUser]{
+		OutputState: i.ToDatabaseUserMapOutputWithContext(ctx).OutputState,
+	}
+}
+
 type DatabaseUserOutput struct{ *pulumi.OutputState }
 
 func (DatabaseUserOutput) ElementType() reflect.Type {
@@ -175,18 +246,28 @@ func (o DatabaseUserOutput) ToDatabaseUserOutputWithContext(ctx context.Context)
 	return o
 }
 
+func (o DatabaseUserOutput) ToOutput(ctx context.Context) pulumix.Output[*DatabaseUser] {
+	return pulumix.Output[*DatabaseUser]{
+		OutputState: o.OutputState,
+	}
+}
+
+// The managed database ID you want to attach this user to.
 func (o DatabaseUserOutput) DatabaseId() pulumi.StringOutput {
 	return o.ApplyT(func(v *DatabaseUser) pulumi.StringOutput { return v.DatabaseId }).(pulumi.StringOutput)
 }
 
+// The encryption type of the new managed database user's password (MySQL engine types only - `cachingSha2Password`, `mysqlNativePassword`).
 func (o DatabaseUserOutput) Encryption() pulumi.StringOutput {
 	return o.ApplyT(func(v *DatabaseUser) pulumi.StringOutput { return v.Encryption }).(pulumi.StringOutput)
 }
 
+// The password of the new managed database user.
 func (o DatabaseUserOutput) Password() pulumi.StringOutput {
 	return o.ApplyT(func(v *DatabaseUser) pulumi.StringOutput { return v.Password }).(pulumi.StringOutput)
 }
 
+// The username of the new managed database user.
 func (o DatabaseUserOutput) Username() pulumi.StringOutput {
 	return o.ApplyT(func(v *DatabaseUser) pulumi.StringOutput { return v.Username }).(pulumi.StringOutput)
 }
@@ -203,6 +284,12 @@ func (o DatabaseUserArrayOutput) ToDatabaseUserArrayOutput() DatabaseUserArrayOu
 
 func (o DatabaseUserArrayOutput) ToDatabaseUserArrayOutputWithContext(ctx context.Context) DatabaseUserArrayOutput {
 	return o
+}
+
+func (o DatabaseUserArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]*DatabaseUser] {
+	return pulumix.Output[[]*DatabaseUser]{
+		OutputState: o.OutputState,
+	}
 }
 
 func (o DatabaseUserArrayOutput) Index(i pulumi.IntInput) DatabaseUserOutput {
@@ -223,6 +310,12 @@ func (o DatabaseUserMapOutput) ToDatabaseUserMapOutput() DatabaseUserMapOutput {
 
 func (o DatabaseUserMapOutput) ToDatabaseUserMapOutputWithContext(ctx context.Context) DatabaseUserMapOutput {
 	return o
+}
+
+func (o DatabaseUserMapOutput) ToOutput(ctx context.Context) pulumix.Output[map[string]*DatabaseUser] {
+	return pulumix.Output[map[string]*DatabaseUser]{
+		OutputState: o.OutputState,
+	}
 }
 
 func (o DatabaseUserMapOutput) MapIndex(k pulumi.StringInput) DatabaseUserOutput {

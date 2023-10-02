@@ -62,3 +62,20 @@ export interface GetAccountResult {
      */
     readonly pendingCharges: number;
 }
+/**
+ * Get information about your Vultr account. This data source provides the balance, pending charges, last payment date, and last payment amount for your Vultr account.
+ *
+ * ## Example Usage
+ *
+ * Get the information for an account:
+ *
+ * ```typescript
+ * import * as pulumi from "@pulumi/pulumi";
+ * import * as vultr from "@pulumi/vultr";
+ *
+ * const myAccount = vultr.getAccount({});
+ * ```
+ */
+export function getAccountOutput(opts?: pulumi.InvokeOptions): pulumi.Output<GetAccountResult> {
+    return pulumi.output(getAccount(opts))
+}

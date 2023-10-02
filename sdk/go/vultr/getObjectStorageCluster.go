@@ -7,7 +7,9 @@ import (
 	"context"
 	"reflect"
 
+	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 )
 
 // Get information about Object Storage Clusters on Vultr.
@@ -47,7 +49,7 @@ import (
 //
 // ```
 func GetObjectStorageCluster(ctx *pulumi.Context, args *GetObjectStorageClusterArgs, opts ...pulumi.InvokeOption) (*GetObjectStorageClusterResult, error) {
-	opts = pkgInvokeDefaultOpts(opts)
+	opts = internal.PkgInvokeDefaultOpts(opts)
 	var rv GetObjectStorageClusterResult
 	err := ctx.Invoke("vultr:index/getObjectStorageCluster:getObjectStorageCluster", args, &rv, opts...)
 	if err != nil {
@@ -111,6 +113,12 @@ func (o GetObjectStorageClusterResultOutput) ToGetObjectStorageClusterResultOutp
 
 func (o GetObjectStorageClusterResultOutput) ToGetObjectStorageClusterResultOutputWithContext(ctx context.Context) GetObjectStorageClusterResultOutput {
 	return o
+}
+
+func (o GetObjectStorageClusterResultOutput) ToOutput(ctx context.Context) pulumix.Output[GetObjectStorageClusterResult] {
+	return pulumix.Output[GetObjectStorageClusterResult]{
+		OutputState: o.OutputState,
+	}
 }
 
 // The Cluster is eligible for Object Storage deployment. (yes or no)

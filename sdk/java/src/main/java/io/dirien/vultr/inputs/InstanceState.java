@@ -628,6 +628,21 @@ public final class InstanceState extends com.pulumi.resources.ResourceArgs {
     }
 
     /**
+     * A list of VPC 2.0 IDs to be attached to the server.
+     * 
+     */
+    @Import(name="vpc2Ids")
+    private @Nullable Output<List<String>> vpc2Ids;
+
+    /**
+     * @return A list of VPC 2.0 IDs to be attached to the server.
+     * 
+     */
+    public Optional<Output<List<String>>> vpc2Ids() {
+        return Optional.ofNullable(this.vpc2Ids);
+    }
+
+    /**
      * A list of VPC IDs to be attached to the server.
      * 
      */
@@ -685,6 +700,7 @@ public final class InstanceState extends com.pulumi.resources.ResourceArgs {
         this.v6Network = $.v6Network;
         this.v6NetworkSize = $.v6NetworkSize;
         this.vcpuCount = $.vcpuCount;
+        this.vpc2Ids = $.vpc2Ids;
         this.vpcIds = $.vpcIds;
     }
 
@@ -1596,6 +1612,37 @@ public final class InstanceState extends com.pulumi.resources.ResourceArgs {
          */
         public Builder vcpuCount(Integer vcpuCount) {
             return vcpuCount(Output.of(vcpuCount));
+        }
+
+        /**
+         * @param vpc2Ids A list of VPC 2.0 IDs to be attached to the server.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder vpc2Ids(@Nullable Output<List<String>> vpc2Ids) {
+            $.vpc2Ids = vpc2Ids;
+            return this;
+        }
+
+        /**
+         * @param vpc2Ids A list of VPC 2.0 IDs to be attached to the server.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder vpc2Ids(List<String> vpc2Ids) {
+            return vpc2Ids(Output.of(vpc2Ids));
+        }
+
+        /**
+         * @param vpc2Ids A list of VPC 2.0 IDs to be attached to the server.
+         * 
+         * @return builder
+         * 
+         */
+        public Builder vpc2Ids(String... vpc2Ids) {
+            return vpc2Ids(List.of(vpc2Ids));
         }
 
         /**

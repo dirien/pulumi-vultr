@@ -4,6 +4,20 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "./utilities";
 
+/**
+ * Provides a Vultr database DB resource. This can be used to create, read, and delete logical DBs for a managed database on your Vultr account.
+ *
+ * ## Example Usage
+ *
+ * Create a new database DB:
+ *
+ * ```typescript
+ * import * as pulumi from "@pulumi/pulumi";
+ * import * as vultr from "@ediri/vultr";
+ *
+ * const myDatabaseDb = new vultr.DatabaseDb("myDatabaseDb", {databaseId: vultr_database.my_database.id});
+ * ```
+ */
 export class DatabaseDb extends pulumi.CustomResource {
     /**
      * Get an existing DatabaseDb resource's state with the given name, ID, and optional extra
@@ -32,7 +46,13 @@ export class DatabaseDb extends pulumi.CustomResource {
         return obj['__pulumiType'] === DatabaseDb.__pulumiType;
     }
 
+    /**
+     * The managed database ID you want to attach this logical DB to.
+     */
     public readonly databaseId!: pulumi.Output<string>;
+    /**
+     * The name of the new managed database logical DB.
+     */
     public readonly name!: pulumi.Output<string>;
 
     /**
@@ -67,7 +87,13 @@ export class DatabaseDb extends pulumi.CustomResource {
  * Input properties used for looking up and filtering DatabaseDb resources.
  */
 export interface DatabaseDbState {
+    /**
+     * The managed database ID you want to attach this logical DB to.
+     */
     databaseId?: pulumi.Input<string>;
+    /**
+     * The name of the new managed database logical DB.
+     */
     name?: pulumi.Input<string>;
 }
 
@@ -75,6 +101,12 @@ export interface DatabaseDbState {
  * The set of arguments for constructing a DatabaseDb resource.
  */
 export interface DatabaseDbArgs {
+    /**
+     * The managed database ID you want to attach this logical DB to.
+     */
     databaseId: pulumi.Input<string>;
+    /**
+     * The name of the new managed database logical DB.
+     */
     name?: pulumi.Input<string>;
 }

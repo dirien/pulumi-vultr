@@ -14,119 +14,347 @@ import javax.annotation.Nullable;
 
 @CustomType
 public final class DatabaseReadReplica {
+    /**
+     * @return The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
+     * 
+     */
     private @Nullable String clusterTimeZone;
+    /**
+     * @return The database engine of the new managed database.
+     * 
+     */
     private @Nullable String databaseEngine;
+    /**
+     * @return The database engine version of the new managed database.
+     * 
+     */
     private @Nullable String databaseEngineVersion;
+    /**
+     * @return The date the managed database was added to your Vultr account.
+     * 
+     */
     private @Nullable String dateCreated;
+    /**
+     * @return The managed database&#39;s default logical database.
+     * 
+     */
     private @Nullable String dbname;
+    /**
+     * @return The hostname assigned to the managed database.
+     * 
+     */
     private @Nullable String host;
+    /**
+     * @return The ID of the managed database.
+     * 
+     */
     private @Nullable String id;
+    /**
+     * @return A label for the managed database.
+     * 
+     */
     private String label;
+    /**
+     * @return The date of the latest backup available on the managed database.
+     * 
+     */
     private @Nullable String latestBackup;
+    /**
+     * @return The preferred maintenance day of week for the managed database.
+     * 
+     */
     private @Nullable String maintenanceDow;
+    /**
+     * @return The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).
+     * 
+     */
     private @Nullable String maintenanceTime;
+    /**
+     * @return The configuration value for the long query time (in seconds) on the managed database (MySQL engine types only).
+     * 
+     */
     private @Nullable Integer mysqlLongQueryTime;
+    /**
+     * @return The configuration value for whether primary keys are required on the managed database (MySQL engine types only).
+     * 
+     */
     private @Nullable Boolean mysqlRequirePrimaryKey;
+    /**
+     * @return The configuration value for slow query logging on the managed database (MySQL engine types only).
+     * 
+     */
     private @Nullable Boolean mysqlSlowQueryLog;
+    /**
+     * @return A list of SQL modes to configure for the managed database (MySQL engine types only - `ALLOW_INVALID_DATES`, `ANSI`, `ANSI_QUOTES`, `ERROR_FOR_DIVISION_BY_ZERO`, `HIGH_NOT_PRECEDENCE`, `IGNORE_SPACE`, `NO_AUTO_VALUE_ON_ZERO`, `NO_DIR_IN_CREATE`, `NO_ENGINE_SUBSTITUTION`, `NO_UNSIGNED_SUBTRACTION`, `NO_ZERO_DATE`, `NO_ZERO_IN_DATE`, `ONLY_FULL_GROUP_BY`, `PIPES_AS_CONCAT`, `REAL_AS_FLOAT`, `STRICT_ALL_TABLES`, `STRICT_TRANS_TABLES`, `TIME_TRUNCATE_FRACTIONAL`, `TRADITIONAL`).
+     * 
+     */
     private @Nullable List<String> mysqlSqlModes;
+    /**
+     * @return The password for the managed database&#39;s primary admin user.
+     * 
+     */
     private @Nullable String password;
+    /**
+     * @return The ID of the plan that you want the managed database to subscribe to. [See List Managed Database Plans](https://www.vultr.com/api/#tag/managed-databases/operation/list-database-plans)
+     * 
+     */
     private @Nullable String plan;
+    /**
+     * @return The description of the disk(s) on the managed database.
+     * 
+     */
     private @Nullable Integer planDisk;
+    /**
+     * @return The amount of memory available on the managed database in MB.
+     * 
+     */
     private @Nullable Integer planRam;
+    /**
+     * @return The number of standby nodes available on the managed database.
+     * 
+     */
     private @Nullable Integer planReplicas;
+    /**
+     * @return The number of virtual CPUs available on the managed database.
+     * 
+     */
     private @Nullable Integer planVcpus;
+    /**
+     * @return The connection port for the managed database.
+     * 
+     */
     private @Nullable String port;
+    /**
+     * @return The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
+     * 
+     */
     private @Nullable String redisEvictionPolicy;
+    /**
+     * @return The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
+     * 
+     */
     private String region;
+    /**
+     * @return The current status of the managed database (poweroff, rebuilding, rebalancing, running).
+     * 
+     */
     private @Nullable String status;
+    /**
+     * @return The tag to assign to the managed database.
+     * 
+     */
     private @Nullable String tag;
+    /**
+     * @return A list of allowed IP addresses for the managed database.
+     * 
+     */
     private @Nullable List<String> trustedIps;
+    /**
+     * @return The primary admin user for the managed database.
+     * 
+     */
     private @Nullable String user;
+    private @Nullable String vpcId;
 
     private DatabaseReadReplica() {}
+    /**
+     * @return The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
+     * 
+     */
     public Optional<String> clusterTimeZone() {
         return Optional.ofNullable(this.clusterTimeZone);
     }
+    /**
+     * @return The database engine of the new managed database.
+     * 
+     */
     public Optional<String> databaseEngine() {
         return Optional.ofNullable(this.databaseEngine);
     }
+    /**
+     * @return The database engine version of the new managed database.
+     * 
+     */
     public Optional<String> databaseEngineVersion() {
         return Optional.ofNullable(this.databaseEngineVersion);
     }
+    /**
+     * @return The date the managed database was added to your Vultr account.
+     * 
+     */
     public Optional<String> dateCreated() {
         return Optional.ofNullable(this.dateCreated);
     }
+    /**
+     * @return The managed database&#39;s default logical database.
+     * 
+     */
     public Optional<String> dbname() {
         return Optional.ofNullable(this.dbname);
     }
+    /**
+     * @return The hostname assigned to the managed database.
+     * 
+     */
     public Optional<String> host() {
         return Optional.ofNullable(this.host);
     }
+    /**
+     * @return The ID of the managed database.
+     * 
+     */
     public Optional<String> id() {
         return Optional.ofNullable(this.id);
     }
+    /**
+     * @return A label for the managed database.
+     * 
+     */
     public String label() {
         return this.label;
     }
+    /**
+     * @return The date of the latest backup available on the managed database.
+     * 
+     */
     public Optional<String> latestBackup() {
         return Optional.ofNullable(this.latestBackup);
     }
+    /**
+     * @return The preferred maintenance day of week for the managed database.
+     * 
+     */
     public Optional<String> maintenanceDow() {
         return Optional.ofNullable(this.maintenanceDow);
     }
+    /**
+     * @return The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).
+     * 
+     */
     public Optional<String> maintenanceTime() {
         return Optional.ofNullable(this.maintenanceTime);
     }
+    /**
+     * @return The configuration value for the long query time (in seconds) on the managed database (MySQL engine types only).
+     * 
+     */
     public Optional<Integer> mysqlLongQueryTime() {
         return Optional.ofNullable(this.mysqlLongQueryTime);
     }
+    /**
+     * @return The configuration value for whether primary keys are required on the managed database (MySQL engine types only).
+     * 
+     */
     public Optional<Boolean> mysqlRequirePrimaryKey() {
         return Optional.ofNullable(this.mysqlRequirePrimaryKey);
     }
+    /**
+     * @return The configuration value for slow query logging on the managed database (MySQL engine types only).
+     * 
+     */
     public Optional<Boolean> mysqlSlowQueryLog() {
         return Optional.ofNullable(this.mysqlSlowQueryLog);
     }
+    /**
+     * @return A list of SQL modes to configure for the managed database (MySQL engine types only - `ALLOW_INVALID_DATES`, `ANSI`, `ANSI_QUOTES`, `ERROR_FOR_DIVISION_BY_ZERO`, `HIGH_NOT_PRECEDENCE`, `IGNORE_SPACE`, `NO_AUTO_VALUE_ON_ZERO`, `NO_DIR_IN_CREATE`, `NO_ENGINE_SUBSTITUTION`, `NO_UNSIGNED_SUBTRACTION`, `NO_ZERO_DATE`, `NO_ZERO_IN_DATE`, `ONLY_FULL_GROUP_BY`, `PIPES_AS_CONCAT`, `REAL_AS_FLOAT`, `STRICT_ALL_TABLES`, `STRICT_TRANS_TABLES`, `TIME_TRUNCATE_FRACTIONAL`, `TRADITIONAL`).
+     * 
+     */
     public List<String> mysqlSqlModes() {
         return this.mysqlSqlModes == null ? List.of() : this.mysqlSqlModes;
     }
+    /**
+     * @return The password for the managed database&#39;s primary admin user.
+     * 
+     */
     public Optional<String> password() {
         return Optional.ofNullable(this.password);
     }
+    /**
+     * @return The ID of the plan that you want the managed database to subscribe to. [See List Managed Database Plans](https://www.vultr.com/api/#tag/managed-databases/operation/list-database-plans)
+     * 
+     */
     public Optional<String> plan() {
         return Optional.ofNullable(this.plan);
     }
+    /**
+     * @return The description of the disk(s) on the managed database.
+     * 
+     */
     public Optional<Integer> planDisk() {
         return Optional.ofNullable(this.planDisk);
     }
+    /**
+     * @return The amount of memory available on the managed database in MB.
+     * 
+     */
     public Optional<Integer> planRam() {
         return Optional.ofNullable(this.planRam);
     }
+    /**
+     * @return The number of standby nodes available on the managed database.
+     * 
+     */
     public Optional<Integer> planReplicas() {
         return Optional.ofNullable(this.planReplicas);
     }
+    /**
+     * @return The number of virtual CPUs available on the managed database.
+     * 
+     */
     public Optional<Integer> planVcpus() {
         return Optional.ofNullable(this.planVcpus);
     }
+    /**
+     * @return The connection port for the managed database.
+     * 
+     */
     public Optional<String> port() {
         return Optional.ofNullable(this.port);
     }
+    /**
+     * @return The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
+     * 
+     */
     public Optional<String> redisEvictionPolicy() {
         return Optional.ofNullable(this.redisEvictionPolicy);
     }
+    /**
+     * @return The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
+     * 
+     */
     public String region() {
         return this.region;
     }
+    /**
+     * @return The current status of the managed database (poweroff, rebuilding, rebalancing, running).
+     * 
+     */
     public Optional<String> status() {
         return Optional.ofNullable(this.status);
     }
+    /**
+     * @return The tag to assign to the managed database.
+     * 
+     */
     public Optional<String> tag() {
         return Optional.ofNullable(this.tag);
     }
+    /**
+     * @return A list of allowed IP addresses for the managed database.
+     * 
+     */
     public List<String> trustedIps() {
         return this.trustedIps == null ? List.of() : this.trustedIps;
     }
+    /**
+     * @return The primary admin user for the managed database.
+     * 
+     */
     public Optional<String> user() {
         return Optional.ofNullable(this.user);
+    }
+    public Optional<String> vpcId() {
+        return Optional.ofNullable(this.vpcId);
     }
 
     public static Builder builder() {
@@ -166,6 +394,7 @@ public final class DatabaseReadReplica {
         private @Nullable String tag;
         private @Nullable List<String> trustedIps;
         private @Nullable String user;
+        private @Nullable String vpcId;
         public Builder() {}
         public Builder(DatabaseReadReplica defaults) {
     	      Objects.requireNonNull(defaults);
@@ -197,6 +426,7 @@ public final class DatabaseReadReplica {
     	      this.tag = defaults.tag;
     	      this.trustedIps = defaults.trustedIps;
     	      this.user = defaults.user;
+    	      this.vpcId = defaults.vpcId;
         }
 
         @CustomType.Setter
@@ -345,6 +575,11 @@ public final class DatabaseReadReplica {
             this.user = user;
             return this;
         }
+        @CustomType.Setter
+        public Builder vpcId(@Nullable String vpcId) {
+            this.vpcId = vpcId;
+            return this;
+        }
         public DatabaseReadReplica build() {
             final var o = new DatabaseReadReplica();
             o.clusterTimeZone = clusterTimeZone;
@@ -375,6 +610,7 @@ public final class DatabaseReadReplica {
             o.tag = tag;
             o.trustedIps = trustedIps;
             o.user = user;
+            o.vpcId = vpcId;
             return o;
         }
     }

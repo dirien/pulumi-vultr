@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 
 __all__ = [
@@ -105,10 +105,10 @@ def get_dns_domain(domain: Optional[str] = None,
     __ret__ = pulumi.runtime.invoke('vultr:index/getDnsDomain:getDnsDomain', __args__, opts=opts, typ=GetDnsDomainResult).value
 
     return AwaitableGetDnsDomainResult(
-        date_created=__ret__.date_created,
-        dns_sec=__ret__.dns_sec,
-        domain=__ret__.domain,
-        id=__ret__.id)
+        date_created=pulumi.get(__ret__, 'date_created'),
+        dns_sec=pulumi.get(__ret__, 'dns_sec'),
+        domain=pulumi.get(__ret__, 'domain'),
+        id=pulumi.get(__ret__, 'id'))
 
 
 @_utilities.lift_output_func(get_dns_domain)

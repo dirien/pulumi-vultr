@@ -20,30 +20,30 @@ public final class LoadBalancerHealthCheckArgs extends com.pulumi.resources.Reso
      * Time in seconds to perform health check. Default value is 15.
      * 
      */
-    @Import(name="checkInterval", required=true)
-    private Output<Integer> checkInterval;
+    @Import(name="checkInterval")
+    private @Nullable Output<Integer> checkInterval;
 
     /**
      * @return Time in seconds to perform health check. Default value is 15.
      * 
      */
-    public Output<Integer> checkInterval() {
-        return this.checkInterval;
+    public Optional<Output<Integer>> checkInterval() {
+        return Optional.ofNullable(this.checkInterval);
     }
 
     /**
      * Number of failed attempts encountered before failover. Default value is 5.
      * 
      */
-    @Import(name="healthyThreshold", required=true)
-    private Output<Integer> healthyThreshold;
+    @Import(name="healthyThreshold")
+    private @Nullable Output<Integer> healthyThreshold;
 
     /**
      * @return Number of failed attempts encountered before failover. Default value is 5.
      * 
      */
-    public Output<Integer> healthyThreshold() {
-        return this.healthyThreshold;
+    public Optional<Output<Integer>> healthyThreshold() {
+        return Optional.ofNullable(this.healthyThreshold);
     }
 
     /**
@@ -95,30 +95,30 @@ public final class LoadBalancerHealthCheckArgs extends com.pulumi.resources.Reso
      * Time in seconds to wait for a health check response. Default value is 5.
      * 
      */
-    @Import(name="responseTimeout", required=true)
-    private Output<Integer> responseTimeout;
+    @Import(name="responseTimeout")
+    private @Nullable Output<Integer> responseTimeout;
 
     /**
      * @return Time in seconds to wait for a health check response. Default value is 5.
      * 
      */
-    public Output<Integer> responseTimeout() {
-        return this.responseTimeout;
+    public Optional<Output<Integer>> responseTimeout() {
+        return Optional.ofNullable(this.responseTimeout);
     }
 
     /**
      * Number of failed attempts encountered before failover. Default value is 5.
      * 
      */
-    @Import(name="unhealthyThreshold", required=true)
-    private Output<Integer> unhealthyThreshold;
+    @Import(name="unhealthyThreshold")
+    private @Nullable Output<Integer> unhealthyThreshold;
 
     /**
      * @return Number of failed attempts encountered before failover. Default value is 5.
      * 
      */
-    public Output<Integer> unhealthyThreshold() {
-        return this.unhealthyThreshold;
+    public Optional<Output<Integer>> unhealthyThreshold() {
+        return Optional.ofNullable(this.unhealthyThreshold);
     }
 
     private LoadBalancerHealthCheckArgs() {}
@@ -157,7 +157,7 @@ public final class LoadBalancerHealthCheckArgs extends com.pulumi.resources.Reso
          * @return builder
          * 
          */
-        public Builder checkInterval(Output<Integer> checkInterval) {
+        public Builder checkInterval(@Nullable Output<Integer> checkInterval) {
             $.checkInterval = checkInterval;
             return this;
         }
@@ -178,7 +178,7 @@ public final class LoadBalancerHealthCheckArgs extends com.pulumi.resources.Reso
          * @return builder
          * 
          */
-        public Builder healthyThreshold(Output<Integer> healthyThreshold) {
+        public Builder healthyThreshold(@Nullable Output<Integer> healthyThreshold) {
             $.healthyThreshold = healthyThreshold;
             return this;
         }
@@ -262,7 +262,7 @@ public final class LoadBalancerHealthCheckArgs extends com.pulumi.resources.Reso
          * @return builder
          * 
          */
-        public Builder responseTimeout(Output<Integer> responseTimeout) {
+        public Builder responseTimeout(@Nullable Output<Integer> responseTimeout) {
             $.responseTimeout = responseTimeout;
             return this;
         }
@@ -283,7 +283,7 @@ public final class LoadBalancerHealthCheckArgs extends com.pulumi.resources.Reso
          * @return builder
          * 
          */
-        public Builder unhealthyThreshold(Output<Integer> unhealthyThreshold) {
+        public Builder unhealthyThreshold(@Nullable Output<Integer> unhealthyThreshold) {
             $.unhealthyThreshold = unhealthyThreshold;
             return this;
         }
@@ -299,12 +299,8 @@ public final class LoadBalancerHealthCheckArgs extends com.pulumi.resources.Reso
         }
 
         public LoadBalancerHealthCheckArgs build() {
-            $.checkInterval = Objects.requireNonNull($.checkInterval, "expected parameter 'checkInterval' to be non-null");
-            $.healthyThreshold = Objects.requireNonNull($.healthyThreshold, "expected parameter 'healthyThreshold' to be non-null");
             $.port = Objects.requireNonNull($.port, "expected parameter 'port' to be non-null");
             $.protocol = Objects.requireNonNull($.protocol, "expected parameter 'protocol' to be non-null");
-            $.responseTimeout = Objects.requireNonNull($.responseTimeout, "expected parameter 'responseTimeout' to be non-null");
-            $.unhealthyThreshold = Objects.requireNonNull($.unhealthyThreshold, "expected parameter 'unhealthyThreshold' to be non-null");
             return $;
         }
     }

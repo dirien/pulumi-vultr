@@ -14,34 +14,116 @@ namespace ediri.Vultr.Outputs
     [OutputType]
     public sealed class GetDatabaseReadReplicaResult
     {
+        /// <summary>
+        /// The configured time zone for the Managed Database in TZ database format.
+        /// </summary>
         public readonly string ClusterTimeZone;
+        /// <summary>
+        /// The database engine of the managed database.
+        /// </summary>
         public readonly string DatabaseEngine;
+        /// <summary>
+        /// The database engine version of the managed database.
+        /// </summary>
         public readonly string DatabaseEngineVersion;
+        /// <summary>
+        /// The date the managed database was added to your Vultr account.
+        /// </summary>
         public readonly string DateCreated;
+        /// <summary>
+        /// The managed database's default logical database.
+        /// </summary>
         public readonly string Dbname;
+        /// <summary>
+        /// The hostname assigned to the managed database.
+        /// </summary>
         public readonly string Host;
         public readonly string Id;
+        /// <summary>
+        /// The managed database's label.
+        /// </summary>
         public readonly string Label;
+        /// <summary>
+        /// The date of the latest backup available on the managed database.
+        /// </summary>
         public readonly string LatestBackup;
+        /// <summary>
+        /// The preferred maintenance day of week for the managed database.
+        /// </summary>
         public readonly string MaintenanceDow;
+        /// <summary>
+        /// The preferred maintenance time for the managed database.
+        /// </summary>
         public readonly string MaintenanceTime;
+        /// <summary>
+        /// The configuration value for the long query time (in seconds) on the managed database (MySQL engine types only).
+        /// </summary>
         public readonly int MysqlLongQueryTime;
+        /// <summary>
+        /// The configuration value for whether primary keys are required on the managed database (MySQL engine types only).
+        /// </summary>
         public readonly bool MysqlRequirePrimaryKey;
+        /// <summary>
+        /// The configuration value for slow query logging on the managed database (MySQL engine types only).
+        /// </summary>
         public readonly bool MysqlSlowQueryLog;
+        /// <summary>
+        /// A list of SQL modes currently configured for the managed database (MySQL engine types only).
+        /// </summary>
         public readonly ImmutableArray<string> MysqlSqlModes;
+        /// <summary>
+        /// The password for the managed database's primary admin user.
+        /// </summary>
         public readonly string Password;
+        /// <summary>
+        /// The managed database's plan ID.
+        /// </summary>
         public readonly string Plan;
+        /// <summary>
+        /// The description of the disk(s) on the managed database.
+        /// </summary>
         public readonly int PlanDisk;
+        /// <summary>
+        /// The amount of memory available on the managed database in MB.
+        /// </summary>
         public readonly int PlanRam;
+        /// <summary>
+        /// The number of standby nodes available on the managed database.
+        /// </summary>
         public readonly int PlanReplicas;
+        /// <summary>
+        /// The number of virtual CPUs available on the managed database.
+        /// </summary>
         public readonly int PlanVcpus;
+        /// <summary>
+        /// The connection port for the managed database.
+        /// </summary>
         public readonly string Port;
+        /// <summary>
+        /// The configuration value for the data eviction policy on the managed database (Redis engine types only).
+        /// </summary>
         public readonly string RedisEvictionPolicy;
+        /// <summary>
+        /// The region ID of the managed database.
+        /// </summary>
         public readonly string Region;
+        /// <summary>
+        /// The current status of the managed database (poweroff, rebuilding, rebalancing, running).
+        /// </summary>
         public readonly string Status;
+        /// <summary>
+        /// The managed database's tag.
+        /// </summary>
         public readonly string Tag;
+        /// <summary>
+        /// A list of allowed IP addresses for the managed database.
+        /// </summary>
         public readonly ImmutableArray<string> TrustedIps;
+        /// <summary>
+        /// The primary admin user for the managed database.
+        /// </summary>
         public readonly string User;
+        public readonly string VpcId;
 
         [OutputConstructor]
         private GetDatabaseReadReplicaResult(
@@ -99,7 +181,9 @@ namespace ediri.Vultr.Outputs
 
             ImmutableArray<string> trustedIps,
 
-            string user)
+            string user,
+
+            string vpcId)
         {
             ClusterTimeZone = clusterTimeZone;
             DatabaseEngine = databaseEngine;
@@ -129,6 +213,7 @@ namespace ediri.Vultr.Outputs
             Tag = tag;
             TrustedIps = trustedIps;
             User = user;
+            VpcId = vpcId;
         }
     }
 }

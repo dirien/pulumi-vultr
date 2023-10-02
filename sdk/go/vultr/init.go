@@ -7,6 +7,7 @@ import (
 	"fmt"
 
 	"github.com/blang/semver"
+	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -74,6 +75,8 @@ func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi
 		r = &StartupScript{}
 	case "vultr:index/user:User":
 		r = &User{}
+	case "vultr:index/vpc2:Vpc2":
+		r = &Vpc2{}
 	case "vultr:index/vpc:Vpc":
 		r = &Vpc{}
 	default:
@@ -103,7 +106,10 @@ func (p *pkg) ConstructProvider(ctx *pulumi.Context, name, typ, urn string) (pul
 }
 
 func init() {
-	version, _ := PkgVersion()
+	version, err := internal.PkgVersion()
+	if err != nil {
+		version = semver.Version{Major: 1}
+	}
 	pulumi.RegisterResourceModule(
 		"vultr",
 		"index/bareMetalServer",
@@ -242,6 +248,11 @@ func init() {
 	pulumi.RegisterResourceModule(
 		"vultr",
 		"index/vpc",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"vultr",
+		"index/vpc2",
 		&module{version},
 	)
 	pulumi.RegisterResourcePackage(

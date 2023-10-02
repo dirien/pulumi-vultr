@@ -16,12 +16,12 @@ public final class LoadBalancerHealthCheck {
      * @return Time in seconds to perform health check. Default value is 15.
      * 
      */
-    private Integer checkInterval;
+    private @Nullable Integer checkInterval;
     /**
      * @return Number of failed attempts encountered before failover. Default value is 5.
      * 
      */
-    private Integer healthyThreshold;
+    private @Nullable Integer healthyThreshold;
     /**
      * @return The path on the attached instances that the load balancer should check against. Default value is `/`
      * 
@@ -41,27 +41,27 @@ public final class LoadBalancerHealthCheck {
      * @return Time in seconds to wait for a health check response. Default value is 5.
      * 
      */
-    private Integer responseTimeout;
+    private @Nullable Integer responseTimeout;
     /**
      * @return Number of failed attempts encountered before failover. Default value is 5.
      * 
      */
-    private Integer unhealthyThreshold;
+    private @Nullable Integer unhealthyThreshold;
 
     private LoadBalancerHealthCheck() {}
     /**
      * @return Time in seconds to perform health check. Default value is 15.
      * 
      */
-    public Integer checkInterval() {
-        return this.checkInterval;
+    public Optional<Integer> checkInterval() {
+        return Optional.ofNullable(this.checkInterval);
     }
     /**
      * @return Number of failed attempts encountered before failover. Default value is 5.
      * 
      */
-    public Integer healthyThreshold() {
-        return this.healthyThreshold;
+    public Optional<Integer> healthyThreshold() {
+        return Optional.ofNullable(this.healthyThreshold);
     }
     /**
      * @return The path on the attached instances that the load balancer should check against. Default value is `/`
@@ -88,15 +88,15 @@ public final class LoadBalancerHealthCheck {
      * @return Time in seconds to wait for a health check response. Default value is 5.
      * 
      */
-    public Integer responseTimeout() {
-        return this.responseTimeout;
+    public Optional<Integer> responseTimeout() {
+        return Optional.ofNullable(this.responseTimeout);
     }
     /**
      * @return Number of failed attempts encountered before failover. Default value is 5.
      * 
      */
-    public Integer unhealthyThreshold() {
-        return this.unhealthyThreshold;
+    public Optional<Integer> unhealthyThreshold() {
+        return Optional.ofNullable(this.unhealthyThreshold);
     }
 
     public static Builder builder() {
@@ -108,13 +108,13 @@ public final class LoadBalancerHealthCheck {
     }
     @CustomType.Builder
     public static final class Builder {
-        private Integer checkInterval;
-        private Integer healthyThreshold;
+        private @Nullable Integer checkInterval;
+        private @Nullable Integer healthyThreshold;
         private @Nullable String path;
         private Integer port;
         private String protocol;
-        private Integer responseTimeout;
-        private Integer unhealthyThreshold;
+        private @Nullable Integer responseTimeout;
+        private @Nullable Integer unhealthyThreshold;
         public Builder() {}
         public Builder(LoadBalancerHealthCheck defaults) {
     	      Objects.requireNonNull(defaults);
@@ -128,13 +128,13 @@ public final class LoadBalancerHealthCheck {
         }
 
         @CustomType.Setter
-        public Builder checkInterval(Integer checkInterval) {
-            this.checkInterval = Objects.requireNonNull(checkInterval);
+        public Builder checkInterval(@Nullable Integer checkInterval) {
+            this.checkInterval = checkInterval;
             return this;
         }
         @CustomType.Setter
-        public Builder healthyThreshold(Integer healthyThreshold) {
-            this.healthyThreshold = Objects.requireNonNull(healthyThreshold);
+        public Builder healthyThreshold(@Nullable Integer healthyThreshold) {
+            this.healthyThreshold = healthyThreshold;
             return this;
         }
         @CustomType.Setter
@@ -153,13 +153,13 @@ public final class LoadBalancerHealthCheck {
             return this;
         }
         @CustomType.Setter
-        public Builder responseTimeout(Integer responseTimeout) {
-            this.responseTimeout = Objects.requireNonNull(responseTimeout);
+        public Builder responseTimeout(@Nullable Integer responseTimeout) {
+            this.responseTimeout = responseTimeout;
             return this;
         }
         @CustomType.Setter
-        public Builder unhealthyThreshold(Integer unhealthyThreshold) {
-            this.unhealthyThreshold = Objects.requireNonNull(unhealthyThreshold);
+        public Builder unhealthyThreshold(@Nullable Integer unhealthyThreshold) {
+            this.unhealthyThreshold = unhealthyThreshold;
             return this;
         }
         public LoadBalancerHealthCheck build() {

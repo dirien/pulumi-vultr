@@ -10,18 +10,55 @@ using Pulumi;
 
 namespace ediri.Vultr
 {
+    /// <summary>
+    /// Provides a Vultr database user resource. This can be used to create, read, modify, and delete users for a managed database on your Vultr account.
+    /// 
+    /// ## Example Usage
+    /// 
+    /// Create a new database user:
+    /// 
+    /// ```csharp
+    /// using System.Collections.Generic;
+    /// using System.Linq;
+    /// using Pulumi;
+    /// using Vultr = ediri.Vultr;
+    /// 
+    /// return await Deployment.RunAsync(() =&gt; 
+    /// {
+    ///     var myDatabaseUser = new Vultr.DatabaseUser("myDatabaseUser", new()
+    ///     {
+    ///         DatabaseId = vultr_database.My_database.Id,
+    ///         Username = "my_database_user",
+    ///         Password = "randomTestPW40298",
+    ///     });
+    /// 
+    /// });
+    /// ```
+    /// </summary>
     [VultrResourceType("vultr:index/databaseUser:DatabaseUser")]
     public partial class DatabaseUser : global::Pulumi.CustomResource
     {
+        /// <summary>
+        /// The managed database ID you want to attach this user to.
+        /// </summary>
         [Output("databaseId")]
         public Output<string> DatabaseId { get; private set; } = null!;
 
+        /// <summary>
+        /// The encryption type of the new managed database user's password (MySQL engine types only - `caching_sha2_password`, `mysql_native_password`).
+        /// </summary>
         [Output("encryption")]
         public Output<string> Encryption { get; private set; } = null!;
 
+        /// <summary>
+        /// The password of the new managed database user.
+        /// </summary>
         [Output("password")]
         public Output<string> Password { get; private set; } = null!;
 
+        /// <summary>
+        /// The username of the new managed database user.
+        /// </summary>
         [Output("username")]
         public Output<string> Username { get; private set; } = null!;
 
@@ -72,15 +109,27 @@ namespace ediri.Vultr
 
     public sealed class DatabaseUserArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// The managed database ID you want to attach this user to.
+        /// </summary>
         [Input("databaseId", required: true)]
         public Input<string> DatabaseId { get; set; } = null!;
 
+        /// <summary>
+        /// The encryption type of the new managed database user's password (MySQL engine types only - `caching_sha2_password`, `mysql_native_password`).
+        /// </summary>
         [Input("encryption")]
         public Input<string>? Encryption { get; set; }
 
+        /// <summary>
+        /// The password of the new managed database user.
+        /// </summary>
         [Input("password")]
         public Input<string>? Password { get; set; }
 
+        /// <summary>
+        /// The username of the new managed database user.
+        /// </summary>
         [Input("username", required: true)]
         public Input<string> Username { get; set; } = null!;
 
@@ -92,15 +141,27 @@ namespace ediri.Vultr
 
     public sealed class DatabaseUserState : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// The managed database ID you want to attach this user to.
+        /// </summary>
         [Input("databaseId")]
         public Input<string>? DatabaseId { get; set; }
 
+        /// <summary>
+        /// The encryption type of the new managed database user's password (MySQL engine types only - `caching_sha2_password`, `mysql_native_password`).
+        /// </summary>
         [Input("encryption")]
         public Input<string>? Encryption { get; set; }
 
+        /// <summary>
+        /// The password of the new managed database user.
+        /// </summary>
         [Input("password")]
         public Input<string>? Password { get; set; }
 
+        /// <summary>
+        /// The username of the new managed database user.
+        /// </summary>
         [Input("username")]
         public Input<string>? Username { get; set; }
 

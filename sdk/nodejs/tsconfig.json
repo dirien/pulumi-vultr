@@ -55,6 +55,7 @@
         "getStartupScript.ts",
         "getUser.ts",
         "getVpc.ts",
+        "getVpc2.ts",
         "index.ts",
         "instance.ts",
         "instanceIpv4.ts",
@@ -77,6 +78,7 @@
         "types/output.ts",
         "user.ts",
         "utilities.ts",
-        "vpc.ts"
+        "vpc.ts",
+        "vpc2.ts"
     ]
 }

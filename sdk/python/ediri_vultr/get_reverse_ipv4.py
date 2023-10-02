@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -143,13 +143,13 @@ def get_reverse_ipv4(filters: Optional[Sequence[pulumi.InputType['GetReverseIpv4
     __ret__ = pulumi.runtime.invoke('vultr:index/getReverseIpv4:getReverseIpv4', __args__, opts=opts, typ=GetReverseIpv4Result).value
 
     return AwaitableGetReverseIpv4Result(
-        filters=__ret__.filters,
-        gateway=__ret__.gateway,
-        id=__ret__.id,
-        instance_id=__ret__.instance_id,
-        ip=__ret__.ip,
-        netmask=__ret__.netmask,
-        reverse=__ret__.reverse)
+        filters=pulumi.get(__ret__, 'filters'),
+        gateway=pulumi.get(__ret__, 'gateway'),
+        id=pulumi.get(__ret__, 'id'),
+        instance_id=pulumi.get(__ret__, 'instance_id'),
+        ip=pulumi.get(__ret__, 'ip'),
+        netmask=pulumi.get(__ret__, 'netmask'),
+        reverse=pulumi.get(__ret__, 'reverse'))
 
 
 @_utilities.lift_output_func(get_reverse_ipv4)

@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 
 __all__ = ['InstanceIpv4Args', 'InstanceIpv4']
@@ -21,9 +21,20 @@ class InstanceIpv4Args:
         :param pulumi.Input[str] instance_id: The ID of the instance to be assigned the IPv4 address.
         :param pulumi.Input[bool] reboot: Default true. Determines whether or not the server is rebooted after adding the IPv4 address.
         """
-        pulumi.set(__self__, "instance_id", instance_id)
+        InstanceIpv4Args._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            instance_id=instance_id,
+            reboot=reboot,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             instance_id: pulumi.Input[str],
+             reboot: Optional[pulumi.Input[bool]] = None,
+             opts: Optional[pulumi.ResourceOptions]=None):
+        _setter("instance_id", instance_id)
         if reboot is not None:
-            pulumi.set(__self__, "reboot", reboot)
+            _setter("reboot", reboot)
 
     @property
     @pulumi.getter(name="instanceId")
@@ -68,18 +79,37 @@ class _InstanceIpv4State:
         :param pulumi.Input[bool] reboot: Default true. Determines whether or not the server is rebooted after adding the IPv4 address.
         :param pulumi.Input[str] reverse: The reverse DNS information for this IP address.
         """
+        _InstanceIpv4State._configure(
+            lambda key, value: pulumi.set(__self__, key, value),
+            gateway=gateway,
+            instance_id=instance_id,
+            ip=ip,
+            netmask=netmask,
+            reboot=reboot,
+            reverse=reverse,
+        )
+    @staticmethod
+    def _configure(
+             _setter: Callable[[Any, Any], None],
+             gateway: Optional[pulumi.Input[str]] = None,
+             instance_id: Optional[pulumi.Input[str]] = None,
+             ip: Optional[pulumi.Input[str]] = None,
+             netmask: Optional[pulumi.Input[str]] = None,
+             reboot: Optional[pulumi.Input[bool]] = None,
+             reverse: Optional[pulumi.Input[str]] = None,
+             opts: Optional[pulumi.ResourceOptions]=None):
         if gateway is not None:
-            pulumi.set(__self__, "gateway", gateway)
+            _setter("gateway", gateway)
         if instance_id is not None:
-            pulumi.set(__self__, "instance_id", instance_id)
+            _setter("instance_id", instance_id)
         if ip is not None:
-            pulumi.set(__self__, "ip", ip)
+            _setter("ip", ip)
         if netmask is not None:
-            pulumi.set(__self__, "netmask", netmask)
+            _setter("netmask", netmask)
         if reboot is not None:
-            pulumi.set(__self__, "reboot", reboot)
+            _setter("reboot", reboot)
         if reverse is not None:
-            pulumi.set(__self__, "reverse", reverse)
+            _setter("reverse", reverse)
 
     @property
     @pulumi.getter
@@ -227,6 +257,10 @@ class InstanceIpv4(pulumi.CustomResource):
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
+            kwargs = kwargs or {}
+            def _setter(key, value):
+                kwargs[key] = value
+            InstanceIpv4Args._configure(_setter, **kwargs)
             __self__._internal_init(resource_name, *args, **kwargs)
 
     def _internal_init(__self__,

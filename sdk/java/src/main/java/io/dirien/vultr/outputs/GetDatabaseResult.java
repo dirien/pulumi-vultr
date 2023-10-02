@@ -15,60 +15,197 @@ import javax.annotation.Nullable;
 
 @CustomType
 public final class GetDatabaseResult {
+    /**
+     * @return The configured time zone for the Managed Database in TZ database format.
+     * 
+     */
     private String clusterTimeZone;
+    /**
+     * @return The database engine of the managed database.
+     * 
+     */
     private String databaseEngine;
+    /**
+     * @return The database engine version of the managed database.
+     * 
+     */
     private String databaseEngineVersion;
+    /**
+     * @return The date the managed database was added to your Vultr account.
+     * 
+     */
     private String dateCreated;
+    /**
+     * @return The managed database&#39;s default logical database.
+     * 
+     */
     private String dbname;
     private @Nullable List<GetDatabaseFilter> filters;
+    /**
+     * @return The hostname assigned to the managed database.
+     * 
+     */
     private String host;
     /**
      * @return The provider-assigned unique ID for this managed resource.
      * 
      */
     private String id;
+    /**
+     * @return The managed database&#39;s label.
+     * 
+     */
     private String label;
+    /**
+     * @return The date of the latest backup available on the managed database.
+     * 
+     */
     private String latestBackup;
+    /**
+     * @return The preferred maintenance day of week for the managed database.
+     * 
+     */
     private String maintenanceDow;
+    /**
+     * @return The preferred maintenance time for the managed database.
+     * 
+     */
     private String maintenanceTime;
+    /**
+     * @return The configuration value for the long query time (in seconds) on the managed database (MySQL engine types only).
+     * 
+     */
     private Integer mysqlLongQueryTime;
+    /**
+     * @return The configuration value for whether primary keys are required on the managed database (MySQL engine types only).
+     * 
+     */
     private Boolean mysqlRequirePrimaryKey;
+    /**
+     * @return The configuration value for slow query logging on the managed database (MySQL engine types only).
+     * 
+     */
     private Boolean mysqlSlowQueryLog;
+    /**
+     * @return A list of SQL modes currently configured for the managed database (MySQL engine types only).
+     * 
+     */
     private List<String> mysqlSqlModes;
+    /**
+     * @return The password for the managed database&#39;s primary admin user.
+     * 
+     */
     private String password;
+    /**
+     * @return The managed database&#39;s plan ID.
+     * 
+     */
     private String plan;
+    /**
+     * @return The description of the disk(s) on the managed database.
+     * 
+     */
     private Integer planDisk;
+    /**
+     * @return The amount of memory available on the managed database in MB.
+     * 
+     */
     private Integer planRam;
+    /**
+     * @return The number of standby nodes available on the managed database.
+     * 
+     */
     private Integer planReplicas;
+    /**
+     * @return The number of virtual CPUs available on the managed database.
+     * 
+     */
     private Integer planVcpus;
+    /**
+     * @return The connection port for the managed database.
+     * 
+     */
     private String port;
+    /**
+     * @return A list of read replicas attached to the managed database.
+     * 
+     */
     private List<GetDatabaseReadReplica> readReplicas;
+    /**
+     * @return The configuration value for the data eviction policy on the managed database (Redis engine types only).
+     * 
+     */
     private String redisEvictionPolicy;
+    /**
+     * @return The region ID of the managed database.
+     * 
+     */
     private String region;
+    /**
+     * @return The current status of the managed database (poweroff, rebuilding, rebalancing, running).
+     * 
+     */
     private String status;
+    /**
+     * @return The managed database&#39;s tag.
+     * 
+     */
     private String tag;
+    /**
+     * @return A list of allowed IP addresses for the managed database.
+     * 
+     */
     private List<String> trustedIps;
+    /**
+     * @return The primary admin user for the managed database.
+     * 
+     */
     private String user;
+    private String vpcId;
 
     private GetDatabaseResult() {}
+    /**
+     * @return The configured time zone for the Managed Database in TZ database format.
+     * 
+     */
     public String clusterTimeZone() {
         return this.clusterTimeZone;
     }
+    /**
+     * @return The database engine of the managed database.
+     * 
+     */
     public String databaseEngine() {
         return this.databaseEngine;
     }
+    /**
+     * @return The database engine version of the managed database.
+     * 
+     */
     public String databaseEngineVersion() {
         return this.databaseEngineVersion;
     }
+    /**
+     * @return The date the managed database was added to your Vultr account.
+     * 
+     */
     public String dateCreated() {
         return this.dateCreated;
     }
+    /**
+     * @return The managed database&#39;s default logical database.
+     * 
+     */
     public String dbname() {
         return this.dbname;
     }
     public List<GetDatabaseFilter> filters() {
         return this.filters == null ? List.of() : this.filters;
     }
+    /**
+     * @return The hostname assigned to the managed database.
+     * 
+     */
     public String host() {
         return this.host;
     }
@@ -79,71 +216,162 @@ public final class GetDatabaseResult {
     public String id() {
         return this.id;
     }
+    /**
+     * @return The managed database&#39;s label.
+     * 
+     */
     public String label() {
         return this.label;
     }
+    /**
+     * @return The date of the latest backup available on the managed database.
+     * 
+     */
     public String latestBackup() {
         return this.latestBackup;
     }
+    /**
+     * @return The preferred maintenance day of week for the managed database.
+     * 
+     */
     public String maintenanceDow() {
         return this.maintenanceDow;
     }
+    /**
+     * @return The preferred maintenance time for the managed database.
+     * 
+     */
     public String maintenanceTime() {
         return this.maintenanceTime;
     }
+    /**
+     * @return The configuration value for the long query time (in seconds) on the managed database (MySQL engine types only).
+     * 
+     */
     public Integer mysqlLongQueryTime() {
         return this.mysqlLongQueryTime;
     }
+    /**
+     * @return The configuration value for whether primary keys are required on the managed database (MySQL engine types only).
+     * 
+     */
     public Boolean mysqlRequirePrimaryKey() {
         return this.mysqlRequirePrimaryKey;
     }
+    /**
+     * @return The configuration value for slow query logging on the managed database (MySQL engine types only).
+     * 
+     */
     public Boolean mysqlSlowQueryLog() {
         return this.mysqlSlowQueryLog;
     }
+    /**
+     * @return A list of SQL modes currently configured for the managed database (MySQL engine types only).
+     * 
+     */
     public List<String> mysqlSqlModes() {
         return this.mysqlSqlModes;
     }
+    /**
+     * @return The password for the managed database&#39;s primary admin user.
+     * 
+     */
     public String password() {
         return this.password;
     }
+    /**
+     * @return The managed database&#39;s plan ID.
+     * 
+     */
     public String plan() {
         return this.plan;
     }
+    /**
+     * @return The description of the disk(s) on the managed database.
+     * 
+     */
     public Integer planDisk() {
         return this.planDisk;
     }
+    /**
+     * @return The amount of memory available on the managed database in MB.
+     * 
+     */
     public Integer planRam() {
         return this.planRam;
     }
+    /**
+     * @return The number of standby nodes available on the managed database.
+     * 
+     */
     public Integer planReplicas() {
         return this.planReplicas;
     }
+    /**
+     * @return The number of virtual CPUs available on the managed database.
+     * 
+     */
     public Integer planVcpus() {
         return this.planVcpus;
     }
+    /**
+     * @return The connection port for the managed database.
+     * 
+     */
     public String port() {
         return this.port;
     }
+    /**
+     * @return A list of read replicas attached to the managed database.
+     * 
+     */
     public List<GetDatabaseReadReplica> readReplicas() {
         return this.readReplicas;
     }
+    /**
+     * @return The configuration value for the data eviction policy on the managed database (Redis engine types only).
+     * 
+     */
     public String redisEvictionPolicy() {
         return this.redisEvictionPolicy;
     }
+    /**
+     * @return The region ID of the managed database.
+     * 
+     */
     public String region() {
         return this.region;
     }
+    /**
+     * @return The current status of the managed database (poweroff, rebuilding, rebalancing, running).
+     * 
+     */
     public String status() {
         return this.status;
     }
+    /**
+     * @return The managed database&#39;s tag.
+     * 
+     */
     public String tag() {
         return this.tag;
     }
+    /**
+     * @return A list of allowed IP addresses for the managed database.
+     * 
+     */
     public List<String> trustedIps() {
         return this.trustedIps;
     }
+    /**
+     * @return The primary admin user for the managed database.
+     * 
+     */
     public String user() {
         return this.user;
+    }
+    public String vpcId() {
+        return this.vpcId;
     }
 
     public static Builder builder() {
@@ -185,6 +413,7 @@ public final class GetDatabaseResult {
         private String tag;
         private List<String> trustedIps;
         private String user;
+        private String vpcId;
         public Builder() {}
         public Builder(GetDatabaseResult defaults) {
     	      Objects.requireNonNull(defaults);
@@ -218,6 +447,7 @@ public final class GetDatabaseResult {
     	      this.tag = defaults.tag;
     	      this.trustedIps = defaults.trustedIps;
     	      this.user = defaults.user;
+    	      this.vpcId = defaults.vpcId;
         }
 
         @CustomType.Setter
@@ -382,6 +612,11 @@ public final class GetDatabaseResult {
             this.user = Objects.requireNonNull(user);
             return this;
         }
+        @CustomType.Setter
+        public Builder vpcId(String vpcId) {
+            this.vpcId = Objects.requireNonNull(vpcId);
+            return this;
+        }
         public GetDatabaseResult build() {
             final var o = new GetDatabaseResult();
             o.clusterTimeZone = clusterTimeZone;
@@ -414,6 +649,7 @@ public final class GetDatabaseResult {
             o.tag = tag;
             o.trustedIps = trustedIps;
             o.user = user;
+            o.vpcId = vpcId;
             return o;
         }
     }

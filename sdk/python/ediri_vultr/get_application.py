@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -155,14 +155,14 @@ def get_application(filters: Optional[Sequence[pulumi.InputType['GetApplicationF
     __ret__ = pulumi.runtime.invoke('vultr:index/getApplication:getApplication', __args__, opts=opts, typ=GetApplicationResult).value
 
     return AwaitableGetApplicationResult(
-        deploy_name=__ret__.deploy_name,
-        filters=__ret__.filters,
-        id=__ret__.id,
-        image_id=__ret__.image_id,
-        name=__ret__.name,
-        short_name=__ret__.short_name,
-        type=__ret__.type,
-        vendor=__ret__.vendor)
+        deploy_name=pulumi.get(__ret__, 'deploy_name'),
+        filters=pulumi.get(__ret__, 'filters'),
+        id=pulumi.get(__ret__, 'id'),
+        image_id=pulumi.get(__ret__, 'image_id'),
+        name=pulumi.get(__ret__, 'name'),
+        short_name=pulumi.get(__ret__, 'short_name'),
+        type=pulumi.get(__ret__, 'type'),
+        vendor=pulumi.get(__ret__, 'vendor'))
 
 
 @_utilities.lift_output_func(get_application)

@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -143,12 +143,12 @@ def get_user(filters: Optional[Sequence[pulumi.InputType['GetUserFilterArgs']]] 
     __ret__ = pulumi.runtime.invoke('vultr:index/getUser:getUser', __args__, opts=opts, typ=GetUserResult).value
 
     return AwaitableGetUserResult(
-        acls=__ret__.acls,
-        api_enabled=__ret__.api_enabled,
-        email=__ret__.email,
-        filters=__ret__.filters,
-        id=__ret__.id,
-        name=__ret__.name)
+        acls=pulumi.get(__ret__, 'acls'),
+        api_enabled=pulumi.get(__ret__, 'api_enabled'),
+        email=pulumi.get(__ret__, 'email'),
+        filters=pulumi.get(__ret__, 'filters'),
+        id=pulumi.get(__ret__, 'id'),
+        name=pulumi.get(__ret__, 'name'))
 
 
 @_utilities.lift_output_func(get_user)

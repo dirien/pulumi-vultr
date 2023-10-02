@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -191,17 +191,17 @@ def get_object_storage(filters: Optional[Sequence[pulumi.InputType['GetObjectSto
     __ret__ = pulumi.runtime.invoke('vultr:index/getObjectStorage:getObjectStorage', __args__, opts=opts, typ=GetObjectStorageResult).value
 
     return AwaitableGetObjectStorageResult(
-        cluster_id=__ret__.cluster_id,
-        date_created=__ret__.date_created,
-        filters=__ret__.filters,
-        id=__ret__.id,
-        label=__ret__.label,
-        location=__ret__.location,
-        region=__ret__.region,
-        s3_access_key=__ret__.s3_access_key,
-        s3_hostname=__ret__.s3_hostname,
-        s3_secret_key=__ret__.s3_secret_key,
-        status=__ret__.status)
+        cluster_id=pulumi.get(__ret__, 'cluster_id'),
+        date_created=pulumi.get(__ret__, 'date_created'),
+        filters=pulumi.get(__ret__, 'filters'),
+        id=pulumi.get(__ret__, 'id'),
+        label=pulumi.get(__ret__, 'label'),
+        location=pulumi.get(__ret__, 'location'),
+        region=pulumi.get(__ret__, 'region'),
+        s3_access_key=pulumi.get(__ret__, 's3_access_key'),
+        s3_hostname=pulumi.get(__ret__, 's3_hostname'),
+        s3_secret_key=pulumi.get(__ret__, 's3_secret_key'),
+        status=pulumi.get(__ret__, 'status'))
 
 
 @_utilities.lift_output_func(get_object_storage)

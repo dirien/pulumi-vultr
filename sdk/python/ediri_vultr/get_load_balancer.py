@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -281,25 +281,25 @@ def get_load_balancer(filters: Optional[Sequence[pulumi.InputType['GetLoadBalanc
     __ret__ = pulumi.runtime.invoke('vultr:index/getLoadBalancer:getLoadBalancer', __args__, opts=opts, typ=GetLoadBalancerResult).value
 
     return AwaitableGetLoadBalancerResult(
-        attached_instances=__ret__.attached_instances,
-        balancing_algorithm=__ret__.balancing_algorithm,
-        cookie_name=__ret__.cookie_name,
-        date_created=__ret__.date_created,
-        filters=__ret__.filters,
-        firewall_rules=__ret__.firewall_rules,
-        forwarding_rules=__ret__.forwarding_rules,
-        has_ssl=__ret__.has_ssl,
-        health_check=__ret__.health_check,
-        id=__ret__.id,
-        ipv4=__ret__.ipv4,
-        ipv6=__ret__.ipv6,
-        label=__ret__.label,
-        private_network=__ret__.private_network,
-        proxy_protocol=__ret__.proxy_protocol,
-        region=__ret__.region,
-        ssl=__ret__.ssl,
-        ssl_redirect=__ret__.ssl_redirect,
-        status=__ret__.status)
+        attached_instances=pulumi.get(__ret__, 'attached_instances'),
+        balancing_algorithm=pulumi.get(__ret__, 'balancing_algorithm'),
+        cookie_name=pulumi.get(__ret__, 'cookie_name'),
+        date_created=pulumi.get(__ret__, 'date_created'),
+        filters=pulumi.get(__ret__, 'filters'),
+        firewall_rules=pulumi.get(__ret__, 'firewall_rules'),
+        forwarding_rules=pulumi.get(__ret__, 'forwarding_rules'),
+        has_ssl=pulumi.get(__ret__, 'has_ssl'),
+        health_check=pulumi.get(__ret__, 'health_check'),
+        id=pulumi.get(__ret__, 'id'),
+        ipv4=pulumi.get(__ret__, 'ipv4'),
+        ipv6=pulumi.get(__ret__, 'ipv6'),
+        label=pulumi.get(__ret__, 'label'),
+        private_network=pulumi.get(__ret__, 'private_network'),
+        proxy_protocol=pulumi.get(__ret__, 'proxy_protocol'),
+        region=pulumi.get(__ret__, 'region'),
+        ssl=pulumi.get(__ret__, 'ssl'),
+        ssl_redirect=pulumi.get(__ret__, 'ssl_redirect'),
+        status=pulumi.get(__ret__, 'status'))
 
 
 @_utilities.lift_output_func(get_load_balancer)

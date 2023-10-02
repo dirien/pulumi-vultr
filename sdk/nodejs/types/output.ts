@@ -6,34 +6,119 @@ import * as inputs from "../types/input";
 import * as outputs from "../types/output";
 
 export interface DatabaseReadReplica {
+    /**
+     * The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
+     */
     clusterTimeZone: string;
+    /**
+     * The database engine of the new managed database.
+     */
     databaseEngine: string;
+    /**
+     * The database engine version of the new managed database.
+     */
     databaseEngineVersion: string;
+    /**
+     * The date the managed database was added to your Vultr account.
+     */
     dateCreated: string;
+    /**
+     * The managed database's default logical database.
+     */
     dbname: string;
+    /**
+     * The hostname assigned to the managed database.
+     */
     host: string;
+    /**
+     * The ID of the managed database.
+     */
     id: string;
+    /**
+     * A label for the managed database.
+     */
     label: string;
+    /**
+     * The date of the latest backup available on the managed database.
+     */
     latestBackup: string;
+    /**
+     * The preferred maintenance day of week for the managed database.
+     */
     maintenanceDow: string;
+    /**
+     * The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).
+     */
     maintenanceTime: string;
+    /**
+     * The configuration value for the long query time (in seconds) on the managed database (MySQL engine types only).
+     */
     mysqlLongQueryTime: number;
+    /**
+     * The configuration value for whether primary keys are required on the managed database (MySQL engine types only).
+     */
     mysqlRequirePrimaryKey: boolean;
+    /**
+     * The configuration value for slow query logging on the managed database (MySQL engine types only).
+     */
     mysqlSlowQueryLog: boolean;
+    /**
+     * A list of SQL modes to configure for the managed database (MySQL engine types only - `ALLOW_INVALID_DATES`, `ANSI`, `ANSI_QUOTES`, `ERROR_FOR_DIVISION_BY_ZERO`, `HIGH_NOT_PRECEDENCE`, `IGNORE_SPACE`, `NO_AUTO_VALUE_ON_ZERO`, `NO_DIR_IN_CREATE`, `NO_ENGINE_SUBSTITUTION`, `NO_UNSIGNED_SUBTRACTION`, `NO_ZERO_DATE`, `NO_ZERO_IN_DATE`, `ONLY_FULL_GROUP_BY`, `PIPES_AS_CONCAT`, `REAL_AS_FLOAT`, `STRICT_ALL_TABLES`, `STRICT_TRANS_TABLES`, `TIME_TRUNCATE_FRACTIONAL`, `TRADITIONAL`).
+     */
     mysqlSqlModes: string[];
+    /**
+     * The password for the managed database's primary admin user.
+     */
     password: string;
+    /**
+     * The ID of the plan that you want the managed database to subscribe to. [See List Managed Database Plans](https://www.vultr.com/api/#tag/managed-databases/operation/list-database-plans)
+     */
     plan: string;
+    /**
+     * The description of the disk(s) on the managed database.
+     */
     planDisk: number;
+    /**
+     * The amount of memory available on the managed database in MB.
+     */
     planRam: number;
+    /**
+     * The number of standby nodes available on the managed database.
+     */
     planReplicas: number;
+    /**
+     * The number of virtual CPUs available on the managed database.
+     */
     planVcpus: number;
+    /**
+     * The connection port for the managed database.
+     */
     port: string;
+    /**
+     * The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
+     */
     redisEvictionPolicy: string;
+    /**
+     * The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
+     */
     region: string;
+    /**
+     * The current status of the managed database (poweroff, rebuilding, rebalancing, running).
+     */
     status: string;
+    /**
+     * The tag to assign to the managed database.
+     */
     tag: string;
+    /**
+     * A list of allowed IP addresses for the managed database.
+     */
     trustedIps: string[];
+    /**
+     * The primary admin user for the managed database.
+     */
     user: string;
+    vpcId: string;
 }
 
 export interface GetApplicationFilter {
@@ -92,39 +177,127 @@ export interface GetBlockStorageFilter {
 }
 
 export interface GetDatabaseFilter {
+    /**
+     * Attribute name to filter with.
+     */
     name: string;
+    /**
+     * One or more values filter with.
+     */
     values: string[];
 }
 
 export interface GetDatabaseReadReplica {
+    /**
+     * The configured time zone for the Managed Database in TZ database format.
+     */
     clusterTimeZone: string;
+    /**
+     * The database engine of the managed database.
+     */
     databaseEngine: string;
+    /**
+     * The database engine version of the managed database.
+     */
     databaseEngineVersion: string;
+    /**
+     * The date the managed database was added to your Vultr account.
+     */
     dateCreated: string;
+    /**
+     * The managed database's default logical database.
+     */
     dbname: string;
+    /**
+     * The hostname assigned to the managed database.
+     */
     host: string;
     id: string;
+    /**
+     * The managed database's label.
+     */
     label: string;
+    /**
+     * The date of the latest backup available on the managed database.
+     */
     latestBackup: string;
+    /**
+     * The preferred maintenance day of week for the managed database.
+     */
     maintenanceDow: string;
+    /**
+     * The preferred maintenance time for the managed database.
+     */
     maintenanceTime: string;
+    /**
+     * The configuration value for the long query time (in seconds) on the managed database (MySQL engine types only).
+     */
     mysqlLongQueryTime: number;
+    /**
+     * The configuration value for whether primary keys are required on the managed database (MySQL engine types only).
+     */
     mysqlRequirePrimaryKey: boolean;
+    /**
+     * The configuration value for slow query logging on the managed database (MySQL engine types only).
+     */
     mysqlSlowQueryLog: boolean;
+    /**
+     * A list of SQL modes currently configured for the managed database (MySQL engine types only).
+     */
     mysqlSqlModes: string[];
+    /**
+     * The password for the managed database's primary admin user.
+     */
     password: string;
+    /**
+     * The managed database's plan ID.
+     */
     plan: string;
+    /**
+     * The description of the disk(s) on the managed database.
+     */
     planDisk: number;
+    /**
+     * The amount of memory available on the managed database in MB.
+     */
     planRam: number;
+    /**
+     * The number of standby nodes available on the managed database.
+     */
     planReplicas: number;
+    /**
+     * The number of virtual CPUs available on the managed database.
+     */
     planVcpus: number;
+    /**
+     * The connection port for the managed database.
+     */
     port: string;
+    /**
+     * The configuration value for the data eviction policy on the managed database (Redis engine types only).
+     */
     redisEvictionPolicy: string;
+    /**
+     * The region ID of the managed database.
+     */
     region: string;
+    /**
+     * The current status of the managed database (poweroff, rebuilding, rebalancing, running).
+     */
     status: string;
+    /**
+     * The managed database's tag.
+     */
     tag: string;
+    /**
+     * A list of allowed IP addresses for the managed database.
+     */
     trustedIps: string[];
+    /**
+     * The primary admin user for the managed database.
+     */
     user: string;
+    vpcId: string;
 }
 
 export interface GetFirewallGroupFilter {
@@ -417,6 +590,17 @@ export interface GetUserFilter {
     values: string[];
 }
 
+export interface GetVpc2Filter {
+    /**
+     * Attribute name to filter with.
+     */
+    name: string;
+    /**
+     * One or more values filter with.
+     */
+    values: string[];
+}
+
 export interface GetVpcFilter {
     /**
      * Attribute name to filter with.
@@ -560,11 +744,11 @@ export interface LoadBalancerHealthCheck {
     /**
      * Time in seconds to perform health check. Default value is 15.
      */
-    checkInterval: number;
+    checkInterval?: number;
     /**
      * Number of failed attempts encountered before failover. Default value is 5.
      */
-    healthyThreshold: number;
+    healthyThreshold?: number;
     /**
      * The path on the attached instances that the load balancer should check against. Default value is `/`
      */
@@ -580,11 +764,11 @@ export interface LoadBalancerHealthCheck {
     /**
      * Time in seconds to wait for a health check response. Default value is 5.
      */
-    responseTimeout: number;
+    responseTimeout?: number;
     /**
      * Number of failed attempts encountered before failover. Default value is 5.
      */
-    unhealthyThreshold: number;
+    unhealthyThreshold?: number;
 }
 
 export interface LoadBalancerSsl {

@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -119,11 +119,11 @@ def get_os(filters: Optional[Sequence[pulumi.InputType['GetOsFilterArgs']]] = No
     __ret__ = pulumi.runtime.invoke('vultr:index/getOs:getOs', __args__, opts=opts, typ=GetOsResult).value
 
     return AwaitableGetOsResult(
-        arch=__ret__.arch,
-        family=__ret__.family,
-        filters=__ret__.filters,
-        id=__ret__.id,
-        name=__ret__.name)
+        arch=pulumi.get(__ret__, 'arch'),
+        family=pulumi.get(__ret__, 'family'),
+        filters=pulumi.get(__ret__, 'filters'),
+        id=pulumi.get(__ret__, 'id'),
+        name=pulumi.get(__ret__, 'name'))
 
 
 @_utilities.lift_output_func(get_os)

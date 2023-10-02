@@ -8,7 +8,9 @@ import (
 	"reflect"
 
 	"errors"
+	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 )
 
 // Provides a Vultr Startup Script resource. This can be used to create, read, modify, and delete Startup Scripts.
@@ -75,7 +77,7 @@ func NewStartupScript(ctx *pulumi.Context,
 	if args.Script == nil {
 		return nil, errors.New("invalid value for required argument 'Script'")
 	}
-	opts = pkgResourceDefaultOpts(opts)
+	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource StartupScript
 	err := ctx.RegisterResource("vultr:index/startupScript:StartupScript", name, args, &resource, opts...)
 	if err != nil {
@@ -169,6 +171,12 @@ func (i *StartupScript) ToStartupScriptOutputWithContext(ctx context.Context) St
 	return pulumi.ToOutputWithContext(ctx, i).(StartupScriptOutput)
 }
 
+func (i *StartupScript) ToOutput(ctx context.Context) pulumix.Output[*StartupScript] {
+	return pulumix.Output[*StartupScript]{
+		OutputState: i.ToStartupScriptOutputWithContext(ctx).OutputState,
+	}
+}
+
 // StartupScriptArrayInput is an input type that accepts StartupScriptArray and StartupScriptArrayOutput values.
 // You can construct a concrete instance of `StartupScriptArrayInput` via:
 //
@@ -192,6 +200,12 @@ func (i StartupScriptArray) ToStartupScriptArrayOutput() StartupScriptArrayOutpu
 
 func (i StartupScriptArray) ToStartupScriptArrayOutputWithContext(ctx context.Context) StartupScriptArrayOutput {
 	return pulumi.ToOutputWithContext(ctx, i).(StartupScriptArrayOutput)
+}
+
+func (i StartupScriptArray) ToOutput(ctx context.Context) pulumix.Output[[]*StartupScript] {
+	return pulumix.Output[[]*StartupScript]{
+		OutputState: i.ToStartupScriptArrayOutputWithContext(ctx).OutputState,
+	}
 }
 
 // StartupScriptMapInput is an input type that accepts StartupScriptMap and StartupScriptMapOutput values.
@@ -219,6 +233,12 @@ func (i StartupScriptMap) ToStartupScriptMapOutputWithContext(ctx context.Contex
 	return pulumi.ToOutputWithContext(ctx, i).(StartupScriptMapOutput)
 }
 
+func (i StartupScriptMap) ToOutput(ctx context.Context) pulumix.Output[map[string]*StartupScript] {
+	return pulumix.Output[map[string]*StartupScript]{
+		OutputState: i.ToStartupScriptMapOutputWithContext(ctx).OutputState,
+	}
+}
+
 type StartupScriptOutput struct{ *pulumi.OutputState }
 
 func (StartupScriptOutput) ElementType() reflect.Type {
@@ -231,6 +251,12 @@ func (o StartupScriptOutput) ToStartupScriptOutput() StartupScriptOutput {
 
 func (o StartupScriptOutput) ToStartupScriptOutputWithContext(ctx context.Context) StartupScriptOutput {
 	return o
+}
+
+func (o StartupScriptOutput) ToOutput(ctx context.Context) pulumix.Output[*StartupScript] {
+	return pulumix.Output[*StartupScript]{
+		OutputState: o.OutputState,
+	}
 }
 
 // Date the script was created.
@@ -272,6 +298,12 @@ func (o StartupScriptArrayOutput) ToStartupScriptArrayOutputWithContext(ctx cont
 	return o
 }
 
+func (o StartupScriptArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]*StartupScript] {
+	return pulumix.Output[[]*StartupScript]{
+		OutputState: o.OutputState,
+	}
+}
+
 func (o StartupScriptArrayOutput) Index(i pulumi.IntInput) StartupScriptOutput {
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) *StartupScript {
 		return vs[0].([]*StartupScript)[vs[1].(int)]
@@ -290,6 +322,12 @@ func (o StartupScriptMapOutput) ToStartupScriptMapOutput() StartupScriptMapOutpu
 
 func (o StartupScriptMapOutput) ToStartupScriptMapOutputWithContext(ctx context.Context) StartupScriptMapOutput {
 	return o
+}
+
+func (o StartupScriptMapOutput) ToOutput(ctx context.Context) pulumix.Output[map[string]*StartupScript] {
+	return pulumix.Output[map[string]*StartupScript]{
+		OutputState: o.OutputState,
+	}
 }
 
 func (o StartupScriptMapOutput) MapIndex(k pulumi.StringInput) StartupScriptOutput {

@@ -13,16 +13,32 @@ public final class GetDatabaseFilter extends com.pulumi.resources.InvokeArgs {
 
     public static final GetDatabaseFilter Empty = new GetDatabaseFilter();
 
+    /**
+     * Attribute name to filter with.
+     * 
+     */
     @Import(name="name", required=true)
     private String name;
 
+    /**
+     * @return Attribute name to filter with.
+     * 
+     */
     public String name() {
         return this.name;
     }
 
+    /**
+     * One or more values filter with.
+     * 
+     */
     @Import(name="values", required=true)
     private List<String> values;
 
+    /**
+     * @return One or more values filter with.
+     * 
+     */
     public List<String> values() {
         return this.values;
     }
@@ -52,16 +68,34 @@ public final class GetDatabaseFilter extends com.pulumi.resources.InvokeArgs {
             $ = new GetDatabaseFilter(Objects.requireNonNull(defaults));
         }
 
+        /**
+         * @param name Attribute name to filter with.
+         * 
+         * @return builder
+         * 
+         */
         public Builder name(String name) {
             $.name = name;
             return this;
         }
 
+        /**
+         * @param values One or more values filter with.
+         * 
+         * @return builder
+         * 
+         */
         public Builder values(List<String> values) {
             $.values = values;
             return this;
         }
 
+        /**
+         * @param values One or more values filter with.
+         * 
+         * @return builder
+         * 
+         */
         public Builder values(String... values) {
             return values(List.of(values));
         }
