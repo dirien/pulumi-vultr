@@ -32,7 +32,7 @@ import (
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
 //			_, err := vultr.NewInstance(ctx, "myInstance", &vultr.InstanceArgs{
-//				OsId:   pulumi.Int(167),
+//				OsId:   pulumi.Int(1743),
 //				Plan:   pulumi.String("vc2-1c-1gb"),
 //				Region: pulumi.String("sea"),
 //			})
@@ -69,7 +69,7 @@ import (
 //				EnableIpv6:     pulumi.Bool(true),
 //				Hostname:       pulumi.String("my-instance-hostname"),
 //				Label:          pulumi.String("my-instance-label"),
-//				OsId:           pulumi.Int(167),
+//				OsId:           pulumi.Int(1743),
 //				Plan:           pulumi.String("vc2-1c-1gb"),
 //				Region:         pulumi.String("sea"),
 //				Tags: pulumi.StringArray{

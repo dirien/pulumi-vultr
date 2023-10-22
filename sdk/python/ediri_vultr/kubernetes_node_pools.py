@@ -57,7 +57,19 @@ class KubernetesNodePoolsInitArgs:
              max_nodes: Optional[pulumi.Input[int]] = None,
              min_nodes: Optional[pulumi.Input[int]] = None,
              tag: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'clusterId' in kwargs:
+            cluster_id = kwargs['clusterId']
+        if 'nodeQuantity' in kwargs:
+            node_quantity = kwargs['nodeQuantity']
+        if 'autoScaler' in kwargs:
+            auto_scaler = kwargs['autoScaler']
+        if 'maxNodes' in kwargs:
+            max_nodes = kwargs['maxNodes']
+        if 'minNodes' in kwargs:
+            min_nodes = kwargs['minNodes']
+
         _setter("cluster_id", cluster_id)
         _setter("label", label)
         _setter("node_quantity", node_quantity)
@@ -228,7 +240,23 @@ class _KubernetesNodePoolsState:
              plan: Optional[pulumi.Input[str]] = None,
              status: Optional[pulumi.Input[str]] = None,
              tag: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'autoScaler' in kwargs:
+            auto_scaler = kwargs['autoScaler']
+        if 'clusterId' in kwargs:
+            cluster_id = kwargs['clusterId']
+        if 'dateCreated' in kwargs:
+            date_created = kwargs['dateCreated']
+        if 'dateUpdated' in kwargs:
+            date_updated = kwargs['dateUpdated']
+        if 'maxNodes' in kwargs:
+            max_nodes = kwargs['maxNodes']
+        if 'minNodes' in kwargs:
+            min_nodes = kwargs['minNodes']
+        if 'nodeQuantity' in kwargs:
+            node_quantity = kwargs['nodeQuantity']
+
         if auto_scaler is not None:
             _setter("auto_scaler", auto_scaler)
         if cluster_id is not None:

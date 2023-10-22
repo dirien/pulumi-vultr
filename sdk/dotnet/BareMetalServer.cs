@@ -27,7 +27,7 @@ namespace ediri.Vultr
     /// {
     ///     var myServer = new Vultr.BareMetalServer("myServer", new()
     ///     {
-    ///         OsId = 270,
+    ///         OsId = 1743,
     ///         Plan = "vbm-4c-32gb",
     ///         Region = "ewr",
     ///     });
@@ -51,7 +51,7 @@ namespace ediri.Vultr
     ///         EnableIpv6 = true,
     ///         Hostname = "my-server-hostname",
     ///         Label = "my-server-label",
-    ///         OsId = 270,
+    ///         OsId = 1743,
     ///         Plan = "vbm-4c-32gb",
     ///         Region = "ewr",
     ///         Tags = new[]

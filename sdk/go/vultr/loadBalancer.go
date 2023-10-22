@@ -50,7 +50,7 @@ import (
 //					ResponseTimeout:    pulumi.Int(1),
 //					UnhealthyThreshold: pulumi.Int(2),
 //				},
-//				Label:  pulumi.String("terraform lb example"),
+//				Label:  pulumi.String("vultr-load-balancer"),
 //				Region: pulumi.String("ewr"),
 //			})
 //			if err != nil {

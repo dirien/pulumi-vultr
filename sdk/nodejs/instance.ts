@@ -18,7 +18,7 @@ import * as utilities from "./utilities";
  * import * as vultr from "@ediri/vultr";
  *
  * const myInstance = new vultr.Instance("myInstance", {
- *     osId: 167,
+ *     osId: 1743,
  *     plan: "vc2-1c-1gb",
  *     region: "sea",
  * });
@@ -40,7 +40,7 @@ import * as utilities from "./utilities";
  *     enableIpv6: true,
  *     hostname: "my-instance-hostname",
  *     label: "my-instance-label",
- *     osId: 167,
+ *     osId: 1743,
  *     plan: "vc2-1c-1gb",
  *     region: "sea",
  *     tags: ["my-instance-tag"],

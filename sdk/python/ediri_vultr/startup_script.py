@@ -35,7 +35,9 @@ class StartupScriptArgs:
              script: pulumi.Input[str],
              name: Optional[pulumi.Input[str]] = None,
              type: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("script", script)
         if name is not None:
             _setter("name", name)
@@ -111,7 +113,13 @@ class _StartupScriptState:
              name: Optional[pulumi.Input[str]] = None,
              script: Optional[pulumi.Input[str]] = None,
              type: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'dateCreated' in kwargs:
+            date_created = kwargs['dateCreated']
+        if 'dateModified' in kwargs:
+            date_modified = kwargs['dateModified']
+
         if date_created is not None:
             _setter("date_created", date_created)
         if date_modified is not None:

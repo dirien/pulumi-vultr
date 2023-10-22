@@ -16,6 +16,7 @@ import * as utilities from "./utilities";
  * import * as vultr from "@ediri/vultr";
  *
  * const myBlockstorage = new vultr.BlockStorage("myBlockstorage", {
+ *     label: "vultr-block-storage",
  *     region: "ewr",
  *     sizeGb: 10,
  * });

@@ -32,7 +32,7 @@ import (
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
 //			_, err := vultr.NewBareMetalServer(ctx, "myServer", &vultr.BareMetalServerArgs{
-//				OsId:   pulumi.Int(270),
+//				OsId:   pulumi.Int(1743),
 //				Plan:   pulumi.String("vbm-4c-32gb"),
 //				Region: pulumi.String("ewr"),
 //			})
@@ -64,7 +64,7 @@ import (
 //				EnableIpv6:      pulumi.Bool(true),
 //				Hostname:        pulumi.String("my-server-hostname"),
 //				Label:           pulumi.String("my-server-label"),
-//				OsId:            pulumi.Int(270),
+//				OsId:            pulumi.Int(1743),
 //				Plan:            pulumi.String("vbm-4c-32gb"),
 //				Region:          pulumi.String("ewr"),
 //				Tags: pulumi.StringArray{

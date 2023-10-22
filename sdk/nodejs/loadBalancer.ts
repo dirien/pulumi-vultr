@@ -34,7 +34,7 @@ import * as utilities from "./utilities";
  *         responseTimeout: 1,
  *         unhealthyThreshold: 2,
  *     },
- *     label: "terraform lb example",
+ *     label: "vultr-load-balancer",
  *     region: "ewr",
  * });
  * ```

@@ -31,7 +31,11 @@ class ObjectStorageArgs:
              _setter: Callable[[Any, Any], None],
              cluster_id: pulumi.Input[int],
              label: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'clusterId' in kwargs:
+            cluster_id = kwargs['clusterId']
+
         _setter("cluster_id", cluster_id)
         if label is not None:
             _setter("label", label)
@@ -109,7 +113,19 @@ class _ObjectStorageState:
              s3_hostname: Optional[pulumi.Input[str]] = None,
              s3_secret_key: Optional[pulumi.Input[str]] = None,
              status: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'clusterId' in kwargs:
+            cluster_id = kwargs['clusterId']
+        if 'dateCreated' in kwargs:
+            date_created = kwargs['dateCreated']
+        if 's3AccessKey' in kwargs:
+            s3_access_key = kwargs['s3AccessKey']
+        if 's3Hostname' in kwargs:
+            s3_hostname = kwargs['s3Hostname']
+        if 's3SecretKey' in kwargs:
+            s3_secret_key = kwargs['s3SecretKey']
+
         if cluster_id is not None:
             _setter("cluster_id", cluster_id)
         if date_created is not None:
@@ -259,7 +275,7 @@ class ObjectStorage(pulumi.CustomResource):
 
         tf = vultr.ObjectStorage("tf",
             cluster_id=2,
-            label="tf-label")
+            label="vultr-object-storage")
         ```
 
         ## Import
@@ -294,7 +310,7 @@ class ObjectStorage(pulumi.CustomResource):
 
         tf = vultr.ObjectStorage("tf",
             cluster_id=2,
-            label="tf-label")
+            label="vultr-object-storage")
         ```
 
         ## Import

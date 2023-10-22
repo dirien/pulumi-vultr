@@ -16,17 +16,17 @@ import * as utilities from "./utilities";
  * import * as vultr from "@ediri/vultr";
  *
  * const k8 = new vultr.Kubernetes("k8", {
- *     label: "tf-test",
+ *     label: "vke-test",
  *     nodePools: {
  *         autoScaler: true,
- *         label: "my-label",
+ *         label: "vke-nodepool",
  *         maxNodes: 2,
  *         minNodes: 1,
  *         nodeQuantity: 1,
- *         plan: "vc2-2c-4gb",
+ *         plan: "vc2-1c-2gb",
  *     },
  *     region: "ewr",
- *     version: "v1.23.5+1",
+ *     version: "v1.28.2+1",
  * });
  * ```
  *
@@ -38,16 +38,16 @@ import * as utilities from "./utilities";
  *
  * const k8 = new vultr.Kubernetes("k8", {
  *     region: "ewr",
- *     label: "tf-test",
- *     version: "v1.23.5+1",
+ *     label: "vke-test",
+ *     version: "v1.28.2+1",
  * });
  * // This resource must be created and attached to the cluster
  * // before removing the default node from the vultr_kubernetes resource
  * const np = new vultr.KubernetesNodePools("np", {
  *     clusterId: k8.id,
  *     nodeQuantity: 1,
- *     plan: "vc2-2c-4gb",
- *     label: "my-label",
+ *     plan: "vc2-1c-2gb",
+ *     label: "vke-nodepool",
  *     autoScaler: true,
  *     minNodes: 1,
  *     maxNodes: 2,

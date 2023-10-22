@@ -55,7 +55,15 @@ class FirewallRuleArgs:
              notes: Optional[pulumi.Input[str]] = None,
              port: Optional[pulumi.Input[str]] = None,
              source: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'firewallGroupId' in kwargs:
+            firewall_group_id = kwargs['firewallGroupId']
+        if 'ipType' in kwargs:
+            ip_type = kwargs['ipType']
+        if 'subnetSize' in kwargs:
+            subnet_size = kwargs['subnetSize']
+
         _setter("firewall_group_id", firewall_group_id)
         _setter("ip_type", ip_type)
         _setter("protocol", protocol)
@@ -209,7 +217,15 @@ class _FirewallRuleState:
              source: Optional[pulumi.Input[str]] = None,
              subnet: Optional[pulumi.Input[str]] = None,
              subnet_size: Optional[pulumi.Input[int]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'firewallGroupId' in kwargs:
+            firewall_group_id = kwargs['firewallGroupId']
+        if 'ipType' in kwargs:
+            ip_type = kwargs['ipType']
+        if 'subnetSize' in kwargs:
+            subnet_size = kwargs['subnetSize']
+
         if firewall_group_id is not None:
             _setter("firewall_group_id", firewall_group_id)
         if ip_type is not None:

@@ -174,7 +174,45 @@ class DatabaseReadReplicaArgs:
              trusted_ips: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
              user: Optional[pulumi.Input[str]] = None,
              vpc_id: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'clusterTimeZone' in kwargs:
+            cluster_time_zone = kwargs['clusterTimeZone']
+        if 'databaseEngine' in kwargs:
+            database_engine = kwargs['databaseEngine']
+        if 'databaseEngineVersion' in kwargs:
+            database_engine_version = kwargs['databaseEngineVersion']
+        if 'dateCreated' in kwargs:
+            date_created = kwargs['dateCreated']
+        if 'latestBackup' in kwargs:
+            latest_backup = kwargs['latestBackup']
+        if 'maintenanceDow' in kwargs:
+            maintenance_dow = kwargs['maintenanceDow']
+        if 'maintenanceTime' in kwargs:
+            maintenance_time = kwargs['maintenanceTime']
+        if 'mysqlLongQueryTime' in kwargs:
+            mysql_long_query_time = kwargs['mysqlLongQueryTime']
+        if 'mysqlRequirePrimaryKey' in kwargs:
+            mysql_require_primary_key = kwargs['mysqlRequirePrimaryKey']
+        if 'mysqlSlowQueryLog' in kwargs:
+            mysql_slow_query_log = kwargs['mysqlSlowQueryLog']
+        if 'mysqlSqlModes' in kwargs:
+            mysql_sql_modes = kwargs['mysqlSqlModes']
+        if 'planDisk' in kwargs:
+            plan_disk = kwargs['planDisk']
+        if 'planRam' in kwargs:
+            plan_ram = kwargs['planRam']
+        if 'planReplicas' in kwargs:
+            plan_replicas = kwargs['planReplicas']
+        if 'planVcpus' in kwargs:
+            plan_vcpus = kwargs['planVcpus']
+        if 'redisEvictionPolicy' in kwargs:
+            redis_eviction_policy = kwargs['redisEvictionPolicy']
+        if 'trustedIps' in kwargs:
+            trusted_ips = kwargs['trustedIps']
+        if 'vpcId' in kwargs:
+            vpc_id = kwargs['vpcId']
+
         _setter("label", label)
         _setter("region", region)
         if cluster_time_zone is not None:
@@ -605,7 +643,9 @@ class InstanceBackupsScheduleArgs:
              dom: Optional[pulumi.Input[int]] = None,
              dow: Optional[pulumi.Input[int]] = None,
              hour: Optional[pulumi.Input[int]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("type", type)
         if dom is not None:
             _setter("dom", dom)
@@ -722,7 +762,21 @@ class KubernetesNodePoolsArgs:
              nodes: Optional[pulumi.Input[Sequence[pulumi.Input['KubernetesNodePoolsNodeArgs']]]] = None,
              status: Optional[pulumi.Input[str]] = None,
              tag: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'nodeQuantity' in kwargs:
+            node_quantity = kwargs['nodeQuantity']
+        if 'autoScaler' in kwargs:
+            auto_scaler = kwargs['autoScaler']
+        if 'dateCreated' in kwargs:
+            date_created = kwargs['dateCreated']
+        if 'dateUpdated' in kwargs:
+            date_updated = kwargs['dateUpdated']
+        if 'maxNodes' in kwargs:
+            max_nodes = kwargs['maxNodes']
+        if 'minNodes' in kwargs:
+            min_nodes = kwargs['minNodes']
+
         _setter("label", label)
         _setter("node_quantity", node_quantity)
         _setter("plan", plan)
@@ -917,7 +971,11 @@ class KubernetesNodePoolsNodeArgs:
              id: Optional[pulumi.Input[str]] = None,
              label: Optional[pulumi.Input[str]] = None,
              status: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'dateCreated' in kwargs:
+            date_created = kwargs['dateCreated']
+
         if date_created is not None:
             _setter("date_created", date_created)
         if id is not None:
@@ -1003,7 +1061,11 @@ class LoadBalancerFirewallRuleArgs:
              port: pulumi.Input[int],
              source: pulumi.Input[str],
              id: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'ipType' in kwargs:
+            ip_type = kwargs['ipType']
+
         _setter("ip_type", ip_type)
         _setter("port", port)
         _setter("source", source)
@@ -1089,7 +1151,19 @@ class LoadBalancerForwardingRuleArgs:
              frontend_port: pulumi.Input[int],
              frontend_protocol: pulumi.Input[str],
              rule_id: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'backendPort' in kwargs:
+            backend_port = kwargs['backendPort']
+        if 'backendProtocol' in kwargs:
+            backend_protocol = kwargs['backendProtocol']
+        if 'frontendPort' in kwargs:
+            frontend_port = kwargs['frontendPort']
+        if 'frontendProtocol' in kwargs:
+            frontend_protocol = kwargs['frontendProtocol']
+        if 'ruleId' in kwargs:
+            rule_id = kwargs['ruleId']
+
         _setter("backend_port", backend_port)
         _setter("backend_protocol", backend_protocol)
         _setter("frontend_port", frontend_port)
@@ -1194,7 +1268,17 @@ class LoadBalancerHealthCheckArgs:
              path: Optional[pulumi.Input[str]] = None,
              response_timeout: Optional[pulumi.Input[int]] = None,
              unhealthy_threshold: Optional[pulumi.Input[int]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'checkInterval' in kwargs:
+            check_interval = kwargs['checkInterval']
+        if 'healthyThreshold' in kwargs:
+            healthy_threshold = kwargs['healthyThreshold']
+        if 'responseTimeout' in kwargs:
+            response_timeout = kwargs['responseTimeout']
+        if 'unhealthyThreshold' in kwargs:
+            unhealthy_threshold = kwargs['unhealthyThreshold']
+
         _setter("port", port)
         _setter("protocol", protocol)
         if check_interval is not None:
@@ -1316,7 +1400,11 @@ class LoadBalancerSslArgs:
              certificate: pulumi.Input[str],
              private_key: pulumi.Input[str],
              chain: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'privateKey' in kwargs:
+            private_key = kwargs['privateKey']
+
         _setter("certificate", certificate)
         _setter("private_key", private_key)
         if chain is not None:
@@ -1378,7 +1466,9 @@ class GetApplicationFilterArgs:
              _setter: Callable[[Any, Any], None],
              name: str,
              values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("name", name)
         _setter("values", values)
 
@@ -1426,7 +1516,9 @@ class GetBackupFilterArgs:
              _setter: Callable[[Any, Any], None],
              name: str,
              values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("name", name)
         _setter("values", values)
 
@@ -1474,7 +1566,9 @@ class GetBareMetalPlanFilterArgs:
              _setter: Callable[[Any, Any], None],
              name: str,
              values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("name", name)
         _setter("values", values)
 
@@ -1522,7 +1616,9 @@ class GetBareMetalServerFilterArgs:
              _setter: Callable[[Any, Any], None],
              name: str,
              values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("name", name)
         _setter("values", values)
 
@@ -1570,7 +1666,9 @@ class GetBlockStorageFilterArgs:
              _setter: Callable[[Any, Any], None],
              name: str,
              values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("name", name)
         _setter("values", values)
 
@@ -1618,7 +1716,9 @@ class GetDatabaseFilterArgs:
              _setter: Callable[[Any, Any], None],
              name: str,
              values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("name", name)
         _setter("values", values)
 
@@ -1666,7 +1766,9 @@ class GetFirewallGroupFilterArgs:
              _setter: Callable[[Any, Any], None],
              name: str,
              values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("name", name)
         _setter("values", values)
 
@@ -1714,7 +1816,9 @@ class GetInstanceFilterArgs:
              _setter: Callable[[Any, Any], None],
              name: str,
              values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("name", name)
         _setter("values", values)
 
@@ -1762,7 +1866,9 @@ class GetInstanceIpv4FilterArgs:
              _setter: Callable[[Any, Any], None],
              name: str,
              values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("name", name)
         _setter("values", values)
 
@@ -1810,7 +1916,9 @@ class GetIsoPrivateFilterArgs:
              _setter: Callable[[Any, Any], None],
              name: str,
              values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("name", name)
         _setter("values", values)
 
@@ -1858,7 +1966,9 @@ class GetIsoPublicFilterArgs:
              _setter: Callable[[Any, Any], None],
              name: str,
              values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("name", name)
         _setter("values", values)
 
@@ -1906,7 +2016,9 @@ class GetKubernetesFilterArgs:
              _setter: Callable[[Any, Any], None],
              name: str,
              values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("name", name)
         _setter("values", values)
 
@@ -1954,7 +2066,9 @@ class GetLoadBalancerFilterArgs:
              _setter: Callable[[Any, Any], None],
              name: str,
              values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("name", name)
         _setter("values", values)
 
@@ -2002,7 +2116,9 @@ class GetObjectStorageClusterFilterArgs:
              _setter: Callable[[Any, Any], None],
              name: str,
              values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("name", name)
         _setter("values", values)
 
@@ -2050,7 +2166,9 @@ class GetObjectStorageFilterArgs:
              _setter: Callable[[Any, Any], None],
              name: str,
              values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("name", name)
         _setter("values", values)
 
@@ -2098,7 +2216,9 @@ class GetOsFilterArgs:
              _setter: Callable[[Any, Any], None],
              name: str,
              values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("name", name)
         _setter("values", values)
 
@@ -2146,7 +2266,9 @@ class GetPlanFilterArgs:
              _setter: Callable[[Any, Any], None],
              name: str,
              values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("name", name)
         _setter("values", values)
 
@@ -2194,7 +2316,9 @@ class GetPrivateNetworkFilterArgs:
              _setter: Callable[[Any, Any], None],
              name: str,
              values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("name", name)
         _setter("values", values)
 
@@ -2242,7 +2366,9 @@ class GetRegionFilterArgs:
              _setter: Callable[[Any, Any], None],
              name: str,
              values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("name", name)
         _setter("values", values)
 
@@ -2290,7 +2416,9 @@ class GetReservedIpFilterArgs:
              _setter: Callable[[Any, Any], None],
              name: str,
              values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("name", name)
         _setter("values", values)
 
@@ -2338,7 +2466,9 @@ class GetReverseIpv4FilterArgs:
              _setter: Callable[[Any, Any], None],
              name: str,
              values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("name", name)
         _setter("values", values)
 
@@ -2386,7 +2516,9 @@ class GetReverseIpv6FilterArgs:
              _setter: Callable[[Any, Any], None],
              name: str,
              values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("name", name)
         _setter("values", values)
 
@@ -2434,7 +2566,9 @@ class GetSnapshotFilterArgs:
              _setter: Callable[[Any, Any], None],
              name: str,
              values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("name", name)
         _setter("values", values)
 
@@ -2482,7 +2616,9 @@ class GetSshKeyFilterArgs:
              _setter: Callable[[Any, Any], None],
              name: str,
              values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("name", name)
         _setter("values", values)
 
@@ -2530,7 +2666,9 @@ class GetStartupScriptFilterArgs:
              _setter: Callable[[Any, Any], None],
              name: str,
              values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("name", name)
         _setter("values", values)
 
@@ -2578,7 +2716,9 @@ class GetUserFilterArgs:
              _setter: Callable[[Any, Any], None],
              name: str,
              values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("name", name)
         _setter("values", values)
 
@@ -2626,7 +2766,9 @@ class GetVpc2FilterArgs:
              _setter: Callable[[Any, Any], None],
              name: str,
              values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("name", name)
         _setter("values", values)
 
@@ -2674,7 +2816,9 @@ class GetVpcFilterArgs:
              _setter: Callable[[Any, Any], None],
              name: str,
              values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("name", name)
         _setter("values", values)
 

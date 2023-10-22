@@ -4,8 +4,12 @@
 package vultr
 
 import (
+	"context"
+	"reflect"
+
 	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 )
 
 // Get information about your Vultr account. This data source provides the balance, pending charges, last payment date, and last payment amount for your Vultr account.
@@ -63,4 +67,80 @@ type GetAccountResult struct {
 	Name string `pulumi:"name"`
 	// The pending charges on your Vultr account.
 	PendingCharges float64 `pulumi:"pendingCharges"`
+}
+
+func GetAccountOutput(ctx *pulumi.Context, opts ...pulumi.InvokeOption) GetAccountResultOutput {
+	return pulumi.ToOutput(0).ApplyT(func(int) (GetAccountResult, error) {
+		r, err := GetAccount(ctx, opts...)
+		var s GetAccountResult
+		if r != nil {
+			s = *r
+		}
+		return s, err
+	}).(GetAccountResultOutput)
+}
+
+// A collection of values returned by getAccount.
+type GetAccountResultOutput struct{ *pulumi.OutputState }
+
+func (GetAccountResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetAccountResult)(nil)).Elem()
+}
+
+func (o GetAccountResultOutput) ToGetAccountResultOutput() GetAccountResultOutput {
+	return o
+}
+
+func (o GetAccountResultOutput) ToGetAccountResultOutputWithContext(ctx context.Context) GetAccountResultOutput {
+	return o
+}
+
+func (o GetAccountResultOutput) ToOutput(ctx context.Context) pulumix.Output[GetAccountResult] {
+	return pulumix.Output[GetAccountResult]{
+		OutputState: o.OutputState,
+	}
+}
+
+// The access control list on your Vultr account.
+func (o GetAccountResultOutput) Acls() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetAccountResult) []string { return v.Acls }).(pulumi.StringArrayOutput)
+}
+
+// The current balance on your Vultr account.
+func (o GetAccountResultOutput) Balance() pulumi.Float64Output {
+	return o.ApplyT(func(v GetAccountResult) float64 { return v.Balance }).(pulumi.Float64Output)
+}
+
+// The email address on your Vultr account.
+func (o GetAccountResultOutput) Email() pulumi.StringOutput {
+	return o.ApplyT(func(v GetAccountResult) string { return v.Email }).(pulumi.StringOutput)
+}
+
+// The provider-assigned unique ID for this managed resource.
+func (o GetAccountResultOutput) Id() pulumi.StringOutput {
+	return o.ApplyT(func(v GetAccountResult) string { return v.Id }).(pulumi.StringOutput)
+}
+
+// The amount of the last payment made on your Vultr account.
+func (o GetAccountResultOutput) LastPaymentAmount() pulumi.Float64Output {
+	return o.ApplyT(func(v GetAccountResult) float64 { return v.LastPaymentAmount }).(pulumi.Float64Output)
+}
+
+// The date of the last payment made on your Vultr account.
+func (o GetAccountResultOutput) LastPaymentDate() pulumi.StringOutput {
+	return o.ApplyT(func(v GetAccountResult) string { return v.LastPaymentDate }).(pulumi.StringOutput)
+}
+
+// The name on your Vultr account.
+func (o GetAccountResultOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v GetAccountResult) string { return v.Name }).(pulumi.StringOutput)
+}
+
+// The pending charges on your Vultr account.
+func (o GetAccountResultOutput) PendingCharges() pulumi.Float64Output {
+	return o.ApplyT(func(v GetAccountResult) float64 { return v.PendingCharges }).(pulumi.Float64Output)
+}
+
+func init() {
+	pulumi.RegisterOutputType(GetAccountResultOutput{})
 }

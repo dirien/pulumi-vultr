@@ -31,7 +31,11 @@ class DatabaseDbArgs:
              _setter: Callable[[Any, Any], None],
              database_id: pulumi.Input[str],
              name: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'databaseId' in kwargs:
+            database_id = kwargs['databaseId']
+
         _setter("database_id", database_id)
         if name is not None:
             _setter("name", name)
@@ -81,7 +85,11 @@ class _DatabaseDbState:
              _setter: Callable[[Any, Any], None],
              database_id: Optional[pulumi.Input[str]] = None,
              name: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'databaseId' in kwargs:
+            database_id = kwargs['databaseId']
+
         if database_id is not None:
             _setter("database_id", database_id)
         if name is not None:

@@ -17,7 +17,7 @@ import * as utilities from "./utilities";
  *
  * const tf = new vultr.ObjectStorage("tf", {
  *     clusterId: 2,
- *     label: "tf-label",
+ *     label: "vultr-object-storage",
  * });
  * ```
  *

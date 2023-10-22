@@ -43,7 +43,11 @@ class UserArgs:
              acls: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
              api_enabled: Optional[pulumi.Input[bool]] = None,
              name: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'apiEnabled' in kwargs:
+            api_enabled = kwargs['apiEnabled']
+
         _setter("email", email)
         _setter("password", password)
         if acls is not None:
@@ -149,7 +153,13 @@ class _UserState:
              email: Optional[pulumi.Input[str]] = None,
              name: Optional[pulumi.Input[str]] = None,
              password: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'apiEnabled' in kwargs:
+            api_enabled = kwargs['apiEnabled']
+        if 'apiKey' in kwargs:
+            api_key = kwargs['apiKey']
+
         if acls is not None:
             _setter("acls", acls)
         if api_enabled is not None:

@@ -13,6 +13,7 @@ __all__ = [
     'GetAccountResult',
     'AwaitableGetAccountResult',
     'get_account',
+    'get_account_output',
 ]
 
 @pulumi.output_type
@@ -155,3 +156,22 @@ def get_account(opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetAcco
         last_payment_date=pulumi.get(__ret__, 'last_payment_date'),
         name=pulumi.get(__ret__, 'name'),
         pending_charges=pulumi.get(__ret__, 'pending_charges'))
+
+
+@_utilities.lift_output_func(get_account)
+def get_account_output(opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetAccountResult]:
+    """
+    Get information about your Vultr account. This data source provides the balance, pending charges, last payment date, and last payment amount for your Vultr account.
+
+    ## Example Usage
+
+    Get the information for an account:
+
+    ```python
+    import pulumi
+    import pulumi_vultr as vultr
+
+    my_account = vultr.get_account()
+    ```
+    """
+    ...

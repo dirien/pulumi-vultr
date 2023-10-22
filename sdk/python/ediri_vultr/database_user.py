@@ -39,7 +39,11 @@ class DatabaseUserArgs:
              username: pulumi.Input[str],
              encryption: Optional[pulumi.Input[str]] = None,
              password: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'databaseId' in kwargs:
+            database_id = kwargs['databaseId']
+
         _setter("database_id", database_id)
         _setter("username", username)
         if encryption is not None:
@@ -124,7 +128,11 @@ class _DatabaseUserState:
              encryption: Optional[pulumi.Input[str]] = None,
              password: Optional[pulumi.Input[str]] = None,
              username: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'databaseId' in kwargs:
+            database_id = kwargs['databaseId']
+
         if database_id is not None:
             _setter("database_id", database_id)
         if encryption is not None:

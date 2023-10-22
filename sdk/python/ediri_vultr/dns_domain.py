@@ -35,7 +35,11 @@ class DnsDomainArgs:
              domain: pulumi.Input[str],
              dns_sec: Optional[pulumi.Input[str]] = None,
              ip: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'dnsSec' in kwargs:
+            dns_sec = kwargs['dnsSec']
+
         _setter("domain", domain)
         if dns_sec is not None:
             _setter("dns_sec", dns_sec)
@@ -107,7 +111,13 @@ class _DnsDomainState:
              dns_sec: Optional[pulumi.Input[str]] = None,
              domain: Optional[pulumi.Input[str]] = None,
              ip: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'dateCreated' in kwargs:
+            date_created = kwargs['dateCreated']
+        if 'dnsSec' in kwargs:
+            dns_sec = kwargs['dnsSec']
+
         if date_created is not None:
             _setter("date_created", date_created)
         if dns_sec is not None:

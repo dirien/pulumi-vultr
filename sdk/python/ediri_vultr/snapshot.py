@@ -31,7 +31,11 @@ class SnapshotArgs:
              _setter: Callable[[Any, Any], None],
              instance_id: pulumi.Input[str],
              description: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'instanceId' in kwargs:
+            instance_id = kwargs['instanceId']
+
         _setter("instance_id", instance_id)
         if description is not None:
             _setter("description", description)
@@ -101,7 +105,17 @@ class _SnapshotState:
              os_id: Optional[pulumi.Input[int]] = None,
              size: Optional[pulumi.Input[int]] = None,
              status: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'appId' in kwargs:
+            app_id = kwargs['appId']
+        if 'dateCreated' in kwargs:
+            date_created = kwargs['dateCreated']
+        if 'instanceId' in kwargs:
+            instance_id = kwargs['instanceId']
+        if 'osId' in kwargs:
+            os_id = kwargs['osId']
+
         if app_id is not None:
             _setter("app_id", app_id)
         if date_created is not None:

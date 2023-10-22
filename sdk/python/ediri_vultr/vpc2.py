@@ -43,7 +43,15 @@ class Vpc2Args:
              ip_block: Optional[pulumi.Input[str]] = None,
              ip_type: Optional[pulumi.Input[str]] = None,
              prefix_length: Optional[pulumi.Input[int]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'ipBlock' in kwargs:
+            ip_block = kwargs['ipBlock']
+        if 'ipType' in kwargs:
+            ip_type = kwargs['ipType']
+        if 'prefixLength' in kwargs:
+            prefix_length = kwargs['prefixLength']
+
         _setter("region", region)
         if description is not None:
             _setter("description", description)
@@ -151,7 +159,17 @@ class _Vpc2State:
              ip_type: Optional[pulumi.Input[str]] = None,
              prefix_length: Optional[pulumi.Input[int]] = None,
              region: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'dateCreated' in kwargs:
+            date_created = kwargs['dateCreated']
+        if 'ipBlock' in kwargs:
+            ip_block = kwargs['ipBlock']
+        if 'ipType' in kwargs:
+            ip_type = kwargs['ipType']
+        if 'prefixLength' in kwargs:
+            prefix_length = kwargs['prefixLength']
+
         if date_created is not None:
             _setter("date_created", date_created)
         if description is not None:

@@ -41,7 +41,11 @@ class KubernetesArgs:
              region: pulumi.Input[str],
              version: pulumi.Input[str],
              node_pools: Optional[pulumi.Input['KubernetesNodePoolsArgs']] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'nodePools' in kwargs:
+            node_pools = kwargs['nodePools']
+
         _setter("label", label)
         _setter("region", region)
         _setter("version", version)
@@ -165,7 +169,25 @@ class _KubernetesState:
              service_subnet: Optional[pulumi.Input[str]] = None,
              status: Optional[pulumi.Input[str]] = None,
              version: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'clientCertificate' in kwargs:
+            client_certificate = kwargs['clientCertificate']
+        if 'clientKey' in kwargs:
+            client_key = kwargs['clientKey']
+        if 'clusterCaCertificate' in kwargs:
+            cluster_ca_certificate = kwargs['clusterCaCertificate']
+        if 'clusterSubnet' in kwargs:
+            cluster_subnet = kwargs['clusterSubnet']
+        if 'dateCreated' in kwargs:
+            date_created = kwargs['dateCreated']
+        if 'kubeConfig' in kwargs:
+            kube_config = kwargs['kubeConfig']
+        if 'nodePools' in kwargs:
+            node_pools = kwargs['nodePools']
+        if 'serviceSubnet' in kwargs:
+            service_subnet = kwargs['serviceSubnet']
+
         if client_certificate is not None:
             _setter("client_certificate", client_certificate)
         if client_key is not None:
@@ -384,17 +406,17 @@ class Kubernetes(pulumi.CustomResource):
         import ediri_vultr as vultr
 
         k8 = vultr.Kubernetes("k8",
-            label="tf-test",
+            label="vke-test",
             node_pools=vultr.KubernetesNodePoolsArgs(
                 auto_scaler=True,
-                label="my-label",
+                label="vke-nodepool",
                 max_nodes=2,
                 min_nodes=1,
                 node_quantity=1,
-                plan="vc2-2c-4gb",
+                plan="vc2-1c-2gb",
             ),
             region="ewr",
-            version="v1.23.5+1")
+            version="v1.28.2+1")
         ```
 
         A default node pool is required when first creating the resource but it can be removed at a later point so long as there is a separate `KubernetesNodePools` resource attached. For example:
@@ -405,15 +427,15 @@ class Kubernetes(pulumi.CustomResource):
 
         k8 = vultr.Kubernetes("k8",
             region="ewr",
-            label="tf-test",
-            version="v1.23.5+1")
+            label="vke-test",
+            version="v1.28.2+1")
         # This resource must be created and attached to the cluster
         # before removing the default node from the vultr_kubernetes resource
         np = vultr.KubernetesNodePools("np",
             cluster_id=k8.id,
             node_quantity=1,
-            plan="vc2-2c-4gb",
-            label="my-label",
+            plan="vc2-1c-2gb",
+            label="vke-nodepool",
             auto_scaler=True,
             min_nodes=1,
             max_nodes=2)
@@ -444,17 +466,17 @@ class Kubernetes(pulumi.CustomResource):
         import ediri_vultr as vultr
 
         k8 = vultr.Kubernetes("k8",
-            label="tf-test",
+            label="vke-test",
             node_pools=vultr.KubernetesNodePoolsArgs(
                 auto_scaler=True,
-                label="my-label",
+                label="vke-nodepool",
                 max_nodes=2,
                 min_nodes=1,
                 node_quantity=1,
-                plan="vc2-2c-4gb",
+                plan="vc2-1c-2gb",
             ),
             region="ewr",
-            version="v1.23.5+1")
+            version="v1.28.2+1")
         ```
 
         A default node pool is required when first creating the resource but it can be removed at a later point so long as there is a separate `KubernetesNodePools` resource attached. For example:
@@ -465,15 +487,15 @@ class Kubernetes(pulumi.CustomResource):
 
         k8 = vultr.Kubernetes("k8",
             region="ewr",
-            label="tf-test",
-            version="v1.23.5+1")
+            label="vke-test",
+            version="v1.28.2+1")
         # This resource must be created and attached to the cluster
         # before removing the default node from the vultr_kubernetes resource
         np = vultr.KubernetesNodePools("np",
             cluster_id=k8.id,
             node_quantity=1,
-            plan="vc2-2c-4gb",
-            label="my-label",
+            plan="vc2-1c-2gb",
+            label="vke-nodepool",
             auto_scaler=True,
             min_nodes=1,
             max_nodes=2)
@@ -516,7 +538,7 @@ class Kubernetes(pulumi.CustomResource):
             if label is None and not opts.urn:
                 raise TypeError("Missing required property 'label'")
             __props__.__dict__["label"] = label
-            if not isinstance(node_pools, KubernetesNodePoolsArgs):
+            if node_pools is not None and not isinstance(node_pools, KubernetesNodePoolsArgs):
                 node_pools = node_pools or {}
                 def _setter(key, value):
                     node_pools[key] = value
