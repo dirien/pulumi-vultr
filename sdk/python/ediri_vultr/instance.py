@@ -117,7 +117,43 @@ class InstanceArgs:
              user_data: Optional[pulumi.Input[str]] = None,
              vpc2_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
              vpc_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'activationEmail' in kwargs:
+            activation_email = kwargs['activationEmail']
+        if 'appId' in kwargs:
+            app_id = kwargs['appId']
+        if 'backupsSchedule' in kwargs:
+            backups_schedule = kwargs['backupsSchedule']
+        if 'ddosProtection' in kwargs:
+            ddos_protection = kwargs['ddosProtection']
+        if 'enableIpv6' in kwargs:
+            enable_ipv6 = kwargs['enableIpv6']
+        if 'firewallGroupId' in kwargs:
+            firewall_group_id = kwargs['firewallGroupId']
+        if 'imageId' in kwargs:
+            image_id = kwargs['imageId']
+        if 'isoId' in kwargs:
+            iso_id = kwargs['isoId']
+        if 'osId' in kwargs:
+            os_id = kwargs['osId']
+        if 'privateNetworkIds' in kwargs:
+            private_network_ids = kwargs['privateNetworkIds']
+        if 'reservedIpId' in kwargs:
+            reserved_ip_id = kwargs['reservedIpId']
+        if 'scriptId' in kwargs:
+            script_id = kwargs['scriptId']
+        if 'snapshotId' in kwargs:
+            snapshot_id = kwargs['snapshotId']
+        if 'sshKeyIds' in kwargs:
+            ssh_key_ids = kwargs['sshKeyIds']
+        if 'userData' in kwargs:
+            user_data = kwargs['userData']
+        if 'vpc2Ids' in kwargs:
+            vpc2_ids = kwargs['vpc2Ids']
+        if 'vpcIds' in kwargs:
+            vpc_ids = kwargs['vpcIds']
+
         _setter("plan", plan)
         _setter("region", region)
         if activation_email is not None:
@@ -626,7 +662,69 @@ class _InstanceState:
              vcpu_count: Optional[pulumi.Input[int]] = None,
              vpc2_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
              vpc_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'activationEmail' in kwargs:
+            activation_email = kwargs['activationEmail']
+        if 'allowedBandwidth' in kwargs:
+            allowed_bandwidth = kwargs['allowedBandwidth']
+        if 'appId' in kwargs:
+            app_id = kwargs['appId']
+        if 'backupsSchedule' in kwargs:
+            backups_schedule = kwargs['backupsSchedule']
+        if 'dateCreated' in kwargs:
+            date_created = kwargs['dateCreated']
+        if 'ddosProtection' in kwargs:
+            ddos_protection = kwargs['ddosProtection']
+        if 'defaultPassword' in kwargs:
+            default_password = kwargs['defaultPassword']
+        if 'enableIpv6' in kwargs:
+            enable_ipv6 = kwargs['enableIpv6']
+        if 'firewallGroupId' in kwargs:
+            firewall_group_id = kwargs['firewallGroupId']
+        if 'gatewayV4' in kwargs:
+            gateway_v4 = kwargs['gatewayV4']
+        if 'imageId' in kwargs:
+            image_id = kwargs['imageId']
+        if 'internalIp' in kwargs:
+            internal_ip = kwargs['internalIp']
+        if 'isoId' in kwargs:
+            iso_id = kwargs['isoId']
+        if 'mainIp' in kwargs:
+            main_ip = kwargs['mainIp']
+        if 'netmaskV4' in kwargs:
+            netmask_v4 = kwargs['netmaskV4']
+        if 'osId' in kwargs:
+            os_id = kwargs['osId']
+        if 'powerStatus' in kwargs:
+            power_status = kwargs['powerStatus']
+        if 'privateNetworkIds' in kwargs:
+            private_network_ids = kwargs['privateNetworkIds']
+        if 'reservedIpId' in kwargs:
+            reserved_ip_id = kwargs['reservedIpId']
+        if 'scriptId' in kwargs:
+            script_id = kwargs['scriptId']
+        if 'serverStatus' in kwargs:
+            server_status = kwargs['serverStatus']
+        if 'snapshotId' in kwargs:
+            snapshot_id = kwargs['snapshotId']
+        if 'sshKeyIds' in kwargs:
+            ssh_key_ids = kwargs['sshKeyIds']
+        if 'userData' in kwargs:
+            user_data = kwargs['userData']
+        if 'v6MainIp' in kwargs:
+            v6_main_ip = kwargs['v6MainIp']
+        if 'v6Network' in kwargs:
+            v6_network = kwargs['v6Network']
+        if 'v6NetworkSize' in kwargs:
+            v6_network_size = kwargs['v6NetworkSize']
+        if 'vcpuCount' in kwargs:
+            vcpu_count = kwargs['vcpuCount']
+        if 'vpc2Ids' in kwargs:
+            vpc2_ids = kwargs['vpc2Ids']
+        if 'vpcIds' in kwargs:
+            vpc_ids = kwargs['vpcIds']
+
         if activation_email is not None:
             _setter("activation_email", activation_email)
         if allowed_bandwidth is not None:
@@ -1264,7 +1362,7 @@ class Instance(pulumi.CustomResource):
         import ediri_vultr as vultr
 
         my_instance = vultr.Instance("myInstance",
-            os_id=167,
+            os_id=1743,
             plan="vc2-1c-1gb",
             region="sea")
         ```
@@ -1285,7 +1383,7 @@ class Instance(pulumi.CustomResource):
             enable_ipv6=True,
             hostname="my-instance-hostname",
             label="my-instance-label",
-            os_id=167,
+            os_id=1743,
             plan="vc2-1c-1gb",
             region="sea",
             tags=["my-instance-tag"])
@@ -1343,7 +1441,7 @@ class Instance(pulumi.CustomResource):
         import ediri_vultr as vultr
 
         my_instance = vultr.Instance("myInstance",
-            os_id=167,
+            os_id=1743,
             plan="vc2-1c-1gb",
             region="sea")
         ```
@@ -1364,7 +1462,7 @@ class Instance(pulumi.CustomResource):
             enable_ipv6=True,
             hostname="my-instance-hostname",
             label="my-instance-label",
-            os_id=167,
+            os_id=1743,
             plan="vc2-1c-1gb",
             region="sea",
             tags=["my-instance-tag"])
@@ -1432,7 +1530,7 @@ class Instance(pulumi.CustomResource):
             __props__.__dict__["activation_email"] = activation_email
             __props__.__dict__["app_id"] = app_id
             __props__.__dict__["backups"] = backups
-            if not isinstance(backups_schedule, InstanceBackupsScheduleArgs):
+            if backups_schedule is not None and not isinstance(backups_schedule, InstanceBackupsScheduleArgs):
                 backups_schedule = backups_schedule or {}
                 def _setter(key, value):
                     backups_schedule[key] = value

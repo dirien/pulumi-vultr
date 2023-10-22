@@ -39,7 +39,13 @@ class ReservedIpArgs:
              region: pulumi.Input[str],
              instance_id: Optional[pulumi.Input[str]] = None,
              label: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'ipType' in kwargs:
+            ip_type = kwargs['ipType']
+        if 'instanceId' in kwargs:
+            instance_id = kwargs['instanceId']
+
         _setter("ip_type", ip_type)
         _setter("region", region)
         if instance_id is not None:
@@ -132,7 +138,15 @@ class _ReservedIpState:
              region: Optional[pulumi.Input[str]] = None,
              subnet: Optional[pulumi.Input[str]] = None,
              subnet_size: Optional[pulumi.Input[int]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'instanceId' in kwargs:
+            instance_id = kwargs['instanceId']
+        if 'ipType' in kwargs:
+            ip_type = kwargs['ipType']
+        if 'subnetSize' in kwargs:
+            subnet_size = kwargs['subnetSize']
+
         if instance_id is not None:
             _setter("instance_id", instance_id)
         if ip_type is not None:

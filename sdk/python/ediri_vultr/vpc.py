@@ -39,7 +39,13 @@ class VpcArgs:
              description: Optional[pulumi.Input[str]] = None,
              v4_subnet: Optional[pulumi.Input[str]] = None,
              v4_subnet_mask: Optional[pulumi.Input[int]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'v4Subnet' in kwargs:
+            v4_subnet = kwargs['v4Subnet']
+        if 'v4SubnetMask' in kwargs:
+            v4_subnet_mask = kwargs['v4SubnetMask']
+
         _setter("region", region)
         if description is not None:
             _setter("description", description)
@@ -129,7 +135,15 @@ class _VpcState:
              region: Optional[pulumi.Input[str]] = None,
              v4_subnet: Optional[pulumi.Input[str]] = None,
              v4_subnet_mask: Optional[pulumi.Input[int]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'dateCreated' in kwargs:
+            date_created = kwargs['dateCreated']
+        if 'v4Subnet' in kwargs:
+            v4_subnet = kwargs['v4Subnet']
+        if 'v4SubnetMask' in kwargs:
+            v4_subnet_mask = kwargs['v4SubnetMask']
+
         if date_created is not None:
             _setter("date_created", date_created)
         if description is not None:

@@ -77,7 +77,27 @@ class LoadBalancerArgs:
              ssl: Optional[pulumi.Input['LoadBalancerSslArgs']] = None,
              ssl_redirect: Optional[pulumi.Input[bool]] = None,
              vpc: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'forwardingRules' in kwargs:
+            forwarding_rules = kwargs['forwardingRules']
+        if 'attachedInstances' in kwargs:
+            attached_instances = kwargs['attachedInstances']
+        if 'balancingAlgorithm' in kwargs:
+            balancing_algorithm = kwargs['balancingAlgorithm']
+        if 'cookieName' in kwargs:
+            cookie_name = kwargs['cookieName']
+        if 'firewallRules' in kwargs:
+            firewall_rules = kwargs['firewallRules']
+        if 'healthCheck' in kwargs:
+            health_check = kwargs['healthCheck']
+        if 'privateNetwork' in kwargs:
+            private_network = kwargs['privateNetwork']
+        if 'proxyProtocol' in kwargs:
+            proxy_protocol = kwargs['proxyProtocol']
+        if 'sslRedirect' in kwargs:
+            ssl_redirect = kwargs['sslRedirect']
+
         _setter("forwarding_rules", forwarding_rules)
         _setter("region", region)
         if attached_instances is not None:
@@ -346,7 +366,29 @@ class _LoadBalancerState:
              ssl_redirect: Optional[pulumi.Input[bool]] = None,
              status: Optional[pulumi.Input[str]] = None,
              vpc: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'attachedInstances' in kwargs:
+            attached_instances = kwargs['attachedInstances']
+        if 'balancingAlgorithm' in kwargs:
+            balancing_algorithm = kwargs['balancingAlgorithm']
+        if 'cookieName' in kwargs:
+            cookie_name = kwargs['cookieName']
+        if 'firewallRules' in kwargs:
+            firewall_rules = kwargs['firewallRules']
+        if 'forwardingRules' in kwargs:
+            forwarding_rules = kwargs['forwardingRules']
+        if 'hasSsl' in kwargs:
+            has_ssl = kwargs['hasSsl']
+        if 'healthCheck' in kwargs:
+            health_check = kwargs['healthCheck']
+        if 'privateNetwork' in kwargs:
+            private_network = kwargs['privateNetwork']
+        if 'proxyProtocol' in kwargs:
+            proxy_protocol = kwargs['proxyProtocol']
+        if 'sslRedirect' in kwargs:
+            ssl_redirect = kwargs['sslRedirect']
+
         if attached_instances is not None:
             _setter("attached_instances", attached_instances)
         if balancing_algorithm is not None:
@@ -640,7 +682,7 @@ class LoadBalancer(pulumi.CustomResource):
                 response_timeout=1,
                 unhealthy_threshold=2,
             ),
-            label="terraform lb example",
+            label="vultr-load-balancer",
             region="ewr")
         ```
 
@@ -702,7 +744,7 @@ class LoadBalancer(pulumi.CustomResource):
                 response_timeout=1,
                 unhealthy_threshold=2,
             ),
-            label="terraform lb example",
+            label="vultr-load-balancer",
             region="ewr")
         ```
 
@@ -762,7 +804,7 @@ class LoadBalancer(pulumi.CustomResource):
             if forwarding_rules is None and not opts.urn:
                 raise TypeError("Missing required property 'forwarding_rules'")
             __props__.__dict__["forwarding_rules"] = forwarding_rules
-            if not isinstance(health_check, LoadBalancerHealthCheckArgs):
+            if health_check is not None and not isinstance(health_check, LoadBalancerHealthCheckArgs):
                 health_check = health_check or {}
                 def _setter(key, value):
                     health_check[key] = value
@@ -774,7 +816,7 @@ class LoadBalancer(pulumi.CustomResource):
             if region is None and not opts.urn:
                 raise TypeError("Missing required property 'region'")
             __props__.__dict__["region"] = region
-            if not isinstance(ssl, LoadBalancerSslArgs):
+            if ssl is not None and not isinstance(ssl, LoadBalancerSslArgs):
                 ssl = ssl or {}
                 def _setter(key, value):
                     ssl[key] = value

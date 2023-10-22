@@ -27,7 +27,9 @@ class FirewallGroupArgs:
     def _configure(
              _setter: Callable[[Any, Any], None],
              description: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         if description is not None:
             _setter("description", description)
 
@@ -80,7 +82,19 @@ class _FirewallGroupState:
              instance_count: Optional[pulumi.Input[int]] = None,
              max_rule_count: Optional[pulumi.Input[int]] = None,
              rule_count: Optional[pulumi.Input[int]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'dateCreated' in kwargs:
+            date_created = kwargs['dateCreated']
+        if 'dateModified' in kwargs:
+            date_modified = kwargs['dateModified']
+        if 'instanceCount' in kwargs:
+            instance_count = kwargs['instanceCount']
+        if 'maxRuleCount' in kwargs:
+            max_rule_count = kwargs['maxRuleCount']
+        if 'ruleCount' in kwargs:
+            rule_count = kwargs['ruleCount']
+
         if date_created is not None:
             _setter("date_created", date_created)
         if date_modified is not None:

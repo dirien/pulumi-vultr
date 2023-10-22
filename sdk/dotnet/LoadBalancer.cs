@@ -48,7 +48,7 @@ namespace ediri.Vultr
     ///             ResponseTimeout = 1,
     ///             UnhealthyThreshold = 2,
     ///         },
-    ///         Label = "terraform lb example",
+    ///         Label = "vultr-load-balancer",
     ///         Region = "ewr",
     ///     });
     /// 

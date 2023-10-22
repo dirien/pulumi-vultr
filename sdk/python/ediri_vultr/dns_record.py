@@ -47,7 +47,9 @@ class DnsRecordArgs:
              name: Optional[pulumi.Input[str]] = None,
              priority: Optional[pulumi.Input[int]] = None,
              ttl: Optional[pulumi.Input[int]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("data", data)
         _setter("domain", domain)
         _setter("type", type)
@@ -167,7 +169,9 @@ class _DnsRecordState:
              priority: Optional[pulumi.Input[int]] = None,
              ttl: Optional[pulumi.Input[int]] = None,
              type: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         if data is not None:
             _setter("data", data)
         if domain is not None:

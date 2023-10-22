@@ -28,7 +28,7 @@ namespace ediri.Vultr
     ///     var tf = new Vultr.ObjectStorage("tf", new()
     ///     {
     ///         ClusterId = 2,
-    ///         Label = "tf-label",
+    ///         Label = "vultr-object-storage",
     ///     });
     /// 
     /// });

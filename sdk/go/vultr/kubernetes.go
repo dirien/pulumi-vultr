@@ -30,17 +30,17 @@ import (
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
 //			_, err := vultr.NewKubernetes(ctx, "k8", &vultr.KubernetesArgs{
-//				Label: pulumi.String("tf-test"),
+//				Label: pulumi.String("vke-test"),
 //				NodePools: &vultr.KubernetesNodePoolsTypeArgs{
 //					AutoScaler:   pulumi.Bool(true),
-//					Label:        pulumi.String("my-label"),
+//					Label:        pulumi.String("vke-nodepool"),
 //					MaxNodes:     pulumi.Int(2),
 //					MinNodes:     pulumi.Int(1),
 //					NodeQuantity: pulumi.Int(1),
-//					Plan:         pulumi.String("vc2-2c-4gb"),
+//					Plan:         pulumi.String("vc2-1c-2gb"),
 //				},
 //				Region:  pulumi.String("ewr"),
-//				Version: pulumi.String("v1.23.5+1"),
+//				Version: pulumi.String("v1.28.2+1"),
 //			})
 //			if err != nil {
 //				return err
@@ -67,8 +67,8 @@ import (
 //		pulumi.Run(func(ctx *pulumi.Context) error {
 //			k8, err := vultr.NewKubernetes(ctx, "k8", &vultr.KubernetesArgs{
 //				Region:  pulumi.String("ewr"),
-//				Label:   pulumi.String("tf-test"),
-//				Version: pulumi.String("v1.23.5+1"),
+//				Label:   pulumi.String("vke-test"),
+//				Version: pulumi.String("v1.28.2+1"),
 //			})
 //			if err != nil {
 //				return err
@@ -76,8 +76,8 @@ import (
 //			_, err = vultr.NewKubernetesNodePools(ctx, "np", &vultr.KubernetesNodePoolsArgs{
 //				ClusterId:    k8.ID(),
 //				NodeQuantity: pulumi.Int(1),
-//				Plan:         pulumi.String("vc2-2c-4gb"),
-//				Label:        pulumi.String("my-label"),
+//				Plan:         pulumi.String("vc2-1c-2gb"),
+//				Label:        pulumi.String("vke-nodepool"),
 //				AutoScaler:   pulumi.Bool(true),
 //				MinNodes:     pulumi.Int(1),
 //				MaxNodes:     pulumi.Int(2),

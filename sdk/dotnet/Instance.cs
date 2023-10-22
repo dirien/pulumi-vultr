@@ -27,7 +27,7 @@ namespace ediri.Vultr
     /// {
     ///     var myInstance = new Vultr.Instance("myInstance", new()
     ///     {
-    ///         OsId = 167,
+    ///         OsId = 1743,
     ///         Plan = "vc2-1c-1gb",
     ///         Region = "sea",
     ///     });
@@ -57,7 +57,7 @@ namespace ediri.Vultr
     ///         EnableIpv6 = true,
     ///         Hostname = "my-instance-hostname",
     ///         Label = "my-instance-label",
-    ///         OsId = 167,
+    ///         OsId = 1743,
     ///         Plan = "vc2-1c-1gb",
     ///         Region = "sea",
     ///         Tags = new[]

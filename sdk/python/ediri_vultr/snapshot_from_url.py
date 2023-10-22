@@ -27,7 +27,9 @@ class SnapshotFromUrlArgs:
     def _configure(
              _setter: Callable[[Any, Any], None],
              url: pulumi.Input[str],
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("url", url)
 
     @property
@@ -83,7 +85,15 @@ class _SnapshotFromUrlState:
              size: Optional[pulumi.Input[int]] = None,
              status: Optional[pulumi.Input[str]] = None,
              url: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'appId' in kwargs:
+            app_id = kwargs['appId']
+        if 'dateCreated' in kwargs:
+            date_created = kwargs['dateCreated']
+        if 'osId' in kwargs:
+            os_id = kwargs['osId']
+
         if app_id is not None:
             _setter("app_id", app_id)
         if date_created is not None:

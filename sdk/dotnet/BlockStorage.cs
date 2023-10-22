@@ -27,6 +27,7 @@ namespace ediri.Vultr
     /// {
     ///     var myBlockstorage = new Vultr.BlockStorage("myBlockstorage", new()
     ///     {
+    ///         Label = "vultr-block-storage",
     ///         Region = "ewr",
     ///         SizeGb = 10,
     ///     });

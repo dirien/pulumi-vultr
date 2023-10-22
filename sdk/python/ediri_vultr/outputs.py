@@ -229,7 +229,45 @@ class DatabaseReadReplica(dict):
              trusted_ips: Optional[Sequence[str]] = None,
              user: Optional[str] = None,
              vpc_id: Optional[str] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'clusterTimeZone' in kwargs:
+            cluster_time_zone = kwargs['clusterTimeZone']
+        if 'databaseEngine' in kwargs:
+            database_engine = kwargs['databaseEngine']
+        if 'databaseEngineVersion' in kwargs:
+            database_engine_version = kwargs['databaseEngineVersion']
+        if 'dateCreated' in kwargs:
+            date_created = kwargs['dateCreated']
+        if 'latestBackup' in kwargs:
+            latest_backup = kwargs['latestBackup']
+        if 'maintenanceDow' in kwargs:
+            maintenance_dow = kwargs['maintenanceDow']
+        if 'maintenanceTime' in kwargs:
+            maintenance_time = kwargs['maintenanceTime']
+        if 'mysqlLongQueryTime' in kwargs:
+            mysql_long_query_time = kwargs['mysqlLongQueryTime']
+        if 'mysqlRequirePrimaryKey' in kwargs:
+            mysql_require_primary_key = kwargs['mysqlRequirePrimaryKey']
+        if 'mysqlSlowQueryLog' in kwargs:
+            mysql_slow_query_log = kwargs['mysqlSlowQueryLog']
+        if 'mysqlSqlModes' in kwargs:
+            mysql_sql_modes = kwargs['mysqlSqlModes']
+        if 'planDisk' in kwargs:
+            plan_disk = kwargs['planDisk']
+        if 'planRam' in kwargs:
+            plan_ram = kwargs['planRam']
+        if 'planReplicas' in kwargs:
+            plan_replicas = kwargs['planReplicas']
+        if 'planVcpus' in kwargs:
+            plan_vcpus = kwargs['planVcpus']
+        if 'redisEvictionPolicy' in kwargs:
+            redis_eviction_policy = kwargs['redisEvictionPolicy']
+        if 'trustedIps' in kwargs:
+            trusted_ips = kwargs['trustedIps']
+        if 'vpcId' in kwargs:
+            vpc_id = kwargs['vpcId']
+
         _setter("label", label)
         _setter("region", region)
         if cluster_time_zone is not None:
@@ -544,7 +582,9 @@ class InstanceBackupsSchedule(dict):
              dom: Optional[int] = None,
              dow: Optional[int] = None,
              hour: Optional[int] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("type", type)
         if dom is not None:
             _setter("dom", dom)
@@ -672,7 +712,21 @@ class KubernetesNodePools(dict):
              nodes: Optional[Sequence['outputs.KubernetesNodePoolsNode']] = None,
              status: Optional[str] = None,
              tag: Optional[str] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'nodeQuantity' in kwargs:
+            node_quantity = kwargs['nodeQuantity']
+        if 'autoScaler' in kwargs:
+            auto_scaler = kwargs['autoScaler']
+        if 'dateCreated' in kwargs:
+            date_created = kwargs['dateCreated']
+        if 'dateUpdated' in kwargs:
+            date_updated = kwargs['dateUpdated']
+        if 'maxNodes' in kwargs:
+            max_nodes = kwargs['maxNodes']
+        if 'minNodes' in kwargs:
+            min_nodes = kwargs['minNodes']
+
         _setter("label", label)
         _setter("node_quantity", node_quantity)
         _setter("plan", plan)
@@ -836,7 +890,11 @@ class KubernetesNodePoolsNode(dict):
              id: Optional[str] = None,
              label: Optional[str] = None,
              status: Optional[str] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'dateCreated' in kwargs:
+            date_created = kwargs['dateCreated']
+
         if date_created is not None:
             _setter("date_created", date_created)
         if id is not None:
@@ -923,7 +981,11 @@ class LoadBalancerFirewallRule(dict):
              port: int,
              source: str,
              id: Optional[str] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'ipType' in kwargs:
+            ip_type = kwargs['ipType']
+
         _setter("ip_type", ip_type)
         _setter("port", port)
         _setter("source", source)
@@ -1018,7 +1080,19 @@ class LoadBalancerForwardingRule(dict):
              frontend_port: int,
              frontend_protocol: str,
              rule_id: Optional[str] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'backendPort' in kwargs:
+            backend_port = kwargs['backendPort']
+        if 'backendProtocol' in kwargs:
+            backend_protocol = kwargs['backendProtocol']
+        if 'frontendPort' in kwargs:
+            frontend_port = kwargs['frontendPort']
+        if 'frontendProtocol' in kwargs:
+            frontend_protocol = kwargs['frontendProtocol']
+        if 'ruleId' in kwargs:
+            rule_id = kwargs['ruleId']
+
         _setter("backend_port", backend_port)
         _setter("backend_protocol", backend_protocol)
         _setter("frontend_port", frontend_port)
@@ -1126,7 +1200,17 @@ class LoadBalancerHealthCheck(dict):
              path: Optional[str] = None,
              response_timeout: Optional[int] = None,
              unhealthy_threshold: Optional[int] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'checkInterval' in kwargs:
+            check_interval = kwargs['checkInterval']
+        if 'healthyThreshold' in kwargs:
+            healthy_threshold = kwargs['healthyThreshold']
+        if 'responseTimeout' in kwargs:
+            response_timeout = kwargs['responseTimeout']
+        if 'unhealthyThreshold' in kwargs:
+            unhealthy_threshold = kwargs['unhealthyThreshold']
+
         _setter("port", port)
         _setter("protocol", protocol)
         if check_interval is not None:
@@ -1237,7 +1321,11 @@ class LoadBalancerSsl(dict):
              certificate: str,
              private_key: str,
              chain: Optional[str] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'privateKey' in kwargs:
+            private_key = kwargs['privateKey']
+
         _setter("certificate", certificate)
         _setter("private_key", private_key)
         if chain is not None:
@@ -1287,7 +1375,9 @@ class GetApplicationFilterResult(dict):
              _setter: Callable[[Any, Any], None],
              name: str,
              values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("name", name)
         _setter("values", values)
 
@@ -1327,7 +1417,9 @@ class GetBackupFilterResult(dict):
              _setter: Callable[[Any, Any], None],
              name: str,
              values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("name", name)
         _setter("values", values)
 
@@ -1367,7 +1459,9 @@ class GetBareMetalPlanFilterResult(dict):
              _setter: Callable[[Any, Any], None],
              name: str,
              values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("name", name)
         _setter("values", values)
 
@@ -1407,7 +1501,9 @@ class GetBareMetalServerFilterResult(dict):
              _setter: Callable[[Any, Any], None],
              name: str,
              values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("name", name)
         _setter("values", values)
 
@@ -1447,7 +1543,9 @@ class GetBlockStorageFilterResult(dict):
              _setter: Callable[[Any, Any], None],
              name: str,
              values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("name", name)
         _setter("values", values)
 
@@ -1487,7 +1585,9 @@ class GetDatabaseFilterResult(dict):
              _setter: Callable[[Any, Any], None],
              name: str,
              values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("name", name)
         _setter("values", values)
 
@@ -1633,7 +1733,45 @@ class GetDatabaseReadReplicaResult(dict):
              trusted_ips: Sequence[str],
              user: str,
              vpc_id: str,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'clusterTimeZone' in kwargs:
+            cluster_time_zone = kwargs['clusterTimeZone']
+        if 'databaseEngine' in kwargs:
+            database_engine = kwargs['databaseEngine']
+        if 'databaseEngineVersion' in kwargs:
+            database_engine_version = kwargs['databaseEngineVersion']
+        if 'dateCreated' in kwargs:
+            date_created = kwargs['dateCreated']
+        if 'latestBackup' in kwargs:
+            latest_backup = kwargs['latestBackup']
+        if 'maintenanceDow' in kwargs:
+            maintenance_dow = kwargs['maintenanceDow']
+        if 'maintenanceTime' in kwargs:
+            maintenance_time = kwargs['maintenanceTime']
+        if 'mysqlLongQueryTime' in kwargs:
+            mysql_long_query_time = kwargs['mysqlLongQueryTime']
+        if 'mysqlRequirePrimaryKey' in kwargs:
+            mysql_require_primary_key = kwargs['mysqlRequirePrimaryKey']
+        if 'mysqlSlowQueryLog' in kwargs:
+            mysql_slow_query_log = kwargs['mysqlSlowQueryLog']
+        if 'mysqlSqlModes' in kwargs:
+            mysql_sql_modes = kwargs['mysqlSqlModes']
+        if 'planDisk' in kwargs:
+            plan_disk = kwargs['planDisk']
+        if 'planRam' in kwargs:
+            plan_ram = kwargs['planRam']
+        if 'planReplicas' in kwargs:
+            plan_replicas = kwargs['planReplicas']
+        if 'planVcpus' in kwargs:
+            plan_vcpus = kwargs['planVcpus']
+        if 'redisEvictionPolicy' in kwargs:
+            redis_eviction_policy = kwargs['redisEvictionPolicy']
+        if 'trustedIps' in kwargs:
+            trusted_ips = kwargs['trustedIps']
+        if 'vpcId' in kwargs:
+            vpc_id = kwargs['vpcId']
+
         _setter("cluster_time_zone", cluster_time_zone)
         _setter("database_engine", database_engine)
         _setter("database_engine_version", database_engine_version)
@@ -1910,7 +2048,9 @@ class GetFirewallGroupFilterResult(dict):
              _setter: Callable[[Any, Any], None],
              name: str,
              values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("name", name)
         _setter("values", values)
 
@@ -1950,7 +2090,9 @@ class GetInstanceFilterResult(dict):
              _setter: Callable[[Any, Any], None],
              name: str,
              values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("name", name)
         _setter("values", values)
 
@@ -1990,7 +2132,9 @@ class GetInstanceIpv4FilterResult(dict):
              _setter: Callable[[Any, Any], None],
              name: str,
              values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("name", name)
         _setter("values", values)
 
@@ -2030,7 +2174,9 @@ class GetIsoPrivateFilterResult(dict):
              _setter: Callable[[Any, Any], None],
              name: str,
              values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("name", name)
         _setter("values", values)
 
@@ -2070,7 +2216,9 @@ class GetIsoPublicFilterResult(dict):
              _setter: Callable[[Any, Any], None],
              name: str,
              values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("name", name)
         _setter("values", values)
 
@@ -2110,7 +2258,9 @@ class GetKubernetesFilterResult(dict):
              _setter: Callable[[Any, Any], None],
              name: str,
              values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("name", name)
         _setter("values", values)
 
@@ -2190,7 +2340,21 @@ class GetKubernetesNodePoolResult(dict):
              auto_scaler: Optional[bool] = None,
              max_nodes: Optional[int] = None,
              min_nodes: Optional[int] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'dateCreated' in kwargs:
+            date_created = kwargs['dateCreated']
+        if 'dateUpdated' in kwargs:
+            date_updated = kwargs['dateUpdated']
+        if 'nodeQuantity' in kwargs:
+            node_quantity = kwargs['nodeQuantity']
+        if 'autoScaler' in kwargs:
+            auto_scaler = kwargs['autoScaler']
+        if 'maxNodes' in kwargs:
+            max_nodes = kwargs['maxNodes']
+        if 'minNodes' in kwargs:
+            min_nodes = kwargs['minNodes']
+
         _setter("date_created", date_created)
         _setter("date_updated", date_updated)
         _setter("id", id)
@@ -2331,7 +2495,11 @@ class GetKubernetesNodePoolNodeResult(dict):
              id: str,
              label: str,
              status: str,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'dateCreated' in kwargs:
+            date_created = kwargs['dateCreated']
+
         _setter("date_created", date_created)
         _setter("id", id)
         _setter("label", label)
@@ -2389,7 +2557,9 @@ class GetLoadBalancerFilterResult(dict):
              _setter: Callable[[Any, Any], None],
              name: str,
              values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("name", name)
         _setter("values", values)
 
@@ -2429,7 +2599,9 @@ class GetObjectStorageClusterFilterResult(dict):
              _setter: Callable[[Any, Any], None],
              name: str,
              values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("name", name)
         _setter("values", values)
 
@@ -2469,7 +2641,9 @@ class GetObjectStorageFilterResult(dict):
              _setter: Callable[[Any, Any], None],
              name: str,
              values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("name", name)
         _setter("values", values)
 
@@ -2509,7 +2683,9 @@ class GetOsFilterResult(dict):
              _setter: Callable[[Any, Any], None],
              name: str,
              values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("name", name)
         _setter("values", values)
 
@@ -2549,7 +2725,9 @@ class GetPlanFilterResult(dict):
              _setter: Callable[[Any, Any], None],
              name: str,
              values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("name", name)
         _setter("values", values)
 
@@ -2589,7 +2767,9 @@ class GetPrivateNetworkFilterResult(dict):
              _setter: Callable[[Any, Any], None],
              name: str,
              values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("name", name)
         _setter("values", values)
 
@@ -2629,7 +2809,9 @@ class GetRegionFilterResult(dict):
              _setter: Callable[[Any, Any], None],
              name: str,
              values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("name", name)
         _setter("values", values)
 
@@ -2669,7 +2851,9 @@ class GetReservedIpFilterResult(dict):
              _setter: Callable[[Any, Any], None],
              name: str,
              values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("name", name)
         _setter("values", values)
 
@@ -2709,7 +2893,9 @@ class GetReverseIpv4FilterResult(dict):
              _setter: Callable[[Any, Any], None],
              name: str,
              values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("name", name)
         _setter("values", values)
 
@@ -2749,7 +2935,9 @@ class GetReverseIpv6FilterResult(dict):
              _setter: Callable[[Any, Any], None],
              name: str,
              values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("name", name)
         _setter("values", values)
 
@@ -2789,7 +2977,9 @@ class GetSnapshotFilterResult(dict):
              _setter: Callable[[Any, Any], None],
              name: str,
              values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("name", name)
         _setter("values", values)
 
@@ -2829,7 +3019,9 @@ class GetSshKeyFilterResult(dict):
              _setter: Callable[[Any, Any], None],
              name: str,
              values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("name", name)
         _setter("values", values)
 
@@ -2869,7 +3061,9 @@ class GetStartupScriptFilterResult(dict):
              _setter: Callable[[Any, Any], None],
              name: str,
              values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("name", name)
         _setter("values", values)
 
@@ -2909,7 +3103,9 @@ class GetUserFilterResult(dict):
              _setter: Callable[[Any, Any], None],
              name: str,
              values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("name", name)
         _setter("values", values)
 
@@ -2949,7 +3145,9 @@ class GetVpc2FilterResult(dict):
              _setter: Callable[[Any, Any], None],
              name: str,
              values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("name", name)
         _setter("values", values)
 
@@ -2989,7 +3187,9 @@ class GetVpcFilterResult(dict):
              _setter: Callable[[Any, Any], None],
              name: str,
              values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("name", name)
         _setter("values", values)
 

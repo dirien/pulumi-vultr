@@ -16,7 +16,7 @@ import * as utilities from "./utilities";
  * import * as vultr from "@ediri/vultr";
  *
  * const myServer = new vultr.BareMetalServer("myServer", {
- *     osId: 270,
+ *     osId: 1743,
  *     plan: "vbm-4c-32gb",
  *     region: "ewr",
  * });
@@ -33,7 +33,7 @@ import * as utilities from "./utilities";
  *     enableIpv6: true,
  *     hostname: "my-server-hostname",
  *     label: "my-server-label",
- *     osId: 270,
+ *     osId: 1743,
  *     plan: "vbm-4c-32gb",
  *     region: "ewr",
  *     tags: ["my-server-tag"],

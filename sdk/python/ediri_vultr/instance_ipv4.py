@@ -31,7 +31,11 @@ class InstanceIpv4Args:
              _setter: Callable[[Any, Any], None],
              instance_id: pulumi.Input[str],
              reboot: Optional[pulumi.Input[bool]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'instanceId' in kwargs:
+            instance_id = kwargs['instanceId']
+
         _setter("instance_id", instance_id)
         if reboot is not None:
             _setter("reboot", reboot)
@@ -97,7 +101,11 @@ class _InstanceIpv4State:
              netmask: Optional[pulumi.Input[str]] = None,
              reboot: Optional[pulumi.Input[bool]] = None,
              reverse: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'instanceId' in kwargs:
+            instance_id = kwargs['instanceId']
+
         if gateway is not None:
             _setter("gateway", gateway)
         if instance_id is not None:

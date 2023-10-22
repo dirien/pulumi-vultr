@@ -31,7 +31,11 @@ class SSHKeyArgs:
              _setter: Callable[[Any, Any], None],
              ssh_key: pulumi.Input[str],
              name: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'sshKey' in kwargs:
+            ssh_key = kwargs['sshKey']
+
         _setter("ssh_key", ssh_key)
         if name is not None:
             _setter("name", name)
@@ -85,7 +89,13 @@ class _SSHKeyState:
              date_created: Optional[pulumi.Input[str]] = None,
              name: Optional[pulumi.Input[str]] = None,
              ssh_key: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'dateCreated' in kwargs:
+            date_created = kwargs['dateCreated']
+        if 'sshKey' in kwargs:
+            ssh_key = kwargs['sshKey']
+
         if date_created is not None:
             _setter("date_created", date_created)
         if name is not None:

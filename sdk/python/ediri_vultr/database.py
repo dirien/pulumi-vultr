@@ -100,7 +100,37 @@ class DatabaseArgs:
              tag: Optional[pulumi.Input[str]] = None,
              trusted_ips: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
              vpc_id: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'databaseEngine' in kwargs:
+            database_engine = kwargs['databaseEngine']
+        if 'databaseEngineVersion' in kwargs:
+            database_engine_version = kwargs['databaseEngineVersion']
+        if 'clusterTimeZone' in kwargs:
+            cluster_time_zone = kwargs['clusterTimeZone']
+        if 'maintenanceDow' in kwargs:
+            maintenance_dow = kwargs['maintenanceDow']
+        if 'maintenanceTime' in kwargs:
+            maintenance_time = kwargs['maintenanceTime']
+        if 'mysqlLongQueryTime' in kwargs:
+            mysql_long_query_time = kwargs['mysqlLongQueryTime']
+        if 'mysqlRequirePrimaryKey' in kwargs:
+            mysql_require_primary_key = kwargs['mysqlRequirePrimaryKey']
+        if 'mysqlSlowQueryLog' in kwargs:
+            mysql_slow_query_log = kwargs['mysqlSlowQueryLog']
+        if 'mysqlSqlModes' in kwargs:
+            mysql_sql_modes = kwargs['mysqlSqlModes']
+        if 'planDisk' in kwargs:
+            plan_disk = kwargs['planDisk']
+        if 'readReplicas' in kwargs:
+            read_replicas = kwargs['readReplicas']
+        if 'redisEvictionPolicy' in kwargs:
+            redis_eviction_policy = kwargs['redisEvictionPolicy']
+        if 'trustedIps' in kwargs:
+            trusted_ips = kwargs['trustedIps']
+        if 'vpcId' in kwargs:
+            vpc_id = kwargs['vpcId']
+
         _setter("database_engine", database_engine)
         _setter("database_engine_version", database_engine_version)
         _setter("label", label)
@@ -488,7 +518,47 @@ class _DatabaseState:
              trusted_ips: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
              user: Optional[pulumi.Input[str]] = None,
              vpc_id: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'clusterTimeZone' in kwargs:
+            cluster_time_zone = kwargs['clusterTimeZone']
+        if 'databaseEngine' in kwargs:
+            database_engine = kwargs['databaseEngine']
+        if 'databaseEngineVersion' in kwargs:
+            database_engine_version = kwargs['databaseEngineVersion']
+        if 'dateCreated' in kwargs:
+            date_created = kwargs['dateCreated']
+        if 'latestBackup' in kwargs:
+            latest_backup = kwargs['latestBackup']
+        if 'maintenanceDow' in kwargs:
+            maintenance_dow = kwargs['maintenanceDow']
+        if 'maintenanceTime' in kwargs:
+            maintenance_time = kwargs['maintenanceTime']
+        if 'mysqlLongQueryTime' in kwargs:
+            mysql_long_query_time = kwargs['mysqlLongQueryTime']
+        if 'mysqlRequirePrimaryKey' in kwargs:
+            mysql_require_primary_key = kwargs['mysqlRequirePrimaryKey']
+        if 'mysqlSlowQueryLog' in kwargs:
+            mysql_slow_query_log = kwargs['mysqlSlowQueryLog']
+        if 'mysqlSqlModes' in kwargs:
+            mysql_sql_modes = kwargs['mysqlSqlModes']
+        if 'planDisk' in kwargs:
+            plan_disk = kwargs['planDisk']
+        if 'planRam' in kwargs:
+            plan_ram = kwargs['planRam']
+        if 'planReplicas' in kwargs:
+            plan_replicas = kwargs['planReplicas']
+        if 'planVcpus' in kwargs:
+            plan_vcpus = kwargs['planVcpus']
+        if 'readReplicas' in kwargs:
+            read_replicas = kwargs['readReplicas']
+        if 'redisEvictionPolicy' in kwargs:
+            redis_eviction_policy = kwargs['redisEvictionPolicy']
+        if 'trustedIps' in kwargs:
+            trusted_ips = kwargs['trustedIps']
+        if 'vpcId' in kwargs:
+            vpc_id = kwargs['vpcId']
+
         if cluster_time_zone is not None:
             _setter("cluster_time_zone", cluster_time_zone)
         if database_engine is not None:

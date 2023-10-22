@@ -47,7 +47,11 @@ class DatabaseConnectionPoolArgs:
              size: pulumi.Input[int],
              username: pulumi.Input[str],
              name: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'databaseId' in kwargs:
+            database_id = kwargs['databaseId']
+
         _setter("database", database)
         _setter("database_id", database_id)
         _setter("mode", mode)
@@ -165,7 +169,11 @@ class _DatabaseConnectionPoolState:
              name: Optional[pulumi.Input[str]] = None,
              size: Optional[pulumi.Input[int]] = None,
              username: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'databaseId' in kwargs:
+            database_id = kwargs['databaseId']
+
         if database is not None:
             _setter("database", database)
         if database_id is not None:

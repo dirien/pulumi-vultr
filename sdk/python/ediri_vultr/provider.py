@@ -35,7 +35,15 @@ class ProviderArgs:
              api_key: Optional[pulumi.Input[str]] = None,
              rate_limit: Optional[pulumi.Input[int]] = None,
              retry_limit: Optional[pulumi.Input[int]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'apiKey' in kwargs:
+            api_key = kwargs['apiKey']
+        if 'rateLimit' in kwargs:
+            rate_limit = kwargs['rateLimit']
+        if 'retryLimit' in kwargs:
+            retry_limit = kwargs['retryLimit']
+
         if api_key is None:
             api_key = _utilities.get_env('VULTR_API_KEY')
         if api_key is not None:

@@ -87,7 +87,31 @@ class BareMetalServerArgs:
              tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
              user_data: Optional[pulumi.Input[str]] = None,
              vpc2_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'activationEmail' in kwargs:
+            activation_email = kwargs['activationEmail']
+        if 'appId' in kwargs:
+            app_id = kwargs['appId']
+        if 'enableIpv6' in kwargs:
+            enable_ipv6 = kwargs['enableIpv6']
+        if 'imageId' in kwargs:
+            image_id = kwargs['imageId']
+        if 'osId' in kwargs:
+            os_id = kwargs['osId']
+        if 'reservedIpv4' in kwargs:
+            reserved_ipv4 = kwargs['reservedIpv4']
+        if 'scriptId' in kwargs:
+            script_id = kwargs['scriptId']
+        if 'snapshotId' in kwargs:
+            snapshot_id = kwargs['snapshotId']
+        if 'sshKeyIds' in kwargs:
+            ssh_key_ids = kwargs['sshKeyIds']
+        if 'userData' in kwargs:
+            user_data = kwargs['userData']
+        if 'vpc2Ids' in kwargs:
+            vpc2_ids = kwargs['vpc2Ids']
+
         _setter("plan", plan)
         _setter("region", region)
         if activation_email is not None:
@@ -444,7 +468,51 @@ class _BareMetalServerState:
              v6_network: Optional[pulumi.Input[str]] = None,
              v6_network_size: Optional[pulumi.Input[int]] = None,
              vpc2_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'activationEmail' in kwargs:
+            activation_email = kwargs['activationEmail']
+        if 'appId' in kwargs:
+            app_id = kwargs['appId']
+        if 'cpuCount' in kwargs:
+            cpu_count = kwargs['cpuCount']
+        if 'dateCreated' in kwargs:
+            date_created = kwargs['dateCreated']
+        if 'defaultPassword' in kwargs:
+            default_password = kwargs['defaultPassword']
+        if 'enableIpv6' in kwargs:
+            enable_ipv6 = kwargs['enableIpv6']
+        if 'gatewayV4' in kwargs:
+            gateway_v4 = kwargs['gatewayV4']
+        if 'imageId' in kwargs:
+            image_id = kwargs['imageId']
+        if 'macAddress' in kwargs:
+            mac_address = kwargs['macAddress']
+        if 'mainIp' in kwargs:
+            main_ip = kwargs['mainIp']
+        if 'netmaskV4' in kwargs:
+            netmask_v4 = kwargs['netmaskV4']
+        if 'osId' in kwargs:
+            os_id = kwargs['osId']
+        if 'reservedIpv4' in kwargs:
+            reserved_ipv4 = kwargs['reservedIpv4']
+        if 'scriptId' in kwargs:
+            script_id = kwargs['scriptId']
+        if 'snapshotId' in kwargs:
+            snapshot_id = kwargs['snapshotId']
+        if 'sshKeyIds' in kwargs:
+            ssh_key_ids = kwargs['sshKeyIds']
+        if 'userData' in kwargs:
+            user_data = kwargs['userData']
+        if 'v6MainIp' in kwargs:
+            v6_main_ip = kwargs['v6MainIp']
+        if 'v6Network' in kwargs:
+            v6_network = kwargs['v6Network']
+        if 'v6NetworkSize' in kwargs:
+            v6_network_size = kwargs['v6NetworkSize']
+        if 'vpc2Ids' in kwargs:
+            vpc2_ids = kwargs['vpc2Ids']
+
         if activation_email is not None:
             _setter("activation_email", activation_email)
         if app_id is not None:
@@ -901,7 +969,7 @@ class BareMetalServer(pulumi.CustomResource):
         import ediri_vultr as vultr
 
         my_server = vultr.BareMetalServer("myServer",
-            os_id=270,
+            os_id=1743,
             plan="vbm-4c-32gb",
             region="ewr")
         ```
@@ -917,7 +985,7 @@ class BareMetalServer(pulumi.CustomResource):
             enable_ipv6=True,
             hostname="my-server-hostname",
             label="my-server-label",
-            os_id=270,
+            os_id=1743,
             plan="vbm-4c-32gb",
             region="ewr",
             tags=["my-server-tag"],
@@ -969,7 +1037,7 @@ class BareMetalServer(pulumi.CustomResource):
         import ediri_vultr as vultr
 
         my_server = vultr.BareMetalServer("myServer",
-            os_id=270,
+            os_id=1743,
             plan="vbm-4c-32gb",
             region="ewr")
         ```
@@ -985,7 +1053,7 @@ class BareMetalServer(pulumi.CustomResource):
             enable_ipv6=True,
             hostname="my-server-hostname",
             label="my-server-label",
-            os_id=270,
+            os_id=1743,
             plan="vbm-4c-32gb",
             region="ewr",
             tags=["my-server-tag"],

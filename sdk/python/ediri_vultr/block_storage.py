@@ -47,7 +47,15 @@ class BlockStorageArgs:
              block_type: Optional[pulumi.Input[str]] = None,
              label: Optional[pulumi.Input[str]] = None,
              live: Optional[pulumi.Input[bool]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'sizeGb' in kwargs:
+            size_gb = kwargs['sizeGb']
+        if 'attachedToInstance' in kwargs:
+            attached_to_instance = kwargs['attachedToInstance']
+        if 'blockType' in kwargs:
+            block_type = kwargs['blockType']
+
         _setter("region", region)
         _setter("size_gb", size_gb)
         if attached_to_instance is not None:
@@ -184,7 +192,19 @@ class _BlockStorageState:
              region: Optional[pulumi.Input[str]] = None,
              size_gb: Optional[pulumi.Input[int]] = None,
              status: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'attachedToInstance' in kwargs:
+            attached_to_instance = kwargs['attachedToInstance']
+        if 'blockType' in kwargs:
+            block_type = kwargs['blockType']
+        if 'dateCreated' in kwargs:
+            date_created = kwargs['dateCreated']
+        if 'mountId' in kwargs:
+            mount_id = kwargs['mountId']
+        if 'sizeGb' in kwargs:
+            size_gb = kwargs['sizeGb']
+
         if attached_to_instance is not None:
             _setter("attached_to_instance", attached_to_instance)
         if block_type is not None:
@@ -351,6 +371,7 @@ class BlockStorage(pulumi.CustomResource):
         import ediri_vultr as vultr
 
         my_blockstorage = vultr.BlockStorage("myBlockstorage",
+            label="vultr-block-storage",
             region="ewr",
             size_gb=10)
         ```
@@ -390,6 +411,7 @@ class BlockStorage(pulumi.CustomResource):
         import ediri_vultr as vultr
 
         my_blockstorage = vultr.BlockStorage("myBlockstorage",
+            label="vultr-block-storage",
             region="ewr",
             size_gb=10)
         ```

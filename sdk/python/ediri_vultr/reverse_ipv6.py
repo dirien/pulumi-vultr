@@ -36,7 +36,11 @@ class ReverseIpv6Args:
              instance_id: pulumi.Input[str],
              ip: pulumi.Input[str],
              reverse: pulumi.Input[str],
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'instanceId' in kwargs:
+            instance_id = kwargs['instanceId']
+
         _setter("instance_id", instance_id)
         _setter("ip", ip)
         _setter("reverse", reverse)
@@ -104,7 +108,11 @@ class _ReverseIpv6State:
              instance_id: Optional[pulumi.Input[str]] = None,
              ip: Optional[pulumi.Input[str]] = None,
              reverse: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'instanceId' in kwargs:
+            instance_id = kwargs['instanceId']
+
         if instance_id is not None:
             _setter("instance_id", instance_id)
         if ip is not None:

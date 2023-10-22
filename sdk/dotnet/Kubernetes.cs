@@ -25,18 +25,18 @@ namespace ediri.Vultr
     /// {
     ///     var k8 = new Vultr.Kubernetes("k8", new()
     ///     {
-    ///         Label = "tf-test",
+    ///         Label = "vke-test",
     ///         NodePools = new Vultr.Inputs.KubernetesNodePoolsArgs
     ///         {
     ///             AutoScaler = true,
-    ///             Label = "my-label",
+    ///             Label = "vke-nodepool",
     ///             MaxNodes = 2,
     ///             MinNodes = 1,
     ///             NodeQuantity = 1,
-    ///             Plan = "vc2-2c-4gb",
+    ///             Plan = "vc2-1c-2gb",
     ///         },
     ///         Region = "ewr",
-    ///         Version = "v1.23.5+1",
+    ///         Version = "v1.28.2+1",
     ///     });
     /// 
     /// });
@@ -55,8 +55,8 @@ namespace ediri.Vultr
     ///     var k8 = new Vultr.Kubernetes("k8", new()
     ///     {
     ///         Region = "ewr",
-    ///         Label = "tf-test",
-    ///         Version = "v1.23.5+1",
+    ///         Label = "vke-test",
+    ///         Version = "v1.28.2+1",
     ///     });
     /// 
     ///     // This resource must be created and attached to the cluster
@@ -65,8 +65,8 @@ namespace ediri.Vultr
     ///     {
     ///         ClusterId = k8.Id,
     ///         NodeQuantity = 1,
-    ///         Plan = "vc2-2c-4gb",
-    ///         Label = "my-label",
+    ///         Plan = "vc2-1c-2gb",
+    ///         Label = "vke-nodepool",
     ///         AutoScaler = true,
     ///         MinNodes = 1,
     ///         MaxNodes = 2,

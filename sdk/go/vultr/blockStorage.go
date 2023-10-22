@@ -32,6 +32,7 @@ import (
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
 //			_, err := vultr.NewBlockStorage(ctx, "myBlockstorage", &vultr.BlockStorageArgs{
+//				Label:  pulumi.String("vultr-block-storage"),
 //				Region: pulumi.String("ewr"),
 //				SizeGb: pulumi.Int(10),
 //			})

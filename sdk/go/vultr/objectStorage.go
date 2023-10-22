@@ -33,7 +33,7 @@ import (
 //		pulumi.Run(func(ctx *pulumi.Context) error {
 //			_, err := vultr.NewObjectStorage(ctx, "tf", &vultr.ObjectStorageArgs{
 //				ClusterId: pulumi.Int(2),
-//				Label:     pulumi.String("tf-label"),
+//				Label:     pulumi.String("vultr-object-storage"),
 //			})
 //			if err != nil {
 //				return err

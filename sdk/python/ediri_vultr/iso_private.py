@@ -26,7 +26,9 @@ class IsoPrivateArgs:
     def _configure(
              _setter: Callable[[Any, Any], None],
              url: pulumi.Input[str],
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+
         _setter("url", url)
 
     @property
@@ -72,7 +74,11 @@ class _IsoPrivateState:
              size: Optional[pulumi.Input[int]] = None,
              status: Optional[pulumi.Input[str]] = None,
              url: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None):
+             opts: Optional[pulumi.ResourceOptions]=None,
+             **kwargs):
+        if 'dateCreated' in kwargs:
+            date_created = kwargs['dateCreated']
+
         if date_created is not None:
             _setter("date_created", date_created)
         if filename is not None:
