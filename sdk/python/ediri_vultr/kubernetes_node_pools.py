@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -35,53 +35,18 @@ class KubernetesNodePoolsInitArgs:
         :param pulumi.Input[int] min_nodes: The minimum number of nodes to use with the auto scaler.
         :param pulumi.Input[str] tag: A tag that is assigned to this node pool.
         """
-        KubernetesNodePoolsInitArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            cluster_id=cluster_id,
-            label=label,
-            node_quantity=node_quantity,
-            plan=plan,
-            auto_scaler=auto_scaler,
-            max_nodes=max_nodes,
-            min_nodes=min_nodes,
-            tag=tag,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             cluster_id: pulumi.Input[str],
-             label: pulumi.Input[str],
-             node_quantity: pulumi.Input[int],
-             plan: pulumi.Input[str],
-             auto_scaler: Optional[pulumi.Input[bool]] = None,
-             max_nodes: Optional[pulumi.Input[int]] = None,
-             min_nodes: Optional[pulumi.Input[int]] = None,
-             tag: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'clusterId' in kwargs:
-            cluster_id = kwargs['clusterId']
-        if 'nodeQuantity' in kwargs:
-            node_quantity = kwargs['nodeQuantity']
-        if 'autoScaler' in kwargs:
-            auto_scaler = kwargs['autoScaler']
-        if 'maxNodes' in kwargs:
-            max_nodes = kwargs['maxNodes']
-        if 'minNodes' in kwargs:
-            min_nodes = kwargs['minNodes']
-
-        _setter("cluster_id", cluster_id)
-        _setter("label", label)
-        _setter("node_quantity", node_quantity)
-        _setter("plan", plan)
+        pulumi.set(__self__, "cluster_id", cluster_id)
+        pulumi.set(__self__, "label", label)
+        pulumi.set(__self__, "node_quantity", node_quantity)
+        pulumi.set(__self__, "plan", plan)
         if auto_scaler is not None:
-            _setter("auto_scaler", auto_scaler)
+            pulumi.set(__self__, "auto_scaler", auto_scaler)
         if max_nodes is not None:
-            _setter("max_nodes", max_nodes)
+            pulumi.set(__self__, "max_nodes", max_nodes)
         if min_nodes is not None:
-            _setter("min_nodes", min_nodes)
+            pulumi.set(__self__, "min_nodes", min_nodes)
         if tag is not None:
-            _setter("tag", tag)
+            pulumi.set(__self__, "tag", tag)
 
     @property
     @pulumi.getter(name="clusterId")
@@ -210,77 +175,30 @@ class _KubernetesNodePoolsState:
         :param pulumi.Input[str] status: Status of node.
         :param pulumi.Input[str] tag: A tag that is assigned to this node pool.
         """
-        _KubernetesNodePoolsState._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            auto_scaler=auto_scaler,
-            cluster_id=cluster_id,
-            date_created=date_created,
-            date_updated=date_updated,
-            label=label,
-            max_nodes=max_nodes,
-            min_nodes=min_nodes,
-            node_quantity=node_quantity,
-            nodes=nodes,
-            plan=plan,
-            status=status,
-            tag=tag,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             auto_scaler: Optional[pulumi.Input[bool]] = None,
-             cluster_id: Optional[pulumi.Input[str]] = None,
-             date_created: Optional[pulumi.Input[str]] = None,
-             date_updated: Optional[pulumi.Input[str]] = None,
-             label: Optional[pulumi.Input[str]] = None,
-             max_nodes: Optional[pulumi.Input[int]] = None,
-             min_nodes: Optional[pulumi.Input[int]] = None,
-             node_quantity: Optional[pulumi.Input[int]] = None,
-             nodes: Optional[pulumi.Input[Sequence[pulumi.Input['KubernetesNodePoolsNodeArgs']]]] = None,
-             plan: Optional[pulumi.Input[str]] = None,
-             status: Optional[pulumi.Input[str]] = None,
-             tag: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'autoScaler' in kwargs:
-            auto_scaler = kwargs['autoScaler']
-        if 'clusterId' in kwargs:
-            cluster_id = kwargs['clusterId']
-        if 'dateCreated' in kwargs:
-            date_created = kwargs['dateCreated']
-        if 'dateUpdated' in kwargs:
-            date_updated = kwargs['dateUpdated']
-        if 'maxNodes' in kwargs:
-            max_nodes = kwargs['maxNodes']
-        if 'minNodes' in kwargs:
-            min_nodes = kwargs['minNodes']
-        if 'nodeQuantity' in kwargs:
-            node_quantity = kwargs['nodeQuantity']
-
         if auto_scaler is not None:
-            _setter("auto_scaler", auto_scaler)
+            pulumi.set(__self__, "auto_scaler", auto_scaler)
         if cluster_id is not None:
-            _setter("cluster_id", cluster_id)
+            pulumi.set(__self__, "cluster_id", cluster_id)
         if date_created is not None:
-            _setter("date_created", date_created)
+            pulumi.set(__self__, "date_created", date_created)
         if date_updated is not None:
-            _setter("date_updated", date_updated)
+            pulumi.set(__self__, "date_updated", date_updated)
         if label is not None:
-            _setter("label", label)
+            pulumi.set(__self__, "label", label)
         if max_nodes is not None:
-            _setter("max_nodes", max_nodes)
+            pulumi.set(__self__, "max_nodes", max_nodes)
         if min_nodes is not None:
-            _setter("min_nodes", min_nodes)
+            pulumi.set(__self__, "min_nodes", min_nodes)
         if node_quantity is not None:
-            _setter("node_quantity", node_quantity)
+            pulumi.set(__self__, "node_quantity", node_quantity)
         if nodes is not None:
-            _setter("nodes", nodes)
+            pulumi.set(__self__, "nodes", nodes)
         if plan is not None:
-            _setter("plan", plan)
+            pulumi.set(__self__, "plan", plan)
         if status is not None:
-            _setter("status", status)
+            pulumi.set(__self__, "status", status)
         if tag is not None:
-            _setter("tag", tag)
+            pulumi.set(__self__, "tag", tag)
 
     @property
     @pulumi.getter(name="autoScaler")
@@ -512,10 +430,6 @@ class KubernetesNodePools(pulumi.CustomResource):
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
-            kwargs = kwargs or {}
-            def _setter(key, value):
-                kwargs[key] = value
-            KubernetesNodePoolsInitArgs._configure(_setter, **kwargs)
             __self__._internal_init(resource_name, *args, **kwargs)
 
     def _internal_init(__self__,

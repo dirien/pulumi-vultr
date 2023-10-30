@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 
 __all__ = ['StartupScriptArgs', 'StartupScript']
@@ -23,26 +23,11 @@ class StartupScriptArgs:
         :param pulumi.Input[str] name: Name of the given script.
         :param pulumi.Input[str] type: Type of startup script. Possible values are boot or pxe - default is boot.
         """
-        StartupScriptArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            script=script,
-            name=name,
-            type=type,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             script: pulumi.Input[str],
-             name: Optional[pulumi.Input[str]] = None,
-             type: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("script", script)
+        pulumi.set(__self__, "script", script)
         if name is not None:
-            _setter("name", name)
+            pulumi.set(__self__, "name", name)
         if type is not None:
-            _setter("type", type)
+            pulumi.set(__self__, "type", type)
 
     @property
     @pulumi.getter
@@ -97,39 +82,16 @@ class _StartupScriptState:
         :param pulumi.Input[str] script: Contents of the startup script base64 encoded.
         :param pulumi.Input[str] type: Type of startup script. Possible values are boot or pxe - default is boot.
         """
-        _StartupScriptState._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            date_created=date_created,
-            date_modified=date_modified,
-            name=name,
-            script=script,
-            type=type,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             date_created: Optional[pulumi.Input[str]] = None,
-             date_modified: Optional[pulumi.Input[str]] = None,
-             name: Optional[pulumi.Input[str]] = None,
-             script: Optional[pulumi.Input[str]] = None,
-             type: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'dateCreated' in kwargs:
-            date_created = kwargs['dateCreated']
-        if 'dateModified' in kwargs:
-            date_modified = kwargs['dateModified']
-
         if date_created is not None:
-            _setter("date_created", date_created)
+            pulumi.set(__self__, "date_created", date_created)
         if date_modified is not None:
-            _setter("date_modified", date_modified)
+            pulumi.set(__self__, "date_modified", date_modified)
         if name is not None:
-            _setter("name", name)
+            pulumi.set(__self__, "name", name)
         if script is not None:
-            _setter("script", script)
+            pulumi.set(__self__, "script", script)
         if type is not None:
-            _setter("type", type)
+            pulumi.set(__self__, "type", type)
 
     @property
     @pulumi.getter(name="dateCreated")
@@ -267,10 +229,6 @@ class StartupScript(pulumi.CustomResource):
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
-            kwargs = kwargs or {}
-            def _setter(key, value):
-                kwargs[key] = value
-            StartupScriptArgs._configure(_setter, **kwargs)
             __self__._internal_init(resource_name, *args, **kwargs)
 
     def _internal_init(__self__,

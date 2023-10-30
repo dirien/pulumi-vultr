@@ -78,7 +78,7 @@ namespace ediri.Vultr
         /// The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
         /// </summary>
         [Output("clusterTimeZone")]
-        public Output<string?> ClusterTimeZone { get; private set; } = null!;
+        public Output<string> ClusterTimeZone { get; private set; } = null!;
 
         /// <summary>
         /// The database engine of the new managed database.
@@ -126,13 +126,13 @@ namespace ediri.Vultr
         /// The preferred maintenance day of week for the managed database.
         /// </summary>
         [Output("maintenanceDow")]
-        public Output<string?> MaintenanceDow { get; private set; } = null!;
+        public Output<string> MaintenanceDow { get; private set; } = null!;
 
         /// <summary>
         /// The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).
         /// </summary>
         [Output("maintenanceTime")]
-        public Output<string?> MaintenanceTime { get; private set; } = null!;
+        public Output<string> MaintenanceTime { get; private set; } = null!;
 
         /// <summary>
         /// The configuration value for the long query time (in seconds) on the managed database (MySQL engine types only).
@@ -201,6 +201,12 @@ namespace ediri.Vultr
         public Output<string> Port { get; private set; } = null!;
 
         /// <summary>
+        /// The public hostname assigned to the managed database (VPC-attached only).
+        /// </summary>
+        [Output("publicHost")]
+        public Output<string> PublicHost { get; private set; } = null!;
+
+        /// <summary>
         /// A list of read replicas attached to the managed database.
         /// </summary>
         [Output("readReplicas")]
@@ -242,6 +248,9 @@ namespace ediri.Vultr
         [Output("user")]
         public Output<string> User { get; private set; } = null!;
 
+        /// <summary>
+        /// The ID of the VPC Network to attach to the Managed Database.
+        /// </summary>
         [Output("vpcId")]
         public Output<string?> VpcId { get; private set; } = null!;
 
@@ -376,6 +385,12 @@ namespace ediri.Vultr
         [Input("planDisk")]
         public Input<int>? PlanDisk { get; set; }
 
+        /// <summary>
+        /// The public hostname assigned to the managed database (VPC-attached only).
+        /// </summary>
+        [Input("publicHost")]
+        public Input<string>? PublicHost { get; set; }
+
         [Input("readReplicas")]
         private InputList<Inputs.DatabaseReadReplicaArgs>? _readReplicas;
 
@@ -418,6 +433,9 @@ namespace ediri.Vultr
             set => _trustedIps = value;
         }
 
+        /// <summary>
+        /// The ID of the VPC Network to attach to the Managed Database.
+        /// </summary>
         [Input("vpcId")]
         public Input<string>? VpcId { get; set; }
 
@@ -561,6 +579,12 @@ namespace ediri.Vultr
         [Input("port")]
         public Input<string>? Port { get; set; }
 
+        /// <summary>
+        /// The public hostname assigned to the managed database (VPC-attached only).
+        /// </summary>
+        [Input("publicHost")]
+        public Input<string>? PublicHost { get; set; }
+
         [Input("readReplicas")]
         private InputList<Inputs.DatabaseReadReplicaGetArgs>? _readReplicas;
 
@@ -615,6 +639,9 @@ namespace ediri.Vultr
         [Input("user")]
         public Input<string>? User { get; set; }
 
+        /// <summary>
+        /// The ID of the VPC Network to attach to the Managed Database.
+        /// </summary>
         [Input("vpcId")]
         public Input<string>? VpcId { get; set; }
 

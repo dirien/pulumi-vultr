@@ -70,7 +70,8 @@ type DatabaseReadReplica struct {
 	// A list of allowed IP addresses for the managed database.
 	TrustedIps []string `pulumi:"trustedIps"`
 	// The primary admin user for the managed database.
-	User  *string `pulumi:"user"`
+	User *string `pulumi:"user"`
+	// The ID of the VPC Network to attach to the Managed Database.
 	VpcId *string `pulumi:"vpcId"`
 }
 
@@ -141,7 +142,8 @@ type DatabaseReadReplicaArgs struct {
 	// A list of allowed IP addresses for the managed database.
 	TrustedIps pulumi.StringArrayInput `pulumi:"trustedIps"`
 	// The primary admin user for the managed database.
-	User  pulumi.StringPtrInput `pulumi:"user"`
+	User pulumi.StringPtrInput `pulumi:"user"`
+	// The ID of the VPC Network to attach to the Managed Database.
 	VpcId pulumi.StringPtrInput `pulumi:"vpcId"`
 }
 
@@ -354,6 +356,7 @@ func (o DatabaseReadReplicaOutput) User() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v DatabaseReadReplica) *string { return v.User }).(pulumi.StringPtrOutput)
 }
 
+// The ID of the VPC Network to attach to the Managed Database.
 func (o DatabaseReadReplicaOutput) VpcId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v DatabaseReadReplica) *string { return v.VpcId }).(pulumi.StringPtrOutput)
 }
@@ -2731,7 +2734,8 @@ type GetDatabaseReadReplica struct {
 	// A list of allowed IP addresses for the managed database.
 	TrustedIps []string `pulumi:"trustedIps"`
 	// The primary admin user for the managed database.
-	User  string `pulumi:"user"`
+	User string `pulumi:"user"`
+	// The ID of the VPC Network attached to the Managed Database.
 	VpcId string `pulumi:"vpcId"`
 }
 
@@ -2801,7 +2805,8 @@ type GetDatabaseReadReplicaArgs struct {
 	// A list of allowed IP addresses for the managed database.
 	TrustedIps pulumi.StringArrayInput `pulumi:"trustedIps"`
 	// The primary admin user for the managed database.
-	User  pulumi.StringInput `pulumi:"user"`
+	User pulumi.StringInput `pulumi:"user"`
+	// The ID of the VPC Network attached to the Managed Database.
 	VpcId pulumi.StringInput `pulumi:"vpcId"`
 }
 
@@ -3013,6 +3018,7 @@ func (o GetDatabaseReadReplicaOutput) User() pulumi.StringOutput {
 	return o.ApplyT(func(v GetDatabaseReadReplica) string { return v.User }).(pulumi.StringOutput)
 }
 
+// The ID of the VPC Network attached to the Managed Database.
 func (o GetDatabaseReadReplicaOutput) VpcId() pulumi.StringOutput {
 	return o.ApplyT(func(v GetDatabaseReadReplica) string { return v.VpcId }).(pulumi.StringOutput)
 }

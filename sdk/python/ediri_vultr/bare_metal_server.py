@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 
 __all__ = ['BareMetalServerArgs', 'BareMetalServer']
@@ -49,99 +49,36 @@ class BareMetalServerArgs:
         :param pulumi.Input[str] user_data: Generic data store, which some provisioning tools and cloud operating systems use as a configuration file. It is generally consumed only once after an instance has been launched, but individual needs may vary.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] vpc2_ids: A list of VPC 2.0 IDs to be attached to the server.
         """
-        BareMetalServerArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            plan=plan,
-            region=region,
-            activation_email=activation_email,
-            app_id=app_id,
-            enable_ipv6=enable_ipv6,
-            hostname=hostname,
-            image_id=image_id,
-            label=label,
-            os_id=os_id,
-            reserved_ipv4=reserved_ipv4,
-            script_id=script_id,
-            snapshot_id=snapshot_id,
-            ssh_key_ids=ssh_key_ids,
-            tags=tags,
-            user_data=user_data,
-            vpc2_ids=vpc2_ids,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             plan: pulumi.Input[str],
-             region: pulumi.Input[str],
-             activation_email: Optional[pulumi.Input[bool]] = None,
-             app_id: Optional[pulumi.Input[int]] = None,
-             enable_ipv6: Optional[pulumi.Input[bool]] = None,
-             hostname: Optional[pulumi.Input[str]] = None,
-             image_id: Optional[pulumi.Input[str]] = None,
-             label: Optional[pulumi.Input[str]] = None,
-             os_id: Optional[pulumi.Input[int]] = None,
-             reserved_ipv4: Optional[pulumi.Input[str]] = None,
-             script_id: Optional[pulumi.Input[str]] = None,
-             snapshot_id: Optional[pulumi.Input[str]] = None,
-             ssh_key_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             user_data: Optional[pulumi.Input[str]] = None,
-             vpc2_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'activationEmail' in kwargs:
-            activation_email = kwargs['activationEmail']
-        if 'appId' in kwargs:
-            app_id = kwargs['appId']
-        if 'enableIpv6' in kwargs:
-            enable_ipv6 = kwargs['enableIpv6']
-        if 'imageId' in kwargs:
-            image_id = kwargs['imageId']
-        if 'osId' in kwargs:
-            os_id = kwargs['osId']
-        if 'reservedIpv4' in kwargs:
-            reserved_ipv4 = kwargs['reservedIpv4']
-        if 'scriptId' in kwargs:
-            script_id = kwargs['scriptId']
-        if 'snapshotId' in kwargs:
-            snapshot_id = kwargs['snapshotId']
-        if 'sshKeyIds' in kwargs:
-            ssh_key_ids = kwargs['sshKeyIds']
-        if 'userData' in kwargs:
-            user_data = kwargs['userData']
-        if 'vpc2Ids' in kwargs:
-            vpc2_ids = kwargs['vpc2Ids']
-
-        _setter("plan", plan)
-        _setter("region", region)
+        pulumi.set(__self__, "plan", plan)
+        pulumi.set(__self__, "region", region)
         if activation_email is not None:
-            _setter("activation_email", activation_email)
+            pulumi.set(__self__, "activation_email", activation_email)
         if app_id is not None:
-            _setter("app_id", app_id)
+            pulumi.set(__self__, "app_id", app_id)
         if enable_ipv6 is not None:
-            _setter("enable_ipv6", enable_ipv6)
+            pulumi.set(__self__, "enable_ipv6", enable_ipv6)
         if hostname is not None:
-            _setter("hostname", hostname)
+            pulumi.set(__self__, "hostname", hostname)
         if image_id is not None:
-            _setter("image_id", image_id)
+            pulumi.set(__self__, "image_id", image_id)
         if label is not None:
-            _setter("label", label)
+            pulumi.set(__self__, "label", label)
         if os_id is not None:
-            _setter("os_id", os_id)
+            pulumi.set(__self__, "os_id", os_id)
         if reserved_ipv4 is not None:
-            _setter("reserved_ipv4", reserved_ipv4)
+            pulumi.set(__self__, "reserved_ipv4", reserved_ipv4)
         if script_id is not None:
-            _setter("script_id", script_id)
+            pulumi.set(__self__, "script_id", script_id)
         if snapshot_id is not None:
-            _setter("snapshot_id", snapshot_id)
+            pulumi.set(__self__, "snapshot_id", snapshot_id)
         if ssh_key_ids is not None:
-            _setter("ssh_key_ids", ssh_key_ids)
+            pulumi.set(__self__, "ssh_key_ids", ssh_key_ids)
         if tags is not None:
-            _setter("tags", tags)
+            pulumi.set(__self__, "tags", tags)
         if user_data is not None:
-            _setter("user_data", user_data)
+            pulumi.set(__self__, "user_data", user_data)
         if vpc2_ids is not None:
-            _setter("vpc2_ids", vpc2_ids)
+            pulumi.set(__self__, "vpc2_ids", vpc2_ids)
 
     @property
     @pulumi.getter
@@ -402,177 +339,66 @@ class _BareMetalServerState:
         :param pulumi.Input[int] v6_network_size: The IPv6 network size in bits.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] vpc2_ids: A list of VPC 2.0 IDs to be attached to the server.
         """
-        _BareMetalServerState._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            activation_email=activation_email,
-            app_id=app_id,
-            cpu_count=cpu_count,
-            date_created=date_created,
-            default_password=default_password,
-            disk=disk,
-            enable_ipv6=enable_ipv6,
-            gateway_v4=gateway_v4,
-            hostname=hostname,
-            image_id=image_id,
-            label=label,
-            mac_address=mac_address,
-            main_ip=main_ip,
-            netmask_v4=netmask_v4,
-            os=os,
-            os_id=os_id,
-            plan=plan,
-            ram=ram,
-            region=region,
-            reserved_ipv4=reserved_ipv4,
-            script_id=script_id,
-            snapshot_id=snapshot_id,
-            ssh_key_ids=ssh_key_ids,
-            status=status,
-            tags=tags,
-            user_data=user_data,
-            v6_main_ip=v6_main_ip,
-            v6_network=v6_network,
-            v6_network_size=v6_network_size,
-            vpc2_ids=vpc2_ids,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             activation_email: Optional[pulumi.Input[bool]] = None,
-             app_id: Optional[pulumi.Input[int]] = None,
-             cpu_count: Optional[pulumi.Input[int]] = None,
-             date_created: Optional[pulumi.Input[str]] = None,
-             default_password: Optional[pulumi.Input[str]] = None,
-             disk: Optional[pulumi.Input[str]] = None,
-             enable_ipv6: Optional[pulumi.Input[bool]] = None,
-             gateway_v4: Optional[pulumi.Input[str]] = None,
-             hostname: Optional[pulumi.Input[str]] = None,
-             image_id: Optional[pulumi.Input[str]] = None,
-             label: Optional[pulumi.Input[str]] = None,
-             mac_address: Optional[pulumi.Input[int]] = None,
-             main_ip: Optional[pulumi.Input[str]] = None,
-             netmask_v4: Optional[pulumi.Input[str]] = None,
-             os: Optional[pulumi.Input[str]] = None,
-             os_id: Optional[pulumi.Input[int]] = None,
-             plan: Optional[pulumi.Input[str]] = None,
-             ram: Optional[pulumi.Input[str]] = None,
-             region: Optional[pulumi.Input[str]] = None,
-             reserved_ipv4: Optional[pulumi.Input[str]] = None,
-             script_id: Optional[pulumi.Input[str]] = None,
-             snapshot_id: Optional[pulumi.Input[str]] = None,
-             ssh_key_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             status: Optional[pulumi.Input[str]] = None,
-             tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             user_data: Optional[pulumi.Input[str]] = None,
-             v6_main_ip: Optional[pulumi.Input[str]] = None,
-             v6_network: Optional[pulumi.Input[str]] = None,
-             v6_network_size: Optional[pulumi.Input[int]] = None,
-             vpc2_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'activationEmail' in kwargs:
-            activation_email = kwargs['activationEmail']
-        if 'appId' in kwargs:
-            app_id = kwargs['appId']
-        if 'cpuCount' in kwargs:
-            cpu_count = kwargs['cpuCount']
-        if 'dateCreated' in kwargs:
-            date_created = kwargs['dateCreated']
-        if 'defaultPassword' in kwargs:
-            default_password = kwargs['defaultPassword']
-        if 'enableIpv6' in kwargs:
-            enable_ipv6 = kwargs['enableIpv6']
-        if 'gatewayV4' in kwargs:
-            gateway_v4 = kwargs['gatewayV4']
-        if 'imageId' in kwargs:
-            image_id = kwargs['imageId']
-        if 'macAddress' in kwargs:
-            mac_address = kwargs['macAddress']
-        if 'mainIp' in kwargs:
-            main_ip = kwargs['mainIp']
-        if 'netmaskV4' in kwargs:
-            netmask_v4 = kwargs['netmaskV4']
-        if 'osId' in kwargs:
-            os_id = kwargs['osId']
-        if 'reservedIpv4' in kwargs:
-            reserved_ipv4 = kwargs['reservedIpv4']
-        if 'scriptId' in kwargs:
-            script_id = kwargs['scriptId']
-        if 'snapshotId' in kwargs:
-            snapshot_id = kwargs['snapshotId']
-        if 'sshKeyIds' in kwargs:
-            ssh_key_ids = kwargs['sshKeyIds']
-        if 'userData' in kwargs:
-            user_data = kwargs['userData']
-        if 'v6MainIp' in kwargs:
-            v6_main_ip = kwargs['v6MainIp']
-        if 'v6Network' in kwargs:
-            v6_network = kwargs['v6Network']
-        if 'v6NetworkSize' in kwargs:
-            v6_network_size = kwargs['v6NetworkSize']
-        if 'vpc2Ids' in kwargs:
-            vpc2_ids = kwargs['vpc2Ids']
-
         if activation_email is not None:
-            _setter("activation_email", activation_email)
+            pulumi.set(__self__, "activation_email", activation_email)
         if app_id is not None:
-            _setter("app_id", app_id)
+            pulumi.set(__self__, "app_id", app_id)
         if cpu_count is not None:
-            _setter("cpu_count", cpu_count)
+            pulumi.set(__self__, "cpu_count", cpu_count)
         if date_created is not None:
-            _setter("date_created", date_created)
+            pulumi.set(__self__, "date_created", date_created)
         if default_password is not None:
-            _setter("default_password", default_password)
+            pulumi.set(__self__, "default_password", default_password)
         if disk is not None:
-            _setter("disk", disk)
+            pulumi.set(__self__, "disk", disk)
         if enable_ipv6 is not None:
-            _setter("enable_ipv6", enable_ipv6)
+            pulumi.set(__self__, "enable_ipv6", enable_ipv6)
         if gateway_v4 is not None:
-            _setter("gateway_v4", gateway_v4)
+            pulumi.set(__self__, "gateway_v4", gateway_v4)
         if hostname is not None:
-            _setter("hostname", hostname)
+            pulumi.set(__self__, "hostname", hostname)
         if image_id is not None:
-            _setter("image_id", image_id)
+            pulumi.set(__self__, "image_id", image_id)
         if label is not None:
-            _setter("label", label)
+            pulumi.set(__self__, "label", label)
         if mac_address is not None:
-            _setter("mac_address", mac_address)
+            pulumi.set(__self__, "mac_address", mac_address)
         if main_ip is not None:
-            _setter("main_ip", main_ip)
+            pulumi.set(__self__, "main_ip", main_ip)
         if netmask_v4 is not None:
-            _setter("netmask_v4", netmask_v4)
+            pulumi.set(__self__, "netmask_v4", netmask_v4)
         if os is not None:
-            _setter("os", os)
+            pulumi.set(__self__, "os", os)
         if os_id is not None:
-            _setter("os_id", os_id)
+            pulumi.set(__self__, "os_id", os_id)
         if plan is not None:
-            _setter("plan", plan)
+            pulumi.set(__self__, "plan", plan)
         if ram is not None:
-            _setter("ram", ram)
+            pulumi.set(__self__, "ram", ram)
         if region is not None:
-            _setter("region", region)
+            pulumi.set(__self__, "region", region)
         if reserved_ipv4 is not None:
-            _setter("reserved_ipv4", reserved_ipv4)
+            pulumi.set(__self__, "reserved_ipv4", reserved_ipv4)
         if script_id is not None:
-            _setter("script_id", script_id)
+            pulumi.set(__self__, "script_id", script_id)
         if snapshot_id is not None:
-            _setter("snapshot_id", snapshot_id)
+            pulumi.set(__self__, "snapshot_id", snapshot_id)
         if ssh_key_ids is not None:
-            _setter("ssh_key_ids", ssh_key_ids)
+            pulumi.set(__self__, "ssh_key_ids", ssh_key_ids)
         if status is not None:
-            _setter("status", status)
+            pulumi.set(__self__, "status", status)
         if tags is not None:
-            _setter("tags", tags)
+            pulumi.set(__self__, "tags", tags)
         if user_data is not None:
-            _setter("user_data", user_data)
+            pulumi.set(__self__, "user_data", user_data)
         if v6_main_ip is not None:
-            _setter("v6_main_ip", v6_main_ip)
+            pulumi.set(__self__, "v6_main_ip", v6_main_ip)
         if v6_network is not None:
-            _setter("v6_network", v6_network)
+            pulumi.set(__self__, "v6_network", v6_network)
         if v6_network_size is not None:
-            _setter("v6_network_size", v6_network_size)
+            pulumi.set(__self__, "v6_network_size", v6_network_size)
         if vpc2_ids is not None:
-            _setter("vpc2_ids", vpc2_ids)
+            pulumi.set(__self__, "vpc2_ids", vpc2_ids)
 
     @property
     @pulumi.getter(name="activationEmail")
@@ -1078,10 +904,6 @@ class BareMetalServer(pulumi.CustomResource):
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
-            kwargs = kwargs or {}
-            def _setter(key, value):
-                kwargs[key] = value
-            BareMetalServerArgs._configure(_setter, **kwargs)
             __self__._internal_init(resource_name, *args, **kwargs)
 
     def _internal_init(__self__,

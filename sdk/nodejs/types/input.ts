@@ -118,6 +118,9 @@ export interface DatabaseReadReplica {
      * The primary admin user for the managed database.
      */
     user?: pulumi.Input<string>;
+    /**
+     * The ID of the VPC Network to attach to the Managed Database.
+     */
     vpcId?: pulumi.Input<string>;
 }
 

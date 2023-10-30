@@ -30,8 +30,8 @@ namespace ediri.Vultr
     ///     var myInstance = new Vultr.Instance("myInstance", new()
     ///     {
     ///         EnableIpv6 = true,
-    ///         OsId = 167,
-    ///         Plan = "vc2-1c-1gb",
+    ///         OsId = 477,
+    ///         Plan = "vc2-1c-2gb",
     ///         Region = "ewr",
     ///     });
     /// 

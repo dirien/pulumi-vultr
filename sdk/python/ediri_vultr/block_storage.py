@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 
 __all__ = ['BlockStorageArgs', 'BlockStorage']
@@ -29,43 +29,16 @@ class BlockStorageArgs:
         :param pulumi.Input[str] label: Label that is given to your block storage.
         :param pulumi.Input[bool] live: Boolean value that will allow attachment of the volume to an instance without a restart. Default is false.
         """
-        BlockStorageArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            region=region,
-            size_gb=size_gb,
-            attached_to_instance=attached_to_instance,
-            block_type=block_type,
-            label=label,
-            live=live,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             region: pulumi.Input[str],
-             size_gb: pulumi.Input[int],
-             attached_to_instance: Optional[pulumi.Input[str]] = None,
-             block_type: Optional[pulumi.Input[str]] = None,
-             label: Optional[pulumi.Input[str]] = None,
-             live: Optional[pulumi.Input[bool]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'sizeGb' in kwargs:
-            size_gb = kwargs['sizeGb']
-        if 'attachedToInstance' in kwargs:
-            attached_to_instance = kwargs['attachedToInstance']
-        if 'blockType' in kwargs:
-            block_type = kwargs['blockType']
-
-        _setter("region", region)
-        _setter("size_gb", size_gb)
+        pulumi.set(__self__, "region", region)
+        pulumi.set(__self__, "size_gb", size_gb)
         if attached_to_instance is not None:
-            _setter("attached_to_instance", attached_to_instance)
+            pulumi.set(__self__, "attached_to_instance", attached_to_instance)
         if block_type is not None:
-            _setter("block_type", block_type)
+            pulumi.set(__self__, "block_type", block_type)
         if label is not None:
-            _setter("label", label)
+            pulumi.set(__self__, "label", label)
         if live is not None:
-            _setter("live", live)
+            pulumi.set(__self__, "live", live)
 
     @property
     @pulumi.getter
@@ -166,65 +139,26 @@ class _BlockStorageState:
         :param pulumi.Input[int] size_gb: The size of the given block storage.
         :param pulumi.Input[str] status: Current status of your block storage.
         """
-        _BlockStorageState._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            attached_to_instance=attached_to_instance,
-            block_type=block_type,
-            cost=cost,
-            date_created=date_created,
-            label=label,
-            live=live,
-            mount_id=mount_id,
-            region=region,
-            size_gb=size_gb,
-            status=status,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             attached_to_instance: Optional[pulumi.Input[str]] = None,
-             block_type: Optional[pulumi.Input[str]] = None,
-             cost: Optional[pulumi.Input[float]] = None,
-             date_created: Optional[pulumi.Input[str]] = None,
-             label: Optional[pulumi.Input[str]] = None,
-             live: Optional[pulumi.Input[bool]] = None,
-             mount_id: Optional[pulumi.Input[str]] = None,
-             region: Optional[pulumi.Input[str]] = None,
-             size_gb: Optional[pulumi.Input[int]] = None,
-             status: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'attachedToInstance' in kwargs:
-            attached_to_instance = kwargs['attachedToInstance']
-        if 'blockType' in kwargs:
-            block_type = kwargs['blockType']
-        if 'dateCreated' in kwargs:
-            date_created = kwargs['dateCreated']
-        if 'mountId' in kwargs:
-            mount_id = kwargs['mountId']
-        if 'sizeGb' in kwargs:
-            size_gb = kwargs['sizeGb']
-
         if attached_to_instance is not None:
-            _setter("attached_to_instance", attached_to_instance)
+            pulumi.set(__self__, "attached_to_instance", attached_to_instance)
         if block_type is not None:
-            _setter("block_type", block_type)
+            pulumi.set(__self__, "block_type", block_type)
         if cost is not None:
-            _setter("cost", cost)
+            pulumi.set(__self__, "cost", cost)
         if date_created is not None:
-            _setter("date_created", date_created)
+            pulumi.set(__self__, "date_created", date_created)
         if label is not None:
-            _setter("label", label)
+            pulumi.set(__self__, "label", label)
         if live is not None:
-            _setter("live", live)
+            pulumi.set(__self__, "live", live)
         if mount_id is not None:
-            _setter("mount_id", mount_id)
+            pulumi.set(__self__, "mount_id", mount_id)
         if region is not None:
-            _setter("region", region)
+            pulumi.set(__self__, "region", region)
         if size_gb is not None:
-            _setter("size_gb", size_gb)
+            pulumi.set(__self__, "size_gb", size_gb)
         if status is not None:
-            _setter("status", status)
+            pulumi.set(__self__, "status", status)
 
     @property
     @pulumi.getter(name="attachedToInstance")
@@ -434,10 +368,6 @@ class BlockStorage(pulumi.CustomResource):
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
-            kwargs = kwargs or {}
-            def _setter(key, value):
-                kwargs[key] = value
-            BlockStorageArgs._configure(_setter, **kwargs)
             __self__._internal_init(resource_name, *args, **kwargs)
 
     def _internal_init(__self__,

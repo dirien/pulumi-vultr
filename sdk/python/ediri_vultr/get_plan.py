@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -187,7 +187,7 @@ def get_plan(filters: Optional[Sequence[pulumi.InputType['GetPlanFilterArgs']]] 
 
     my_plan = vultr.get_plan(filters=[vultr.GetPlanFilterArgs(
         name="id",
-        values=["vc2-1c-1gb"],
+        values=["vc2-1c-2gb"],
     )])
     ```
 
@@ -230,7 +230,7 @@ def get_plan_output(filters: Optional[pulumi.Input[Optional[Sequence[pulumi.Inpu
 
     my_plan = vultr.get_plan(filters=[vultr.GetPlanFilterArgs(
         name="id",
-        values=["vc2-1c-1gb"],
+        values=["vc2-1c-2gb"],
     )])
     ```
 

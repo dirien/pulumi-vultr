@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 
 __all__ = ['DnsRecordArgs', 'DnsRecord']
@@ -29,36 +29,15 @@ class DnsRecordArgs:
         :param pulumi.Input[int] priority: Priority of this record (only required for MX and SRV).
         :param pulumi.Input[int] ttl: The time to live of this record.
         """
-        DnsRecordArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            data=data,
-            domain=domain,
-            type=type,
-            name=name,
-            priority=priority,
-            ttl=ttl,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             data: pulumi.Input[str],
-             domain: pulumi.Input[str],
-             type: pulumi.Input[str],
-             name: Optional[pulumi.Input[str]] = None,
-             priority: Optional[pulumi.Input[int]] = None,
-             ttl: Optional[pulumi.Input[int]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("data", data)
-        _setter("domain", domain)
-        _setter("type", type)
+        pulumi.set(__self__, "data", data)
+        pulumi.set(__self__, "domain", domain)
+        pulumi.set(__self__, "type", type)
         if name is not None:
-            _setter("name", name)
+            pulumi.set(__self__, "name", name)
         if priority is not None:
-            _setter("priority", priority)
+            pulumi.set(__self__, "priority", priority)
         if ttl is not None:
-            _setter("ttl", ttl)
+            pulumi.set(__self__, "ttl", ttl)
 
     @property
     @pulumi.getter
@@ -151,39 +130,18 @@ class _DnsRecordState:
         :param pulumi.Input[int] ttl: The time to live of this record.
         :param pulumi.Input[str] type: Type of record.
         """
-        _DnsRecordState._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            data=data,
-            domain=domain,
-            name=name,
-            priority=priority,
-            ttl=ttl,
-            type=type,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             data: Optional[pulumi.Input[str]] = None,
-             domain: Optional[pulumi.Input[str]] = None,
-             name: Optional[pulumi.Input[str]] = None,
-             priority: Optional[pulumi.Input[int]] = None,
-             ttl: Optional[pulumi.Input[int]] = None,
-             type: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
         if data is not None:
-            _setter("data", data)
+            pulumi.set(__self__, "data", data)
         if domain is not None:
-            _setter("domain", domain)
+            pulumi.set(__self__, "domain", domain)
         if name is not None:
-            _setter("name", name)
+            pulumi.set(__self__, "name", name)
         if priority is not None:
-            _setter("priority", priority)
+            pulumi.set(__self__, "priority", priority)
         if ttl is not None:
-            _setter("ttl", ttl)
+            pulumi.set(__self__, "ttl", ttl)
         if type is not None:
-            _setter("type", type)
+            pulumi.set(__self__, "type", type)
 
     @property
     @pulumi.getter
@@ -351,10 +309,6 @@ class DnsRecord(pulumi.CustomResource):
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
-            kwargs = kwargs or {}
-            def _setter(key, value):
-                kwargs[key] = value
-            DnsRecordArgs._configure(_setter, **kwargs)
             __self__._internal_init(resource_name, *args, **kwargs)
 
     def _internal_init(__self__,

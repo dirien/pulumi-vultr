@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 
 __all__ = ['ObjectStorageArgs', 'ObjectStorage']
@@ -21,24 +21,9 @@ class ObjectStorageArgs:
         :param pulumi.Input[int] cluster_id: The region ID that you want the network to be created in.
         :param pulumi.Input[str] label: The description you want to give your network.
         """
-        ObjectStorageArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            cluster_id=cluster_id,
-            label=label,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             cluster_id: pulumi.Input[int],
-             label: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'clusterId' in kwargs:
-            cluster_id = kwargs['clusterId']
-
-        _setter("cluster_id", cluster_id)
+        pulumi.set(__self__, "cluster_id", cluster_id)
         if label is not None:
-            _setter("label", label)
+            pulumi.set(__self__, "label", label)
 
     @property
     @pulumi.getter(name="clusterId")
@@ -89,61 +74,24 @@ class _ObjectStorageState:
         :param pulumi.Input[str] s3_secret_key: Your secret key.
         :param pulumi.Input[str] status: Current status of this object storage subscription.
         """
-        _ObjectStorageState._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            cluster_id=cluster_id,
-            date_created=date_created,
-            label=label,
-            location=location,
-            region=region,
-            s3_access_key=s3_access_key,
-            s3_hostname=s3_hostname,
-            s3_secret_key=s3_secret_key,
-            status=status,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             cluster_id: Optional[pulumi.Input[int]] = None,
-             date_created: Optional[pulumi.Input[str]] = None,
-             label: Optional[pulumi.Input[str]] = None,
-             location: Optional[pulumi.Input[str]] = None,
-             region: Optional[pulumi.Input[str]] = None,
-             s3_access_key: Optional[pulumi.Input[str]] = None,
-             s3_hostname: Optional[pulumi.Input[str]] = None,
-             s3_secret_key: Optional[pulumi.Input[str]] = None,
-             status: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'clusterId' in kwargs:
-            cluster_id = kwargs['clusterId']
-        if 'dateCreated' in kwargs:
-            date_created = kwargs['dateCreated']
-        if 's3AccessKey' in kwargs:
-            s3_access_key = kwargs['s3AccessKey']
-        if 's3Hostname' in kwargs:
-            s3_hostname = kwargs['s3Hostname']
-        if 's3SecretKey' in kwargs:
-            s3_secret_key = kwargs['s3SecretKey']
-
         if cluster_id is not None:
-            _setter("cluster_id", cluster_id)
+            pulumi.set(__self__, "cluster_id", cluster_id)
         if date_created is not None:
-            _setter("date_created", date_created)
+            pulumi.set(__self__, "date_created", date_created)
         if label is not None:
-            _setter("label", label)
+            pulumi.set(__self__, "label", label)
         if location is not None:
-            _setter("location", location)
+            pulumi.set(__self__, "location", location)
         if region is not None:
-            _setter("region", region)
+            pulumi.set(__self__, "region", region)
         if s3_access_key is not None:
-            _setter("s3_access_key", s3_access_key)
+            pulumi.set(__self__, "s3_access_key", s3_access_key)
         if s3_hostname is not None:
-            _setter("s3_hostname", s3_hostname)
+            pulumi.set(__self__, "s3_hostname", s3_hostname)
         if s3_secret_key is not None:
-            _setter("s3_secret_key", s3_secret_key)
+            pulumi.set(__self__, "s3_secret_key", s3_secret_key)
         if status is not None:
-            _setter("status", status)
+            pulumi.set(__self__, "status", status)
 
     @property
     @pulumi.getter(name="clusterId")
@@ -331,10 +279,6 @@ class ObjectStorage(pulumi.CustomResource):
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
-            kwargs = kwargs or {}
-            def _setter(key, value):
-                kwargs[key] = value
-            ObjectStorageArgs._configure(_setter, **kwargs)
             __self__._internal_init(resource_name, *args, **kwargs)
 
     def _internal_init(__self__,

@@ -35,7 +35,7 @@ import (
 //					{
 //						Name: "id",
 //						Values: []string{
-//							"vc2-1c-1gb",
+//							"vc2-1c-2gb",
 //						},
 //					},
 //				},

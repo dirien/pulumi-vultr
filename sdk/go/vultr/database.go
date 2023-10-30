@@ -94,7 +94,7 @@ type Database struct {
 	pulumi.CustomResourceState
 
 	// The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
-	ClusterTimeZone pulumi.StringPtrOutput `pulumi:"clusterTimeZone"`
+	ClusterTimeZone pulumi.StringOutput `pulumi:"clusterTimeZone"`
 	// The database engine of the new managed database.
 	DatabaseEngine pulumi.StringOutput `pulumi:"databaseEngine"`
 	// The database engine version of the new managed database.
@@ -110,9 +110,9 @@ type Database struct {
 	// The date of the latest backup available on the managed database.
 	LatestBackup pulumi.StringOutput `pulumi:"latestBackup"`
 	// The preferred maintenance day of week for the managed database.
-	MaintenanceDow pulumi.StringPtrOutput `pulumi:"maintenanceDow"`
+	MaintenanceDow pulumi.StringOutput `pulumi:"maintenanceDow"`
 	// The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).
-	MaintenanceTime pulumi.StringPtrOutput `pulumi:"maintenanceTime"`
+	MaintenanceTime pulumi.StringOutput `pulumi:"maintenanceTime"`
 	// The configuration value for the long query time (in seconds) on the managed database (MySQL engine types only).
 	MysqlLongQueryTime pulumi.IntPtrOutput `pulumi:"mysqlLongQueryTime"`
 	// The configuration value for whether primary keys are required on the managed database (MySQL engine types only).
@@ -135,6 +135,8 @@ type Database struct {
 	PlanVcpus pulumi.IntOutput `pulumi:"planVcpus"`
 	// The connection port for the managed database.
 	Port pulumi.StringOutput `pulumi:"port"`
+	// The public hostname assigned to the managed database (VPC-attached only).
+	PublicHost pulumi.StringOutput `pulumi:"publicHost"`
 	// A list of read replicas attached to the managed database.
 	ReadReplicas DatabaseReadReplicaArrayOutput `pulumi:"readReplicas"`
 	// The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
@@ -148,7 +150,8 @@ type Database struct {
 	// A list of allowed IP addresses for the managed database.
 	TrustedIps pulumi.StringArrayOutput `pulumi:"trustedIps"`
 	// The primary admin user for the managed database.
-	User  pulumi.StringOutput    `pulumi:"user"`
+	User pulumi.StringOutput `pulumi:"user"`
+	// The ID of the VPC Network to attach to the Managed Database.
 	VpcId pulumi.StringPtrOutput `pulumi:"vpcId"`
 }
 
@@ -239,6 +242,8 @@ type databaseState struct {
 	PlanVcpus *int `pulumi:"planVcpus"`
 	// The connection port for the managed database.
 	Port *string `pulumi:"port"`
+	// The public hostname assigned to the managed database (VPC-attached only).
+	PublicHost *string `pulumi:"publicHost"`
 	// A list of read replicas attached to the managed database.
 	ReadReplicas []DatabaseReadReplica `pulumi:"readReplicas"`
 	// The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
@@ -252,7 +257,8 @@ type databaseState struct {
 	// A list of allowed IP addresses for the managed database.
 	TrustedIps []string `pulumi:"trustedIps"`
 	// The primary admin user for the managed database.
-	User  *string `pulumi:"user"`
+	User *string `pulumi:"user"`
+	// The ID of the VPC Network to attach to the Managed Database.
 	VpcId *string `pulumi:"vpcId"`
 }
 
@@ -299,6 +305,8 @@ type DatabaseState struct {
 	PlanVcpus pulumi.IntPtrInput
 	// The connection port for the managed database.
 	Port pulumi.StringPtrInput
+	// The public hostname assigned to the managed database (VPC-attached only).
+	PublicHost pulumi.StringPtrInput
 	// A list of read replicas attached to the managed database.
 	ReadReplicas DatabaseReadReplicaArrayInput
 	// The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
@@ -312,7 +320,8 @@ type DatabaseState struct {
 	// A list of allowed IP addresses for the managed database.
 	TrustedIps pulumi.StringArrayInput
 	// The primary admin user for the managed database.
-	User  pulumi.StringPtrInput
+	User pulumi.StringPtrInput
+	// The ID of the VPC Network to attach to the Managed Database.
 	VpcId pulumi.StringPtrInput
 }
 
@@ -347,6 +356,8 @@ type databaseArgs struct {
 	Plan string `pulumi:"plan"`
 	// The description of the disk(s) on the managed database.
 	PlanDisk *int `pulumi:"planDisk"`
+	// The public hostname assigned to the managed database (VPC-attached only).
+	PublicHost *string `pulumi:"publicHost"`
 	// A list of read replicas attached to the managed database.
 	ReadReplicas []DatabaseReadReplica `pulumi:"readReplicas"`
 	// The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
@@ -357,7 +368,8 @@ type databaseArgs struct {
 	Tag *string `pulumi:"tag"`
 	// A list of allowed IP addresses for the managed database.
 	TrustedIps []string `pulumi:"trustedIps"`
-	VpcId      *string  `pulumi:"vpcId"`
+	// The ID of the VPC Network to attach to the Managed Database.
+	VpcId *string `pulumi:"vpcId"`
 }
 
 // The set of arguments for constructing a Database resource.
@@ -388,6 +400,8 @@ type DatabaseArgs struct {
 	Plan pulumi.StringInput
 	// The description of the disk(s) on the managed database.
 	PlanDisk pulumi.IntPtrInput
+	// The public hostname assigned to the managed database (VPC-attached only).
+	PublicHost pulumi.StringPtrInput
 	// A list of read replicas attached to the managed database.
 	ReadReplicas DatabaseReadReplicaArrayInput
 	// The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
@@ -398,7 +412,8 @@ type DatabaseArgs struct {
 	Tag pulumi.StringPtrInput
 	// A list of allowed IP addresses for the managed database.
 	TrustedIps pulumi.StringArrayInput
-	VpcId      pulumi.StringPtrInput
+	// The ID of the VPC Network to attach to the Managed Database.
+	VpcId pulumi.StringPtrInput
 }
 
 func (DatabaseArgs) ElementType() reflect.Type {
@@ -513,8 +528,8 @@ func (o DatabaseOutput) ToOutput(ctx context.Context) pulumix.Output[*Database] 
 }
 
 // The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
-func (o DatabaseOutput) ClusterTimeZone() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Database) pulumi.StringPtrOutput { return v.ClusterTimeZone }).(pulumi.StringPtrOutput)
+func (o DatabaseOutput) ClusterTimeZone() pulumi.StringOutput {
+	return o.ApplyT(func(v *Database) pulumi.StringOutput { return v.ClusterTimeZone }).(pulumi.StringOutput)
 }
 
 // The database engine of the new managed database.
@@ -553,13 +568,13 @@ func (o DatabaseOutput) LatestBackup() pulumi.StringOutput {
 }
 
 // The preferred maintenance day of week for the managed database.
-func (o DatabaseOutput) MaintenanceDow() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Database) pulumi.StringPtrOutput { return v.MaintenanceDow }).(pulumi.StringPtrOutput)
+func (o DatabaseOutput) MaintenanceDow() pulumi.StringOutput {
+	return o.ApplyT(func(v *Database) pulumi.StringOutput { return v.MaintenanceDow }).(pulumi.StringOutput)
 }
 
 // The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).
-func (o DatabaseOutput) MaintenanceTime() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Database) pulumi.StringPtrOutput { return v.MaintenanceTime }).(pulumi.StringPtrOutput)
+func (o DatabaseOutput) MaintenanceTime() pulumi.StringOutput {
+	return o.ApplyT(func(v *Database) pulumi.StringOutput { return v.MaintenanceTime }).(pulumi.StringOutput)
 }
 
 // The configuration value for the long query time (in seconds) on the managed database (MySQL engine types only).
@@ -617,6 +632,11 @@ func (o DatabaseOutput) Port() pulumi.StringOutput {
 	return o.ApplyT(func(v *Database) pulumi.StringOutput { return v.Port }).(pulumi.StringOutput)
 }
 
+// The public hostname assigned to the managed database (VPC-attached only).
+func (o DatabaseOutput) PublicHost() pulumi.StringOutput {
+	return o.ApplyT(func(v *Database) pulumi.StringOutput { return v.PublicHost }).(pulumi.StringOutput)
+}
+
 // A list of read replicas attached to the managed database.
 func (o DatabaseOutput) ReadReplicas() DatabaseReadReplicaArrayOutput {
 	return o.ApplyT(func(v *Database) DatabaseReadReplicaArrayOutput { return v.ReadReplicas }).(DatabaseReadReplicaArrayOutput)
@@ -652,6 +672,7 @@ func (o DatabaseOutput) User() pulumi.StringOutput {
 	return o.ApplyT(func(v *Database) pulumi.StringOutput { return v.User }).(pulumi.StringOutput)
 }
 
+// The ID of the VPC Network to attach to the Managed Database.
 func (o DatabaseOutput) VpcId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Database) pulumi.StringPtrOutput { return v.VpcId }).(pulumi.StringPtrOutput)
 }

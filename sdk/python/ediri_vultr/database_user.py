@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 
 __all__ = ['DatabaseUserArgs', 'DatabaseUser']
@@ -25,31 +25,12 @@ class DatabaseUserArgs:
         :param pulumi.Input[str] encryption: The encryption type of the new managed database user's password (MySQL engine types only - `caching_sha2_password`, `mysql_native_password`).
         :param pulumi.Input[str] password: The password of the new managed database user.
         """
-        DatabaseUserArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            database_id=database_id,
-            username=username,
-            encryption=encryption,
-            password=password,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             database_id: pulumi.Input[str],
-             username: pulumi.Input[str],
-             encryption: Optional[pulumi.Input[str]] = None,
-             password: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'databaseId' in kwargs:
-            database_id = kwargs['databaseId']
-
-        _setter("database_id", database_id)
-        _setter("username", username)
+        pulumi.set(__self__, "database_id", database_id)
+        pulumi.set(__self__, "username", username)
         if encryption is not None:
-            _setter("encryption", encryption)
+            pulumi.set(__self__, "encryption", encryption)
         if password is not None:
-            _setter("password", password)
+            pulumi.set(__self__, "password", password)
 
     @property
     @pulumi.getter(name="databaseId")
@@ -114,33 +95,14 @@ class _DatabaseUserState:
         :param pulumi.Input[str] password: The password of the new managed database user.
         :param pulumi.Input[str] username: The username of the new managed database user.
         """
-        _DatabaseUserState._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            database_id=database_id,
-            encryption=encryption,
-            password=password,
-            username=username,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             database_id: Optional[pulumi.Input[str]] = None,
-             encryption: Optional[pulumi.Input[str]] = None,
-             password: Optional[pulumi.Input[str]] = None,
-             username: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'databaseId' in kwargs:
-            database_id = kwargs['databaseId']
-
         if database_id is not None:
-            _setter("database_id", database_id)
+            pulumi.set(__self__, "database_id", database_id)
         if encryption is not None:
-            _setter("encryption", encryption)
+            pulumi.set(__self__, "encryption", encryption)
         if password is not None:
-            _setter("password", password)
+            pulumi.set(__self__, "password", password)
         if username is not None:
-            _setter("username", username)
+            pulumi.set(__self__, "username", username)
 
     @property
     @pulumi.getter(name="databaseId")
@@ -258,10 +220,6 @@ class DatabaseUser(pulumi.CustomResource):
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
-            kwargs = kwargs or {}
-            def _setter(key, value):
-                kwargs[key] = value
-            DatabaseUserArgs._configure(_setter, **kwargs)
             __self__._internal_init(resource_name, *args, **kwargs)
 
     def _internal_init(__self__,

@@ -111,6 +111,8 @@ type LookupDatabaseResult struct {
 	PlanVcpus int `pulumi:"planVcpus"`
 	// The connection port for the managed database.
 	Port string `pulumi:"port"`
+	// The public hostname assigned to the managed database (VPC-attached only).
+	PublicHost string `pulumi:"publicHost"`
 	// A list of read replicas attached to the managed database.
 	ReadReplicas []GetDatabaseReadReplica `pulumi:"readReplicas"`
 	// The configuration value for the data eviction policy on the managed database (Redis engine types only).
@@ -124,7 +126,8 @@ type LookupDatabaseResult struct {
 	// A list of allowed IP addresses for the managed database.
 	TrustedIps []string `pulumi:"trustedIps"`
 	// The primary admin user for the managed database.
-	User  string `pulumi:"user"`
+	User string `pulumi:"user"`
+	// The ID of the VPC Network attached to the Managed Database.
 	VpcId string `pulumi:"vpcId"`
 }
 
@@ -286,6 +289,11 @@ func (o LookupDatabaseResultOutput) Port() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupDatabaseResult) string { return v.Port }).(pulumi.StringOutput)
 }
 
+// The public hostname assigned to the managed database (VPC-attached only).
+func (o LookupDatabaseResultOutput) PublicHost() pulumi.StringOutput {
+	return o.ApplyT(func(v LookupDatabaseResult) string { return v.PublicHost }).(pulumi.StringOutput)
+}
+
 // A list of read replicas attached to the managed database.
 func (o LookupDatabaseResultOutput) ReadReplicas() GetDatabaseReadReplicaArrayOutput {
 	return o.ApplyT(func(v LookupDatabaseResult) []GetDatabaseReadReplica { return v.ReadReplicas }).(GetDatabaseReadReplicaArrayOutput)
@@ -321,6 +329,7 @@ func (o LookupDatabaseResultOutput) User() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupDatabaseResult) string { return v.User }).(pulumi.StringOutput)
 }
 
+// The ID of the VPC Network attached to the Managed Database.
 func (o LookupDatabaseResultOutput) VpcId() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupDatabaseResult) string { return v.VpcId }).(pulumi.StringOutput)
 }

@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 
 __all__ = ['ProviderArgs', 'Provider']
@@ -23,39 +23,18 @@ class ProviderArgs:
         :param pulumi.Input[int] rate_limit: Allows users to set the speed of API calls to work with the Vultr Rate Limit
         :param pulumi.Input[int] retry_limit: Allows users to set the maximum number of retries allowed for a failed API call.
         """
-        ProviderArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            api_key=api_key,
-            rate_limit=rate_limit,
-            retry_limit=retry_limit,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             api_key: Optional[pulumi.Input[str]] = None,
-             rate_limit: Optional[pulumi.Input[int]] = None,
-             retry_limit: Optional[pulumi.Input[int]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'apiKey' in kwargs:
-            api_key = kwargs['apiKey']
-        if 'rateLimit' in kwargs:
-            rate_limit = kwargs['rateLimit']
-        if 'retryLimit' in kwargs:
-            retry_limit = kwargs['retryLimit']
-
         if api_key is None:
             api_key = _utilities.get_env('VULTR_API_KEY')
         if api_key is not None:
-            _setter("api_key", api_key)
+            pulumi.set(__self__, "api_key", api_key)
         if rate_limit is None:
             rate_limit = 500
         if rate_limit is not None:
-            _setter("rate_limit", rate_limit)
+            pulumi.set(__self__, "rate_limit", rate_limit)
         if retry_limit is None:
             retry_limit = 3
         if retry_limit is not None:
-            _setter("retry_limit", retry_limit)
+            pulumi.set(__self__, "retry_limit", retry_limit)
 
     @property
     @pulumi.getter(name="apiKey")
@@ -137,10 +116,6 @@ class Provider(pulumi.ProviderResource):
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
-            kwargs = kwargs or {}
-            def _setter(key, value):
-                kwargs[key] = value
-            ProviderArgs._configure(_setter, **kwargs)
             __self__._internal_init(resource_name, *args, **kwargs)
 
     def _internal_init(__self__,

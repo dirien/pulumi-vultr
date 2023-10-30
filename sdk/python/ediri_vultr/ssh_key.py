@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 
 __all__ = ['SSHKeyArgs', 'SSHKey']
@@ -21,24 +21,9 @@ class SSHKeyArgs:
         :param pulumi.Input[str] ssh_key: The public SSH key.
         :param pulumi.Input[str] name: The name/label of the SSH key.
         """
-        SSHKeyArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            ssh_key=ssh_key,
-            name=name,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             ssh_key: pulumi.Input[str],
-             name: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'sshKey' in kwargs:
-            ssh_key = kwargs['sshKey']
-
-        _setter("ssh_key", ssh_key)
+        pulumi.set(__self__, "ssh_key", ssh_key)
         if name is not None:
-            _setter("name", name)
+            pulumi.set(__self__, "name", name)
 
     @property
     @pulumi.getter(name="sshKey")
@@ -77,31 +62,12 @@ class _SSHKeyState:
         :param pulumi.Input[str] name: The name/label of the SSH key.
         :param pulumi.Input[str] ssh_key: The public SSH key.
         """
-        _SSHKeyState._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            date_created=date_created,
-            name=name,
-            ssh_key=ssh_key,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             date_created: Optional[pulumi.Input[str]] = None,
-             name: Optional[pulumi.Input[str]] = None,
-             ssh_key: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'dateCreated' in kwargs:
-            date_created = kwargs['dateCreated']
-        if 'sshKey' in kwargs:
-            ssh_key = kwargs['sshKey']
-
         if date_created is not None:
-            _setter("date_created", date_created)
+            pulumi.set(__self__, "date_created", date_created)
         if name is not None:
-            _setter("name", name)
+            pulumi.set(__self__, "name", name)
         if ssh_key is not None:
-            _setter("ssh_key", ssh_key)
+            pulumi.set(__self__, "ssh_key", ssh_key)
 
     @property
     @pulumi.getter(name="dateCreated")
@@ -213,10 +179,6 @@ class SSHKey(pulumi.CustomResource):
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
-            kwargs = kwargs or {}
-            def _setter(key, value):
-                kwargs[key] = value
-            SSHKeyArgs._configure(_setter, **kwargs)
             __self__._internal_init(resource_name, *args, **kwargs)
 
     def _internal_init(__self__,

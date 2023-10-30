@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 
 __all__ = ['ReservedIpArgs', 'ReservedIp']
@@ -25,33 +25,12 @@ class ReservedIpArgs:
         :param pulumi.Input[str] instance_id: The VPS ID you want this reserved IP to be attached to.
         :param pulumi.Input[str] label: The label you want to give your reserved IP.
         """
-        ReservedIpArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            ip_type=ip_type,
-            region=region,
-            instance_id=instance_id,
-            label=label,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             ip_type: pulumi.Input[str],
-             region: pulumi.Input[str],
-             instance_id: Optional[pulumi.Input[str]] = None,
-             label: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'ipType' in kwargs:
-            ip_type = kwargs['ipType']
-        if 'instanceId' in kwargs:
-            instance_id = kwargs['instanceId']
-
-        _setter("ip_type", ip_type)
-        _setter("region", region)
+        pulumi.set(__self__, "ip_type", ip_type)
+        pulumi.set(__self__, "region", region)
         if instance_id is not None:
-            _setter("instance_id", instance_id)
+            pulumi.set(__self__, "instance_id", instance_id)
         if label is not None:
-            _setter("label", label)
+            pulumi.set(__self__, "label", label)
 
     @property
     @pulumi.getter(name="ipType")
@@ -120,45 +99,18 @@ class _ReservedIpState:
         :param pulumi.Input[str] subnet: The reserved IP's subnet.
         :param pulumi.Input[int] subnet_size: The reserved IP's subnet size.
         """
-        _ReservedIpState._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            instance_id=instance_id,
-            ip_type=ip_type,
-            label=label,
-            region=region,
-            subnet=subnet,
-            subnet_size=subnet_size,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             instance_id: Optional[pulumi.Input[str]] = None,
-             ip_type: Optional[pulumi.Input[str]] = None,
-             label: Optional[pulumi.Input[str]] = None,
-             region: Optional[pulumi.Input[str]] = None,
-             subnet: Optional[pulumi.Input[str]] = None,
-             subnet_size: Optional[pulumi.Input[int]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'instanceId' in kwargs:
-            instance_id = kwargs['instanceId']
-        if 'ipType' in kwargs:
-            ip_type = kwargs['ipType']
-        if 'subnetSize' in kwargs:
-            subnet_size = kwargs['subnetSize']
-
         if instance_id is not None:
-            _setter("instance_id", instance_id)
+            pulumi.set(__self__, "instance_id", instance_id)
         if ip_type is not None:
-            _setter("ip_type", ip_type)
+            pulumi.set(__self__, "ip_type", ip_type)
         if label is not None:
-            _setter("label", label)
+            pulumi.set(__self__, "label", label)
         if region is not None:
-            _setter("region", region)
+            pulumi.set(__self__, "region", region)
         if subnet is not None:
-            _setter("subnet", subnet)
+            pulumi.set(__self__, "subnet", subnet)
         if subnet_size is not None:
-            _setter("subnet_size", subnet_size)
+            pulumi.set(__self__, "subnet_size", subnet_size)
 
     @property
     @pulumi.getter(name="instanceId")
@@ -342,10 +294,6 @@ class ReservedIp(pulumi.CustomResource):
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
-            kwargs = kwargs or {}
-            def _setter(key, value):
-                kwargs[key] = value
-            ReservedIpArgs._configure(_setter, **kwargs)
             __self__._internal_init(resource_name, *args, **kwargs)
 
     def _internal_init(__self__,

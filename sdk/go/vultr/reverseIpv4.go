@@ -35,8 +35,8 @@ import (
 //		pulumi.Run(func(ctx *pulumi.Context) error {
 //			myInstance, err := vultr.NewInstance(ctx, "myInstance", &vultr.InstanceArgs{
 //				EnableIpv6: pulumi.Bool(true),
-//				OsId:       pulumi.Int(167),
-//				Plan:       pulumi.String("vc2-1c-1gb"),
+//				OsId:       pulumi.Int(477),
+//				Plan:       pulumi.String("vc2-1c-2gb"),
 //				Region:     pulumi.String("ewr"),
 //			})
 //			if err != nil {

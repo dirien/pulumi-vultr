@@ -118,6 +118,9 @@ export interface DatabaseReadReplica {
      * The primary admin user for the managed database.
      */
     user: string;
+    /**
+     * The ID of the VPC Network to attach to the Managed Database.
+     */
     vpcId: string;
 }
 
@@ -297,6 +300,9 @@ export interface GetDatabaseReadReplica {
      * The primary admin user for the managed database.
      */
     user: string;
+    /**
+     * The ID of the VPC Network attached to the Managed Database.
+     */
     vpcId: string;
 }
 

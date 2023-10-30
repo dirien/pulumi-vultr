@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 
 __all__ = ['SnapshotFromUrlArgs', 'SnapshotFromUrl']
@@ -19,18 +19,7 @@ class SnapshotFromUrlArgs:
         The set of arguments for constructing a SnapshotFromUrl resource.
         :param pulumi.Input[str] url: URL of the given resource you want to create a snapshot from.
         """
-        SnapshotFromUrlArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            url=url,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             url: pulumi.Input[str],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("url", url)
+        pulumi.set(__self__, "url", url)
 
     @property
     @pulumi.getter
@@ -65,49 +54,20 @@ class _SnapshotFromUrlState:
         :param pulumi.Input[str] status: The status for the given snapshot.
         :param pulumi.Input[str] url: URL of the given resource you want to create a snapshot from.
         """
-        _SnapshotFromUrlState._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            app_id=app_id,
-            date_created=date_created,
-            description=description,
-            os_id=os_id,
-            size=size,
-            status=status,
-            url=url,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             app_id: Optional[pulumi.Input[int]] = None,
-             date_created: Optional[pulumi.Input[str]] = None,
-             description: Optional[pulumi.Input[str]] = None,
-             os_id: Optional[pulumi.Input[int]] = None,
-             size: Optional[pulumi.Input[int]] = None,
-             status: Optional[pulumi.Input[str]] = None,
-             url: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'appId' in kwargs:
-            app_id = kwargs['appId']
-        if 'dateCreated' in kwargs:
-            date_created = kwargs['dateCreated']
-        if 'osId' in kwargs:
-            os_id = kwargs['osId']
-
         if app_id is not None:
-            _setter("app_id", app_id)
+            pulumi.set(__self__, "app_id", app_id)
         if date_created is not None:
-            _setter("date_created", date_created)
+            pulumi.set(__self__, "date_created", date_created)
         if description is not None:
-            _setter("description", description)
+            pulumi.set(__self__, "description", description)
         if os_id is not None:
-            _setter("os_id", os_id)
+            pulumi.set(__self__, "os_id", os_id)
         if size is not None:
-            _setter("size", size)
+            pulumi.set(__self__, "size", size)
         if status is not None:
-            _setter("status", status)
+            pulumi.set(__self__, "status", status)
         if url is not None:
-            _setter("url", url)
+            pulumi.set(__self__, "url", url)
 
     @property
     @pulumi.getter(name="appId")
@@ -265,10 +225,6 @@ class SnapshotFromUrl(pulumi.CustomResource):
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
-            kwargs = kwargs or {}
-            def _setter(key, value):
-                kwargs[key] = value
-            SnapshotFromUrlArgs._configure(_setter, **kwargs)
             __self__._internal_init(resource_name, *args, **kwargs)
 
     def _internal_init(__self__,

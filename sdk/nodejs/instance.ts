@@ -19,7 +19,7 @@ import * as utilities from "./utilities";
  *
  * const myInstance = new vultr.Instance("myInstance", {
  *     osId: 1743,
- *     plan: "vc2-1c-1gb",
+ *     plan: "vc2-1c-2gb",
  *     region: "sea",
  * });
  * ```
@@ -41,7 +41,7 @@ import * as utilities from "./utilities";
  *     hostname: "my-instance-hostname",
  *     label: "my-instance-label",
  *     osId: 1743,
- *     plan: "vc2-1c-1gb",
+ *     plan: "vc2-1c-2gb",
  *     region: "sea",
  *     tags: ["my-instance-tag"],
  * });

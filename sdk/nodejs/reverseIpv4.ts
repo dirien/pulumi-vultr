@@ -19,8 +19,8 @@ import * as utilities from "./utilities";
  *
  * const myInstance = new vultr.Instance("myInstance", {
  *     enableIpv6: true,
- *     osId: 167,
- *     plan: "vc2-1c-1gb",
+ *     osId: 477,
+ *     plan: "vc2-1c-2gb",
  *     region: "ewr",
  * });
  * const myReverseIpv4 = new vultr.ReverseIpv4("myReverseIpv4", {
