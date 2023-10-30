@@ -228,6 +228,10 @@ namespace ediri.Vultr
         /// </summary>
         public readonly string Port;
         /// <summary>
+        /// The public hostname assigned to the managed database (VPC-attached only).
+        /// </summary>
+        public readonly string PublicHost;
+        /// <summary>
         /// A list of read replicas attached to the managed database.
         /// </summary>
         public readonly ImmutableArray<Outputs.GetDatabaseReadReplicaResult> ReadReplicas;
@@ -255,6 +259,9 @@ namespace ediri.Vultr
         /// The primary admin user for the managed database.
         /// </summary>
         public readonly string User;
+        /// <summary>
+        /// The ID of the VPC Network attached to the Managed Database.
+        /// </summary>
         public readonly string VpcId;
 
         [OutputConstructor]
@@ -305,6 +312,8 @@ namespace ediri.Vultr
 
             string port,
 
+            string publicHost,
+
             ImmutableArray<Outputs.GetDatabaseReadReplicaResult> readReplicas,
 
             string redisEvictionPolicy,
@@ -344,6 +353,7 @@ namespace ediri.Vultr
             PlanReplicas = planReplicas;
             PlanVcpus = planVcpus;
             Port = port;
+            PublicHost = publicHost;
             ReadReplicas = readReplicas;
             RedisEvictionPolicy = redisEvictionPolicy;
             Region = region;

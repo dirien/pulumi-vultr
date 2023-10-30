@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 
 __all__ = ['ReverseIpv6Args', 'ReverseIpv6']
@@ -24,26 +24,9 @@ class ReverseIpv6Args:
         :param pulumi.Input[str] ip: The IPv6 address used in the reverse DNS record.
         :param pulumi.Input[str] reverse: The hostname used in the IPv6 reverse DNS record.
         """
-        ReverseIpv6Args._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            instance_id=instance_id,
-            ip=ip,
-            reverse=reverse,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             instance_id: pulumi.Input[str],
-             ip: pulumi.Input[str],
-             reverse: pulumi.Input[str],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'instanceId' in kwargs:
-            instance_id = kwargs['instanceId']
-
-        _setter("instance_id", instance_id)
-        _setter("ip", ip)
-        _setter("reverse", reverse)
+        pulumi.set(__self__, "instance_id", instance_id)
+        pulumi.set(__self__, "ip", ip)
+        pulumi.set(__self__, "reverse", reverse)
 
     @property
     @pulumi.getter(name="instanceId")
@@ -96,29 +79,12 @@ class _ReverseIpv6State:
         :param pulumi.Input[str] ip: The IPv6 address used in the reverse DNS record.
         :param pulumi.Input[str] reverse: The hostname used in the IPv6 reverse DNS record.
         """
-        _ReverseIpv6State._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            instance_id=instance_id,
-            ip=ip,
-            reverse=reverse,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             instance_id: Optional[pulumi.Input[str]] = None,
-             ip: Optional[pulumi.Input[str]] = None,
-             reverse: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'instanceId' in kwargs:
-            instance_id = kwargs['instanceId']
-
         if instance_id is not None:
-            _setter("instance_id", instance_id)
+            pulumi.set(__self__, "instance_id", instance_id)
         if ip is not None:
-            _setter("ip", ip)
+            pulumi.set(__self__, "ip", ip)
         if reverse is not None:
-            _setter("reverse", reverse)
+            pulumi.set(__self__, "reverse", reverse)
 
     @property
     @pulumi.getter(name="instanceId")
@@ -200,10 +166,6 @@ class ReverseIpv6(pulumi.CustomResource):
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
-            kwargs = kwargs or {}
-            def _setter(key, value):
-                kwargs[key] = value
-            ReverseIpv6Args._configure(_setter, **kwargs)
             __self__._internal_init(resource_name, *args, **kwargs)
 
     def _internal_init(__self__,

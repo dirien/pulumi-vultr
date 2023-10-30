@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 
 __all__ = ['IsoPrivateArgs', 'IsoPrivate']
@@ -18,18 +18,7 @@ class IsoPrivateArgs:
         """
         The set of arguments for constructing a IsoPrivate resource.
         """
-        IsoPrivateArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            url=url,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             url: pulumi.Input[str],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("url", url)
+        pulumi.set(__self__, "url", url)
 
     @property
     @pulumi.getter
@@ -54,45 +43,20 @@ class _IsoPrivateState:
         """
         Input properties used for looking up and filtering IsoPrivate resources.
         """
-        _IsoPrivateState._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            date_created=date_created,
-            filename=filename,
-            md5sum=md5sum,
-            sha512sum=sha512sum,
-            size=size,
-            status=status,
-            url=url,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             date_created: Optional[pulumi.Input[str]] = None,
-             filename: Optional[pulumi.Input[str]] = None,
-             md5sum: Optional[pulumi.Input[str]] = None,
-             sha512sum: Optional[pulumi.Input[str]] = None,
-             size: Optional[pulumi.Input[int]] = None,
-             status: Optional[pulumi.Input[str]] = None,
-             url: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'dateCreated' in kwargs:
-            date_created = kwargs['dateCreated']
-
         if date_created is not None:
-            _setter("date_created", date_created)
+            pulumi.set(__self__, "date_created", date_created)
         if filename is not None:
-            _setter("filename", filename)
+            pulumi.set(__self__, "filename", filename)
         if md5sum is not None:
-            _setter("md5sum", md5sum)
+            pulumi.set(__self__, "md5sum", md5sum)
         if sha512sum is not None:
-            _setter("sha512sum", sha512sum)
+            pulumi.set(__self__, "sha512sum", sha512sum)
         if size is not None:
-            _setter("size", size)
+            pulumi.set(__self__, "size", size)
         if status is not None:
-            _setter("status", status)
+            pulumi.set(__self__, "status", status)
         if url is not None:
-            _setter("url", url)
+            pulumi.set(__self__, "url", url)
 
     @property
     @pulumi.getter(name="dateCreated")
@@ -188,10 +152,6 @@ class IsoPrivate(pulumi.CustomResource):
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
-            kwargs = kwargs or {}
-            def _setter(key, value):
-                kwargs[key] = value
-            IsoPrivateArgs._configure(_setter, **kwargs)
             __self__._internal_init(resource_name, *args, **kwargs)
 
     def _internal_init(__self__,

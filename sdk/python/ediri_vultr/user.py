@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 
 __all__ = ['UserArgs', 'User']
@@ -27,35 +27,14 @@ class UserArgs:
         :param pulumi.Input[bool] api_enabled: Whether API is enabled for the user. Default behavior is set to enabled.
         :param pulumi.Input[str] name: Name for this user.
         """
-        UserArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            email=email,
-            password=password,
-            acls=acls,
-            api_enabled=api_enabled,
-            name=name,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             email: pulumi.Input[str],
-             password: pulumi.Input[str],
-             acls: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             api_enabled: Optional[pulumi.Input[bool]] = None,
-             name: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'apiEnabled' in kwargs:
-            api_enabled = kwargs['apiEnabled']
-
-        _setter("email", email)
-        _setter("password", password)
+        pulumi.set(__self__, "email", email)
+        pulumi.set(__self__, "password", password)
         if acls is not None:
-            _setter("acls", acls)
+            pulumi.set(__self__, "acls", acls)
         if api_enabled is not None:
-            _setter("api_enabled", api_enabled)
+            pulumi.set(__self__, "api_enabled", api_enabled)
         if name is not None:
-            _setter("name", name)
+            pulumi.set(__self__, "name", name)
 
     @property
     @pulumi.getter
@@ -135,43 +114,18 @@ class _UserState:
         :param pulumi.Input[str] name: Name for this user.
         :param pulumi.Input[str] password: Password for this user.
         """
-        _UserState._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            acls=acls,
-            api_enabled=api_enabled,
-            api_key=api_key,
-            email=email,
-            name=name,
-            password=password,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             acls: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             api_enabled: Optional[pulumi.Input[bool]] = None,
-             api_key: Optional[pulumi.Input[str]] = None,
-             email: Optional[pulumi.Input[str]] = None,
-             name: Optional[pulumi.Input[str]] = None,
-             password: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'apiEnabled' in kwargs:
-            api_enabled = kwargs['apiEnabled']
-        if 'apiKey' in kwargs:
-            api_key = kwargs['apiKey']
-
         if acls is not None:
-            _setter("acls", acls)
+            pulumi.set(__self__, "acls", acls)
         if api_enabled is not None:
-            _setter("api_enabled", api_enabled)
+            pulumi.set(__self__, "api_enabled", api_enabled)
         if api_key is not None:
-            _setter("api_key", api_key)
+            pulumi.set(__self__, "api_key", api_key)
         if email is not None:
-            _setter("email", email)
+            pulumi.set(__self__, "email", email)
         if name is not None:
-            _setter("name", name)
+            pulumi.set(__self__, "name", name)
         if password is not None:
-            _setter("password", password)
+            pulumi.set(__self__, "password", password)
 
     @property
     @pulumi.getter
@@ -372,10 +326,6 @@ class User(pulumi.CustomResource):
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
-            kwargs = kwargs or {}
-            def _setter(key, value):
-                kwargs[key] = value
-            UserArgs._configure(_setter, **kwargs)
             __self__._internal_init(resource_name, *args, **kwargs)
 
     def _internal_init(__self__,

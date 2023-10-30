@@ -33,7 +33,7 @@ import (
 //		pulumi.Run(func(ctx *pulumi.Context) error {
 //			_, err := vultr.NewInstance(ctx, "myInstance", &vultr.InstanceArgs{
 //				OsId:   pulumi.Int(1743),
-//				Plan:   pulumi.String("vc2-1c-1gb"),
+//				Plan:   pulumi.String("vc2-1c-2gb"),
 //				Region: pulumi.String("sea"),
 //			})
 //			if err != nil {
@@ -70,7 +70,7 @@ import (
 //				Hostname:       pulumi.String("my-instance-hostname"),
 //				Label:          pulumi.String("my-instance-label"),
 //				OsId:           pulumi.Int(1743),
-//				Plan:           pulumi.String("vc2-1c-1gb"),
+//				Plan:           pulumi.String("vc2-1c-2gb"),
 //				Region:         pulumi.String("sea"),
 //				Tags: pulumi.StringArray{
 //					pulumi.String("my-instance-tag"),

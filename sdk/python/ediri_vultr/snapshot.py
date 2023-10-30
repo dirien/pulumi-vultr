@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 
 __all__ = ['SnapshotArgs', 'Snapshot']
@@ -21,24 +21,9 @@ class SnapshotArgs:
         :param pulumi.Input[str] instance_id: ID of a given instance that you want to create a snapshot from.
         :param pulumi.Input[str] description: The description for the given snapshot.
         """
-        SnapshotArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            instance_id=instance_id,
-            description=description,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             instance_id: pulumi.Input[str],
-             description: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'instanceId' in kwargs:
-            instance_id = kwargs['instanceId']
-
-        _setter("instance_id", instance_id)
+        pulumi.set(__self__, "instance_id", instance_id)
         if description is not None:
-            _setter("description", description)
+            pulumi.set(__self__, "description", description)
 
     @property
     @pulumi.getter(name="instanceId")
@@ -85,51 +70,20 @@ class _SnapshotState:
         :param pulumi.Input[int] size: The size of the snapshot in Bytes.
         :param pulumi.Input[str] status: The status for the given snapshot.
         """
-        _SnapshotState._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            app_id=app_id,
-            date_created=date_created,
-            description=description,
-            instance_id=instance_id,
-            os_id=os_id,
-            size=size,
-            status=status,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             app_id: Optional[pulumi.Input[int]] = None,
-             date_created: Optional[pulumi.Input[str]] = None,
-             description: Optional[pulumi.Input[str]] = None,
-             instance_id: Optional[pulumi.Input[str]] = None,
-             os_id: Optional[pulumi.Input[int]] = None,
-             size: Optional[pulumi.Input[int]] = None,
-             status: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'appId' in kwargs:
-            app_id = kwargs['appId']
-        if 'dateCreated' in kwargs:
-            date_created = kwargs['dateCreated']
-        if 'instanceId' in kwargs:
-            instance_id = kwargs['instanceId']
-        if 'osId' in kwargs:
-            os_id = kwargs['osId']
-
         if app_id is not None:
-            _setter("app_id", app_id)
+            pulumi.set(__self__, "app_id", app_id)
         if date_created is not None:
-            _setter("date_created", date_created)
+            pulumi.set(__self__, "date_created", date_created)
         if description is not None:
-            _setter("description", description)
+            pulumi.set(__self__, "description", description)
         if instance_id is not None:
-            _setter("instance_id", instance_id)
+            pulumi.set(__self__, "instance_id", instance_id)
         if os_id is not None:
-            _setter("os_id", os_id)
+            pulumi.set(__self__, "os_id", os_id)
         if size is not None:
-            _setter("size", size)
+            pulumi.set(__self__, "size", size)
         if status is not None:
-            _setter("status", status)
+            pulumi.set(__self__, "status", status)
 
     @property
     @pulumi.getter(name="appId")
@@ -303,10 +257,6 @@ class Snapshot(pulumi.CustomResource):
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
-            kwargs = kwargs or {}
-            def _setter(key, value):
-                kwargs[key] = value
-            SnapshotArgs._configure(_setter, **kwargs)
             __self__._internal_init(resource_name, *args, **kwargs)
 
     def _internal_init(__self__,

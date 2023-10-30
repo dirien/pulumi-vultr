@@ -138,6 +138,10 @@ export interface GetDatabaseResult {
      */
     readonly port: string;
     /**
+     * The public hostname assigned to the managed database (VPC-attached only).
+     */
+    readonly publicHost: string;
+    /**
      * A list of read replicas attached to the managed database.
      */
     readonly readReplicas: outputs.GetDatabaseReadReplica[];
@@ -165,6 +169,9 @@ export interface GetDatabaseResult {
      * The primary admin user for the managed database.
      */
     readonly user: string;
+    /**
+     * The ID of the VPC Network attached to the Managed Database.
+     */
     readonly vpcId: string;
 }
 /**

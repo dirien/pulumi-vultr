@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 from . import outputs
 
@@ -164,166 +164,64 @@ class DatabaseReadReplica(dict):
         :param str tag: The tag to assign to the managed database.
         :param Sequence[str] trusted_ips: A list of allowed IP addresses for the managed database.
         :param str user: The primary admin user for the managed database.
+        :param str vpc_id: The ID of the VPC Network to attach to the Managed Database.
         """
-        DatabaseReadReplica._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            label=label,
-            region=region,
-            cluster_time_zone=cluster_time_zone,
-            database_engine=database_engine,
-            database_engine_version=database_engine_version,
-            date_created=date_created,
-            dbname=dbname,
-            host=host,
-            id=id,
-            latest_backup=latest_backup,
-            maintenance_dow=maintenance_dow,
-            maintenance_time=maintenance_time,
-            mysql_long_query_time=mysql_long_query_time,
-            mysql_require_primary_key=mysql_require_primary_key,
-            mysql_slow_query_log=mysql_slow_query_log,
-            mysql_sql_modes=mysql_sql_modes,
-            password=password,
-            plan=plan,
-            plan_disk=plan_disk,
-            plan_ram=plan_ram,
-            plan_replicas=plan_replicas,
-            plan_vcpus=plan_vcpus,
-            port=port,
-            redis_eviction_policy=redis_eviction_policy,
-            status=status,
-            tag=tag,
-            trusted_ips=trusted_ips,
-            user=user,
-            vpc_id=vpc_id,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             label: str,
-             region: str,
-             cluster_time_zone: Optional[str] = None,
-             database_engine: Optional[str] = None,
-             database_engine_version: Optional[str] = None,
-             date_created: Optional[str] = None,
-             dbname: Optional[str] = None,
-             host: Optional[str] = None,
-             id: Optional[str] = None,
-             latest_backup: Optional[str] = None,
-             maintenance_dow: Optional[str] = None,
-             maintenance_time: Optional[str] = None,
-             mysql_long_query_time: Optional[int] = None,
-             mysql_require_primary_key: Optional[bool] = None,
-             mysql_slow_query_log: Optional[bool] = None,
-             mysql_sql_modes: Optional[Sequence[str]] = None,
-             password: Optional[str] = None,
-             plan: Optional[str] = None,
-             plan_disk: Optional[int] = None,
-             plan_ram: Optional[int] = None,
-             plan_replicas: Optional[int] = None,
-             plan_vcpus: Optional[int] = None,
-             port: Optional[str] = None,
-             redis_eviction_policy: Optional[str] = None,
-             status: Optional[str] = None,
-             tag: Optional[str] = None,
-             trusted_ips: Optional[Sequence[str]] = None,
-             user: Optional[str] = None,
-             vpc_id: Optional[str] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'clusterTimeZone' in kwargs:
-            cluster_time_zone = kwargs['clusterTimeZone']
-        if 'databaseEngine' in kwargs:
-            database_engine = kwargs['databaseEngine']
-        if 'databaseEngineVersion' in kwargs:
-            database_engine_version = kwargs['databaseEngineVersion']
-        if 'dateCreated' in kwargs:
-            date_created = kwargs['dateCreated']
-        if 'latestBackup' in kwargs:
-            latest_backup = kwargs['latestBackup']
-        if 'maintenanceDow' in kwargs:
-            maintenance_dow = kwargs['maintenanceDow']
-        if 'maintenanceTime' in kwargs:
-            maintenance_time = kwargs['maintenanceTime']
-        if 'mysqlLongQueryTime' in kwargs:
-            mysql_long_query_time = kwargs['mysqlLongQueryTime']
-        if 'mysqlRequirePrimaryKey' in kwargs:
-            mysql_require_primary_key = kwargs['mysqlRequirePrimaryKey']
-        if 'mysqlSlowQueryLog' in kwargs:
-            mysql_slow_query_log = kwargs['mysqlSlowQueryLog']
-        if 'mysqlSqlModes' in kwargs:
-            mysql_sql_modes = kwargs['mysqlSqlModes']
-        if 'planDisk' in kwargs:
-            plan_disk = kwargs['planDisk']
-        if 'planRam' in kwargs:
-            plan_ram = kwargs['planRam']
-        if 'planReplicas' in kwargs:
-            plan_replicas = kwargs['planReplicas']
-        if 'planVcpus' in kwargs:
-            plan_vcpus = kwargs['planVcpus']
-        if 'redisEvictionPolicy' in kwargs:
-            redis_eviction_policy = kwargs['redisEvictionPolicy']
-        if 'trustedIps' in kwargs:
-            trusted_ips = kwargs['trustedIps']
-        if 'vpcId' in kwargs:
-            vpc_id = kwargs['vpcId']
-
-        _setter("label", label)
-        _setter("region", region)
+        pulumi.set(__self__, "label", label)
+        pulumi.set(__self__, "region", region)
         if cluster_time_zone is not None:
-            _setter("cluster_time_zone", cluster_time_zone)
+            pulumi.set(__self__, "cluster_time_zone", cluster_time_zone)
         if database_engine is not None:
-            _setter("database_engine", database_engine)
+            pulumi.set(__self__, "database_engine", database_engine)
         if database_engine_version is not None:
-            _setter("database_engine_version", database_engine_version)
+            pulumi.set(__self__, "database_engine_version", database_engine_version)
         if date_created is not None:
-            _setter("date_created", date_created)
+            pulumi.set(__self__, "date_created", date_created)
         if dbname is not None:
-            _setter("dbname", dbname)
+            pulumi.set(__self__, "dbname", dbname)
         if host is not None:
-            _setter("host", host)
+            pulumi.set(__self__, "host", host)
         if id is not None:
-            _setter("id", id)
+            pulumi.set(__self__, "id", id)
         if latest_backup is not None:
-            _setter("latest_backup", latest_backup)
+            pulumi.set(__self__, "latest_backup", latest_backup)
         if maintenance_dow is not None:
-            _setter("maintenance_dow", maintenance_dow)
+            pulumi.set(__self__, "maintenance_dow", maintenance_dow)
         if maintenance_time is not None:
-            _setter("maintenance_time", maintenance_time)
+            pulumi.set(__self__, "maintenance_time", maintenance_time)
         if mysql_long_query_time is not None:
-            _setter("mysql_long_query_time", mysql_long_query_time)
+            pulumi.set(__self__, "mysql_long_query_time", mysql_long_query_time)
         if mysql_require_primary_key is not None:
-            _setter("mysql_require_primary_key", mysql_require_primary_key)
+            pulumi.set(__self__, "mysql_require_primary_key", mysql_require_primary_key)
         if mysql_slow_query_log is not None:
-            _setter("mysql_slow_query_log", mysql_slow_query_log)
+            pulumi.set(__self__, "mysql_slow_query_log", mysql_slow_query_log)
         if mysql_sql_modes is not None:
-            _setter("mysql_sql_modes", mysql_sql_modes)
+            pulumi.set(__self__, "mysql_sql_modes", mysql_sql_modes)
         if password is not None:
-            _setter("password", password)
+            pulumi.set(__self__, "password", password)
         if plan is not None:
-            _setter("plan", plan)
+            pulumi.set(__self__, "plan", plan)
         if plan_disk is not None:
-            _setter("plan_disk", plan_disk)
+            pulumi.set(__self__, "plan_disk", plan_disk)
         if plan_ram is not None:
-            _setter("plan_ram", plan_ram)
+            pulumi.set(__self__, "plan_ram", plan_ram)
         if plan_replicas is not None:
-            _setter("plan_replicas", plan_replicas)
+            pulumi.set(__self__, "plan_replicas", plan_replicas)
         if plan_vcpus is not None:
-            _setter("plan_vcpus", plan_vcpus)
+            pulumi.set(__self__, "plan_vcpus", plan_vcpus)
         if port is not None:
-            _setter("port", port)
+            pulumi.set(__self__, "port", port)
         if redis_eviction_policy is not None:
-            _setter("redis_eviction_policy", redis_eviction_policy)
+            pulumi.set(__self__, "redis_eviction_policy", redis_eviction_policy)
         if status is not None:
-            _setter("status", status)
+            pulumi.set(__self__, "status", status)
         if tag is not None:
-            _setter("tag", tag)
+            pulumi.set(__self__, "tag", tag)
         if trusted_ips is not None:
-            _setter("trusted_ips", trusted_ips)
+            pulumi.set(__self__, "trusted_ips", trusted_ips)
         if user is not None:
-            _setter("user", user)
+            pulumi.set(__self__, "user", user)
         if vpc_id is not None:
-            _setter("vpc_id", vpc_id)
+            pulumi.set(__self__, "vpc_id", vpc_id)
 
     @property
     @pulumi.getter
@@ -552,6 +450,9 @@ class DatabaseReadReplica(dict):
     @property
     @pulumi.getter(name="vpcId")
     def vpc_id(self) -> Optional[str]:
+        """
+        The ID of the VPC Network to attach to the Managed Database.
+        """
         return pulumi.get(self, "vpc_id")
 
 
@@ -568,30 +469,13 @@ class InstanceBackupsSchedule(dict):
         :param int dow: Day of week to run. `1 = Sunday`, `2 = Monday`, `3 = Tuesday`, `4 = Wednesday`, `5 = Thursday`, `6 = Friday`, `7 = Saturday`
         :param int hour: Hour of day to run in UTC.
         """
-        InstanceBackupsSchedule._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            type=type,
-            dom=dom,
-            dow=dow,
-            hour=hour,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             type: str,
-             dom: Optional[int] = None,
-             dow: Optional[int] = None,
-             hour: Optional[int] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("type", type)
+        pulumi.set(__self__, "type", type)
         if dom is not None:
-            _setter("dom", dom)
+            pulumi.set(__self__, "dom", dom)
         if dow is not None:
-            _setter("dow", dow)
+            pulumi.set(__self__, "dow", dow)
         if hour is not None:
-            _setter("hour", hour)
+            pulumi.set(__self__, "hour", hour)
 
     @property
     @pulumi.getter
@@ -682,72 +566,27 @@ class KubernetesNodePools(dict):
         :param str status: Status of node.
         :param str tag: Tag for node pool.
         """
-        KubernetesNodePools._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            label=label,
-            node_quantity=node_quantity,
-            plan=plan,
-            auto_scaler=auto_scaler,
-            date_created=date_created,
-            date_updated=date_updated,
-            id=id,
-            max_nodes=max_nodes,
-            min_nodes=min_nodes,
-            nodes=nodes,
-            status=status,
-            tag=tag,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             label: str,
-             node_quantity: int,
-             plan: str,
-             auto_scaler: Optional[bool] = None,
-             date_created: Optional[str] = None,
-             date_updated: Optional[str] = None,
-             id: Optional[str] = None,
-             max_nodes: Optional[int] = None,
-             min_nodes: Optional[int] = None,
-             nodes: Optional[Sequence['outputs.KubernetesNodePoolsNode']] = None,
-             status: Optional[str] = None,
-             tag: Optional[str] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'nodeQuantity' in kwargs:
-            node_quantity = kwargs['nodeQuantity']
-        if 'autoScaler' in kwargs:
-            auto_scaler = kwargs['autoScaler']
-        if 'dateCreated' in kwargs:
-            date_created = kwargs['dateCreated']
-        if 'dateUpdated' in kwargs:
-            date_updated = kwargs['dateUpdated']
-        if 'maxNodes' in kwargs:
-            max_nodes = kwargs['maxNodes']
-        if 'minNodes' in kwargs:
-            min_nodes = kwargs['minNodes']
-
-        _setter("label", label)
-        _setter("node_quantity", node_quantity)
-        _setter("plan", plan)
+        pulumi.set(__self__, "label", label)
+        pulumi.set(__self__, "node_quantity", node_quantity)
+        pulumi.set(__self__, "plan", plan)
         if auto_scaler is not None:
-            _setter("auto_scaler", auto_scaler)
+            pulumi.set(__self__, "auto_scaler", auto_scaler)
         if date_created is not None:
-            _setter("date_created", date_created)
+            pulumi.set(__self__, "date_created", date_created)
         if date_updated is not None:
-            _setter("date_updated", date_updated)
+            pulumi.set(__self__, "date_updated", date_updated)
         if id is not None:
-            _setter("id", id)
+            pulumi.set(__self__, "id", id)
         if max_nodes is not None:
-            _setter("max_nodes", max_nodes)
+            pulumi.set(__self__, "max_nodes", max_nodes)
         if min_nodes is not None:
-            _setter("min_nodes", min_nodes)
+            pulumi.set(__self__, "min_nodes", min_nodes)
         if nodes is not None:
-            _setter("nodes", nodes)
+            pulumi.set(__self__, "nodes", nodes)
         if status is not None:
-            _setter("status", status)
+            pulumi.set(__self__, "status", status)
         if tag is not None:
-            _setter("tag", tag)
+            pulumi.set(__self__, "tag", tag)
 
     @property
     @pulumi.getter
@@ -876,33 +715,14 @@ class KubernetesNodePoolsNode(dict):
         :param str label: The label to be used as a prefix for nodes in this node pool.
         :param str status: Status of node.
         """
-        KubernetesNodePoolsNode._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            date_created=date_created,
-            id=id,
-            label=label,
-            status=status,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             date_created: Optional[str] = None,
-             id: Optional[str] = None,
-             label: Optional[str] = None,
-             status: Optional[str] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'dateCreated' in kwargs:
-            date_created = kwargs['dateCreated']
-
         if date_created is not None:
-            _setter("date_created", date_created)
+            pulumi.set(__self__, "date_created", date_created)
         if id is not None:
-            _setter("id", id)
+            pulumi.set(__self__, "id", id)
         if label is not None:
-            _setter("label", label)
+            pulumi.set(__self__, "label", label)
         if status is not None:
-            _setter("status", status)
+            pulumi.set(__self__, "status", status)
 
     @property
     @pulumi.getter(name="dateCreated")
@@ -967,30 +787,11 @@ class LoadBalancerFirewallRule(dict):
         :param str source: IP address with subnet that is allowed through the firewall. You may also pass in `cloudflare` which will allow only CloudFlares IP range.
         :param str id: The load balancer ID.
         """
-        LoadBalancerFirewallRule._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            ip_type=ip_type,
-            port=port,
-            source=source,
-            id=id,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             ip_type: str,
-             port: int,
-             source: str,
-             id: Optional[str] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'ipType' in kwargs:
-            ip_type = kwargs['ipType']
-
-        _setter("ip_type", ip_type)
-        _setter("port", port)
-        _setter("source", source)
+        pulumi.set(__self__, "ip_type", ip_type)
+        pulumi.set(__self__, "port", port)
+        pulumi.set(__self__, "source", source)
         if id is not None:
-            _setter("id", id)
+            pulumi.set(__self__, "id", id)
 
     @property
     @pulumi.getter(name="ipType")
@@ -1064,41 +865,12 @@ class LoadBalancerForwardingRule(dict):
         :param int frontend_port: Port on load balancer side.
         :param str frontend_protocol: Protocol on load balancer side. Possible values: "http", "https", "tcp".
         """
-        LoadBalancerForwardingRule._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            backend_port=backend_port,
-            backend_protocol=backend_protocol,
-            frontend_port=frontend_port,
-            frontend_protocol=frontend_protocol,
-            rule_id=rule_id,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             backend_port: int,
-             backend_protocol: str,
-             frontend_port: int,
-             frontend_protocol: str,
-             rule_id: Optional[str] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'backendPort' in kwargs:
-            backend_port = kwargs['backendPort']
-        if 'backendProtocol' in kwargs:
-            backend_protocol = kwargs['backendProtocol']
-        if 'frontendPort' in kwargs:
-            frontend_port = kwargs['frontendPort']
-        if 'frontendProtocol' in kwargs:
-            frontend_protocol = kwargs['frontendProtocol']
-        if 'ruleId' in kwargs:
-            rule_id = kwargs['ruleId']
-
-        _setter("backend_port", backend_port)
-        _setter("backend_protocol", backend_protocol)
-        _setter("frontend_port", frontend_port)
-        _setter("frontend_protocol", frontend_protocol)
+        pulumi.set(__self__, "backend_port", backend_port)
+        pulumi.set(__self__, "backend_protocol", backend_protocol)
+        pulumi.set(__self__, "frontend_port", frontend_port)
+        pulumi.set(__self__, "frontend_protocol", frontend_protocol)
         if rule_id is not None:
-            _setter("rule_id", rule_id)
+            pulumi.set(__self__, "rule_id", rule_id)
 
     @property
     @pulumi.getter(name="backendPort")
@@ -1180,49 +952,18 @@ class LoadBalancerHealthCheck(dict):
         :param int response_timeout: Time in seconds to wait for a health check response. Default value is 5.
         :param int unhealthy_threshold: Number of failed attempts encountered before failover. Default value is 5.
         """
-        LoadBalancerHealthCheck._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            port=port,
-            protocol=protocol,
-            check_interval=check_interval,
-            healthy_threshold=healthy_threshold,
-            path=path,
-            response_timeout=response_timeout,
-            unhealthy_threshold=unhealthy_threshold,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             port: int,
-             protocol: str,
-             check_interval: Optional[int] = None,
-             healthy_threshold: Optional[int] = None,
-             path: Optional[str] = None,
-             response_timeout: Optional[int] = None,
-             unhealthy_threshold: Optional[int] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'checkInterval' in kwargs:
-            check_interval = kwargs['checkInterval']
-        if 'healthyThreshold' in kwargs:
-            healthy_threshold = kwargs['healthyThreshold']
-        if 'responseTimeout' in kwargs:
-            response_timeout = kwargs['responseTimeout']
-        if 'unhealthyThreshold' in kwargs:
-            unhealthy_threshold = kwargs['unhealthyThreshold']
-
-        _setter("port", port)
-        _setter("protocol", protocol)
+        pulumi.set(__self__, "port", port)
+        pulumi.set(__self__, "protocol", protocol)
         if check_interval is not None:
-            _setter("check_interval", check_interval)
+            pulumi.set(__self__, "check_interval", check_interval)
         if healthy_threshold is not None:
-            _setter("healthy_threshold", healthy_threshold)
+            pulumi.set(__self__, "healthy_threshold", healthy_threshold)
         if path is not None:
-            _setter("path", path)
+            pulumi.set(__self__, "path", path)
         if response_timeout is not None:
-            _setter("response_timeout", response_timeout)
+            pulumi.set(__self__, "response_timeout", response_timeout)
         if unhealthy_threshold is not None:
-            _setter("unhealthy_threshold", unhealthy_threshold)
+            pulumi.set(__self__, "unhealthy_threshold", unhealthy_threshold)
 
     @property
     @pulumi.getter
@@ -1309,27 +1050,10 @@ class LoadBalancerSsl(dict):
         :param str private_key: The SSL certificates private key.
         :param str chain: The SSL certificate chain.
         """
-        LoadBalancerSsl._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            certificate=certificate,
-            private_key=private_key,
-            chain=chain,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             certificate: str,
-             private_key: str,
-             chain: Optional[str] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'privateKey' in kwargs:
-            private_key = kwargs['privateKey']
-
-        _setter("certificate", certificate)
-        _setter("private_key", private_key)
+        pulumi.set(__self__, "certificate", certificate)
+        pulumi.set(__self__, "private_key", private_key)
         if chain is not None:
-            _setter("chain", chain)
+            pulumi.set(__self__, "chain", chain)
 
     @property
     @pulumi.getter
@@ -1365,21 +1089,8 @@ class GetApplicationFilterResult(dict):
         :param str name: Attribute name to filter with.
         :param Sequence[str] values: One or more values filter with.
         """
-        GetApplicationFilterResult._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            name=name,
-            values=values,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             name: str,
-             values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("name", name)
-        _setter("values", values)
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "values", values)
 
     @property
     @pulumi.getter
@@ -1407,21 +1118,8 @@ class GetBackupFilterResult(dict):
         :param str name: Attribute name to filter with.
         :param Sequence[str] values: One or more values filter with.
         """
-        GetBackupFilterResult._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            name=name,
-            values=values,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             name: str,
-             values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("name", name)
-        _setter("values", values)
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "values", values)
 
     @property
     @pulumi.getter
@@ -1449,21 +1147,8 @@ class GetBareMetalPlanFilterResult(dict):
         :param str name: Attribute name to filter with.
         :param Sequence[str] values: One or more values filter with.
         """
-        GetBareMetalPlanFilterResult._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            name=name,
-            values=values,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             name: str,
-             values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("name", name)
-        _setter("values", values)
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "values", values)
 
     @property
     @pulumi.getter
@@ -1491,21 +1176,8 @@ class GetBareMetalServerFilterResult(dict):
         :param str name: Attribute name to filter with.
         :param Sequence[str] values: One or more values filter with.
         """
-        GetBareMetalServerFilterResult._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            name=name,
-            values=values,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             name: str,
-             values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("name", name)
-        _setter("values", values)
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "values", values)
 
     @property
     @pulumi.getter
@@ -1533,21 +1205,8 @@ class GetBlockStorageFilterResult(dict):
         :param str name: Attribute name to filter with.
         :param Sequence[str] values: One or more values filter with.
         """
-        GetBlockStorageFilterResult._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            name=name,
-            values=values,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             name: str,
-             values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("name", name)
-        _setter("values", values)
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "values", values)
 
     @property
     @pulumi.getter
@@ -1575,21 +1234,8 @@ class GetDatabaseFilterResult(dict):
         :param str name: Attribute name to filter with.
         :param Sequence[str] values: One or more values filter with.
         """
-        GetDatabaseFilterResult._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            name=name,
-            values=values,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             name: str,
-             values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("name", name)
-        _setter("values", values)
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "values", values)
 
     @property
     @pulumi.getter
@@ -1668,139 +1314,37 @@ class GetDatabaseReadReplicaResult(dict):
         :param str tag: The managed database's tag.
         :param Sequence[str] trusted_ips: A list of allowed IP addresses for the managed database.
         :param str user: The primary admin user for the managed database.
+        :param str vpc_id: The ID of the VPC Network attached to the Managed Database.
         """
-        GetDatabaseReadReplicaResult._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            cluster_time_zone=cluster_time_zone,
-            database_engine=database_engine,
-            database_engine_version=database_engine_version,
-            date_created=date_created,
-            dbname=dbname,
-            host=host,
-            id=id,
-            label=label,
-            latest_backup=latest_backup,
-            maintenance_dow=maintenance_dow,
-            maintenance_time=maintenance_time,
-            mysql_long_query_time=mysql_long_query_time,
-            mysql_require_primary_key=mysql_require_primary_key,
-            mysql_slow_query_log=mysql_slow_query_log,
-            mysql_sql_modes=mysql_sql_modes,
-            password=password,
-            plan=plan,
-            plan_disk=plan_disk,
-            plan_ram=plan_ram,
-            plan_replicas=plan_replicas,
-            plan_vcpus=plan_vcpus,
-            port=port,
-            redis_eviction_policy=redis_eviction_policy,
-            region=region,
-            status=status,
-            tag=tag,
-            trusted_ips=trusted_ips,
-            user=user,
-            vpc_id=vpc_id,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             cluster_time_zone: str,
-             database_engine: str,
-             database_engine_version: str,
-             date_created: str,
-             dbname: str,
-             host: str,
-             id: str,
-             label: str,
-             latest_backup: str,
-             maintenance_dow: str,
-             maintenance_time: str,
-             mysql_long_query_time: int,
-             mysql_require_primary_key: bool,
-             mysql_slow_query_log: bool,
-             mysql_sql_modes: Sequence[str],
-             password: str,
-             plan: str,
-             plan_disk: int,
-             plan_ram: int,
-             plan_replicas: int,
-             plan_vcpus: int,
-             port: str,
-             redis_eviction_policy: str,
-             region: str,
-             status: str,
-             tag: str,
-             trusted_ips: Sequence[str],
-             user: str,
-             vpc_id: str,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'clusterTimeZone' in kwargs:
-            cluster_time_zone = kwargs['clusterTimeZone']
-        if 'databaseEngine' in kwargs:
-            database_engine = kwargs['databaseEngine']
-        if 'databaseEngineVersion' in kwargs:
-            database_engine_version = kwargs['databaseEngineVersion']
-        if 'dateCreated' in kwargs:
-            date_created = kwargs['dateCreated']
-        if 'latestBackup' in kwargs:
-            latest_backup = kwargs['latestBackup']
-        if 'maintenanceDow' in kwargs:
-            maintenance_dow = kwargs['maintenanceDow']
-        if 'maintenanceTime' in kwargs:
-            maintenance_time = kwargs['maintenanceTime']
-        if 'mysqlLongQueryTime' in kwargs:
-            mysql_long_query_time = kwargs['mysqlLongQueryTime']
-        if 'mysqlRequirePrimaryKey' in kwargs:
-            mysql_require_primary_key = kwargs['mysqlRequirePrimaryKey']
-        if 'mysqlSlowQueryLog' in kwargs:
-            mysql_slow_query_log = kwargs['mysqlSlowQueryLog']
-        if 'mysqlSqlModes' in kwargs:
-            mysql_sql_modes = kwargs['mysqlSqlModes']
-        if 'planDisk' in kwargs:
-            plan_disk = kwargs['planDisk']
-        if 'planRam' in kwargs:
-            plan_ram = kwargs['planRam']
-        if 'planReplicas' in kwargs:
-            plan_replicas = kwargs['planReplicas']
-        if 'planVcpus' in kwargs:
-            plan_vcpus = kwargs['planVcpus']
-        if 'redisEvictionPolicy' in kwargs:
-            redis_eviction_policy = kwargs['redisEvictionPolicy']
-        if 'trustedIps' in kwargs:
-            trusted_ips = kwargs['trustedIps']
-        if 'vpcId' in kwargs:
-            vpc_id = kwargs['vpcId']
-
-        _setter("cluster_time_zone", cluster_time_zone)
-        _setter("database_engine", database_engine)
-        _setter("database_engine_version", database_engine_version)
-        _setter("date_created", date_created)
-        _setter("dbname", dbname)
-        _setter("host", host)
-        _setter("id", id)
-        _setter("label", label)
-        _setter("latest_backup", latest_backup)
-        _setter("maintenance_dow", maintenance_dow)
-        _setter("maintenance_time", maintenance_time)
-        _setter("mysql_long_query_time", mysql_long_query_time)
-        _setter("mysql_require_primary_key", mysql_require_primary_key)
-        _setter("mysql_slow_query_log", mysql_slow_query_log)
-        _setter("mysql_sql_modes", mysql_sql_modes)
-        _setter("password", password)
-        _setter("plan", plan)
-        _setter("plan_disk", plan_disk)
-        _setter("plan_ram", plan_ram)
-        _setter("plan_replicas", plan_replicas)
-        _setter("plan_vcpus", plan_vcpus)
-        _setter("port", port)
-        _setter("redis_eviction_policy", redis_eviction_policy)
-        _setter("region", region)
-        _setter("status", status)
-        _setter("tag", tag)
-        _setter("trusted_ips", trusted_ips)
-        _setter("user", user)
-        _setter("vpc_id", vpc_id)
+        pulumi.set(__self__, "cluster_time_zone", cluster_time_zone)
+        pulumi.set(__self__, "database_engine", database_engine)
+        pulumi.set(__self__, "database_engine_version", database_engine_version)
+        pulumi.set(__self__, "date_created", date_created)
+        pulumi.set(__self__, "dbname", dbname)
+        pulumi.set(__self__, "host", host)
+        pulumi.set(__self__, "id", id)
+        pulumi.set(__self__, "label", label)
+        pulumi.set(__self__, "latest_backup", latest_backup)
+        pulumi.set(__self__, "maintenance_dow", maintenance_dow)
+        pulumi.set(__self__, "maintenance_time", maintenance_time)
+        pulumi.set(__self__, "mysql_long_query_time", mysql_long_query_time)
+        pulumi.set(__self__, "mysql_require_primary_key", mysql_require_primary_key)
+        pulumi.set(__self__, "mysql_slow_query_log", mysql_slow_query_log)
+        pulumi.set(__self__, "mysql_sql_modes", mysql_sql_modes)
+        pulumi.set(__self__, "password", password)
+        pulumi.set(__self__, "plan", plan)
+        pulumi.set(__self__, "plan_disk", plan_disk)
+        pulumi.set(__self__, "plan_ram", plan_ram)
+        pulumi.set(__self__, "plan_replicas", plan_replicas)
+        pulumi.set(__self__, "plan_vcpus", plan_vcpus)
+        pulumi.set(__self__, "port", port)
+        pulumi.set(__self__, "redis_eviction_policy", redis_eviction_policy)
+        pulumi.set(__self__, "region", region)
+        pulumi.set(__self__, "status", status)
+        pulumi.set(__self__, "tag", tag)
+        pulumi.set(__self__, "trusted_ips", trusted_ips)
+        pulumi.set(__self__, "user", user)
+        pulumi.set(__self__, "vpc_id", vpc_id)
 
     @property
     @pulumi.getter(name="clusterTimeZone")
@@ -2026,6 +1570,9 @@ class GetDatabaseReadReplicaResult(dict):
     @property
     @pulumi.getter(name="vpcId")
     def vpc_id(self) -> str:
+        """
+        The ID of the VPC Network attached to the Managed Database.
+        """
         return pulumi.get(self, "vpc_id")
 
 
@@ -2038,21 +1585,8 @@ class GetFirewallGroupFilterResult(dict):
         :param str name: Attribute name to filter with.
         :param Sequence[str] values: One or more values filter with.
         """
-        GetFirewallGroupFilterResult._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            name=name,
-            values=values,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             name: str,
-             values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("name", name)
-        _setter("values", values)
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "values", values)
 
     @property
     @pulumi.getter
@@ -2080,21 +1614,8 @@ class GetInstanceFilterResult(dict):
         :param str name: Attribute name to filter with.
         :param Sequence[str] values: One or more values filter with.
         """
-        GetInstanceFilterResult._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            name=name,
-            values=values,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             name: str,
-             values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("name", name)
-        _setter("values", values)
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "values", values)
 
     @property
     @pulumi.getter
@@ -2122,21 +1643,8 @@ class GetInstanceIpv4FilterResult(dict):
         :param str name: Attribute name to filter with.
         :param Sequence[str] values: One or more values to filter with.
         """
-        GetInstanceIpv4FilterResult._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            name=name,
-            values=values,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             name: str,
-             values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("name", name)
-        _setter("values", values)
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "values", values)
 
     @property
     @pulumi.getter
@@ -2164,21 +1672,8 @@ class GetIsoPrivateFilterResult(dict):
         :param str name: Attribute name to filter with.
         :param Sequence[str] values: One or more values filter with.
         """
-        GetIsoPrivateFilterResult._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            name=name,
-            values=values,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             name: str,
-             values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("name", name)
-        _setter("values", values)
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "values", values)
 
     @property
     @pulumi.getter
@@ -2206,21 +1701,8 @@ class GetIsoPublicFilterResult(dict):
         :param str name: Attribute name to filter with.
         :param Sequence[str] values: One or more values filter with.
         """
-        GetIsoPublicFilterResult._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            name=name,
-            values=values,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             name: str,
-             values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("name", name)
-        _setter("values", values)
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "values", values)
 
     @property
     @pulumi.getter
@@ -2248,21 +1730,8 @@ class GetKubernetesFilterResult(dict):
         :param str name: Attribute name to filter with.
         :param Sequence[str] values: One or more values filter with.
         """
-        GetKubernetesFilterResult._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            name=name,
-            values=values,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             name: str,
-             values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("name", name)
-        _setter("values", values)
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "values", values)
 
     @property
     @pulumi.getter
@@ -2310,66 +1779,21 @@ class GetKubernetesNodePoolResult(dict):
         :param int max_nodes: The maximum number of nodes used by the auto scaler.
         :param int min_nodes: The minimum number of nodes used by the auto scaler.
         """
-        GetKubernetesNodePoolResult._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            date_created=date_created,
-            date_updated=date_updated,
-            id=id,
-            label=label,
-            node_quantity=node_quantity,
-            nodes=nodes,
-            plan=plan,
-            status=status,
-            tag=tag,
-            auto_scaler=auto_scaler,
-            max_nodes=max_nodes,
-            min_nodes=min_nodes,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             date_created: str,
-             date_updated: str,
-             id: str,
-             label: str,
-             node_quantity: int,
-             nodes: Sequence['outputs.GetKubernetesNodePoolNodeResult'],
-             plan: str,
-             status: str,
-             tag: str,
-             auto_scaler: Optional[bool] = None,
-             max_nodes: Optional[int] = None,
-             min_nodes: Optional[int] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'dateCreated' in kwargs:
-            date_created = kwargs['dateCreated']
-        if 'dateUpdated' in kwargs:
-            date_updated = kwargs['dateUpdated']
-        if 'nodeQuantity' in kwargs:
-            node_quantity = kwargs['nodeQuantity']
-        if 'autoScaler' in kwargs:
-            auto_scaler = kwargs['autoScaler']
-        if 'maxNodes' in kwargs:
-            max_nodes = kwargs['maxNodes']
-        if 'minNodes' in kwargs:
-            min_nodes = kwargs['minNodes']
-
-        _setter("date_created", date_created)
-        _setter("date_updated", date_updated)
-        _setter("id", id)
-        _setter("label", label)
-        _setter("node_quantity", node_quantity)
-        _setter("nodes", nodes)
-        _setter("plan", plan)
-        _setter("status", status)
-        _setter("tag", tag)
+        pulumi.set(__self__, "date_created", date_created)
+        pulumi.set(__self__, "date_updated", date_updated)
+        pulumi.set(__self__, "id", id)
+        pulumi.set(__self__, "label", label)
+        pulumi.set(__self__, "node_quantity", node_quantity)
+        pulumi.set(__self__, "nodes", nodes)
+        pulumi.set(__self__, "plan", plan)
+        pulumi.set(__self__, "status", status)
+        pulumi.set(__self__, "tag", tag)
         if auto_scaler is not None:
-            _setter("auto_scaler", auto_scaler)
+            pulumi.set(__self__, "auto_scaler", auto_scaler)
         if max_nodes is not None:
-            _setter("max_nodes", max_nodes)
+            pulumi.set(__self__, "max_nodes", max_nodes)
         if min_nodes is not None:
-            _setter("min_nodes", min_nodes)
+            pulumi.set(__self__, "min_nodes", min_nodes)
 
     @property
     @pulumi.getter(name="dateCreated")
@@ -2481,29 +1905,10 @@ class GetKubernetesNodePoolNodeResult(dict):
         :param str label: Label of node.
         :param str status: Status of node.
         """
-        GetKubernetesNodePoolNodeResult._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            date_created=date_created,
-            id=id,
-            label=label,
-            status=status,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             date_created: str,
-             id: str,
-             label: str,
-             status: str,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'dateCreated' in kwargs:
-            date_created = kwargs['dateCreated']
-
-        _setter("date_created", date_created)
-        _setter("id", id)
-        _setter("label", label)
-        _setter("status", status)
+        pulumi.set(__self__, "date_created", date_created)
+        pulumi.set(__self__, "id", id)
+        pulumi.set(__self__, "label", label)
+        pulumi.set(__self__, "status", status)
 
     @property
     @pulumi.getter(name="dateCreated")
@@ -2547,21 +1952,8 @@ class GetLoadBalancerFilterResult(dict):
         :param str name: Attribute name to filter with.
         :param Sequence[str] values: One or more values filter with.
         """
-        GetLoadBalancerFilterResult._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            name=name,
-            values=values,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             name: str,
-             values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("name", name)
-        _setter("values", values)
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "values", values)
 
     @property
     @pulumi.getter
@@ -2589,21 +1981,8 @@ class GetObjectStorageClusterFilterResult(dict):
         :param str name: Attribute name to filter with.
         :param Sequence[str] values: One or more values filter with.
         """
-        GetObjectStorageClusterFilterResult._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            name=name,
-            values=values,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             name: str,
-             values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("name", name)
-        _setter("values", values)
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "values", values)
 
     @property
     @pulumi.getter
@@ -2631,21 +2010,8 @@ class GetObjectStorageFilterResult(dict):
         :param str name: Attribute name to filter with.
         :param Sequence[str] values: One or more values filter with.
         """
-        GetObjectStorageFilterResult._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            name=name,
-            values=values,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             name: str,
-             values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("name", name)
-        _setter("values", values)
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "values", values)
 
     @property
     @pulumi.getter
@@ -2673,21 +2039,8 @@ class GetOsFilterResult(dict):
         :param str name: Attribute name to filter with.
         :param Sequence[str] values: One or more values filter with.
         """
-        GetOsFilterResult._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            name=name,
-            values=values,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             name: str,
-             values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("name", name)
-        _setter("values", values)
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "values", values)
 
     @property
     @pulumi.getter
@@ -2715,21 +2068,8 @@ class GetPlanFilterResult(dict):
         :param str name: Attribute name to filter with.
         :param Sequence[str] values: One or more values filter with.
         """
-        GetPlanFilterResult._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            name=name,
-            values=values,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             name: str,
-             values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("name", name)
-        _setter("values", values)
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "values", values)
 
     @property
     @pulumi.getter
@@ -2757,21 +2097,8 @@ class GetPrivateNetworkFilterResult(dict):
         :param str name: Attribute name to filter with.
         :param Sequence[str] values: One or more values filter with.
         """
-        GetPrivateNetworkFilterResult._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            name=name,
-            values=values,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             name: str,
-             values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("name", name)
-        _setter("values", values)
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "values", values)
 
     @property
     @pulumi.getter
@@ -2799,21 +2126,8 @@ class GetRegionFilterResult(dict):
         :param str name: Attribute name to filter with.
         :param Sequence[str] values: One or more values filter with.
         """
-        GetRegionFilterResult._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            name=name,
-            values=values,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             name: str,
-             values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("name", name)
-        _setter("values", values)
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "values", values)
 
     @property
     @pulumi.getter
@@ -2841,21 +2155,8 @@ class GetReservedIpFilterResult(dict):
         :param str name: Attribute name to filter with.
         :param Sequence[str] values: One or more values filter with.
         """
-        GetReservedIpFilterResult._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            name=name,
-            values=values,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             name: str,
-             values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("name", name)
-        _setter("values", values)
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "values", values)
 
     @property
     @pulumi.getter
@@ -2883,21 +2184,8 @@ class GetReverseIpv4FilterResult(dict):
         :param str name: Attribute name to filter with.
         :param Sequence[str] values: One or more values to filter with.
         """
-        GetReverseIpv4FilterResult._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            name=name,
-            values=values,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             name: str,
-             values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("name", name)
-        _setter("values", values)
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "values", values)
 
     @property
     @pulumi.getter
@@ -2925,21 +2213,8 @@ class GetReverseIpv6FilterResult(dict):
         :param str name: Attribute name to filter with.
         :param Sequence[str] values: One or more values to filter with.
         """
-        GetReverseIpv6FilterResult._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            name=name,
-            values=values,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             name: str,
-             values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("name", name)
-        _setter("values", values)
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "values", values)
 
     @property
     @pulumi.getter
@@ -2967,21 +2242,8 @@ class GetSnapshotFilterResult(dict):
         :param str name: Attribute name to filter with.
         :param Sequence[str] values: One or more values filter with.
         """
-        GetSnapshotFilterResult._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            name=name,
-            values=values,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             name: str,
-             values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("name", name)
-        _setter("values", values)
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "values", values)
 
     @property
     @pulumi.getter
@@ -3009,21 +2271,8 @@ class GetSshKeyFilterResult(dict):
         :param str name: Attribute name to filter with.
         :param Sequence[str] values: One or more values filter with.
         """
-        GetSshKeyFilterResult._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            name=name,
-            values=values,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             name: str,
-             values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("name", name)
-        _setter("values", values)
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "values", values)
 
     @property
     @pulumi.getter
@@ -3051,21 +2300,8 @@ class GetStartupScriptFilterResult(dict):
         :param str name: Attribute name to filter with.
         :param Sequence[str] values: One or more values filter with.
         """
-        GetStartupScriptFilterResult._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            name=name,
-            values=values,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             name: str,
-             values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("name", name)
-        _setter("values", values)
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "values", values)
 
     @property
     @pulumi.getter
@@ -3093,21 +2329,8 @@ class GetUserFilterResult(dict):
         :param str name: Attribute name to filter with.
         :param Sequence[str] values: One or more values filter with.
         """
-        GetUserFilterResult._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            name=name,
-            values=values,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             name: str,
-             values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("name", name)
-        _setter("values", values)
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "values", values)
 
     @property
     @pulumi.getter
@@ -3135,21 +2358,8 @@ class GetVpc2FilterResult(dict):
         :param str name: Attribute name to filter with.
         :param Sequence[str] values: One or more values filter with.
         """
-        GetVpc2FilterResult._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            name=name,
-            values=values,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             name: str,
-             values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("name", name)
-        _setter("values", values)
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "values", values)
 
     @property
     @pulumi.getter
@@ -3177,21 +2387,8 @@ class GetVpcFilterResult(dict):
         :param str name: Attribute name to filter with.
         :param Sequence[str] values: One or more values filter with.
         """
-        GetVpcFilterResult._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            name=name,
-            values=values,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             name: str,
-             values: Sequence[str],
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-
-        _setter("name", name)
-        _setter("values", values)
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "values", values)
 
     @property
     @pulumi.getter

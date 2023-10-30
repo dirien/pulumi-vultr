@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 
 __all__ = ['DatabaseConnectionPoolArgs', 'DatabaseConnectionPool']
@@ -29,36 +29,13 @@ class DatabaseConnectionPoolArgs:
         :param pulumi.Input[str] username: The database user to use for the new managed database connection pool.
         :param pulumi.Input[str] name: The name of the new managed database connection pool.
         """
-        DatabaseConnectionPoolArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            database=database,
-            database_id=database_id,
-            mode=mode,
-            size=size,
-            username=username,
-            name=name,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             database: pulumi.Input[str],
-             database_id: pulumi.Input[str],
-             mode: pulumi.Input[str],
-             size: pulumi.Input[int],
-             username: pulumi.Input[str],
-             name: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'databaseId' in kwargs:
-            database_id = kwargs['databaseId']
-
-        _setter("database", database)
-        _setter("database_id", database_id)
-        _setter("mode", mode)
-        _setter("size", size)
-        _setter("username", username)
+        pulumi.set(__self__, "database", database)
+        pulumi.set(__self__, "database_id", database_id)
+        pulumi.set(__self__, "mode", mode)
+        pulumi.set(__self__, "size", size)
+        pulumi.set(__self__, "username", username)
         if name is not None:
-            _setter("name", name)
+            pulumi.set(__self__, "name", name)
 
     @property
     @pulumi.getter
@@ -151,41 +128,18 @@ class _DatabaseConnectionPoolState:
         :param pulumi.Input[int] size: The size of the new managed database connection pool.
         :param pulumi.Input[str] username: The database user to use for the new managed database connection pool.
         """
-        _DatabaseConnectionPoolState._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            database=database,
-            database_id=database_id,
-            mode=mode,
-            name=name,
-            size=size,
-            username=username,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             database: Optional[pulumi.Input[str]] = None,
-             database_id: Optional[pulumi.Input[str]] = None,
-             mode: Optional[pulumi.Input[str]] = None,
-             name: Optional[pulumi.Input[str]] = None,
-             size: Optional[pulumi.Input[int]] = None,
-             username: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'databaseId' in kwargs:
-            database_id = kwargs['databaseId']
-
         if database is not None:
-            _setter("database", database)
+            pulumi.set(__self__, "database", database)
         if database_id is not None:
-            _setter("database_id", database_id)
+            pulumi.set(__self__, "database_id", database_id)
         if mode is not None:
-            _setter("mode", mode)
+            pulumi.set(__self__, "mode", mode)
         if name is not None:
-            _setter("name", name)
+            pulumi.set(__self__, "name", name)
         if size is not None:
-            _setter("size", size)
+            pulumi.set(__self__, "size", size)
         if username is not None:
-            _setter("username", username)
+            pulumi.set(__self__, "username", username)
 
     @property
     @pulumi.getter
@@ -335,10 +289,6 @@ class DatabaseConnectionPool(pulumi.CustomResource):
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
-            kwargs = kwargs or {}
-            def _setter(key, value):
-                kwargs[key] = value
-            DatabaseConnectionPoolArgs._configure(_setter, **kwargs)
             __self__._internal_init(resource_name, *args, **kwargs)
 
     def _internal_init(__self__,

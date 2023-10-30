@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 
 __all__ = ['DatabaseReplicaArgs', 'DatabaseReplica']
@@ -39,72 +39,25 @@ class DatabaseReplicaArgs:
         :param pulumi.Input[str] tag: The tag to assign to the managed database read replica.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] trusted_ips: A list of allowed IP addresses for the managed database read replica.
         """
-        DatabaseReplicaArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            database_id=database_id,
-            label=label,
-            region=region,
-            mysql_long_query_time=mysql_long_query_time,
-            mysql_require_primary_key=mysql_require_primary_key,
-            mysql_slow_query_log=mysql_slow_query_log,
-            mysql_sql_modes=mysql_sql_modes,
-            plan_disk=plan_disk,
-            redis_eviction_policy=redis_eviction_policy,
-            tag=tag,
-            trusted_ips=trusted_ips,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             database_id: pulumi.Input[str],
-             label: pulumi.Input[str],
-             region: pulumi.Input[str],
-             mysql_long_query_time: Optional[pulumi.Input[int]] = None,
-             mysql_require_primary_key: Optional[pulumi.Input[bool]] = None,
-             mysql_slow_query_log: Optional[pulumi.Input[bool]] = None,
-             mysql_sql_modes: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             plan_disk: Optional[pulumi.Input[int]] = None,
-             redis_eviction_policy: Optional[pulumi.Input[str]] = None,
-             tag: Optional[pulumi.Input[str]] = None,
-             trusted_ips: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'databaseId' in kwargs:
-            database_id = kwargs['databaseId']
-        if 'mysqlLongQueryTime' in kwargs:
-            mysql_long_query_time = kwargs['mysqlLongQueryTime']
-        if 'mysqlRequirePrimaryKey' in kwargs:
-            mysql_require_primary_key = kwargs['mysqlRequirePrimaryKey']
-        if 'mysqlSlowQueryLog' in kwargs:
-            mysql_slow_query_log = kwargs['mysqlSlowQueryLog']
-        if 'mysqlSqlModes' in kwargs:
-            mysql_sql_modes = kwargs['mysqlSqlModes']
-        if 'planDisk' in kwargs:
-            plan_disk = kwargs['planDisk']
-        if 'redisEvictionPolicy' in kwargs:
-            redis_eviction_policy = kwargs['redisEvictionPolicy']
-        if 'trustedIps' in kwargs:
-            trusted_ips = kwargs['trustedIps']
-
-        _setter("database_id", database_id)
-        _setter("label", label)
-        _setter("region", region)
+        pulumi.set(__self__, "database_id", database_id)
+        pulumi.set(__self__, "label", label)
+        pulumi.set(__self__, "region", region)
         if mysql_long_query_time is not None:
-            _setter("mysql_long_query_time", mysql_long_query_time)
+            pulumi.set(__self__, "mysql_long_query_time", mysql_long_query_time)
         if mysql_require_primary_key is not None:
-            _setter("mysql_require_primary_key", mysql_require_primary_key)
+            pulumi.set(__self__, "mysql_require_primary_key", mysql_require_primary_key)
         if mysql_slow_query_log is not None:
-            _setter("mysql_slow_query_log", mysql_slow_query_log)
+            pulumi.set(__self__, "mysql_slow_query_log", mysql_slow_query_log)
         if mysql_sql_modes is not None:
-            _setter("mysql_sql_modes", mysql_sql_modes)
+            pulumi.set(__self__, "mysql_sql_modes", mysql_sql_modes)
         if plan_disk is not None:
-            _setter("plan_disk", plan_disk)
+            pulumi.set(__self__, "plan_disk", plan_disk)
         if redis_eviction_policy is not None:
-            _setter("redis_eviction_policy", redis_eviction_policy)
+            pulumi.set(__self__, "redis_eviction_policy", redis_eviction_policy)
         if tag is not None:
-            _setter("tag", tag)
+            pulumi.set(__self__, "tag", tag)
         if trusted_ips is not None:
-            _setter("trusted_ips", trusted_ips)
+            pulumi.set(__self__, "trusted_ips", trusted_ips)
 
     @property
     @pulumi.getter(name="databaseId")
@@ -302,169 +255,64 @@ class _DatabaseReplicaState:
         :param pulumi.Input[Sequence[pulumi.Input[str]]] trusted_ips: A list of allowed IP addresses for the managed database read replica.
         :param pulumi.Input[str] user: The primary admin user for the managed database read replica.
         """
-        _DatabaseReplicaState._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            cluster_time_zone=cluster_time_zone,
-            database_engine=database_engine,
-            database_engine_version=database_engine_version,
-            database_id=database_id,
-            date_created=date_created,
-            dbname=dbname,
-            host=host,
-            label=label,
-            latest_backup=latest_backup,
-            maintenance_dow=maintenance_dow,
-            maintenance_time=maintenance_time,
-            mysql_long_query_time=mysql_long_query_time,
-            mysql_require_primary_key=mysql_require_primary_key,
-            mysql_slow_query_log=mysql_slow_query_log,
-            mysql_sql_modes=mysql_sql_modes,
-            password=password,
-            plan=plan,
-            plan_disk=plan_disk,
-            plan_ram=plan_ram,
-            plan_replicas=plan_replicas,
-            plan_vcpus=plan_vcpus,
-            port=port,
-            redis_eviction_policy=redis_eviction_policy,
-            region=region,
-            status=status,
-            tag=tag,
-            trusted_ips=trusted_ips,
-            user=user,
-            vpc_id=vpc_id,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             cluster_time_zone: Optional[pulumi.Input[str]] = None,
-             database_engine: Optional[pulumi.Input[str]] = None,
-             database_engine_version: Optional[pulumi.Input[str]] = None,
-             database_id: Optional[pulumi.Input[str]] = None,
-             date_created: Optional[pulumi.Input[str]] = None,
-             dbname: Optional[pulumi.Input[str]] = None,
-             host: Optional[pulumi.Input[str]] = None,
-             label: Optional[pulumi.Input[str]] = None,
-             latest_backup: Optional[pulumi.Input[str]] = None,
-             maintenance_dow: Optional[pulumi.Input[str]] = None,
-             maintenance_time: Optional[pulumi.Input[str]] = None,
-             mysql_long_query_time: Optional[pulumi.Input[int]] = None,
-             mysql_require_primary_key: Optional[pulumi.Input[bool]] = None,
-             mysql_slow_query_log: Optional[pulumi.Input[bool]] = None,
-             mysql_sql_modes: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             password: Optional[pulumi.Input[str]] = None,
-             plan: Optional[pulumi.Input[str]] = None,
-             plan_disk: Optional[pulumi.Input[int]] = None,
-             plan_ram: Optional[pulumi.Input[int]] = None,
-             plan_replicas: Optional[pulumi.Input[int]] = None,
-             plan_vcpus: Optional[pulumi.Input[int]] = None,
-             port: Optional[pulumi.Input[str]] = None,
-             redis_eviction_policy: Optional[pulumi.Input[str]] = None,
-             region: Optional[pulumi.Input[str]] = None,
-             status: Optional[pulumi.Input[str]] = None,
-             tag: Optional[pulumi.Input[str]] = None,
-             trusted_ips: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             user: Optional[pulumi.Input[str]] = None,
-             vpc_id: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'clusterTimeZone' in kwargs:
-            cluster_time_zone = kwargs['clusterTimeZone']
-        if 'databaseEngine' in kwargs:
-            database_engine = kwargs['databaseEngine']
-        if 'databaseEngineVersion' in kwargs:
-            database_engine_version = kwargs['databaseEngineVersion']
-        if 'databaseId' in kwargs:
-            database_id = kwargs['databaseId']
-        if 'dateCreated' in kwargs:
-            date_created = kwargs['dateCreated']
-        if 'latestBackup' in kwargs:
-            latest_backup = kwargs['latestBackup']
-        if 'maintenanceDow' in kwargs:
-            maintenance_dow = kwargs['maintenanceDow']
-        if 'maintenanceTime' in kwargs:
-            maintenance_time = kwargs['maintenanceTime']
-        if 'mysqlLongQueryTime' in kwargs:
-            mysql_long_query_time = kwargs['mysqlLongQueryTime']
-        if 'mysqlRequirePrimaryKey' in kwargs:
-            mysql_require_primary_key = kwargs['mysqlRequirePrimaryKey']
-        if 'mysqlSlowQueryLog' in kwargs:
-            mysql_slow_query_log = kwargs['mysqlSlowQueryLog']
-        if 'mysqlSqlModes' in kwargs:
-            mysql_sql_modes = kwargs['mysqlSqlModes']
-        if 'planDisk' in kwargs:
-            plan_disk = kwargs['planDisk']
-        if 'planRam' in kwargs:
-            plan_ram = kwargs['planRam']
-        if 'planReplicas' in kwargs:
-            plan_replicas = kwargs['planReplicas']
-        if 'planVcpus' in kwargs:
-            plan_vcpus = kwargs['planVcpus']
-        if 'redisEvictionPolicy' in kwargs:
-            redis_eviction_policy = kwargs['redisEvictionPolicy']
-        if 'trustedIps' in kwargs:
-            trusted_ips = kwargs['trustedIps']
-        if 'vpcId' in kwargs:
-            vpc_id = kwargs['vpcId']
-
         if cluster_time_zone is not None:
-            _setter("cluster_time_zone", cluster_time_zone)
+            pulumi.set(__self__, "cluster_time_zone", cluster_time_zone)
         if database_engine is not None:
-            _setter("database_engine", database_engine)
+            pulumi.set(__self__, "database_engine", database_engine)
         if database_engine_version is not None:
-            _setter("database_engine_version", database_engine_version)
+            pulumi.set(__self__, "database_engine_version", database_engine_version)
         if database_id is not None:
-            _setter("database_id", database_id)
+            pulumi.set(__self__, "database_id", database_id)
         if date_created is not None:
-            _setter("date_created", date_created)
+            pulumi.set(__self__, "date_created", date_created)
         if dbname is not None:
-            _setter("dbname", dbname)
+            pulumi.set(__self__, "dbname", dbname)
         if host is not None:
-            _setter("host", host)
+            pulumi.set(__self__, "host", host)
         if label is not None:
-            _setter("label", label)
+            pulumi.set(__self__, "label", label)
         if latest_backup is not None:
-            _setter("latest_backup", latest_backup)
+            pulumi.set(__self__, "latest_backup", latest_backup)
         if maintenance_dow is not None:
-            _setter("maintenance_dow", maintenance_dow)
+            pulumi.set(__self__, "maintenance_dow", maintenance_dow)
         if maintenance_time is not None:
-            _setter("maintenance_time", maintenance_time)
+            pulumi.set(__self__, "maintenance_time", maintenance_time)
         if mysql_long_query_time is not None:
-            _setter("mysql_long_query_time", mysql_long_query_time)
+            pulumi.set(__self__, "mysql_long_query_time", mysql_long_query_time)
         if mysql_require_primary_key is not None:
-            _setter("mysql_require_primary_key", mysql_require_primary_key)
+            pulumi.set(__self__, "mysql_require_primary_key", mysql_require_primary_key)
         if mysql_slow_query_log is not None:
-            _setter("mysql_slow_query_log", mysql_slow_query_log)
+            pulumi.set(__self__, "mysql_slow_query_log", mysql_slow_query_log)
         if mysql_sql_modes is not None:
-            _setter("mysql_sql_modes", mysql_sql_modes)
+            pulumi.set(__self__, "mysql_sql_modes", mysql_sql_modes)
         if password is not None:
-            _setter("password", password)
+            pulumi.set(__self__, "password", password)
         if plan is not None:
-            _setter("plan", plan)
+            pulumi.set(__self__, "plan", plan)
         if plan_disk is not None:
-            _setter("plan_disk", plan_disk)
+            pulumi.set(__self__, "plan_disk", plan_disk)
         if plan_ram is not None:
-            _setter("plan_ram", plan_ram)
+            pulumi.set(__self__, "plan_ram", plan_ram)
         if plan_replicas is not None:
-            _setter("plan_replicas", plan_replicas)
+            pulumi.set(__self__, "plan_replicas", plan_replicas)
         if plan_vcpus is not None:
-            _setter("plan_vcpus", plan_vcpus)
+            pulumi.set(__self__, "plan_vcpus", plan_vcpus)
         if port is not None:
-            _setter("port", port)
+            pulumi.set(__self__, "port", port)
         if redis_eviction_policy is not None:
-            _setter("redis_eviction_policy", redis_eviction_policy)
+            pulumi.set(__self__, "redis_eviction_policy", redis_eviction_policy)
         if region is not None:
-            _setter("region", region)
+            pulumi.set(__self__, "region", region)
         if status is not None:
-            _setter("status", status)
+            pulumi.set(__self__, "status", status)
         if tag is not None:
-            _setter("tag", tag)
+            pulumi.set(__self__, "tag", tag)
         if trusted_ips is not None:
-            _setter("trusted_ips", trusted_ips)
+            pulumi.set(__self__, "trusted_ips", trusted_ips)
         if user is not None:
-            _setter("user", user)
+            pulumi.set(__self__, "user", user)
         if vpc_id is not None:
-            _setter("vpc_id", vpc_id)
+            pulumi.set(__self__, "vpc_id", vpc_id)
 
     @property
     @pulumi.getter(name="clusterTimeZone")
@@ -895,10 +743,6 @@ class DatabaseReplica(pulumi.CustomResource):
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
-            kwargs = kwargs or {}
-            def _setter(key, value):
-                kwargs[key] = value
-            DatabaseReplicaArgs._configure(_setter, **kwargs)
             __self__._internal_init(resource_name, *args, **kwargs)
 
     def _internal_init(__self__,

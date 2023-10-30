@@ -123,6 +123,9 @@ namespace ediri.Vultr.Outputs
         /// The primary admin user for the managed database.
         /// </summary>
         public readonly string User;
+        /// <summary>
+        /// The ID of the VPC Network attached to the Managed Database.
+        /// </summary>
         public readonly string VpcId;
 
         [OutputConstructor]

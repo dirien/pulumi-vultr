@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 
 __all__ = ['VpcArgs', 'Vpc']
@@ -25,34 +25,13 @@ class VpcArgs:
         :param pulumi.Input[str] v4_subnet: The IPv4 subnet to be used when attaching instances to this VPC.
         :param pulumi.Input[int] v4_subnet_mask: The number of bits for the netmask in CIDR notation. Example: 32
         """
-        VpcArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            region=region,
-            description=description,
-            v4_subnet=v4_subnet,
-            v4_subnet_mask=v4_subnet_mask,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             region: pulumi.Input[str],
-             description: Optional[pulumi.Input[str]] = None,
-             v4_subnet: Optional[pulumi.Input[str]] = None,
-             v4_subnet_mask: Optional[pulumi.Input[int]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'v4Subnet' in kwargs:
-            v4_subnet = kwargs['v4Subnet']
-        if 'v4SubnetMask' in kwargs:
-            v4_subnet_mask = kwargs['v4SubnetMask']
-
-        _setter("region", region)
+        pulumi.set(__self__, "region", region)
         if description is not None:
-            _setter("description", description)
+            pulumi.set(__self__, "description", description)
         if v4_subnet is not None:
-            _setter("v4_subnet", v4_subnet)
+            pulumi.set(__self__, "v4_subnet", v4_subnet)
         if v4_subnet_mask is not None:
-            _setter("v4_subnet_mask", v4_subnet_mask)
+            pulumi.set(__self__, "v4_subnet_mask", v4_subnet_mask)
 
     @property
     @pulumi.getter
@@ -119,41 +98,16 @@ class _VpcState:
         :param pulumi.Input[str] v4_subnet: The IPv4 subnet to be used when attaching instances to this VPC.
         :param pulumi.Input[int] v4_subnet_mask: The number of bits for the netmask in CIDR notation. Example: 32
         """
-        _VpcState._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            date_created=date_created,
-            description=description,
-            region=region,
-            v4_subnet=v4_subnet,
-            v4_subnet_mask=v4_subnet_mask,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             date_created: Optional[pulumi.Input[str]] = None,
-             description: Optional[pulumi.Input[str]] = None,
-             region: Optional[pulumi.Input[str]] = None,
-             v4_subnet: Optional[pulumi.Input[str]] = None,
-             v4_subnet_mask: Optional[pulumi.Input[int]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'dateCreated' in kwargs:
-            date_created = kwargs['dateCreated']
-        if 'v4Subnet' in kwargs:
-            v4_subnet = kwargs['v4Subnet']
-        if 'v4SubnetMask' in kwargs:
-            v4_subnet_mask = kwargs['v4SubnetMask']
-
         if date_created is not None:
-            _setter("date_created", date_created)
+            pulumi.set(__self__, "date_created", date_created)
         if description is not None:
-            _setter("description", description)
+            pulumi.set(__self__, "description", description)
         if region is not None:
-            _setter("region", region)
+            pulumi.set(__self__, "region", region)
         if v4_subnet is not None:
-            _setter("v4_subnet", v4_subnet)
+            pulumi.set(__self__, "v4_subnet", v4_subnet)
         if v4_subnet_mask is not None:
-            _setter("v4_subnet_mask", v4_subnet_mask)
+            pulumi.set(__self__, "v4_subnet_mask", v4_subnet_mask)
 
     @property
     @pulumi.getter(name="dateCreated")
@@ -323,10 +277,6 @@ class Vpc(pulumi.CustomResource):
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
-            kwargs = kwargs or {}
-            def _setter(key, value):
-                kwargs[key] = value
-            VpcArgs._configure(_setter, **kwargs)
             __self__._internal_init(resource_name, *args, **kwargs)
 
     def _internal_init(__self__,

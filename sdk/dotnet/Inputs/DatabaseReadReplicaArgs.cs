@@ -193,6 +193,9 @@ namespace ediri.Vultr.Inputs
         [Input("user")]
         public Input<string>? User { get; set; }
 
+        /// <summary>
+        /// The ID of the VPC Network to attach to the Managed Database.
+        /// </summary>
         [Input("vpcId")]
         public Input<string>? VpcId { get; set; }
 

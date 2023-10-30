@@ -38,7 +38,7 @@ namespace ediri.Vultr
         ///                 Name = "id",
         ///                 Values = new[]
         ///                 {
-        ///                     "vc2-1c-1gb",
+        ///                     "vc2-1c-2gb",
         ///                 },
         ///             },
         ///         },
@@ -78,7 +78,7 @@ namespace ediri.Vultr
         ///                 Name = "id",
         ///                 Values = new[]
         ///                 {
-        ///                     "vc2-1c-1gb",
+        ///                     "vc2-1c-2gb",
         ///                 },
         ///             },
         ///         },

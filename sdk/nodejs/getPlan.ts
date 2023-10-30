@@ -20,7 +20,7 @@ import * as utilities from "./utilities";
  * const myPlan = vultr.getPlan({
  *     filters: [{
  *         name: "id",
- *         values: ["vc2-1c-1gb"],
+ *         values: ["vc2-1c-2gb"],
  *     }],
  * });
  * ```
@@ -105,7 +105,7 @@ export interface GetPlanResult {
  * const myPlan = vultr.getPlan({
  *     filters: [{
  *         name: "id",
- *         values: ["vc2-1c-1gb"],
+ *         values: ["vc2-1c-2gb"],
  *     }],
  * });
  * ```

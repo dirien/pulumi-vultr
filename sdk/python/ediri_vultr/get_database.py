@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -23,7 +23,7 @@ class GetDatabaseResult:
     """
     A collection of values returned by getDatabase.
     """
-    def __init__(__self__, cluster_time_zone=None, database_engine=None, database_engine_version=None, date_created=None, dbname=None, filters=None, host=None, id=None, label=None, latest_backup=None, maintenance_dow=None, maintenance_time=None, mysql_long_query_time=None, mysql_require_primary_key=None, mysql_slow_query_log=None, mysql_sql_modes=None, password=None, plan=None, plan_disk=None, plan_ram=None, plan_replicas=None, plan_vcpus=None, port=None, read_replicas=None, redis_eviction_policy=None, region=None, status=None, tag=None, trusted_ips=None, user=None, vpc_id=None):
+    def __init__(__self__, cluster_time_zone=None, database_engine=None, database_engine_version=None, date_created=None, dbname=None, filters=None, host=None, id=None, label=None, latest_backup=None, maintenance_dow=None, maintenance_time=None, mysql_long_query_time=None, mysql_require_primary_key=None, mysql_slow_query_log=None, mysql_sql_modes=None, password=None, plan=None, plan_disk=None, plan_ram=None, plan_replicas=None, plan_vcpus=None, port=None, public_host=None, read_replicas=None, redis_eviction_policy=None, region=None, status=None, tag=None, trusted_ips=None, user=None, vpc_id=None):
         if cluster_time_zone and not isinstance(cluster_time_zone, str):
             raise TypeError("Expected argument 'cluster_time_zone' to be a str")
         pulumi.set(__self__, "cluster_time_zone", cluster_time_zone)
@@ -93,6 +93,9 @@ class GetDatabaseResult:
         if port and not isinstance(port, str):
             raise TypeError("Expected argument 'port' to be a str")
         pulumi.set(__self__, "port", port)
+        if public_host and not isinstance(public_host, str):
+            raise TypeError("Expected argument 'public_host' to be a str")
+        pulumi.set(__self__, "public_host", public_host)
         if read_replicas and not isinstance(read_replicas, list):
             raise TypeError("Expected argument 'read_replicas' to be a list")
         pulumi.set(__self__, "read_replicas", read_replicas)
@@ -300,6 +303,14 @@ class GetDatabaseResult:
         return pulumi.get(self, "port")
 
     @property
+    @pulumi.getter(name="publicHost")
+    def public_host(self) -> str:
+        """
+        The public hostname assigned to the managed database (VPC-attached only).
+        """
+        return pulumi.get(self, "public_host")
+
+    @property
     @pulumi.getter(name="readReplicas")
     def read_replicas(self) -> Sequence['outputs.GetDatabaseReadReplicaResult']:
         """
@@ -358,6 +369,9 @@ class GetDatabaseResult:
     @property
     @pulumi.getter(name="vpcId")
     def vpc_id(self) -> str:
+        """
+        The ID of the VPC Network attached to the Managed Database.
+        """
         return pulumi.get(self, "vpc_id")
 
 
@@ -390,6 +404,7 @@ class AwaitableGetDatabaseResult(GetDatabaseResult):
             plan_replicas=self.plan_replicas,
             plan_vcpus=self.plan_vcpus,
             port=self.port,
+            public_host=self.public_host,
             read_replicas=self.read_replicas,
             redis_eviction_policy=self.redis_eviction_policy,
             region=self.region,
@@ -451,6 +466,7 @@ def get_database(filters: Optional[Sequence[pulumi.InputType['GetDatabaseFilterA
         plan_replicas=pulumi.get(__ret__, 'plan_replicas'),
         plan_vcpus=pulumi.get(__ret__, 'plan_vcpus'),
         port=pulumi.get(__ret__, 'port'),
+        public_host=pulumi.get(__ret__, 'public_host'),
         read_replicas=pulumi.get(__ret__, 'read_replicas'),
         redis_eviction_policy=pulumi.get(__ret__, 'redis_eviction_policy'),
         region=pulumi.get(__ret__, 'region'),

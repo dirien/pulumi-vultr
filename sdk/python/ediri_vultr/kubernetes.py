@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -27,30 +27,11 @@ class KubernetesArgs:
         :param pulumi.Input[str] version: The version your VKE cluster you want deployed. [See Available Version](https://www.vultr.com/api/#operation/get-kubernetes-versions)
         :param pulumi.Input['KubernetesNodePoolsArgs'] node_pools: Contains the default node pool that was deployed.
         """
-        KubernetesArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            label=label,
-            region=region,
-            version=version,
-            node_pools=node_pools,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             label: pulumi.Input[str],
-             region: pulumi.Input[str],
-             version: pulumi.Input[str],
-             node_pools: Optional[pulumi.Input['KubernetesNodePoolsArgs']] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'nodePools' in kwargs:
-            node_pools = kwargs['nodePools']
-
-        _setter("label", label)
-        _setter("region", region)
-        _setter("version", version)
+        pulumi.set(__self__, "label", label)
+        pulumi.set(__self__, "region", region)
+        pulumi.set(__self__, "version", version)
         if node_pools is not None:
-            _setter("node_pools", node_pools)
+            pulumi.set(__self__, "node_pools", node_pools)
 
     @property
     @pulumi.getter
@@ -135,87 +116,34 @@ class _KubernetesState:
         :param pulumi.Input[str] status: Status of node.
         :param pulumi.Input[str] version: The version your VKE cluster you want deployed. [See Available Version](https://www.vultr.com/api/#operation/get-kubernetes-versions)
         """
-        _KubernetesState._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            client_certificate=client_certificate,
-            client_key=client_key,
-            cluster_ca_certificate=cluster_ca_certificate,
-            cluster_subnet=cluster_subnet,
-            date_created=date_created,
-            endpoint=endpoint,
-            ip=ip,
-            kube_config=kube_config,
-            label=label,
-            node_pools=node_pools,
-            region=region,
-            service_subnet=service_subnet,
-            status=status,
-            version=version,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             client_certificate: Optional[pulumi.Input[str]] = None,
-             client_key: Optional[pulumi.Input[str]] = None,
-             cluster_ca_certificate: Optional[pulumi.Input[str]] = None,
-             cluster_subnet: Optional[pulumi.Input[str]] = None,
-             date_created: Optional[pulumi.Input[str]] = None,
-             endpoint: Optional[pulumi.Input[str]] = None,
-             ip: Optional[pulumi.Input[str]] = None,
-             kube_config: Optional[pulumi.Input[str]] = None,
-             label: Optional[pulumi.Input[str]] = None,
-             node_pools: Optional[pulumi.Input['KubernetesNodePoolsArgs']] = None,
-             region: Optional[pulumi.Input[str]] = None,
-             service_subnet: Optional[pulumi.Input[str]] = None,
-             status: Optional[pulumi.Input[str]] = None,
-             version: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'clientCertificate' in kwargs:
-            client_certificate = kwargs['clientCertificate']
-        if 'clientKey' in kwargs:
-            client_key = kwargs['clientKey']
-        if 'clusterCaCertificate' in kwargs:
-            cluster_ca_certificate = kwargs['clusterCaCertificate']
-        if 'clusterSubnet' in kwargs:
-            cluster_subnet = kwargs['clusterSubnet']
-        if 'dateCreated' in kwargs:
-            date_created = kwargs['dateCreated']
-        if 'kubeConfig' in kwargs:
-            kube_config = kwargs['kubeConfig']
-        if 'nodePools' in kwargs:
-            node_pools = kwargs['nodePools']
-        if 'serviceSubnet' in kwargs:
-            service_subnet = kwargs['serviceSubnet']
-
         if client_certificate is not None:
-            _setter("client_certificate", client_certificate)
+            pulumi.set(__self__, "client_certificate", client_certificate)
         if client_key is not None:
-            _setter("client_key", client_key)
+            pulumi.set(__self__, "client_key", client_key)
         if cluster_ca_certificate is not None:
-            _setter("cluster_ca_certificate", cluster_ca_certificate)
+            pulumi.set(__self__, "cluster_ca_certificate", cluster_ca_certificate)
         if cluster_subnet is not None:
-            _setter("cluster_subnet", cluster_subnet)
+            pulumi.set(__self__, "cluster_subnet", cluster_subnet)
         if date_created is not None:
-            _setter("date_created", date_created)
+            pulumi.set(__self__, "date_created", date_created)
         if endpoint is not None:
-            _setter("endpoint", endpoint)
+            pulumi.set(__self__, "endpoint", endpoint)
         if ip is not None:
-            _setter("ip", ip)
+            pulumi.set(__self__, "ip", ip)
         if kube_config is not None:
-            _setter("kube_config", kube_config)
+            pulumi.set(__self__, "kube_config", kube_config)
         if label is not None:
-            _setter("label", label)
+            pulumi.set(__self__, "label", label)
         if node_pools is not None:
-            _setter("node_pools", node_pools)
+            pulumi.set(__self__, "node_pools", node_pools)
         if region is not None:
-            _setter("region", region)
+            pulumi.set(__self__, "region", region)
         if service_subnet is not None:
-            _setter("service_subnet", service_subnet)
+            pulumi.set(__self__, "service_subnet", service_subnet)
         if status is not None:
-            _setter("status", status)
+            pulumi.set(__self__, "status", status)
         if version is not None:
-            _setter("version", version)
+            pulumi.set(__self__, "version", version)
 
     @property
     @pulumi.getter(name="clientCertificate")
@@ -513,10 +441,6 @@ class Kubernetes(pulumi.CustomResource):
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
-            kwargs = kwargs or {}
-            def _setter(key, value):
-                kwargs[key] = value
-            KubernetesArgs._configure(_setter, **kwargs)
             __self__._internal_init(resource_name, *args, **kwargs)
 
     def _internal_init(__self__,
@@ -538,11 +462,6 @@ class Kubernetes(pulumi.CustomResource):
             if label is None and not opts.urn:
                 raise TypeError("Missing required property 'label'")
             __props__.__dict__["label"] = label
-            if node_pools is not None and not isinstance(node_pools, KubernetesNodePoolsArgs):
-                node_pools = node_pools or {}
-                def _setter(key, value):
-                    node_pools[key] = value
-                KubernetesNodePoolsArgs._configure(_setter, **node_pools)
             __props__.__dict__["node_pools"] = node_pools
             if region is None and not opts.urn:
                 raise TypeError("Missing required property 'region'")

@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -30,6 +30,7 @@ class DatabaseArgs:
                  mysql_sql_modes: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  password: Optional[pulumi.Input[str]] = None,
                  plan_disk: Optional[pulumi.Input[int]] = None,
+                 public_host: Optional[pulumi.Input[str]] = None,
                  read_replicas: Optional[pulumi.Input[Sequence[pulumi.Input['DatabaseReadReplicaArgs']]]] = None,
                  redis_eviction_policy: Optional[pulumi.Input[str]] = None,
                  tag: Optional[pulumi.Input[str]] = None,
@@ -51,119 +52,48 @@ class DatabaseArgs:
         :param pulumi.Input[Sequence[pulumi.Input[str]]] mysql_sql_modes: A list of SQL modes to configure for the managed database (MySQL engine types only - `ALLOW_INVALID_DATES`, `ANSI`, `ANSI_QUOTES`, `ERROR_FOR_DIVISION_BY_ZERO`, `HIGH_NOT_PRECEDENCE`, `IGNORE_SPACE`, `NO_AUTO_VALUE_ON_ZERO`, `NO_DIR_IN_CREATE`, `NO_ENGINE_SUBSTITUTION`, `NO_UNSIGNED_SUBTRACTION`, `NO_ZERO_DATE`, `NO_ZERO_IN_DATE`, `ONLY_FULL_GROUP_BY`, `PIPES_AS_CONCAT`, `REAL_AS_FLOAT`, `STRICT_ALL_TABLES`, `STRICT_TRANS_TABLES`, `TIME_TRUNCATE_FRACTIONAL`, `TRADITIONAL`).
         :param pulumi.Input[str] password: The password for the managed database's primary admin user.
         :param pulumi.Input[int] plan_disk: The description of the disk(s) on the managed database.
+        :param pulumi.Input[str] public_host: The public hostname assigned to the managed database (VPC-attached only).
         :param pulumi.Input[Sequence[pulumi.Input['DatabaseReadReplicaArgs']]] read_replicas: A list of read replicas attached to the managed database.
         :param pulumi.Input[str] redis_eviction_policy: The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
         :param pulumi.Input[str] tag: The tag to assign to the managed database.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] trusted_ips: A list of allowed IP addresses for the managed database.
+        :param pulumi.Input[str] vpc_id: The ID of the VPC Network to attach to the Managed Database.
         """
-        DatabaseArgs._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            database_engine=database_engine,
-            database_engine_version=database_engine_version,
-            label=label,
-            plan=plan,
-            region=region,
-            cluster_time_zone=cluster_time_zone,
-            maintenance_dow=maintenance_dow,
-            maintenance_time=maintenance_time,
-            mysql_long_query_time=mysql_long_query_time,
-            mysql_require_primary_key=mysql_require_primary_key,
-            mysql_slow_query_log=mysql_slow_query_log,
-            mysql_sql_modes=mysql_sql_modes,
-            password=password,
-            plan_disk=plan_disk,
-            read_replicas=read_replicas,
-            redis_eviction_policy=redis_eviction_policy,
-            tag=tag,
-            trusted_ips=trusted_ips,
-            vpc_id=vpc_id,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             database_engine: pulumi.Input[str],
-             database_engine_version: pulumi.Input[str],
-             label: pulumi.Input[str],
-             plan: pulumi.Input[str],
-             region: pulumi.Input[str],
-             cluster_time_zone: Optional[pulumi.Input[str]] = None,
-             maintenance_dow: Optional[pulumi.Input[str]] = None,
-             maintenance_time: Optional[pulumi.Input[str]] = None,
-             mysql_long_query_time: Optional[pulumi.Input[int]] = None,
-             mysql_require_primary_key: Optional[pulumi.Input[bool]] = None,
-             mysql_slow_query_log: Optional[pulumi.Input[bool]] = None,
-             mysql_sql_modes: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             password: Optional[pulumi.Input[str]] = None,
-             plan_disk: Optional[pulumi.Input[int]] = None,
-             read_replicas: Optional[pulumi.Input[Sequence[pulumi.Input['DatabaseReadReplicaArgs']]]] = None,
-             redis_eviction_policy: Optional[pulumi.Input[str]] = None,
-             tag: Optional[pulumi.Input[str]] = None,
-             trusted_ips: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             vpc_id: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'databaseEngine' in kwargs:
-            database_engine = kwargs['databaseEngine']
-        if 'databaseEngineVersion' in kwargs:
-            database_engine_version = kwargs['databaseEngineVersion']
-        if 'clusterTimeZone' in kwargs:
-            cluster_time_zone = kwargs['clusterTimeZone']
-        if 'maintenanceDow' in kwargs:
-            maintenance_dow = kwargs['maintenanceDow']
-        if 'maintenanceTime' in kwargs:
-            maintenance_time = kwargs['maintenanceTime']
-        if 'mysqlLongQueryTime' in kwargs:
-            mysql_long_query_time = kwargs['mysqlLongQueryTime']
-        if 'mysqlRequirePrimaryKey' in kwargs:
-            mysql_require_primary_key = kwargs['mysqlRequirePrimaryKey']
-        if 'mysqlSlowQueryLog' in kwargs:
-            mysql_slow_query_log = kwargs['mysqlSlowQueryLog']
-        if 'mysqlSqlModes' in kwargs:
-            mysql_sql_modes = kwargs['mysqlSqlModes']
-        if 'planDisk' in kwargs:
-            plan_disk = kwargs['planDisk']
-        if 'readReplicas' in kwargs:
-            read_replicas = kwargs['readReplicas']
-        if 'redisEvictionPolicy' in kwargs:
-            redis_eviction_policy = kwargs['redisEvictionPolicy']
-        if 'trustedIps' in kwargs:
-            trusted_ips = kwargs['trustedIps']
-        if 'vpcId' in kwargs:
-            vpc_id = kwargs['vpcId']
-
-        _setter("database_engine", database_engine)
-        _setter("database_engine_version", database_engine_version)
-        _setter("label", label)
-        _setter("plan", plan)
-        _setter("region", region)
+        pulumi.set(__self__, "database_engine", database_engine)
+        pulumi.set(__self__, "database_engine_version", database_engine_version)
+        pulumi.set(__self__, "label", label)
+        pulumi.set(__self__, "plan", plan)
+        pulumi.set(__self__, "region", region)
         if cluster_time_zone is not None:
-            _setter("cluster_time_zone", cluster_time_zone)
+            pulumi.set(__self__, "cluster_time_zone", cluster_time_zone)
         if maintenance_dow is not None:
-            _setter("maintenance_dow", maintenance_dow)
+            pulumi.set(__self__, "maintenance_dow", maintenance_dow)
         if maintenance_time is not None:
-            _setter("maintenance_time", maintenance_time)
+            pulumi.set(__self__, "maintenance_time", maintenance_time)
         if mysql_long_query_time is not None:
-            _setter("mysql_long_query_time", mysql_long_query_time)
+            pulumi.set(__self__, "mysql_long_query_time", mysql_long_query_time)
         if mysql_require_primary_key is not None:
-            _setter("mysql_require_primary_key", mysql_require_primary_key)
+            pulumi.set(__self__, "mysql_require_primary_key", mysql_require_primary_key)
         if mysql_slow_query_log is not None:
-            _setter("mysql_slow_query_log", mysql_slow_query_log)
+            pulumi.set(__self__, "mysql_slow_query_log", mysql_slow_query_log)
         if mysql_sql_modes is not None:
-            _setter("mysql_sql_modes", mysql_sql_modes)
+            pulumi.set(__self__, "mysql_sql_modes", mysql_sql_modes)
         if password is not None:
-            _setter("password", password)
+            pulumi.set(__self__, "password", password)
         if plan_disk is not None:
-            _setter("plan_disk", plan_disk)
+            pulumi.set(__self__, "plan_disk", plan_disk)
+        if public_host is not None:
+            pulumi.set(__self__, "public_host", public_host)
         if read_replicas is not None:
-            _setter("read_replicas", read_replicas)
+            pulumi.set(__self__, "read_replicas", read_replicas)
         if redis_eviction_policy is not None:
-            _setter("redis_eviction_policy", redis_eviction_policy)
+            pulumi.set(__self__, "redis_eviction_policy", redis_eviction_policy)
         if tag is not None:
-            _setter("tag", tag)
+            pulumi.set(__self__, "tag", tag)
         if trusted_ips is not None:
-            _setter("trusted_ips", trusted_ips)
+            pulumi.set(__self__, "trusted_ips", trusted_ips)
         if vpc_id is not None:
-            _setter("vpc_id", vpc_id)
+            pulumi.set(__self__, "vpc_id", vpc_id)
 
     @property
     @pulumi.getter(name="databaseEngine")
@@ -334,6 +264,18 @@ class DatabaseArgs:
         pulumi.set(self, "plan_disk", value)
 
     @property
+    @pulumi.getter(name="publicHost")
+    def public_host(self) -> Optional[pulumi.Input[str]]:
+        """
+        The public hostname assigned to the managed database (VPC-attached only).
+        """
+        return pulumi.get(self, "public_host")
+
+    @public_host.setter
+    def public_host(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "public_host", value)
+
+    @property
     @pulumi.getter(name="readReplicas")
     def read_replicas(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['DatabaseReadReplicaArgs']]]]:
         """
@@ -384,6 +326,9 @@ class DatabaseArgs:
     @property
     @pulumi.getter(name="vpcId")
     def vpc_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        The ID of the VPC Network to attach to the Managed Database.
+        """
         return pulumi.get(self, "vpc_id")
 
     @vpc_id.setter
@@ -415,6 +360,7 @@ class _DatabaseState:
                  plan_replicas: Optional[pulumi.Input[int]] = None,
                  plan_vcpus: Optional[pulumi.Input[int]] = None,
                  port: Optional[pulumi.Input[str]] = None,
+                 public_host: Optional[pulumi.Input[str]] = None,
                  read_replicas: Optional[pulumi.Input[Sequence[pulumi.Input['DatabaseReadReplicaArgs']]]] = None,
                  redis_eviction_policy: Optional[pulumi.Input[str]] = None,
                  region: Optional[pulumi.Input[str]] = None,
@@ -446,6 +392,7 @@ class _DatabaseState:
         :param pulumi.Input[int] plan_replicas: The number of standby nodes available on the managed database.
         :param pulumi.Input[int] plan_vcpus: The number of virtual CPUs available on the managed database.
         :param pulumi.Input[str] port: The connection port for the managed database.
+        :param pulumi.Input[str] public_host: The public hostname assigned to the managed database (VPC-attached only).
         :param pulumi.Input[Sequence[pulumi.Input['DatabaseReadReplicaArgs']]] read_replicas: A list of read replicas attached to the managed database.
         :param pulumi.Input[str] redis_eviction_policy: The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
         :param pulumi.Input[str] region: The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
@@ -453,170 +400,68 @@ class _DatabaseState:
         :param pulumi.Input[str] tag: The tag to assign to the managed database.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] trusted_ips: A list of allowed IP addresses for the managed database.
         :param pulumi.Input[str] user: The primary admin user for the managed database.
+        :param pulumi.Input[str] vpc_id: The ID of the VPC Network to attach to the Managed Database.
         """
-        _DatabaseState._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            cluster_time_zone=cluster_time_zone,
-            database_engine=database_engine,
-            database_engine_version=database_engine_version,
-            date_created=date_created,
-            dbname=dbname,
-            host=host,
-            label=label,
-            latest_backup=latest_backup,
-            maintenance_dow=maintenance_dow,
-            maintenance_time=maintenance_time,
-            mysql_long_query_time=mysql_long_query_time,
-            mysql_require_primary_key=mysql_require_primary_key,
-            mysql_slow_query_log=mysql_slow_query_log,
-            mysql_sql_modes=mysql_sql_modes,
-            password=password,
-            plan=plan,
-            plan_disk=plan_disk,
-            plan_ram=plan_ram,
-            plan_replicas=plan_replicas,
-            plan_vcpus=plan_vcpus,
-            port=port,
-            read_replicas=read_replicas,
-            redis_eviction_policy=redis_eviction_policy,
-            region=region,
-            status=status,
-            tag=tag,
-            trusted_ips=trusted_ips,
-            user=user,
-            vpc_id=vpc_id,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             cluster_time_zone: Optional[pulumi.Input[str]] = None,
-             database_engine: Optional[pulumi.Input[str]] = None,
-             database_engine_version: Optional[pulumi.Input[str]] = None,
-             date_created: Optional[pulumi.Input[str]] = None,
-             dbname: Optional[pulumi.Input[str]] = None,
-             host: Optional[pulumi.Input[str]] = None,
-             label: Optional[pulumi.Input[str]] = None,
-             latest_backup: Optional[pulumi.Input[str]] = None,
-             maintenance_dow: Optional[pulumi.Input[str]] = None,
-             maintenance_time: Optional[pulumi.Input[str]] = None,
-             mysql_long_query_time: Optional[pulumi.Input[int]] = None,
-             mysql_require_primary_key: Optional[pulumi.Input[bool]] = None,
-             mysql_slow_query_log: Optional[pulumi.Input[bool]] = None,
-             mysql_sql_modes: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             password: Optional[pulumi.Input[str]] = None,
-             plan: Optional[pulumi.Input[str]] = None,
-             plan_disk: Optional[pulumi.Input[int]] = None,
-             plan_ram: Optional[pulumi.Input[int]] = None,
-             plan_replicas: Optional[pulumi.Input[int]] = None,
-             plan_vcpus: Optional[pulumi.Input[int]] = None,
-             port: Optional[pulumi.Input[str]] = None,
-             read_replicas: Optional[pulumi.Input[Sequence[pulumi.Input['DatabaseReadReplicaArgs']]]] = None,
-             redis_eviction_policy: Optional[pulumi.Input[str]] = None,
-             region: Optional[pulumi.Input[str]] = None,
-             status: Optional[pulumi.Input[str]] = None,
-             tag: Optional[pulumi.Input[str]] = None,
-             trusted_ips: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
-             user: Optional[pulumi.Input[str]] = None,
-             vpc_id: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'clusterTimeZone' in kwargs:
-            cluster_time_zone = kwargs['clusterTimeZone']
-        if 'databaseEngine' in kwargs:
-            database_engine = kwargs['databaseEngine']
-        if 'databaseEngineVersion' in kwargs:
-            database_engine_version = kwargs['databaseEngineVersion']
-        if 'dateCreated' in kwargs:
-            date_created = kwargs['dateCreated']
-        if 'latestBackup' in kwargs:
-            latest_backup = kwargs['latestBackup']
-        if 'maintenanceDow' in kwargs:
-            maintenance_dow = kwargs['maintenanceDow']
-        if 'maintenanceTime' in kwargs:
-            maintenance_time = kwargs['maintenanceTime']
-        if 'mysqlLongQueryTime' in kwargs:
-            mysql_long_query_time = kwargs['mysqlLongQueryTime']
-        if 'mysqlRequirePrimaryKey' in kwargs:
-            mysql_require_primary_key = kwargs['mysqlRequirePrimaryKey']
-        if 'mysqlSlowQueryLog' in kwargs:
-            mysql_slow_query_log = kwargs['mysqlSlowQueryLog']
-        if 'mysqlSqlModes' in kwargs:
-            mysql_sql_modes = kwargs['mysqlSqlModes']
-        if 'planDisk' in kwargs:
-            plan_disk = kwargs['planDisk']
-        if 'planRam' in kwargs:
-            plan_ram = kwargs['planRam']
-        if 'planReplicas' in kwargs:
-            plan_replicas = kwargs['planReplicas']
-        if 'planVcpus' in kwargs:
-            plan_vcpus = kwargs['planVcpus']
-        if 'readReplicas' in kwargs:
-            read_replicas = kwargs['readReplicas']
-        if 'redisEvictionPolicy' in kwargs:
-            redis_eviction_policy = kwargs['redisEvictionPolicy']
-        if 'trustedIps' in kwargs:
-            trusted_ips = kwargs['trustedIps']
-        if 'vpcId' in kwargs:
-            vpc_id = kwargs['vpcId']
-
         if cluster_time_zone is not None:
-            _setter("cluster_time_zone", cluster_time_zone)
+            pulumi.set(__self__, "cluster_time_zone", cluster_time_zone)
         if database_engine is not None:
-            _setter("database_engine", database_engine)
+            pulumi.set(__self__, "database_engine", database_engine)
         if database_engine_version is not None:
-            _setter("database_engine_version", database_engine_version)
+            pulumi.set(__self__, "database_engine_version", database_engine_version)
         if date_created is not None:
-            _setter("date_created", date_created)
+            pulumi.set(__self__, "date_created", date_created)
         if dbname is not None:
-            _setter("dbname", dbname)
+            pulumi.set(__self__, "dbname", dbname)
         if host is not None:
-            _setter("host", host)
+            pulumi.set(__self__, "host", host)
         if label is not None:
-            _setter("label", label)
+            pulumi.set(__self__, "label", label)
         if latest_backup is not None:
-            _setter("latest_backup", latest_backup)
+            pulumi.set(__self__, "latest_backup", latest_backup)
         if maintenance_dow is not None:
-            _setter("maintenance_dow", maintenance_dow)
+            pulumi.set(__self__, "maintenance_dow", maintenance_dow)
         if maintenance_time is not None:
-            _setter("maintenance_time", maintenance_time)
+            pulumi.set(__self__, "maintenance_time", maintenance_time)
         if mysql_long_query_time is not None:
-            _setter("mysql_long_query_time", mysql_long_query_time)
+            pulumi.set(__self__, "mysql_long_query_time", mysql_long_query_time)
         if mysql_require_primary_key is not None:
-            _setter("mysql_require_primary_key", mysql_require_primary_key)
+            pulumi.set(__self__, "mysql_require_primary_key", mysql_require_primary_key)
         if mysql_slow_query_log is not None:
-            _setter("mysql_slow_query_log", mysql_slow_query_log)
+            pulumi.set(__self__, "mysql_slow_query_log", mysql_slow_query_log)
         if mysql_sql_modes is not None:
-            _setter("mysql_sql_modes", mysql_sql_modes)
+            pulumi.set(__self__, "mysql_sql_modes", mysql_sql_modes)
         if password is not None:
-            _setter("password", password)
+            pulumi.set(__self__, "password", password)
         if plan is not None:
-            _setter("plan", plan)
+            pulumi.set(__self__, "plan", plan)
         if plan_disk is not None:
-            _setter("plan_disk", plan_disk)
+            pulumi.set(__self__, "plan_disk", plan_disk)
         if plan_ram is not None:
-            _setter("plan_ram", plan_ram)
+            pulumi.set(__self__, "plan_ram", plan_ram)
         if plan_replicas is not None:
-            _setter("plan_replicas", plan_replicas)
+            pulumi.set(__self__, "plan_replicas", plan_replicas)
         if plan_vcpus is not None:
-            _setter("plan_vcpus", plan_vcpus)
+            pulumi.set(__self__, "plan_vcpus", plan_vcpus)
         if port is not None:
-            _setter("port", port)
+            pulumi.set(__self__, "port", port)
+        if public_host is not None:
+            pulumi.set(__self__, "public_host", public_host)
         if read_replicas is not None:
-            _setter("read_replicas", read_replicas)
+            pulumi.set(__self__, "read_replicas", read_replicas)
         if redis_eviction_policy is not None:
-            _setter("redis_eviction_policy", redis_eviction_policy)
+            pulumi.set(__self__, "redis_eviction_policy", redis_eviction_policy)
         if region is not None:
-            _setter("region", region)
+            pulumi.set(__self__, "region", region)
         if status is not None:
-            _setter("status", status)
+            pulumi.set(__self__, "status", status)
         if tag is not None:
-            _setter("tag", tag)
+            pulumi.set(__self__, "tag", tag)
         if trusted_ips is not None:
-            _setter("trusted_ips", trusted_ips)
+            pulumi.set(__self__, "trusted_ips", trusted_ips)
         if user is not None:
-            _setter("user", user)
+            pulumi.set(__self__, "user", user)
         if vpc_id is not None:
-            _setter("vpc_id", vpc_id)
+            pulumi.set(__self__, "vpc_id", vpc_id)
 
     @property
     @pulumi.getter(name="clusterTimeZone")
@@ -871,6 +716,18 @@ class _DatabaseState:
         pulumi.set(self, "port", value)
 
     @property
+    @pulumi.getter(name="publicHost")
+    def public_host(self) -> Optional[pulumi.Input[str]]:
+        """
+        The public hostname assigned to the managed database (VPC-attached only).
+        """
+        return pulumi.get(self, "public_host")
+
+    @public_host.setter
+    def public_host(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "public_host", value)
+
+    @property
     @pulumi.getter(name="readReplicas")
     def read_replicas(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['DatabaseReadReplicaArgs']]]]:
         """
@@ -957,6 +814,9 @@ class _DatabaseState:
     @property
     @pulumi.getter(name="vpcId")
     def vpc_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        The ID of the VPC Network to attach to the Managed Database.
+        """
         return pulumi.get(self, "vpc_id")
 
     @vpc_id.setter
@@ -982,6 +842,7 @@ class Database(pulumi.CustomResource):
                  password: Optional[pulumi.Input[str]] = None,
                  plan: Optional[pulumi.Input[str]] = None,
                  plan_disk: Optional[pulumi.Input[int]] = None,
+                 public_host: Optional[pulumi.Input[str]] = None,
                  read_replicas: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['DatabaseReadReplicaArgs']]]]] = None,
                  redis_eviction_policy: Optional[pulumi.Input[str]] = None,
                  region: Optional[pulumi.Input[str]] = None,
@@ -1049,11 +910,13 @@ class Database(pulumi.CustomResource):
         :param pulumi.Input[str] password: The password for the managed database's primary admin user.
         :param pulumi.Input[str] plan: The ID of the plan that you want the managed database to subscribe to. [See List Managed Database Plans](https://www.vultr.com/api/#tag/managed-databases/operation/list-database-plans)
         :param pulumi.Input[int] plan_disk: The description of the disk(s) on the managed database.
+        :param pulumi.Input[str] public_host: The public hostname assigned to the managed database (VPC-attached only).
         :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['DatabaseReadReplicaArgs']]]] read_replicas: A list of read replicas attached to the managed database.
         :param pulumi.Input[str] redis_eviction_policy: The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
         :param pulumi.Input[str] region: The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
         :param pulumi.Input[str] tag: The tag to assign to the managed database.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] trusted_ips: A list of allowed IP addresses for the managed database.
+        :param pulumi.Input[str] vpc_id: The ID of the VPC Network to attach to the Managed Database.
         """
         ...
     @overload
@@ -1116,10 +979,6 @@ class Database(pulumi.CustomResource):
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
-            kwargs = kwargs or {}
-            def _setter(key, value):
-                kwargs[key] = value
-            DatabaseArgs._configure(_setter, **kwargs)
             __self__._internal_init(resource_name, *args, **kwargs)
 
     def _internal_init(__self__,
@@ -1138,6 +997,7 @@ class Database(pulumi.CustomResource):
                  password: Optional[pulumi.Input[str]] = None,
                  plan: Optional[pulumi.Input[str]] = None,
                  plan_disk: Optional[pulumi.Input[int]] = None,
+                 public_host: Optional[pulumi.Input[str]] = None,
                  read_replicas: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['DatabaseReadReplicaArgs']]]]] = None,
                  redis_eviction_policy: Optional[pulumi.Input[str]] = None,
                  region: Optional[pulumi.Input[str]] = None,
@@ -1174,6 +1034,7 @@ class Database(pulumi.CustomResource):
                 raise TypeError("Missing required property 'plan'")
             __props__.__dict__["plan"] = plan
             __props__.__dict__["plan_disk"] = plan_disk
+            __props__.__dict__["public_host"] = public_host
             __props__.__dict__["read_replicas"] = read_replicas
             __props__.__dict__["redis_eviction_policy"] = redis_eviction_policy
             if region is None and not opts.urn:
@@ -1223,6 +1084,7 @@ class Database(pulumi.CustomResource):
             plan_replicas: Optional[pulumi.Input[int]] = None,
             plan_vcpus: Optional[pulumi.Input[int]] = None,
             port: Optional[pulumi.Input[str]] = None,
+            public_host: Optional[pulumi.Input[str]] = None,
             read_replicas: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['DatabaseReadReplicaArgs']]]]] = None,
             redis_eviction_policy: Optional[pulumi.Input[str]] = None,
             region: Optional[pulumi.Input[str]] = None,
@@ -1259,6 +1121,7 @@ class Database(pulumi.CustomResource):
         :param pulumi.Input[int] plan_replicas: The number of standby nodes available on the managed database.
         :param pulumi.Input[int] plan_vcpus: The number of virtual CPUs available on the managed database.
         :param pulumi.Input[str] port: The connection port for the managed database.
+        :param pulumi.Input[str] public_host: The public hostname assigned to the managed database (VPC-attached only).
         :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['DatabaseReadReplicaArgs']]]] read_replicas: A list of read replicas attached to the managed database.
         :param pulumi.Input[str] redis_eviction_policy: The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
         :param pulumi.Input[str] region: The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
@@ -1266,6 +1129,7 @@ class Database(pulumi.CustomResource):
         :param pulumi.Input[str] tag: The tag to assign to the managed database.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] trusted_ips: A list of allowed IP addresses for the managed database.
         :param pulumi.Input[str] user: The primary admin user for the managed database.
+        :param pulumi.Input[str] vpc_id: The ID of the VPC Network to attach to the Managed Database.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -1292,6 +1156,7 @@ class Database(pulumi.CustomResource):
         __props__.__dict__["plan_replicas"] = plan_replicas
         __props__.__dict__["plan_vcpus"] = plan_vcpus
         __props__.__dict__["port"] = port
+        __props__.__dict__["public_host"] = public_host
         __props__.__dict__["read_replicas"] = read_replicas
         __props__.__dict__["redis_eviction_policy"] = redis_eviction_policy
         __props__.__dict__["region"] = region
@@ -1304,7 +1169,7 @@ class Database(pulumi.CustomResource):
 
     @property
     @pulumi.getter(name="clusterTimeZone")
-    def cluster_time_zone(self) -> pulumi.Output[Optional[str]]:
+    def cluster_time_zone(self) -> pulumi.Output[str]:
         """
         The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
         """
@@ -1368,7 +1233,7 @@ class Database(pulumi.CustomResource):
 
     @property
     @pulumi.getter(name="maintenanceDow")
-    def maintenance_dow(self) -> pulumi.Output[Optional[str]]:
+    def maintenance_dow(self) -> pulumi.Output[str]:
         """
         The preferred maintenance day of week for the managed database.
         """
@@ -1376,7 +1241,7 @@ class Database(pulumi.CustomResource):
 
     @property
     @pulumi.getter(name="maintenanceTime")
-    def maintenance_time(self) -> pulumi.Output[Optional[str]]:
+    def maintenance_time(self) -> pulumi.Output[str]:
         """
         The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).
         """
@@ -1471,6 +1336,14 @@ class Database(pulumi.CustomResource):
         return pulumi.get(self, "port")
 
     @property
+    @pulumi.getter(name="publicHost")
+    def public_host(self) -> pulumi.Output[str]:
+        """
+        The public hostname assigned to the managed database (VPC-attached only).
+        """
+        return pulumi.get(self, "public_host")
+
+    @property
     @pulumi.getter(name="readReplicas")
     def read_replicas(self) -> pulumi.Output[Sequence['outputs.DatabaseReadReplica']]:
         """
@@ -1529,5 +1402,8 @@ class Database(pulumi.CustomResource):
     @property
     @pulumi.getter(name="vpcId")
     def vpc_id(self) -> pulumi.Output[Optional[str]]:
+        """
+        The ID of the VPC Network to attach to the Managed Database.
+        """
         return pulumi.get(self, "vpc_id")
 

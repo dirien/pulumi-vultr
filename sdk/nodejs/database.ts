@@ -84,7 +84,7 @@ export class Database extends pulumi.CustomResource {
     /**
      * The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
      */
-    public readonly clusterTimeZone!: pulumi.Output<string | undefined>;
+    public readonly clusterTimeZone!: pulumi.Output<string>;
     /**
      * The database engine of the new managed database.
      */
@@ -116,11 +116,11 @@ export class Database extends pulumi.CustomResource {
     /**
      * The preferred maintenance day of week for the managed database.
      */
-    public readonly maintenanceDow!: pulumi.Output<string | undefined>;
+    public readonly maintenanceDow!: pulumi.Output<string>;
     /**
      * The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).
      */
-    public readonly maintenanceTime!: pulumi.Output<string | undefined>;
+    public readonly maintenanceTime!: pulumi.Output<string>;
     /**
      * The configuration value for the long query time (in seconds) on the managed database (MySQL engine types only).
      */
@@ -166,6 +166,10 @@ export class Database extends pulumi.CustomResource {
      */
     public /*out*/ readonly port!: pulumi.Output<string>;
     /**
+     * The public hostname assigned to the managed database (VPC-attached only).
+     */
+    public readonly publicHost!: pulumi.Output<string>;
+    /**
      * A list of read replicas attached to the managed database.
      */
     public readonly readReplicas!: pulumi.Output<outputs.DatabaseReadReplica[]>;
@@ -193,6 +197,9 @@ export class Database extends pulumi.CustomResource {
      * The primary admin user for the managed database.
      */
     public /*out*/ readonly user!: pulumi.Output<string>;
+    /**
+     * The ID of the VPC Network to attach to the Managed Database.
+     */
     public readonly vpcId!: pulumi.Output<string | undefined>;
 
     /**
@@ -229,6 +236,7 @@ export class Database extends pulumi.CustomResource {
             resourceInputs["planReplicas"] = state ? state.planReplicas : undefined;
             resourceInputs["planVcpus"] = state ? state.planVcpus : undefined;
             resourceInputs["port"] = state ? state.port : undefined;
+            resourceInputs["publicHost"] = state ? state.publicHost : undefined;
             resourceInputs["readReplicas"] = state ? state.readReplicas : undefined;
             resourceInputs["redisEvictionPolicy"] = state ? state.redisEvictionPolicy : undefined;
             resourceInputs["region"] = state ? state.region : undefined;
@@ -267,6 +275,7 @@ export class Database extends pulumi.CustomResource {
             resourceInputs["password"] = args ? args.password : undefined;
             resourceInputs["plan"] = args ? args.plan : undefined;
             resourceInputs["planDisk"] = args ? args.planDisk : undefined;
+            resourceInputs["publicHost"] = args ? args.publicHost : undefined;
             resourceInputs["readReplicas"] = args ? args.readReplicas : undefined;
             resourceInputs["redisEvictionPolicy"] = args ? args.redisEvictionPolicy : undefined;
             resourceInputs["region"] = args ? args.region : undefined;
@@ -378,6 +387,10 @@ export interface DatabaseState {
      */
     port?: pulumi.Input<string>;
     /**
+     * The public hostname assigned to the managed database (VPC-attached only).
+     */
+    publicHost?: pulumi.Input<string>;
+    /**
      * A list of read replicas attached to the managed database.
      */
     readReplicas?: pulumi.Input<pulumi.Input<inputs.DatabaseReadReplica>[]>;
@@ -405,6 +418,9 @@ export interface DatabaseState {
      * The primary admin user for the managed database.
      */
     user?: pulumi.Input<string>;
+    /**
+     * The ID of the VPC Network to attach to the Managed Database.
+     */
     vpcId?: pulumi.Input<string>;
 }
 
@@ -465,6 +481,10 @@ export interface DatabaseArgs {
      */
     planDisk?: pulumi.Input<number>;
     /**
+     * The public hostname assigned to the managed database (VPC-attached only).
+     */
+    publicHost?: pulumi.Input<string>;
+    /**
      * A list of read replicas attached to the managed database.
      */
     readReplicas?: pulumi.Input<pulumi.Input<inputs.DatabaseReadReplica>[]>;
@@ -484,5 +504,8 @@ export interface DatabaseArgs {
      * A list of allowed IP addresses for the managed database.
      */
     trustedIps?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * The ID of the VPC Network to attach to the Managed Database.
+     */
     vpcId?: pulumi.Input<string>;
 }

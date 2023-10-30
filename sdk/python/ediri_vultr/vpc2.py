@@ -6,7 +6,7 @@ import copy
 import warnings
 import pulumi
 import pulumi.runtime
-from typing import Any, Callable, Mapping, Optional, Sequence, Union, overload
+from typing import Any, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
 
 __all__ = ['Vpc2Args', 'Vpc2']
@@ -27,40 +27,15 @@ class Vpc2Args:
         :param pulumi.Input[str] ip_type: Accepted values: `v4`.
         :param pulumi.Input[int] prefix_length: The number of bits for the netmask in CIDR notation. Example: 32
         """
-        Vpc2Args._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            region=region,
-            description=description,
-            ip_block=ip_block,
-            ip_type=ip_type,
-            prefix_length=prefix_length,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             region: pulumi.Input[str],
-             description: Optional[pulumi.Input[str]] = None,
-             ip_block: Optional[pulumi.Input[str]] = None,
-             ip_type: Optional[pulumi.Input[str]] = None,
-             prefix_length: Optional[pulumi.Input[int]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'ipBlock' in kwargs:
-            ip_block = kwargs['ipBlock']
-        if 'ipType' in kwargs:
-            ip_type = kwargs['ipType']
-        if 'prefixLength' in kwargs:
-            prefix_length = kwargs['prefixLength']
-
-        _setter("region", region)
+        pulumi.set(__self__, "region", region)
         if description is not None:
-            _setter("description", description)
+            pulumi.set(__self__, "description", description)
         if ip_block is not None:
-            _setter("ip_block", ip_block)
+            pulumi.set(__self__, "ip_block", ip_block)
         if ip_type is not None:
-            _setter("ip_type", ip_type)
+            pulumi.set(__self__, "ip_type", ip_type)
         if prefix_length is not None:
-            _setter("prefix_length", prefix_length)
+            pulumi.set(__self__, "prefix_length", prefix_length)
 
     @property
     @pulumi.getter
@@ -141,47 +116,18 @@ class _Vpc2State:
         :param pulumi.Input[int] prefix_length: The number of bits for the netmask in CIDR notation. Example: 32
         :param pulumi.Input[str] region: The region ID that you want the VPC 2.0 to be created in.
         """
-        _Vpc2State._configure(
-            lambda key, value: pulumi.set(__self__, key, value),
-            date_created=date_created,
-            description=description,
-            ip_block=ip_block,
-            ip_type=ip_type,
-            prefix_length=prefix_length,
-            region=region,
-        )
-    @staticmethod
-    def _configure(
-             _setter: Callable[[Any, Any], None],
-             date_created: Optional[pulumi.Input[str]] = None,
-             description: Optional[pulumi.Input[str]] = None,
-             ip_block: Optional[pulumi.Input[str]] = None,
-             ip_type: Optional[pulumi.Input[str]] = None,
-             prefix_length: Optional[pulumi.Input[int]] = None,
-             region: Optional[pulumi.Input[str]] = None,
-             opts: Optional[pulumi.ResourceOptions]=None,
-             **kwargs):
-        if 'dateCreated' in kwargs:
-            date_created = kwargs['dateCreated']
-        if 'ipBlock' in kwargs:
-            ip_block = kwargs['ipBlock']
-        if 'ipType' in kwargs:
-            ip_type = kwargs['ipType']
-        if 'prefixLength' in kwargs:
-            prefix_length = kwargs['prefixLength']
-
         if date_created is not None:
-            _setter("date_created", date_created)
+            pulumi.set(__self__, "date_created", date_created)
         if description is not None:
-            _setter("description", description)
+            pulumi.set(__self__, "description", description)
         if ip_block is not None:
-            _setter("ip_block", ip_block)
+            pulumi.set(__self__, "ip_block", ip_block)
         if ip_type is not None:
-            _setter("ip_type", ip_type)
+            pulumi.set(__self__, "ip_type", ip_type)
         if prefix_length is not None:
-            _setter("prefix_length", prefix_length)
+            pulumi.set(__self__, "prefix_length", prefix_length)
         if region is not None:
-            _setter("region", region)
+            pulumi.set(__self__, "region", region)
 
     @property
     @pulumi.getter(name="dateCreated")
@@ -365,10 +311,6 @@ class Vpc2(pulumi.CustomResource):
         if resource_args is not None:
             __self__._internal_init(resource_name, opts, **resource_args.__dict__)
         else:
-            kwargs = kwargs or {}
-            def _setter(key, value):
-                kwargs[key] = value
-            Vpc2Args._configure(_setter, **kwargs)
             __self__._internal_init(resource_name, *args, **kwargs)
 
     def _internal_init(__self__,
