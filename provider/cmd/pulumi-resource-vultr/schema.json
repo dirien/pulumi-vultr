@@ -109,6 +109,13 @@
                     "type": "string",
                     "description": "The managed database's default logical database.\n"
                 },
+                "ferretdbCredentials": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "pulumi.json#/Any"
+                    },
+                    "description": "An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).\n"
+                },
                 "host": {
                     "type": "string",
                     "description": "The hostname assigned to the managed database.\n"
@@ -180,6 +187,10 @@
                     "type": "string",
                     "description": "The connection port for the managed database.\n"
                 },
+                "publicHost": {
+                    "type": "string",
+                    "description": "The public hostname assigned to the managed database (VPC-attached only).\n"
+                },
                 "redisEvictionPolicy": {
                     "type": "string",
                     "description": "The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).\n"
@@ -190,7 +201,7 @@
                 },
                 "status": {
                     "type": "string",
-                    "description": "The current status of the managed database (poweroff, rebuilding, rebalancing, running).\n"
+                    "description": "The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).\n"
                 },
                 "tag": {
                     "type": "string",
@@ -225,6 +236,7 @@
                         "databaseEngineVersion",
                         "dateCreated",
                         "dbname",
+                        "ferretdbCredentials",
                         "host",
                         "id",
                         "label",
@@ -242,6 +254,7 @@
                         "planReplicas",
                         "planVcpus",
                         "port",
+                        "publicHost",
                         "redisEvictionPolicy",
                         "region",
                         "status",
@@ -672,6 +685,13 @@
                     "type": "string",
                     "description": "The managed database's default logical database.\n"
                 },
+                "ferretdbCredentials": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "pulumi.json#/Any"
+                    },
+                    "description": "An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).\n"
+                },
                 "host": {
                     "type": "string",
                     "description": "The hostname assigned to the managed database.\n"
@@ -742,6 +762,10 @@
                     "type": "string",
                     "description": "The connection port for the managed database.\n"
                 },
+                "publicHost": {
+                    "type": "string",
+                    "description": "The public hostname assigned to the managed database (VPC-attached only).\n"
+                },
                 "redisEvictionPolicy": {
                     "type": "string",
                     "description": "The configuration value for the data eviction policy on the managed database (Redis engine types only).\n"
@@ -752,7 +776,7 @@
                 },
                 "status": {
                     "type": "string",
-                    "description": "The current status of the managed database (poweroff, rebuilding, rebalancing, running).\n"
+                    "description": "The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).\n"
                 },
                 "tag": {
                     "type": "string",
@@ -781,6 +805,7 @@
                 "databaseEngineVersion",
                 "dateCreated",
                 "dbname",
+                "ferretdbCredentials",
                 "host",
                 "id",
                 "label",
@@ -798,6 +823,7 @@
                 "planReplicas",
                 "planVcpus",
                 "port",
+                "publicHost",
                 "redisEvictionPolicy",
                 "region",
                 "status",
@@ -1946,6 +1972,13 @@
                     "type": "string",
                     "description": "The managed database's default logical database.\n"
                 },
+                "ferretdbCredentials": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "pulumi.json#/Any"
+                    },
+                    "description": "An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).\n"
+                },
                 "host": {
                     "type": "string",
                     "description": "The hostname assigned to the managed database.\n"
@@ -2034,7 +2067,7 @@
                 },
                 "status": {
                     "type": "string",
-                    "description": "The current status of the managed database (poweroff, rebuilding, rebalancing, running).\n"
+                    "description": "The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).\n"
                 },
                 "tag": {
                     "type": "string",
@@ -2062,6 +2095,7 @@
                 "databaseEngineVersion",
                 "dateCreated",
                 "dbname",
+                "ferretdbCredentials",
                 "host",
                 "label",
                 "latestBackup",
@@ -2093,6 +2127,13 @@
                 "databaseEngineVersion": {
                     "type": "string",
                     "description": "The database engine version of the new managed database.\n"
+                },
+                "ferretdbCredentials": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "pulumi.json#/Any"
+                    },
+                    "description": "An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).\n"
                 },
                 "label": {
                     "type": "string",
@@ -2203,6 +2244,13 @@
                         "type": "string",
                         "description": "The managed database's default logical database.\n"
                     },
+                    "ferretdbCredentials": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "pulumi.json#/Any"
+                        },
+                        "description": "An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).\n"
+                    },
                     "host": {
                         "type": "string",
                         "description": "The hostname assigned to the managed database.\n"
@@ -2291,7 +2339,7 @@
                     },
                     "status": {
                         "type": "string",
-                        "description": "The current status of the managed database (poweroff, rebuilding, rebalancing, running).\n"
+                        "description": "The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).\n"
                     },
                     "tag": {
                         "type": "string",
@@ -2495,6 +2543,13 @@
                     "type": "string",
                     "description": "The managed database read replica's default logical database.\n"
                 },
+                "ferretdbCredentials": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "pulumi.json#/Any"
+                    },
+                    "description": "An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).\n"
+                },
                 "host": {
                     "type": "string",
                     "description": "The hostname assigned to the managed database read replica.\n"
@@ -2562,6 +2617,10 @@
                     "type": "string",
                     "description": "The connection port for the managed database read replica.\n"
                 },
+                "publicHost": {
+                    "type": "string",
+                    "description": "The public hostname assigned to the managed database read replica (VPC-attached only).\n"
+                },
                 "redisEvictionPolicy": {
                     "type": "string",
                     "description": "The configuration value for the data eviction policy on the managed database read replica (Redis engine types only).\n"
@@ -2572,7 +2631,7 @@
                 },
                 "status": {
                     "type": "string",
-                    "description": "The current status of the managed database read replica (poweroff, rebuilding, rebalancing, running).\n"
+                    "description": "The current status of the managed database read replica (poweroff, rebuilding, rebalancing, configuring, running).\n"
                 },
                 "tag": {
                     "type": "string",
@@ -2590,7 +2649,8 @@
                     "description": "The primary admin user for the managed database read replica.\n"
                 },
                 "vpcId": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The ID of the VPC Network attached to the managed database read replica.\n"
                 }
             },
             "required": [
@@ -2600,6 +2660,7 @@
                 "databaseId",
                 "dateCreated",
                 "dbname",
+                "ferretdbCredentials",
                 "host",
                 "label",
                 "latestBackup",
@@ -2616,6 +2677,7 @@
                 "planReplicas",
                 "planVcpus",
                 "port",
+                "publicHost",
                 "redisEvictionPolicy",
                 "region",
                 "status",
@@ -2629,6 +2691,13 @@
                     "type": "string",
                     "description": "The managed database ID you want to attach this replica to.\n",
                     "willReplaceOnChanges": true
+                },
+                "ferretdbCredentials": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "pulumi.json#/Any"
+                    },
+                    "description": "An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).\n"
                 },
                 "label": {
                     "type": "string",
@@ -2656,6 +2725,10 @@
                 "planDisk": {
                     "type": "integer",
                     "description": "The description of the disk(s) on the managed database read replica.\n"
+                },
+                "publicHost": {
+                    "type": "string",
+                    "description": "The public hostname assigned to the managed database read replica (VPC-attached only).\n"
                 },
                 "redisEvictionPolicy": {
                     "type": "string",
@@ -2709,6 +2782,13 @@
                     "dbname": {
                         "type": "string",
                         "description": "The managed database read replica's default logical database.\n"
+                    },
+                    "ferretdbCredentials": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "pulumi.json#/Any"
+                        },
+                        "description": "An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).\n"
                     },
                     "host": {
                         "type": "string",
@@ -2777,6 +2857,10 @@
                         "type": "string",
                         "description": "The connection port for the managed database read replica.\n"
                     },
+                    "publicHost": {
+                        "type": "string",
+                        "description": "The public hostname assigned to the managed database read replica (VPC-attached only).\n"
+                    },
                     "redisEvictionPolicy": {
                         "type": "string",
                         "description": "The configuration value for the data eviction policy on the managed database read replica (Redis engine types only).\n"
@@ -2787,7 +2871,7 @@
                     },
                     "status": {
                         "type": "string",
-                        "description": "The current status of the managed database read replica (poweroff, rebuilding, rebalancing, running).\n"
+                        "description": "The current status of the managed database read replica (poweroff, rebuilding, rebalancing, configuring, running).\n"
                     },
                     "tag": {
                         "type": "string",
@@ -2805,7 +2889,8 @@
                         "description": "The primary admin user for the managed database read replica.\n"
                     },
                     "vpcId": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The ID of the VPC Network attached to the managed database read replica.\n"
                     }
                 },
                 "type": "object"
@@ -4003,6 +4088,10 @@
                     "type": "string",
                     "description": "Domain for your Kubernetes clusters control plane.\n"
                 },
+                "haControlplanes": {
+                    "type": "boolean",
+                    "description": "Boolean indicating if the cluster should be created with multiple, highly available controlplanes.\n"
+                },
                 "ip": {
                     "type": "string",
                     "description": "IP address of VKE cluster control plane.\n"
@@ -4053,6 +4142,11 @@
                 "version"
             ],
             "inputProperties": {
+                "haControlplanes": {
+                    "type": "boolean",
+                    "description": "Boolean indicating if the cluster should be created with multiple, highly available controlplanes.\n",
+                    "willReplaceOnChanges": true
+                },
                 "label": {
                     "type": "string",
                     "description": "The VKE clusters label.\n"
@@ -4105,6 +4199,11 @@
                     "endpoint": {
                         "type": "string",
                         "description": "Domain for your Kubernetes clusters control plane.\n"
+                    },
+                    "haControlplanes": {
+                        "type": "boolean",
+                        "description": "Boolean indicating if the cluster should be created with multiple, highly available controlplanes.\n",
+                        "willReplaceOnChanges": true
                     },
                     "ip": {
                         "type": "string",
@@ -5432,6 +5531,9 @@
             },
             "required": [
                 "dateCreated",
+                "ipBlock",
+                "ipType",
+                "prefixLength",
                 "region"
             ],
             "inputProperties": {
@@ -6108,6 +6210,13 @@
                         "type": "string",
                         "description": "The managed database's default logical database.\n"
                     },
+                    "ferretdbCredentials": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "pulumi.json#/Any"
+                        },
+                        "description": "An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).\n"
+                    },
                     "filters": {
                         "type": "array",
                         "items": {
@@ -6206,7 +6315,7 @@
                     },
                     "status": {
                         "type": "string",
-                        "description": "The current status of the managed database (poweroff, rebuilding, rebalancing, running).\n"
+                        "description": "The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).\n"
                     },
                     "tag": {
                         "type": "string",
@@ -6235,6 +6344,7 @@
                     "databaseEngineVersion",
                     "dateCreated",
                     "dbname",
+                    "ferretdbCredentials",
                     "host",
                     "label",
                     "latestBackup",
@@ -6816,6 +6926,10 @@
                             "$ref": "#/types/vultr:index/getKubernetesFilter:getKubernetesFilter"
                         }
                     },
+                    "haControlplanes": {
+                        "type": "boolean",
+                        "description": "Boolean indicating whether or not the cluster has multiple, highly available controlplanes.\n"
+                    },
                     "id": {
                         "type": "string",
                         "description": "ID of node.\n"
@@ -6864,6 +6978,7 @@
                     "clusterSubnet",
                     "dateCreated",
                     "endpoint",
+                    "haControlplanes",
                     "id",
                     "ip",
                     "kubeConfig",
