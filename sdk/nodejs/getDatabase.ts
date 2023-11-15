@@ -68,6 +68,10 @@ export interface GetDatabaseResult {
      * The managed database's default logical database.
      */
     readonly dbname: string;
+    /**
+     * An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
+     */
+    readonly ferretdbCredentials: {[key: string]: any};
     readonly filters?: outputs.GetDatabaseFilter[];
     /**
      * The hostname assigned to the managed database.
@@ -154,7 +158,7 @@ export interface GetDatabaseResult {
      */
     readonly region: string;
     /**
-     * The current status of the managed database (poweroff, rebuilding, rebalancing, running).
+     * The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).
      */
     readonly status: string;
     /**

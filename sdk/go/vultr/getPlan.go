@@ -9,7 +9,6 @@ import (
 
 	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 )
 
 // Get information about a Vultr plan.
@@ -126,12 +125,6 @@ func (o GetPlanResultOutput) ToGetPlanResultOutput() GetPlanResultOutput {
 
 func (o GetPlanResultOutput) ToGetPlanResultOutputWithContext(ctx context.Context) GetPlanResultOutput {
 	return o
-}
-
-func (o GetPlanResultOutput) ToOutput(ctx context.Context) pulumix.Output[GetPlanResult] {
-	return pulumix.Output[GetPlanResult]{
-		OutputState: o.OutputState,
-	}
 }
 
 // The bandwidth available on the plan in GB.

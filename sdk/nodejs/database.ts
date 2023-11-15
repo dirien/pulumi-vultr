@@ -102,6 +102,10 @@ export class Database extends pulumi.CustomResource {
      */
     public /*out*/ readonly dbname!: pulumi.Output<string>;
     /**
+     * An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
+     */
+    public readonly ferretdbCredentials!: pulumi.Output<{[key: string]: any}>;
+    /**
      * The hostname assigned to the managed database.
      */
     public /*out*/ readonly host!: pulumi.Output<string>;
@@ -182,7 +186,7 @@ export class Database extends pulumi.CustomResource {
      */
     public readonly region!: pulumi.Output<string>;
     /**
-     * The current status of the managed database (poweroff, rebuilding, rebalancing, running).
+     * The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).
      */
     public /*out*/ readonly status!: pulumi.Output<string>;
     /**
@@ -220,6 +224,7 @@ export class Database extends pulumi.CustomResource {
             resourceInputs["databaseEngineVersion"] = state ? state.databaseEngineVersion : undefined;
             resourceInputs["dateCreated"] = state ? state.dateCreated : undefined;
             resourceInputs["dbname"] = state ? state.dbname : undefined;
+            resourceInputs["ferretdbCredentials"] = state ? state.ferretdbCredentials : undefined;
             resourceInputs["host"] = state ? state.host : undefined;
             resourceInputs["label"] = state ? state.label : undefined;
             resourceInputs["latestBackup"] = state ? state.latestBackup : undefined;
@@ -265,6 +270,7 @@ export class Database extends pulumi.CustomResource {
             resourceInputs["clusterTimeZone"] = args ? args.clusterTimeZone : undefined;
             resourceInputs["databaseEngine"] = args ? args.databaseEngine : undefined;
             resourceInputs["databaseEngineVersion"] = args ? args.databaseEngineVersion : undefined;
+            resourceInputs["ferretdbCredentials"] = args ? args.ferretdbCredentials : undefined;
             resourceInputs["label"] = args ? args.label : undefined;
             resourceInputs["maintenanceDow"] = args ? args.maintenanceDow : undefined;
             resourceInputs["maintenanceTime"] = args ? args.maintenanceTime : undefined;
@@ -322,6 +328,10 @@ export interface DatabaseState {
      * The managed database's default logical database.
      */
     dbname?: pulumi.Input<string>;
+    /**
+     * An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
+     */
+    ferretdbCredentials?: pulumi.Input<{[key: string]: any}>;
     /**
      * The hostname assigned to the managed database.
      */
@@ -403,7 +413,7 @@ export interface DatabaseState {
      */
     region?: pulumi.Input<string>;
     /**
-     * The current status of the managed database (poweroff, rebuilding, rebalancing, running).
+     * The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).
      */
     status?: pulumi.Input<string>;
     /**
@@ -440,6 +450,10 @@ export interface DatabaseArgs {
      * The database engine version of the new managed database.
      */
     databaseEngineVersion: pulumi.Input<string>;
+    /**
+     * An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
+     */
+    ferretdbCredentials?: pulumi.Input<{[key: string]: any}>;
     /**
      * A label for the managed database.
      */

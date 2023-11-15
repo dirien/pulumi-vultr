@@ -9,7 +9,6 @@ import (
 
 	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 )
 
 // Get information about a Vultr SSH key. This data source provides the name, public SSH key, and the creation date for your Vultr SSH key.
@@ -113,12 +112,6 @@ func (o GetSshKeyResultOutput) ToGetSshKeyResultOutput() GetSshKeyResultOutput {
 
 func (o GetSshKeyResultOutput) ToGetSshKeyResultOutputWithContext(ctx context.Context) GetSshKeyResultOutput {
 	return o
-}
-
-func (o GetSshKeyResultOutput) ToOutput(ctx context.Context) pulumix.Output[GetSshKeyResult] {
-	return pulumix.Output[GetSshKeyResult]{
-		OutputState: o.OutputState,
-	}
 }
 
 // The date the SSH key was added to your Vultr account.

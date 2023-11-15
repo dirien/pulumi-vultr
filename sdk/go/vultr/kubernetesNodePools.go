@@ -10,7 +10,6 @@ import (
 	"errors"
 	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 )
 
 // Deploy additional node pools to an existing Vultr Kubernetes Engine (VKE) cluster.
@@ -239,12 +238,6 @@ func (i *KubernetesNodePools) ToKubernetesNodePoolsOutputWithContext(ctx context
 	return pulumi.ToOutputWithContext(ctx, i).(KubernetesNodePoolsOutput)
 }
 
-func (i *KubernetesNodePools) ToOutput(ctx context.Context) pulumix.Output[*KubernetesNodePools] {
-	return pulumix.Output[*KubernetesNodePools]{
-		OutputState: i.ToKubernetesNodePoolsOutputWithContext(ctx).OutputState,
-	}
-}
-
 // KubernetesNodePoolsArrayInput is an input type that accepts KubernetesNodePoolsArray and KubernetesNodePoolsArrayOutput values.
 // You can construct a concrete instance of `KubernetesNodePoolsArrayInput` via:
 //
@@ -268,12 +261,6 @@ func (i KubernetesNodePoolsArray) ToKubernetesNodePoolsArrayOutput() KubernetesN
 
 func (i KubernetesNodePoolsArray) ToKubernetesNodePoolsArrayOutputWithContext(ctx context.Context) KubernetesNodePoolsArrayOutput {
 	return pulumi.ToOutputWithContext(ctx, i).(KubernetesNodePoolsArrayOutput)
-}
-
-func (i KubernetesNodePoolsArray) ToOutput(ctx context.Context) pulumix.Output[[]*KubernetesNodePools] {
-	return pulumix.Output[[]*KubernetesNodePools]{
-		OutputState: i.ToKubernetesNodePoolsArrayOutputWithContext(ctx).OutputState,
-	}
 }
 
 // KubernetesNodePoolsMapInput is an input type that accepts KubernetesNodePoolsMap and KubernetesNodePoolsMapOutput values.
@@ -301,12 +288,6 @@ func (i KubernetesNodePoolsMap) ToKubernetesNodePoolsMapOutputWithContext(ctx co
 	return pulumi.ToOutputWithContext(ctx, i).(KubernetesNodePoolsMapOutput)
 }
 
-func (i KubernetesNodePoolsMap) ToOutput(ctx context.Context) pulumix.Output[map[string]*KubernetesNodePools] {
-	return pulumix.Output[map[string]*KubernetesNodePools]{
-		OutputState: i.ToKubernetesNodePoolsMapOutputWithContext(ctx).OutputState,
-	}
-}
-
 type KubernetesNodePoolsOutput struct{ *pulumi.OutputState }
 
 func (KubernetesNodePoolsOutput) ElementType() reflect.Type {
@@ -319,12 +300,6 @@ func (o KubernetesNodePoolsOutput) ToKubernetesNodePoolsOutput() KubernetesNodeP
 
 func (o KubernetesNodePoolsOutput) ToKubernetesNodePoolsOutputWithContext(ctx context.Context) KubernetesNodePoolsOutput {
 	return o
-}
-
-func (o KubernetesNodePoolsOutput) ToOutput(ctx context.Context) pulumix.Output[*KubernetesNodePools] {
-	return pulumix.Output[*KubernetesNodePools]{
-		OutputState: o.OutputState,
-	}
 }
 
 // Enable the auto scaler for the default node pool.
@@ -401,12 +376,6 @@ func (o KubernetesNodePoolsArrayOutput) ToKubernetesNodePoolsArrayOutputWithCont
 	return o
 }
 
-func (o KubernetesNodePoolsArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]*KubernetesNodePools] {
-	return pulumix.Output[[]*KubernetesNodePools]{
-		OutputState: o.OutputState,
-	}
-}
-
 func (o KubernetesNodePoolsArrayOutput) Index(i pulumi.IntInput) KubernetesNodePoolsOutput {
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) *KubernetesNodePools {
 		return vs[0].([]*KubernetesNodePools)[vs[1].(int)]
@@ -425,12 +394,6 @@ func (o KubernetesNodePoolsMapOutput) ToKubernetesNodePoolsMapOutput() Kubernete
 
 func (o KubernetesNodePoolsMapOutput) ToKubernetesNodePoolsMapOutputWithContext(ctx context.Context) KubernetesNodePoolsMapOutput {
 	return o
-}
-
-func (o KubernetesNodePoolsMapOutput) ToOutput(ctx context.Context) pulumix.Output[map[string]*KubernetesNodePools] {
-	return pulumix.Output[map[string]*KubernetesNodePools]{
-		OutputState: o.OutputState,
-	}
 }
 
 func (o KubernetesNodePoolsMapOutput) MapIndex(k pulumi.StringInput) KubernetesNodePoolsOutput {

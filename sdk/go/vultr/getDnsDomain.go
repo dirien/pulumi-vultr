@@ -9,7 +9,6 @@ import (
 
 	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 )
 
 // Get information about a DNS domain associated with your Vultr account.
@@ -105,12 +104,6 @@ func (o LookupDnsDomainResultOutput) ToLookupDnsDomainResultOutput() LookupDnsDo
 
 func (o LookupDnsDomainResultOutput) ToLookupDnsDomainResultOutputWithContext(ctx context.Context) LookupDnsDomainResultOutput {
 	return o
-}
-
-func (o LookupDnsDomainResultOutput) ToOutput(ctx context.Context) pulumix.Output[LookupDnsDomainResult] {
-	return pulumix.Output[LookupDnsDomainResult]{
-		OutputState: o.OutputState,
-	}
 }
 
 // The date the DNS domain was added to your Vultr account.

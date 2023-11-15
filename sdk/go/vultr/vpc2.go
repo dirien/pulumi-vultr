@@ -10,7 +10,6 @@ import (
 	"errors"
 	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 )
 
 // Provides a Vultr VPC 2.0 resource. This can be used to create, read, and delete VPCs 2.0 on your Vultr account.
@@ -90,11 +89,11 @@ type Vpc2 struct {
 	// The description you want to give your VPC 2.0.
 	Description pulumi.StringPtrOutput `pulumi:"description"`
 	// The IPv4 subnet to be used when attaching instances to this VPC 2.0.
-	IpBlock pulumi.StringPtrOutput `pulumi:"ipBlock"`
+	IpBlock pulumi.StringOutput `pulumi:"ipBlock"`
 	// Accepted values: `v4`.
-	IpType pulumi.StringPtrOutput `pulumi:"ipType"`
+	IpType pulumi.StringOutput `pulumi:"ipType"`
 	// The number of bits for the netmask in CIDR notation. Example: 32
-	PrefixLength pulumi.IntPtrOutput `pulumi:"prefixLength"`
+	PrefixLength pulumi.IntOutput `pulumi:"prefixLength"`
 	// The region ID that you want the VPC 2.0 to be created in.
 	Region pulumi.StringOutput `pulumi:"region"`
 }
@@ -215,12 +214,6 @@ func (i *Vpc2) ToVpc2OutputWithContext(ctx context.Context) Vpc2Output {
 	return pulumi.ToOutputWithContext(ctx, i).(Vpc2Output)
 }
 
-func (i *Vpc2) ToOutput(ctx context.Context) pulumix.Output[*Vpc2] {
-	return pulumix.Output[*Vpc2]{
-		OutputState: i.ToVpc2OutputWithContext(ctx).OutputState,
-	}
-}
-
 // Vpc2ArrayInput is an input type that accepts Vpc2Array and Vpc2ArrayOutput values.
 // You can construct a concrete instance of `Vpc2ArrayInput` via:
 //
@@ -244,12 +237,6 @@ func (i Vpc2Array) ToVpc2ArrayOutput() Vpc2ArrayOutput {
 
 func (i Vpc2Array) ToVpc2ArrayOutputWithContext(ctx context.Context) Vpc2ArrayOutput {
 	return pulumi.ToOutputWithContext(ctx, i).(Vpc2ArrayOutput)
-}
-
-func (i Vpc2Array) ToOutput(ctx context.Context) pulumix.Output[[]*Vpc2] {
-	return pulumix.Output[[]*Vpc2]{
-		OutputState: i.ToVpc2ArrayOutputWithContext(ctx).OutputState,
-	}
 }
 
 // Vpc2MapInput is an input type that accepts Vpc2Map and Vpc2MapOutput values.
@@ -277,12 +264,6 @@ func (i Vpc2Map) ToVpc2MapOutputWithContext(ctx context.Context) Vpc2MapOutput {
 	return pulumi.ToOutputWithContext(ctx, i).(Vpc2MapOutput)
 }
 
-func (i Vpc2Map) ToOutput(ctx context.Context) pulumix.Output[map[string]*Vpc2] {
-	return pulumix.Output[map[string]*Vpc2]{
-		OutputState: i.ToVpc2MapOutputWithContext(ctx).OutputState,
-	}
-}
-
 type Vpc2Output struct{ *pulumi.OutputState }
 
 func (Vpc2Output) ElementType() reflect.Type {
@@ -297,12 +278,6 @@ func (o Vpc2Output) ToVpc2OutputWithContext(ctx context.Context) Vpc2Output {
 	return o
 }
 
-func (o Vpc2Output) ToOutput(ctx context.Context) pulumix.Output[*Vpc2] {
-	return pulumix.Output[*Vpc2]{
-		OutputState: o.OutputState,
-	}
-}
-
 // The date that the VPC 2.0 was added to your Vultr account.
 func (o Vpc2Output) DateCreated() pulumi.StringOutput {
 	return o.ApplyT(func(v *Vpc2) pulumi.StringOutput { return v.DateCreated }).(pulumi.StringOutput)
@@ -314,18 +289,18 @@ func (o Vpc2Output) Description() pulumi.StringPtrOutput {
 }
 
 // The IPv4 subnet to be used when attaching instances to this VPC 2.0.
-func (o Vpc2Output) IpBlock() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Vpc2) pulumi.StringPtrOutput { return v.IpBlock }).(pulumi.StringPtrOutput)
+func (o Vpc2Output) IpBlock() pulumi.StringOutput {
+	return o.ApplyT(func(v *Vpc2) pulumi.StringOutput { return v.IpBlock }).(pulumi.StringOutput)
 }
 
 // Accepted values: `v4`.
-func (o Vpc2Output) IpType() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Vpc2) pulumi.StringPtrOutput { return v.IpType }).(pulumi.StringPtrOutput)
+func (o Vpc2Output) IpType() pulumi.StringOutput {
+	return o.ApplyT(func(v *Vpc2) pulumi.StringOutput { return v.IpType }).(pulumi.StringOutput)
 }
 
 // The number of bits for the netmask in CIDR notation. Example: 32
-func (o Vpc2Output) PrefixLength() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v *Vpc2) pulumi.IntPtrOutput { return v.PrefixLength }).(pulumi.IntPtrOutput)
+func (o Vpc2Output) PrefixLength() pulumi.IntOutput {
+	return o.ApplyT(func(v *Vpc2) pulumi.IntOutput { return v.PrefixLength }).(pulumi.IntOutput)
 }
 
 // The region ID that you want the VPC 2.0 to be created in.
@@ -347,12 +322,6 @@ func (o Vpc2ArrayOutput) ToVpc2ArrayOutputWithContext(ctx context.Context) Vpc2A
 	return o
 }
 
-func (o Vpc2ArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]*Vpc2] {
-	return pulumix.Output[[]*Vpc2]{
-		OutputState: o.OutputState,
-	}
-}
-
 func (o Vpc2ArrayOutput) Index(i pulumi.IntInput) Vpc2Output {
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) *Vpc2 {
 		return vs[0].([]*Vpc2)[vs[1].(int)]
@@ -371,12 +340,6 @@ func (o Vpc2MapOutput) ToVpc2MapOutput() Vpc2MapOutput {
 
 func (o Vpc2MapOutput) ToVpc2MapOutputWithContext(ctx context.Context) Vpc2MapOutput {
 	return o
-}
-
-func (o Vpc2MapOutput) ToOutput(ctx context.Context) pulumix.Output[map[string]*Vpc2] {
-	return pulumix.Output[map[string]*Vpc2]{
-		OutputState: o.OutputState,
-	}
 }
 
 func (o Vpc2MapOutput) MapIndex(k pulumi.StringInput) Vpc2Output {

@@ -10,7 +10,6 @@ import (
 	"errors"
 	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 )
 
 // Provides a Vultr Block Storage resource. This can be used to create, read, modify, and delete Block Storage.
@@ -218,12 +217,6 @@ func (i *BlockStorage) ToBlockStorageOutputWithContext(ctx context.Context) Bloc
 	return pulumi.ToOutputWithContext(ctx, i).(BlockStorageOutput)
 }
 
-func (i *BlockStorage) ToOutput(ctx context.Context) pulumix.Output[*BlockStorage] {
-	return pulumix.Output[*BlockStorage]{
-		OutputState: i.ToBlockStorageOutputWithContext(ctx).OutputState,
-	}
-}
-
 // BlockStorageArrayInput is an input type that accepts BlockStorageArray and BlockStorageArrayOutput values.
 // You can construct a concrete instance of `BlockStorageArrayInput` via:
 //
@@ -247,12 +240,6 @@ func (i BlockStorageArray) ToBlockStorageArrayOutput() BlockStorageArrayOutput {
 
 func (i BlockStorageArray) ToBlockStorageArrayOutputWithContext(ctx context.Context) BlockStorageArrayOutput {
 	return pulumi.ToOutputWithContext(ctx, i).(BlockStorageArrayOutput)
-}
-
-func (i BlockStorageArray) ToOutput(ctx context.Context) pulumix.Output[[]*BlockStorage] {
-	return pulumix.Output[[]*BlockStorage]{
-		OutputState: i.ToBlockStorageArrayOutputWithContext(ctx).OutputState,
-	}
 }
 
 // BlockStorageMapInput is an input type that accepts BlockStorageMap and BlockStorageMapOutput values.
@@ -280,12 +267,6 @@ func (i BlockStorageMap) ToBlockStorageMapOutputWithContext(ctx context.Context)
 	return pulumi.ToOutputWithContext(ctx, i).(BlockStorageMapOutput)
 }
 
-func (i BlockStorageMap) ToOutput(ctx context.Context) pulumix.Output[map[string]*BlockStorage] {
-	return pulumix.Output[map[string]*BlockStorage]{
-		OutputState: i.ToBlockStorageMapOutputWithContext(ctx).OutputState,
-	}
-}
-
 type BlockStorageOutput struct{ *pulumi.OutputState }
 
 func (BlockStorageOutput) ElementType() reflect.Type {
@@ -298,12 +279,6 @@ func (o BlockStorageOutput) ToBlockStorageOutput() BlockStorageOutput {
 
 func (o BlockStorageOutput) ToBlockStorageOutputWithContext(ctx context.Context) BlockStorageOutput {
 	return o
-}
-
-func (o BlockStorageOutput) ToOutput(ctx context.Context) pulumix.Output[*BlockStorage] {
-	return pulumix.Output[*BlockStorage]{
-		OutputState: o.OutputState,
-	}
 }
 
 // VPS ID that you want to have this block storage attached to.
@@ -370,12 +345,6 @@ func (o BlockStorageArrayOutput) ToBlockStorageArrayOutputWithContext(ctx contex
 	return o
 }
 
-func (o BlockStorageArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]*BlockStorage] {
-	return pulumix.Output[[]*BlockStorage]{
-		OutputState: o.OutputState,
-	}
-}
-
 func (o BlockStorageArrayOutput) Index(i pulumi.IntInput) BlockStorageOutput {
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) *BlockStorage {
 		return vs[0].([]*BlockStorage)[vs[1].(int)]
@@ -394,12 +363,6 @@ func (o BlockStorageMapOutput) ToBlockStorageMapOutput() BlockStorageMapOutput {
 
 func (o BlockStorageMapOutput) ToBlockStorageMapOutputWithContext(ctx context.Context) BlockStorageMapOutput {
 	return o
-}
-
-func (o BlockStorageMapOutput) ToOutput(ctx context.Context) pulumix.Output[map[string]*BlockStorage] {
-	return pulumix.Output[map[string]*BlockStorage]{
-		OutputState: o.OutputState,
-	}
 }
 
 func (o BlockStorageMapOutput) MapIndex(k pulumi.StringInput) BlockStorageOutput {

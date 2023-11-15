@@ -164,6 +164,10 @@ namespace ediri.Vultr
         public readonly string Endpoint;
         public readonly ImmutableArray<Outputs.GetKubernetesFilterResult> Filters;
         /// <summary>
+        /// Boolean indicating whether or not the cluster has multiple, highly available controlplanes.
+        /// </summary>
+        public readonly bool HaControlplanes;
+        /// <summary>
         /// ID of node.
         /// </summary>
         public readonly string Id;
@@ -216,6 +220,8 @@ namespace ediri.Vultr
 
             ImmutableArray<Outputs.GetKubernetesFilterResult> filters,
 
+            bool haControlplanes,
+
             string id,
 
             string ip,
@@ -241,6 +247,7 @@ namespace ediri.Vultr
             DateCreated = dateCreated;
             Endpoint = endpoint;
             Filters = filters;
+            HaControlplanes = haControlplanes;
             Id = id;
             Ip = ip;
             KubeConfig = kubeConfig;

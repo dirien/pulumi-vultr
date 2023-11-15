@@ -9,7 +9,6 @@ import (
 
 	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 )
 
 // Get information about a Vultr database.
@@ -75,8 +74,10 @@ type LookupDatabaseResult struct {
 	// The date the managed database was added to your Vultr account.
 	DateCreated string `pulumi:"dateCreated"`
 	// The managed database's default logical database.
-	Dbname  string              `pulumi:"dbname"`
-	Filters []GetDatabaseFilter `pulumi:"filters"`
+	Dbname string `pulumi:"dbname"`
+	// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
+	FerretdbCredentials map[string]interface{} `pulumi:"ferretdbCredentials"`
+	Filters             []GetDatabaseFilter    `pulumi:"filters"`
 	// The hostname assigned to the managed database.
 	Host string `pulumi:"host"`
 	// The provider-assigned unique ID for this managed resource.
@@ -119,7 +120,7 @@ type LookupDatabaseResult struct {
 	RedisEvictionPolicy string `pulumi:"redisEvictionPolicy"`
 	// The region ID of the managed database.
 	Region string `pulumi:"region"`
-	// The current status of the managed database (poweroff, rebuilding, rebalancing, running).
+	// The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).
 	Status string `pulumi:"status"`
 	// The managed database's tag.
 	Tag string `pulumi:"tag"`
@@ -169,12 +170,6 @@ func (o LookupDatabaseResultOutput) ToLookupDatabaseResultOutputWithContext(ctx 
 	return o
 }
 
-func (o LookupDatabaseResultOutput) ToOutput(ctx context.Context) pulumix.Output[LookupDatabaseResult] {
-	return pulumix.Output[LookupDatabaseResult]{
-		OutputState: o.OutputState,
-	}
-}
-
 // The configured time zone for the Managed Database in TZ database format.
 func (o LookupDatabaseResultOutput) ClusterTimeZone() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupDatabaseResult) string { return v.ClusterTimeZone }).(pulumi.StringOutput)
@@ -198,6 +193,11 @@ func (o LookupDatabaseResultOutput) DateCreated() pulumi.StringOutput {
 // The managed database's default logical database.
 func (o LookupDatabaseResultOutput) Dbname() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupDatabaseResult) string { return v.Dbname }).(pulumi.StringOutput)
+}
+
+// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
+func (o LookupDatabaseResultOutput) FerretdbCredentials() pulumi.MapOutput {
+	return o.ApplyT(func(v LookupDatabaseResult) map[string]interface{} { return v.FerretdbCredentials }).(pulumi.MapOutput)
 }
 
 func (o LookupDatabaseResultOutput) Filters() GetDatabaseFilterArrayOutput {
@@ -309,7 +309,7 @@ func (o LookupDatabaseResultOutput) Region() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupDatabaseResult) string { return v.Region }).(pulumi.StringOutput)
 }
 
-// The current status of the managed database (poweroff, rebuilding, rebalancing, running).
+// The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).
 func (o LookupDatabaseResultOutput) Status() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupDatabaseResult) string { return v.Status }).(pulumi.StringOutput)
 }

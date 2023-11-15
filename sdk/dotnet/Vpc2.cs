@@ -82,19 +82,19 @@ namespace ediri.Vultr
         /// The IPv4 subnet to be used when attaching instances to this VPC 2.0.
         /// </summary>
         [Output("ipBlock")]
-        public Output<string?> IpBlock { get; private set; } = null!;
+        public Output<string> IpBlock { get; private set; } = null!;
 
         /// <summary>
         /// Accepted values: `v4`.
         /// </summary>
         [Output("ipType")]
-        public Output<string?> IpType { get; private set; } = null!;
+        public Output<string> IpType { get; private set; } = null!;
 
         /// <summary>
         /// The number of bits for the netmask in CIDR notation. Example: 32
         /// </summary>
         [Output("prefixLength")]
-        public Output<int?> PrefixLength { get; private set; } = null!;
+        public Output<int> PrefixLength { get; private set; } = null!;
 
         /// <summary>
         /// The region ID that you want the VPC 2.0 to be created in.

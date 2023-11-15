@@ -9,7 +9,6 @@ import (
 
 	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 )
 
 // Get information about an Object Storage subscription on Vultr.
@@ -125,12 +124,6 @@ func (o LookupObjectStorageResultOutput) ToLookupObjectStorageResultOutput() Loo
 
 func (o LookupObjectStorageResultOutput) ToLookupObjectStorageResultOutputWithContext(ctx context.Context) LookupObjectStorageResultOutput {
 	return o
-}
-
-func (o LookupObjectStorageResultOutput) ToOutput(ctx context.Context) pulumix.Output[LookupObjectStorageResult] {
-	return pulumix.Output[LookupObjectStorageResult]{
-		OutputState: o.OutputState,
-	}
 }
 
 // The identifying cluster ID.

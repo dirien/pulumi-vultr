@@ -76,6 +76,10 @@ export class DatabaseReplica extends pulumi.CustomResource {
      */
     public /*out*/ readonly dbname!: pulumi.Output<string>;
     /**
+     * An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
+     */
+    public readonly ferretdbCredentials!: pulumi.Output<{[key: string]: any}>;
+    /**
      * The hostname assigned to the managed database read replica.
      */
     public /*out*/ readonly host!: pulumi.Output<string>;
@@ -140,6 +144,10 @@ export class DatabaseReplica extends pulumi.CustomResource {
      */
     public /*out*/ readonly port!: pulumi.Output<string>;
     /**
+     * The public hostname assigned to the managed database read replica (VPC-attached only).
+     */
+    public readonly publicHost!: pulumi.Output<string>;
+    /**
      * The configuration value for the data eviction policy on the managed database read replica (Redis engine types only).
      */
     public readonly redisEvictionPolicy!: pulumi.Output<string>;
@@ -148,7 +156,7 @@ export class DatabaseReplica extends pulumi.CustomResource {
      */
     public readonly region!: pulumi.Output<string>;
     /**
-     * The current status of the managed database read replica (poweroff, rebuilding, rebalancing, running).
+     * The current status of the managed database read replica (poweroff, rebuilding, rebalancing, configuring, running).
      */
     public /*out*/ readonly status!: pulumi.Output<string>;
     /**
@@ -163,6 +171,9 @@ export class DatabaseReplica extends pulumi.CustomResource {
      * The primary admin user for the managed database read replica.
      */
     public /*out*/ readonly user!: pulumi.Output<string>;
+    /**
+     * The ID of the VPC Network attached to the managed database read replica.
+     */
     public /*out*/ readonly vpcId!: pulumi.Output<string>;
 
     /**
@@ -184,6 +195,7 @@ export class DatabaseReplica extends pulumi.CustomResource {
             resourceInputs["databaseId"] = state ? state.databaseId : undefined;
             resourceInputs["dateCreated"] = state ? state.dateCreated : undefined;
             resourceInputs["dbname"] = state ? state.dbname : undefined;
+            resourceInputs["ferretdbCredentials"] = state ? state.ferretdbCredentials : undefined;
             resourceInputs["host"] = state ? state.host : undefined;
             resourceInputs["label"] = state ? state.label : undefined;
             resourceInputs["latestBackup"] = state ? state.latestBackup : undefined;
@@ -200,6 +212,7 @@ export class DatabaseReplica extends pulumi.CustomResource {
             resourceInputs["planReplicas"] = state ? state.planReplicas : undefined;
             resourceInputs["planVcpus"] = state ? state.planVcpus : undefined;
             resourceInputs["port"] = state ? state.port : undefined;
+            resourceInputs["publicHost"] = state ? state.publicHost : undefined;
             resourceInputs["redisEvictionPolicy"] = state ? state.redisEvictionPolicy : undefined;
             resourceInputs["region"] = state ? state.region : undefined;
             resourceInputs["status"] = state ? state.status : undefined;
@@ -219,12 +232,14 @@ export class DatabaseReplica extends pulumi.CustomResource {
                 throw new Error("Missing required property 'region'");
             }
             resourceInputs["databaseId"] = args ? args.databaseId : undefined;
+            resourceInputs["ferretdbCredentials"] = args ? args.ferretdbCredentials : undefined;
             resourceInputs["label"] = args ? args.label : undefined;
             resourceInputs["mysqlLongQueryTime"] = args ? args.mysqlLongQueryTime : undefined;
             resourceInputs["mysqlRequirePrimaryKey"] = args ? args.mysqlRequirePrimaryKey : undefined;
             resourceInputs["mysqlSlowQueryLog"] = args ? args.mysqlSlowQueryLog : undefined;
             resourceInputs["mysqlSqlModes"] = args ? args.mysqlSqlModes : undefined;
             resourceInputs["planDisk"] = args ? args.planDisk : undefined;
+            resourceInputs["publicHost"] = args ? args.publicHost : undefined;
             resourceInputs["redisEvictionPolicy"] = args ? args.redisEvictionPolicy : undefined;
             resourceInputs["region"] = args ? args.region : undefined;
             resourceInputs["tag"] = args ? args.tag : undefined;
@@ -281,6 +296,10 @@ export interface DatabaseReplicaState {
      * The managed database read replica's default logical database.
      */
     dbname?: pulumi.Input<string>;
+    /**
+     * An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
+     */
+    ferretdbCredentials?: pulumi.Input<{[key: string]: any}>;
     /**
      * The hostname assigned to the managed database read replica.
      */
@@ -346,6 +365,10 @@ export interface DatabaseReplicaState {
      */
     port?: pulumi.Input<string>;
     /**
+     * The public hostname assigned to the managed database read replica (VPC-attached only).
+     */
+    publicHost?: pulumi.Input<string>;
+    /**
      * The configuration value for the data eviction policy on the managed database read replica (Redis engine types only).
      */
     redisEvictionPolicy?: pulumi.Input<string>;
@@ -354,7 +377,7 @@ export interface DatabaseReplicaState {
      */
     region?: pulumi.Input<string>;
     /**
-     * The current status of the managed database read replica (poweroff, rebuilding, rebalancing, running).
+     * The current status of the managed database read replica (poweroff, rebuilding, rebalancing, configuring, running).
      */
     status?: pulumi.Input<string>;
     /**
@@ -369,6 +392,9 @@ export interface DatabaseReplicaState {
      * The primary admin user for the managed database read replica.
      */
     user?: pulumi.Input<string>;
+    /**
+     * The ID of the VPC Network attached to the managed database read replica.
+     */
     vpcId?: pulumi.Input<string>;
 }
 
@@ -380,6 +406,10 @@ export interface DatabaseReplicaArgs {
      * The managed database ID you want to attach this replica to.
      */
     databaseId: pulumi.Input<string>;
+    /**
+     * An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
+     */
+    ferretdbCredentials?: pulumi.Input<{[key: string]: any}>;
     /**
      * A label for the managed database read replica.
      */
@@ -404,6 +434,10 @@ export interface DatabaseReplicaArgs {
      * The description of the disk(s) on the managed database read replica.
      */
     planDisk?: pulumi.Input<number>;
+    /**
+     * The public hostname assigned to the managed database read replica (VPC-attached only).
+     */
+    publicHost?: pulumi.Input<string>;
     /**
      * The configuration value for the data eviction policy on the managed database read replica (Redis engine types only).
      */

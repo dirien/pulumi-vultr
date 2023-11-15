@@ -109,6 +109,10 @@ export class Kubernetes extends pulumi.CustomResource {
      */
     public /*out*/ readonly endpoint!: pulumi.Output<string>;
     /**
+     * Boolean indicating if the cluster should be created with multiple, highly available controlplanes.
+     */
+    public readonly haControlplanes!: pulumi.Output<boolean | undefined>;
+    /**
      * IP address of VKE cluster control plane.
      */
     public /*out*/ readonly ip!: pulumi.Output<string>;
@@ -160,6 +164,7 @@ export class Kubernetes extends pulumi.CustomResource {
             resourceInputs["clusterSubnet"] = state ? state.clusterSubnet : undefined;
             resourceInputs["dateCreated"] = state ? state.dateCreated : undefined;
             resourceInputs["endpoint"] = state ? state.endpoint : undefined;
+            resourceInputs["haControlplanes"] = state ? state.haControlplanes : undefined;
             resourceInputs["ip"] = state ? state.ip : undefined;
             resourceInputs["kubeConfig"] = state ? state.kubeConfig : undefined;
             resourceInputs["label"] = state ? state.label : undefined;
@@ -179,6 +184,7 @@ export class Kubernetes extends pulumi.CustomResource {
             if ((!args || args.version === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'version'");
             }
+            resourceInputs["haControlplanes"] = args ? args.haControlplanes : undefined;
             resourceInputs["label"] = args ? args.label : undefined;
             resourceInputs["nodePools"] = args ? args.nodePools : undefined;
             resourceInputs["region"] = args ? args.region : undefined;
@@ -230,6 +236,10 @@ export interface KubernetesState {
      */
     endpoint?: pulumi.Input<string>;
     /**
+     * Boolean indicating if the cluster should be created with multiple, highly available controlplanes.
+     */
+    haControlplanes?: pulumi.Input<boolean>;
+    /**
      * IP address of VKE cluster control plane.
      */
     ip?: pulumi.Input<string>;
@@ -267,6 +277,10 @@ export interface KubernetesState {
  * The set of arguments for constructing a Kubernetes resource.
  */
 export interface KubernetesArgs {
+    /**
+     * Boolean indicating if the cluster should be created with multiple, highly available controlplanes.
+     */
+    haControlplanes?: pulumi.Input<boolean>;
     /**
      * The VKE clusters label.
      */

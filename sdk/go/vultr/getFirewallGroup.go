@@ -9,7 +9,6 @@ import (
 
 	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 )
 
 // Get information about a firewall group on your Vultr account.
@@ -119,12 +118,6 @@ func (o LookupFirewallGroupResultOutput) ToLookupFirewallGroupResultOutput() Loo
 
 func (o LookupFirewallGroupResultOutput) ToLookupFirewallGroupResultOutputWithContext(ctx context.Context) LookupFirewallGroupResultOutput {
 	return o
-}
-
-func (o LookupFirewallGroupResultOutput) ToOutput(ctx context.Context) pulumix.Output[LookupFirewallGroupResult] {
-	return pulumix.Output[LookupFirewallGroupResult]{
-		OutputState: o.OutputState,
-	}
 }
 
 // The date the firewall group was added to your Vultr account.

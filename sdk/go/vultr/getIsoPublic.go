@@ -9,7 +9,6 @@ import (
 
 	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 )
 
 // Get information about an ISO file offered in the Vultr ISO library.
@@ -113,12 +112,6 @@ func (o GetIsoPublicResultOutput) ToGetIsoPublicResultOutput() GetIsoPublicResul
 
 func (o GetIsoPublicResultOutput) ToGetIsoPublicResultOutputWithContext(ctx context.Context) GetIsoPublicResultOutput {
 	return o
-}
-
-func (o GetIsoPublicResultOutput) ToOutput(ctx context.Context) pulumix.Output[GetIsoPublicResult] {
-	return pulumix.Output[GetIsoPublicResult]{
-		OutputState: o.OutputState,
-	}
 }
 
 // The description of the ISO file.

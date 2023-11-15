@@ -10,7 +10,6 @@ import (
 	"errors"
 	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 )
 
 // Provides a Vultr database connection pool resource. This can be used to create, read, modify, and delete connection pools for a PostgreSQL managed database on your Vultr account.
@@ -195,12 +194,6 @@ func (i *DatabaseConnectionPool) ToDatabaseConnectionPoolOutputWithContext(ctx c
 	return pulumi.ToOutputWithContext(ctx, i).(DatabaseConnectionPoolOutput)
 }
 
-func (i *DatabaseConnectionPool) ToOutput(ctx context.Context) pulumix.Output[*DatabaseConnectionPool] {
-	return pulumix.Output[*DatabaseConnectionPool]{
-		OutputState: i.ToDatabaseConnectionPoolOutputWithContext(ctx).OutputState,
-	}
-}
-
 // DatabaseConnectionPoolArrayInput is an input type that accepts DatabaseConnectionPoolArray and DatabaseConnectionPoolArrayOutput values.
 // You can construct a concrete instance of `DatabaseConnectionPoolArrayInput` via:
 //
@@ -224,12 +217,6 @@ func (i DatabaseConnectionPoolArray) ToDatabaseConnectionPoolArrayOutput() Datab
 
 func (i DatabaseConnectionPoolArray) ToDatabaseConnectionPoolArrayOutputWithContext(ctx context.Context) DatabaseConnectionPoolArrayOutput {
 	return pulumi.ToOutputWithContext(ctx, i).(DatabaseConnectionPoolArrayOutput)
-}
-
-func (i DatabaseConnectionPoolArray) ToOutput(ctx context.Context) pulumix.Output[[]*DatabaseConnectionPool] {
-	return pulumix.Output[[]*DatabaseConnectionPool]{
-		OutputState: i.ToDatabaseConnectionPoolArrayOutputWithContext(ctx).OutputState,
-	}
 }
 
 // DatabaseConnectionPoolMapInput is an input type that accepts DatabaseConnectionPoolMap and DatabaseConnectionPoolMapOutput values.
@@ -257,12 +244,6 @@ func (i DatabaseConnectionPoolMap) ToDatabaseConnectionPoolMapOutputWithContext(
 	return pulumi.ToOutputWithContext(ctx, i).(DatabaseConnectionPoolMapOutput)
 }
 
-func (i DatabaseConnectionPoolMap) ToOutput(ctx context.Context) pulumix.Output[map[string]*DatabaseConnectionPool] {
-	return pulumix.Output[map[string]*DatabaseConnectionPool]{
-		OutputState: i.ToDatabaseConnectionPoolMapOutputWithContext(ctx).OutputState,
-	}
-}
-
 type DatabaseConnectionPoolOutput struct{ *pulumi.OutputState }
 
 func (DatabaseConnectionPoolOutput) ElementType() reflect.Type {
@@ -275,12 +256,6 @@ func (o DatabaseConnectionPoolOutput) ToDatabaseConnectionPoolOutput() DatabaseC
 
 func (o DatabaseConnectionPoolOutput) ToDatabaseConnectionPoolOutputWithContext(ctx context.Context) DatabaseConnectionPoolOutput {
 	return o
-}
-
-func (o DatabaseConnectionPoolOutput) ToOutput(ctx context.Context) pulumix.Output[*DatabaseConnectionPool] {
-	return pulumix.Output[*DatabaseConnectionPool]{
-		OutputState: o.OutputState,
-	}
 }
 
 // The logical database to use for the new managed database connection pool.
@@ -327,12 +302,6 @@ func (o DatabaseConnectionPoolArrayOutput) ToDatabaseConnectionPoolArrayOutputWi
 	return o
 }
 
-func (o DatabaseConnectionPoolArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]*DatabaseConnectionPool] {
-	return pulumix.Output[[]*DatabaseConnectionPool]{
-		OutputState: o.OutputState,
-	}
-}
-
 func (o DatabaseConnectionPoolArrayOutput) Index(i pulumi.IntInput) DatabaseConnectionPoolOutput {
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) *DatabaseConnectionPool {
 		return vs[0].([]*DatabaseConnectionPool)[vs[1].(int)]
@@ -351,12 +320,6 @@ func (o DatabaseConnectionPoolMapOutput) ToDatabaseConnectionPoolMapOutput() Dat
 
 func (o DatabaseConnectionPoolMapOutput) ToDatabaseConnectionPoolMapOutputWithContext(ctx context.Context) DatabaseConnectionPoolMapOutput {
 	return o
-}
-
-func (o DatabaseConnectionPoolMapOutput) ToOutput(ctx context.Context) pulumix.Output[map[string]*DatabaseConnectionPool] {
-	return pulumix.Output[map[string]*DatabaseConnectionPool]{
-		OutputState: o.OutputState,
-	}
 }
 
 func (o DatabaseConnectionPoolMapOutput) MapIndex(k pulumi.StringInput) DatabaseConnectionPoolOutput {

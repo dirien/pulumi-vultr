@@ -10,7 +10,6 @@ import (
 	"errors"
 	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 )
 
 // Provides a Vultr private object storage resource. This can be used to create, read, update and delete object storage resources on your Vultr account.
@@ -197,12 +196,6 @@ func (i *ObjectStorage) ToObjectStorageOutputWithContext(ctx context.Context) Ob
 	return pulumi.ToOutputWithContext(ctx, i).(ObjectStorageOutput)
 }
 
-func (i *ObjectStorage) ToOutput(ctx context.Context) pulumix.Output[*ObjectStorage] {
-	return pulumix.Output[*ObjectStorage]{
-		OutputState: i.ToObjectStorageOutputWithContext(ctx).OutputState,
-	}
-}
-
 // ObjectStorageArrayInput is an input type that accepts ObjectStorageArray and ObjectStorageArrayOutput values.
 // You can construct a concrete instance of `ObjectStorageArrayInput` via:
 //
@@ -226,12 +219,6 @@ func (i ObjectStorageArray) ToObjectStorageArrayOutput() ObjectStorageArrayOutpu
 
 func (i ObjectStorageArray) ToObjectStorageArrayOutputWithContext(ctx context.Context) ObjectStorageArrayOutput {
 	return pulumi.ToOutputWithContext(ctx, i).(ObjectStorageArrayOutput)
-}
-
-func (i ObjectStorageArray) ToOutput(ctx context.Context) pulumix.Output[[]*ObjectStorage] {
-	return pulumix.Output[[]*ObjectStorage]{
-		OutputState: i.ToObjectStorageArrayOutputWithContext(ctx).OutputState,
-	}
 }
 
 // ObjectStorageMapInput is an input type that accepts ObjectStorageMap and ObjectStorageMapOutput values.
@@ -259,12 +246,6 @@ func (i ObjectStorageMap) ToObjectStorageMapOutputWithContext(ctx context.Contex
 	return pulumi.ToOutputWithContext(ctx, i).(ObjectStorageMapOutput)
 }
 
-func (i ObjectStorageMap) ToOutput(ctx context.Context) pulumix.Output[map[string]*ObjectStorage] {
-	return pulumix.Output[map[string]*ObjectStorage]{
-		OutputState: i.ToObjectStorageMapOutputWithContext(ctx).OutputState,
-	}
-}
-
 type ObjectStorageOutput struct{ *pulumi.OutputState }
 
 func (ObjectStorageOutput) ElementType() reflect.Type {
@@ -277,12 +258,6 @@ func (o ObjectStorageOutput) ToObjectStorageOutput() ObjectStorageOutput {
 
 func (o ObjectStorageOutput) ToObjectStorageOutputWithContext(ctx context.Context) ObjectStorageOutput {
 	return o
-}
-
-func (o ObjectStorageOutput) ToOutput(ctx context.Context) pulumix.Output[*ObjectStorage] {
-	return pulumix.Output[*ObjectStorage]{
-		OutputState: o.OutputState,
-	}
 }
 
 // The region ID that you want the network to be created in.
@@ -344,12 +319,6 @@ func (o ObjectStorageArrayOutput) ToObjectStorageArrayOutputWithContext(ctx cont
 	return o
 }
 
-func (o ObjectStorageArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]*ObjectStorage] {
-	return pulumix.Output[[]*ObjectStorage]{
-		OutputState: o.OutputState,
-	}
-}
-
 func (o ObjectStorageArrayOutput) Index(i pulumi.IntInput) ObjectStorageOutput {
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) *ObjectStorage {
 		return vs[0].([]*ObjectStorage)[vs[1].(int)]
@@ -368,12 +337,6 @@ func (o ObjectStorageMapOutput) ToObjectStorageMapOutput() ObjectStorageMapOutpu
 
 func (o ObjectStorageMapOutput) ToObjectStorageMapOutputWithContext(ctx context.Context) ObjectStorageMapOutput {
 	return o
-}
-
-func (o ObjectStorageMapOutput) ToOutput(ctx context.Context) pulumix.Output[map[string]*ObjectStorage] {
-	return pulumix.Output[map[string]*ObjectStorage]{
-		OutputState: o.OutputState,
-	}
 }
 
 func (o ObjectStorageMapOutput) MapIndex(k pulumi.StringInput) ObjectStorageOutput {

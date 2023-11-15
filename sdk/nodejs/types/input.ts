@@ -27,6 +27,10 @@ export interface DatabaseReadReplica {
      */
     dbname?: pulumi.Input<string>;
     /**
+     * An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
+     */
+    ferretdbCredentials?: pulumi.Input<{[key: string]: any}>;
+    /**
      * The hostname assigned to the managed database.
      */
     host?: pulumi.Input<string>;
@@ -95,6 +99,10 @@ export interface DatabaseReadReplica {
      */
     port?: pulumi.Input<string>;
     /**
+     * The public hostname assigned to the managed database (VPC-attached only).
+     */
+    publicHost?: pulumi.Input<string>;
+    /**
      * The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
      */
     redisEvictionPolicy?: pulumi.Input<string>;
@@ -103,7 +111,7 @@ export interface DatabaseReadReplica {
      */
     region: pulumi.Input<string>;
     /**
-     * The current status of the managed database (poweroff, rebuilding, rebalancing, running).
+     * The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).
      */
     status?: pulumi.Input<string>;
     /**

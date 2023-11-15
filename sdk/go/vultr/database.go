@@ -10,7 +10,6 @@ import (
 	"errors"
 	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 )
 
 // Provides a Vultr database resource. This can be used to create, read, modify, and delete managed databases on your Vultr account.
@@ -103,6 +102,8 @@ type Database struct {
 	DateCreated pulumi.StringOutput `pulumi:"dateCreated"`
 	// The managed database's default logical database.
 	Dbname pulumi.StringOutput `pulumi:"dbname"`
+	// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
+	FerretdbCredentials pulumi.MapOutput `pulumi:"ferretdbCredentials"`
 	// The hostname assigned to the managed database.
 	Host pulumi.StringOutput `pulumi:"host"`
 	// A label for the managed database.
@@ -143,7 +144,7 @@ type Database struct {
 	RedisEvictionPolicy pulumi.StringPtrOutput `pulumi:"redisEvictionPolicy"`
 	// The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
 	Region pulumi.StringOutput `pulumi:"region"`
-	// The current status of the managed database (poweroff, rebuilding, rebalancing, running).
+	// The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).
 	Status pulumi.StringOutput `pulumi:"status"`
 	// The tag to assign to the managed database.
 	Tag pulumi.StringPtrOutput `pulumi:"tag"`
@@ -210,6 +211,8 @@ type databaseState struct {
 	DateCreated *string `pulumi:"dateCreated"`
 	// The managed database's default logical database.
 	Dbname *string `pulumi:"dbname"`
+	// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
+	FerretdbCredentials map[string]interface{} `pulumi:"ferretdbCredentials"`
 	// The hostname assigned to the managed database.
 	Host *string `pulumi:"host"`
 	// A label for the managed database.
@@ -250,7 +253,7 @@ type databaseState struct {
 	RedisEvictionPolicy *string `pulumi:"redisEvictionPolicy"`
 	// The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
 	Region *string `pulumi:"region"`
-	// The current status of the managed database (poweroff, rebuilding, rebalancing, running).
+	// The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).
 	Status *string `pulumi:"status"`
 	// The tag to assign to the managed database.
 	Tag *string `pulumi:"tag"`
@@ -273,6 +276,8 @@ type DatabaseState struct {
 	DateCreated pulumi.StringPtrInput
 	// The managed database's default logical database.
 	Dbname pulumi.StringPtrInput
+	// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
+	FerretdbCredentials pulumi.MapInput
 	// The hostname assigned to the managed database.
 	Host pulumi.StringPtrInput
 	// A label for the managed database.
@@ -313,7 +318,7 @@ type DatabaseState struct {
 	RedisEvictionPolicy pulumi.StringPtrInput
 	// The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
 	Region pulumi.StringPtrInput
-	// The current status of the managed database (poweroff, rebuilding, rebalancing, running).
+	// The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).
 	Status pulumi.StringPtrInput
 	// The tag to assign to the managed database.
 	Tag pulumi.StringPtrInput
@@ -336,6 +341,8 @@ type databaseArgs struct {
 	DatabaseEngine string `pulumi:"databaseEngine"`
 	// The database engine version of the new managed database.
 	DatabaseEngineVersion string `pulumi:"databaseEngineVersion"`
+	// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
+	FerretdbCredentials map[string]interface{} `pulumi:"ferretdbCredentials"`
 	// A label for the managed database.
 	Label string `pulumi:"label"`
 	// The preferred maintenance day of week for the managed database.
@@ -380,6 +387,8 @@ type DatabaseArgs struct {
 	DatabaseEngine pulumi.StringInput
 	// The database engine version of the new managed database.
 	DatabaseEngineVersion pulumi.StringInput
+	// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
+	FerretdbCredentials pulumi.MapInput
 	// A label for the managed database.
 	Label pulumi.StringInput
 	// The preferred maintenance day of week for the managed database.
@@ -439,12 +448,6 @@ func (i *Database) ToDatabaseOutputWithContext(ctx context.Context) DatabaseOutp
 	return pulumi.ToOutputWithContext(ctx, i).(DatabaseOutput)
 }
 
-func (i *Database) ToOutput(ctx context.Context) pulumix.Output[*Database] {
-	return pulumix.Output[*Database]{
-		OutputState: i.ToDatabaseOutputWithContext(ctx).OutputState,
-	}
-}
-
 // DatabaseArrayInput is an input type that accepts DatabaseArray and DatabaseArrayOutput values.
 // You can construct a concrete instance of `DatabaseArrayInput` via:
 //
@@ -468,12 +471,6 @@ func (i DatabaseArray) ToDatabaseArrayOutput() DatabaseArrayOutput {
 
 func (i DatabaseArray) ToDatabaseArrayOutputWithContext(ctx context.Context) DatabaseArrayOutput {
 	return pulumi.ToOutputWithContext(ctx, i).(DatabaseArrayOutput)
-}
-
-func (i DatabaseArray) ToOutput(ctx context.Context) pulumix.Output[[]*Database] {
-	return pulumix.Output[[]*Database]{
-		OutputState: i.ToDatabaseArrayOutputWithContext(ctx).OutputState,
-	}
 }
 
 // DatabaseMapInput is an input type that accepts DatabaseMap and DatabaseMapOutput values.
@@ -501,12 +498,6 @@ func (i DatabaseMap) ToDatabaseMapOutputWithContext(ctx context.Context) Databas
 	return pulumi.ToOutputWithContext(ctx, i).(DatabaseMapOutput)
 }
 
-func (i DatabaseMap) ToOutput(ctx context.Context) pulumix.Output[map[string]*Database] {
-	return pulumix.Output[map[string]*Database]{
-		OutputState: i.ToDatabaseMapOutputWithContext(ctx).OutputState,
-	}
-}
-
 type DatabaseOutput struct{ *pulumi.OutputState }
 
 func (DatabaseOutput) ElementType() reflect.Type {
@@ -519,12 +510,6 @@ func (o DatabaseOutput) ToDatabaseOutput() DatabaseOutput {
 
 func (o DatabaseOutput) ToDatabaseOutputWithContext(ctx context.Context) DatabaseOutput {
 	return o
-}
-
-func (o DatabaseOutput) ToOutput(ctx context.Context) pulumix.Output[*Database] {
-	return pulumix.Output[*Database]{
-		OutputState: o.OutputState,
-	}
 }
 
 // The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
@@ -550,6 +535,11 @@ func (o DatabaseOutput) DateCreated() pulumi.StringOutput {
 // The managed database's default logical database.
 func (o DatabaseOutput) Dbname() pulumi.StringOutput {
 	return o.ApplyT(func(v *Database) pulumi.StringOutput { return v.Dbname }).(pulumi.StringOutput)
+}
+
+// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
+func (o DatabaseOutput) FerretdbCredentials() pulumi.MapOutput {
+	return o.ApplyT(func(v *Database) pulumi.MapOutput { return v.FerretdbCredentials }).(pulumi.MapOutput)
 }
 
 // The hostname assigned to the managed database.
@@ -652,7 +642,7 @@ func (o DatabaseOutput) Region() pulumi.StringOutput {
 	return o.ApplyT(func(v *Database) pulumi.StringOutput { return v.Region }).(pulumi.StringOutput)
 }
 
-// The current status of the managed database (poweroff, rebuilding, rebalancing, running).
+// The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).
 func (o DatabaseOutput) Status() pulumi.StringOutput {
 	return o.ApplyT(func(v *Database) pulumi.StringOutput { return v.Status }).(pulumi.StringOutput)
 }
@@ -691,12 +681,6 @@ func (o DatabaseArrayOutput) ToDatabaseArrayOutputWithContext(ctx context.Contex
 	return o
 }
 
-func (o DatabaseArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]*Database] {
-	return pulumix.Output[[]*Database]{
-		OutputState: o.OutputState,
-	}
-}
-
 func (o DatabaseArrayOutput) Index(i pulumi.IntInput) DatabaseOutput {
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) *Database {
 		return vs[0].([]*Database)[vs[1].(int)]
@@ -715,12 +699,6 @@ func (o DatabaseMapOutput) ToDatabaseMapOutput() DatabaseMapOutput {
 
 func (o DatabaseMapOutput) ToDatabaseMapOutputWithContext(ctx context.Context) DatabaseMapOutput {
 	return o
-}
-
-func (o DatabaseMapOutput) ToOutput(ctx context.Context) pulumix.Output[map[string]*Database] {
-	return pulumix.Output[map[string]*Database]{
-		OutputState: o.OutputState,
-	}
 }
 
 func (o DatabaseMapOutput) MapIndex(k pulumi.StringInput) DatabaseOutput {

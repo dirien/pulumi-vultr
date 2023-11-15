@@ -23,7 +23,7 @@ class GetKubernetesResult:
     """
     A collection of values returned by getKubernetes.
     """
-    def __init__(__self__, client_certificate=None, client_key=None, cluster_ca_certificate=None, cluster_subnet=None, date_created=None, endpoint=None, filters=None, id=None, ip=None, kube_config=None, label=None, node_pools=None, region=None, service_subnet=None, status=None, version=None):
+    def __init__(__self__, client_certificate=None, client_key=None, cluster_ca_certificate=None, cluster_subnet=None, date_created=None, endpoint=None, filters=None, ha_controlplanes=None, id=None, ip=None, kube_config=None, label=None, node_pools=None, region=None, service_subnet=None, status=None, version=None):
         if client_certificate and not isinstance(client_certificate, str):
             raise TypeError("Expected argument 'client_certificate' to be a str")
         pulumi.set(__self__, "client_certificate", client_certificate)
@@ -45,6 +45,9 @@ class GetKubernetesResult:
         if filters and not isinstance(filters, list):
             raise TypeError("Expected argument 'filters' to be a list")
         pulumi.set(__self__, "filters", filters)
+        if ha_controlplanes and not isinstance(ha_controlplanes, bool):
+            raise TypeError("Expected argument 'ha_controlplanes' to be a bool")
+        pulumi.set(__self__, "ha_controlplanes", ha_controlplanes)
         if id and not isinstance(id, str):
             raise TypeError("Expected argument 'id' to be a str")
         pulumi.set(__self__, "id", id)
@@ -125,6 +128,14 @@ class GetKubernetesResult:
     @pulumi.getter
     def filters(self) -> Optional[Sequence['outputs.GetKubernetesFilterResult']]:
         return pulumi.get(self, "filters")
+
+    @property
+    @pulumi.getter(name="haControlplanes")
+    def ha_controlplanes(self) -> bool:
+        """
+        Boolean indicating whether or not the cluster has multiple, highly available controlplanes.
+        """
+        return pulumi.get(self, "ha_controlplanes")
 
     @property
     @pulumi.getter
@@ -212,6 +223,7 @@ class AwaitableGetKubernetesResult(GetKubernetesResult):
             date_created=self.date_created,
             endpoint=self.endpoint,
             filters=self.filters,
+            ha_controlplanes=self.ha_controlplanes,
             id=self.id,
             ip=self.ip,
             kube_config=self.kube_config,
@@ -258,6 +270,7 @@ def get_kubernetes(filters: Optional[Sequence[pulumi.InputType['GetKubernetesFil
         date_created=pulumi.get(__ret__, 'date_created'),
         endpoint=pulumi.get(__ret__, 'endpoint'),
         filters=pulumi.get(__ret__, 'filters'),
+        ha_controlplanes=pulumi.get(__ret__, 'ha_controlplanes'),
         id=pulumi.get(__ret__, 'id'),
         ip=pulumi.get(__ret__, 'ip'),
         kube_config=pulumi.get(__ret__, 'kube_config'),

@@ -10,7 +10,6 @@ import (
 	"errors"
 	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 )
 
 // Provides a Vultr Reverse IPv4 resource. This can be used to create, read, and
@@ -185,12 +184,6 @@ func (i *ReverseIpv4) ToReverseIpv4OutputWithContext(ctx context.Context) Revers
 	return pulumi.ToOutputWithContext(ctx, i).(ReverseIpv4Output)
 }
 
-func (i *ReverseIpv4) ToOutput(ctx context.Context) pulumix.Output[*ReverseIpv4] {
-	return pulumix.Output[*ReverseIpv4]{
-		OutputState: i.ToReverseIpv4OutputWithContext(ctx).OutputState,
-	}
-}
-
 // ReverseIpv4ArrayInput is an input type that accepts ReverseIpv4Array and ReverseIpv4ArrayOutput values.
 // You can construct a concrete instance of `ReverseIpv4ArrayInput` via:
 //
@@ -214,12 +207,6 @@ func (i ReverseIpv4Array) ToReverseIpv4ArrayOutput() ReverseIpv4ArrayOutput {
 
 func (i ReverseIpv4Array) ToReverseIpv4ArrayOutputWithContext(ctx context.Context) ReverseIpv4ArrayOutput {
 	return pulumi.ToOutputWithContext(ctx, i).(ReverseIpv4ArrayOutput)
-}
-
-func (i ReverseIpv4Array) ToOutput(ctx context.Context) pulumix.Output[[]*ReverseIpv4] {
-	return pulumix.Output[[]*ReverseIpv4]{
-		OutputState: i.ToReverseIpv4ArrayOutputWithContext(ctx).OutputState,
-	}
 }
 
 // ReverseIpv4MapInput is an input type that accepts ReverseIpv4Map and ReverseIpv4MapOutput values.
@@ -247,12 +234,6 @@ func (i ReverseIpv4Map) ToReverseIpv4MapOutputWithContext(ctx context.Context) R
 	return pulumi.ToOutputWithContext(ctx, i).(ReverseIpv4MapOutput)
 }
 
-func (i ReverseIpv4Map) ToOutput(ctx context.Context) pulumix.Output[map[string]*ReverseIpv4] {
-	return pulumix.Output[map[string]*ReverseIpv4]{
-		OutputState: i.ToReverseIpv4MapOutputWithContext(ctx).OutputState,
-	}
-}
-
 type ReverseIpv4Output struct{ *pulumi.OutputState }
 
 func (ReverseIpv4Output) ElementType() reflect.Type {
@@ -265,12 +246,6 @@ func (o ReverseIpv4Output) ToReverseIpv4Output() ReverseIpv4Output {
 
 func (o ReverseIpv4Output) ToReverseIpv4OutputWithContext(ctx context.Context) ReverseIpv4Output {
 	return o
-}
-
-func (o ReverseIpv4Output) ToOutput(ctx context.Context) pulumix.Output[*ReverseIpv4] {
-	return pulumix.Output[*ReverseIpv4]{
-		OutputState: o.OutputState,
-	}
 }
 
 // The gateway IP address.
@@ -313,12 +288,6 @@ func (o ReverseIpv4ArrayOutput) ToReverseIpv4ArrayOutputWithContext(ctx context.
 	return o
 }
 
-func (o ReverseIpv4ArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]*ReverseIpv4] {
-	return pulumix.Output[[]*ReverseIpv4]{
-		OutputState: o.OutputState,
-	}
-}
-
 func (o ReverseIpv4ArrayOutput) Index(i pulumi.IntInput) ReverseIpv4Output {
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) *ReverseIpv4 {
 		return vs[0].([]*ReverseIpv4)[vs[1].(int)]
@@ -337,12 +306,6 @@ func (o ReverseIpv4MapOutput) ToReverseIpv4MapOutput() ReverseIpv4MapOutput {
 
 func (o ReverseIpv4MapOutput) ToReverseIpv4MapOutputWithContext(ctx context.Context) ReverseIpv4MapOutput {
 	return o
-}
-
-func (o ReverseIpv4MapOutput) ToOutput(ctx context.Context) pulumix.Output[map[string]*ReverseIpv4] {
-	return pulumix.Output[map[string]*ReverseIpv4]{
-		OutputState: o.OutputState,
-	}
 }
 
 func (o ReverseIpv4MapOutput) MapIndex(k pulumi.StringInput) ReverseIpv4Output {
