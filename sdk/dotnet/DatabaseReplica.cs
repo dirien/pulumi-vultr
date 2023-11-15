@@ -76,6 +76,12 @@ namespace ediri.Vultr
         public Output<string> Dbname { get; private set; } = null!;
 
         /// <summary>
+        /// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
+        /// </summary>
+        [Output("ferretdbCredentials")]
+        public Output<ImmutableDictionary<string, object>> FerretdbCredentials { get; private set; } = null!;
+
+        /// <summary>
         /// The hostname assigned to the managed database read replica.
         /// </summary>
         [Output("host")]
@@ -172,6 +178,12 @@ namespace ediri.Vultr
         public Output<string> Port { get; private set; } = null!;
 
         /// <summary>
+        /// The public hostname assigned to the managed database read replica (VPC-attached only).
+        /// </summary>
+        [Output("publicHost")]
+        public Output<string> PublicHost { get; private set; } = null!;
+
+        /// <summary>
         /// The configuration value for the data eviction policy on the managed database read replica (Redis engine types only).
         /// </summary>
         [Output("redisEvictionPolicy")]
@@ -184,7 +196,7 @@ namespace ediri.Vultr
         public Output<string> Region { get; private set; } = null!;
 
         /// <summary>
-        /// The current status of the managed database read replica (poweroff, rebuilding, rebalancing, running).
+        /// The current status of the managed database read replica (poweroff, rebuilding, rebalancing, configuring, running).
         /// </summary>
         [Output("status")]
         public Output<string> Status { get; private set; } = null!;
@@ -207,6 +219,9 @@ namespace ediri.Vultr
         [Output("user")]
         public Output<string> User { get; private set; } = null!;
 
+        /// <summary>
+        /// The ID of the VPC Network attached to the managed database read replica.
+        /// </summary>
         [Output("vpcId")]
         public Output<string> VpcId { get; private set; } = null!;
 
@@ -263,6 +278,18 @@ namespace ediri.Vultr
         [Input("databaseId", required: true)]
         public Input<string> DatabaseId { get; set; } = null!;
 
+        [Input("ferretdbCredentials")]
+        private InputMap<object>? _ferretdbCredentials;
+
+        /// <summary>
+        /// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
+        /// </summary>
+        public InputMap<object> FerretdbCredentials
+        {
+            get => _ferretdbCredentials ?? (_ferretdbCredentials = new InputMap<object>());
+            set => _ferretdbCredentials = value;
+        }
+
         /// <summary>
         /// A label for the managed database read replica.
         /// </summary>
@@ -304,6 +331,12 @@ namespace ediri.Vultr
         /// </summary>
         [Input("planDisk")]
         public Input<int>? PlanDisk { get; set; }
+
+        /// <summary>
+        /// The public hostname assigned to the managed database read replica (VPC-attached only).
+        /// </summary>
+        [Input("publicHost")]
+        public Input<string>? PublicHost { get; set; }
 
         /// <summary>
         /// The configuration value for the data eviction policy on the managed database read replica (Redis engine types only).
@@ -378,6 +411,18 @@ namespace ediri.Vultr
         /// </summary>
         [Input("dbname")]
         public Input<string>? Dbname { get; set; }
+
+        [Input("ferretdbCredentials")]
+        private InputMap<object>? _ferretdbCredentials;
+
+        /// <summary>
+        /// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
+        /// </summary>
+        public InputMap<object> FerretdbCredentials
+        {
+            get => _ferretdbCredentials ?? (_ferretdbCredentials = new InputMap<object>());
+            set => _ferretdbCredentials = value;
+        }
 
         /// <summary>
         /// The hostname assigned to the managed database read replica.
@@ -482,6 +527,12 @@ namespace ediri.Vultr
         public Input<string>? Port { get; set; }
 
         /// <summary>
+        /// The public hostname assigned to the managed database read replica (VPC-attached only).
+        /// </summary>
+        [Input("publicHost")]
+        public Input<string>? PublicHost { get; set; }
+
+        /// <summary>
         /// The configuration value for the data eviction policy on the managed database read replica (Redis engine types only).
         /// </summary>
         [Input("redisEvictionPolicy")]
@@ -494,7 +545,7 @@ namespace ediri.Vultr
         public Input<string>? Region { get; set; }
 
         /// <summary>
-        /// The current status of the managed database read replica (poweroff, rebuilding, rebalancing, running).
+        /// The current status of the managed database read replica (poweroff, rebuilding, rebalancing, configuring, running).
         /// </summary>
         [Input("status")]
         public Input<string>? Status { get; set; }
@@ -523,6 +574,9 @@ namespace ediri.Vultr
         [Input("user")]
         public Input<string>? User { get; set; }
 
+        /// <summary>
+        /// The ID of the VPC Network attached to the managed database read replica.
+        /// </summary>
         [Input("vpcId")]
         public Input<string>? VpcId { get; set; }
 

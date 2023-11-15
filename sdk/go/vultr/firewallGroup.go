@@ -9,7 +9,6 @@ import (
 
 	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 )
 
 // Provides a Vultr Firewall Group resource. This can be used to create, read, modify, and delete Firewall Group.
@@ -165,12 +164,6 @@ func (i *FirewallGroup) ToFirewallGroupOutputWithContext(ctx context.Context) Fi
 	return pulumi.ToOutputWithContext(ctx, i).(FirewallGroupOutput)
 }
 
-func (i *FirewallGroup) ToOutput(ctx context.Context) pulumix.Output[*FirewallGroup] {
-	return pulumix.Output[*FirewallGroup]{
-		OutputState: i.ToFirewallGroupOutputWithContext(ctx).OutputState,
-	}
-}
-
 // FirewallGroupArrayInput is an input type that accepts FirewallGroupArray and FirewallGroupArrayOutput values.
 // You can construct a concrete instance of `FirewallGroupArrayInput` via:
 //
@@ -194,12 +187,6 @@ func (i FirewallGroupArray) ToFirewallGroupArrayOutput() FirewallGroupArrayOutpu
 
 func (i FirewallGroupArray) ToFirewallGroupArrayOutputWithContext(ctx context.Context) FirewallGroupArrayOutput {
 	return pulumi.ToOutputWithContext(ctx, i).(FirewallGroupArrayOutput)
-}
-
-func (i FirewallGroupArray) ToOutput(ctx context.Context) pulumix.Output[[]*FirewallGroup] {
-	return pulumix.Output[[]*FirewallGroup]{
-		OutputState: i.ToFirewallGroupArrayOutputWithContext(ctx).OutputState,
-	}
 }
 
 // FirewallGroupMapInput is an input type that accepts FirewallGroupMap and FirewallGroupMapOutput values.
@@ -227,12 +214,6 @@ func (i FirewallGroupMap) ToFirewallGroupMapOutputWithContext(ctx context.Contex
 	return pulumi.ToOutputWithContext(ctx, i).(FirewallGroupMapOutput)
 }
 
-func (i FirewallGroupMap) ToOutput(ctx context.Context) pulumix.Output[map[string]*FirewallGroup] {
-	return pulumix.Output[map[string]*FirewallGroup]{
-		OutputState: i.ToFirewallGroupMapOutputWithContext(ctx).OutputState,
-	}
-}
-
 type FirewallGroupOutput struct{ *pulumi.OutputState }
 
 func (FirewallGroupOutput) ElementType() reflect.Type {
@@ -245,12 +226,6 @@ func (o FirewallGroupOutput) ToFirewallGroupOutput() FirewallGroupOutput {
 
 func (o FirewallGroupOutput) ToFirewallGroupOutputWithContext(ctx context.Context) FirewallGroupOutput {
 	return o
-}
-
-func (o FirewallGroupOutput) ToOutput(ctx context.Context) pulumix.Output[*FirewallGroup] {
-	return pulumix.Output[*FirewallGroup]{
-		OutputState: o.OutputState,
-	}
 }
 
 // The date the firewall group was created.
@@ -297,12 +272,6 @@ func (o FirewallGroupArrayOutput) ToFirewallGroupArrayOutputWithContext(ctx cont
 	return o
 }
 
-func (o FirewallGroupArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]*FirewallGroup] {
-	return pulumix.Output[[]*FirewallGroup]{
-		OutputState: o.OutputState,
-	}
-}
-
 func (o FirewallGroupArrayOutput) Index(i pulumi.IntInput) FirewallGroupOutput {
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) *FirewallGroup {
 		return vs[0].([]*FirewallGroup)[vs[1].(int)]
@@ -321,12 +290,6 @@ func (o FirewallGroupMapOutput) ToFirewallGroupMapOutput() FirewallGroupMapOutpu
 
 func (o FirewallGroupMapOutput) ToFirewallGroupMapOutputWithContext(ctx context.Context) FirewallGroupMapOutput {
 	return o
-}
-
-func (o FirewallGroupMapOutput) ToOutput(ctx context.Context) pulumix.Output[map[string]*FirewallGroup] {
-	return pulumix.Output[map[string]*FirewallGroup]{
-		OutputState: o.OutputState,
-	}
 }
 
 func (o FirewallGroupMapOutput) MapIndex(k pulumi.StringInput) FirewallGroupOutput {

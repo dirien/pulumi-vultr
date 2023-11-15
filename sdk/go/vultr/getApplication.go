@@ -9,7 +9,6 @@ import (
 
 	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 )
 
 // Get information about applications that can be launched when creating a Vultr VPS.
@@ -119,12 +118,6 @@ func (o GetApplicationResultOutput) ToGetApplicationResultOutput() GetApplicatio
 
 func (o GetApplicationResultOutput) ToGetApplicationResultOutputWithContext(ctx context.Context) GetApplicationResultOutput {
 	return o
-}
-
-func (o GetApplicationResultOutput) ToOutput(ctx context.Context) pulumix.Output[GetApplicationResult] {
-	return pulumix.Output[GetApplicationResult]{
-		OutputState: o.OutputState,
-	}
 }
 
 // The deploy name of the application.

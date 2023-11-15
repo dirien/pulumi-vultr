@@ -105,6 +105,12 @@ namespace ediri.Vultr
         public Output<string> Dbname { get; private set; } = null!;
 
         /// <summary>
+        /// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
+        /// </summary>
+        [Output("ferretdbCredentials")]
+        public Output<ImmutableDictionary<string, object>> FerretdbCredentials { get; private set; } = null!;
+
+        /// <summary>
         /// The hostname assigned to the managed database.
         /// </summary>
         [Output("host")]
@@ -225,7 +231,7 @@ namespace ediri.Vultr
         public Output<string> Region { get; private set; } = null!;
 
         /// <summary>
-        /// The current status of the managed database (poweroff, rebuilding, rebalancing, running).
+        /// The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).
         /// </summary>
         [Output("status")]
         public Output<string> Status { get; private set; } = null!;
@@ -318,6 +324,18 @@ namespace ediri.Vultr
         /// </summary>
         [Input("databaseEngineVersion", required: true)]
         public Input<string> DatabaseEngineVersion { get; set; } = null!;
+
+        [Input("ferretdbCredentials")]
+        private InputMap<object>? _ferretdbCredentials;
+
+        /// <summary>
+        /// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
+        /// </summary>
+        public InputMap<object> FerretdbCredentials
+        {
+            get => _ferretdbCredentials ?? (_ferretdbCredentials = new InputMap<object>());
+            set => _ferretdbCredentials = value;
+        }
 
         /// <summary>
         /// A label for the managed database.
@@ -477,6 +495,18 @@ namespace ediri.Vultr
         [Input("dbname")]
         public Input<string>? Dbname { get; set; }
 
+        [Input("ferretdbCredentials")]
+        private InputMap<object>? _ferretdbCredentials;
+
+        /// <summary>
+        /// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
+        /// </summary>
+        public InputMap<object> FerretdbCredentials
+        {
+            get => _ferretdbCredentials ?? (_ferretdbCredentials = new InputMap<object>());
+            set => _ferretdbCredentials = value;
+        }
+
         /// <summary>
         /// The hostname assigned to the managed database.
         /// </summary>
@@ -610,7 +640,7 @@ namespace ediri.Vultr
         public Input<string>? Region { get; set; }
 
         /// <summary>
-        /// The current status of the managed database (poweroff, rebuilding, rebalancing, running).
+        /// The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).
         /// </summary>
         [Input("status")]
         public Input<string>? Status { get; set; }

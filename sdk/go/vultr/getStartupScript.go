@@ -9,7 +9,6 @@ import (
 
 	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 )
 
 // Get information about a Vultr startup script. This data source provides the name, script, type, creation date, and the last modification date for your Vultr startup script.
@@ -117,12 +116,6 @@ func (o LookupStartupScriptResultOutput) ToLookupStartupScriptResultOutput() Loo
 
 func (o LookupStartupScriptResultOutput) ToLookupStartupScriptResultOutputWithContext(ctx context.Context) LookupStartupScriptResultOutput {
 	return o
-}
-
-func (o LookupStartupScriptResultOutput) ToOutput(ctx context.Context) pulumix.Output[LookupStartupScriptResult] {
-	return pulumix.Output[LookupStartupScriptResult]{
-		OutputState: o.OutputState,
-	}
 }
 
 // The date the startup script was added to your Vultr account.

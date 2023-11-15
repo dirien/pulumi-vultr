@@ -58,6 +58,7 @@ class DatabaseReadReplicaArgs:
                  database_engine_version: Optional[pulumi.Input[str]] = None,
                  date_created: Optional[pulumi.Input[str]] = None,
                  dbname: Optional[pulumi.Input[str]] = None,
+                 ferretdb_credentials: Optional[pulumi.Input[Mapping[str, Any]]] = None,
                  host: Optional[pulumi.Input[str]] = None,
                  id: Optional[pulumi.Input[str]] = None,
                  latest_backup: Optional[pulumi.Input[str]] = None,
@@ -74,6 +75,7 @@ class DatabaseReadReplicaArgs:
                  plan_replicas: Optional[pulumi.Input[int]] = None,
                  plan_vcpus: Optional[pulumi.Input[int]] = None,
                  port: Optional[pulumi.Input[str]] = None,
+                 public_host: Optional[pulumi.Input[str]] = None,
                  redis_eviction_policy: Optional[pulumi.Input[str]] = None,
                  status: Optional[pulumi.Input[str]] = None,
                  tag: Optional[pulumi.Input[str]] = None,
@@ -88,6 +90,7 @@ class DatabaseReadReplicaArgs:
         :param pulumi.Input[str] database_engine_version: The database engine version of the new managed database.
         :param pulumi.Input[str] date_created: The date the managed database was added to your Vultr account.
         :param pulumi.Input[str] dbname: The managed database's default logical database.
+        :param pulumi.Input[Mapping[str, Any]] ferretdb_credentials: An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
         :param pulumi.Input[str] host: The hostname assigned to the managed database.
         :param pulumi.Input[str] id: The ID of the managed database.
         :param pulumi.Input[str] latest_backup: The date of the latest backup available on the managed database.
@@ -104,8 +107,9 @@ class DatabaseReadReplicaArgs:
         :param pulumi.Input[int] plan_replicas: The number of standby nodes available on the managed database.
         :param pulumi.Input[int] plan_vcpus: The number of virtual CPUs available on the managed database.
         :param pulumi.Input[str] port: The connection port for the managed database.
+        :param pulumi.Input[str] public_host: The public hostname assigned to the managed database (VPC-attached only).
         :param pulumi.Input[str] redis_eviction_policy: The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
-        :param pulumi.Input[str] status: The current status of the managed database (poweroff, rebuilding, rebalancing, running).
+        :param pulumi.Input[str] status: The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).
         :param pulumi.Input[str] tag: The tag to assign to the managed database.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] trusted_ips: A list of allowed IP addresses for the managed database.
         :param pulumi.Input[str] user: The primary admin user for the managed database.
@@ -123,6 +127,8 @@ class DatabaseReadReplicaArgs:
             pulumi.set(__self__, "date_created", date_created)
         if dbname is not None:
             pulumi.set(__self__, "dbname", dbname)
+        if ferretdb_credentials is not None:
+            pulumi.set(__self__, "ferretdb_credentials", ferretdb_credentials)
         if host is not None:
             pulumi.set(__self__, "host", host)
         if id is not None:
@@ -155,6 +161,8 @@ class DatabaseReadReplicaArgs:
             pulumi.set(__self__, "plan_vcpus", plan_vcpus)
         if port is not None:
             pulumi.set(__self__, "port", port)
+        if public_host is not None:
+            pulumi.set(__self__, "public_host", public_host)
         if redis_eviction_policy is not None:
             pulumi.set(__self__, "redis_eviction_policy", redis_eviction_policy)
         if status is not None:
@@ -251,6 +259,18 @@ class DatabaseReadReplicaArgs:
     @dbname.setter
     def dbname(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "dbname", value)
+
+    @property
+    @pulumi.getter(name="ferretdbCredentials")
+    def ferretdb_credentials(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+        """
+        An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
+        """
+        return pulumi.get(self, "ferretdb_credentials")
+
+    @ferretdb_credentials.setter
+    def ferretdb_credentials(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+        pulumi.set(self, "ferretdb_credentials", value)
 
     @property
     @pulumi.getter
@@ -445,6 +465,18 @@ class DatabaseReadReplicaArgs:
         pulumi.set(self, "port", value)
 
     @property
+    @pulumi.getter(name="publicHost")
+    def public_host(self) -> Optional[pulumi.Input[str]]:
+        """
+        The public hostname assigned to the managed database (VPC-attached only).
+        """
+        return pulumi.get(self, "public_host")
+
+    @public_host.setter
+    def public_host(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "public_host", value)
+
+    @property
     @pulumi.getter(name="redisEvictionPolicy")
     def redis_eviction_policy(self) -> Optional[pulumi.Input[str]]:
         """
@@ -460,7 +492,7 @@ class DatabaseReadReplicaArgs:
     @pulumi.getter
     def status(self) -> Optional[pulumi.Input[str]]:
         """
-        The current status of the managed database (poweroff, rebuilding, rebalancing, running).
+        The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).
         """
         return pulumi.get(self, "status")
 

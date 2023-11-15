@@ -117,6 +117,12 @@ namespace ediri.Vultr
         public Output<string> Endpoint { get; private set; } = null!;
 
         /// <summary>
+        /// Boolean indicating if the cluster should be created with multiple, highly available controlplanes.
+        /// </summary>
+        [Output("haControlplanes")]
+        public Output<bool?> HaControlplanes { get; private set; } = null!;
+
+        /// <summary>
         /// IP address of VKE cluster control plane.
         /// </summary>
         [Output("ip")]
@@ -219,6 +225,12 @@ namespace ediri.Vultr
     public sealed class KubernetesArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
+        /// Boolean indicating if the cluster should be created with multiple, highly available controlplanes.
+        /// </summary>
+        [Input("haControlplanes")]
+        public Input<bool>? HaControlplanes { get; set; }
+
+        /// <summary>
         /// The VKE clusters label.
         /// </summary>
         [Input("label", required: true)]
@@ -315,6 +327,12 @@ namespace ediri.Vultr
         /// </summary>
         [Input("endpoint")]
         public Input<string>? Endpoint { get; set; }
+
+        /// <summary>
+        /// Boolean indicating if the cluster should be created with multiple, highly available controlplanes.
+        /// </summary>
+        [Input("haControlplanes")]
+        public Input<bool>? HaControlplanes { get; set; }
 
         /// <summary>
         /// IP address of VKE cluster control plane.

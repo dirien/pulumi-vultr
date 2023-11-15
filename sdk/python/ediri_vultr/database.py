@@ -22,6 +22,7 @@ class DatabaseArgs:
                  plan: pulumi.Input[str],
                  region: pulumi.Input[str],
                  cluster_time_zone: Optional[pulumi.Input[str]] = None,
+                 ferretdb_credentials: Optional[pulumi.Input[Mapping[str, Any]]] = None,
                  maintenance_dow: Optional[pulumi.Input[str]] = None,
                  maintenance_time: Optional[pulumi.Input[str]] = None,
                  mysql_long_query_time: Optional[pulumi.Input[int]] = None,
@@ -44,6 +45,7 @@ class DatabaseArgs:
         :param pulumi.Input[str] plan: The ID of the plan that you want the managed database to subscribe to. [See List Managed Database Plans](https://www.vultr.com/api/#tag/managed-databases/operation/list-database-plans)
         :param pulumi.Input[str] region: The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
         :param pulumi.Input[str] cluster_time_zone: The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
+        :param pulumi.Input[Mapping[str, Any]] ferretdb_credentials: An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
         :param pulumi.Input[str] maintenance_dow: The preferred maintenance day of week for the managed database.
         :param pulumi.Input[str] maintenance_time: The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).
         :param pulumi.Input[int] mysql_long_query_time: The configuration value for the long query time (in seconds) on the managed database (MySQL engine types only).
@@ -66,6 +68,8 @@ class DatabaseArgs:
         pulumi.set(__self__, "region", region)
         if cluster_time_zone is not None:
             pulumi.set(__self__, "cluster_time_zone", cluster_time_zone)
+        if ferretdb_credentials is not None:
+            pulumi.set(__self__, "ferretdb_credentials", ferretdb_credentials)
         if maintenance_dow is not None:
             pulumi.set(__self__, "maintenance_dow", maintenance_dow)
         if maintenance_time is not None:
@@ -166,6 +170,18 @@ class DatabaseArgs:
     @cluster_time_zone.setter
     def cluster_time_zone(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "cluster_time_zone", value)
+
+    @property
+    @pulumi.getter(name="ferretdbCredentials")
+    def ferretdb_credentials(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+        """
+        An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
+        """
+        return pulumi.get(self, "ferretdb_credentials")
+
+    @ferretdb_credentials.setter
+    def ferretdb_credentials(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+        pulumi.set(self, "ferretdb_credentials", value)
 
     @property
     @pulumi.getter(name="maintenanceDow")
@@ -344,6 +360,7 @@ class _DatabaseState:
                  database_engine_version: Optional[pulumi.Input[str]] = None,
                  date_created: Optional[pulumi.Input[str]] = None,
                  dbname: Optional[pulumi.Input[str]] = None,
+                 ferretdb_credentials: Optional[pulumi.Input[Mapping[str, Any]]] = None,
                  host: Optional[pulumi.Input[str]] = None,
                  label: Optional[pulumi.Input[str]] = None,
                  latest_backup: Optional[pulumi.Input[str]] = None,
@@ -376,6 +393,7 @@ class _DatabaseState:
         :param pulumi.Input[str] database_engine_version: The database engine version of the new managed database.
         :param pulumi.Input[str] date_created: The date the managed database was added to your Vultr account.
         :param pulumi.Input[str] dbname: The managed database's default logical database.
+        :param pulumi.Input[Mapping[str, Any]] ferretdb_credentials: An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
         :param pulumi.Input[str] host: The hostname assigned to the managed database.
         :param pulumi.Input[str] label: A label for the managed database.
         :param pulumi.Input[str] latest_backup: The date of the latest backup available on the managed database.
@@ -396,7 +414,7 @@ class _DatabaseState:
         :param pulumi.Input[Sequence[pulumi.Input['DatabaseReadReplicaArgs']]] read_replicas: A list of read replicas attached to the managed database.
         :param pulumi.Input[str] redis_eviction_policy: The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
         :param pulumi.Input[str] region: The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
-        :param pulumi.Input[str] status: The current status of the managed database (poweroff, rebuilding, rebalancing, running).
+        :param pulumi.Input[str] status: The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).
         :param pulumi.Input[str] tag: The tag to assign to the managed database.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] trusted_ips: A list of allowed IP addresses for the managed database.
         :param pulumi.Input[str] user: The primary admin user for the managed database.
@@ -412,6 +430,8 @@ class _DatabaseState:
             pulumi.set(__self__, "date_created", date_created)
         if dbname is not None:
             pulumi.set(__self__, "dbname", dbname)
+        if ferretdb_credentials is not None:
+            pulumi.set(__self__, "ferretdb_credentials", ferretdb_credentials)
         if host is not None:
             pulumi.set(__self__, "host", host)
         if label is not None:
@@ -522,6 +542,18 @@ class _DatabaseState:
     @dbname.setter
     def dbname(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "dbname", value)
+
+    @property
+    @pulumi.getter(name="ferretdbCredentials")
+    def ferretdb_credentials(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+        """
+        An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
+        """
+        return pulumi.get(self, "ferretdb_credentials")
+
+    @ferretdb_credentials.setter
+    def ferretdb_credentials(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+        pulumi.set(self, "ferretdb_credentials", value)
 
     @property
     @pulumi.getter
@@ -767,7 +799,7 @@ class _DatabaseState:
     @pulumi.getter
     def status(self) -> Optional[pulumi.Input[str]]:
         """
-        The current status of the managed database (poweroff, rebuilding, rebalancing, running).
+        The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).
         """
         return pulumi.get(self, "status")
 
@@ -832,6 +864,7 @@ class Database(pulumi.CustomResource):
                  cluster_time_zone: Optional[pulumi.Input[str]] = None,
                  database_engine: Optional[pulumi.Input[str]] = None,
                  database_engine_version: Optional[pulumi.Input[str]] = None,
+                 ferretdb_credentials: Optional[pulumi.Input[Mapping[str, Any]]] = None,
                  label: Optional[pulumi.Input[str]] = None,
                  maintenance_dow: Optional[pulumi.Input[str]] = None,
                  maintenance_time: Optional[pulumi.Input[str]] = None,
@@ -900,6 +933,7 @@ class Database(pulumi.CustomResource):
         :param pulumi.Input[str] cluster_time_zone: The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
         :param pulumi.Input[str] database_engine: The database engine of the new managed database.
         :param pulumi.Input[str] database_engine_version: The database engine version of the new managed database.
+        :param pulumi.Input[Mapping[str, Any]] ferretdb_credentials: An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
         :param pulumi.Input[str] label: A label for the managed database.
         :param pulumi.Input[str] maintenance_dow: The preferred maintenance day of week for the managed database.
         :param pulumi.Input[str] maintenance_time: The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).
@@ -987,6 +1021,7 @@ class Database(pulumi.CustomResource):
                  cluster_time_zone: Optional[pulumi.Input[str]] = None,
                  database_engine: Optional[pulumi.Input[str]] = None,
                  database_engine_version: Optional[pulumi.Input[str]] = None,
+                 ferretdb_credentials: Optional[pulumi.Input[Mapping[str, Any]]] = None,
                  label: Optional[pulumi.Input[str]] = None,
                  maintenance_dow: Optional[pulumi.Input[str]] = None,
                  maintenance_time: Optional[pulumi.Input[str]] = None,
@@ -1020,6 +1055,7 @@ class Database(pulumi.CustomResource):
             if database_engine_version is None and not opts.urn:
                 raise TypeError("Missing required property 'database_engine_version'")
             __props__.__dict__["database_engine_version"] = database_engine_version
+            __props__.__dict__["ferretdb_credentials"] = ferretdb_credentials
             if label is None and not opts.urn:
                 raise TypeError("Missing required property 'label'")
             __props__.__dict__["label"] = label
@@ -1068,6 +1104,7 @@ class Database(pulumi.CustomResource):
             database_engine_version: Optional[pulumi.Input[str]] = None,
             date_created: Optional[pulumi.Input[str]] = None,
             dbname: Optional[pulumi.Input[str]] = None,
+            ferretdb_credentials: Optional[pulumi.Input[Mapping[str, Any]]] = None,
             host: Optional[pulumi.Input[str]] = None,
             label: Optional[pulumi.Input[str]] = None,
             latest_backup: Optional[pulumi.Input[str]] = None,
@@ -1105,6 +1142,7 @@ class Database(pulumi.CustomResource):
         :param pulumi.Input[str] database_engine_version: The database engine version of the new managed database.
         :param pulumi.Input[str] date_created: The date the managed database was added to your Vultr account.
         :param pulumi.Input[str] dbname: The managed database's default logical database.
+        :param pulumi.Input[Mapping[str, Any]] ferretdb_credentials: An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
         :param pulumi.Input[str] host: The hostname assigned to the managed database.
         :param pulumi.Input[str] label: A label for the managed database.
         :param pulumi.Input[str] latest_backup: The date of the latest backup available on the managed database.
@@ -1125,7 +1163,7 @@ class Database(pulumi.CustomResource):
         :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['DatabaseReadReplicaArgs']]]] read_replicas: A list of read replicas attached to the managed database.
         :param pulumi.Input[str] redis_eviction_policy: The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
         :param pulumi.Input[str] region: The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
-        :param pulumi.Input[str] status: The current status of the managed database (poweroff, rebuilding, rebalancing, running).
+        :param pulumi.Input[str] status: The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).
         :param pulumi.Input[str] tag: The tag to assign to the managed database.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] trusted_ips: A list of allowed IP addresses for the managed database.
         :param pulumi.Input[str] user: The primary admin user for the managed database.
@@ -1140,6 +1178,7 @@ class Database(pulumi.CustomResource):
         __props__.__dict__["database_engine_version"] = database_engine_version
         __props__.__dict__["date_created"] = date_created
         __props__.__dict__["dbname"] = dbname
+        __props__.__dict__["ferretdb_credentials"] = ferretdb_credentials
         __props__.__dict__["host"] = host
         __props__.__dict__["label"] = label
         __props__.__dict__["latest_backup"] = latest_backup
@@ -1206,6 +1245,14 @@ class Database(pulumi.CustomResource):
         The managed database's default logical database.
         """
         return pulumi.get(self, "dbname")
+
+    @property
+    @pulumi.getter(name="ferretdbCredentials")
+    def ferretdb_credentials(self) -> pulumi.Output[Mapping[str, Any]]:
+        """
+        An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
+        """
+        return pulumi.get(self, "ferretdb_credentials")
 
     @property
     @pulumi.getter
@@ -1371,7 +1418,7 @@ class Database(pulumi.CustomResource):
     @pulumi.getter
     def status(self) -> pulumi.Output[str]:
         """
-        The current status of the managed database (poweroff, rebuilding, rebalancing, running).
+        The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).
         """
         return pulumi.get(self, "status")
 

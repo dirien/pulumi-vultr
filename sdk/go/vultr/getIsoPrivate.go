@@ -9,7 +9,6 @@ import (
 
 	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 )
 
 // Get information about an ISO file uploaded to your Vultr account.
@@ -119,12 +118,6 @@ func (o LookupIsoPrivateResultOutput) ToLookupIsoPrivateResultOutput() LookupIso
 
 func (o LookupIsoPrivateResultOutput) ToLookupIsoPrivateResultOutputWithContext(ctx context.Context) LookupIsoPrivateResultOutput {
 	return o
-}
-
-func (o LookupIsoPrivateResultOutput) ToOutput(ctx context.Context) pulumix.Output[LookupIsoPrivateResult] {
-	return pulumix.Output[LookupIsoPrivateResult]{
-		OutputState: o.OutputState,
-	}
 }
 
 // The date the ISO file was added to your Vultr account.

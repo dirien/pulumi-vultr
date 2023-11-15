@@ -9,7 +9,6 @@ import (
 
 	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 )
 
 // Get information about operating systems that can be launched when creating a Vultr VPS.
@@ -113,12 +112,6 @@ func (o GetOsResultOutput) ToGetOsResultOutput() GetOsResultOutput {
 
 func (o GetOsResultOutput) ToGetOsResultOutputWithContext(ctx context.Context) GetOsResultOutput {
 	return o
-}
-
-func (o GetOsResultOutput) ToOutput(ctx context.Context) pulumix.Output[GetOsResult] {
-	return pulumix.Output[GetOsResult]{
-		OutputState: o.OutputState,
-	}
 }
 
 // The architecture of the operating system.

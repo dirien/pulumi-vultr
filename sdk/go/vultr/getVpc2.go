@@ -9,7 +9,6 @@ import (
 
 	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 )
 
 // Get information about a Vultr VPC 2.0.
@@ -117,12 +116,6 @@ func (o LookupVpc2ResultOutput) ToLookupVpc2ResultOutput() LookupVpc2ResultOutpu
 
 func (o LookupVpc2ResultOutput) ToLookupVpc2ResultOutputWithContext(ctx context.Context) LookupVpc2ResultOutput {
 	return o
-}
-
-func (o LookupVpc2ResultOutput) ToOutput(ctx context.Context) pulumix.Output[LookupVpc2Result] {
-	return pulumix.Output[LookupVpc2Result]{
-		OutputState: o.OutputState,
-	}
 }
 
 // The date the VPC 2.0 was added to your Vultr account.

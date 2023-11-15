@@ -27,6 +27,10 @@ export interface DatabaseReadReplica {
      */
     dbname: string;
     /**
+     * An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
+     */
+    ferretdbCredentials: {[key: string]: any};
+    /**
      * The hostname assigned to the managed database.
      */
     host: string;
@@ -95,6 +99,10 @@ export interface DatabaseReadReplica {
      */
     port: string;
     /**
+     * The public hostname assigned to the managed database (VPC-attached only).
+     */
+    publicHost: string;
+    /**
      * The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
      */
     redisEvictionPolicy: string;
@@ -103,7 +111,7 @@ export interface DatabaseReadReplica {
      */
     region: string;
     /**
-     * The current status of the managed database (poweroff, rebuilding, rebalancing, running).
+     * The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).
      */
     status: string;
     /**
@@ -212,6 +220,10 @@ export interface GetDatabaseReadReplica {
      */
     dbname: string;
     /**
+     * An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
+     */
+    ferretdbCredentials: {[key: string]: any};
+    /**
      * The hostname assigned to the managed database.
      */
     host: string;
@@ -277,6 +289,10 @@ export interface GetDatabaseReadReplica {
      */
     port: string;
     /**
+     * The public hostname assigned to the managed database (VPC-attached only).
+     */
+    publicHost: string;
+    /**
      * The configuration value for the data eviction policy on the managed database (Redis engine types only).
      */
     redisEvictionPolicy: string;
@@ -285,7 +301,7 @@ export interface GetDatabaseReadReplica {
      */
     region: string;
     /**
-     * The current status of the managed database (poweroff, rebuilding, rebalancing, running).
+     * The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).
      */
     status: string;
     /**

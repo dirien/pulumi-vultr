@@ -9,7 +9,6 @@ import (
 
 	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 )
 
 // Get information about a Vultr bare metal server.
@@ -146,12 +145,6 @@ func (o LookupBareMetalServerResultOutput) ToLookupBareMetalServerResultOutput()
 
 func (o LookupBareMetalServerResultOutput) ToLookupBareMetalServerResultOutputWithContext(ctx context.Context) LookupBareMetalServerResultOutput {
 	return o
-}
-
-func (o LookupBareMetalServerResultOutput) ToOutput(ctx context.Context) pulumix.Output[LookupBareMetalServerResult] {
-	return pulumix.Output[LookupBareMetalServerResult]{
-		OutputState: o.OutputState,
-	}
 }
 
 // The server's application ID.

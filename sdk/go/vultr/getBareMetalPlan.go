@@ -9,7 +9,6 @@ import (
 
 	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 )
 
 // Get information about a Vultr bare metal server plan.
@@ -126,12 +125,6 @@ func (o GetBareMetalPlanResultOutput) ToGetBareMetalPlanResultOutput() GetBareMe
 
 func (o GetBareMetalPlanResultOutput) ToGetBareMetalPlanResultOutputWithContext(ctx context.Context) GetBareMetalPlanResultOutput {
 	return o
-}
-
-func (o GetBareMetalPlanResultOutput) ToOutput(ctx context.Context) pulumix.Output[GetBareMetalPlanResult] {
-	return pulumix.Output[GetBareMetalPlanResult]{
-		OutputState: o.OutputState,
-	}
 }
 
 // The bandwidth available on the plan.

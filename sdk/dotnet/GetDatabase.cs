@@ -158,6 +158,10 @@ namespace ediri.Vultr
         /// The managed database's default logical database.
         /// </summary>
         public readonly string Dbname;
+        /// <summary>
+        /// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
+        /// </summary>
+        public readonly ImmutableDictionary<string, object> FerretdbCredentials;
         public readonly ImmutableArray<Outputs.GetDatabaseFilterResult> Filters;
         /// <summary>
         /// The hostname assigned to the managed database.
@@ -244,7 +248,7 @@ namespace ediri.Vultr
         /// </summary>
         public readonly string Region;
         /// <summary>
-        /// The current status of the managed database (poweroff, rebuilding, rebalancing, running).
+        /// The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).
         /// </summary>
         public readonly string Status;
         /// <summary>
@@ -275,6 +279,8 @@ namespace ediri.Vultr
             string dateCreated,
 
             string dbname,
+
+            ImmutableDictionary<string, object> ferretdbCredentials,
 
             ImmutableArray<Outputs.GetDatabaseFilterResult> filters,
 
@@ -335,6 +341,7 @@ namespace ediri.Vultr
             DatabaseEngineVersion = databaseEngineVersion;
             DateCreated = dateCreated;
             Dbname = dbname;
+            FerretdbCredentials = ferretdbCredentials;
             Filters = filters;
             Host = host;
             Id = id;

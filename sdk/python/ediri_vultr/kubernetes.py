@@ -19,17 +19,21 @@ class KubernetesArgs:
                  label: pulumi.Input[str],
                  region: pulumi.Input[str],
                  version: pulumi.Input[str],
+                 ha_controlplanes: Optional[pulumi.Input[bool]] = None,
                  node_pools: Optional[pulumi.Input['KubernetesNodePoolsArgs']] = None):
         """
         The set of arguments for constructing a Kubernetes resource.
         :param pulumi.Input[str] label: The VKE clusters label.
         :param pulumi.Input[str] region: The region your VKE cluster will be deployed in.
         :param pulumi.Input[str] version: The version your VKE cluster you want deployed. [See Available Version](https://www.vultr.com/api/#operation/get-kubernetes-versions)
+        :param pulumi.Input[bool] ha_controlplanes: Boolean indicating if the cluster should be created with multiple, highly available controlplanes.
         :param pulumi.Input['KubernetesNodePoolsArgs'] node_pools: Contains the default node pool that was deployed.
         """
         pulumi.set(__self__, "label", label)
         pulumi.set(__self__, "region", region)
         pulumi.set(__self__, "version", version)
+        if ha_controlplanes is not None:
+            pulumi.set(__self__, "ha_controlplanes", ha_controlplanes)
         if node_pools is not None:
             pulumi.set(__self__, "node_pools", node_pools)
 
@@ -70,6 +74,18 @@ class KubernetesArgs:
         pulumi.set(self, "version", value)
 
     @property
+    @pulumi.getter(name="haControlplanes")
+    def ha_controlplanes(self) -> Optional[pulumi.Input[bool]]:
+        """
+        Boolean indicating if the cluster should be created with multiple, highly available controlplanes.
+        """
+        return pulumi.get(self, "ha_controlplanes")
+
+    @ha_controlplanes.setter
+    def ha_controlplanes(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "ha_controlplanes", value)
+
+    @property
     @pulumi.getter(name="nodePools")
     def node_pools(self) -> Optional[pulumi.Input['KubernetesNodePoolsArgs']]:
         """
@@ -91,6 +107,7 @@ class _KubernetesState:
                  cluster_subnet: Optional[pulumi.Input[str]] = None,
                  date_created: Optional[pulumi.Input[str]] = None,
                  endpoint: Optional[pulumi.Input[str]] = None,
+                 ha_controlplanes: Optional[pulumi.Input[bool]] = None,
                  ip: Optional[pulumi.Input[str]] = None,
                  kube_config: Optional[pulumi.Input[str]] = None,
                  label: Optional[pulumi.Input[str]] = None,
@@ -107,6 +124,7 @@ class _KubernetesState:
         :param pulumi.Input[str] cluster_subnet: IP range that your pods will run on in this cluster.
         :param pulumi.Input[str] date_created: Date node was created.
         :param pulumi.Input[str] endpoint: Domain for your Kubernetes clusters control plane.
+        :param pulumi.Input[bool] ha_controlplanes: Boolean indicating if the cluster should be created with multiple, highly available controlplanes.
         :param pulumi.Input[str] ip: IP address of VKE cluster control plane.
         :param pulumi.Input[str] kube_config: Base64 encoded Kubeconfig for this VKE cluster.
         :param pulumi.Input[str] label: The VKE clusters label.
@@ -128,6 +146,8 @@ class _KubernetesState:
             pulumi.set(__self__, "date_created", date_created)
         if endpoint is not None:
             pulumi.set(__self__, "endpoint", endpoint)
+        if ha_controlplanes is not None:
+            pulumi.set(__self__, "ha_controlplanes", ha_controlplanes)
         if ip is not None:
             pulumi.set(__self__, "ip", ip)
         if kube_config is not None:
@@ -216,6 +236,18 @@ class _KubernetesState:
     @endpoint.setter
     def endpoint(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "endpoint", value)
+
+    @property
+    @pulumi.getter(name="haControlplanes")
+    def ha_controlplanes(self) -> Optional[pulumi.Input[bool]]:
+        """
+        Boolean indicating if the cluster should be created with multiple, highly available controlplanes.
+        """
+        return pulumi.get(self, "ha_controlplanes")
+
+    @ha_controlplanes.setter
+    def ha_controlplanes(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "ha_controlplanes", value)
 
     @property
     @pulumi.getter
@@ -319,6 +351,7 @@ class Kubernetes(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
+                 ha_controlplanes: Optional[pulumi.Input[bool]] = None,
                  label: Optional[pulumi.Input[str]] = None,
                  node_pools: Optional[pulumi.Input[pulumi.InputType['KubernetesNodePoolsArgs']]] = None,
                  region: Optional[pulumi.Input[str]] = None,
@@ -373,6 +406,7 @@ class Kubernetes(pulumi.CustomResource):
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[bool] ha_controlplanes: Boolean indicating if the cluster should be created with multiple, highly available controlplanes.
         :param pulumi.Input[str] label: The VKE clusters label.
         :param pulumi.Input[pulumi.InputType['KubernetesNodePoolsArgs']] node_pools: Contains the default node pool that was deployed.
         :param pulumi.Input[str] region: The region your VKE cluster will be deployed in.
@@ -446,6 +480,7 @@ class Kubernetes(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
+                 ha_controlplanes: Optional[pulumi.Input[bool]] = None,
                  label: Optional[pulumi.Input[str]] = None,
                  node_pools: Optional[pulumi.Input[pulumi.InputType['KubernetesNodePoolsArgs']]] = None,
                  region: Optional[pulumi.Input[str]] = None,
@@ -459,6 +494,7 @@ class Kubernetes(pulumi.CustomResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = KubernetesArgs.__new__(KubernetesArgs)
 
+            __props__.__dict__["ha_controlplanes"] = ha_controlplanes
             if label is None and not opts.urn:
                 raise TypeError("Missing required property 'label'")
             __props__.__dict__["label"] = label
@@ -497,6 +533,7 @@ class Kubernetes(pulumi.CustomResource):
             cluster_subnet: Optional[pulumi.Input[str]] = None,
             date_created: Optional[pulumi.Input[str]] = None,
             endpoint: Optional[pulumi.Input[str]] = None,
+            ha_controlplanes: Optional[pulumi.Input[bool]] = None,
             ip: Optional[pulumi.Input[str]] = None,
             kube_config: Optional[pulumi.Input[str]] = None,
             label: Optional[pulumi.Input[str]] = None,
@@ -518,6 +555,7 @@ class Kubernetes(pulumi.CustomResource):
         :param pulumi.Input[str] cluster_subnet: IP range that your pods will run on in this cluster.
         :param pulumi.Input[str] date_created: Date node was created.
         :param pulumi.Input[str] endpoint: Domain for your Kubernetes clusters control plane.
+        :param pulumi.Input[bool] ha_controlplanes: Boolean indicating if the cluster should be created with multiple, highly available controlplanes.
         :param pulumi.Input[str] ip: IP address of VKE cluster control plane.
         :param pulumi.Input[str] kube_config: Base64 encoded Kubeconfig for this VKE cluster.
         :param pulumi.Input[str] label: The VKE clusters label.
@@ -537,6 +575,7 @@ class Kubernetes(pulumi.CustomResource):
         __props__.__dict__["cluster_subnet"] = cluster_subnet
         __props__.__dict__["date_created"] = date_created
         __props__.__dict__["endpoint"] = endpoint
+        __props__.__dict__["ha_controlplanes"] = ha_controlplanes
         __props__.__dict__["ip"] = ip
         __props__.__dict__["kube_config"] = kube_config
         __props__.__dict__["label"] = label
@@ -594,6 +633,14 @@ class Kubernetes(pulumi.CustomResource):
         Domain for your Kubernetes clusters control plane.
         """
         return pulumi.get(self, "endpoint")
+
+    @property
+    @pulumi.getter(name="haControlplanes")
+    def ha_controlplanes(self) -> pulumi.Output[Optional[bool]]:
+        """
+        Boolean indicating if the cluster should be created with multiple, highly available controlplanes.
+        """
+        return pulumi.get(self, "ha_controlplanes")
 
     @property
     @pulumi.getter

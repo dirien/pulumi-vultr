@@ -10,7 +10,6 @@ import (
 	"errors"
 	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 )
 
 type IsoPrivate struct {
@@ -113,12 +112,6 @@ func (i *IsoPrivate) ToIsoPrivateOutputWithContext(ctx context.Context) IsoPriva
 	return pulumi.ToOutputWithContext(ctx, i).(IsoPrivateOutput)
 }
 
-func (i *IsoPrivate) ToOutput(ctx context.Context) pulumix.Output[*IsoPrivate] {
-	return pulumix.Output[*IsoPrivate]{
-		OutputState: i.ToIsoPrivateOutputWithContext(ctx).OutputState,
-	}
-}
-
 // IsoPrivateArrayInput is an input type that accepts IsoPrivateArray and IsoPrivateArrayOutput values.
 // You can construct a concrete instance of `IsoPrivateArrayInput` via:
 //
@@ -142,12 +135,6 @@ func (i IsoPrivateArray) ToIsoPrivateArrayOutput() IsoPrivateArrayOutput {
 
 func (i IsoPrivateArray) ToIsoPrivateArrayOutputWithContext(ctx context.Context) IsoPrivateArrayOutput {
 	return pulumi.ToOutputWithContext(ctx, i).(IsoPrivateArrayOutput)
-}
-
-func (i IsoPrivateArray) ToOutput(ctx context.Context) pulumix.Output[[]*IsoPrivate] {
-	return pulumix.Output[[]*IsoPrivate]{
-		OutputState: i.ToIsoPrivateArrayOutputWithContext(ctx).OutputState,
-	}
 }
 
 // IsoPrivateMapInput is an input type that accepts IsoPrivateMap and IsoPrivateMapOutput values.
@@ -175,12 +162,6 @@ func (i IsoPrivateMap) ToIsoPrivateMapOutputWithContext(ctx context.Context) Iso
 	return pulumi.ToOutputWithContext(ctx, i).(IsoPrivateMapOutput)
 }
 
-func (i IsoPrivateMap) ToOutput(ctx context.Context) pulumix.Output[map[string]*IsoPrivate] {
-	return pulumix.Output[map[string]*IsoPrivate]{
-		OutputState: i.ToIsoPrivateMapOutputWithContext(ctx).OutputState,
-	}
-}
-
 type IsoPrivateOutput struct{ *pulumi.OutputState }
 
 func (IsoPrivateOutput) ElementType() reflect.Type {
@@ -193,12 +174,6 @@ func (o IsoPrivateOutput) ToIsoPrivateOutput() IsoPrivateOutput {
 
 func (o IsoPrivateOutput) ToIsoPrivateOutputWithContext(ctx context.Context) IsoPrivateOutput {
 	return o
-}
-
-func (o IsoPrivateOutput) ToOutput(ctx context.Context) pulumix.Output[*IsoPrivate] {
-	return pulumix.Output[*IsoPrivate]{
-		OutputState: o.OutputState,
-	}
 }
 
 func (o IsoPrivateOutput) DateCreated() pulumi.StringOutput {
@@ -243,12 +218,6 @@ func (o IsoPrivateArrayOutput) ToIsoPrivateArrayOutputWithContext(ctx context.Co
 	return o
 }
 
-func (o IsoPrivateArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]*IsoPrivate] {
-	return pulumix.Output[[]*IsoPrivate]{
-		OutputState: o.OutputState,
-	}
-}
-
 func (o IsoPrivateArrayOutput) Index(i pulumi.IntInput) IsoPrivateOutput {
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) *IsoPrivate {
 		return vs[0].([]*IsoPrivate)[vs[1].(int)]
@@ -267,12 +236,6 @@ func (o IsoPrivateMapOutput) ToIsoPrivateMapOutput() IsoPrivateMapOutput {
 
 func (o IsoPrivateMapOutput) ToIsoPrivateMapOutputWithContext(ctx context.Context) IsoPrivateMapOutput {
 	return o
-}
-
-func (o IsoPrivateMapOutput) ToOutput(ctx context.Context) pulumix.Output[map[string]*IsoPrivate] {
-	return pulumix.Output[map[string]*IsoPrivate]{
-		OutputState: o.OutputState,
-	}
 }
 
 func (o IsoPrivateMapOutput) MapIndex(k pulumi.StringInput) IsoPrivateOutput {

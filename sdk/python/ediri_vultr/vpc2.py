@@ -398,7 +398,7 @@ class Vpc2(pulumi.CustomResource):
 
     @property
     @pulumi.getter(name="ipBlock")
-    def ip_block(self) -> pulumi.Output[Optional[str]]:
+    def ip_block(self) -> pulumi.Output[str]:
         """
         The IPv4 subnet to be used when attaching instances to this VPC 2.0.
         """
@@ -406,7 +406,7 @@ class Vpc2(pulumi.CustomResource):
 
     @property
     @pulumi.getter(name="ipType")
-    def ip_type(self) -> pulumi.Output[Optional[str]]:
+    def ip_type(self) -> pulumi.Output[str]:
         """
         Accepted values: `v4`.
         """
@@ -414,7 +414,7 @@ class Vpc2(pulumi.CustomResource):
 
     @property
     @pulumi.getter(name="prefixLength")
-    def prefix_length(self) -> pulumi.Output[Optional[int]]:
+    def prefix_length(self) -> pulumi.Output[int]:
         """
         The number of bits for the netmask in CIDR notation. Example: 32
         """

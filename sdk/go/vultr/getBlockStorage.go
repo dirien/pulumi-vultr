@@ -9,7 +9,6 @@ import (
 
 	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 )
 
 // Get information about a Vultr block storage subscription.
@@ -125,12 +124,6 @@ func (o LookupBlockStorageResultOutput) ToLookupBlockStorageResultOutput() Looku
 
 func (o LookupBlockStorageResultOutput) ToLookupBlockStorageResultOutputWithContext(ctx context.Context) LookupBlockStorageResultOutput {
 	return o
-}
-
-func (o LookupBlockStorageResultOutput) ToOutput(ctx context.Context) pulumix.Output[LookupBlockStorageResult] {
-	return pulumix.Output[LookupBlockStorageResult]{
-		OutputState: o.OutputState,
-	}
 }
 
 // The ID of the VPS the block storage subscription is attached to.

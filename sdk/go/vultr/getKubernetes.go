@@ -9,7 +9,6 @@ import (
 
 	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 )
 
 // Get information about a Vultr Kubernetes Engine (VKE) Cluster.
@@ -79,6 +78,8 @@ type LookupKubernetesResult struct {
 	// Domain for your Kubernetes clusters control plane.
 	Endpoint string                `pulumi:"endpoint"`
 	Filters  []GetKubernetesFilter `pulumi:"filters"`
+	// Boolean indicating whether or not the cluster has multiple, highly available controlplanes.
+	HaControlplanes bool `pulumi:"haControlplanes"`
 	// ID of node.
 	Id string `pulumi:"id"`
 	// IP address of VKE cluster control plane.
@@ -137,12 +138,6 @@ func (o LookupKubernetesResultOutput) ToLookupKubernetesResultOutputWithContext(
 	return o
 }
 
-func (o LookupKubernetesResultOutput) ToOutput(ctx context.Context) pulumix.Output[LookupKubernetesResult] {
-	return pulumix.Output[LookupKubernetesResult]{
-		OutputState: o.OutputState,
-	}
-}
-
 // The base64 encoded public certificate used by clients to access the cluster.
 func (o LookupKubernetesResultOutput) ClientCertificate() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupKubernetesResult) string { return v.ClientCertificate }).(pulumi.StringOutput)
@@ -175,6 +170,11 @@ func (o LookupKubernetesResultOutput) Endpoint() pulumi.StringOutput {
 
 func (o LookupKubernetesResultOutput) Filters() GetKubernetesFilterArrayOutput {
 	return o.ApplyT(func(v LookupKubernetesResult) []GetKubernetesFilter { return v.Filters }).(GetKubernetesFilterArrayOutput)
+}
+
+// Boolean indicating whether or not the cluster has multiple, highly available controlplanes.
+func (o LookupKubernetesResultOutput) HaControlplanes() pulumi.BoolOutput {
+	return o.ApplyT(func(v LookupKubernetesResult) bool { return v.HaControlplanes }).(pulumi.BoolOutput)
 }
 
 // ID of node.

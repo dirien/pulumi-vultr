@@ -9,7 +9,6 @@ import (
 
 	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 )
 
 // Get information about a Vultr reserved IP address.
@@ -119,12 +118,6 @@ func (o LookupReservedIpResultOutput) ToLookupReservedIpResultOutput() LookupRes
 
 func (o LookupReservedIpResultOutput) ToLookupReservedIpResultOutputWithContext(ctx context.Context) LookupReservedIpResultOutput {
 	return o
-}
-
-func (o LookupReservedIpResultOutput) ToOutput(ctx context.Context) pulumix.Output[LookupReservedIpResult] {
-	return pulumix.Output[LookupReservedIpResult]{
-		OutputState: o.OutputState,
-	}
 }
 
 func (o LookupReservedIpResultOutput) Filters() GetReservedIpFilterArrayOutput {

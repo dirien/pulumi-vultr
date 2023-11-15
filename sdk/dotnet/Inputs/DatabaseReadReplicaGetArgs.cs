@@ -43,6 +43,18 @@ namespace ediri.Vultr.Inputs
         [Input("dbname")]
         public Input<string>? Dbname { get; set; }
 
+        [Input("ferretdbCredentials")]
+        private InputMap<object>? _ferretdbCredentials;
+
+        /// <summary>
+        /// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
+        /// </summary>
+        public InputMap<object> FerretdbCredentials
+        {
+            get => _ferretdbCredentials ?? (_ferretdbCredentials = new InputMap<object>());
+            set => _ferretdbCredentials = value;
+        }
+
         /// <summary>
         /// The hostname assigned to the managed database.
         /// </summary>
@@ -152,6 +164,12 @@ namespace ediri.Vultr.Inputs
         public Input<string>? Port { get; set; }
 
         /// <summary>
+        /// The public hostname assigned to the managed database (VPC-attached only).
+        /// </summary>
+        [Input("publicHost")]
+        public Input<string>? PublicHost { get; set; }
+
+        /// <summary>
         /// The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
         /// </summary>
         [Input("redisEvictionPolicy")]
@@ -164,7 +182,7 @@ namespace ediri.Vultr.Inputs
         public Input<string> Region { get; set; } = null!;
 
         /// <summary>
-        /// The current status of the managed database (poweroff, rebuilding, rebalancing, running).
+        /// The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).
         /// </summary>
         [Input("status")]
         public Input<string>? Status { get; set; }

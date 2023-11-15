@@ -10,7 +10,6 @@ import (
 	"errors"
 	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 )
 
 // Provides a Vultr bare metal server resource. This can be used to create, read, modify, and delete bare metal servers on your Vultr account.
@@ -418,12 +417,6 @@ func (i *BareMetalServer) ToBareMetalServerOutputWithContext(ctx context.Context
 	return pulumi.ToOutputWithContext(ctx, i).(BareMetalServerOutput)
 }
 
-func (i *BareMetalServer) ToOutput(ctx context.Context) pulumix.Output[*BareMetalServer] {
-	return pulumix.Output[*BareMetalServer]{
-		OutputState: i.ToBareMetalServerOutputWithContext(ctx).OutputState,
-	}
-}
-
 // BareMetalServerArrayInput is an input type that accepts BareMetalServerArray and BareMetalServerArrayOutput values.
 // You can construct a concrete instance of `BareMetalServerArrayInput` via:
 //
@@ -447,12 +440,6 @@ func (i BareMetalServerArray) ToBareMetalServerArrayOutput() BareMetalServerArra
 
 func (i BareMetalServerArray) ToBareMetalServerArrayOutputWithContext(ctx context.Context) BareMetalServerArrayOutput {
 	return pulumi.ToOutputWithContext(ctx, i).(BareMetalServerArrayOutput)
-}
-
-func (i BareMetalServerArray) ToOutput(ctx context.Context) pulumix.Output[[]*BareMetalServer] {
-	return pulumix.Output[[]*BareMetalServer]{
-		OutputState: i.ToBareMetalServerArrayOutputWithContext(ctx).OutputState,
-	}
 }
 
 // BareMetalServerMapInput is an input type that accepts BareMetalServerMap and BareMetalServerMapOutput values.
@@ -480,12 +467,6 @@ func (i BareMetalServerMap) ToBareMetalServerMapOutputWithContext(ctx context.Co
 	return pulumi.ToOutputWithContext(ctx, i).(BareMetalServerMapOutput)
 }
 
-func (i BareMetalServerMap) ToOutput(ctx context.Context) pulumix.Output[map[string]*BareMetalServer] {
-	return pulumix.Output[map[string]*BareMetalServer]{
-		OutputState: i.ToBareMetalServerMapOutputWithContext(ctx).OutputState,
-	}
-}
-
 type BareMetalServerOutput struct{ *pulumi.OutputState }
 
 func (BareMetalServerOutput) ElementType() reflect.Type {
@@ -498,12 +479,6 @@ func (o BareMetalServerOutput) ToBareMetalServerOutput() BareMetalServerOutput {
 
 func (o BareMetalServerOutput) ToBareMetalServerOutputWithContext(ctx context.Context) BareMetalServerOutput {
 	return o
-}
-
-func (o BareMetalServerOutput) ToOutput(ctx context.Context) pulumix.Output[*BareMetalServer] {
-	return pulumix.Output[*BareMetalServer]{
-		OutputState: o.OutputState,
-	}
 }
 
 // Whether an activation email will be sent when the server is ready.
@@ -670,12 +645,6 @@ func (o BareMetalServerArrayOutput) ToBareMetalServerArrayOutputWithContext(ctx 
 	return o
 }
 
-func (o BareMetalServerArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]*BareMetalServer] {
-	return pulumix.Output[[]*BareMetalServer]{
-		OutputState: o.OutputState,
-	}
-}
-
 func (o BareMetalServerArrayOutput) Index(i pulumi.IntInput) BareMetalServerOutput {
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) *BareMetalServer {
 		return vs[0].([]*BareMetalServer)[vs[1].(int)]
@@ -694,12 +663,6 @@ func (o BareMetalServerMapOutput) ToBareMetalServerMapOutput() BareMetalServerMa
 
 func (o BareMetalServerMapOutput) ToBareMetalServerMapOutputWithContext(ctx context.Context) BareMetalServerMapOutput {
 	return o
-}
-
-func (o BareMetalServerMapOutput) ToOutput(ctx context.Context) pulumix.Output[map[string]*BareMetalServer] {
-	return pulumix.Output[map[string]*BareMetalServer]{
-		OutputState: o.OutputState,
-	}
 }
 
 func (o BareMetalServerMapOutput) MapIndex(k pulumi.StringInput) BareMetalServerOutput {

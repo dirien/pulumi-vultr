@@ -9,7 +9,6 @@ import (
 
 	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 )
 
 // Get information about your Vultr account. This data source provides the balance, pending charges, last payment date, and last payment amount for your Vultr account.
@@ -93,12 +92,6 @@ func (o GetAccountResultOutput) ToGetAccountResultOutput() GetAccountResultOutpu
 
 func (o GetAccountResultOutput) ToGetAccountResultOutputWithContext(ctx context.Context) GetAccountResultOutput {
 	return o
-}
-
-func (o GetAccountResultOutput) ToOutput(ctx context.Context) pulumix.Output[GetAccountResult] {
-	return pulumix.Output[GetAccountResult]{
-		OutputState: o.OutputState,
-	}
 }
 
 // The access control list on your Vultr account.

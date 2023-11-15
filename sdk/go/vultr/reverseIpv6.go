@@ -10,7 +10,6 @@ import (
 	"errors"
 	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 )
 
 // Provides a Vultr Reverse IPv6 resource. This can be used to create, read,
@@ -134,12 +133,6 @@ func (i *ReverseIpv6) ToReverseIpv6OutputWithContext(ctx context.Context) Revers
 	return pulumi.ToOutputWithContext(ctx, i).(ReverseIpv6Output)
 }
 
-func (i *ReverseIpv6) ToOutput(ctx context.Context) pulumix.Output[*ReverseIpv6] {
-	return pulumix.Output[*ReverseIpv6]{
-		OutputState: i.ToReverseIpv6OutputWithContext(ctx).OutputState,
-	}
-}
-
 // ReverseIpv6ArrayInput is an input type that accepts ReverseIpv6Array and ReverseIpv6ArrayOutput values.
 // You can construct a concrete instance of `ReverseIpv6ArrayInput` via:
 //
@@ -163,12 +156,6 @@ func (i ReverseIpv6Array) ToReverseIpv6ArrayOutput() ReverseIpv6ArrayOutput {
 
 func (i ReverseIpv6Array) ToReverseIpv6ArrayOutputWithContext(ctx context.Context) ReverseIpv6ArrayOutput {
 	return pulumi.ToOutputWithContext(ctx, i).(ReverseIpv6ArrayOutput)
-}
-
-func (i ReverseIpv6Array) ToOutput(ctx context.Context) pulumix.Output[[]*ReverseIpv6] {
-	return pulumix.Output[[]*ReverseIpv6]{
-		OutputState: i.ToReverseIpv6ArrayOutputWithContext(ctx).OutputState,
-	}
 }
 
 // ReverseIpv6MapInput is an input type that accepts ReverseIpv6Map and ReverseIpv6MapOutput values.
@@ -196,12 +183,6 @@ func (i ReverseIpv6Map) ToReverseIpv6MapOutputWithContext(ctx context.Context) R
 	return pulumi.ToOutputWithContext(ctx, i).(ReverseIpv6MapOutput)
 }
 
-func (i ReverseIpv6Map) ToOutput(ctx context.Context) pulumix.Output[map[string]*ReverseIpv6] {
-	return pulumix.Output[map[string]*ReverseIpv6]{
-		OutputState: i.ToReverseIpv6MapOutputWithContext(ctx).OutputState,
-	}
-}
-
 type ReverseIpv6Output struct{ *pulumi.OutputState }
 
 func (ReverseIpv6Output) ElementType() reflect.Type {
@@ -214,12 +195,6 @@ func (o ReverseIpv6Output) ToReverseIpv6Output() ReverseIpv6Output {
 
 func (o ReverseIpv6Output) ToReverseIpv6OutputWithContext(ctx context.Context) ReverseIpv6Output {
 	return o
-}
-
-func (o ReverseIpv6Output) ToOutput(ctx context.Context) pulumix.Output[*ReverseIpv6] {
-	return pulumix.Output[*ReverseIpv6]{
-		OutputState: o.OutputState,
-	}
 }
 
 // The ID of the server you want to set an IPv6
@@ -252,12 +227,6 @@ func (o ReverseIpv6ArrayOutput) ToReverseIpv6ArrayOutputWithContext(ctx context.
 	return o
 }
 
-func (o ReverseIpv6ArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]*ReverseIpv6] {
-	return pulumix.Output[[]*ReverseIpv6]{
-		OutputState: o.OutputState,
-	}
-}
-
 func (o ReverseIpv6ArrayOutput) Index(i pulumi.IntInput) ReverseIpv6Output {
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) *ReverseIpv6 {
 		return vs[0].([]*ReverseIpv6)[vs[1].(int)]
@@ -276,12 +245,6 @@ func (o ReverseIpv6MapOutput) ToReverseIpv6MapOutput() ReverseIpv6MapOutput {
 
 func (o ReverseIpv6MapOutput) ToReverseIpv6MapOutputWithContext(ctx context.Context) ReverseIpv6MapOutput {
 	return o
-}
-
-func (o ReverseIpv6MapOutput) ToOutput(ctx context.Context) pulumix.Output[map[string]*ReverseIpv6] {
-	return pulumix.Output[map[string]*ReverseIpv6]{
-		OutputState: o.OutputState,
-	}
 }
 
 func (o ReverseIpv6MapOutput) MapIndex(k pulumi.StringInput) ReverseIpv6Output {

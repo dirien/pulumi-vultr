@@ -10,7 +10,6 @@ import (
 	"errors"
 	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 )
 
 // Provides a Vultr instance IPv4 resource. This can be used to create, read, and
@@ -174,12 +173,6 @@ func (i *InstanceIpv4) ToInstanceIpv4OutputWithContext(ctx context.Context) Inst
 	return pulumi.ToOutputWithContext(ctx, i).(InstanceIpv4Output)
 }
 
-func (i *InstanceIpv4) ToOutput(ctx context.Context) pulumix.Output[*InstanceIpv4] {
-	return pulumix.Output[*InstanceIpv4]{
-		OutputState: i.ToInstanceIpv4OutputWithContext(ctx).OutputState,
-	}
-}
-
 // InstanceIpv4ArrayInput is an input type that accepts InstanceIpv4Array and InstanceIpv4ArrayOutput values.
 // You can construct a concrete instance of `InstanceIpv4ArrayInput` via:
 //
@@ -203,12 +196,6 @@ func (i InstanceIpv4Array) ToInstanceIpv4ArrayOutput() InstanceIpv4ArrayOutput {
 
 func (i InstanceIpv4Array) ToInstanceIpv4ArrayOutputWithContext(ctx context.Context) InstanceIpv4ArrayOutput {
 	return pulumi.ToOutputWithContext(ctx, i).(InstanceIpv4ArrayOutput)
-}
-
-func (i InstanceIpv4Array) ToOutput(ctx context.Context) pulumix.Output[[]*InstanceIpv4] {
-	return pulumix.Output[[]*InstanceIpv4]{
-		OutputState: i.ToInstanceIpv4ArrayOutputWithContext(ctx).OutputState,
-	}
 }
 
 // InstanceIpv4MapInput is an input type that accepts InstanceIpv4Map and InstanceIpv4MapOutput values.
@@ -236,12 +223,6 @@ func (i InstanceIpv4Map) ToInstanceIpv4MapOutputWithContext(ctx context.Context)
 	return pulumi.ToOutputWithContext(ctx, i).(InstanceIpv4MapOutput)
 }
 
-func (i InstanceIpv4Map) ToOutput(ctx context.Context) pulumix.Output[map[string]*InstanceIpv4] {
-	return pulumix.Output[map[string]*InstanceIpv4]{
-		OutputState: i.ToInstanceIpv4MapOutputWithContext(ctx).OutputState,
-	}
-}
-
 type InstanceIpv4Output struct{ *pulumi.OutputState }
 
 func (InstanceIpv4Output) ElementType() reflect.Type {
@@ -254,12 +235,6 @@ func (o InstanceIpv4Output) ToInstanceIpv4Output() InstanceIpv4Output {
 
 func (o InstanceIpv4Output) ToInstanceIpv4OutputWithContext(ctx context.Context) InstanceIpv4Output {
 	return o
-}
-
-func (o InstanceIpv4Output) ToOutput(ctx context.Context) pulumix.Output[*InstanceIpv4] {
-	return pulumix.Output[*InstanceIpv4]{
-		OutputState: o.OutputState,
-	}
 }
 
 // The gateway IP address.
@@ -306,12 +281,6 @@ func (o InstanceIpv4ArrayOutput) ToInstanceIpv4ArrayOutputWithContext(ctx contex
 	return o
 }
 
-func (o InstanceIpv4ArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]*InstanceIpv4] {
-	return pulumix.Output[[]*InstanceIpv4]{
-		OutputState: o.OutputState,
-	}
-}
-
 func (o InstanceIpv4ArrayOutput) Index(i pulumi.IntInput) InstanceIpv4Output {
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) *InstanceIpv4 {
 		return vs[0].([]*InstanceIpv4)[vs[1].(int)]
@@ -330,12 +299,6 @@ func (o InstanceIpv4MapOutput) ToInstanceIpv4MapOutput() InstanceIpv4MapOutput {
 
 func (o InstanceIpv4MapOutput) ToInstanceIpv4MapOutputWithContext(ctx context.Context) InstanceIpv4MapOutput {
 	return o
-}
-
-func (o InstanceIpv4MapOutput) ToOutput(ctx context.Context) pulumix.Output[map[string]*InstanceIpv4] {
-	return pulumix.Output[map[string]*InstanceIpv4]{
-		OutputState: o.OutputState,
-	}
 }
 
 func (o InstanceIpv4MapOutput) MapIndex(k pulumi.StringInput) InstanceIpv4Output {

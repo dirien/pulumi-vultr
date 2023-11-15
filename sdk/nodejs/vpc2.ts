@@ -82,15 +82,15 @@ export class Vpc2 extends pulumi.CustomResource {
     /**
      * The IPv4 subnet to be used when attaching instances to this VPC 2.0.
      */
-    public readonly ipBlock!: pulumi.Output<string | undefined>;
+    public readonly ipBlock!: pulumi.Output<string>;
     /**
      * Accepted values: `v4`.
      */
-    public readonly ipType!: pulumi.Output<string | undefined>;
+    public readonly ipType!: pulumi.Output<string>;
     /**
      * The number of bits for the netmask in CIDR notation. Example: 32
      */
-    public readonly prefixLength!: pulumi.Output<number | undefined>;
+    public readonly prefixLength!: pulumi.Output<number>;
     /**
      * The region ID that you want the VPC 2.0 to be created in.
      */

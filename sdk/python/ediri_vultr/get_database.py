@@ -23,7 +23,7 @@ class GetDatabaseResult:
     """
     A collection of values returned by getDatabase.
     """
-    def __init__(__self__, cluster_time_zone=None, database_engine=None, database_engine_version=None, date_created=None, dbname=None, filters=None, host=None, id=None, label=None, latest_backup=None, maintenance_dow=None, maintenance_time=None, mysql_long_query_time=None, mysql_require_primary_key=None, mysql_slow_query_log=None, mysql_sql_modes=None, password=None, plan=None, plan_disk=None, plan_ram=None, plan_replicas=None, plan_vcpus=None, port=None, public_host=None, read_replicas=None, redis_eviction_policy=None, region=None, status=None, tag=None, trusted_ips=None, user=None, vpc_id=None):
+    def __init__(__self__, cluster_time_zone=None, database_engine=None, database_engine_version=None, date_created=None, dbname=None, ferretdb_credentials=None, filters=None, host=None, id=None, label=None, latest_backup=None, maintenance_dow=None, maintenance_time=None, mysql_long_query_time=None, mysql_require_primary_key=None, mysql_slow_query_log=None, mysql_sql_modes=None, password=None, plan=None, plan_disk=None, plan_ram=None, plan_replicas=None, plan_vcpus=None, port=None, public_host=None, read_replicas=None, redis_eviction_policy=None, region=None, status=None, tag=None, trusted_ips=None, user=None, vpc_id=None):
         if cluster_time_zone and not isinstance(cluster_time_zone, str):
             raise TypeError("Expected argument 'cluster_time_zone' to be a str")
         pulumi.set(__self__, "cluster_time_zone", cluster_time_zone)
@@ -39,6 +39,9 @@ class GetDatabaseResult:
         if dbname and not isinstance(dbname, str):
             raise TypeError("Expected argument 'dbname' to be a str")
         pulumi.set(__self__, "dbname", dbname)
+        if ferretdb_credentials and not isinstance(ferretdb_credentials, dict):
+            raise TypeError("Expected argument 'ferretdb_credentials' to be a dict")
+        pulumi.set(__self__, "ferretdb_credentials", ferretdb_credentials)
         if filters and not isinstance(filters, list):
             raise TypeError("Expected argument 'filters' to be a list")
         pulumi.set(__self__, "filters", filters)
@@ -160,6 +163,14 @@ class GetDatabaseResult:
         The managed database's default logical database.
         """
         return pulumi.get(self, "dbname")
+
+    @property
+    @pulumi.getter(name="ferretdbCredentials")
+    def ferretdb_credentials(self) -> Mapping[str, Any]:
+        """
+        An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
+        """
+        return pulumi.get(self, "ferretdb_credentials")
 
     @property
     @pulumi.getter
@@ -338,7 +349,7 @@ class GetDatabaseResult:
     @pulumi.getter
     def status(self) -> str:
         """
-        The current status of the managed database (poweroff, rebuilding, rebalancing, running).
+        The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).
         """
         return pulumi.get(self, "status")
 
@@ -386,6 +397,7 @@ class AwaitableGetDatabaseResult(GetDatabaseResult):
             database_engine_version=self.database_engine_version,
             date_created=self.date_created,
             dbname=self.dbname,
+            ferretdb_credentials=self.ferretdb_credentials,
             filters=self.filters,
             host=self.host,
             id=self.id,
@@ -448,6 +460,7 @@ def get_database(filters: Optional[Sequence[pulumi.InputType['GetDatabaseFilterA
         database_engine_version=pulumi.get(__ret__, 'database_engine_version'),
         date_created=pulumi.get(__ret__, 'date_created'),
         dbname=pulumi.get(__ret__, 'dbname'),
+        ferretdb_credentials=pulumi.get(__ret__, 'ferretdb_credentials'),
         filters=pulumi.get(__ret__, 'filters'),
         host=pulumi.get(__ret__, 'host'),
         id=pulumi.get(__ret__, 'id'),

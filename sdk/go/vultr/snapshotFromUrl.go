@@ -10,7 +10,6 @@ import (
 	"errors"
 	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 )
 
 // Provides a Vultr Snapshots from URL resource. This can be used to create, read, modify, and delete Snapshots from URL.
@@ -175,12 +174,6 @@ func (i *SnapshotFromUrl) ToSnapshotFromUrlOutputWithContext(ctx context.Context
 	return pulumi.ToOutputWithContext(ctx, i).(SnapshotFromUrlOutput)
 }
 
-func (i *SnapshotFromUrl) ToOutput(ctx context.Context) pulumix.Output[*SnapshotFromUrl] {
-	return pulumix.Output[*SnapshotFromUrl]{
-		OutputState: i.ToSnapshotFromUrlOutputWithContext(ctx).OutputState,
-	}
-}
-
 // SnapshotFromUrlArrayInput is an input type that accepts SnapshotFromUrlArray and SnapshotFromUrlArrayOutput values.
 // You can construct a concrete instance of `SnapshotFromUrlArrayInput` via:
 //
@@ -204,12 +197,6 @@ func (i SnapshotFromUrlArray) ToSnapshotFromUrlArrayOutput() SnapshotFromUrlArra
 
 func (i SnapshotFromUrlArray) ToSnapshotFromUrlArrayOutputWithContext(ctx context.Context) SnapshotFromUrlArrayOutput {
 	return pulumi.ToOutputWithContext(ctx, i).(SnapshotFromUrlArrayOutput)
-}
-
-func (i SnapshotFromUrlArray) ToOutput(ctx context.Context) pulumix.Output[[]*SnapshotFromUrl] {
-	return pulumix.Output[[]*SnapshotFromUrl]{
-		OutputState: i.ToSnapshotFromUrlArrayOutputWithContext(ctx).OutputState,
-	}
 }
 
 // SnapshotFromUrlMapInput is an input type that accepts SnapshotFromUrlMap and SnapshotFromUrlMapOutput values.
@@ -237,12 +224,6 @@ func (i SnapshotFromUrlMap) ToSnapshotFromUrlMapOutputWithContext(ctx context.Co
 	return pulumi.ToOutputWithContext(ctx, i).(SnapshotFromUrlMapOutput)
 }
 
-func (i SnapshotFromUrlMap) ToOutput(ctx context.Context) pulumix.Output[map[string]*SnapshotFromUrl] {
-	return pulumix.Output[map[string]*SnapshotFromUrl]{
-		OutputState: i.ToSnapshotFromUrlMapOutputWithContext(ctx).OutputState,
-	}
-}
-
 type SnapshotFromUrlOutput struct{ *pulumi.OutputState }
 
 func (SnapshotFromUrlOutput) ElementType() reflect.Type {
@@ -255,12 +236,6 @@ func (o SnapshotFromUrlOutput) ToSnapshotFromUrlOutput() SnapshotFromUrlOutput {
 
 func (o SnapshotFromUrlOutput) ToSnapshotFromUrlOutputWithContext(ctx context.Context) SnapshotFromUrlOutput {
 	return o
-}
-
-func (o SnapshotFromUrlOutput) ToOutput(ctx context.Context) pulumix.Output[*SnapshotFromUrl] {
-	return pulumix.Output[*SnapshotFromUrl]{
-		OutputState: o.OutputState,
-	}
 }
 
 // The app id which the snapshot is associated with.
@@ -312,12 +287,6 @@ func (o SnapshotFromUrlArrayOutput) ToSnapshotFromUrlArrayOutputWithContext(ctx 
 	return o
 }
 
-func (o SnapshotFromUrlArrayOutput) ToOutput(ctx context.Context) pulumix.Output[[]*SnapshotFromUrl] {
-	return pulumix.Output[[]*SnapshotFromUrl]{
-		OutputState: o.OutputState,
-	}
-}
-
 func (o SnapshotFromUrlArrayOutput) Index(i pulumi.IntInput) SnapshotFromUrlOutput {
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) *SnapshotFromUrl {
 		return vs[0].([]*SnapshotFromUrl)[vs[1].(int)]
@@ -336,12 +305,6 @@ func (o SnapshotFromUrlMapOutput) ToSnapshotFromUrlMapOutput() SnapshotFromUrlMa
 
 func (o SnapshotFromUrlMapOutput) ToSnapshotFromUrlMapOutputWithContext(ctx context.Context) SnapshotFromUrlMapOutput {
 	return o
-}
-
-func (o SnapshotFromUrlMapOutput) ToOutput(ctx context.Context) pulumix.Output[map[string]*SnapshotFromUrl] {
-	return pulumix.Output[map[string]*SnapshotFromUrl]{
-		OutputState: o.OutputState,
-	}
 }
 
 func (o SnapshotFromUrlMapOutput) MapIndex(k pulumi.StringInput) SnapshotFromUrlOutput {

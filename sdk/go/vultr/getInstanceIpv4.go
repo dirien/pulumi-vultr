@@ -9,7 +9,6 @@ import (
 
 	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr/internal"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumix"
 )
 
 // Get information about a Vultr instance IPv4.
@@ -117,12 +116,6 @@ func (o LookupInstanceIpv4ResultOutput) ToLookupInstanceIpv4ResultOutput() Looku
 
 func (o LookupInstanceIpv4ResultOutput) ToLookupInstanceIpv4ResultOutputWithContext(ctx context.Context) LookupInstanceIpv4ResultOutput {
 	return o
-}
-
-func (o LookupInstanceIpv4ResultOutput) ToOutput(ctx context.Context) pulumix.Output[LookupInstanceIpv4Result] {
-	return pulumix.Output[LookupInstanceIpv4Result]{
-		OutputState: o.OutputState,
-	}
 }
 
 func (o LookupInstanceIpv4ResultOutput) Filters() GetInstanceIpv4FilterArrayOutput {
