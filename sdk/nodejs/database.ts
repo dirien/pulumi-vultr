@@ -180,7 +180,7 @@ export class Database extends pulumi.CustomResource {
     /**
      * The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
      */
-    public readonly redisEvictionPolicy!: pulumi.Output<string | undefined>;
+    public readonly redisEvictionPolicy!: pulumi.Output<string>;
     /**
      * The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
      */

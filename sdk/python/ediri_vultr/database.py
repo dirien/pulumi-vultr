@@ -1400,7 +1400,7 @@ class Database(pulumi.CustomResource):
 
     @property
     @pulumi.getter(name="redisEvictionPolicy")
-    def redis_eviction_policy(self) -> pulumi.Output[Optional[str]]:
+    def redis_eviction_policy(self) -> pulumi.Output[str]:
         """
         The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
         """

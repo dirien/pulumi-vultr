@@ -115,6 +115,11 @@ export const getInstanceIpv4: typeof import("./getInstanceIpv4").getInstanceIpv4
 export const getInstanceIpv4Output: typeof import("./getInstanceIpv4").getInstanceIpv4Output = null as any;
 utilities.lazyLoad(exports, ["getInstanceIpv4","getInstanceIpv4Output"], () => require("./getInstanceIpv4"));
 
+export { GetInstancesArgs, GetInstancesResult, GetInstancesOutputArgs } from "./getInstances";
+export const getInstances: typeof import("./getInstances").getInstances = null as any;
+export const getInstancesOutput: typeof import("./getInstances").getInstancesOutput = null as any;
+utilities.lazyLoad(exports, ["getInstances","getInstancesOutput"], () => require("./getInstances"));
+
 export { GetIsoPrivateArgs, GetIsoPrivateResult, GetIsoPrivateOutputArgs } from "./getIsoPrivate";
 export const getIsoPrivate: typeof import("./getIsoPrivate").getIsoPrivate = null as any;
 export const getIsoPrivateOutput: typeof import("./getIsoPrivate").getIsoPrivateOutput = null as any;

@@ -8,6 +8,8 @@ import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
 from . import _utilities
+from . import outputs
+from ._inputs import *
 
 __all__ = ['DatabaseUserArgs', 'DatabaseUser']
 
@@ -16,6 +18,7 @@ class DatabaseUserArgs:
     def __init__(__self__, *,
                  database_id: pulumi.Input[str],
                  username: pulumi.Input[str],
+                 access_control: Optional[pulumi.Input['DatabaseUserAccessControlArgs']] = None,
                  encryption: Optional[pulumi.Input[str]] = None,
                  password: Optional[pulumi.Input[str]] = None):
         """
@@ -27,6 +30,8 @@ class DatabaseUserArgs:
         """
         pulumi.set(__self__, "database_id", database_id)
         pulumi.set(__self__, "username", username)
+        if access_control is not None:
+            pulumi.set(__self__, "access_control", access_control)
         if encryption is not None:
             pulumi.set(__self__, "encryption", encryption)
         if password is not None:
@@ -57,6 +62,15 @@ class DatabaseUserArgs:
         pulumi.set(self, "username", value)
 
     @property
+    @pulumi.getter(name="accessControl")
+    def access_control(self) -> Optional[pulumi.Input['DatabaseUserAccessControlArgs']]:
+        return pulumi.get(self, "access_control")
+
+    @access_control.setter
+    def access_control(self, value: Optional[pulumi.Input['DatabaseUserAccessControlArgs']]):
+        pulumi.set(self, "access_control", value)
+
+    @property
     @pulumi.getter
     def encryption(self) -> Optional[pulumi.Input[str]]:
         """
@@ -84,6 +98,7 @@ class DatabaseUserArgs:
 @pulumi.input_type
 class _DatabaseUserState:
     def __init__(__self__, *,
+                 access_control: Optional[pulumi.Input['DatabaseUserAccessControlArgs']] = None,
                  database_id: Optional[pulumi.Input[str]] = None,
                  encryption: Optional[pulumi.Input[str]] = None,
                  password: Optional[pulumi.Input[str]] = None,
@@ -95,6 +110,8 @@ class _DatabaseUserState:
         :param pulumi.Input[str] password: The password of the new managed database user.
         :param pulumi.Input[str] username: The username of the new managed database user.
         """
+        if access_control is not None:
+            pulumi.set(__self__, "access_control", access_control)
         if database_id is not None:
             pulumi.set(__self__, "database_id", database_id)
         if encryption is not None:
@@ -103,6 +120,15 @@ class _DatabaseUserState:
             pulumi.set(__self__, "password", password)
         if username is not None:
             pulumi.set(__self__, "username", username)
+
+    @property
+    @pulumi.getter(name="accessControl")
+    def access_control(self) -> Optional[pulumi.Input['DatabaseUserAccessControlArgs']]:
+        return pulumi.get(self, "access_control")
+
+    @access_control.setter
+    def access_control(self, value: Optional[pulumi.Input['DatabaseUserAccessControlArgs']]):
+        pulumi.set(self, "access_control", value)
 
     @property
     @pulumi.getter(name="databaseId")
@@ -158,6 +184,7 @@ class DatabaseUser(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
+                 access_control: Optional[pulumi.Input[pulumi.InputType['DatabaseUserAccessControlArgs']]] = None,
                  database_id: Optional[pulumi.Input[str]] = None,
                  encryption: Optional[pulumi.Input[str]] = None,
                  password: Optional[pulumi.Input[str]] = None,
@@ -225,6 +252,7 @@ class DatabaseUser(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
+                 access_control: Optional[pulumi.Input[pulumi.InputType['DatabaseUserAccessControlArgs']]] = None,
                  database_id: Optional[pulumi.Input[str]] = None,
                  encryption: Optional[pulumi.Input[str]] = None,
                  password: Optional[pulumi.Input[str]] = None,
@@ -238,6 +266,7 @@ class DatabaseUser(pulumi.CustomResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = DatabaseUserArgs.__new__(DatabaseUserArgs)
 
+            __props__.__dict__["access_control"] = access_control
             if database_id is None and not opts.urn:
                 raise TypeError("Missing required property 'database_id'")
             __props__.__dict__["database_id"] = database_id
@@ -256,6 +285,7 @@ class DatabaseUser(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
+            access_control: Optional[pulumi.Input[pulumi.InputType['DatabaseUserAccessControlArgs']]] = None,
             database_id: Optional[pulumi.Input[str]] = None,
             encryption: Optional[pulumi.Input[str]] = None,
             password: Optional[pulumi.Input[str]] = None,
@@ -276,11 +306,17 @@ class DatabaseUser(pulumi.CustomResource):
 
         __props__ = _DatabaseUserState.__new__(_DatabaseUserState)
 
+        __props__.__dict__["access_control"] = access_control
         __props__.__dict__["database_id"] = database_id
         __props__.__dict__["encryption"] = encryption
         __props__.__dict__["password"] = password
         __props__.__dict__["username"] = username
         return DatabaseUser(resource_name, opts=opts, __props__=__props__)
+
+    @property
+    @pulumi.getter(name="accessControl")
+    def access_control(self) -> pulumi.Output['outputs.DatabaseUserAccessControl']:
+        return pulumi.get(self, "access_control")
 
     @property
     @pulumi.getter(name="databaseId")

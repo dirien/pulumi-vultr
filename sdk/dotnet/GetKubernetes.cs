@@ -164,6 +164,10 @@ namespace ediri.Vultr
         public readonly string Endpoint;
         public readonly ImmutableArray<Outputs.GetKubernetesFilterResult> Filters;
         /// <summary>
+        /// The ID of the firewall group managed by this cluster.
+        /// </summary>
+        public readonly string FirewallGroupId;
+        /// <summary>
         /// Boolean indicating whether or not the cluster has multiple, highly available controlplanes.
         /// </summary>
         public readonly bool HaControlplanes;
@@ -220,6 +224,8 @@ namespace ediri.Vultr
 
             ImmutableArray<Outputs.GetKubernetesFilterResult> filters,
 
+            string firewallGroupId,
+
             bool haControlplanes,
 
             string id,
@@ -247,6 +253,7 @@ namespace ediri.Vultr
             DateCreated = dateCreated;
             Endpoint = endpoint;
             Filters = filters;
+            FirewallGroupId = firewallGroupId;
             HaControlplanes = haControlplanes;
             Id = id;
             Ip = ip;

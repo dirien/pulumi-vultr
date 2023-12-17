@@ -38,6 +38,9 @@ namespace ediri.Vultr
     [VultrResourceType("vultr:index/databaseUser:DatabaseUser")]
     public partial class DatabaseUser : global::Pulumi.CustomResource
     {
+        [Output("accessControl")]
+        public Output<Outputs.DatabaseUserAccessControl> AccessControl { get; private set; } = null!;
+
         /// <summary>
         /// The managed database ID you want to attach this user to.
         /// </summary>
@@ -109,6 +112,9 @@ namespace ediri.Vultr
 
     public sealed class DatabaseUserArgs : global::Pulumi.ResourceArgs
     {
+        [Input("accessControl")]
+        public Input<Inputs.DatabaseUserAccessControlArgs>? AccessControl { get; set; }
+
         /// <summary>
         /// The managed database ID you want to attach this user to.
         /// </summary>
@@ -141,6 +147,9 @@ namespace ediri.Vultr
 
     public sealed class DatabaseUserState : global::Pulumi.ResourceArgs
     {
+        [Input("accessControl")]
+        public Input<Inputs.DatabaseUserAccessControlGetArgs>? AccessControl { get; set; }
+
         /// <summary>
         /// The managed database ID you want to attach this user to.
         /// </summary>

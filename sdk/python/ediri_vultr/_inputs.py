@@ -11,6 +11,7 @@ from . import _utilities
 
 __all__ = [
     'DatabaseReadReplicaArgs',
+    'DatabaseUserAccessControlArgs',
     'InstanceBackupsScheduleArgs',
     'KubernetesNodePoolsArgs',
     'KubernetesNodePoolsNodeArgs',
@@ -27,6 +28,7 @@ __all__ = [
     'GetFirewallGroupFilterArgs',
     'GetInstanceFilterArgs',
     'GetInstanceIpv4FilterArgs',
+    'GetInstancesFilterArgs',
     'GetIsoPrivateFilterArgs',
     'GetIsoPublicFilterArgs',
     'GetKubernetesFilterArgs',
@@ -547,6 +549,73 @@ class DatabaseReadReplicaArgs:
     @vpc_id.setter
     def vpc_id(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "vpc_id", value)
+
+
+@pulumi.input_type
+class DatabaseUserAccessControlArgs:
+    def __init__(__self__, *,
+                 redis_acl_categories: pulumi.Input[Sequence[pulumi.Input[str]]],
+                 redis_acl_channels: pulumi.Input[Sequence[pulumi.Input[str]]],
+                 redis_acl_commands: pulumi.Input[Sequence[pulumi.Input[str]]],
+                 redis_acl_keys: pulumi.Input[Sequence[pulumi.Input[str]]]):
+        """
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] redis_acl_categories: The list of command category rules for this managed database user.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] redis_acl_channels: The list of publish/subscribe channel patterns for this managed database user.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] redis_acl_commands: The list of individual command rules for this managed database user.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] redis_acl_keys: The list of access rules for this managed database user.
+        """
+        pulumi.set(__self__, "redis_acl_categories", redis_acl_categories)
+        pulumi.set(__self__, "redis_acl_channels", redis_acl_channels)
+        pulumi.set(__self__, "redis_acl_commands", redis_acl_commands)
+        pulumi.set(__self__, "redis_acl_keys", redis_acl_keys)
+
+    @property
+    @pulumi.getter(name="redisAclCategories")
+    def redis_acl_categories(self) -> pulumi.Input[Sequence[pulumi.Input[str]]]:
+        """
+        The list of command category rules for this managed database user.
+        """
+        return pulumi.get(self, "redis_acl_categories")
+
+    @redis_acl_categories.setter
+    def redis_acl_categories(self, value: pulumi.Input[Sequence[pulumi.Input[str]]]):
+        pulumi.set(self, "redis_acl_categories", value)
+
+    @property
+    @pulumi.getter(name="redisAclChannels")
+    def redis_acl_channels(self) -> pulumi.Input[Sequence[pulumi.Input[str]]]:
+        """
+        The list of publish/subscribe channel patterns for this managed database user.
+        """
+        return pulumi.get(self, "redis_acl_channels")
+
+    @redis_acl_channels.setter
+    def redis_acl_channels(self, value: pulumi.Input[Sequence[pulumi.Input[str]]]):
+        pulumi.set(self, "redis_acl_channels", value)
+
+    @property
+    @pulumi.getter(name="redisAclCommands")
+    def redis_acl_commands(self) -> pulumi.Input[Sequence[pulumi.Input[str]]]:
+        """
+        The list of individual command rules for this managed database user.
+        """
+        return pulumi.get(self, "redis_acl_commands")
+
+    @redis_acl_commands.setter
+    def redis_acl_commands(self, value: pulumi.Input[Sequence[pulumi.Input[str]]]):
+        pulumi.set(self, "redis_acl_commands", value)
+
+    @property
+    @pulumi.getter(name="redisAclKeys")
+    def redis_acl_keys(self) -> pulumi.Input[Sequence[pulumi.Input[str]]]:
+        """
+        The list of access rules for this managed database user.
+        """
+        return pulumi.get(self, "redis_acl_keys")
+
+    @redis_acl_keys.setter
+    def redis_acl_keys(self, value: pulumi.Input[Sequence[pulumi.Input[str]]]):
+        pulumi.set(self, "redis_acl_keys", value)
 
 
 @pulumi.input_type
@@ -1528,6 +1597,43 @@ class GetInstanceIpv4FilterArgs:
     def values(self) -> Sequence[str]:
         """
         One or more values to filter with.
+        """
+        return pulumi.get(self, "values")
+
+    @values.setter
+    def values(self, value: Sequence[str]):
+        pulumi.set(self, "values", value)
+
+
+@pulumi.input_type
+class GetInstancesFilterArgs:
+    def __init__(__self__, *,
+                 name: str,
+                 values: Sequence[str]):
+        """
+        :param str name: Attribute name to filter with.
+        :param Sequence[str] values: One or more values filter with.
+        """
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "values", values)
+
+    @property
+    @pulumi.getter
+    def name(self) -> str:
+        """
+        Attribute name to filter with.
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: str):
+        pulumi.set(self, "name", value)
+
+    @property
+    @pulumi.getter
+    def values(self) -> Sequence[str]:
+        """
+        One or more values filter with.
         """
         return pulumi.get(self, "values")
 

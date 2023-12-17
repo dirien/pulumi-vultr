@@ -46,6 +46,7 @@ import (
 type DatabaseUser struct {
 	pulumi.CustomResourceState
 
+	AccessControl DatabaseUserAccessControlOutput `pulumi:"accessControl"`
 	// The managed database ID you want to attach this user to.
 	DatabaseId pulumi.StringOutput `pulumi:"databaseId"`
 	// The encryption type of the new managed database user's password (MySQL engine types only - `cachingSha2Password`, `mysqlNativePassword`).
@@ -92,6 +93,7 @@ func GetDatabaseUser(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering DatabaseUser resources.
 type databaseUserState struct {
+	AccessControl *DatabaseUserAccessControl `pulumi:"accessControl"`
 	// The managed database ID you want to attach this user to.
 	DatabaseId *string `pulumi:"databaseId"`
 	// The encryption type of the new managed database user's password (MySQL engine types only - `cachingSha2Password`, `mysqlNativePassword`).
@@ -103,6 +105,7 @@ type databaseUserState struct {
 }
 
 type DatabaseUserState struct {
+	AccessControl DatabaseUserAccessControlPtrInput
 	// The managed database ID you want to attach this user to.
 	DatabaseId pulumi.StringPtrInput
 	// The encryption type of the new managed database user's password (MySQL engine types only - `cachingSha2Password`, `mysqlNativePassword`).
@@ -118,6 +121,7 @@ func (DatabaseUserState) ElementType() reflect.Type {
 }
 
 type databaseUserArgs struct {
+	AccessControl *DatabaseUserAccessControl `pulumi:"accessControl"`
 	// The managed database ID you want to attach this user to.
 	DatabaseId string `pulumi:"databaseId"`
 	// The encryption type of the new managed database user's password (MySQL engine types only - `cachingSha2Password`, `mysqlNativePassword`).
@@ -130,6 +134,7 @@ type databaseUserArgs struct {
 
 // The set of arguments for constructing a DatabaseUser resource.
 type DatabaseUserArgs struct {
+	AccessControl DatabaseUserAccessControlPtrInput
 	// The managed database ID you want to attach this user to.
 	DatabaseId pulumi.StringInput
 	// The encryption type of the new managed database user's password (MySQL engine types only - `cachingSha2Password`, `mysqlNativePassword`).
@@ -225,6 +230,10 @@ func (o DatabaseUserOutput) ToDatabaseUserOutput() DatabaseUserOutput {
 
 func (o DatabaseUserOutput) ToDatabaseUserOutputWithContext(ctx context.Context) DatabaseUserOutput {
 	return o
+}
+
+func (o DatabaseUserOutput) AccessControl() DatabaseUserAccessControlOutput {
+	return o.ApplyT(func(v *DatabaseUser) DatabaseUserAccessControlOutput { return v.AccessControl }).(DatabaseUserAccessControlOutput)
 }
 
 // The managed database ID you want to attach this user to.

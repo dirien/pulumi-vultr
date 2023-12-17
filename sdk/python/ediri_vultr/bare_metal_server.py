@@ -23,6 +23,7 @@ class BareMetalServerArgs:
                  image_id: Optional[pulumi.Input[str]] = None,
                  label: Optional[pulumi.Input[str]] = None,
                  os_id: Optional[pulumi.Input[int]] = None,
+                 persistent_pxe: Optional[pulumi.Input[bool]] = None,
                  reserved_ipv4: Optional[pulumi.Input[str]] = None,
                  script_id: Optional[pulumi.Input[str]] = None,
                  snapshot_id: Optional[pulumi.Input[str]] = None,
@@ -65,6 +66,8 @@ class BareMetalServerArgs:
             pulumi.set(__self__, "label", label)
         if os_id is not None:
             pulumi.set(__self__, "os_id", os_id)
+        if persistent_pxe is not None:
+            pulumi.set(__self__, "persistent_pxe", persistent_pxe)
         if reserved_ipv4 is not None:
             pulumi.set(__self__, "reserved_ipv4", reserved_ipv4)
         if script_id is not None:
@@ -189,6 +192,15 @@ class BareMetalServerArgs:
         pulumi.set(self, "os_id", value)
 
     @property
+    @pulumi.getter(name="persistentPxe")
+    def persistent_pxe(self) -> Optional[pulumi.Input[bool]]:
+        return pulumi.get(self, "persistent_pxe")
+
+    @persistent_pxe.setter
+    def persistent_pxe(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "persistent_pxe", value)
+
+    @property
     @pulumi.getter(name="reservedIpv4")
     def reserved_ipv4(self) -> Optional[pulumi.Input[str]]:
         """
@@ -292,6 +304,7 @@ class _BareMetalServerState:
                  netmask_v4: Optional[pulumi.Input[str]] = None,
                  os: Optional[pulumi.Input[str]] = None,
                  os_id: Optional[pulumi.Input[int]] = None,
+                 persistent_pxe: Optional[pulumi.Input[bool]] = None,
                  plan: Optional[pulumi.Input[str]] = None,
                  ram: Optional[pulumi.Input[str]] = None,
                  region: Optional[pulumi.Input[str]] = None,
@@ -371,6 +384,8 @@ class _BareMetalServerState:
             pulumi.set(__self__, "os", os)
         if os_id is not None:
             pulumi.set(__self__, "os_id", os_id)
+        if persistent_pxe is not None:
+            pulumi.set(__self__, "persistent_pxe", persistent_pxe)
         if plan is not None:
             pulumi.set(__self__, "plan", plan)
         if ram is not None:
@@ -593,6 +608,15 @@ class _BareMetalServerState:
         pulumi.set(self, "os_id", value)
 
     @property
+    @pulumi.getter(name="persistentPxe")
+    def persistent_pxe(self) -> Optional[pulumi.Input[bool]]:
+        return pulumi.get(self, "persistent_pxe")
+
+    @persistent_pxe.setter
+    def persistent_pxe(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "persistent_pxe", value)
+
+    @property
     @pulumi.getter
     def plan(self) -> Optional[pulumi.Input[str]]:
         """
@@ -773,6 +797,7 @@ class BareMetalServer(pulumi.CustomResource):
                  image_id: Optional[pulumi.Input[str]] = None,
                  label: Optional[pulumi.Input[str]] = None,
                  os_id: Optional[pulumi.Input[int]] = None,
+                 persistent_pxe: Optional[pulumi.Input[bool]] = None,
                  plan: Optional[pulumi.Input[str]] = None,
                  region: Optional[pulumi.Input[str]] = None,
                  reserved_ipv4: Optional[pulumi.Input[str]] = None,
@@ -916,6 +941,7 @@ class BareMetalServer(pulumi.CustomResource):
                  image_id: Optional[pulumi.Input[str]] = None,
                  label: Optional[pulumi.Input[str]] = None,
                  os_id: Optional[pulumi.Input[int]] = None,
+                 persistent_pxe: Optional[pulumi.Input[bool]] = None,
                  plan: Optional[pulumi.Input[str]] = None,
                  region: Optional[pulumi.Input[str]] = None,
                  reserved_ipv4: Optional[pulumi.Input[str]] = None,
@@ -941,6 +967,7 @@ class BareMetalServer(pulumi.CustomResource):
             __props__.__dict__["image_id"] = image_id
             __props__.__dict__["label"] = label
             __props__.__dict__["os_id"] = os_id
+            __props__.__dict__["persistent_pxe"] = persistent_pxe
             if plan is None and not opts.urn:
                 raise TypeError("Missing required property 'plan'")
             __props__.__dict__["plan"] = plan
@@ -996,6 +1023,7 @@ class BareMetalServer(pulumi.CustomResource):
             netmask_v4: Optional[pulumi.Input[str]] = None,
             os: Optional[pulumi.Input[str]] = None,
             os_id: Optional[pulumi.Input[int]] = None,
+            persistent_pxe: Optional[pulumi.Input[bool]] = None,
             plan: Optional[pulumi.Input[str]] = None,
             ram: Optional[pulumi.Input[str]] = None,
             region: Optional[pulumi.Input[str]] = None,
@@ -1068,6 +1096,7 @@ class BareMetalServer(pulumi.CustomResource):
         __props__.__dict__["netmask_v4"] = netmask_v4
         __props__.__dict__["os"] = os
         __props__.__dict__["os_id"] = os_id
+        __props__.__dict__["persistent_pxe"] = persistent_pxe
         __props__.__dict__["plan"] = plan
         __props__.__dict__["ram"] = ram
         __props__.__dict__["region"] = region
@@ -1211,6 +1240,11 @@ class BareMetalServer(pulumi.CustomResource):
         The ID of the operating system to be installed on the server. [See List OS](https://www.vultr.com/api/#operation/list-os)
         """
         return pulumi.get(self, "os_id")
+
+    @property
+    @pulumi.getter(name="persistentPxe")
+    def persistent_pxe(self) -> pulumi.Output[Optional[bool]]:
+        return pulumi.get(self, "persistent_pxe")
 
     @property
     @pulumi.getter

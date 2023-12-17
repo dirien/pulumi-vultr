@@ -171,6 +171,9 @@ namespace ediri.Vultr
         [Output("osId")]
         public Output<int> OsId { get; private set; } = null!;
 
+        [Output("persistentPxe")]
+        public Output<bool?> PersistentPxe { get; private set; } = null!;
+
         /// <summary>
         /// The ID of the plan that you want the server to subscribe to. [See List Plans](https://www.vultr.com/api/#tag/plans)
         /// </summary>
@@ -347,6 +350,9 @@ namespace ediri.Vultr
         /// </summary>
         [Input("osId")]
         public Input<int>? OsId { get; set; }
+
+        [Input("persistentPxe")]
+        public Input<bool>? PersistentPxe { get; set; }
 
         /// <summary>
         /// The ID of the plan that you want the server to subscribe to. [See List Plans](https://www.vultr.com/api/#tag/plans)
@@ -533,6 +539,9 @@ namespace ediri.Vultr
         /// </summary>
         [Input("osId")]
         public Input<int>? OsId { get; set; }
+
+        [Input("persistentPxe")]
+        public Input<bool>? PersistentPxe { get; set; }
 
         /// <summary>
         /// The ID of the plan that you want the server to subscribe to. [See List Plans](https://www.vultr.com/api/#tag/plans)

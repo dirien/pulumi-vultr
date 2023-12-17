@@ -37,6 +37,7 @@
         "getFirewallGroup.ts",
         "getInstance.ts",
         "getInstanceIpv4.ts",
+        "getInstances.ts",
         "getIsoPrivate.ts",
         "getIsoPublic.ts",
         "getKubernetes.ts",

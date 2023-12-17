@@ -132,6 +132,25 @@ export interface DatabaseReadReplica {
     vpcId: string;
 }
 
+export interface DatabaseUserAccessControl {
+    /**
+     * The list of command category rules for this managed database user.
+     */
+    redisAclCategories: string[];
+    /**
+     * The list of publish/subscribe channel patterns for this managed database user.
+     */
+    redisAclChannels: string[];
+    /**
+     * The list of individual command rules for this managed database user.
+     */
+    redisAclCommands: string[];
+    /**
+     * The list of access rules for this managed database user.
+     */
+    redisAclKeys: string[];
+}
+
 export interface GetApplicationFilter {
     /**
      * Attribute name to filter with.
@@ -353,6 +372,137 @@ export interface GetInstanceIpv4Filter {
      * One or more values to filter with.
      */
     values: string[];
+}
+
+export interface GetInstancesFilter {
+    /**
+     * Attribute name to filter with.
+     */
+    name: string;
+    /**
+     * One or more values filter with.
+     */
+    values: string[];
+}
+
+export interface GetInstancesInstance {
+    /**
+     * The server's allowed bandwidth usage in GB.
+     */
+    allowedBandwidth: number;
+    /**
+     * The server's application ID.
+     */
+    appId: number;
+    backups: string;
+    /**
+     * The current configuration for backups
+     */
+    backupsSchedule: {[key: string]: any};
+    /**
+     * The date the server was added to your Vultr account.
+     */
+    dateCreated: string;
+    /**
+     * The description of the disk(s) on the server.
+     */
+    disk: number;
+    /**
+     * Array of which features are enabled.
+     */
+    features: string[];
+    /**
+     * The ID of the firewall group applied to this server.
+     */
+    firewallGroupId: string;
+    /**
+     * The server's IPv4 gateway.
+     */
+    gatewayV4: string;
+    /**
+     * The hostname assigned to the server.
+     */
+    hostname: string;
+    id: string;
+    /**
+     * The Marketplace ID for this application.
+     */
+    imageId: string;
+    /**
+     * The server's internal IP address.
+     */
+    internalIp: string;
+    /**
+     * The server's current KVM URL. This URL will change periodically. It is not advised to cache this value.
+     */
+    kvm: string;
+    /**
+     * The server's label.
+     */
+    label: string;
+    location: string;
+    /**
+     * The server's main IP address.
+     */
+    mainIp: string;
+    /**
+     * The server's IPv4 netmask.
+     */
+    netmaskV4: string;
+    /**
+     * The operating system of the instance.
+     */
+    os: string;
+    /**
+     * The server's operating system ID.
+     */
+    osId: number;
+    /**
+     * The server's plan ID.
+     */
+    plan: string;
+    /**
+     * Whether the server is powered on or not.
+     */
+    powerStatus: string;
+    privateNetworkIds: string[];
+    /**
+     * The amount of memory available on the instance in MB.
+     */
+    ram: number;
+    /**
+     * The region ID of the server.
+     */
+    region: string;
+    /**
+     * A more detailed server status (none, locked, installingbooting, isomounting, ok).
+     */
+    serverStatus: string;
+    /**
+     * The status of the server's subscription.
+     */
+    status: string;
+    /**
+     * A list of tags applied to the instance.
+     */
+    tags: string[];
+    /**
+     * The main IPv6 network address.
+     */
+    v6MainIp: string;
+    /**
+     * The IPv6 subnet.
+     */
+    v6Network: string;
+    /**
+     * The IPv6 network size in bits.
+     */
+    v6NetworkSize: number;
+    /**
+     * The number of virtual CPUs available on the server.
+     */
+    vcpuCount: number;
+    vpcIds: string[];
 }
 
 export interface GetIsoPrivateFilter {

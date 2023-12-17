@@ -54,7 +54,7 @@ export interface GetSshKeyResult {
     readonly dateCreated: string;
     readonly filters?: outputs.GetSshKeyFilter[];
     /**
-     * The provider-assigned unique ID for this managed resource.
+     * The ID of the SSH key.
      */
     readonly id: string;
     /**

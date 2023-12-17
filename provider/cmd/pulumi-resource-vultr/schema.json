@@ -29,12 +29,6 @@
             "generateResourceContainerTypes": true,
             "generateExtraInputTypes": true
         },
-        "java": {
-            "basePackage": "io.dirien",
-            "buildFiles": "",
-            "gradleNexusPublishPluginVersion": "",
-            "gradleTest": ""
-        },
         "nodejs": {
             "packageName": "@ediri/vultr",
             "packageDescription": "A Pulumi package for creating and managing Vultr cloud resources.",
@@ -265,6 +259,45 @@
                     ]
                 }
             }
+        },
+        "vultr:index/DatabaseUserAccessControl:DatabaseUserAccessControl": {
+            "properties": {
+                "redisAclCategories": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "The list of command category rules for this managed database user.\n"
+                },
+                "redisAclChannels": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "The list of publish/subscribe channel patterns for this managed database user.\n"
+                },
+                "redisAclCommands": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "The list of individual command rules for this managed database user.\n"
+                },
+                "redisAclKeys": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "The list of access rules for this managed database user.\n"
+                }
+            },
+            "type": "object",
+            "required": [
+                "redisAclCategories",
+                "redisAclChannels",
+                "redisAclCommands",
+                "redisAclKeys"
+            ]
         },
         "vultr:index/InstanceBackupsSchedule:InstanceBackupsSchedule": {
             "properties": {
@@ -898,6 +931,213 @@
                 "values"
             ]
         },
+        "vultr:index/getInstancesFilter:getInstancesFilter": {
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Attribute name to filter with.\n"
+                },
+                "values": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "One or more values filter with.\n"
+                }
+            },
+            "type": "object",
+            "required": [
+                "name",
+                "values"
+            ]
+        },
+        "vultr:index/getInstancesInstance:getInstancesInstance": {
+            "properties": {
+                "allowedBandwidth": {
+                    "type": "integer",
+                    "description": "The server's allowed bandwidth usage in GB.\n"
+                },
+                "appId": {
+                    "type": "integer",
+                    "description": "The server's application ID.\n"
+                },
+                "backups": {
+                    "type": "string"
+                },
+                "backupsSchedule": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "pulumi.json#/Any"
+                    },
+                    "description": "The current configuration for backups\n"
+                },
+                "dateCreated": {
+                    "type": "string",
+                    "description": "The date the server was added to your Vultr account.\n"
+                },
+                "disk": {
+                    "type": "integer",
+                    "description": "The description of the disk(s) on the server.\n"
+                },
+                "features": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "Array of which features are enabled.\n"
+                },
+                "firewallGroupId": {
+                    "type": "string",
+                    "description": "The ID of the firewall group applied to this server.\n"
+                },
+                "gatewayV4": {
+                    "type": "string",
+                    "description": "The server's IPv4 gateway.\n"
+                },
+                "hostname": {
+                    "type": "string",
+                    "description": "The hostname assigned to the server.\n"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "imageId": {
+                    "type": "string",
+                    "description": "The Marketplace ID for this application.\n"
+                },
+                "internalIp": {
+                    "type": "string",
+                    "description": "The server's internal IP address.\n"
+                },
+                "kvm": {
+                    "type": "string",
+                    "description": "The server's current KVM URL. This URL will change periodically. It is not advised to cache this value.\n"
+                },
+                "label": {
+                    "type": "string",
+                    "description": "The server's label.\n"
+                },
+                "location": {
+                    "type": "string"
+                },
+                "mainIp": {
+                    "type": "string",
+                    "description": "The server's main IP address.\n"
+                },
+                "netmaskV4": {
+                    "type": "string",
+                    "description": "The server's IPv4 netmask.\n"
+                },
+                "os": {
+                    "type": "string",
+                    "description": "The operating system of the instance.\n"
+                },
+                "osId": {
+                    "type": "integer",
+                    "description": "The server's operating system ID.\n"
+                },
+                "plan": {
+                    "type": "string",
+                    "description": "The server's plan ID.\n"
+                },
+                "powerStatus": {
+                    "type": "string",
+                    "description": "Whether the server is powered on or not.\n"
+                },
+                "privateNetworkIds": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "ram": {
+                    "type": "integer",
+                    "description": "The amount of memory available on the instance in MB.\n"
+                },
+                "region": {
+                    "type": "string",
+                    "description": "The region ID of the server.\n"
+                },
+                "serverStatus": {
+                    "type": "string",
+                    "description": "A more detailed server status (none, locked, installingbooting, isomounting, ok).\n"
+                },
+                "status": {
+                    "type": "string",
+                    "description": "The status of the server's subscription.\n"
+                },
+                "tags": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "A list of tags applied to the instance.\n"
+                },
+                "v6MainIp": {
+                    "type": "string",
+                    "description": "The main IPv6 network address.\n"
+                },
+                "v6Network": {
+                    "type": "string",
+                    "description": "The IPv6 subnet.\n"
+                },
+                "v6NetworkSize": {
+                    "type": "integer",
+                    "description": "The IPv6 network size in bits.\n"
+                },
+                "vcpuCount": {
+                    "type": "integer",
+                    "description": "The number of virtual CPUs available on the server.\n"
+                },
+                "vpcIds": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "type": "object",
+            "required": [
+                "allowedBandwidth",
+                "appId",
+                "backups",
+                "backupsSchedule",
+                "dateCreated",
+                "disk",
+                "features",
+                "firewallGroupId",
+                "gatewayV4",
+                "hostname",
+                "id",
+                "imageId",
+                "internalIp",
+                "kvm",
+                "label",
+                "location",
+                "mainIp",
+                "netmaskV4",
+                "os",
+                "osId",
+                "plan",
+                "powerStatus",
+                "privateNetworkIds",
+                "ram",
+                "region",
+                "serverStatus",
+                "status",
+                "tags",
+                "v6MainIp",
+                "v6Network",
+                "v6NetworkSize",
+                "vcpuCount",
+                "vpcIds"
+            ],
+            "language": {
+                "nodejs": {
+                    "requiredInputs": []
+                }
+            }
+        },
         "vultr:index/getIsoPrivateFilter:getIsoPrivateFilter": {
             "properties": {
                 "name": {
@@ -1492,6 +1732,9 @@
                     "type": "integer",
                     "description": "The ID of the operating system to be installed on the server. [See List OS](https://www.vultr.com/api/#operation/list-os)\n"
                 },
+                "persistentPxe": {
+                    "type": "boolean"
+                },
                 "plan": {
                     "type": "string",
                     "description": "The ID of the plan that you want the server to subscribe to. [See List Plans](https://www.vultr.com/api/#tag/plans)\n"
@@ -1612,6 +1855,9 @@
                 "osId": {
                     "type": "integer",
                     "description": "The ID of the operating system to be installed on the server. [See List OS](https://www.vultr.com/api/#operation/list-os)\n"
+                },
+                "persistentPxe": {
+                    "type": "boolean"
                 },
                 "plan": {
                     "type": "string",
@@ -1739,6 +1985,9 @@
                     "osId": {
                         "type": "integer",
                         "description": "The ID of the operating system to be installed on the server. [See List OS](https://www.vultr.com/api/#operation/list-os)\n"
+                    },
+                    "persistentPxe": {
+                        "type": "boolean"
                     },
                     "plan": {
                         "type": "string",
@@ -2110,6 +2359,7 @@
                 "port",
                 "publicHost",
                 "readReplicas",
+                "redisEvictionPolicy",
                 "region",
                 "status",
                 "user"
@@ -2899,6 +3149,9 @@
         "vultr:index/databaseUser:DatabaseUser": {
             "description": "Provides a Vultr database user resource. This can be used to create, read, modify, and delete users for a managed database on your Vultr account.\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\nCreate a new database user:\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@ediri/vultr\";\n\nconst myDatabaseUser = new vultr.DatabaseUser(\"myDatabaseUser\", {\n    databaseId: vultr_database.my_database.id,\n    username: \"my_database_user\",\n    password: \"randomTestPW40298\",\n});\n```\n```python\nimport pulumi\nimport ediri_vultr as vultr\n\nmy_database_user = vultr.DatabaseUser(\"myDatabaseUser\",\n    database_id=vultr_database[\"my_database\"][\"id\"],\n    username=\"my_database_user\",\n    password=\"randomTestPW40298\")\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vultr = ediri.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var myDatabaseUser = new Vultr.DatabaseUser(\"myDatabaseUser\", new()\n    {\n        DatabaseId = vultr_database.My_database.Id,\n        Username = \"my_database_user\",\n        Password = \"randomTestPW40298\",\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.NewDatabaseUser(ctx, \"myDatabaseUser\", \u0026vultr.DatabaseUserArgs{\n\t\t\tDatabaseId: pulumi.Any(vultr_database.My_database.Id),\n\t\t\tUsername:   pulumi.String(\"my_database_user\"),\n\t\t\tPassword:   pulumi.String(\"randomTestPW40298\"),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.DatabaseUser;\nimport com.pulumi.vultr.DatabaseUserArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var myDatabaseUser = new DatabaseUser(\"myDatabaseUser\", DatabaseUserArgs.builder()        \n            .databaseId(vultr_database.my_database().id())\n            .username(\"my_database_user\")\n            .password(\"randomTestPW40298\")\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  myDatabaseUser:\n    type: vultr:DatabaseUser\n    properties:\n      databaseId: ${vultr_database.my_database.id}\n      username: my_database_user\n      password: randomTestPW40298\n```\n{{% /example %}}\n{{% /examples %}}",
             "properties": {
+                "accessControl": {
+                    "$ref": "#/types/vultr:index/DatabaseUserAccessControl:DatabaseUserAccessControl"
+                },
                 "databaseId": {
                     "type": "string",
                     "description": "The managed database ID you want to attach this user to.\n"
@@ -2917,12 +3170,16 @@
                 }
             },
             "required": [
+                "accessControl",
                 "databaseId",
                 "encryption",
                 "password",
                 "username"
             ],
             "inputProperties": {
+                "accessControl": {
+                    "$ref": "#/types/vultr:index/DatabaseUserAccessControl:DatabaseUserAccessControl"
+                },
                 "databaseId": {
                     "type": "string",
                     "description": "The managed database ID you want to attach this user to.\n",
@@ -2948,6 +3205,9 @@
             "stateInputs": {
                 "description": "Input properties used for looking up and filtering DatabaseUser resources.\n",
                 "properties": {
+                    "accessControl": {
+                        "$ref": "#/types/vultr:index/DatabaseUserAccessControl:DatabaseUserAccessControl"
+                    },
                     "databaseId": {
                         "type": "string",
                         "description": "The managed database ID you want to attach this user to.\n",
@@ -4084,9 +4344,17 @@
                     "type": "string",
                     "description": "Date node was created.\n"
                 },
+                "enableFirewall": {
+                    "type": "boolean",
+                    "description": "Boolean indicating if the cluster should be created with a managed firewall.\n"
+                },
                 "endpoint": {
                     "type": "string",
                     "description": "Domain for your Kubernetes clusters control plane.\n"
+                },
+                "firewallGroupId": {
+                    "type": "string",
+                    "description": "The ID of the firewall group managed by this cluster.\n"
                 },
                 "haControlplanes": {
                     "type": "boolean",
@@ -4133,6 +4401,7 @@
                 "clusterSubnet",
                 "dateCreated",
                 "endpoint",
+                "firewallGroupId",
                 "ip",
                 "kubeConfig",
                 "label",
@@ -4142,6 +4411,11 @@
                 "version"
             ],
             "inputProperties": {
+                "enableFirewall": {
+                    "type": "boolean",
+                    "description": "Boolean indicating if the cluster should be created with a managed firewall.\n",
+                    "willReplaceOnChanges": true
+                },
                 "haControlplanes": {
                     "type": "boolean",
                     "description": "Boolean indicating if the cluster should be created with multiple, highly available controlplanes.\n",
@@ -4196,9 +4470,18 @@
                         "type": "string",
                         "description": "Date node was created.\n"
                     },
+                    "enableFirewall": {
+                        "type": "boolean",
+                        "description": "Boolean indicating if the cluster should be created with a managed firewall.\n",
+                        "willReplaceOnChanges": true
+                    },
                     "endpoint": {
                         "type": "string",
                         "description": "Domain for your Kubernetes clusters control plane.\n"
+                    },
+                    "firewallGroupId": {
+                        "type": "string",
+                        "description": "The ID of the firewall group managed by this cluster.\n"
                     },
                     "haControlplanes": {
                         "type": "boolean",
@@ -6760,6 +7043,50 @@
                 ]
             }
         },
+        "vultr:index/getInstances:getInstances": {
+            "description": "List information for Vultr instances.\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\nGet the information for all instances by `status`:\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@pulumi/vultr\";\n\nconst activeInstances = vultr.getInstances({\n    filters: [{\n        name: \"status\",\n        values: [\"active\"],\n    }],\n});\nexport const instances = activeInstances.then(activeInstances =\u003e activeInstances.instances.map(__item =\u003e __item.label));\n```\n```python\nimport pulumi\nimport pulumi_vultr as vultr\n\nactive_instances = vultr.get_instances(filters=[vultr.GetInstancesFilterArgs(\n    name=\"status\",\n    values=[\"active\"],\n)])\npulumi.export(\"instances\", [__item.label for __item in active_instances.instances])\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vultr = Pulumi.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var activeInstances = Vultr.GetInstances.Invoke(new()\n    {\n        Filters = new[]\n        {\n            new Vultr.Inputs.GetInstancesFilterInputArgs\n            {\n                Name = \"status\",\n                Values = new[]\n                {\n                    \"active\",\n                },\n            },\n        },\n    });\n\n    return new Dictionary\u003cstring, object?\u003e\n    {\n        [\"instances\"] = activeInstances.Apply(getInstancesResult =\u003e getInstancesResult.Instances).Select(__item =\u003e __item.Label).ToList(),\n    };\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\tactiveInstances, err := vultr.GetInstances(ctx, \u0026vultr.GetInstancesArgs{\n\t\t\tFilters: []vultr.GetInstancesFilter{\n\t\t\t\t{\n\t\t\t\t\tName: \"status\",\n\t\t\t\t\tValues: []string{\n\t\t\t\t\t\t\"active\",\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t},\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tvar splat0 []*string\n\t\tfor _, val0 := range activeInstances.Instances {\n\t\t\tsplat0 = append(splat0, val0.Label)\n\t\t}\n\t\tctx.Export(\"instances\", splat0)\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.VultrFunctions;\nimport com.pulumi.vultr.inputs.GetInstancesArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var activeInstances = VultrFunctions.getInstances(GetInstancesArgs.builder()\n            .filters(GetInstancesFilterArgs.builder()\n                .name(\"status\")\n                .values(\"active\")\n                .build())\n            .build());\n\n        ctx.export(\"instances\", activeInstances.applyValue(getInstancesResult -\u003e getInstancesResult.instances()).stream().map(element -\u003e element.label()).collect(toList()));\n    }\n}\n```\n{{% /example %}}\n{{% /examples %}}",
+            "inputs": {
+                "description": "A collection of arguments for invoking getInstances.\n",
+                "properties": {
+                    "filters": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/vultr:index/getInstancesFilter:getInstancesFilter"
+                        },
+                        "description": "Query parameters for finding instances.\n",
+                        "willReplaceOnChanges": true
+                    }
+                },
+                "type": "object"
+            },
+            "outputs": {
+                "description": "A collection of values returned by getInstances.\n",
+                "properties": {
+                    "filters": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/vultr:index/getInstancesFilter:getInstancesFilter"
+                        }
+                    },
+                    "id": {
+                        "type": "string",
+                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                    },
+                    "instances": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/vultr:index/getInstancesInstance:getInstancesInstance"
+                        },
+                        "description": "The list of instances which individually include the following:\n"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "instances",
+                    "id"
+                ]
+            }
+        },
         "vultr:index/getIsoPrivate:getIsoPrivate": {
             "description": "Get information about an ISO file uploaded to your Vultr account.\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\nGet the information for a ISO file by `filename`:\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@pulumi/vultr\";\n\nconst myIso = vultr.getIsoPrivate({\n    filters: [{\n        name: \"filename\",\n        values: [\"my-iso-filename\"],\n    }],\n});\n```\n```python\nimport pulumi\nimport pulumi_vultr as vultr\n\nmy_iso = vultr.get_iso_private(filters=[vultr.GetIsoPrivateFilterArgs(\n    name=\"filename\",\n    values=[\"my-iso-filename\"],\n)])\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vultr = Pulumi.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var myIso = Vultr.GetIsoPrivate.Invoke(new()\n    {\n        Filters = new[]\n        {\n            new Vultr.Inputs.GetIsoPrivateFilterInputArgs\n            {\n                Name = \"filename\",\n                Values = new[]\n                {\n                    \"my-iso-filename\",\n                },\n            },\n        },\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.LookupIsoPrivate(ctx, \u0026vultr.LookupIsoPrivateArgs{\n\t\t\tFilters: []vultr.GetIsoPrivateFilter{\n\t\t\t\t{\n\t\t\t\t\tName: \"filename\",\n\t\t\t\t\tValues: []string{\n\t\t\t\t\t\t\"my-iso-filename\",\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t},\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.VultrFunctions;\nimport com.pulumi.vultr.inputs.GetIsoPrivateArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var myIso = VultrFunctions.getIsoPrivate(GetIsoPrivateArgs.builder()\n            .filters(GetIsoPrivateFilterArgs.builder()\n                .name(\"filename\")\n                .values(\"my-iso-filename\")\n                .build())\n            .build());\n\n    }\n}\n```\n```yaml\nvariables:\n  myIso:\n    fn::invoke:\n      Function: vultr:getIsoPrivate\n      Arguments:\n        filters:\n          - name: filename\n            values:\n              - my-iso-filename\n```\n{{% /example %}}\n{{% /examples %}}",
             "inputs": {
@@ -6926,6 +7253,10 @@
                             "$ref": "#/types/vultr:index/getKubernetesFilter:getKubernetesFilter"
                         }
                     },
+                    "firewallGroupId": {
+                        "type": "string",
+                        "description": "The ID of the firewall group managed by this cluster.\n"
+                    },
                     "haControlplanes": {
                         "type": "boolean",
                         "description": "Boolean indicating whether or not the cluster has multiple, highly available controlplanes.\n"
@@ -6978,6 +7309,7 @@
                     "clusterSubnet",
                     "dateCreated",
                     "endpoint",
+                    "firewallGroupId",
                     "haControlplanes",
                     "id",
                     "ip",
@@ -7801,7 +8133,7 @@
                     },
                     "id": {
                         "type": "string",
-                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                        "description": "The ID of the SSH key.\n"
                     },
                     "name": {
                         "type": "string",
@@ -7815,9 +8147,9 @@
                 "type": "object",
                 "required": [
                     "dateCreated",
+                    "id",
                     "name",
-                    "sshKey",
-                    "id"
+                    "sshKey"
                 ]
             }
         },

@@ -57,7 +57,7 @@ class GetSshKeyResult:
     @pulumi.getter
     def id(self) -> str:
         """
-        The provider-assigned unique ID for this managed resource.
+        The ID of the SSH key.
         """
         return pulumi.get(self, "id")
 

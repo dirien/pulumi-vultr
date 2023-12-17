@@ -74,6 +74,10 @@ export interface GetKubernetesResult {
     readonly endpoint: string;
     readonly filters?: outputs.GetKubernetesFilter[];
     /**
+     * The ID of the firewall group managed by this cluster.
+     */
+    readonly firewallGroupId: string;
+    /**
      * Boolean indicating whether or not the cluster has multiple, highly available controlplanes.
      */
     readonly haControlplanes: boolean;

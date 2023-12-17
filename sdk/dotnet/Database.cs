@@ -222,7 +222,7 @@ namespace ediri.Vultr
         /// The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
         /// </summary>
         [Output("redisEvictionPolicy")]
-        public Output<string?> RedisEvictionPolicy { get; private set; } = null!;
+        public Output<string> RedisEvictionPolicy { get; private set; } = null!;
 
         /// <summary>
         /// The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)

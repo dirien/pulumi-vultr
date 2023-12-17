@@ -183,8 +183,9 @@ func Provider() tfbridge.ProviderInfo {
 			"vultr_startup_script":         {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getStartupScript")},
 			"vultr_user":                   {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getUser")},
 			"vultr_vpc":                    {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getVpc")},
-			"vultr_vpc2":                    {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getVpc2")},
+			"vultr_vpc2":                   {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getVpc2")},
 			"vultr_database":               {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getDatabase")},
+			"vultr_instances":				{Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getInstances")},
 		},
 		JavaScript: &tfbridge.JavaScriptInfo{
 			PackageName: "@ediri/vultr",
@@ -222,9 +223,6 @@ func Provider() tfbridge.ProviderInfo {
 			PackageReferences: map[string]string{
 				"Pulumi": "3.*",
 			},
-		},
-		Java: &tfbridge.JavaInfo{
-			BasePackage: "io.dirien",
 		},
 	}
 
