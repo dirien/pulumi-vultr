@@ -19,6 +19,7 @@ class KubernetesArgs:
                  label: pulumi.Input[str],
                  region: pulumi.Input[str],
                  version: pulumi.Input[str],
+                 enable_firewall: Optional[pulumi.Input[bool]] = None,
                  ha_controlplanes: Optional[pulumi.Input[bool]] = None,
                  node_pools: Optional[pulumi.Input['KubernetesNodePoolsArgs']] = None):
         """
@@ -26,12 +27,15 @@ class KubernetesArgs:
         :param pulumi.Input[str] label: The VKE clusters label.
         :param pulumi.Input[str] region: The region your VKE cluster will be deployed in.
         :param pulumi.Input[str] version: The version your VKE cluster you want deployed. [See Available Version](https://www.vultr.com/api/#operation/get-kubernetes-versions)
+        :param pulumi.Input[bool] enable_firewall: Boolean indicating if the cluster should be created with a managed firewall.
         :param pulumi.Input[bool] ha_controlplanes: Boolean indicating if the cluster should be created with multiple, highly available controlplanes.
         :param pulumi.Input['KubernetesNodePoolsArgs'] node_pools: Contains the default node pool that was deployed.
         """
         pulumi.set(__self__, "label", label)
         pulumi.set(__self__, "region", region)
         pulumi.set(__self__, "version", version)
+        if enable_firewall is not None:
+            pulumi.set(__self__, "enable_firewall", enable_firewall)
         if ha_controlplanes is not None:
             pulumi.set(__self__, "ha_controlplanes", ha_controlplanes)
         if node_pools is not None:
@@ -74,6 +78,18 @@ class KubernetesArgs:
         pulumi.set(self, "version", value)
 
     @property
+    @pulumi.getter(name="enableFirewall")
+    def enable_firewall(self) -> Optional[pulumi.Input[bool]]:
+        """
+        Boolean indicating if the cluster should be created with a managed firewall.
+        """
+        return pulumi.get(self, "enable_firewall")
+
+    @enable_firewall.setter
+    def enable_firewall(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "enable_firewall", value)
+
+    @property
     @pulumi.getter(name="haControlplanes")
     def ha_controlplanes(self) -> Optional[pulumi.Input[bool]]:
         """
@@ -106,7 +122,9 @@ class _KubernetesState:
                  cluster_ca_certificate: Optional[pulumi.Input[str]] = None,
                  cluster_subnet: Optional[pulumi.Input[str]] = None,
                  date_created: Optional[pulumi.Input[str]] = None,
+                 enable_firewall: Optional[pulumi.Input[bool]] = None,
                  endpoint: Optional[pulumi.Input[str]] = None,
+                 firewall_group_id: Optional[pulumi.Input[str]] = None,
                  ha_controlplanes: Optional[pulumi.Input[bool]] = None,
                  ip: Optional[pulumi.Input[str]] = None,
                  kube_config: Optional[pulumi.Input[str]] = None,
@@ -123,7 +141,9 @@ class _KubernetesState:
         :param pulumi.Input[str] cluster_ca_certificate: The base64 encoded public certificate for the cluster's certificate authority.
         :param pulumi.Input[str] cluster_subnet: IP range that your pods will run on in this cluster.
         :param pulumi.Input[str] date_created: Date node was created.
+        :param pulumi.Input[bool] enable_firewall: Boolean indicating if the cluster should be created with a managed firewall.
         :param pulumi.Input[str] endpoint: Domain for your Kubernetes clusters control plane.
+        :param pulumi.Input[str] firewall_group_id: The ID of the firewall group managed by this cluster.
         :param pulumi.Input[bool] ha_controlplanes: Boolean indicating if the cluster should be created with multiple, highly available controlplanes.
         :param pulumi.Input[str] ip: IP address of VKE cluster control plane.
         :param pulumi.Input[str] kube_config: Base64 encoded Kubeconfig for this VKE cluster.
@@ -144,8 +164,12 @@ class _KubernetesState:
             pulumi.set(__self__, "cluster_subnet", cluster_subnet)
         if date_created is not None:
             pulumi.set(__self__, "date_created", date_created)
+        if enable_firewall is not None:
+            pulumi.set(__self__, "enable_firewall", enable_firewall)
         if endpoint is not None:
             pulumi.set(__self__, "endpoint", endpoint)
+        if firewall_group_id is not None:
+            pulumi.set(__self__, "firewall_group_id", firewall_group_id)
         if ha_controlplanes is not None:
             pulumi.set(__self__, "ha_controlplanes", ha_controlplanes)
         if ip is not None:
@@ -226,6 +250,18 @@ class _KubernetesState:
         pulumi.set(self, "date_created", value)
 
     @property
+    @pulumi.getter(name="enableFirewall")
+    def enable_firewall(self) -> Optional[pulumi.Input[bool]]:
+        """
+        Boolean indicating if the cluster should be created with a managed firewall.
+        """
+        return pulumi.get(self, "enable_firewall")
+
+    @enable_firewall.setter
+    def enable_firewall(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "enable_firewall", value)
+
+    @property
     @pulumi.getter
     def endpoint(self) -> Optional[pulumi.Input[str]]:
         """
@@ -236,6 +272,18 @@ class _KubernetesState:
     @endpoint.setter
     def endpoint(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "endpoint", value)
+
+    @property
+    @pulumi.getter(name="firewallGroupId")
+    def firewall_group_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        The ID of the firewall group managed by this cluster.
+        """
+        return pulumi.get(self, "firewall_group_id")
+
+    @firewall_group_id.setter
+    def firewall_group_id(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "firewall_group_id", value)
 
     @property
     @pulumi.getter(name="haControlplanes")
@@ -351,6 +399,7 @@ class Kubernetes(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
+                 enable_firewall: Optional[pulumi.Input[bool]] = None,
                  ha_controlplanes: Optional[pulumi.Input[bool]] = None,
                  label: Optional[pulumi.Input[str]] = None,
                  node_pools: Optional[pulumi.Input[pulumi.InputType['KubernetesNodePoolsArgs']]] = None,
@@ -406,6 +455,7 @@ class Kubernetes(pulumi.CustomResource):
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[bool] enable_firewall: Boolean indicating if the cluster should be created with a managed firewall.
         :param pulumi.Input[bool] ha_controlplanes: Boolean indicating if the cluster should be created with multiple, highly available controlplanes.
         :param pulumi.Input[str] label: The VKE clusters label.
         :param pulumi.Input[pulumi.InputType['KubernetesNodePoolsArgs']] node_pools: Contains the default node pool that was deployed.
@@ -480,6 +530,7 @@ class Kubernetes(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
+                 enable_firewall: Optional[pulumi.Input[bool]] = None,
                  ha_controlplanes: Optional[pulumi.Input[bool]] = None,
                  label: Optional[pulumi.Input[str]] = None,
                  node_pools: Optional[pulumi.Input[pulumi.InputType['KubernetesNodePoolsArgs']]] = None,
@@ -494,6 +545,7 @@ class Kubernetes(pulumi.CustomResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = KubernetesArgs.__new__(KubernetesArgs)
 
+            __props__.__dict__["enable_firewall"] = enable_firewall
             __props__.__dict__["ha_controlplanes"] = ha_controlplanes
             if label is None and not opts.urn:
                 raise TypeError("Missing required property 'label'")
@@ -511,6 +563,7 @@ class Kubernetes(pulumi.CustomResource):
             __props__.__dict__["cluster_subnet"] = None
             __props__.__dict__["date_created"] = None
             __props__.__dict__["endpoint"] = None
+            __props__.__dict__["firewall_group_id"] = None
             __props__.__dict__["ip"] = None
             __props__.__dict__["kube_config"] = None
             __props__.__dict__["service_subnet"] = None
@@ -532,7 +585,9 @@ class Kubernetes(pulumi.CustomResource):
             cluster_ca_certificate: Optional[pulumi.Input[str]] = None,
             cluster_subnet: Optional[pulumi.Input[str]] = None,
             date_created: Optional[pulumi.Input[str]] = None,
+            enable_firewall: Optional[pulumi.Input[bool]] = None,
             endpoint: Optional[pulumi.Input[str]] = None,
+            firewall_group_id: Optional[pulumi.Input[str]] = None,
             ha_controlplanes: Optional[pulumi.Input[bool]] = None,
             ip: Optional[pulumi.Input[str]] = None,
             kube_config: Optional[pulumi.Input[str]] = None,
@@ -554,7 +609,9 @@ class Kubernetes(pulumi.CustomResource):
         :param pulumi.Input[str] cluster_ca_certificate: The base64 encoded public certificate for the cluster's certificate authority.
         :param pulumi.Input[str] cluster_subnet: IP range that your pods will run on in this cluster.
         :param pulumi.Input[str] date_created: Date node was created.
+        :param pulumi.Input[bool] enable_firewall: Boolean indicating if the cluster should be created with a managed firewall.
         :param pulumi.Input[str] endpoint: Domain for your Kubernetes clusters control plane.
+        :param pulumi.Input[str] firewall_group_id: The ID of the firewall group managed by this cluster.
         :param pulumi.Input[bool] ha_controlplanes: Boolean indicating if the cluster should be created with multiple, highly available controlplanes.
         :param pulumi.Input[str] ip: IP address of VKE cluster control plane.
         :param pulumi.Input[str] kube_config: Base64 encoded Kubeconfig for this VKE cluster.
@@ -574,7 +631,9 @@ class Kubernetes(pulumi.CustomResource):
         __props__.__dict__["cluster_ca_certificate"] = cluster_ca_certificate
         __props__.__dict__["cluster_subnet"] = cluster_subnet
         __props__.__dict__["date_created"] = date_created
+        __props__.__dict__["enable_firewall"] = enable_firewall
         __props__.__dict__["endpoint"] = endpoint
+        __props__.__dict__["firewall_group_id"] = firewall_group_id
         __props__.__dict__["ha_controlplanes"] = ha_controlplanes
         __props__.__dict__["ip"] = ip
         __props__.__dict__["kube_config"] = kube_config
@@ -627,12 +686,28 @@ class Kubernetes(pulumi.CustomResource):
         return pulumi.get(self, "date_created")
 
     @property
+    @pulumi.getter(name="enableFirewall")
+    def enable_firewall(self) -> pulumi.Output[Optional[bool]]:
+        """
+        Boolean indicating if the cluster should be created with a managed firewall.
+        """
+        return pulumi.get(self, "enable_firewall")
+
+    @property
     @pulumi.getter
     def endpoint(self) -> pulumi.Output[str]:
         """
         Domain for your Kubernetes clusters control plane.
         """
         return pulumi.get(self, "endpoint")
+
+    @property
+    @pulumi.getter(name="firewallGroupId")
+    def firewall_group_id(self) -> pulumi.Output[str]:
+        """
+        The ID of the firewall group managed by this cluster.
+        """
+        return pulumi.get(self, "firewall_group_id")
 
     @property
     @pulumi.getter(name="haControlplanes")

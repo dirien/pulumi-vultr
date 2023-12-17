@@ -27,6 +27,7 @@ from .get_dns_domain import *
 from .get_firewall_group import *
 from .get_instance import *
 from .get_instance_ipv4 import *
+from .get_instances import *
 from .get_iso_private import *
 from .get_iso_public import *
 from .get_kubernetes import *

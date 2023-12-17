@@ -78,6 +78,8 @@ type LookupKubernetesResult struct {
 	// Domain for your Kubernetes clusters control plane.
 	Endpoint string                `pulumi:"endpoint"`
 	Filters  []GetKubernetesFilter `pulumi:"filters"`
+	// The ID of the firewall group managed by this cluster.
+	FirewallGroupId string `pulumi:"firewallGroupId"`
 	// Boolean indicating whether or not the cluster has multiple, highly available controlplanes.
 	HaControlplanes bool `pulumi:"haControlplanes"`
 	// ID of node.
@@ -170,6 +172,11 @@ func (o LookupKubernetesResultOutput) Endpoint() pulumi.StringOutput {
 
 func (o LookupKubernetesResultOutput) Filters() GetKubernetesFilterArrayOutput {
 	return o.ApplyT(func(v LookupKubernetesResult) []GetKubernetesFilter { return v.Filters }).(GetKubernetesFilterArrayOutput)
+}
+
+// The ID of the firewall group managed by this cluster.
+func (o LookupKubernetesResultOutput) FirewallGroupId() pulumi.StringOutput {
+	return o.ApplyT(func(v LookupKubernetesResult) string { return v.FirewallGroupId }).(pulumi.StringOutput)
 }
 
 // Boolean indicating whether or not the cluster has multiple, highly available controlplanes.

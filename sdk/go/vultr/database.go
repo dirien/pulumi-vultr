@@ -141,7 +141,7 @@ type Database struct {
 	// A list of read replicas attached to the managed database.
 	ReadReplicas DatabaseReadReplicaArrayOutput `pulumi:"readReplicas"`
 	// The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
-	RedisEvictionPolicy pulumi.StringPtrOutput `pulumi:"redisEvictionPolicy"`
+	RedisEvictionPolicy pulumi.StringOutput `pulumi:"redisEvictionPolicy"`
 	// The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
 	Region pulumi.StringOutput `pulumi:"region"`
 	// The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).
@@ -633,8 +633,8 @@ func (o DatabaseOutput) ReadReplicas() DatabaseReadReplicaArrayOutput {
 }
 
 // The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
-func (o DatabaseOutput) RedisEvictionPolicy() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Database) pulumi.StringPtrOutput { return v.RedisEvictionPolicy }).(pulumi.StringPtrOutput)
+func (o DatabaseOutput) RedisEvictionPolicy() pulumi.StringOutput {
+	return o.ApplyT(func(v *Database) pulumi.StringOutput { return v.RedisEvictionPolicy }).(pulumi.StringOutput)
 }
 
 // The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)

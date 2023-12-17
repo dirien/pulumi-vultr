@@ -68,7 +68,7 @@ type GetSshKeyResult struct {
 	// The date the SSH key was added to your Vultr account.
 	DateCreated string            `pulumi:"dateCreated"`
 	Filters     []GetSshKeyFilter `pulumi:"filters"`
-	// The provider-assigned unique ID for this managed resource.
+	// The ID of the SSH key.
 	Id string `pulumi:"id"`
 	// The name of the SSH key.
 	Name string `pulumi:"name"`
@@ -123,7 +123,7 @@ func (o GetSshKeyResultOutput) Filters() GetSshKeyFilterArrayOutput {
 	return o.ApplyT(func(v GetSshKeyResult) []GetSshKeyFilter { return v.Filters }).(GetSshKeyFilterArrayOutput)
 }
 
-// The provider-assigned unique ID for this managed resource.
+// The ID of the SSH key.
 func (o GetSshKeyResultOutput) Id() pulumi.StringOutput {
 	return o.ApplyT(func(v GetSshKeyResult) string { return v.Id }).(pulumi.StringOutput)
 }

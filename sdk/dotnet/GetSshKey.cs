@@ -144,7 +144,7 @@ namespace ediri.Vultr
         public readonly string DateCreated;
         public readonly ImmutableArray<Outputs.GetSshKeyFilterResult> Filters;
         /// <summary>
-        /// The provider-assigned unique ID for this managed resource.
+        /// The ID of the SSH key.
         /// </summary>
         public readonly string Id;
         /// <summary>

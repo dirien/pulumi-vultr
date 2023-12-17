@@ -123,7 +123,8 @@ type BareMetalServer struct {
 	// The string description of the operating system installed on the server.
 	Os pulumi.StringOutput `pulumi:"os"`
 	// The ID of the operating system to be installed on the server. [See List OS](https://www.vultr.com/api/#operation/list-os)
-	OsId pulumi.IntOutput `pulumi:"osId"`
+	OsId          pulumi.IntOutput     `pulumi:"osId"`
+	PersistentPxe pulumi.BoolPtrOutput `pulumi:"persistentPxe"`
 	// The ID of the plan that you want the server to subscribe to. [See List Plans](https://www.vultr.com/api/#tag/plans)
 	Plan pulumi.StringOutput `pulumi:"plan"`
 	// The amount of memory available on the server in MB.
@@ -225,7 +226,8 @@ type bareMetalServerState struct {
 	// The string description of the operating system installed on the server.
 	Os *string `pulumi:"os"`
 	// The ID of the operating system to be installed on the server. [See List OS](https://www.vultr.com/api/#operation/list-os)
-	OsId *int `pulumi:"osId"`
+	OsId          *int  `pulumi:"osId"`
+	PersistentPxe *bool `pulumi:"persistentPxe"`
 	// The ID of the plan that you want the server to subscribe to. [See List Plans](https://www.vultr.com/api/#tag/plans)
 	Plan *string `pulumi:"plan"`
 	// The amount of memory available on the server in MB.
@@ -288,7 +290,8 @@ type BareMetalServerState struct {
 	// The string description of the operating system installed on the server.
 	Os pulumi.StringPtrInput
 	// The ID of the operating system to be installed on the server. [See List OS](https://www.vultr.com/api/#operation/list-os)
-	OsId pulumi.IntPtrInput
+	OsId          pulumi.IntPtrInput
+	PersistentPxe pulumi.BoolPtrInput
 	// The ID of the plan that you want the server to subscribe to. [See List Plans](https://www.vultr.com/api/#tag/plans)
 	Plan pulumi.StringPtrInput
 	// The amount of memory available on the server in MB.
@@ -337,7 +340,8 @@ type bareMetalServerArgs struct {
 	// A label for the server.
 	Label *string `pulumi:"label"`
 	// The ID of the operating system to be installed on the server. [See List OS](https://www.vultr.com/api/#operation/list-os)
-	OsId *int `pulumi:"osId"`
+	OsId          *int  `pulumi:"osId"`
+	PersistentPxe *bool `pulumi:"persistentPxe"`
 	// The ID of the plan that you want the server to subscribe to. [See List Plans](https://www.vultr.com/api/#tag/plans)
 	Plan string `pulumi:"plan"`
 	// The ID of the region that the server is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
@@ -373,7 +377,8 @@ type BareMetalServerArgs struct {
 	// A label for the server.
 	Label pulumi.StringPtrInput
 	// The ID of the operating system to be installed on the server. [See List OS](https://www.vultr.com/api/#operation/list-os)
-	OsId pulumi.IntPtrInput
+	OsId          pulumi.IntPtrInput
+	PersistentPxe pulumi.BoolPtrInput
 	// The ID of the plan that you want the server to subscribe to. [See List Plans](https://www.vultr.com/api/#tag/plans)
 	Plan pulumi.StringInput
 	// The ID of the region that the server is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
@@ -559,6 +564,10 @@ func (o BareMetalServerOutput) Os() pulumi.StringOutput {
 // The ID of the operating system to be installed on the server. [See List OS](https://www.vultr.com/api/#operation/list-os)
 func (o BareMetalServerOutput) OsId() pulumi.IntOutput {
 	return o.ApplyT(func(v *BareMetalServer) pulumi.IntOutput { return v.OsId }).(pulumi.IntOutput)
+}
+
+func (o BareMetalServerOutput) PersistentPxe() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *BareMetalServer) pulumi.BoolPtrOutput { return v.PersistentPxe }).(pulumi.BoolPtrOutput)
 }
 
 // The ID of the plan that you want the server to subscribe to. [See List Plans](https://www.vultr.com/api/#tag/plans)

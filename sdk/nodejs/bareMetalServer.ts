@@ -141,6 +141,7 @@ export class BareMetalServer extends pulumi.CustomResource {
      * The ID of the operating system to be installed on the server. [See List OS](https://www.vultr.com/api/#operation/list-os)
      */
     public readonly osId!: pulumi.Output<number>;
+    public readonly persistentPxe!: pulumi.Output<boolean | undefined>;
     /**
      * The ID of the plan that you want the server to subscribe to. [See List Plans](https://www.vultr.com/api/#tag/plans)
      */
@@ -227,6 +228,7 @@ export class BareMetalServer extends pulumi.CustomResource {
             resourceInputs["netmaskV4"] = state ? state.netmaskV4 : undefined;
             resourceInputs["os"] = state ? state.os : undefined;
             resourceInputs["osId"] = state ? state.osId : undefined;
+            resourceInputs["persistentPxe"] = state ? state.persistentPxe : undefined;
             resourceInputs["plan"] = state ? state.plan : undefined;
             resourceInputs["ram"] = state ? state.ram : undefined;
             resourceInputs["region"] = state ? state.region : undefined;
@@ -256,6 +258,7 @@ export class BareMetalServer extends pulumi.CustomResource {
             resourceInputs["imageId"] = args ? args.imageId : undefined;
             resourceInputs["label"] = args ? args.label : undefined;
             resourceInputs["osId"] = args ? args.osId : undefined;
+            resourceInputs["persistentPxe"] = args ? args.persistentPxe : undefined;
             resourceInputs["plan"] = args ? args.plan : undefined;
             resourceInputs["region"] = args ? args.region : undefined;
             resourceInputs["reservedIpv4"] = args ? args.reservedIpv4 : undefined;
@@ -355,6 +358,7 @@ export interface BareMetalServerState {
      * The ID of the operating system to be installed on the server. [See List OS](https://www.vultr.com/api/#operation/list-os)
      */
     osId?: pulumi.Input<number>;
+    persistentPxe?: pulumi.Input<boolean>;
     /**
      * The ID of the plan that you want the server to subscribe to. [See List Plans](https://www.vultr.com/api/#tag/plans)
      */
@@ -445,6 +449,7 @@ export interface BareMetalServerArgs {
      * The ID of the operating system to be installed on the server. [See List OS](https://www.vultr.com/api/#operation/list-os)
      */
     osId?: pulumi.Input<number>;
+    persistentPxe?: pulumi.Input<boolean>;
     /**
      * The ID of the plan that you want the server to subscribe to. [See List Plans](https://www.vultr.com/api/#tag/plans)
      */

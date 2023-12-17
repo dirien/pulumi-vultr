@@ -2,6 +2,8 @@
 // *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 import * as pulumi from "@pulumi/pulumi";
+import * as inputs from "./types/input";
+import * as outputs from "./types/output";
 import * as utilities from "./utilities";
 
 /**
@@ -50,6 +52,7 @@ export class DatabaseUser extends pulumi.CustomResource {
         return obj['__pulumiType'] === DatabaseUser.__pulumiType;
     }
 
+    public readonly accessControl!: pulumi.Output<outputs.DatabaseUserAccessControl>;
     /**
      * The managed database ID you want to attach this user to.
      */
@@ -80,6 +83,7 @@ export class DatabaseUser extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as DatabaseUserState | undefined;
+            resourceInputs["accessControl"] = state ? state.accessControl : undefined;
             resourceInputs["databaseId"] = state ? state.databaseId : undefined;
             resourceInputs["encryption"] = state ? state.encryption : undefined;
             resourceInputs["password"] = state ? state.password : undefined;
@@ -92,6 +96,7 @@ export class DatabaseUser extends pulumi.CustomResource {
             if ((!args || args.username === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'username'");
             }
+            resourceInputs["accessControl"] = args ? args.accessControl : undefined;
             resourceInputs["databaseId"] = args ? args.databaseId : undefined;
             resourceInputs["encryption"] = args ? args.encryption : undefined;
             resourceInputs["password"] = args ? args.password : undefined;
@@ -106,6 +111,7 @@ export class DatabaseUser extends pulumi.CustomResource {
  * Input properties used for looking up and filtering DatabaseUser resources.
  */
 export interface DatabaseUserState {
+    accessControl?: pulumi.Input<inputs.DatabaseUserAccessControl>;
     /**
      * The managed database ID you want to attach this user to.
      */
@@ -128,6 +134,7 @@ export interface DatabaseUserState {
  * The set of arguments for constructing a DatabaseUser resource.
  */
 export interface DatabaseUserArgs {
+    accessControl?: pulumi.Input<inputs.DatabaseUserAccessControl>;
     /**
      * The managed database ID you want to attach this user to.
      */

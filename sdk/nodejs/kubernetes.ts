@@ -105,9 +105,17 @@ export class Kubernetes extends pulumi.CustomResource {
      */
     public /*out*/ readonly dateCreated!: pulumi.Output<string>;
     /**
+     * Boolean indicating if the cluster should be created with a managed firewall.
+     */
+    public readonly enableFirewall!: pulumi.Output<boolean | undefined>;
+    /**
      * Domain for your Kubernetes clusters control plane.
      */
     public /*out*/ readonly endpoint!: pulumi.Output<string>;
+    /**
+     * The ID of the firewall group managed by this cluster.
+     */
+    public /*out*/ readonly firewallGroupId!: pulumi.Output<string>;
     /**
      * Boolean indicating if the cluster should be created with multiple, highly available controlplanes.
      */
@@ -163,7 +171,9 @@ export class Kubernetes extends pulumi.CustomResource {
             resourceInputs["clusterCaCertificate"] = state ? state.clusterCaCertificate : undefined;
             resourceInputs["clusterSubnet"] = state ? state.clusterSubnet : undefined;
             resourceInputs["dateCreated"] = state ? state.dateCreated : undefined;
+            resourceInputs["enableFirewall"] = state ? state.enableFirewall : undefined;
             resourceInputs["endpoint"] = state ? state.endpoint : undefined;
+            resourceInputs["firewallGroupId"] = state ? state.firewallGroupId : undefined;
             resourceInputs["haControlplanes"] = state ? state.haControlplanes : undefined;
             resourceInputs["ip"] = state ? state.ip : undefined;
             resourceInputs["kubeConfig"] = state ? state.kubeConfig : undefined;
@@ -184,6 +194,7 @@ export class Kubernetes extends pulumi.CustomResource {
             if ((!args || args.version === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'version'");
             }
+            resourceInputs["enableFirewall"] = args ? args.enableFirewall : undefined;
             resourceInputs["haControlplanes"] = args ? args.haControlplanes : undefined;
             resourceInputs["label"] = args ? args.label : undefined;
             resourceInputs["nodePools"] = args ? args.nodePools : undefined;
@@ -195,6 +206,7 @@ export class Kubernetes extends pulumi.CustomResource {
             resourceInputs["clusterSubnet"] = undefined /*out*/;
             resourceInputs["dateCreated"] = undefined /*out*/;
             resourceInputs["endpoint"] = undefined /*out*/;
+            resourceInputs["firewallGroupId"] = undefined /*out*/;
             resourceInputs["ip"] = undefined /*out*/;
             resourceInputs["kubeConfig"] = undefined /*out*/;
             resourceInputs["serviceSubnet"] = undefined /*out*/;
@@ -232,9 +244,17 @@ export interface KubernetesState {
      */
     dateCreated?: pulumi.Input<string>;
     /**
+     * Boolean indicating if the cluster should be created with a managed firewall.
+     */
+    enableFirewall?: pulumi.Input<boolean>;
+    /**
      * Domain for your Kubernetes clusters control plane.
      */
     endpoint?: pulumi.Input<string>;
+    /**
+     * The ID of the firewall group managed by this cluster.
+     */
+    firewallGroupId?: pulumi.Input<string>;
     /**
      * Boolean indicating if the cluster should be created with multiple, highly available controlplanes.
      */
@@ -277,6 +297,10 @@ export interface KubernetesState {
  * The set of arguments for constructing a Kubernetes resource.
  */
 export interface KubernetesArgs {
+    /**
+     * Boolean indicating if the cluster should be created with a managed firewall.
+     */
+    enableFirewall?: pulumi.Input<boolean>;
     /**
      * Boolean indicating if the cluster should be created with multiple, highly available controlplanes.
      */

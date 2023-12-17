@@ -132,6 +132,25 @@ export interface DatabaseReadReplica {
     vpcId?: pulumi.Input<string>;
 }
 
+export interface DatabaseUserAccessControl {
+    /**
+     * The list of command category rules for this managed database user.
+     */
+    redisAclCategories: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * The list of publish/subscribe channel patterns for this managed database user.
+     */
+    redisAclChannels: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * The list of individual command rules for this managed database user.
+     */
+    redisAclCommands: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * The list of access rules for this managed database user.
+     */
+    redisAclKeys: pulumi.Input<pulumi.Input<string>[]>;
+}
+
 export interface GetApplicationFilter {
     /**
      * Attribute name to filter with.
@@ -326,6 +345,28 @@ export interface GetInstanceIpv4FilterArgs {
     name: pulumi.Input<string>;
     /**
      * One or more values to filter with.
+     */
+    values: pulumi.Input<pulumi.Input<string>[]>;
+}
+
+export interface GetInstancesFilter {
+    /**
+     * Attribute name to filter with.
+     */
+    name: string;
+    /**
+     * One or more values filter with.
+     */
+    values: string[];
+}
+
+export interface GetInstancesFilterArgs {
+    /**
+     * Attribute name to filter with.
+     */
+    name: pulumi.Input<string>;
+    /**
+     * One or more values filter with.
      */
     values: pulumi.Input<pulumi.Input<string>[]>;
 }

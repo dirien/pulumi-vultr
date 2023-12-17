@@ -380,6 +380,200 @@ func (o DatabaseReadReplicaArrayOutput) Index(i pulumi.IntInput) DatabaseReadRep
 	}).(DatabaseReadReplicaOutput)
 }
 
+type DatabaseUserAccessControl struct {
+	// The list of command category rules for this managed database user.
+	RedisAclCategories []string `pulumi:"redisAclCategories"`
+	// The list of publish/subscribe channel patterns for this managed database user.
+	RedisAclChannels []string `pulumi:"redisAclChannels"`
+	// The list of individual command rules for this managed database user.
+	RedisAclCommands []string `pulumi:"redisAclCommands"`
+	// The list of access rules for this managed database user.
+	RedisAclKeys []string `pulumi:"redisAclKeys"`
+}
+
+// DatabaseUserAccessControlInput is an input type that accepts DatabaseUserAccessControlArgs and DatabaseUserAccessControlOutput values.
+// You can construct a concrete instance of `DatabaseUserAccessControlInput` via:
+//
+//	DatabaseUserAccessControlArgs{...}
+type DatabaseUserAccessControlInput interface {
+	pulumi.Input
+
+	ToDatabaseUserAccessControlOutput() DatabaseUserAccessControlOutput
+	ToDatabaseUserAccessControlOutputWithContext(context.Context) DatabaseUserAccessControlOutput
+}
+
+type DatabaseUserAccessControlArgs struct {
+	// The list of command category rules for this managed database user.
+	RedisAclCategories pulumi.StringArrayInput `pulumi:"redisAclCategories"`
+	// The list of publish/subscribe channel patterns for this managed database user.
+	RedisAclChannels pulumi.StringArrayInput `pulumi:"redisAclChannels"`
+	// The list of individual command rules for this managed database user.
+	RedisAclCommands pulumi.StringArrayInput `pulumi:"redisAclCommands"`
+	// The list of access rules for this managed database user.
+	RedisAclKeys pulumi.StringArrayInput `pulumi:"redisAclKeys"`
+}
+
+func (DatabaseUserAccessControlArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*DatabaseUserAccessControl)(nil)).Elem()
+}
+
+func (i DatabaseUserAccessControlArgs) ToDatabaseUserAccessControlOutput() DatabaseUserAccessControlOutput {
+	return i.ToDatabaseUserAccessControlOutputWithContext(context.Background())
+}
+
+func (i DatabaseUserAccessControlArgs) ToDatabaseUserAccessControlOutputWithContext(ctx context.Context) DatabaseUserAccessControlOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(DatabaseUserAccessControlOutput)
+}
+
+func (i DatabaseUserAccessControlArgs) ToDatabaseUserAccessControlPtrOutput() DatabaseUserAccessControlPtrOutput {
+	return i.ToDatabaseUserAccessControlPtrOutputWithContext(context.Background())
+}
+
+func (i DatabaseUserAccessControlArgs) ToDatabaseUserAccessControlPtrOutputWithContext(ctx context.Context) DatabaseUserAccessControlPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(DatabaseUserAccessControlOutput).ToDatabaseUserAccessControlPtrOutputWithContext(ctx)
+}
+
+// DatabaseUserAccessControlPtrInput is an input type that accepts DatabaseUserAccessControlArgs, DatabaseUserAccessControlPtr and DatabaseUserAccessControlPtrOutput values.
+// You can construct a concrete instance of `DatabaseUserAccessControlPtrInput` via:
+//
+//	        DatabaseUserAccessControlArgs{...}
+//
+//	or:
+//
+//	        nil
+type DatabaseUserAccessControlPtrInput interface {
+	pulumi.Input
+
+	ToDatabaseUserAccessControlPtrOutput() DatabaseUserAccessControlPtrOutput
+	ToDatabaseUserAccessControlPtrOutputWithContext(context.Context) DatabaseUserAccessControlPtrOutput
+}
+
+type databaseUserAccessControlPtrType DatabaseUserAccessControlArgs
+
+func DatabaseUserAccessControlPtr(v *DatabaseUserAccessControlArgs) DatabaseUserAccessControlPtrInput {
+	return (*databaseUserAccessControlPtrType)(v)
+}
+
+func (*databaseUserAccessControlPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**DatabaseUserAccessControl)(nil)).Elem()
+}
+
+func (i *databaseUserAccessControlPtrType) ToDatabaseUserAccessControlPtrOutput() DatabaseUserAccessControlPtrOutput {
+	return i.ToDatabaseUserAccessControlPtrOutputWithContext(context.Background())
+}
+
+func (i *databaseUserAccessControlPtrType) ToDatabaseUserAccessControlPtrOutputWithContext(ctx context.Context) DatabaseUserAccessControlPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(DatabaseUserAccessControlPtrOutput)
+}
+
+type DatabaseUserAccessControlOutput struct{ *pulumi.OutputState }
+
+func (DatabaseUserAccessControlOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*DatabaseUserAccessControl)(nil)).Elem()
+}
+
+func (o DatabaseUserAccessControlOutput) ToDatabaseUserAccessControlOutput() DatabaseUserAccessControlOutput {
+	return o
+}
+
+func (o DatabaseUserAccessControlOutput) ToDatabaseUserAccessControlOutputWithContext(ctx context.Context) DatabaseUserAccessControlOutput {
+	return o
+}
+
+func (o DatabaseUserAccessControlOutput) ToDatabaseUserAccessControlPtrOutput() DatabaseUserAccessControlPtrOutput {
+	return o.ToDatabaseUserAccessControlPtrOutputWithContext(context.Background())
+}
+
+func (o DatabaseUserAccessControlOutput) ToDatabaseUserAccessControlPtrOutputWithContext(ctx context.Context) DatabaseUserAccessControlPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v DatabaseUserAccessControl) *DatabaseUserAccessControl {
+		return &v
+	}).(DatabaseUserAccessControlPtrOutput)
+}
+
+// The list of command category rules for this managed database user.
+func (o DatabaseUserAccessControlOutput) RedisAclCategories() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v DatabaseUserAccessControl) []string { return v.RedisAclCategories }).(pulumi.StringArrayOutput)
+}
+
+// The list of publish/subscribe channel patterns for this managed database user.
+func (o DatabaseUserAccessControlOutput) RedisAclChannels() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v DatabaseUserAccessControl) []string { return v.RedisAclChannels }).(pulumi.StringArrayOutput)
+}
+
+// The list of individual command rules for this managed database user.
+func (o DatabaseUserAccessControlOutput) RedisAclCommands() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v DatabaseUserAccessControl) []string { return v.RedisAclCommands }).(pulumi.StringArrayOutput)
+}
+
+// The list of access rules for this managed database user.
+func (o DatabaseUserAccessControlOutput) RedisAclKeys() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v DatabaseUserAccessControl) []string { return v.RedisAclKeys }).(pulumi.StringArrayOutput)
+}
+
+type DatabaseUserAccessControlPtrOutput struct{ *pulumi.OutputState }
+
+func (DatabaseUserAccessControlPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**DatabaseUserAccessControl)(nil)).Elem()
+}
+
+func (o DatabaseUserAccessControlPtrOutput) ToDatabaseUserAccessControlPtrOutput() DatabaseUserAccessControlPtrOutput {
+	return o
+}
+
+func (o DatabaseUserAccessControlPtrOutput) ToDatabaseUserAccessControlPtrOutputWithContext(ctx context.Context) DatabaseUserAccessControlPtrOutput {
+	return o
+}
+
+func (o DatabaseUserAccessControlPtrOutput) Elem() DatabaseUserAccessControlOutput {
+	return o.ApplyT(func(v *DatabaseUserAccessControl) DatabaseUserAccessControl {
+		if v != nil {
+			return *v
+		}
+		var ret DatabaseUserAccessControl
+		return ret
+	}).(DatabaseUserAccessControlOutput)
+}
+
+// The list of command category rules for this managed database user.
+func (o DatabaseUserAccessControlPtrOutput) RedisAclCategories() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *DatabaseUserAccessControl) []string {
+		if v == nil {
+			return nil
+		}
+		return v.RedisAclCategories
+	}).(pulumi.StringArrayOutput)
+}
+
+// The list of publish/subscribe channel patterns for this managed database user.
+func (o DatabaseUserAccessControlPtrOutput) RedisAclChannels() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *DatabaseUserAccessControl) []string {
+		if v == nil {
+			return nil
+		}
+		return v.RedisAclChannels
+	}).(pulumi.StringArrayOutput)
+}
+
+// The list of individual command rules for this managed database user.
+func (o DatabaseUserAccessControlPtrOutput) RedisAclCommands() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *DatabaseUserAccessControl) []string {
+		if v == nil {
+			return nil
+		}
+		return v.RedisAclCommands
+	}).(pulumi.StringArrayOutput)
+}
+
+// The list of access rules for this managed database user.
+func (o DatabaseUserAccessControlPtrOutput) RedisAclKeys() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *DatabaseUserAccessControl) []string {
+		if v == nil {
+			return nil
+		}
+		return v.RedisAclKeys
+	}).(pulumi.StringArrayOutput)
+}
+
 type InstanceBackupsSchedule struct {
 	// Day of month to run. Use values between 1 and 28.
 	Dom *int `pulumi:"dom"`
@@ -3042,6 +3236,482 @@ func (o GetInstanceIpv4FilterArrayOutput) Index(i pulumi.IntInput) GetInstanceIp
 	}).(GetInstanceIpv4FilterOutput)
 }
 
+type GetInstancesFilter struct {
+	// Attribute name to filter with.
+	Name string `pulumi:"name"`
+	// One or more values filter with.
+	Values []string `pulumi:"values"`
+}
+
+// GetInstancesFilterInput is an input type that accepts GetInstancesFilterArgs and GetInstancesFilterOutput values.
+// You can construct a concrete instance of `GetInstancesFilterInput` via:
+//
+//	GetInstancesFilterArgs{...}
+type GetInstancesFilterInput interface {
+	pulumi.Input
+
+	ToGetInstancesFilterOutput() GetInstancesFilterOutput
+	ToGetInstancesFilterOutputWithContext(context.Context) GetInstancesFilterOutput
+}
+
+type GetInstancesFilterArgs struct {
+	// Attribute name to filter with.
+	Name pulumi.StringInput `pulumi:"name"`
+	// One or more values filter with.
+	Values pulumi.StringArrayInput `pulumi:"values"`
+}
+
+func (GetInstancesFilterArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetInstancesFilter)(nil)).Elem()
+}
+
+func (i GetInstancesFilterArgs) ToGetInstancesFilterOutput() GetInstancesFilterOutput {
+	return i.ToGetInstancesFilterOutputWithContext(context.Background())
+}
+
+func (i GetInstancesFilterArgs) ToGetInstancesFilterOutputWithContext(ctx context.Context) GetInstancesFilterOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetInstancesFilterOutput)
+}
+
+// GetInstancesFilterArrayInput is an input type that accepts GetInstancesFilterArray and GetInstancesFilterArrayOutput values.
+// You can construct a concrete instance of `GetInstancesFilterArrayInput` via:
+//
+//	GetInstancesFilterArray{ GetInstancesFilterArgs{...} }
+type GetInstancesFilterArrayInput interface {
+	pulumi.Input
+
+	ToGetInstancesFilterArrayOutput() GetInstancesFilterArrayOutput
+	ToGetInstancesFilterArrayOutputWithContext(context.Context) GetInstancesFilterArrayOutput
+}
+
+type GetInstancesFilterArray []GetInstancesFilterInput
+
+func (GetInstancesFilterArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetInstancesFilter)(nil)).Elem()
+}
+
+func (i GetInstancesFilterArray) ToGetInstancesFilterArrayOutput() GetInstancesFilterArrayOutput {
+	return i.ToGetInstancesFilterArrayOutputWithContext(context.Background())
+}
+
+func (i GetInstancesFilterArray) ToGetInstancesFilterArrayOutputWithContext(ctx context.Context) GetInstancesFilterArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetInstancesFilterArrayOutput)
+}
+
+type GetInstancesFilterOutput struct{ *pulumi.OutputState }
+
+func (GetInstancesFilterOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetInstancesFilter)(nil)).Elem()
+}
+
+func (o GetInstancesFilterOutput) ToGetInstancesFilterOutput() GetInstancesFilterOutput {
+	return o
+}
+
+func (o GetInstancesFilterOutput) ToGetInstancesFilterOutputWithContext(ctx context.Context) GetInstancesFilterOutput {
+	return o
+}
+
+// Attribute name to filter with.
+func (o GetInstancesFilterOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v GetInstancesFilter) string { return v.Name }).(pulumi.StringOutput)
+}
+
+// One or more values filter with.
+func (o GetInstancesFilterOutput) Values() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetInstancesFilter) []string { return v.Values }).(pulumi.StringArrayOutput)
+}
+
+type GetInstancesFilterArrayOutput struct{ *pulumi.OutputState }
+
+func (GetInstancesFilterArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetInstancesFilter)(nil)).Elem()
+}
+
+func (o GetInstancesFilterArrayOutput) ToGetInstancesFilterArrayOutput() GetInstancesFilterArrayOutput {
+	return o
+}
+
+func (o GetInstancesFilterArrayOutput) ToGetInstancesFilterArrayOutputWithContext(ctx context.Context) GetInstancesFilterArrayOutput {
+	return o
+}
+
+func (o GetInstancesFilterArrayOutput) Index(i pulumi.IntInput) GetInstancesFilterOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetInstancesFilter {
+		return vs[0].([]GetInstancesFilter)[vs[1].(int)]
+	}).(GetInstancesFilterOutput)
+}
+
+type GetInstancesInstance struct {
+	// The server's allowed bandwidth usage in GB.
+	AllowedBandwidth int `pulumi:"allowedBandwidth"`
+	// The server's application ID.
+	AppId   int    `pulumi:"appId"`
+	Backups string `pulumi:"backups"`
+	// The current configuration for backups
+	BackupsSchedule map[string]interface{} `pulumi:"backupsSchedule"`
+	// The date the server was added to your Vultr account.
+	DateCreated string `pulumi:"dateCreated"`
+	// The description of the disk(s) on the server.
+	Disk int `pulumi:"disk"`
+	// Array of which features are enabled.
+	Features []string `pulumi:"features"`
+	// The ID of the firewall group applied to this server.
+	FirewallGroupId string `pulumi:"firewallGroupId"`
+	// The server's IPv4 gateway.
+	GatewayV4 string `pulumi:"gatewayV4"`
+	// The hostname assigned to the server.
+	Hostname string `pulumi:"hostname"`
+	Id       string `pulumi:"id"`
+	// The Marketplace ID for this application.
+	ImageId string `pulumi:"imageId"`
+	// The server's internal IP address.
+	InternalIp string `pulumi:"internalIp"`
+	// The server's current KVM URL. This URL will change periodically. It is not advised to cache this value.
+	Kvm string `pulumi:"kvm"`
+	// The server's label.
+	Label    string `pulumi:"label"`
+	Location string `pulumi:"location"`
+	// The server's main IP address.
+	MainIp string `pulumi:"mainIp"`
+	// The server's IPv4 netmask.
+	NetmaskV4 string `pulumi:"netmaskV4"`
+	// The operating system of the instance.
+	Os string `pulumi:"os"`
+	// The server's operating system ID.
+	OsId int `pulumi:"osId"`
+	// The server's plan ID.
+	Plan string `pulumi:"plan"`
+	// Whether the server is powered on or not.
+	PowerStatus       string   `pulumi:"powerStatus"`
+	PrivateNetworkIds []string `pulumi:"privateNetworkIds"`
+	// The amount of memory available on the instance in MB.
+	Ram int `pulumi:"ram"`
+	// The region ID of the server.
+	Region string `pulumi:"region"`
+	// A more detailed server status (none, locked, installingbooting, isomounting, ok).
+	ServerStatus string `pulumi:"serverStatus"`
+	// The status of the server's subscription.
+	Status string `pulumi:"status"`
+	// A list of tags applied to the instance.
+	Tags []string `pulumi:"tags"`
+	// The main IPv6 network address.
+	V6MainIp string `pulumi:"v6MainIp"`
+	// The IPv6 subnet.
+	V6Network string `pulumi:"v6Network"`
+	// The IPv6 network size in bits.
+	V6NetworkSize int `pulumi:"v6NetworkSize"`
+	// The number of virtual CPUs available on the server.
+	VcpuCount int      `pulumi:"vcpuCount"`
+	VpcIds    []string `pulumi:"vpcIds"`
+}
+
+// GetInstancesInstanceInput is an input type that accepts GetInstancesInstanceArgs and GetInstancesInstanceOutput values.
+// You can construct a concrete instance of `GetInstancesInstanceInput` via:
+//
+//	GetInstancesInstanceArgs{...}
+type GetInstancesInstanceInput interface {
+	pulumi.Input
+
+	ToGetInstancesInstanceOutput() GetInstancesInstanceOutput
+	ToGetInstancesInstanceOutputWithContext(context.Context) GetInstancesInstanceOutput
+}
+
+type GetInstancesInstanceArgs struct {
+	// The server's allowed bandwidth usage in GB.
+	AllowedBandwidth pulumi.IntInput `pulumi:"allowedBandwidth"`
+	// The server's application ID.
+	AppId   pulumi.IntInput    `pulumi:"appId"`
+	Backups pulumi.StringInput `pulumi:"backups"`
+	// The current configuration for backups
+	BackupsSchedule pulumi.MapInput `pulumi:"backupsSchedule"`
+	// The date the server was added to your Vultr account.
+	DateCreated pulumi.StringInput `pulumi:"dateCreated"`
+	// The description of the disk(s) on the server.
+	Disk pulumi.IntInput `pulumi:"disk"`
+	// Array of which features are enabled.
+	Features pulumi.StringArrayInput `pulumi:"features"`
+	// The ID of the firewall group applied to this server.
+	FirewallGroupId pulumi.StringInput `pulumi:"firewallGroupId"`
+	// The server's IPv4 gateway.
+	GatewayV4 pulumi.StringInput `pulumi:"gatewayV4"`
+	// The hostname assigned to the server.
+	Hostname pulumi.StringInput `pulumi:"hostname"`
+	Id       pulumi.StringInput `pulumi:"id"`
+	// The Marketplace ID for this application.
+	ImageId pulumi.StringInput `pulumi:"imageId"`
+	// The server's internal IP address.
+	InternalIp pulumi.StringInput `pulumi:"internalIp"`
+	// The server's current KVM URL. This URL will change periodically. It is not advised to cache this value.
+	Kvm pulumi.StringInput `pulumi:"kvm"`
+	// The server's label.
+	Label    pulumi.StringInput `pulumi:"label"`
+	Location pulumi.StringInput `pulumi:"location"`
+	// The server's main IP address.
+	MainIp pulumi.StringInput `pulumi:"mainIp"`
+	// The server's IPv4 netmask.
+	NetmaskV4 pulumi.StringInput `pulumi:"netmaskV4"`
+	// The operating system of the instance.
+	Os pulumi.StringInput `pulumi:"os"`
+	// The server's operating system ID.
+	OsId pulumi.IntInput `pulumi:"osId"`
+	// The server's plan ID.
+	Plan pulumi.StringInput `pulumi:"plan"`
+	// Whether the server is powered on or not.
+	PowerStatus       pulumi.StringInput      `pulumi:"powerStatus"`
+	PrivateNetworkIds pulumi.StringArrayInput `pulumi:"privateNetworkIds"`
+	// The amount of memory available on the instance in MB.
+	Ram pulumi.IntInput `pulumi:"ram"`
+	// The region ID of the server.
+	Region pulumi.StringInput `pulumi:"region"`
+	// A more detailed server status (none, locked, installingbooting, isomounting, ok).
+	ServerStatus pulumi.StringInput `pulumi:"serverStatus"`
+	// The status of the server's subscription.
+	Status pulumi.StringInput `pulumi:"status"`
+	// A list of tags applied to the instance.
+	Tags pulumi.StringArrayInput `pulumi:"tags"`
+	// The main IPv6 network address.
+	V6MainIp pulumi.StringInput `pulumi:"v6MainIp"`
+	// The IPv6 subnet.
+	V6Network pulumi.StringInput `pulumi:"v6Network"`
+	// The IPv6 network size in bits.
+	V6NetworkSize pulumi.IntInput `pulumi:"v6NetworkSize"`
+	// The number of virtual CPUs available on the server.
+	VcpuCount pulumi.IntInput         `pulumi:"vcpuCount"`
+	VpcIds    pulumi.StringArrayInput `pulumi:"vpcIds"`
+}
+
+func (GetInstancesInstanceArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetInstancesInstance)(nil)).Elem()
+}
+
+func (i GetInstancesInstanceArgs) ToGetInstancesInstanceOutput() GetInstancesInstanceOutput {
+	return i.ToGetInstancesInstanceOutputWithContext(context.Background())
+}
+
+func (i GetInstancesInstanceArgs) ToGetInstancesInstanceOutputWithContext(ctx context.Context) GetInstancesInstanceOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetInstancesInstanceOutput)
+}
+
+// GetInstancesInstanceArrayInput is an input type that accepts GetInstancesInstanceArray and GetInstancesInstanceArrayOutput values.
+// You can construct a concrete instance of `GetInstancesInstanceArrayInput` via:
+//
+//	GetInstancesInstanceArray{ GetInstancesInstanceArgs{...} }
+type GetInstancesInstanceArrayInput interface {
+	pulumi.Input
+
+	ToGetInstancesInstanceArrayOutput() GetInstancesInstanceArrayOutput
+	ToGetInstancesInstanceArrayOutputWithContext(context.Context) GetInstancesInstanceArrayOutput
+}
+
+type GetInstancesInstanceArray []GetInstancesInstanceInput
+
+func (GetInstancesInstanceArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetInstancesInstance)(nil)).Elem()
+}
+
+func (i GetInstancesInstanceArray) ToGetInstancesInstanceArrayOutput() GetInstancesInstanceArrayOutput {
+	return i.ToGetInstancesInstanceArrayOutputWithContext(context.Background())
+}
+
+func (i GetInstancesInstanceArray) ToGetInstancesInstanceArrayOutputWithContext(ctx context.Context) GetInstancesInstanceArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetInstancesInstanceArrayOutput)
+}
+
+type GetInstancesInstanceOutput struct{ *pulumi.OutputState }
+
+func (GetInstancesInstanceOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetInstancesInstance)(nil)).Elem()
+}
+
+func (o GetInstancesInstanceOutput) ToGetInstancesInstanceOutput() GetInstancesInstanceOutput {
+	return o
+}
+
+func (o GetInstancesInstanceOutput) ToGetInstancesInstanceOutputWithContext(ctx context.Context) GetInstancesInstanceOutput {
+	return o
+}
+
+// The server's allowed bandwidth usage in GB.
+func (o GetInstancesInstanceOutput) AllowedBandwidth() pulumi.IntOutput {
+	return o.ApplyT(func(v GetInstancesInstance) int { return v.AllowedBandwidth }).(pulumi.IntOutput)
+}
+
+// The server's application ID.
+func (o GetInstancesInstanceOutput) AppId() pulumi.IntOutput {
+	return o.ApplyT(func(v GetInstancesInstance) int { return v.AppId }).(pulumi.IntOutput)
+}
+
+func (o GetInstancesInstanceOutput) Backups() pulumi.StringOutput {
+	return o.ApplyT(func(v GetInstancesInstance) string { return v.Backups }).(pulumi.StringOutput)
+}
+
+// The current configuration for backups
+func (o GetInstancesInstanceOutput) BackupsSchedule() pulumi.MapOutput {
+	return o.ApplyT(func(v GetInstancesInstance) map[string]interface{} { return v.BackupsSchedule }).(pulumi.MapOutput)
+}
+
+// The date the server was added to your Vultr account.
+func (o GetInstancesInstanceOutput) DateCreated() pulumi.StringOutput {
+	return o.ApplyT(func(v GetInstancesInstance) string { return v.DateCreated }).(pulumi.StringOutput)
+}
+
+// The description of the disk(s) on the server.
+func (o GetInstancesInstanceOutput) Disk() pulumi.IntOutput {
+	return o.ApplyT(func(v GetInstancesInstance) int { return v.Disk }).(pulumi.IntOutput)
+}
+
+// Array of which features are enabled.
+func (o GetInstancesInstanceOutput) Features() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetInstancesInstance) []string { return v.Features }).(pulumi.StringArrayOutput)
+}
+
+// The ID of the firewall group applied to this server.
+func (o GetInstancesInstanceOutput) FirewallGroupId() pulumi.StringOutput {
+	return o.ApplyT(func(v GetInstancesInstance) string { return v.FirewallGroupId }).(pulumi.StringOutput)
+}
+
+// The server's IPv4 gateway.
+func (o GetInstancesInstanceOutput) GatewayV4() pulumi.StringOutput {
+	return o.ApplyT(func(v GetInstancesInstance) string { return v.GatewayV4 }).(pulumi.StringOutput)
+}
+
+// The hostname assigned to the server.
+func (o GetInstancesInstanceOutput) Hostname() pulumi.StringOutput {
+	return o.ApplyT(func(v GetInstancesInstance) string { return v.Hostname }).(pulumi.StringOutput)
+}
+
+func (o GetInstancesInstanceOutput) Id() pulumi.StringOutput {
+	return o.ApplyT(func(v GetInstancesInstance) string { return v.Id }).(pulumi.StringOutput)
+}
+
+// The Marketplace ID for this application.
+func (o GetInstancesInstanceOutput) ImageId() pulumi.StringOutput {
+	return o.ApplyT(func(v GetInstancesInstance) string { return v.ImageId }).(pulumi.StringOutput)
+}
+
+// The server's internal IP address.
+func (o GetInstancesInstanceOutput) InternalIp() pulumi.StringOutput {
+	return o.ApplyT(func(v GetInstancesInstance) string { return v.InternalIp }).(pulumi.StringOutput)
+}
+
+// The server's current KVM URL. This URL will change periodically. It is not advised to cache this value.
+func (o GetInstancesInstanceOutput) Kvm() pulumi.StringOutput {
+	return o.ApplyT(func(v GetInstancesInstance) string { return v.Kvm }).(pulumi.StringOutput)
+}
+
+// The server's label.
+func (o GetInstancesInstanceOutput) Label() pulumi.StringOutput {
+	return o.ApplyT(func(v GetInstancesInstance) string { return v.Label }).(pulumi.StringOutput)
+}
+
+func (o GetInstancesInstanceOutput) Location() pulumi.StringOutput {
+	return o.ApplyT(func(v GetInstancesInstance) string { return v.Location }).(pulumi.StringOutput)
+}
+
+// The server's main IP address.
+func (o GetInstancesInstanceOutput) MainIp() pulumi.StringOutput {
+	return o.ApplyT(func(v GetInstancesInstance) string { return v.MainIp }).(pulumi.StringOutput)
+}
+
+// The server's IPv4 netmask.
+func (o GetInstancesInstanceOutput) NetmaskV4() pulumi.StringOutput {
+	return o.ApplyT(func(v GetInstancesInstance) string { return v.NetmaskV4 }).(pulumi.StringOutput)
+}
+
+// The operating system of the instance.
+func (o GetInstancesInstanceOutput) Os() pulumi.StringOutput {
+	return o.ApplyT(func(v GetInstancesInstance) string { return v.Os }).(pulumi.StringOutput)
+}
+
+// The server's operating system ID.
+func (o GetInstancesInstanceOutput) OsId() pulumi.IntOutput {
+	return o.ApplyT(func(v GetInstancesInstance) int { return v.OsId }).(pulumi.IntOutput)
+}
+
+// The server's plan ID.
+func (o GetInstancesInstanceOutput) Plan() pulumi.StringOutput {
+	return o.ApplyT(func(v GetInstancesInstance) string { return v.Plan }).(pulumi.StringOutput)
+}
+
+// Whether the server is powered on or not.
+func (o GetInstancesInstanceOutput) PowerStatus() pulumi.StringOutput {
+	return o.ApplyT(func(v GetInstancesInstance) string { return v.PowerStatus }).(pulumi.StringOutput)
+}
+
+func (o GetInstancesInstanceOutput) PrivateNetworkIds() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetInstancesInstance) []string { return v.PrivateNetworkIds }).(pulumi.StringArrayOutput)
+}
+
+// The amount of memory available on the instance in MB.
+func (o GetInstancesInstanceOutput) Ram() pulumi.IntOutput {
+	return o.ApplyT(func(v GetInstancesInstance) int { return v.Ram }).(pulumi.IntOutput)
+}
+
+// The region ID of the server.
+func (o GetInstancesInstanceOutput) Region() pulumi.StringOutput {
+	return o.ApplyT(func(v GetInstancesInstance) string { return v.Region }).(pulumi.StringOutput)
+}
+
+// A more detailed server status (none, locked, installingbooting, isomounting, ok).
+func (o GetInstancesInstanceOutput) ServerStatus() pulumi.StringOutput {
+	return o.ApplyT(func(v GetInstancesInstance) string { return v.ServerStatus }).(pulumi.StringOutput)
+}
+
+// The status of the server's subscription.
+func (o GetInstancesInstanceOutput) Status() pulumi.StringOutput {
+	return o.ApplyT(func(v GetInstancesInstance) string { return v.Status }).(pulumi.StringOutput)
+}
+
+// A list of tags applied to the instance.
+func (o GetInstancesInstanceOutput) Tags() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetInstancesInstance) []string { return v.Tags }).(pulumi.StringArrayOutput)
+}
+
+// The main IPv6 network address.
+func (o GetInstancesInstanceOutput) V6MainIp() pulumi.StringOutput {
+	return o.ApplyT(func(v GetInstancesInstance) string { return v.V6MainIp }).(pulumi.StringOutput)
+}
+
+// The IPv6 subnet.
+func (o GetInstancesInstanceOutput) V6Network() pulumi.StringOutput {
+	return o.ApplyT(func(v GetInstancesInstance) string { return v.V6Network }).(pulumi.StringOutput)
+}
+
+// The IPv6 network size in bits.
+func (o GetInstancesInstanceOutput) V6NetworkSize() pulumi.IntOutput {
+	return o.ApplyT(func(v GetInstancesInstance) int { return v.V6NetworkSize }).(pulumi.IntOutput)
+}
+
+// The number of virtual CPUs available on the server.
+func (o GetInstancesInstanceOutput) VcpuCount() pulumi.IntOutput {
+	return o.ApplyT(func(v GetInstancesInstance) int { return v.VcpuCount }).(pulumi.IntOutput)
+}
+
+func (o GetInstancesInstanceOutput) VpcIds() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetInstancesInstance) []string { return v.VpcIds }).(pulumi.StringArrayOutput)
+}
+
+type GetInstancesInstanceArrayOutput struct{ *pulumi.OutputState }
+
+func (GetInstancesInstanceArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetInstancesInstance)(nil)).Elem()
+}
+
+func (o GetInstancesInstanceArrayOutput) ToGetInstancesInstanceArrayOutput() GetInstancesInstanceArrayOutput {
+	return o
+}
+
+func (o GetInstancesInstanceArrayOutput) ToGetInstancesInstanceArrayOutputWithContext(ctx context.Context) GetInstancesInstanceArrayOutput {
+	return o
+}
+
+func (o GetInstancesInstanceArrayOutput) Index(i pulumi.IntInput) GetInstancesInstanceOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetInstancesInstance {
+		return vs[0].([]GetInstancesInstance)[vs[1].(int)]
+	}).(GetInstancesInstanceOutput)
+}
+
 type GetIsoPrivateFilter struct {
 	// Attribute name to filter with.
 	Name string `pulumi:"name"`
@@ -5379,6 +6049,8 @@ func (o GetVpcFilterArrayOutput) Index(i pulumi.IntInput) GetVpcFilterOutput {
 func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*DatabaseReadReplicaInput)(nil)).Elem(), DatabaseReadReplicaArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*DatabaseReadReplicaArrayInput)(nil)).Elem(), DatabaseReadReplicaArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*DatabaseUserAccessControlInput)(nil)).Elem(), DatabaseUserAccessControlArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*DatabaseUserAccessControlPtrInput)(nil)).Elem(), DatabaseUserAccessControlArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*InstanceBackupsScheduleInput)(nil)).Elem(), InstanceBackupsScheduleArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*InstanceBackupsSchedulePtrInput)(nil)).Elem(), InstanceBackupsScheduleArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*KubernetesNodePoolsTypeInput)(nil)).Elem(), KubernetesNodePoolsTypeArgs{})
@@ -5413,6 +6085,10 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*GetInstanceFilterArrayInput)(nil)).Elem(), GetInstanceFilterArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetInstanceIpv4FilterInput)(nil)).Elem(), GetInstanceIpv4FilterArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetInstanceIpv4FilterArrayInput)(nil)).Elem(), GetInstanceIpv4FilterArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetInstancesFilterInput)(nil)).Elem(), GetInstancesFilterArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetInstancesFilterArrayInput)(nil)).Elem(), GetInstancesFilterArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetInstancesInstanceInput)(nil)).Elem(), GetInstancesInstanceArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetInstancesInstanceArrayInput)(nil)).Elem(), GetInstancesInstanceArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetIsoPrivateFilterInput)(nil)).Elem(), GetIsoPrivateFilterArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetIsoPrivateFilterArrayInput)(nil)).Elem(), GetIsoPrivateFilterArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetIsoPublicFilterInput)(nil)).Elem(), GetIsoPublicFilterArgs{})
@@ -5457,6 +6133,8 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*GetVpcFilterArrayInput)(nil)).Elem(), GetVpcFilterArray{})
 	pulumi.RegisterOutputType(DatabaseReadReplicaOutput{})
 	pulumi.RegisterOutputType(DatabaseReadReplicaArrayOutput{})
+	pulumi.RegisterOutputType(DatabaseUserAccessControlOutput{})
+	pulumi.RegisterOutputType(DatabaseUserAccessControlPtrOutput{})
 	pulumi.RegisterOutputType(InstanceBackupsScheduleOutput{})
 	pulumi.RegisterOutputType(InstanceBackupsSchedulePtrOutput{})
 	pulumi.RegisterOutputType(KubernetesNodePoolsTypeOutput{})
@@ -5491,6 +6169,10 @@ func init() {
 	pulumi.RegisterOutputType(GetInstanceFilterArrayOutput{})
 	pulumi.RegisterOutputType(GetInstanceIpv4FilterOutput{})
 	pulumi.RegisterOutputType(GetInstanceIpv4FilterArrayOutput{})
+	pulumi.RegisterOutputType(GetInstancesFilterOutput{})
+	pulumi.RegisterOutputType(GetInstancesFilterArrayOutput{})
+	pulumi.RegisterOutputType(GetInstancesInstanceOutput{})
+	pulumi.RegisterOutputType(GetInstancesInstanceArrayOutput{})
 	pulumi.RegisterOutputType(GetIsoPrivateFilterOutput{})
 	pulumi.RegisterOutputType(GetIsoPrivateFilterArrayOutput{})
 	pulumi.RegisterOutputType(GetIsoPublicFilterOutput{})

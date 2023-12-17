@@ -12,6 +12,7 @@ from . import outputs
 
 __all__ = [
     'DatabaseReadReplica',
+    'DatabaseUserAccessControl',
     'InstanceBackupsSchedule',
     'KubernetesNodePools',
     'KubernetesNodePoolsNode',
@@ -29,6 +30,8 @@ __all__ = [
     'GetFirewallGroupFilterResult',
     'GetInstanceFilterResult',
     'GetInstanceIpv4FilterResult',
+    'GetInstancesFilterResult',
+    'GetInstancesInstanceResult',
     'GetIsoPrivateFilterResult',
     'GetIsoPublicFilterResult',
     'GetKubernetesFilterResult',
@@ -482,6 +485,80 @@ class DatabaseReadReplica(dict):
         The ID of the VPC Network to attach to the Managed Database.
         """
         return pulumi.get(self, "vpc_id")
+
+
+@pulumi.output_type
+class DatabaseUserAccessControl(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "redisAclCategories":
+            suggest = "redis_acl_categories"
+        elif key == "redisAclChannels":
+            suggest = "redis_acl_channels"
+        elif key == "redisAclCommands":
+            suggest = "redis_acl_commands"
+        elif key == "redisAclKeys":
+            suggest = "redis_acl_keys"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in DatabaseUserAccessControl. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        DatabaseUserAccessControl.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        DatabaseUserAccessControl.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 redis_acl_categories: Sequence[str],
+                 redis_acl_channels: Sequence[str],
+                 redis_acl_commands: Sequence[str],
+                 redis_acl_keys: Sequence[str]):
+        """
+        :param Sequence[str] redis_acl_categories: The list of command category rules for this managed database user.
+        :param Sequence[str] redis_acl_channels: The list of publish/subscribe channel patterns for this managed database user.
+        :param Sequence[str] redis_acl_commands: The list of individual command rules for this managed database user.
+        :param Sequence[str] redis_acl_keys: The list of access rules for this managed database user.
+        """
+        pulumi.set(__self__, "redis_acl_categories", redis_acl_categories)
+        pulumi.set(__self__, "redis_acl_channels", redis_acl_channels)
+        pulumi.set(__self__, "redis_acl_commands", redis_acl_commands)
+        pulumi.set(__self__, "redis_acl_keys", redis_acl_keys)
+
+    @property
+    @pulumi.getter(name="redisAclCategories")
+    def redis_acl_categories(self) -> Sequence[str]:
+        """
+        The list of command category rules for this managed database user.
+        """
+        return pulumi.get(self, "redis_acl_categories")
+
+    @property
+    @pulumi.getter(name="redisAclChannels")
+    def redis_acl_channels(self) -> Sequence[str]:
+        """
+        The list of publish/subscribe channel patterns for this managed database user.
+        """
+        return pulumi.get(self, "redis_acl_channels")
+
+    @property
+    @pulumi.getter(name="redisAclCommands")
+    def redis_acl_commands(self) -> Sequence[str]:
+        """
+        The list of individual command rules for this managed database user.
+        """
+        return pulumi.get(self, "redis_acl_commands")
+
+    @property
+    @pulumi.getter(name="redisAclKeys")
+    def redis_acl_keys(self) -> Sequence[str]:
+        """
+        The list of access rules for this managed database user.
+        """
+        return pulumi.get(self, "redis_acl_keys")
 
 
 @pulumi.output_type
@@ -1711,6 +1788,385 @@ class GetInstanceIpv4FilterResult(dict):
         One or more values to filter with.
         """
         return pulumi.get(self, "values")
+
+
+@pulumi.output_type
+class GetInstancesFilterResult(dict):
+    def __init__(__self__, *,
+                 name: str,
+                 values: Sequence[str]):
+        """
+        :param str name: Attribute name to filter with.
+        :param Sequence[str] values: One or more values filter with.
+        """
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "values", values)
+
+    @property
+    @pulumi.getter
+    def name(self) -> str:
+        """
+        Attribute name to filter with.
+        """
+        return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter
+    def values(self) -> Sequence[str]:
+        """
+        One or more values filter with.
+        """
+        return pulumi.get(self, "values")
+
+
+@pulumi.output_type
+class GetInstancesInstanceResult(dict):
+    def __init__(__self__, *,
+                 allowed_bandwidth: int,
+                 app_id: int,
+                 backups: str,
+                 backups_schedule: Mapping[str, Any],
+                 date_created: str,
+                 disk: int,
+                 features: Sequence[str],
+                 firewall_group_id: str,
+                 gateway_v4: str,
+                 hostname: str,
+                 id: str,
+                 image_id: str,
+                 internal_ip: str,
+                 kvm: str,
+                 label: str,
+                 location: str,
+                 main_ip: str,
+                 netmask_v4: str,
+                 os: str,
+                 os_id: int,
+                 plan: str,
+                 power_status: str,
+                 private_network_ids: Sequence[str],
+                 ram: int,
+                 region: str,
+                 server_status: str,
+                 status: str,
+                 tags: Sequence[str],
+                 v6_main_ip: str,
+                 v6_network: str,
+                 v6_network_size: int,
+                 vcpu_count: int,
+                 vpc_ids: Sequence[str]):
+        """
+        :param int allowed_bandwidth: The server's allowed bandwidth usage in GB.
+        :param int app_id: The server's application ID.
+        :param Mapping[str, Any] backups_schedule: The current configuration for backups
+        :param str date_created: The date the server was added to your Vultr account.
+        :param int disk: The description of the disk(s) on the server.
+        :param Sequence[str] features: Array of which features are enabled.
+        :param str firewall_group_id: The ID of the firewall group applied to this server.
+        :param str gateway_v4: The server's IPv4 gateway.
+        :param str hostname: The hostname assigned to the server.
+        :param str image_id: The Marketplace ID for this application.
+        :param str internal_ip: The server's internal IP address.
+        :param str kvm: The server's current KVM URL. This URL will change periodically. It is not advised to cache this value.
+        :param str label: The server's label.
+        :param str main_ip: The server's main IP address.
+        :param str netmask_v4: The server's IPv4 netmask.
+        :param str os: The operating system of the instance.
+        :param int os_id: The server's operating system ID.
+        :param str plan: The server's plan ID.
+        :param str power_status: Whether the server is powered on or not.
+        :param int ram: The amount of memory available on the instance in MB.
+        :param str region: The region ID of the server.
+        :param str server_status: A more detailed server status (none, locked, installingbooting, isomounting, ok).
+        :param str status: The status of the server's subscription.
+        :param Sequence[str] tags: A list of tags applied to the instance.
+        :param str v6_main_ip: The main IPv6 network address.
+        :param str v6_network: The IPv6 subnet.
+        :param int v6_network_size: The IPv6 network size in bits.
+        :param int vcpu_count: The number of virtual CPUs available on the server.
+        """
+        pulumi.set(__self__, "allowed_bandwidth", allowed_bandwidth)
+        pulumi.set(__self__, "app_id", app_id)
+        pulumi.set(__self__, "backups", backups)
+        pulumi.set(__self__, "backups_schedule", backups_schedule)
+        pulumi.set(__self__, "date_created", date_created)
+        pulumi.set(__self__, "disk", disk)
+        pulumi.set(__self__, "features", features)
+        pulumi.set(__self__, "firewall_group_id", firewall_group_id)
+        pulumi.set(__self__, "gateway_v4", gateway_v4)
+        pulumi.set(__self__, "hostname", hostname)
+        pulumi.set(__self__, "id", id)
+        pulumi.set(__self__, "image_id", image_id)
+        pulumi.set(__self__, "internal_ip", internal_ip)
+        pulumi.set(__self__, "kvm", kvm)
+        pulumi.set(__self__, "label", label)
+        pulumi.set(__self__, "location", location)
+        pulumi.set(__self__, "main_ip", main_ip)
+        pulumi.set(__self__, "netmask_v4", netmask_v4)
+        pulumi.set(__self__, "os", os)
+        pulumi.set(__self__, "os_id", os_id)
+        pulumi.set(__self__, "plan", plan)
+        pulumi.set(__self__, "power_status", power_status)
+        pulumi.set(__self__, "private_network_ids", private_network_ids)
+        pulumi.set(__self__, "ram", ram)
+        pulumi.set(__self__, "region", region)
+        pulumi.set(__self__, "server_status", server_status)
+        pulumi.set(__self__, "status", status)
+        pulumi.set(__self__, "tags", tags)
+        pulumi.set(__self__, "v6_main_ip", v6_main_ip)
+        pulumi.set(__self__, "v6_network", v6_network)
+        pulumi.set(__self__, "v6_network_size", v6_network_size)
+        pulumi.set(__self__, "vcpu_count", vcpu_count)
+        pulumi.set(__self__, "vpc_ids", vpc_ids)
+
+    @property
+    @pulumi.getter(name="allowedBandwidth")
+    def allowed_bandwidth(self) -> int:
+        """
+        The server's allowed bandwidth usage in GB.
+        """
+        return pulumi.get(self, "allowed_bandwidth")
+
+    @property
+    @pulumi.getter(name="appId")
+    def app_id(self) -> int:
+        """
+        The server's application ID.
+        """
+        return pulumi.get(self, "app_id")
+
+    @property
+    @pulumi.getter
+    def backups(self) -> str:
+        return pulumi.get(self, "backups")
+
+    @property
+    @pulumi.getter(name="backupsSchedule")
+    def backups_schedule(self) -> Mapping[str, Any]:
+        """
+        The current configuration for backups
+        """
+        return pulumi.get(self, "backups_schedule")
+
+    @property
+    @pulumi.getter(name="dateCreated")
+    def date_created(self) -> str:
+        """
+        The date the server was added to your Vultr account.
+        """
+        return pulumi.get(self, "date_created")
+
+    @property
+    @pulumi.getter
+    def disk(self) -> int:
+        """
+        The description of the disk(s) on the server.
+        """
+        return pulumi.get(self, "disk")
+
+    @property
+    @pulumi.getter
+    def features(self) -> Sequence[str]:
+        """
+        Array of which features are enabled.
+        """
+        return pulumi.get(self, "features")
+
+    @property
+    @pulumi.getter(name="firewallGroupId")
+    def firewall_group_id(self) -> str:
+        """
+        The ID of the firewall group applied to this server.
+        """
+        return pulumi.get(self, "firewall_group_id")
+
+    @property
+    @pulumi.getter(name="gatewayV4")
+    def gateway_v4(self) -> str:
+        """
+        The server's IPv4 gateway.
+        """
+        return pulumi.get(self, "gateway_v4")
+
+    @property
+    @pulumi.getter
+    def hostname(self) -> str:
+        """
+        The hostname assigned to the server.
+        """
+        return pulumi.get(self, "hostname")
+
+    @property
+    @pulumi.getter
+    def id(self) -> str:
+        return pulumi.get(self, "id")
+
+    @property
+    @pulumi.getter(name="imageId")
+    def image_id(self) -> str:
+        """
+        The Marketplace ID for this application.
+        """
+        return pulumi.get(self, "image_id")
+
+    @property
+    @pulumi.getter(name="internalIp")
+    def internal_ip(self) -> str:
+        """
+        The server's internal IP address.
+        """
+        return pulumi.get(self, "internal_ip")
+
+    @property
+    @pulumi.getter
+    def kvm(self) -> str:
+        """
+        The server's current KVM URL. This URL will change periodically. It is not advised to cache this value.
+        """
+        return pulumi.get(self, "kvm")
+
+    @property
+    @pulumi.getter
+    def label(self) -> str:
+        """
+        The server's label.
+        """
+        return pulumi.get(self, "label")
+
+    @property
+    @pulumi.getter
+    def location(self) -> str:
+        return pulumi.get(self, "location")
+
+    @property
+    @pulumi.getter(name="mainIp")
+    def main_ip(self) -> str:
+        """
+        The server's main IP address.
+        """
+        return pulumi.get(self, "main_ip")
+
+    @property
+    @pulumi.getter(name="netmaskV4")
+    def netmask_v4(self) -> str:
+        """
+        The server's IPv4 netmask.
+        """
+        return pulumi.get(self, "netmask_v4")
+
+    @property
+    @pulumi.getter
+    def os(self) -> str:
+        """
+        The operating system of the instance.
+        """
+        return pulumi.get(self, "os")
+
+    @property
+    @pulumi.getter(name="osId")
+    def os_id(self) -> int:
+        """
+        The server's operating system ID.
+        """
+        return pulumi.get(self, "os_id")
+
+    @property
+    @pulumi.getter
+    def plan(self) -> str:
+        """
+        The server's plan ID.
+        """
+        return pulumi.get(self, "plan")
+
+    @property
+    @pulumi.getter(name="powerStatus")
+    def power_status(self) -> str:
+        """
+        Whether the server is powered on or not.
+        """
+        return pulumi.get(self, "power_status")
+
+    @property
+    @pulumi.getter(name="privateNetworkIds")
+    def private_network_ids(self) -> Sequence[str]:
+        return pulumi.get(self, "private_network_ids")
+
+    @property
+    @pulumi.getter
+    def ram(self) -> int:
+        """
+        The amount of memory available on the instance in MB.
+        """
+        return pulumi.get(self, "ram")
+
+    @property
+    @pulumi.getter
+    def region(self) -> str:
+        """
+        The region ID of the server.
+        """
+        return pulumi.get(self, "region")
+
+    @property
+    @pulumi.getter(name="serverStatus")
+    def server_status(self) -> str:
+        """
+        A more detailed server status (none, locked, installingbooting, isomounting, ok).
+        """
+        return pulumi.get(self, "server_status")
+
+    @property
+    @pulumi.getter
+    def status(self) -> str:
+        """
+        The status of the server's subscription.
+        """
+        return pulumi.get(self, "status")
+
+    @property
+    @pulumi.getter
+    def tags(self) -> Sequence[str]:
+        """
+        A list of tags applied to the instance.
+        """
+        return pulumi.get(self, "tags")
+
+    @property
+    @pulumi.getter(name="v6MainIp")
+    def v6_main_ip(self) -> str:
+        """
+        The main IPv6 network address.
+        """
+        return pulumi.get(self, "v6_main_ip")
+
+    @property
+    @pulumi.getter(name="v6Network")
+    def v6_network(self) -> str:
+        """
+        The IPv6 subnet.
+        """
+        return pulumi.get(self, "v6_network")
+
+    @property
+    @pulumi.getter(name="v6NetworkSize")
+    def v6_network_size(self) -> int:
+        """
+        The IPv6 network size in bits.
+        """
+        return pulumi.get(self, "v6_network_size")
+
+    @property
+    @pulumi.getter(name="vcpuCount")
+    def vcpu_count(self) -> int:
+        """
+        The number of virtual CPUs available on the server.
+        """
+        return pulumi.get(self, "vcpu_count")
+
+    @property
+    @pulumi.getter(name="vpcIds")
+    def vpc_ids(self) -> Sequence[str]:
+        return pulumi.get(self, "vpc_ids")
 
 
 @pulumi.output_type

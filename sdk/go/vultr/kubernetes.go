@@ -104,8 +104,12 @@ type Kubernetes struct {
 	ClusterSubnet pulumi.StringOutput `pulumi:"clusterSubnet"`
 	// Date node was created.
 	DateCreated pulumi.StringOutput `pulumi:"dateCreated"`
+	// Boolean indicating if the cluster should be created with a managed firewall.
+	EnableFirewall pulumi.BoolPtrOutput `pulumi:"enableFirewall"`
 	// Domain for your Kubernetes clusters control plane.
 	Endpoint pulumi.StringOutput `pulumi:"endpoint"`
+	// The ID of the firewall group managed by this cluster.
+	FirewallGroupId pulumi.StringOutput `pulumi:"firewallGroupId"`
 	// Boolean indicating if the cluster should be created with multiple, highly available controlplanes.
 	HaControlplanes pulumi.BoolPtrOutput `pulumi:"haControlplanes"`
 	// IP address of VKE cluster control plane.
@@ -182,8 +186,12 @@ type kubernetesState struct {
 	ClusterSubnet *string `pulumi:"clusterSubnet"`
 	// Date node was created.
 	DateCreated *string `pulumi:"dateCreated"`
+	// Boolean indicating if the cluster should be created with a managed firewall.
+	EnableFirewall *bool `pulumi:"enableFirewall"`
 	// Domain for your Kubernetes clusters control plane.
 	Endpoint *string `pulumi:"endpoint"`
+	// The ID of the firewall group managed by this cluster.
+	FirewallGroupId *string `pulumi:"firewallGroupId"`
 	// Boolean indicating if the cluster should be created with multiple, highly available controlplanes.
 	HaControlplanes *bool `pulumi:"haControlplanes"`
 	// IP address of VKE cluster control plane.
@@ -215,8 +223,12 @@ type KubernetesState struct {
 	ClusterSubnet pulumi.StringPtrInput
 	// Date node was created.
 	DateCreated pulumi.StringPtrInput
+	// Boolean indicating if the cluster should be created with a managed firewall.
+	EnableFirewall pulumi.BoolPtrInput
 	// Domain for your Kubernetes clusters control plane.
 	Endpoint pulumi.StringPtrInput
+	// The ID of the firewall group managed by this cluster.
+	FirewallGroupId pulumi.StringPtrInput
 	// Boolean indicating if the cluster should be created with multiple, highly available controlplanes.
 	HaControlplanes pulumi.BoolPtrInput
 	// IP address of VKE cluster control plane.
@@ -242,6 +254,8 @@ func (KubernetesState) ElementType() reflect.Type {
 }
 
 type kubernetesArgs struct {
+	// Boolean indicating if the cluster should be created with a managed firewall.
+	EnableFirewall *bool `pulumi:"enableFirewall"`
 	// Boolean indicating if the cluster should be created with multiple, highly available controlplanes.
 	HaControlplanes *bool `pulumi:"haControlplanes"`
 	// The VKE clusters label.
@@ -256,6 +270,8 @@ type kubernetesArgs struct {
 
 // The set of arguments for constructing a Kubernetes resource.
 type KubernetesArgs struct {
+	// Boolean indicating if the cluster should be created with a managed firewall.
+	EnableFirewall pulumi.BoolPtrInput
 	// Boolean indicating if the cluster should be created with multiple, highly available controlplanes.
 	HaControlplanes pulumi.BoolPtrInput
 	// The VKE clusters label.
@@ -380,9 +396,19 @@ func (o KubernetesOutput) DateCreated() pulumi.StringOutput {
 	return o.ApplyT(func(v *Kubernetes) pulumi.StringOutput { return v.DateCreated }).(pulumi.StringOutput)
 }
 
+// Boolean indicating if the cluster should be created with a managed firewall.
+func (o KubernetesOutput) EnableFirewall() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *Kubernetes) pulumi.BoolPtrOutput { return v.EnableFirewall }).(pulumi.BoolPtrOutput)
+}
+
 // Domain for your Kubernetes clusters control plane.
 func (o KubernetesOutput) Endpoint() pulumi.StringOutput {
 	return o.ApplyT(func(v *Kubernetes) pulumi.StringOutput { return v.Endpoint }).(pulumi.StringOutput)
+}
+
+// The ID of the firewall group managed by this cluster.
+func (o KubernetesOutput) FirewallGroupId() pulumi.StringOutput {
+	return o.ApplyT(func(v *Kubernetes) pulumi.StringOutput { return v.FirewallGroupId }).(pulumi.StringOutput)
 }
 
 // Boolean indicating if the cluster should be created with multiple, highly available controlplanes.

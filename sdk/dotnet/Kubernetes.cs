@@ -111,10 +111,22 @@ namespace ediri.Vultr
         public Output<string> DateCreated { get; private set; } = null!;
 
         /// <summary>
+        /// Boolean indicating if the cluster should be created with a managed firewall.
+        /// </summary>
+        [Output("enableFirewall")]
+        public Output<bool?> EnableFirewall { get; private set; } = null!;
+
+        /// <summary>
         /// Domain for your Kubernetes clusters control plane.
         /// </summary>
         [Output("endpoint")]
         public Output<string> Endpoint { get; private set; } = null!;
+
+        /// <summary>
+        /// The ID of the firewall group managed by this cluster.
+        /// </summary>
+        [Output("firewallGroupId")]
+        public Output<string> FirewallGroupId { get; private set; } = null!;
 
         /// <summary>
         /// Boolean indicating if the cluster should be created with multiple, highly available controlplanes.
@@ -225,6 +237,12 @@ namespace ediri.Vultr
     public sealed class KubernetesArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
+        /// Boolean indicating if the cluster should be created with a managed firewall.
+        /// </summary>
+        [Input("enableFirewall")]
+        public Input<bool>? EnableFirewall { get; set; }
+
+        /// <summary>
         /// Boolean indicating if the cluster should be created with multiple, highly available controlplanes.
         /// </summary>
         [Input("haControlplanes")]
@@ -323,10 +341,22 @@ namespace ediri.Vultr
         public Input<string>? DateCreated { get; set; }
 
         /// <summary>
+        /// Boolean indicating if the cluster should be created with a managed firewall.
+        /// </summary>
+        [Input("enableFirewall")]
+        public Input<bool>? EnableFirewall { get; set; }
+
+        /// <summary>
         /// Domain for your Kubernetes clusters control plane.
         /// </summary>
         [Input("endpoint")]
         public Input<string>? Endpoint { get; set; }
+
+        /// <summary>
+        /// The ID of the firewall group managed by this cluster.
+        /// </summary>
+        [Input("firewallGroupId")]
+        public Input<string>? FirewallGroupId { get; set; }
 
         /// <summary>
         /// Boolean indicating if the cluster should be created with multiple, highly available controlplanes.
