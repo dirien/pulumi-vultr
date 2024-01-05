@@ -20,9 +20,11 @@ class InstanceArgs:
                  region: pulumi.Input[str],
                  activation_email: Optional[pulumi.Input[bool]] = None,
                  app_id: Optional[pulumi.Input[int]] = None,
+                 app_variables: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  backups: Optional[pulumi.Input[str]] = None,
                  backups_schedule: Optional[pulumi.Input['InstanceBackupsScheduleArgs']] = None,
                  ddos_protection: Optional[pulumi.Input[bool]] = None,
+                 disable_public_ipv4: Optional[pulumi.Input[bool]] = None,
                  enable_ipv6: Optional[pulumi.Input[bool]] = None,
                  firewall_group_id: Optional[pulumi.Input[str]] = None,
                  hostname: Optional[pulumi.Input[str]] = None,
@@ -45,9 +47,11 @@ class InstanceArgs:
         :param pulumi.Input[str] region: The ID of the region that the instance is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
         :param pulumi.Input[bool] activation_email: Whether an activation email will be sent when the server is ready.
         :param pulumi.Input[int] app_id: The ID of the Vultr application to be installed on the server. [See List Applications](https://www.vultr.com/api/#operation/list-applications)
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] app_variables: A map of user-supplied variable keys and values for Vultr Marketplace apps. [See List Marketplace App Variables](https://www.vultr.com/api/#tag/marketplace/operation/list-marketplace-app-variables)
         :param pulumi.Input[str] backups: Whether automatic backups will be enabled for this server (these have an extra charge associated with them). Values can be enabled or disabled.
         :param pulumi.Input['InstanceBackupsScheduleArgs'] backups_schedule: A block that defines the way backups should be scheduled. While this is an optional field if `backups` are `enabled` this field is mandatory. The configuration of a `backups_schedule` is listed below.
         :param pulumi.Input[bool] ddos_protection: Whether DDOS protection will be enabled on the server (there is an additional charge for this).
+        :param pulumi.Input[bool] disable_public_ipv4: Whether the server has a public IPv4 address assigned (only possible with `enable_ipv6` set to `true`)
         :param pulumi.Input[bool] enable_ipv6: Whether the server has IPv6 networking activated.
         :param pulumi.Input[str] firewall_group_id: The ID of the firewall group to assign to the server.
         :param pulumi.Input[str] hostname: The hostname to assign to the server.
@@ -71,12 +75,16 @@ class InstanceArgs:
             pulumi.set(__self__, "activation_email", activation_email)
         if app_id is not None:
             pulumi.set(__self__, "app_id", app_id)
+        if app_variables is not None:
+            pulumi.set(__self__, "app_variables", app_variables)
         if backups is not None:
             pulumi.set(__self__, "backups", backups)
         if backups_schedule is not None:
             pulumi.set(__self__, "backups_schedule", backups_schedule)
         if ddos_protection is not None:
             pulumi.set(__self__, "ddos_protection", ddos_protection)
+        if disable_public_ipv4 is not None:
+            pulumi.set(__self__, "disable_public_ipv4", disable_public_ipv4)
         if enable_ipv6 is not None:
             pulumi.set(__self__, "enable_ipv6", enable_ipv6)
         if firewall_group_id is not None:
@@ -162,6 +170,18 @@ class InstanceArgs:
         pulumi.set(self, "app_id", value)
 
     @property
+    @pulumi.getter(name="appVariables")
+    def app_variables(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        A map of user-supplied variable keys and values for Vultr Marketplace apps. [See List Marketplace App Variables](https://www.vultr.com/api/#tag/marketplace/operation/list-marketplace-app-variables)
+        """
+        return pulumi.get(self, "app_variables")
+
+    @app_variables.setter
+    def app_variables(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
+        pulumi.set(self, "app_variables", value)
+
+    @property
     @pulumi.getter
     def backups(self) -> Optional[pulumi.Input[str]]:
         """
@@ -196,6 +216,18 @@ class InstanceArgs:
     @ddos_protection.setter
     def ddos_protection(self, value: Optional[pulumi.Input[bool]]):
         pulumi.set(self, "ddos_protection", value)
+
+    @property
+    @pulumi.getter(name="disablePublicIpv4")
+    def disable_public_ipv4(self) -> Optional[pulumi.Input[bool]]:
+        """
+        Whether the server has a public IPv4 address assigned (only possible with `enable_ipv6` set to `true`)
+        """
+        return pulumi.get(self, "disable_public_ipv4")
+
+    @disable_public_ipv4.setter
+    def disable_public_ipv4(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "disable_public_ipv4", value)
 
     @property
     @pulumi.getter(name="enableIpv6")
@@ -399,11 +431,13 @@ class _InstanceState:
                  activation_email: Optional[pulumi.Input[bool]] = None,
                  allowed_bandwidth: Optional[pulumi.Input[int]] = None,
                  app_id: Optional[pulumi.Input[int]] = None,
+                 app_variables: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  backups: Optional[pulumi.Input[str]] = None,
                  backups_schedule: Optional[pulumi.Input['InstanceBackupsScheduleArgs']] = None,
                  date_created: Optional[pulumi.Input[str]] = None,
                  ddos_protection: Optional[pulumi.Input[bool]] = None,
                  default_password: Optional[pulumi.Input[str]] = None,
+                 disable_public_ipv4: Optional[pulumi.Input[bool]] = None,
                  disk: Optional[pulumi.Input[int]] = None,
                  enable_ipv6: Optional[pulumi.Input[bool]] = None,
                  features: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
@@ -443,11 +477,13 @@ class _InstanceState:
         :param pulumi.Input[bool] activation_email: Whether an activation email will be sent when the server is ready.
         :param pulumi.Input[int] allowed_bandwidth: The server's allowed bandwidth usage in GB.
         :param pulumi.Input[int] app_id: The ID of the Vultr application to be installed on the server. [See List Applications](https://www.vultr.com/api/#operation/list-applications)
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] app_variables: A map of user-supplied variable keys and values for Vultr Marketplace apps. [See List Marketplace App Variables](https://www.vultr.com/api/#tag/marketplace/operation/list-marketplace-app-variables)
         :param pulumi.Input[str] backups: Whether automatic backups will be enabled for this server (these have an extra charge associated with them). Values can be enabled or disabled.
         :param pulumi.Input['InstanceBackupsScheduleArgs'] backups_schedule: A block that defines the way backups should be scheduled. While this is an optional field if `backups` are `enabled` this field is mandatory. The configuration of a `backups_schedule` is listed below.
         :param pulumi.Input[str] date_created: The date the server was added to your Vultr account.
         :param pulumi.Input[bool] ddos_protection: Whether DDOS protection will be enabled on the server (there is an additional charge for this).
         :param pulumi.Input[str] default_password: The server's default password.
+        :param pulumi.Input[bool] disable_public_ipv4: Whether the server has a public IPv4 address assigned (only possible with `enable_ipv6` set to `true`)
         :param pulumi.Input[int] disk: The description of the disk(s) on the server.
         :param pulumi.Input[bool] enable_ipv6: Whether the server has IPv6 networking activated.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] features: Array of which features are enabled.
@@ -489,6 +525,8 @@ class _InstanceState:
             pulumi.set(__self__, "allowed_bandwidth", allowed_bandwidth)
         if app_id is not None:
             pulumi.set(__self__, "app_id", app_id)
+        if app_variables is not None:
+            pulumi.set(__self__, "app_variables", app_variables)
         if backups is not None:
             pulumi.set(__self__, "backups", backups)
         if backups_schedule is not None:
@@ -499,6 +537,8 @@ class _InstanceState:
             pulumi.set(__self__, "ddos_protection", ddos_protection)
         if default_password is not None:
             pulumi.set(__self__, "default_password", default_password)
+        if disable_public_ipv4 is not None:
+            pulumi.set(__self__, "disable_public_ipv4", disable_public_ipv4)
         if disk is not None:
             pulumi.set(__self__, "disk", disk)
         if enable_ipv6 is not None:
@@ -608,6 +648,18 @@ class _InstanceState:
         pulumi.set(self, "app_id", value)
 
     @property
+    @pulumi.getter(name="appVariables")
+    def app_variables(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        A map of user-supplied variable keys and values for Vultr Marketplace apps. [See List Marketplace App Variables](https://www.vultr.com/api/#tag/marketplace/operation/list-marketplace-app-variables)
+        """
+        return pulumi.get(self, "app_variables")
+
+    @app_variables.setter
+    def app_variables(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
+        pulumi.set(self, "app_variables", value)
+
+    @property
     @pulumi.getter
     def backups(self) -> Optional[pulumi.Input[str]]:
         """
@@ -666,6 +718,18 @@ class _InstanceState:
     @default_password.setter
     def default_password(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "default_password", value)
+
+    @property
+    @pulumi.getter(name="disablePublicIpv4")
+    def disable_public_ipv4(self) -> Optional[pulumi.Input[bool]]:
+        """
+        Whether the server has a public IPv4 address assigned (only possible with `enable_ipv6` set to `true`)
+        """
+        return pulumi.get(self, "disable_public_ipv4")
+
+    @disable_public_ipv4.setter
+    def disable_public_ipv4(self, value: Optional[pulumi.Input[bool]]):
+        pulumi.set(self, "disable_public_ipv4", value)
 
     @property
     @pulumi.getter
@@ -1086,9 +1150,11 @@ class Instance(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  activation_email: Optional[pulumi.Input[bool]] = None,
                  app_id: Optional[pulumi.Input[int]] = None,
+                 app_variables: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  backups: Optional[pulumi.Input[str]] = None,
                  backups_schedule: Optional[pulumi.Input[pulumi.InputType['InstanceBackupsScheduleArgs']]] = None,
                  ddos_protection: Optional[pulumi.Input[bool]] = None,
+                 disable_public_ipv4: Optional[pulumi.Input[bool]] = None,
                  enable_ipv6: Optional[pulumi.Input[bool]] = None,
                  firewall_group_id: Optional[pulumi.Input[str]] = None,
                  hostname: Optional[pulumi.Input[str]] = None,
@@ -1138,6 +1204,7 @@ class Instance(pulumi.CustomResource):
                 type="daily",
             ),
             ddos_protection=True,
+            disable_public_ipv4=True,
             enable_ipv6=True,
             hostname="my-instance-hostname",
             label="my-instance-label",
@@ -1159,9 +1226,11 @@ class Instance(pulumi.CustomResource):
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[bool] activation_email: Whether an activation email will be sent when the server is ready.
         :param pulumi.Input[int] app_id: The ID of the Vultr application to be installed on the server. [See List Applications](https://www.vultr.com/api/#operation/list-applications)
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] app_variables: A map of user-supplied variable keys and values for Vultr Marketplace apps. [See List Marketplace App Variables](https://www.vultr.com/api/#tag/marketplace/operation/list-marketplace-app-variables)
         :param pulumi.Input[str] backups: Whether automatic backups will be enabled for this server (these have an extra charge associated with them). Values can be enabled or disabled.
         :param pulumi.Input[pulumi.InputType['InstanceBackupsScheduleArgs']] backups_schedule: A block that defines the way backups should be scheduled. While this is an optional field if `backups` are `enabled` this field is mandatory. The configuration of a `backups_schedule` is listed below.
         :param pulumi.Input[bool] ddos_protection: Whether DDOS protection will be enabled on the server (there is an additional charge for this).
+        :param pulumi.Input[bool] disable_public_ipv4: Whether the server has a public IPv4 address assigned (only possible with `enable_ipv6` set to `true`)
         :param pulumi.Input[bool] enable_ipv6: Whether the server has IPv6 networking activated.
         :param pulumi.Input[str] firewall_group_id: The ID of the firewall group to assign to the server.
         :param pulumi.Input[str] hostname: The hostname to assign to the server.
@@ -1217,6 +1286,7 @@ class Instance(pulumi.CustomResource):
                 type="daily",
             ),
             ddos_protection=True,
+            disable_public_ipv4=True,
             enable_ipv6=True,
             hostname="my-instance-hostname",
             label="my-instance-label",
@@ -1251,9 +1321,11 @@ class Instance(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  activation_email: Optional[pulumi.Input[bool]] = None,
                  app_id: Optional[pulumi.Input[int]] = None,
+                 app_variables: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  backups: Optional[pulumi.Input[str]] = None,
                  backups_schedule: Optional[pulumi.Input[pulumi.InputType['InstanceBackupsScheduleArgs']]] = None,
                  ddos_protection: Optional[pulumi.Input[bool]] = None,
+                 disable_public_ipv4: Optional[pulumi.Input[bool]] = None,
                  enable_ipv6: Optional[pulumi.Input[bool]] = None,
                  firewall_group_id: Optional[pulumi.Input[str]] = None,
                  hostname: Optional[pulumi.Input[str]] = None,
@@ -1283,9 +1355,11 @@ class Instance(pulumi.CustomResource):
 
             __props__.__dict__["activation_email"] = activation_email
             __props__.__dict__["app_id"] = app_id
+            __props__.__dict__["app_variables"] = app_variables
             __props__.__dict__["backups"] = backups
             __props__.__dict__["backups_schedule"] = backups_schedule
             __props__.__dict__["ddos_protection"] = ddos_protection
+            __props__.__dict__["disable_public_ipv4"] = disable_public_ipv4
             __props__.__dict__["enable_ipv6"] = enable_ipv6
             __props__.__dict__["firewall_group_id"] = firewall_group_id
             __props__.__dict__["hostname"] = hostname
@@ -1342,11 +1416,13 @@ class Instance(pulumi.CustomResource):
             activation_email: Optional[pulumi.Input[bool]] = None,
             allowed_bandwidth: Optional[pulumi.Input[int]] = None,
             app_id: Optional[pulumi.Input[int]] = None,
+            app_variables: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
             backups: Optional[pulumi.Input[str]] = None,
             backups_schedule: Optional[pulumi.Input[pulumi.InputType['InstanceBackupsScheduleArgs']]] = None,
             date_created: Optional[pulumi.Input[str]] = None,
             ddos_protection: Optional[pulumi.Input[bool]] = None,
             default_password: Optional[pulumi.Input[str]] = None,
+            disable_public_ipv4: Optional[pulumi.Input[bool]] = None,
             disk: Optional[pulumi.Input[int]] = None,
             enable_ipv6: Optional[pulumi.Input[bool]] = None,
             features: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
@@ -1391,11 +1467,13 @@ class Instance(pulumi.CustomResource):
         :param pulumi.Input[bool] activation_email: Whether an activation email will be sent when the server is ready.
         :param pulumi.Input[int] allowed_bandwidth: The server's allowed bandwidth usage in GB.
         :param pulumi.Input[int] app_id: The ID of the Vultr application to be installed on the server. [See List Applications](https://www.vultr.com/api/#operation/list-applications)
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] app_variables: A map of user-supplied variable keys and values for Vultr Marketplace apps. [See List Marketplace App Variables](https://www.vultr.com/api/#tag/marketplace/operation/list-marketplace-app-variables)
         :param pulumi.Input[str] backups: Whether automatic backups will be enabled for this server (these have an extra charge associated with them). Values can be enabled or disabled.
         :param pulumi.Input[pulumi.InputType['InstanceBackupsScheduleArgs']] backups_schedule: A block that defines the way backups should be scheduled. While this is an optional field if `backups` are `enabled` this field is mandatory. The configuration of a `backups_schedule` is listed below.
         :param pulumi.Input[str] date_created: The date the server was added to your Vultr account.
         :param pulumi.Input[bool] ddos_protection: Whether DDOS protection will be enabled on the server (there is an additional charge for this).
         :param pulumi.Input[str] default_password: The server's default password.
+        :param pulumi.Input[bool] disable_public_ipv4: Whether the server has a public IPv4 address assigned (only possible with `enable_ipv6` set to `true`)
         :param pulumi.Input[int] disk: The description of the disk(s) on the server.
         :param pulumi.Input[bool] enable_ipv6: Whether the server has IPv6 networking activated.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] features: Array of which features are enabled.
@@ -1438,11 +1516,13 @@ class Instance(pulumi.CustomResource):
         __props__.__dict__["activation_email"] = activation_email
         __props__.__dict__["allowed_bandwidth"] = allowed_bandwidth
         __props__.__dict__["app_id"] = app_id
+        __props__.__dict__["app_variables"] = app_variables
         __props__.__dict__["backups"] = backups
         __props__.__dict__["backups_schedule"] = backups_schedule
         __props__.__dict__["date_created"] = date_created
         __props__.__dict__["ddos_protection"] = ddos_protection
         __props__.__dict__["default_password"] = default_password
+        __props__.__dict__["disable_public_ipv4"] = disable_public_ipv4
         __props__.__dict__["disk"] = disk
         __props__.__dict__["enable_ipv6"] = enable_ipv6
         __props__.__dict__["features"] = features
@@ -1504,6 +1584,14 @@ class Instance(pulumi.CustomResource):
         return pulumi.get(self, "app_id")
 
     @property
+    @pulumi.getter(name="appVariables")
+    def app_variables(self) -> pulumi.Output[Optional[Mapping[str, str]]]:
+        """
+        A map of user-supplied variable keys and values for Vultr Marketplace apps. [See List Marketplace App Variables](https://www.vultr.com/api/#tag/marketplace/operation/list-marketplace-app-variables)
+        """
+        return pulumi.get(self, "app_variables")
+
+    @property
     @pulumi.getter
     def backups(self) -> pulumi.Output[Optional[str]]:
         """
@@ -1542,6 +1630,14 @@ class Instance(pulumi.CustomResource):
         The server's default password.
         """
         return pulumi.get(self, "default_password")
+
+    @property
+    @pulumi.getter(name="disablePublicIpv4")
+    def disable_public_ipv4(self) -> pulumi.Output[Optional[bool]]:
+        """
+        Whether the server has a public IPv4 address assigned (only possible with `enable_ipv6` set to `true`)
+        """
+        return pulumi.get(self, "disable_public_ipv4")
 
     @property
     @pulumi.getter

@@ -88,6 +88,12 @@ namespace ediri.Vultr
         public Output<int> AppId { get; private set; } = null!;
 
         /// <summary>
+        /// A map of user-supplied variable keys and values for Vultr Marketplace apps. [See List Marketplace App Variables](https://www.vultr.com/api/#tag/marketplace/operation/list-marketplace-app-variables)
+        /// </summary>
+        [Output("appVariables")]
+        public Output<ImmutableDictionary<string, string>?> AppVariables { get; private set; } = null!;
+
+        /// <summary>
         /// The number of CPUs available on the server.
         /// </summary>
         [Output("cpuCount")]
@@ -321,6 +327,18 @@ namespace ediri.Vultr
         [Input("appId")]
         public Input<int>? AppId { get; set; }
 
+        [Input("appVariables")]
+        private InputMap<string>? _appVariables;
+
+        /// <summary>
+        /// A map of user-supplied variable keys and values for Vultr Marketplace apps. [See List Marketplace App Variables](https://www.vultr.com/api/#tag/marketplace/operation/list-marketplace-app-variables)
+        /// </summary>
+        public InputMap<string> AppVariables
+        {
+            get => _appVariables ?? (_appVariables = new InputMap<string>());
+            set => _appVariables = value;
+        }
+
         /// <summary>
         /// Whether the server has IPv6 networking activated.
         /// </summary>
@@ -445,6 +463,18 @@ namespace ediri.Vultr
         /// </summary>
         [Input("appId")]
         public Input<int>? AppId { get; set; }
+
+        [Input("appVariables")]
+        private InputMap<string>? _appVariables;
+
+        /// <summary>
+        /// A map of user-supplied variable keys and values for Vultr Marketplace apps. [See List Marketplace App Variables](https://www.vultr.com/api/#tag/marketplace/operation/list-marketplace-app-variables)
+        /// </summary>
+        public InputMap<string> AppVariables
+        {
+            get => _appVariables ?? (_appVariables = new InputMap<string>());
+            set => _appVariables = value;
+        }
 
         /// <summary>
         /// The number of CPUs available on the server.

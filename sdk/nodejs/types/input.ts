@@ -869,7 +869,7 @@ export interface KubernetesNodePoolsNode {
      */
     id?: pulumi.Input<string>;
     /**
-     * The label to be used as a prefix for nodes in this node pool.
+     * The VKE clusters label.
      */
     label?: pulumi.Input<string>;
     /**

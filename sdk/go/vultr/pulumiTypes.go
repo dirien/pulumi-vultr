@@ -1119,7 +1119,7 @@ type KubernetesNodePoolsNode struct {
 	DateCreated *string `pulumi:"dateCreated"`
 	// ID of node.
 	Id *string `pulumi:"id"`
-	// The label to be used as a prefix for nodes in this node pool.
+	// The VKE clusters label.
 	Label *string `pulumi:"label"`
 	// Status of node.
 	Status *string `pulumi:"status"`
@@ -1141,7 +1141,7 @@ type KubernetesNodePoolsNodeArgs struct {
 	DateCreated pulumi.StringPtrInput `pulumi:"dateCreated"`
 	// ID of node.
 	Id pulumi.StringPtrInput `pulumi:"id"`
-	// The label to be used as a prefix for nodes in this node pool.
+	// The VKE clusters label.
 	Label pulumi.StringPtrInput `pulumi:"label"`
 	// Status of node.
 	Status pulumi.StringPtrInput `pulumi:"status"`
@@ -1208,7 +1208,7 @@ func (o KubernetesNodePoolsNodeOutput) Id() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v KubernetesNodePoolsNode) *string { return v.Id }).(pulumi.StringPtrOutput)
 }
 
-// The label to be used as a prefix for nodes in this node pool.
+// The VKE clusters label.
 func (o KubernetesNodePoolsNodeOutput) Label() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v KubernetesNodePoolsNode) *string { return v.Label }).(pulumi.StringPtrOutput)
 }

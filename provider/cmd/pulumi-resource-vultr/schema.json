@@ -421,7 +421,7 @@
                 },
                 "label": {
                     "type": "string",
-                    "description": "The label to be used as a prefix for nodes in this node pool.\n"
+                    "description": "The VKE clusters label.\n"
                 },
                 "status": {
                     "type": "string",
@@ -1675,6 +1675,13 @@
                     "type": "integer",
                     "description": "The ID of the Vultr application to be installed on the server. [See List Applications](https://www.vultr.com/api/#operation/list-applications)\n"
                 },
+                "appVariables": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "A map of user-supplied variable keys and values for Vultr Marketplace apps. [See List Marketplace App Variables](https://www.vultr.com/api/#tag/marketplace/operation/list-marketplace-app-variables)\n"
+                },
                 "cpuCount": {
                     "type": "integer",
                     "description": "The number of CPUs available on the server.\n"
@@ -1833,6 +1840,14 @@
                     "type": "integer",
                     "description": "The ID of the Vultr application to be installed on the server. [See List Applications](https://www.vultr.com/api/#operation/list-applications)\n"
                 },
+                "appVariables": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "A map of user-supplied variable keys and values for Vultr Marketplace apps. [See List Marketplace App Variables](https://www.vultr.com/api/#tag/marketplace/operation/list-marketplace-app-variables)\n",
+                    "willReplaceOnChanges": true
+                },
                 "enableIpv6": {
                     "type": "boolean",
                     "description": "Whether the server has IPv6 networking activated.\n",
@@ -1857,7 +1872,8 @@
                     "description": "The ID of the operating system to be installed on the server. [See List OS](https://www.vultr.com/api/#operation/list-os)\n"
                 },
                 "persistentPxe": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "willReplaceOnChanges": true
                 },
                 "plan": {
                     "type": "string",
@@ -1926,6 +1942,14 @@
                         "type": "integer",
                         "description": "The ID of the Vultr application to be installed on the server. [See List Applications](https://www.vultr.com/api/#operation/list-applications)\n"
                     },
+                    "appVariables": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        },
+                        "description": "A map of user-supplied variable keys and values for Vultr Marketplace apps. [See List Marketplace App Variables](https://www.vultr.com/api/#tag/marketplace/operation/list-marketplace-app-variables)\n",
+                        "willReplaceOnChanges": true
+                    },
                     "cpuCount": {
                         "type": "integer",
                         "description": "The number of CPUs available on the server.\n"
@@ -1987,7 +2011,8 @@
                         "description": "The ID of the operating system to be installed on the server. [See List OS](https://www.vultr.com/api/#operation/list-os)\n"
                     },
                     "persistentPxe": {
-                        "type": "boolean"
+                        "type": "boolean",
+                        "willReplaceOnChanges": true
                     },
                     "plan": {
                         "type": "string",
@@ -3609,7 +3634,7 @@
             }
         },
         "vultr:index/instance:Instance": {
-            "description": "Provides a Vultr instance resource. This can be used to create, read, modify, and delete instances on your Vultr account.\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\nCreate a new instance:\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@ediri/vultr\";\n\nconst myInstance = new vultr.Instance(\"myInstance\", {\n    osId: 1743,\n    plan: \"vc2-1c-2gb\",\n    region: \"sea\",\n});\n```\n```python\nimport pulumi\nimport ediri_vultr as vultr\n\nmy_instance = vultr.Instance(\"myInstance\",\n    os_id=1743,\n    plan=\"vc2-1c-2gb\",\n    region=\"sea\")\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vultr = ediri.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var myInstance = new Vultr.Instance(\"myInstance\", new()\n    {\n        OsId = 1743,\n        Plan = \"vc2-1c-2gb\",\n        Region = \"sea\",\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.NewInstance(ctx, \"myInstance\", \u0026vultr.InstanceArgs{\n\t\t\tOsId:   pulumi.Int(1743),\n\t\t\tPlan:   pulumi.String(\"vc2-1c-2gb\"),\n\t\t\tRegion: pulumi.String(\"sea\"),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.Instance;\nimport com.pulumi.vultr.InstanceArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var myInstance = new Instance(\"myInstance\", InstanceArgs.builder()        \n            .osId(1743)\n            .plan(\"vc2-1c-2gb\")\n            .region(\"sea\")\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  myInstance:\n    type: vultr:Instance\n    properties:\n      osId: 1743\n      plan: vc2-1c-2gb\n      region: sea\n```\n\nCreate a new instance with options:\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@ediri/vultr\";\n\nconst myInstance = new vultr.Instance(\"myInstance\", {\n    activationEmail: false,\n    backups: \"enabled\",\n    backupsSchedule: {\n        type: \"daily\",\n    },\n    ddosProtection: true,\n    enableIpv6: true,\n    hostname: \"my-instance-hostname\",\n    label: \"my-instance-label\",\n    osId: 1743,\n    plan: \"vc2-1c-2gb\",\n    region: \"sea\",\n    tags: [\"my-instance-tag\"],\n});\n```\n```python\nimport pulumi\nimport ediri_vultr as vultr\n\nmy_instance = vultr.Instance(\"myInstance\",\n    activation_email=False,\n    backups=\"enabled\",\n    backups_schedule=vultr.InstanceBackupsScheduleArgs(\n        type=\"daily\",\n    ),\n    ddos_protection=True,\n    enable_ipv6=True,\n    hostname=\"my-instance-hostname\",\n    label=\"my-instance-label\",\n    os_id=1743,\n    plan=\"vc2-1c-2gb\",\n    region=\"sea\",\n    tags=[\"my-instance-tag\"])\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vultr = ediri.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var myInstance = new Vultr.Instance(\"myInstance\", new()\n    {\n        ActivationEmail = false,\n        Backups = \"enabled\",\n        BackupsSchedule = new Vultr.Inputs.InstanceBackupsScheduleArgs\n        {\n            Type = \"daily\",\n        },\n        DdosProtection = true,\n        EnableIpv6 = true,\n        Hostname = \"my-instance-hostname\",\n        Label = \"my-instance-label\",\n        OsId = 1743,\n        Plan = \"vc2-1c-2gb\",\n        Region = \"sea\",\n        Tags = new[]\n        {\n            \"my-instance-tag\",\n        },\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.NewInstance(ctx, \"myInstance\", \u0026vultr.InstanceArgs{\n\t\t\tActivationEmail: pulumi.Bool(false),\n\t\t\tBackups:         pulumi.String(\"enabled\"),\n\t\t\tBackupsSchedule: \u0026vultr.InstanceBackupsScheduleArgs{\n\t\t\t\tType: pulumi.String(\"daily\"),\n\t\t\t},\n\t\t\tDdosProtection: pulumi.Bool(true),\n\t\t\tEnableIpv6:     pulumi.Bool(true),\n\t\t\tHostname:       pulumi.String(\"my-instance-hostname\"),\n\t\t\tLabel:          pulumi.String(\"my-instance-label\"),\n\t\t\tOsId:           pulumi.Int(1743),\n\t\t\tPlan:           pulumi.String(\"vc2-1c-2gb\"),\n\t\t\tRegion:         pulumi.String(\"sea\"),\n\t\t\tTags: pulumi.StringArray{\n\t\t\t\tpulumi.String(\"my-instance-tag\"),\n\t\t\t},\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.Instance;\nimport com.pulumi.vultr.InstanceArgs;\nimport com.pulumi.vultr.inputs.InstanceBackupsScheduleArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var myInstance = new Instance(\"myInstance\", InstanceArgs.builder()        \n            .activationEmail(false)\n            .backups(\"enabled\")\n            .backupsSchedule(InstanceBackupsScheduleArgs.builder()\n                .type(\"daily\")\n                .build())\n            .ddosProtection(true)\n            .enableIpv6(true)\n            .hostname(\"my-instance-hostname\")\n            .label(\"my-instance-label\")\n            .osId(1743)\n            .plan(\"vc2-1c-2gb\")\n            .region(\"sea\")\n            .tags(\"my-instance-tag\")\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  myInstance:\n    type: vultr:Instance\n    properties:\n      activationEmail: false\n      backups: enabled\n      backupsSchedule:\n        type: daily\n      ddosProtection: true\n      enableIpv6: true\n      hostname: my-instance-hostname\n      label: my-instance-label\n      osId: 1743\n      plan: vc2-1c-2gb\n      region: sea\n      tags:\n        - my-instance-tag\n```\n{{% /example %}}\n{{% /examples %}}\n\n## Import\n\nInstances can be imported using the instance `ID`, e.g.\n\n```sh\n $ pulumi import vultr:index/instance:Instance my_instance b6a859c5-b299-49dd-8888-b1abbc517d08\n```\n\n ",
+            "description": "Provides a Vultr instance resource. This can be used to create, read, modify, and delete instances on your Vultr account.\n\n{{% examples %}}\n## Example Usage\n{{% example %}}\n\nCreate a new instance:\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@ediri/vultr\";\n\nconst myInstance = new vultr.Instance(\"myInstance\", {\n    osId: 1743,\n    plan: \"vc2-1c-2gb\",\n    region: \"sea\",\n});\n```\n```python\nimport pulumi\nimport ediri_vultr as vultr\n\nmy_instance = vultr.Instance(\"myInstance\",\n    os_id=1743,\n    plan=\"vc2-1c-2gb\",\n    region=\"sea\")\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vultr = ediri.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var myInstance = new Vultr.Instance(\"myInstance\", new()\n    {\n        OsId = 1743,\n        Plan = \"vc2-1c-2gb\",\n        Region = \"sea\",\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.NewInstance(ctx, \"myInstance\", \u0026vultr.InstanceArgs{\n\t\t\tOsId:   pulumi.Int(1743),\n\t\t\tPlan:   pulumi.String(\"vc2-1c-2gb\"),\n\t\t\tRegion: pulumi.String(\"sea\"),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.Instance;\nimport com.pulumi.vultr.InstanceArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var myInstance = new Instance(\"myInstance\", InstanceArgs.builder()        \n            .osId(1743)\n            .plan(\"vc2-1c-2gb\")\n            .region(\"sea\")\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  myInstance:\n    type: vultr:Instance\n    properties:\n      osId: 1743\n      plan: vc2-1c-2gb\n      region: sea\n```\n\nCreate a new instance with options:\n\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@ediri/vultr\";\n\nconst myInstance = new vultr.Instance(\"myInstance\", {\n    activationEmail: false,\n    backups: \"enabled\",\n    backupsSchedule: {\n        type: \"daily\",\n    },\n    ddosProtection: true,\n    disablePublicIpv4: true,\n    enableIpv6: true,\n    hostname: \"my-instance-hostname\",\n    label: \"my-instance-label\",\n    osId: 1743,\n    plan: \"vc2-1c-2gb\",\n    region: \"sea\",\n    tags: [\"my-instance-tag\"],\n});\n```\n```python\nimport pulumi\nimport ediri_vultr as vultr\n\nmy_instance = vultr.Instance(\"myInstance\",\n    activation_email=False,\n    backups=\"enabled\",\n    backups_schedule=vultr.InstanceBackupsScheduleArgs(\n        type=\"daily\",\n    ),\n    ddos_protection=True,\n    disable_public_ipv4=True,\n    enable_ipv6=True,\n    hostname=\"my-instance-hostname\",\n    label=\"my-instance-label\",\n    os_id=1743,\n    plan=\"vc2-1c-2gb\",\n    region=\"sea\",\n    tags=[\"my-instance-tag\"])\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vultr = ediri.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var myInstance = new Vultr.Instance(\"myInstance\", new()\n    {\n        ActivationEmail = false,\n        Backups = \"enabled\",\n        BackupsSchedule = new Vultr.Inputs.InstanceBackupsScheduleArgs\n        {\n            Type = \"daily\",\n        },\n        DdosProtection = true,\n        DisablePublicIpv4 = true,\n        EnableIpv6 = true,\n        Hostname = \"my-instance-hostname\",\n        Label = \"my-instance-label\",\n        OsId = 1743,\n        Plan = \"vc2-1c-2gb\",\n        Region = \"sea\",\n        Tags = new[]\n        {\n            \"my-instance-tag\",\n        },\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.NewInstance(ctx, \"myInstance\", \u0026vultr.InstanceArgs{\n\t\t\tActivationEmail: pulumi.Bool(false),\n\t\t\tBackups:         pulumi.String(\"enabled\"),\n\t\t\tBackupsSchedule: \u0026vultr.InstanceBackupsScheduleArgs{\n\t\t\t\tType: pulumi.String(\"daily\"),\n\t\t\t},\n\t\t\tDdosProtection:    pulumi.Bool(true),\n\t\t\tDisablePublicIpv4: pulumi.Bool(true),\n\t\t\tEnableIpv6:        pulumi.Bool(true),\n\t\t\tHostname:          pulumi.String(\"my-instance-hostname\"),\n\t\t\tLabel:             pulumi.String(\"my-instance-label\"),\n\t\t\tOsId:              pulumi.Int(1743),\n\t\t\tPlan:              pulumi.String(\"vc2-1c-2gb\"),\n\t\t\tRegion:            pulumi.String(\"sea\"),\n\t\t\tTags: pulumi.StringArray{\n\t\t\t\tpulumi.String(\"my-instance-tag\"),\n\t\t\t},\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.Instance;\nimport com.pulumi.vultr.InstanceArgs;\nimport com.pulumi.vultr.inputs.InstanceBackupsScheduleArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var myInstance = new Instance(\"myInstance\", InstanceArgs.builder()        \n            .activationEmail(false)\n            .backups(\"enabled\")\n            .backupsSchedule(InstanceBackupsScheduleArgs.builder()\n                .type(\"daily\")\n                .build())\n            .ddosProtection(true)\n            .disablePublicIpv4(true)\n            .enableIpv6(true)\n            .hostname(\"my-instance-hostname\")\n            .label(\"my-instance-label\")\n            .osId(1743)\n            .plan(\"vc2-1c-2gb\")\n            .region(\"sea\")\n            .tags(\"my-instance-tag\")\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  myInstance:\n    type: vultr:Instance\n    properties:\n      activationEmail: false\n      backups: enabled\n      backupsSchedule:\n        type: daily\n      ddosProtection: true\n      disablePublicIpv4: true\n      enableIpv6: true\n      hostname: my-instance-hostname\n      label: my-instance-label\n      osId: 1743\n      plan: vc2-1c-2gb\n      region: sea\n      tags:\n        - my-instance-tag\n```\n{{% /example %}}\n{{% /examples %}}\n\n## Import\n\nInstances can be imported using the instance `ID`, e.g.\n\n```sh\n $ pulumi import vultr:index/instance:Instance my_instance b6a859c5-b299-49dd-8888-b1abbc517d08\n```\n\n ",
             "properties": {
                 "activationEmail": {
                     "type": "boolean",
@@ -3622,6 +3647,13 @@
                 "appId": {
                     "type": "integer",
                     "description": "The ID of the Vultr application to be installed on the server. [See List Applications](https://www.vultr.com/api/#operation/list-applications)\n"
+                },
+                "appVariables": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "A map of user-supplied variable keys and values for Vultr Marketplace apps. [See List Marketplace App Variables](https://www.vultr.com/api/#tag/marketplace/operation/list-marketplace-app-variables)\n"
                 },
                 "backups": {
                     "type": "string",
@@ -3643,6 +3675,10 @@
                     "type": "string",
                     "description": "The server's default password.\n",
                     "secret": true
+                },
+                "disablePublicIpv4": {
+                    "type": "boolean",
+                    "description": "Whether the server has a public IPv4 address assigned (only possible with `enable_ipv6` set to `true`)\n"
                 },
                 "disk": {
                     "type": "integer",
@@ -3845,6 +3881,14 @@
                     "description": "The ID of the Vultr application to be installed on the server. [See List Applications](https://www.vultr.com/api/#operation/list-applications)\n",
                     "willReplaceOnChanges": true
                 },
+                "appVariables": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "A map of user-supplied variable keys and values for Vultr Marketplace apps. [See List Marketplace App Variables](https://www.vultr.com/api/#tag/marketplace/operation/list-marketplace-app-variables)\n",
+                    "willReplaceOnChanges": true
+                },
                 "backups": {
                     "type": "string",
                     "description": "Whether automatic backups will be enabled for this server (these have an extra charge associated with them). Values can be enabled or disabled.\n"
@@ -3856,6 +3900,11 @@
                 "ddosProtection": {
                     "type": "boolean",
                     "description": "Whether DDOS protection will be enabled on the server (there is an additional charge for this).\n"
+                },
+                "disablePublicIpv4": {
+                    "type": "boolean",
+                    "description": "Whether the server has a public IPv4 address assigned (only possible with `enable_ipv6` set to `true`)\n",
+                    "willReplaceOnChanges": true
                 },
                 "enableIpv6": {
                     "type": "boolean",
@@ -3975,6 +4024,14 @@
                         "description": "The ID of the Vultr application to be installed on the server. [See List Applications](https://www.vultr.com/api/#operation/list-applications)\n",
                         "willReplaceOnChanges": true
                     },
+                    "appVariables": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        },
+                        "description": "A map of user-supplied variable keys and values for Vultr Marketplace apps. [See List Marketplace App Variables](https://www.vultr.com/api/#tag/marketplace/operation/list-marketplace-app-variables)\n",
+                        "willReplaceOnChanges": true
+                    },
                     "backups": {
                         "type": "string",
                         "description": "Whether automatic backups will be enabled for this server (these have an extra charge associated with them). Values can be enabled or disabled.\n"
@@ -3995,6 +4052,11 @@
                         "type": "string",
                         "description": "The server's default password.\n",
                         "secret": true
+                    },
+                    "disablePublicIpv4": {
+                        "type": "boolean",
+                        "description": "Whether the server has a public IPv4 address assigned (only possible with `enable_ipv6` set to `true`)\n",
+                        "willReplaceOnChanges": true
                     },
                     "disk": {
                         "type": "integer",

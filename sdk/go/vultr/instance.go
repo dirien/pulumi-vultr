@@ -64,13 +64,14 @@ import (
 //				BackupsSchedule: &vultr.InstanceBackupsScheduleArgs{
 //					Type: pulumi.String("daily"),
 //				},
-//				DdosProtection: pulumi.Bool(true),
-//				EnableIpv6:     pulumi.Bool(true),
-//				Hostname:       pulumi.String("my-instance-hostname"),
-//				Label:          pulumi.String("my-instance-label"),
-//				OsId:           pulumi.Int(1743),
-//				Plan:           pulumi.String("vc2-1c-2gb"),
-//				Region:         pulumi.String("sea"),
+//				DdosProtection:    pulumi.Bool(true),
+//				DisablePublicIpv4: pulumi.Bool(true),
+//				EnableIpv6:        pulumi.Bool(true),
+//				Hostname:          pulumi.String("my-instance-hostname"),
+//				Label:             pulumi.String("my-instance-label"),
+//				OsId:              pulumi.Int(1743),
+//				Plan:              pulumi.String("vc2-1c-2gb"),
+//				Region:            pulumi.String("sea"),
 //				Tags: pulumi.StringArray{
 //					pulumi.String("my-instance-tag"),
 //				},
@@ -102,6 +103,8 @@ type Instance struct {
 	AllowedBandwidth pulumi.IntOutput `pulumi:"allowedBandwidth"`
 	// The ID of the Vultr application to be installed on the server. [See List Applications](https://www.vultr.com/api/#operation/list-applications)
 	AppId pulumi.IntOutput `pulumi:"appId"`
+	// A map of user-supplied variable keys and values for Vultr Marketplace apps. [See List Marketplace App Variables](https://www.vultr.com/api/#tag/marketplace/operation/list-marketplace-app-variables)
+	AppVariables pulumi.StringMapOutput `pulumi:"appVariables"`
 	// Whether automatic backups will be enabled for this server (these have an extra charge associated with them). Values can be enabled or disabled.
 	Backups pulumi.StringPtrOutput `pulumi:"backups"`
 	// A block that defines the way backups should be scheduled. While this is an optional field if `backups` are `enabled` this field is mandatory. The configuration of a `backupsSchedule` is listed below.
@@ -112,6 +115,8 @@ type Instance struct {
 	DdosProtection pulumi.BoolPtrOutput `pulumi:"ddosProtection"`
 	// The server's default password.
 	DefaultPassword pulumi.StringOutput `pulumi:"defaultPassword"`
+	// Whether the server has a public IPv4 address assigned (only possible with `enableIpv6` set to `true`)
+	DisablePublicIpv4 pulumi.BoolPtrOutput `pulumi:"disablePublicIpv4"`
 	// The description of the disk(s) on the server.
 	Disk pulumi.IntOutput `pulumi:"disk"`
 	// Whether the server has IPv6 networking activated.
@@ -230,6 +235,8 @@ type instanceState struct {
 	AllowedBandwidth *int `pulumi:"allowedBandwidth"`
 	// The ID of the Vultr application to be installed on the server. [See List Applications](https://www.vultr.com/api/#operation/list-applications)
 	AppId *int `pulumi:"appId"`
+	// A map of user-supplied variable keys and values for Vultr Marketplace apps. [See List Marketplace App Variables](https://www.vultr.com/api/#tag/marketplace/operation/list-marketplace-app-variables)
+	AppVariables map[string]string `pulumi:"appVariables"`
 	// Whether automatic backups will be enabled for this server (these have an extra charge associated with them). Values can be enabled or disabled.
 	Backups *string `pulumi:"backups"`
 	// A block that defines the way backups should be scheduled. While this is an optional field if `backups` are `enabled` this field is mandatory. The configuration of a `backupsSchedule` is listed below.
@@ -240,6 +247,8 @@ type instanceState struct {
 	DdosProtection *bool `pulumi:"ddosProtection"`
 	// The server's default password.
 	DefaultPassword *string `pulumi:"defaultPassword"`
+	// Whether the server has a public IPv4 address assigned (only possible with `enableIpv6` set to `true`)
+	DisablePublicIpv4 *bool `pulumi:"disablePublicIpv4"`
 	// The description of the disk(s) on the server.
 	Disk *int `pulumi:"disk"`
 	// Whether the server has IPv6 networking activated.
@@ -319,6 +328,8 @@ type InstanceState struct {
 	AllowedBandwidth pulumi.IntPtrInput
 	// The ID of the Vultr application to be installed on the server. [See List Applications](https://www.vultr.com/api/#operation/list-applications)
 	AppId pulumi.IntPtrInput
+	// A map of user-supplied variable keys and values for Vultr Marketplace apps. [See List Marketplace App Variables](https://www.vultr.com/api/#tag/marketplace/operation/list-marketplace-app-variables)
+	AppVariables pulumi.StringMapInput
 	// Whether automatic backups will be enabled for this server (these have an extra charge associated with them). Values can be enabled or disabled.
 	Backups pulumi.StringPtrInput
 	// A block that defines the way backups should be scheduled. While this is an optional field if `backups` are `enabled` this field is mandatory. The configuration of a `backupsSchedule` is listed below.
@@ -329,6 +340,8 @@ type InstanceState struct {
 	DdosProtection pulumi.BoolPtrInput
 	// The server's default password.
 	DefaultPassword pulumi.StringPtrInput
+	// Whether the server has a public IPv4 address assigned (only possible with `enableIpv6` set to `true`)
+	DisablePublicIpv4 pulumi.BoolPtrInput
 	// The description of the disk(s) on the server.
 	Disk pulumi.IntPtrInput
 	// Whether the server has IPv6 networking activated.
@@ -410,12 +423,16 @@ type instanceArgs struct {
 	ActivationEmail *bool `pulumi:"activationEmail"`
 	// The ID of the Vultr application to be installed on the server. [See List Applications](https://www.vultr.com/api/#operation/list-applications)
 	AppId *int `pulumi:"appId"`
+	// A map of user-supplied variable keys and values for Vultr Marketplace apps. [See List Marketplace App Variables](https://www.vultr.com/api/#tag/marketplace/operation/list-marketplace-app-variables)
+	AppVariables map[string]string `pulumi:"appVariables"`
 	// Whether automatic backups will be enabled for this server (these have an extra charge associated with them). Values can be enabled or disabled.
 	Backups *string `pulumi:"backups"`
 	// A block that defines the way backups should be scheduled. While this is an optional field if `backups` are `enabled` this field is mandatory. The configuration of a `backupsSchedule` is listed below.
 	BackupsSchedule *InstanceBackupsSchedule `pulumi:"backupsSchedule"`
 	// Whether DDOS protection will be enabled on the server (there is an additional charge for this).
 	DdosProtection *bool `pulumi:"ddosProtection"`
+	// Whether the server has a public IPv4 address assigned (only possible with `enableIpv6` set to `true`)
+	DisablePublicIpv4 *bool `pulumi:"disablePublicIpv4"`
 	// Whether the server has IPv6 networking activated.
 	EnableIpv6 *bool `pulumi:"enableIpv6"`
 	// The ID of the firewall group to assign to the server.
@@ -462,12 +479,16 @@ type InstanceArgs struct {
 	ActivationEmail pulumi.BoolPtrInput
 	// The ID of the Vultr application to be installed on the server. [See List Applications](https://www.vultr.com/api/#operation/list-applications)
 	AppId pulumi.IntPtrInput
+	// A map of user-supplied variable keys and values for Vultr Marketplace apps. [See List Marketplace App Variables](https://www.vultr.com/api/#tag/marketplace/operation/list-marketplace-app-variables)
+	AppVariables pulumi.StringMapInput
 	// Whether automatic backups will be enabled for this server (these have an extra charge associated with them). Values can be enabled or disabled.
 	Backups pulumi.StringPtrInput
 	// A block that defines the way backups should be scheduled. While this is an optional field if `backups` are `enabled` this field is mandatory. The configuration of a `backupsSchedule` is listed below.
 	BackupsSchedule InstanceBackupsSchedulePtrInput
 	// Whether DDOS protection will be enabled on the server (there is an additional charge for this).
 	DdosProtection pulumi.BoolPtrInput
+	// Whether the server has a public IPv4 address assigned (only possible with `enableIpv6` set to `true`)
+	DisablePublicIpv4 pulumi.BoolPtrInput
 	// Whether the server has IPv6 networking activated.
 	EnableIpv6 pulumi.BoolPtrInput
 	// The ID of the firewall group to assign to the server.
@@ -610,6 +631,11 @@ func (o InstanceOutput) AppId() pulumi.IntOutput {
 	return o.ApplyT(func(v *Instance) pulumi.IntOutput { return v.AppId }).(pulumi.IntOutput)
 }
 
+// A map of user-supplied variable keys and values for Vultr Marketplace apps. [See List Marketplace App Variables](https://www.vultr.com/api/#tag/marketplace/operation/list-marketplace-app-variables)
+func (o InstanceOutput) AppVariables() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *Instance) pulumi.StringMapOutput { return v.AppVariables }).(pulumi.StringMapOutput)
+}
+
 // Whether automatic backups will be enabled for this server (these have an extra charge associated with them). Values can be enabled or disabled.
 func (o InstanceOutput) Backups() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Instance) pulumi.StringPtrOutput { return v.Backups }).(pulumi.StringPtrOutput)
@@ -633,6 +659,11 @@ func (o InstanceOutput) DdosProtection() pulumi.BoolPtrOutput {
 // The server's default password.
 func (o InstanceOutput) DefaultPassword() pulumi.StringOutput {
 	return o.ApplyT(func(v *Instance) pulumi.StringOutput { return v.DefaultPassword }).(pulumi.StringOutput)
+}
+
+// Whether the server has a public IPv4 address assigned (only possible with `enableIpv6` set to `true`)
+func (o InstanceOutput) DisablePublicIpv4() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *Instance) pulumi.BoolPtrOutput { return v.DisablePublicIpv4 }).(pulumi.BoolPtrOutput)
 }
 
 // The description of the disk(s) on the server.

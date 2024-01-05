@@ -37,6 +37,7 @@ import * as utilities from "./utilities";
  *         type: "daily",
  *     },
  *     ddosProtection: true,
+ *     disablePublicIpv4: true,
  *     enableIpv6: true,
  *     hostname: "my-instance-hostname",
  *     label: "my-instance-label",
@@ -96,6 +97,10 @@ export class Instance extends pulumi.CustomResource {
      */
     public readonly appId!: pulumi.Output<number>;
     /**
+     * A map of user-supplied variable keys and values for Vultr Marketplace apps. [See List Marketplace App Variables](https://www.vultr.com/api/#tag/marketplace/operation/list-marketplace-app-variables)
+     */
+    public readonly appVariables!: pulumi.Output<{[key: string]: string} | undefined>;
+    /**
      * Whether automatic backups will be enabled for this server (these have an extra charge associated with them). Values can be enabled or disabled.
      */
     public readonly backups!: pulumi.Output<string | undefined>;
@@ -115,6 +120,10 @@ export class Instance extends pulumi.CustomResource {
      * The server's default password.
      */
     public /*out*/ readonly defaultPassword!: pulumi.Output<string>;
+    /**
+     * Whether the server has a public IPv4 address assigned (only possible with `enableIpv6` set to `true`)
+     */
+    public readonly disablePublicIpv4!: pulumi.Output<boolean | undefined>;
     /**
      * The description of the disk(s) on the server.
      */
@@ -270,11 +279,13 @@ export class Instance extends pulumi.CustomResource {
             resourceInputs["activationEmail"] = state ? state.activationEmail : undefined;
             resourceInputs["allowedBandwidth"] = state ? state.allowedBandwidth : undefined;
             resourceInputs["appId"] = state ? state.appId : undefined;
+            resourceInputs["appVariables"] = state ? state.appVariables : undefined;
             resourceInputs["backups"] = state ? state.backups : undefined;
             resourceInputs["backupsSchedule"] = state ? state.backupsSchedule : undefined;
             resourceInputs["dateCreated"] = state ? state.dateCreated : undefined;
             resourceInputs["ddosProtection"] = state ? state.ddosProtection : undefined;
             resourceInputs["defaultPassword"] = state ? state.defaultPassword : undefined;
+            resourceInputs["disablePublicIpv4"] = state ? state.disablePublicIpv4 : undefined;
             resourceInputs["disk"] = state ? state.disk : undefined;
             resourceInputs["enableIpv6"] = state ? state.enableIpv6 : undefined;
             resourceInputs["features"] = state ? state.features : undefined;
@@ -319,9 +330,11 @@ export class Instance extends pulumi.CustomResource {
             }
             resourceInputs["activationEmail"] = args ? args.activationEmail : undefined;
             resourceInputs["appId"] = args ? args.appId : undefined;
+            resourceInputs["appVariables"] = args ? args.appVariables : undefined;
             resourceInputs["backups"] = args ? args.backups : undefined;
             resourceInputs["backupsSchedule"] = args ? args.backupsSchedule : undefined;
             resourceInputs["ddosProtection"] = args ? args.ddosProtection : undefined;
+            resourceInputs["disablePublicIpv4"] = args ? args.disablePublicIpv4 : undefined;
             resourceInputs["enableIpv6"] = args ? args.enableIpv6 : undefined;
             resourceInputs["firewallGroupId"] = args ? args.firewallGroupId : undefined;
             resourceInputs["hostname"] = args ? args.hostname : undefined;
@@ -384,6 +397,10 @@ export interface InstanceState {
      */
     appId?: pulumi.Input<number>;
     /**
+     * A map of user-supplied variable keys and values for Vultr Marketplace apps. [See List Marketplace App Variables](https://www.vultr.com/api/#tag/marketplace/operation/list-marketplace-app-variables)
+     */
+    appVariables?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
      * Whether automatic backups will be enabled for this server (these have an extra charge associated with them). Values can be enabled or disabled.
      */
     backups?: pulumi.Input<string>;
@@ -403,6 +420,10 @@ export interface InstanceState {
      * The server's default password.
      */
     defaultPassword?: pulumi.Input<string>;
+    /**
+     * Whether the server has a public IPv4 address assigned (only possible with `enableIpv6` set to `true`)
+     */
+    disablePublicIpv4?: pulumi.Input<boolean>;
     /**
      * The description of the disk(s) on the server.
      */
@@ -556,6 +577,10 @@ export interface InstanceArgs {
      */
     appId?: pulumi.Input<number>;
     /**
+     * A map of user-supplied variable keys and values for Vultr Marketplace apps. [See List Marketplace App Variables](https://www.vultr.com/api/#tag/marketplace/operation/list-marketplace-app-variables)
+     */
+    appVariables?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
      * Whether automatic backups will be enabled for this server (these have an extra charge associated with them). Values can be enabled or disabled.
      */
     backups?: pulumi.Input<string>;
@@ -567,6 +592,10 @@ export interface InstanceArgs {
      * Whether DDOS protection will be enabled on the server (there is an additional charge for this).
      */
     ddosProtection?: pulumi.Input<boolean>;
+    /**
+     * Whether the server has a public IPv4 address assigned (only possible with `enableIpv6` set to `true`)
+     */
+    disablePublicIpv4?: pulumi.Input<boolean>;
     /**
      * Whether the server has IPv6 networking activated.
      */

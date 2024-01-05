@@ -96,6 +96,8 @@ type BareMetalServer struct {
 	ActivationEmail pulumi.BoolPtrOutput `pulumi:"activationEmail"`
 	// The ID of the Vultr application to be installed on the server. [See List Applications](https://www.vultr.com/api/#operation/list-applications)
 	AppId pulumi.IntOutput `pulumi:"appId"`
+	// A map of user-supplied variable keys and values for Vultr Marketplace apps. [See List Marketplace App Variables](https://www.vultr.com/api/#tag/marketplace/operation/list-marketplace-app-variables)
+	AppVariables pulumi.StringMapOutput `pulumi:"appVariables"`
 	// The number of CPUs available on the server.
 	CpuCount pulumi.IntOutput `pulumi:"cpuCount"`
 	// The date the server was added to your Vultr account.
@@ -199,6 +201,8 @@ type bareMetalServerState struct {
 	ActivationEmail *bool `pulumi:"activationEmail"`
 	// The ID of the Vultr application to be installed on the server. [See List Applications](https://www.vultr.com/api/#operation/list-applications)
 	AppId *int `pulumi:"appId"`
+	// A map of user-supplied variable keys and values for Vultr Marketplace apps. [See List Marketplace App Variables](https://www.vultr.com/api/#tag/marketplace/operation/list-marketplace-app-variables)
+	AppVariables map[string]string `pulumi:"appVariables"`
 	// The number of CPUs available on the server.
 	CpuCount *int `pulumi:"cpuCount"`
 	// The date the server was added to your Vultr account.
@@ -263,6 +267,8 @@ type BareMetalServerState struct {
 	ActivationEmail pulumi.BoolPtrInput
 	// The ID of the Vultr application to be installed on the server. [See List Applications](https://www.vultr.com/api/#operation/list-applications)
 	AppId pulumi.IntPtrInput
+	// A map of user-supplied variable keys and values for Vultr Marketplace apps. [See List Marketplace App Variables](https://www.vultr.com/api/#tag/marketplace/operation/list-marketplace-app-variables)
+	AppVariables pulumi.StringMapInput
 	// The number of CPUs available on the server.
 	CpuCount pulumi.IntPtrInput
 	// The date the server was added to your Vultr account.
@@ -331,6 +337,8 @@ type bareMetalServerArgs struct {
 	ActivationEmail *bool `pulumi:"activationEmail"`
 	// The ID of the Vultr application to be installed on the server. [See List Applications](https://www.vultr.com/api/#operation/list-applications)
 	AppId *int `pulumi:"appId"`
+	// A map of user-supplied variable keys and values for Vultr Marketplace apps. [See List Marketplace App Variables](https://www.vultr.com/api/#tag/marketplace/operation/list-marketplace-app-variables)
+	AppVariables map[string]string `pulumi:"appVariables"`
 	// Whether the server has IPv6 networking activated.
 	EnableIpv6 *bool `pulumi:"enableIpv6"`
 	// The hostname to assign to the server.
@@ -368,6 +376,8 @@ type BareMetalServerArgs struct {
 	ActivationEmail pulumi.BoolPtrInput
 	// The ID of the Vultr application to be installed on the server. [See List Applications](https://www.vultr.com/api/#operation/list-applications)
 	AppId pulumi.IntPtrInput
+	// A map of user-supplied variable keys and values for Vultr Marketplace apps. [See List Marketplace App Variables](https://www.vultr.com/api/#tag/marketplace/operation/list-marketplace-app-variables)
+	AppVariables pulumi.StringMapInput
 	// Whether the server has IPv6 networking activated.
 	EnableIpv6 pulumi.BoolPtrInput
 	// The hostname to assign to the server.
@@ -494,6 +504,11 @@ func (o BareMetalServerOutput) ActivationEmail() pulumi.BoolPtrOutput {
 // The ID of the Vultr application to be installed on the server. [See List Applications](https://www.vultr.com/api/#operation/list-applications)
 func (o BareMetalServerOutput) AppId() pulumi.IntOutput {
 	return o.ApplyT(func(v *BareMetalServer) pulumi.IntOutput { return v.AppId }).(pulumi.IntOutput)
+}
+
+// A map of user-supplied variable keys and values for Vultr Marketplace apps. [See List Marketplace App Variables](https://www.vultr.com/api/#tag/marketplace/operation/list-marketplace-app-variables)
+func (o BareMetalServerOutput) AppVariables() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *BareMetalServer) pulumi.StringMapOutput { return v.AppVariables }).(pulumi.StringMapOutput)
 }
 
 // The number of CPUs available on the server.
