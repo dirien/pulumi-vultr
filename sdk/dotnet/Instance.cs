@@ -54,6 +54,7 @@ namespace ediri.Vultr
     ///             Type = "daily",
     ///         },
     ///         DdosProtection = true,
+    ///         DisablePublicIpv4 = true,
     ///         EnableIpv6 = true,
     ///         Hostname = "my-instance-hostname",
     ///         Label = "my-instance-label",
@@ -99,6 +100,12 @@ namespace ediri.Vultr
         public Output<int> AppId { get; private set; } = null!;
 
         /// <summary>
+        /// A map of user-supplied variable keys and values for Vultr Marketplace apps. [See List Marketplace App Variables](https://www.vultr.com/api/#tag/marketplace/operation/list-marketplace-app-variables)
+        /// </summary>
+        [Output("appVariables")]
+        public Output<ImmutableDictionary<string, string>?> AppVariables { get; private set; } = null!;
+
+        /// <summary>
         /// Whether automatic backups will be enabled for this server (these have an extra charge associated with them). Values can be enabled or disabled.
         /// </summary>
         [Output("backups")]
@@ -127,6 +134,12 @@ namespace ediri.Vultr
         /// </summary>
         [Output("defaultPassword")]
         public Output<string> DefaultPassword { get; private set; } = null!;
+
+        /// <summary>
+        /// Whether the server has a public IPv4 address assigned (only possible with `enable_ipv6` set to `true`)
+        /// </summary>
+        [Output("disablePublicIpv4")]
+        public Output<bool?> DisablePublicIpv4 { get; private set; } = null!;
 
         /// <summary>
         /// The description of the disk(s) on the server.
@@ -395,6 +408,18 @@ namespace ediri.Vultr
         [Input("appId")]
         public Input<int>? AppId { get; set; }
 
+        [Input("appVariables")]
+        private InputMap<string>? _appVariables;
+
+        /// <summary>
+        /// A map of user-supplied variable keys and values for Vultr Marketplace apps. [See List Marketplace App Variables](https://www.vultr.com/api/#tag/marketplace/operation/list-marketplace-app-variables)
+        /// </summary>
+        public InputMap<string> AppVariables
+        {
+            get => _appVariables ?? (_appVariables = new InputMap<string>());
+            set => _appVariables = value;
+        }
+
         /// <summary>
         /// Whether automatic backups will be enabled for this server (these have an extra charge associated with them). Values can be enabled or disabled.
         /// </summary>
@@ -412,6 +437,12 @@ namespace ediri.Vultr
         /// </summary>
         [Input("ddosProtection")]
         public Input<bool>? DdosProtection { get; set; }
+
+        /// <summary>
+        /// Whether the server has a public IPv4 address assigned (only possible with `enable_ipv6` set to `true`)
+        /// </summary>
+        [Input("disablePublicIpv4")]
+        public Input<bool>? DisablePublicIpv4 { get; set; }
 
         /// <summary>
         /// Whether the server has IPv6 networking activated.
@@ -578,6 +609,18 @@ namespace ediri.Vultr
         [Input("appId")]
         public Input<int>? AppId { get; set; }
 
+        [Input("appVariables")]
+        private InputMap<string>? _appVariables;
+
+        /// <summary>
+        /// A map of user-supplied variable keys and values for Vultr Marketplace apps. [See List Marketplace App Variables](https://www.vultr.com/api/#tag/marketplace/operation/list-marketplace-app-variables)
+        /// </summary>
+        public InputMap<string> AppVariables
+        {
+            get => _appVariables ?? (_appVariables = new InputMap<string>());
+            set => _appVariables = value;
+        }
+
         /// <summary>
         /// Whether automatic backups will be enabled for this server (these have an extra charge associated with them). Values can be enabled or disabled.
         /// </summary>
@@ -617,6 +660,12 @@ namespace ediri.Vultr
                 _defaultPassword = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
             }
         }
+
+        /// <summary>
+        /// Whether the server has a public IPv4 address assigned (only possible with `enable_ipv6` set to `true`)
+        /// </summary>
+        [Input("disablePublicIpv4")]
+        public Input<bool>? DisablePublicIpv4 { get; set; }
 
         /// <summary>
         /// The description of the disk(s) on the server.

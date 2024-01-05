@@ -817,7 +817,7 @@ class KubernetesNodePoolsNode(dict):
         """
         :param str date_created: Date node was created.
         :param str id: ID of node.
-        :param str label: The label to be used as a prefix for nodes in this node pool.
+        :param str label: The VKE clusters label.
         :param str status: Status of node.
         """
         if date_created is not None:
@@ -849,7 +849,7 @@ class KubernetesNodePoolsNode(dict):
     @pulumi.getter
     def label(self) -> Optional[str]:
         """
-        The label to be used as a prefix for nodes in this node pool.
+        The VKE clusters label.
         """
         return pulumi.get(self, "label")
 

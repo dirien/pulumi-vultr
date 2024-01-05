@@ -86,6 +86,10 @@ export class BareMetalServer extends pulumi.CustomResource {
      */
     public readonly appId!: pulumi.Output<number>;
     /**
+     * A map of user-supplied variable keys and values for Vultr Marketplace apps. [See List Marketplace App Variables](https://www.vultr.com/api/#tag/marketplace/operation/list-marketplace-app-variables)
+     */
+    public readonly appVariables!: pulumi.Output<{[key: string]: string} | undefined>;
+    /**
      * The number of CPUs available on the server.
      */
     public /*out*/ readonly cpuCount!: pulumi.Output<number>;
@@ -214,6 +218,7 @@ export class BareMetalServer extends pulumi.CustomResource {
             const state = argsOrState as BareMetalServerState | undefined;
             resourceInputs["activationEmail"] = state ? state.activationEmail : undefined;
             resourceInputs["appId"] = state ? state.appId : undefined;
+            resourceInputs["appVariables"] = state ? state.appVariables : undefined;
             resourceInputs["cpuCount"] = state ? state.cpuCount : undefined;
             resourceInputs["dateCreated"] = state ? state.dateCreated : undefined;
             resourceInputs["defaultPassword"] = state ? state.defaultPassword : undefined;
@@ -253,6 +258,7 @@ export class BareMetalServer extends pulumi.CustomResource {
             }
             resourceInputs["activationEmail"] = args ? args.activationEmail : undefined;
             resourceInputs["appId"] = args ? args.appId : undefined;
+            resourceInputs["appVariables"] = args ? args.appVariables : undefined;
             resourceInputs["enableIpv6"] = args ? args.enableIpv6 : undefined;
             resourceInputs["hostname"] = args ? args.hostname : undefined;
             resourceInputs["imageId"] = args ? args.imageId : undefined;
@@ -302,6 +308,10 @@ export interface BareMetalServerState {
      * The ID of the Vultr application to be installed on the server. [See List Applications](https://www.vultr.com/api/#operation/list-applications)
      */
     appId?: pulumi.Input<number>;
+    /**
+     * A map of user-supplied variable keys and values for Vultr Marketplace apps. [See List Marketplace App Variables](https://www.vultr.com/api/#tag/marketplace/operation/list-marketplace-app-variables)
+     */
+    appVariables?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
      * The number of CPUs available on the server.
      */
@@ -429,6 +439,10 @@ export interface BareMetalServerArgs {
      * The ID of the Vultr application to be installed on the server. [See List Applications](https://www.vultr.com/api/#operation/list-applications)
      */
     appId?: pulumi.Input<number>;
+    /**
+     * A map of user-supplied variable keys and values for Vultr Marketplace apps. [See List Marketplace App Variables](https://www.vultr.com/api/#tag/marketplace/operation/list-marketplace-app-variables)
+     */
+    appVariables?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
      * Whether the server has IPv6 networking activated.
      */

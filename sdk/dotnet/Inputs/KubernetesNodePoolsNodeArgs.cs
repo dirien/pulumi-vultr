@@ -26,7 +26,7 @@ namespace ediri.Vultr.Inputs
         public Input<string>? Id { get; set; }
 
         /// <summary>
-        /// The label to be used as a prefix for nodes in this node pool.
+        /// The VKE clusters label.
         /// </summary>
         [Input("label")]
         public Input<string>? Label { get; set; }

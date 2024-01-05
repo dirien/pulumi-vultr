@@ -18,6 +18,7 @@ class BareMetalServerArgs:
                  region: pulumi.Input[str],
                  activation_email: Optional[pulumi.Input[bool]] = None,
                  app_id: Optional[pulumi.Input[int]] = None,
+                 app_variables: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  enable_ipv6: Optional[pulumi.Input[bool]] = None,
                  hostname: Optional[pulumi.Input[str]] = None,
                  image_id: Optional[pulumi.Input[str]] = None,
@@ -37,6 +38,7 @@ class BareMetalServerArgs:
         :param pulumi.Input[str] region: The ID of the region that the server is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
         :param pulumi.Input[bool] activation_email: Whether an activation email will be sent when the server is ready.
         :param pulumi.Input[int] app_id: The ID of the Vultr application to be installed on the server. [See List Applications](https://www.vultr.com/api/#operation/list-applications)
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] app_variables: A map of user-supplied variable keys and values for Vultr Marketplace apps. [See List Marketplace App Variables](https://www.vultr.com/api/#tag/marketplace/operation/list-marketplace-app-variables)
         :param pulumi.Input[bool] enable_ipv6: Whether the server has IPv6 networking activated.
         :param pulumi.Input[str] hostname: The hostname to assign to the server.
         :param pulumi.Input[str] image_id: The ID of the Vultr marketplace application to be installed on the server. [See List Applications](https://www.vultr.com/api/#operation/list-applications) Note marketplace applications are denoted by type: `marketplace` and you must use the `image_id` not the id.
@@ -56,6 +58,8 @@ class BareMetalServerArgs:
             pulumi.set(__self__, "activation_email", activation_email)
         if app_id is not None:
             pulumi.set(__self__, "app_id", app_id)
+        if app_variables is not None:
+            pulumi.set(__self__, "app_variables", app_variables)
         if enable_ipv6 is not None:
             pulumi.set(__self__, "enable_ipv6", enable_ipv6)
         if hostname is not None:
@@ -130,6 +134,18 @@ class BareMetalServerArgs:
     @app_id.setter
     def app_id(self, value: Optional[pulumi.Input[int]]):
         pulumi.set(self, "app_id", value)
+
+    @property
+    @pulumi.getter(name="appVariables")
+    def app_variables(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        A map of user-supplied variable keys and values for Vultr Marketplace apps. [See List Marketplace App Variables](https://www.vultr.com/api/#tag/marketplace/operation/list-marketplace-app-variables)
+        """
+        return pulumi.get(self, "app_variables")
+
+    @app_variables.setter
+    def app_variables(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
+        pulumi.set(self, "app_variables", value)
 
     @property
     @pulumi.getter(name="enableIpv6")
@@ -290,6 +306,7 @@ class _BareMetalServerState:
     def __init__(__self__, *,
                  activation_email: Optional[pulumi.Input[bool]] = None,
                  app_id: Optional[pulumi.Input[int]] = None,
+                 app_variables: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  cpu_count: Optional[pulumi.Input[int]] = None,
                  date_created: Optional[pulumi.Input[str]] = None,
                  default_password: Optional[pulumi.Input[str]] = None,
@@ -323,6 +340,7 @@ class _BareMetalServerState:
         Input properties used for looking up and filtering BareMetalServer resources.
         :param pulumi.Input[bool] activation_email: Whether an activation email will be sent when the server is ready.
         :param pulumi.Input[int] app_id: The ID of the Vultr application to be installed on the server. [See List Applications](https://www.vultr.com/api/#operation/list-applications)
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] app_variables: A map of user-supplied variable keys and values for Vultr Marketplace apps. [See List Marketplace App Variables](https://www.vultr.com/api/#tag/marketplace/operation/list-marketplace-app-variables)
         :param pulumi.Input[int] cpu_count: The number of CPUs available on the server.
         :param pulumi.Input[str] date_created: The date the server was added to your Vultr account.
         :param pulumi.Input[str] default_password: The server's default password.
@@ -356,6 +374,8 @@ class _BareMetalServerState:
             pulumi.set(__self__, "activation_email", activation_email)
         if app_id is not None:
             pulumi.set(__self__, "app_id", app_id)
+        if app_variables is not None:
+            pulumi.set(__self__, "app_variables", app_variables)
         if cpu_count is not None:
             pulumi.set(__self__, "cpu_count", cpu_count)
         if date_created is not None:
@@ -438,6 +458,18 @@ class _BareMetalServerState:
     @app_id.setter
     def app_id(self, value: Optional[pulumi.Input[int]]):
         pulumi.set(self, "app_id", value)
+
+    @property
+    @pulumi.getter(name="appVariables")
+    def app_variables(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
+        """
+        A map of user-supplied variable keys and values for Vultr Marketplace apps. [See List Marketplace App Variables](https://www.vultr.com/api/#tag/marketplace/operation/list-marketplace-app-variables)
+        """
+        return pulumi.get(self, "app_variables")
+
+    @app_variables.setter
+    def app_variables(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
+        pulumi.set(self, "app_variables", value)
 
     @property
     @pulumi.getter(name="cpuCount")
@@ -792,6 +824,7 @@ class BareMetalServer(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  activation_email: Optional[pulumi.Input[bool]] = None,
                  app_id: Optional[pulumi.Input[int]] = None,
+                 app_variables: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  enable_ipv6: Optional[pulumi.Input[bool]] = None,
                  hostname: Optional[pulumi.Input[str]] = None,
                  image_id: Optional[pulumi.Input[str]] = None,
@@ -855,6 +888,7 @@ class BareMetalServer(pulumi.CustomResource):
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[bool] activation_email: Whether an activation email will be sent when the server is ready.
         :param pulumi.Input[int] app_id: The ID of the Vultr application to be installed on the server. [See List Applications](https://www.vultr.com/api/#operation/list-applications)
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] app_variables: A map of user-supplied variable keys and values for Vultr Marketplace apps. [See List Marketplace App Variables](https://www.vultr.com/api/#tag/marketplace/operation/list-marketplace-app-variables)
         :param pulumi.Input[bool] enable_ipv6: Whether the server has IPv6 networking activated.
         :param pulumi.Input[str] hostname: The hostname to assign to the server.
         :param pulumi.Input[str] image_id: The ID of the Vultr marketplace application to be installed on the server. [See List Applications](https://www.vultr.com/api/#operation/list-applications) Note marketplace applications are denoted by type: `marketplace` and you must use the `image_id` not the id.
@@ -936,6 +970,7 @@ class BareMetalServer(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  activation_email: Optional[pulumi.Input[bool]] = None,
                  app_id: Optional[pulumi.Input[int]] = None,
+                 app_variables: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  enable_ipv6: Optional[pulumi.Input[bool]] = None,
                  hostname: Optional[pulumi.Input[str]] = None,
                  image_id: Optional[pulumi.Input[str]] = None,
@@ -962,6 +997,7 @@ class BareMetalServer(pulumi.CustomResource):
 
             __props__.__dict__["activation_email"] = activation_email
             __props__.__dict__["app_id"] = app_id
+            __props__.__dict__["app_variables"] = app_variables
             __props__.__dict__["enable_ipv6"] = enable_ipv6
             __props__.__dict__["hostname"] = hostname
             __props__.__dict__["image_id"] = image_id
@@ -1009,6 +1045,7 @@ class BareMetalServer(pulumi.CustomResource):
             opts: Optional[pulumi.ResourceOptions] = None,
             activation_email: Optional[pulumi.Input[bool]] = None,
             app_id: Optional[pulumi.Input[int]] = None,
+            app_variables: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
             cpu_count: Optional[pulumi.Input[int]] = None,
             date_created: Optional[pulumi.Input[str]] = None,
             default_password: Optional[pulumi.Input[str]] = None,
@@ -1047,6 +1084,7 @@ class BareMetalServer(pulumi.CustomResource):
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[bool] activation_email: Whether an activation email will be sent when the server is ready.
         :param pulumi.Input[int] app_id: The ID of the Vultr application to be installed on the server. [See List Applications](https://www.vultr.com/api/#operation/list-applications)
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] app_variables: A map of user-supplied variable keys and values for Vultr Marketplace apps. [See List Marketplace App Variables](https://www.vultr.com/api/#tag/marketplace/operation/list-marketplace-app-variables)
         :param pulumi.Input[int] cpu_count: The number of CPUs available on the server.
         :param pulumi.Input[str] date_created: The date the server was added to your Vultr account.
         :param pulumi.Input[str] default_password: The server's default password.
@@ -1082,6 +1120,7 @@ class BareMetalServer(pulumi.CustomResource):
 
         __props__.__dict__["activation_email"] = activation_email
         __props__.__dict__["app_id"] = app_id
+        __props__.__dict__["app_variables"] = app_variables
         __props__.__dict__["cpu_count"] = cpu_count
         __props__.__dict__["date_created"] = date_created
         __props__.__dict__["default_password"] = default_password
@@ -1128,6 +1167,14 @@ class BareMetalServer(pulumi.CustomResource):
         The ID of the Vultr application to be installed on the server. [See List Applications](https://www.vultr.com/api/#operation/list-applications)
         """
         return pulumi.get(self, "app_id")
+
+    @property
+    @pulumi.getter(name="appVariables")
+    def app_variables(self) -> pulumi.Output[Optional[Mapping[str, str]]]:
+        """
+        A map of user-supplied variable keys and values for Vultr Marketplace apps. [See List Marketplace App Variables](https://www.vultr.com/api/#tag/marketplace/operation/list-marketplace-app-variables)
+        """
+        return pulumi.get(self, "app_variables")
 
     @property
     @pulumi.getter(name="cpuCount")
