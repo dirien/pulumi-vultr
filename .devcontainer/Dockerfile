@@ -1,4 +1,4 @@
-FROM  --platform=linux/amd64 pulumi/pulumi:3.100.0
+FROM  --platform=linux/amd64 pulumi/pulumi:3.104.2
 
 # Install pulumictl and set to PATH
 RUN curl -fsSL https://get.pulumi.com | sh
