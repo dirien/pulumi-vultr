@@ -216,7 +216,7 @@ class PrivateNetwork(pulumi.CustomResource):
         Networks can be imported using the network `ID`, e.g.
 
         ```sh
-         $ pulumi import vultr:index/privateNetwork:PrivateNetwork my_network 0e04f918-575e-41cb-86f6-d729b354a5a1
+        $ pulumi import vultr:index/privateNetwork:PrivateNetwork my_network 0e04f918-575e-41cb-86f6-d729b354a5a1
         ```
 
         :param str resource_name: The name of the resource.
@@ -268,7 +268,7 @@ class PrivateNetwork(pulumi.CustomResource):
         Networks can be imported using the network `ID`, e.g.
 
         ```sh
-         $ pulumi import vultr:index/privateNetwork:PrivateNetwork my_network 0e04f918-575e-41cb-86f6-d729b354a5a1
+        $ pulumi import vultr:index/privateNetwork:PrivateNetwork my_network 0e04f918-575e-41cb-86f6-d729b354a5a1
         ```
 
         :param str resource_name: The name of the resource.

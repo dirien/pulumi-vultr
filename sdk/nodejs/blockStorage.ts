@@ -27,7 +27,7 @@ import * as utilities from "./utilities";
  * Block Storage can be imported using the Block Storage `ID`, e.g.
  *
  * ```sh
- *  $ pulumi import vultr:index/blockStorage:BlockStorage my_blockstorage e315835e-d466-4e89-9b4c-dfd8788d7685
+ * $ pulumi import vultr:index/blockStorage:BlockStorage my_blockstorage e315835e-d466-4e89-9b4c-dfd8788d7685
  * ```
  */
 export class BlockStorage extends pulumi.CustomResource {

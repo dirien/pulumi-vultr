@@ -23,7 +23,7 @@ namespace ediri.Vultr.Outputs
         /// </summary>
         public readonly string? Id;
         /// <summary>
-        /// The VKE clusters label.
+        /// The label to be used as a prefix for nodes in this node pool.
         /// </summary>
         public readonly string? Label;
         /// <summary>

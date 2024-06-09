@@ -72,6 +72,8 @@ import (
 //			if err != nil {
 //				return err
 //			}
+//			// This resource must be created and attached to the cluster
+//			// before removing the default node from the vultr_kubernetes resource
 //			_, err = vultr.NewKubernetesNodePools(ctx, "np", &vultr.KubernetesNodePoolsArgs{
 //				ClusterId:    k8.ID(),
 //				NodeQuantity: pulumi.Int(1),

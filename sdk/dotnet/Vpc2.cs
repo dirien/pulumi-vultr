@@ -60,7 +60,7 @@ namespace ediri.Vultr
     /// VPCs 2.0 can be imported using the VPC 2.0 `ID`, e.g.
     /// 
     /// ```sh
-    ///  $ pulumi import vultr:index/vpc2:Vpc2 my_vpc2 0e04f918-575e-41cb-86f6-d729b354a5a1
+    /// $ pulumi import vultr:index/vpc2:Vpc2 my_vpc2 0e04f918-575e-41cb-86f6-d729b354a5a1
     /// ```
     /// </summary>
     [VultrResourceType("vultr:index/vpc2:Vpc2")]

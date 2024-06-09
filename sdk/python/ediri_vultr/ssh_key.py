@@ -133,7 +133,7 @@ class SSHKey(pulumi.CustomResource):
         SSH keys can be imported using the SSH key `ID`, e.g.
 
         ```sh
-         $ pulumi import vultr:index/sSHKey:SSHKey my_key 6b0876a7-f709-41ba-aed8-abed9d38ae45
+        $ pulumi import vultr:index/sSHKey:SSHKey my_key 6b0876a7-f709-41ba-aed8-abed9d38ae45
         ```
 
         :param str resource_name: The name of the resource.
@@ -166,7 +166,7 @@ class SSHKey(pulumi.CustomResource):
         SSH keys can be imported using the SSH key `ID`, e.g.
 
         ```sh
-         $ pulumi import vultr:index/sSHKey:SSHKey my_key 6b0876a7-f709-41ba-aed8-abed9d38ae45
+        $ pulumi import vultr:index/sSHKey:SSHKey my_key 6b0876a7-f709-41ba-aed8-abed9d38ae45
         ```
 
         :param str resource_name: The name of the resource.

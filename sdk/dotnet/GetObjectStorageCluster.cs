@@ -15,9 +15,7 @@ namespace ediri.Vultr
         /// <summary>
         /// Get information about Object Storage Clusters on Vultr.
         /// 
-        /// {{% examples %}}
         /// ## Example Usage
-        /// {{% example %}}
         /// 
         /// Get the information for an object storage cluster by `region`:
         /// 
@@ -46,8 +44,6 @@ namespace ediri.Vultr
         /// 
         /// });
         /// ```
-        /// {{% /example %}}
-        /// {{% /examples %}}
         /// </summary>
         public static Task<GetObjectStorageClusterResult> InvokeAsync(GetObjectStorageClusterArgs? args = null, InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetObjectStorageClusterResult>("vultr:index/getObjectStorageCluster:getObjectStorageCluster", args ?? new GetObjectStorageClusterArgs(), options.WithDefaults());
@@ -55,9 +51,7 @@ namespace ediri.Vultr
         /// <summary>
         /// Get information about Object Storage Clusters on Vultr.
         /// 
-        /// {{% examples %}}
         /// ## Example Usage
-        /// {{% example %}}
         /// 
         /// Get the information for an object storage cluster by `region`:
         /// 
@@ -86,8 +80,6 @@ namespace ediri.Vultr
         /// 
         /// });
         /// ```
-        /// {{% /example %}}
-        /// {{% /examples %}}
         /// </summary>
         public static Output<GetObjectStorageClusterResult> Invoke(GetObjectStorageClusterInvokeArgs? args = null, InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.Invoke<GetObjectStorageClusterResult>("vultr:index/getObjectStorageCluster:getObjectStorageCluster", args ?? new GetObjectStorageClusterInvokeArgs(), options.WithDefaults());

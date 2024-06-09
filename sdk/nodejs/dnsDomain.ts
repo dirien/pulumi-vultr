@@ -26,7 +26,7 @@ import * as utilities from "./utilities";
  * DNS Domains can be imported using the Dns Domain `domain`, e.g.
  *
  * ```sh
- *  $ pulumi import vultr:index/dnsDomain:DnsDomain name domain.com
+ * $ pulumi import vultr:index/dnsDomain:DnsDomain name domain.com
  * ```
  */
 export class DnsDomain extends pulumi.CustomResource {

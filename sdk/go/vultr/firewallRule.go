@@ -59,9 +59,7 @@ import (
 // Firewall Rules can be imported using the Firewall Group `ID` and Firewall Rule `ID`, e.g.
 //
 // ```sh
-//
-//	$ pulumi import vultr:index/firewallRule:FirewallRule my_rule b6a859c5-b299-49dd-8888-b1abbc517d08,1
-//
+// $ pulumi import vultr:index/firewallRule:FirewallRule my_rule b6a859c5-b299-49dd-8888-b1abbc517d08,1
 // ```
 type FirewallRule struct {
 	pulumi.CustomResourceState

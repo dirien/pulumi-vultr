@@ -32,7 +32,7 @@ import * as utilities from "./utilities";
  * Snapshots can be imported using the Snapshot `ID`, e.g.
  *
  * ```sh
- *  $ pulumi import vultr:index/snapshot:Snapshot my_snapshot 283941e8-0783-410e-9540-71c86b833992
+ * $ pulumi import vultr:index/snapshot:Snapshot my_snapshot 283941e8-0783-410e-9540-71c86b833992
  * ```
  */
 export class Snapshot extends pulumi.CustomResource {

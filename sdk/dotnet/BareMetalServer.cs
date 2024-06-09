@@ -69,7 +69,7 @@ namespace ediri.Vultr
     /// Bare Metal Servers can be imported using the server `ID`, e.g.
     /// 
     /// ```sh
-    ///  $ pulumi import vultr:index/bareMetalServer:BareMetalServer my_server b6a859c5-b299-49dd-8888-b1abbc517d08
+    /// $ pulumi import vultr:index/bareMetalServer:BareMetalServer my_server b6a859c5-b299-49dd-8888-b1abbc517d08
     /// ```
     /// </summary>
     [VultrResourceType("vultr:index/bareMetalServer:BareMetalServer")]
@@ -158,6 +158,9 @@ namespace ediri.Vultr
         /// </summary>
         [Output("mainIp")]
         public Output<string> MainIp { get; private set; } = null!;
+
+        [Output("mdiskMode")]
+        public Output<string?> MdiskMode { get; private set; } = null!;
 
         /// <summary>
         /// The server's IPv4 netmask.
@@ -363,6 +366,9 @@ namespace ediri.Vultr
         [Input("label")]
         public Input<string>? Label { get; set; }
 
+        [Input("mdiskMode")]
+        public Input<string>? MdiskMode { get; set; }
+
         /// <summary>
         /// The ID of the operating system to be installed on the server. [See List OS](https://www.vultr.com/api/#operation/list-os)
         /// </summary>
@@ -551,6 +557,9 @@ namespace ediri.Vultr
         /// </summary>
         [Input("mainIp")]
         public Input<string>? MainIp { get; set; }
+
+        [Input("mdiskMode")]
+        public Input<string>? MdiskMode { get; set; }
 
         /// <summary>
         /// The server's IPv4 netmask.

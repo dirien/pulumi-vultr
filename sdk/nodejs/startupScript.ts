@@ -23,7 +23,7 @@ import * as utilities from "./utilities";
  * Startup Scripts can be imported using the Startup Scripts `ID`, e.g.
  *
  * ```sh
- *  $ pulumi import vultr:index/startupScript:StartupScript my_script ff8f36a8-eb86-4b8d-8667-b9d5459b6390
+ * $ pulumi import vultr:index/startupScript:StartupScript my_script ff8f36a8-eb86-4b8d-8667-b9d5459b6390
  * ```
  */
 export class StartupScript extends pulumi.CustomResource {

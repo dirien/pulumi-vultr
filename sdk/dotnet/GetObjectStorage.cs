@@ -15,9 +15,7 @@ namespace ediri.Vultr
         /// <summary>
         /// Get information about an Object Storage subscription on Vultr.
         /// 
-        /// {{% examples %}}
         /// ## Example Usage
-        /// {{% example %}}
         /// 
         /// Get the information for an object storage subscription by `label`:
         /// 
@@ -46,8 +44,6 @@ namespace ediri.Vultr
         /// 
         /// });
         /// ```
-        /// {{% /example %}}
-        /// {{% /examples %}}
         /// </summary>
         public static Task<GetObjectStorageResult> InvokeAsync(GetObjectStorageArgs? args = null, InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetObjectStorageResult>("vultr:index/getObjectStorage:getObjectStorage", args ?? new GetObjectStorageArgs(), options.WithDefaults());
@@ -55,9 +51,7 @@ namespace ediri.Vultr
         /// <summary>
         /// Get information about an Object Storage subscription on Vultr.
         /// 
-        /// {{% examples %}}
         /// ## Example Usage
-        /// {{% example %}}
         /// 
         /// Get the information for an object storage subscription by `label`:
         /// 
@@ -86,8 +80,6 @@ namespace ediri.Vultr
         /// 
         /// });
         /// ```
-        /// {{% /example %}}
-        /// {{% /examples %}}
         /// </summary>
         public static Output<GetObjectStorageResult> Invoke(GetObjectStorageInvokeArgs? args = null, InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.Invoke<GetObjectStorageResult>("vultr:index/getObjectStorage:getObjectStorage", args ?? new GetObjectStorageInvokeArgs(), options.WithDefaults());

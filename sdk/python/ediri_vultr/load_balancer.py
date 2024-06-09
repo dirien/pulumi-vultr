@@ -575,7 +575,7 @@ class LoadBalancer(pulumi.CustomResource):
         Load Balancers can be imported using the load balancer `ID`, e.g.
 
         ```sh
-         $ pulumi import vultr:index/loadBalancer:LoadBalancer lb b6a859c5-b299-49dd-8888-b1abbc517d08
+        $ pulumi import vultr:index/loadBalancer:LoadBalancer lb b6a859c5-b299-49dd-8888-b1abbc517d08
         ```
 
         :param str resource_name: The name of the resource.
@@ -637,7 +637,7 @@ class LoadBalancer(pulumi.CustomResource):
         Load Balancers can be imported using the load balancer `ID`, e.g.
 
         ```sh
-         $ pulumi import vultr:index/loadBalancer:LoadBalancer lb b6a859c5-b299-49dd-8888-b1abbc517d08
+        $ pulumi import vultr:index/loadBalancer:LoadBalancer lb b6a859c5-b299-49dd-8888-b1abbc517d08
         ```
 
         :param str resource_name: The name of the resource.

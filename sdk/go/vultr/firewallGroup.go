@@ -46,9 +46,7 @@ import (
 // Firewall Groups can be imported using the Firewall Group `FIREWALLGROUPID`, e.g.
 //
 // ```sh
-//
-//	$ pulumi import vultr:index/firewallGroup:FirewallGroup my_firewallgroup c342f929
-//
+// $ pulumi import vultr:index/firewallGroup:FirewallGroup my_firewallgroup c342f929
 // ```
 type FirewallGroup struct {
 	pulumi.CustomResourceState

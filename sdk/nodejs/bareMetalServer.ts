@@ -46,7 +46,7 @@ import * as utilities from "./utilities";
  * Bare Metal Servers can be imported using the server `ID`, e.g.
  *
  * ```sh
- *  $ pulumi import vultr:index/bareMetalServer:BareMetalServer my_server b6a859c5-b299-49dd-8888-b1abbc517d08
+ * $ pulumi import vultr:index/bareMetalServer:BareMetalServer my_server b6a859c5-b299-49dd-8888-b1abbc517d08
  * ```
  */
 export class BareMetalServer extends pulumi.CustomResource {
@@ -133,6 +133,7 @@ export class BareMetalServer extends pulumi.CustomResource {
      * The server's main IP address.
      */
     public /*out*/ readonly mainIp!: pulumi.Output<string>;
+    public readonly mdiskMode!: pulumi.Output<string | undefined>;
     /**
      * The server's IPv4 netmask.
      */
@@ -230,6 +231,7 @@ export class BareMetalServer extends pulumi.CustomResource {
             resourceInputs["label"] = state ? state.label : undefined;
             resourceInputs["macAddress"] = state ? state.macAddress : undefined;
             resourceInputs["mainIp"] = state ? state.mainIp : undefined;
+            resourceInputs["mdiskMode"] = state ? state.mdiskMode : undefined;
             resourceInputs["netmaskV4"] = state ? state.netmaskV4 : undefined;
             resourceInputs["os"] = state ? state.os : undefined;
             resourceInputs["osId"] = state ? state.osId : undefined;
@@ -263,6 +265,7 @@ export class BareMetalServer extends pulumi.CustomResource {
             resourceInputs["hostname"] = args ? args.hostname : undefined;
             resourceInputs["imageId"] = args ? args.imageId : undefined;
             resourceInputs["label"] = args ? args.label : undefined;
+            resourceInputs["mdiskMode"] = args ? args.mdiskMode : undefined;
             resourceInputs["osId"] = args ? args.osId : undefined;
             resourceInputs["persistentPxe"] = args ? args.persistentPxe : undefined;
             resourceInputs["plan"] = args ? args.plan : undefined;
@@ -356,6 +359,7 @@ export interface BareMetalServerState {
      * The server's main IP address.
      */
     mainIp?: pulumi.Input<string>;
+    mdiskMode?: pulumi.Input<string>;
     /**
      * The server's IPv4 netmask.
      */
@@ -459,6 +463,7 @@ export interface BareMetalServerArgs {
      * A label for the server.
      */
     label?: pulumi.Input<string>;
+    mdiskMode?: pulumi.Input<string>;
     /**
      * The ID of the operating system to be installed on the server. [See List OS](https://www.vultr.com/api/#operation/list-os)
      */

@@ -165,7 +165,7 @@ class FirewallGroup(pulumi.CustomResource):
         Firewall Groups can be imported using the Firewall Group `FIREWALLGROUPID`, e.g.
 
         ```sh
-         $ pulumi import vultr:index/firewallGroup:FirewallGroup my_firewallgroup c342f929
+        $ pulumi import vultr:index/firewallGroup:FirewallGroup my_firewallgroup c342f929
         ```
 
         :param str resource_name: The name of the resource.
@@ -197,7 +197,7 @@ class FirewallGroup(pulumi.CustomResource):
         Firewall Groups can be imported using the Firewall Group `FIREWALLGROUPID`, e.g.
 
         ```sh
-         $ pulumi import vultr:index/firewallGroup:FirewallGroup my_firewallgroup c342f929
+        $ pulumi import vultr:index/firewallGroup:FirewallGroup my_firewallgroup c342f929
         ```
 
         :param str resource_name: The name of the resource.

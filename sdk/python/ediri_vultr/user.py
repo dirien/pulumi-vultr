@@ -252,7 +252,7 @@ class User(pulumi.CustomResource):
         Users can be imported using the User `ID`, e.g.
 
         ```sh
-         $ pulumi import vultr:index/user:User myuser 1345fef0-8ed3-4a66-bd8c-822a7b7bd05a
+        $ pulumi import vultr:index/user:User myuser 1345fef0-8ed3-4a66-bd8c-822a7b7bd05a
         ```
 
         :param str resource_name: The name of the resource.
@@ -313,7 +313,7 @@ class User(pulumi.CustomResource):
         Users can be imported using the User `ID`, e.g.
 
         ```sh
-         $ pulumi import vultr:index/user:User myuser 1345fef0-8ed3-4a66-bd8c-822a7b7bd05a
+        $ pulumi import vultr:index/user:User myuser 1345fef0-8ed3-4a66-bd8c-822a7b7bd05a
         ```
 
         :param str resource_name: The name of the resource.
