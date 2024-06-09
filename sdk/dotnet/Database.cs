@@ -68,7 +68,7 @@ namespace ediri.Vultr
     /// Database can be imported using the database `ID`, e.g.
     /// 
     /// ```sh
-    ///  $ pulumi import vultr:index/database:Database my_database b6a859c5-b299-49dd-8888-b1abbc517d08
+    /// $ pulumi import vultr:index/database:Database my_database b6a859c5-b299-49dd-8888-b1abbc517d08
     /// ```
     /// </summary>
     [VultrResourceType("vultr:index/database:Database")]

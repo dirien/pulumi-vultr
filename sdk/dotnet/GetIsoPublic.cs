@@ -15,9 +15,7 @@ namespace ediri.Vultr
         /// <summary>
         /// Get information about an ISO file offered in the Vultr ISO library.
         /// 
-        /// {{% examples %}}
         /// ## Example Usage
-        /// {{% example %}}
         /// 
         /// Get the information for a ISO file by `description`:
         /// 
@@ -46,8 +44,6 @@ namespace ediri.Vultr
         /// 
         /// });
         /// ```
-        /// {{% /example %}}
-        /// {{% /examples %}}
         /// </summary>
         public static Task<GetIsoPublicResult> InvokeAsync(GetIsoPublicArgs? args = null, InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetIsoPublicResult>("vultr:index/getIsoPublic:getIsoPublic", args ?? new GetIsoPublicArgs(), options.WithDefaults());
@@ -55,9 +51,7 @@ namespace ediri.Vultr
         /// <summary>
         /// Get information about an ISO file offered in the Vultr ISO library.
         /// 
-        /// {{% examples %}}
         /// ## Example Usage
-        /// {{% example %}}
         /// 
         /// Get the information for a ISO file by `description`:
         /// 
@@ -86,8 +80,6 @@ namespace ediri.Vultr
         /// 
         /// });
         /// ```
-        /// {{% /example %}}
-        /// {{% /examples %}}
         /// </summary>
         public static Output<GetIsoPublicResult> Invoke(GetIsoPublicInvokeArgs? args = null, InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.Invoke<GetIsoPublicResult>("vultr:index/getIsoPublic:getIsoPublic", args ?? new GetIsoPublicInvokeArgs(), options.WithDefaults());

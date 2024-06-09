@@ -817,7 +817,7 @@ class KubernetesNodePoolsNode(dict):
         """
         :param str date_created: Date node was created.
         :param str id: ID of node.
-        :param str label: The VKE clusters label.
+        :param str label: The label to be used as a prefix for nodes in this node pool.
         :param str status: Status of node.
         """
         if date_created is not None:
@@ -849,7 +849,7 @@ class KubernetesNodePoolsNode(dict):
     @pulumi.getter
     def label(self) -> Optional[str]:
         """
-        The VKE clusters label.
+        The label to be used as a prefix for nodes in this node pool.
         """
         return pulumi.get(self, "label")
 
@@ -888,7 +888,6 @@ class LoadBalancerFirewallRule(dict):
                  id: Optional[str] = None):
         """
         :param str ip_type: The type of ip this rule is - may be either v4 or v6.
-        :param int port: The assigned port (integer) on the attached instances that the load balancer should check against. Default value is `80`.
         :param str source: IP address with subnet that is allowed through the firewall. You may also pass in `cloudflare` which will allow only CloudFlares IP range.
         :param str id: The load balancer ID.
         """
@@ -909,9 +908,6 @@ class LoadBalancerFirewallRule(dict):
     @property
     @pulumi.getter
     def port(self) -> int:
-        """
-        The assigned port (integer) on the attached instances that the load balancer should check against. Default value is `80`.
-        """
         return pulumi.get(self, "port")
 
     @property

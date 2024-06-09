@@ -1119,7 +1119,7 @@ type KubernetesNodePoolsNode struct {
 	DateCreated *string `pulumi:"dateCreated"`
 	// ID of node.
 	Id *string `pulumi:"id"`
-	// The VKE clusters label.
+	// The label to be used as a prefix for nodes in this node pool.
 	Label *string `pulumi:"label"`
 	// Status of node.
 	Status *string `pulumi:"status"`
@@ -1141,7 +1141,7 @@ type KubernetesNodePoolsNodeArgs struct {
 	DateCreated pulumi.StringPtrInput `pulumi:"dateCreated"`
 	// ID of node.
 	Id pulumi.StringPtrInput `pulumi:"id"`
-	// The VKE clusters label.
+	// The label to be used as a prefix for nodes in this node pool.
 	Label pulumi.StringPtrInput `pulumi:"label"`
 	// Status of node.
 	Status pulumi.StringPtrInput `pulumi:"status"`
@@ -1208,7 +1208,7 @@ func (o KubernetesNodePoolsNodeOutput) Id() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v KubernetesNodePoolsNode) *string { return v.Id }).(pulumi.StringPtrOutput)
 }
 
-// The VKE clusters label.
+// The label to be used as a prefix for nodes in this node pool.
 func (o KubernetesNodePoolsNodeOutput) Label() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v KubernetesNodePoolsNode) *string { return v.Label }).(pulumi.StringPtrOutput)
 }
@@ -1243,8 +1243,7 @@ type LoadBalancerFirewallRule struct {
 	Id *string `pulumi:"id"`
 	// The type of ip this rule is - may be either v4 or v6.
 	IpType string `pulumi:"ipType"`
-	// The assigned port (integer) on the attached instances that the load balancer should check against. Default value is `80`.
-	Port int `pulumi:"port"`
+	Port   int    `pulumi:"port"`
 	// IP address with subnet that is allowed through the firewall. You may also pass in `cloudflare` which will allow only CloudFlares IP range.
 	Source string `pulumi:"source"`
 }
@@ -1265,8 +1264,7 @@ type LoadBalancerFirewallRuleArgs struct {
 	Id pulumi.StringPtrInput `pulumi:"id"`
 	// The type of ip this rule is - may be either v4 or v6.
 	IpType pulumi.StringInput `pulumi:"ipType"`
-	// The assigned port (integer) on the attached instances that the load balancer should check against. Default value is `80`.
-	Port pulumi.IntInput `pulumi:"port"`
+	Port   pulumi.IntInput    `pulumi:"port"`
 	// IP address with subnet that is allowed through the firewall. You may also pass in `cloudflare` which will allow only CloudFlares IP range.
 	Source pulumi.StringInput `pulumi:"source"`
 }
@@ -1332,7 +1330,6 @@ func (o LoadBalancerFirewallRuleOutput) IpType() pulumi.StringOutput {
 	return o.ApplyT(func(v LoadBalancerFirewallRule) string { return v.IpType }).(pulumi.StringOutput)
 }
 
-// The assigned port (integer) on the attached instances that the load balancer should check against. Default value is `80`.
 func (o LoadBalancerFirewallRuleOutput) Port() pulumi.IntOutput {
 	return o.ApplyT(func(v LoadBalancerFirewallRule) int { return v.Port }).(pulumi.IntOutput)
 }

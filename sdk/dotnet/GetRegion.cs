@@ -15,9 +15,7 @@ namespace ediri.Vultr
         /// <summary>
         /// Get information about a Vultr region.
         /// 
-        /// {{% examples %}}
         /// ## Example Usage
-        /// {{% example %}}
         /// 
         /// Get the information for a region by `id`:
         /// 
@@ -46,8 +44,6 @@ namespace ediri.Vultr
         /// 
         /// });
         /// ```
-        /// {{% /example %}}
-        /// {{% /examples %}}
         /// </summary>
         public static Task<GetRegionResult> InvokeAsync(GetRegionArgs? args = null, InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetRegionResult>("vultr:index/getRegion:getRegion", args ?? new GetRegionArgs(), options.WithDefaults());
@@ -55,9 +51,7 @@ namespace ediri.Vultr
         /// <summary>
         /// Get information about a Vultr region.
         /// 
-        /// {{% examples %}}
         /// ## Example Usage
-        /// {{% example %}}
         /// 
         /// Get the information for a region by `id`:
         /// 
@@ -86,8 +80,6 @@ namespace ediri.Vultr
         /// 
         /// });
         /// ```
-        /// {{% /example %}}
-        /// {{% /examples %}}
         /// </summary>
         public static Output<GetRegionResult> Invoke(GetRegionInvokeArgs? args = null, InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.Invoke<GetRegionResult>("vultr:index/getRegion:getRegion", args ?? new GetRegionInvokeArgs(), options.WithDefaults());

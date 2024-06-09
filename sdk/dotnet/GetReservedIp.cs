@@ -15,9 +15,7 @@ namespace ediri.Vultr
         /// <summary>
         /// Get information about a Vultr reserved IP address.
         /// 
-        /// {{% examples %}}
         /// ## Example Usage
-        /// {{% example %}}
         /// 
         /// Get the information for a reserved IP by `label`:
         /// 
@@ -46,8 +44,6 @@ namespace ediri.Vultr
         /// 
         /// });
         /// ```
-        /// {{% /example %}}
-        /// {{% /examples %}}
         /// </summary>
         public static Task<GetReservedIpResult> InvokeAsync(GetReservedIpArgs? args = null, InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetReservedIpResult>("vultr:index/getReservedIp:getReservedIp", args ?? new GetReservedIpArgs(), options.WithDefaults());
@@ -55,9 +51,7 @@ namespace ediri.Vultr
         /// <summary>
         /// Get information about a Vultr reserved IP address.
         /// 
-        /// {{% examples %}}
         /// ## Example Usage
-        /// {{% example %}}
         /// 
         /// Get the information for a reserved IP by `label`:
         /// 
@@ -86,8 +80,6 @@ namespace ediri.Vultr
         /// 
         /// });
         /// ```
-        /// {{% /example %}}
-        /// {{% /examples %}}
         /// </summary>
         public static Output<GetReservedIpResult> Invoke(GetReservedIpInvokeArgs? args = null, InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.Invoke<GetReservedIpResult>("vultr:index/getReservedIp:getReservedIp", args ?? new GetReservedIpInvokeArgs(), options.WithDefaults());

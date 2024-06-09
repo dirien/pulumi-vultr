@@ -23,7 +23,7 @@ import * as utilities from "./utilities";
  * Snapshots from Url can be imported using the Snapshot `ID`, e.g.
  *
  * ```sh
- *  $ pulumi import vultr:index/snapshotFromUrl:SnapshotFromUrl my_snapshot e60dc0a2-9313-4bab-bffc-57ffe33d99f6
+ * $ pulumi import vultr:index/snapshotFromUrl:SnapshotFromUrl my_snapshot e60dc0a2-9313-4bab-bffc-57ffe33d99f6
  * ```
  */
 export class SnapshotFromUrl extends pulumi.CustomResource {

@@ -15,9 +15,7 @@ namespace ediri.Vultr
         /// <summary>
         /// Get information about your Vultr account. This data source provides the balance, pending charges, last payment date, and last payment amount for your Vultr account.
         /// 
-        /// {{% examples %}}
         /// ## Example Usage
-        /// {{% example %}}
         /// 
         /// Get the information for an account:
         /// 
@@ -33,8 +31,6 @@ namespace ediri.Vultr
         /// 
         /// });
         /// ```
-        /// {{% /example %}}
-        /// {{% /examples %}}
         /// </summary>
         public static Task<GetAccountResult> InvokeAsync(InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetAccountResult>("vultr:index/getAccount:getAccount", InvokeArgs.Empty, options.WithDefaults());
@@ -42,9 +38,7 @@ namespace ediri.Vultr
         /// <summary>
         /// Get information about your Vultr account. This data source provides the balance, pending charges, last payment date, and last payment amount for your Vultr account.
         /// 
-        /// {{% examples %}}
         /// ## Example Usage
-        /// {{% example %}}
         /// 
         /// Get the information for an account:
         /// 
@@ -60,8 +54,6 @@ namespace ediri.Vultr
         /// 
         /// });
         /// ```
-        /// {{% /example %}}
-        /// {{% /examples %}}
         /// </summary>
         public static Output<GetAccountResult> Invoke(InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.Invoke<GetAccountResult>("vultr:index/getAccount:getAccount", InvokeArgs.Empty, options.WithDefaults());

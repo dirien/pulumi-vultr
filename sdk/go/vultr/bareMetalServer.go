@@ -85,9 +85,7 @@ import (
 // Bare Metal Servers can be imported using the server `ID`, e.g.
 //
 // ```sh
-//
-//	$ pulumi import vultr:index/bareMetalServer:BareMetalServer my_server b6a859c5-b299-49dd-8888-b1abbc517d08
-//
+// $ pulumi import vultr:index/bareMetalServer:BareMetalServer my_server b6a859c5-b299-49dd-8888-b1abbc517d08
 // ```
 type BareMetalServer struct {
 	pulumi.CustomResourceState
@@ -119,7 +117,8 @@ type BareMetalServer struct {
 	// The MAC address associated with the server.
 	MacAddress pulumi.IntOutput `pulumi:"macAddress"`
 	// The server's main IP address.
-	MainIp pulumi.StringOutput `pulumi:"mainIp"`
+	MainIp    pulumi.StringOutput    `pulumi:"mainIp"`
+	MdiskMode pulumi.StringPtrOutput `pulumi:"mdiskMode"`
 	// The server's IPv4 netmask.
 	NetmaskV4 pulumi.StringOutput `pulumi:"netmaskV4"`
 	// The string description of the operating system installed on the server.
@@ -224,7 +223,8 @@ type bareMetalServerState struct {
 	// The MAC address associated with the server.
 	MacAddress *int `pulumi:"macAddress"`
 	// The server's main IP address.
-	MainIp *string `pulumi:"mainIp"`
+	MainIp    *string `pulumi:"mainIp"`
+	MdiskMode *string `pulumi:"mdiskMode"`
 	// The server's IPv4 netmask.
 	NetmaskV4 *string `pulumi:"netmaskV4"`
 	// The string description of the operating system installed on the server.
@@ -290,7 +290,8 @@ type BareMetalServerState struct {
 	// The MAC address associated with the server.
 	MacAddress pulumi.IntPtrInput
 	// The server's main IP address.
-	MainIp pulumi.StringPtrInput
+	MainIp    pulumi.StringPtrInput
+	MdiskMode pulumi.StringPtrInput
 	// The server's IPv4 netmask.
 	NetmaskV4 pulumi.StringPtrInput
 	// The string description of the operating system installed on the server.
@@ -346,7 +347,8 @@ type bareMetalServerArgs struct {
 	// The ID of the Vultr marketplace application to be installed on the server. [See List Applications](https://www.vultr.com/api/#operation/list-applications) Note marketplace applications are denoted by type: `marketplace` and you must use the `imageId` not the id.
 	ImageId *string `pulumi:"imageId"`
 	// A label for the server.
-	Label *string `pulumi:"label"`
+	Label     *string `pulumi:"label"`
+	MdiskMode *string `pulumi:"mdiskMode"`
 	// The ID of the operating system to be installed on the server. [See List OS](https://www.vultr.com/api/#operation/list-os)
 	OsId          *int  `pulumi:"osId"`
 	PersistentPxe *bool `pulumi:"persistentPxe"`
@@ -385,7 +387,8 @@ type BareMetalServerArgs struct {
 	// The ID of the Vultr marketplace application to be installed on the server. [See List Applications](https://www.vultr.com/api/#operation/list-applications) Note marketplace applications are denoted by type: `marketplace` and you must use the `imageId` not the id.
 	ImageId pulumi.StringPtrInput
 	// A label for the server.
-	Label pulumi.StringPtrInput
+	Label     pulumi.StringPtrInput
+	MdiskMode pulumi.StringPtrInput
 	// The ID of the operating system to be installed on the server. [See List OS](https://www.vultr.com/api/#operation/list-os)
 	OsId          pulumi.IntPtrInput
 	PersistentPxe pulumi.BoolPtrInput
@@ -564,6 +567,10 @@ func (o BareMetalServerOutput) MacAddress() pulumi.IntOutput {
 // The server's main IP address.
 func (o BareMetalServerOutput) MainIp() pulumi.StringOutput {
 	return o.ApplyT(func(v *BareMetalServer) pulumi.StringOutput { return v.MainIp }).(pulumi.StringOutput)
+}
+
+func (o BareMetalServerOutput) MdiskMode() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *BareMetalServer) pulumi.StringPtrOutput { return v.MdiskMode }).(pulumi.StringPtrOutput)
 }
 
 // The server's IPv4 netmask.

@@ -15,9 +15,7 @@ namespace ediri.Vultr
         /// <summary>
         /// Get information about applications that can be launched when creating a Vultr VPS.
         /// 
-        /// {{% examples %}}
         /// ## Example Usage
-        /// {{% example %}}
         /// 
         /// Get the information for an application by `deploy_name`:
         /// 
@@ -46,8 +44,6 @@ namespace ediri.Vultr
         /// 
         /// });
         /// ```
-        /// {{% /example %}}
-        /// {{% /examples %}}
         /// </summary>
         public static Task<GetApplicationResult> InvokeAsync(GetApplicationArgs? args = null, InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetApplicationResult>("vultr:index/getApplication:getApplication", args ?? new GetApplicationArgs(), options.WithDefaults());
@@ -55,9 +51,7 @@ namespace ediri.Vultr
         /// <summary>
         /// Get information about applications that can be launched when creating a Vultr VPS.
         /// 
-        /// {{% examples %}}
         /// ## Example Usage
-        /// {{% example %}}
         /// 
         /// Get the information for an application by `deploy_name`:
         /// 
@@ -86,8 +80,6 @@ namespace ediri.Vultr
         /// 
         /// });
         /// ```
-        /// {{% /example %}}
-        /// {{% /examples %}}
         /// </summary>
         public static Output<GetApplicationResult> Invoke(GetApplicationInvokeArgs? args = null, InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.Invoke<GetApplicationResult>("vultr:index/getApplication:getApplication", args ?? new GetApplicationInvokeArgs(), options.WithDefaults());

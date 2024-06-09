@@ -15,9 +15,7 @@ namespace ediri.Vultr
         /// <summary>
         /// Get information about a Vultr Reverse IPv6.
         /// 
-        /// {{% examples %}}
         /// ## Example Usage
-        /// {{% example %}}
         /// 
         /// Get the information for an IPv6 reverse DNS record by `reverse`:
         /// 
@@ -46,8 +44,6 @@ namespace ediri.Vultr
         /// 
         /// });
         /// ```
-        /// {{% /example %}}
-        /// {{% /examples %}}
         /// </summary>
         public static Task<GetReverseIpv6Result> InvokeAsync(GetReverseIpv6Args? args = null, InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetReverseIpv6Result>("vultr:index/getReverseIpv6:getReverseIpv6", args ?? new GetReverseIpv6Args(), options.WithDefaults());
@@ -55,9 +51,7 @@ namespace ediri.Vultr
         /// <summary>
         /// Get information about a Vultr Reverse IPv6.
         /// 
-        /// {{% examples %}}
         /// ## Example Usage
-        /// {{% example %}}
         /// 
         /// Get the information for an IPv6 reverse DNS record by `reverse`:
         /// 
@@ -86,8 +80,6 @@ namespace ediri.Vultr
         /// 
         /// });
         /// ```
-        /// {{% /example %}}
-        /// {{% /examples %}}
         /// </summary>
         public static Output<GetReverseIpv6Result> Invoke(GetReverseIpv6InvokeArgs? args = null, InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.Invoke<GetReverseIpv6Result>("vultr:index/getReverseIpv6:getReverseIpv6", args ?? new GetReverseIpv6InvokeArgs(), options.WithDefaults());

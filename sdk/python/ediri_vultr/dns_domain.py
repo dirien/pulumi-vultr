@@ -168,7 +168,7 @@ class DnsDomain(pulumi.CustomResource):
         DNS Domains can be imported using the Dns Domain `domain`, e.g.
 
         ```sh
-         $ pulumi import vultr:index/dnsDomain:DnsDomain name domain.com
+        $ pulumi import vultr:index/dnsDomain:DnsDomain name domain.com
         ```
 
         :param str resource_name: The name of the resource.
@@ -204,7 +204,7 @@ class DnsDomain(pulumi.CustomResource):
         DNS Domains can be imported using the Dns Domain `domain`, e.g.
 
         ```sh
-         $ pulumi import vultr:index/dnsDomain:DnsDomain name domain.com
+        $ pulumi import vultr:index/dnsDomain:DnsDomain name domain.com
         ```
 
         :param str resource_name: The name of the resource.

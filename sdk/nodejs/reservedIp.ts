@@ -41,7 +41,7 @@ import * as utilities from "./utilities";
  * Reserved IPs can be imported using the reserved IP `ID`, e.g.
  *
  * ```sh
- *  $ pulumi import vultr:index/reservedIp:ReservedIp my_reserved_ip b9cc6fad-70b1-40ee-ab6a-4d622858962f
+ * $ pulumi import vultr:index/reservedIp:ReservedIp my_reserved_ip b9cc6fad-70b1-40ee-ab6a-4d622858962f
  * ```
  */
 export class ReservedIp extends pulumi.CustomResource {

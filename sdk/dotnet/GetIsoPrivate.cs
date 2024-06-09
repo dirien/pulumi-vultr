@@ -15,9 +15,7 @@ namespace ediri.Vultr
         /// <summary>
         /// Get information about an ISO file uploaded to your Vultr account.
         /// 
-        /// {{% examples %}}
         /// ## Example Usage
-        /// {{% example %}}
         /// 
         /// Get the information for a ISO file by `filename`:
         /// 
@@ -46,8 +44,6 @@ namespace ediri.Vultr
         /// 
         /// });
         /// ```
-        /// {{% /example %}}
-        /// {{% /examples %}}
         /// </summary>
         public static Task<GetIsoPrivateResult> InvokeAsync(GetIsoPrivateArgs? args = null, InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetIsoPrivateResult>("vultr:index/getIsoPrivate:getIsoPrivate", args ?? new GetIsoPrivateArgs(), options.WithDefaults());
@@ -55,9 +51,7 @@ namespace ediri.Vultr
         /// <summary>
         /// Get information about an ISO file uploaded to your Vultr account.
         /// 
-        /// {{% examples %}}
         /// ## Example Usage
-        /// {{% example %}}
         /// 
         /// Get the information for a ISO file by `filename`:
         /// 
@@ -86,8 +80,6 @@ namespace ediri.Vultr
         /// 
         /// });
         /// ```
-        /// {{% /example %}}
-        /// {{% /examples %}}
         /// </summary>
         public static Output<GetIsoPrivateResult> Invoke(GetIsoPrivateInvokeArgs? args = null, InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.Invoke<GetIsoPrivateResult>("vultr:index/getIsoPrivate:getIsoPrivate", args ?? new GetIsoPrivateInvokeArgs(), options.WithDefaults());

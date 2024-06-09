@@ -15,9 +15,7 @@ namespace ediri.Vultr
         /// <summary>
         /// Get information about a Vultr VPC 2.0.
         /// 
-        /// {{% examples %}}
         /// ## Example Usage
-        /// {{% example %}}
         /// 
         /// Get the information for a VPC 2.0 by `description`:
         /// 
@@ -46,8 +44,6 @@ namespace ediri.Vultr
         /// 
         /// });
         /// ```
-        /// {{% /example %}}
-        /// {{% /examples %}}
         /// </summary>
         public static Task<GetVpc2Result> InvokeAsync(GetVpc2Args? args = null, InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetVpc2Result>("vultr:index/getVpc2:getVpc2", args ?? new GetVpc2Args(), options.WithDefaults());
@@ -55,9 +51,7 @@ namespace ediri.Vultr
         /// <summary>
         /// Get information about a Vultr VPC 2.0.
         /// 
-        /// {{% examples %}}
         /// ## Example Usage
-        /// {{% example %}}
         /// 
         /// Get the information for a VPC 2.0 by `description`:
         /// 
@@ -86,8 +80,6 @@ namespace ediri.Vultr
         /// 
         /// });
         /// ```
-        /// {{% /example %}}
-        /// {{% /examples %}}
         /// </summary>
         public static Output<GetVpc2Result> Invoke(GetVpc2InvokeArgs? args = null, InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.Invoke<GetVpc2Result>("vultr:index/getVpc2:getVpc2", args ?? new GetVpc2InvokeArgs(), options.WithDefaults());

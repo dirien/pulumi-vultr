@@ -864,7 +864,7 @@ export interface KubernetesNodePoolsNode {
      */
     id: string;
     /**
-     * The VKE clusters label.
+     * The label to be used as a prefix for nodes in this node pool.
      */
     label: string;
     /**
@@ -882,9 +882,6 @@ export interface LoadBalancerFirewallRule {
      * The type of ip this rule is - may be either v4 or v6.
      */
     ipType: string;
-    /**
-     * The assigned port (integer) on the attached instances that the load balancer should check against. Default value is `80`.
-     */
     port: number;
     /**
      * IP address with subnet that is allowed through the firewall. You may also pass in `cloudflare` which will allow only CloudFlares IP range.

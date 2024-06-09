@@ -15,9 +15,7 @@ namespace ediri.Vultr
         /// <summary>
         /// Get information about a DNS domain associated with your Vultr account.
         /// 
-        /// {{% examples %}}
         /// ## Example Usage
-        /// {{% example %}}
         /// 
         /// Get the information for a DNS domain:
         /// 
@@ -36,8 +34,6 @@ namespace ediri.Vultr
         /// 
         /// });
         /// ```
-        /// {{% /example %}}
-        /// {{% /examples %}}
         /// </summary>
         public static Task<GetDnsDomainResult> InvokeAsync(GetDnsDomainArgs args, InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetDnsDomainResult>("vultr:index/getDnsDomain:getDnsDomain", args ?? new GetDnsDomainArgs(), options.WithDefaults());
@@ -45,9 +41,7 @@ namespace ediri.Vultr
         /// <summary>
         /// Get information about a DNS domain associated with your Vultr account.
         /// 
-        /// {{% examples %}}
         /// ## Example Usage
-        /// {{% example %}}
         /// 
         /// Get the information for a DNS domain:
         /// 
@@ -66,8 +60,6 @@ namespace ediri.Vultr
         /// 
         /// });
         /// ```
-        /// {{% /example %}}
-        /// {{% /examples %}}
         /// </summary>
         public static Output<GetDnsDomainResult> Invoke(GetDnsDomainInvokeArgs args, InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.Invoke<GetDnsDomainResult>("vultr:index/getDnsDomain:getDnsDomain", args ?? new GetDnsDomainInvokeArgs(), options.WithDefaults());

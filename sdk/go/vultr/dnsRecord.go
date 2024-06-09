@@ -56,9 +56,7 @@ import (
 // DNS Records can be imported using the Dns Domain `domain` and DNS Record `ID` e.g.
 //
 // ```sh
-//
-//	$ pulumi import vultr:index/dnsRecord:DnsRecord rec domain.com,1a0019bd-7645-4310-81bd-03bc5906940f
-//
+// $ pulumi import vultr:index/dnsRecord:DnsRecord rec domain.com,1a0019bd-7645-4310-81bd-03bc5906940f
 // ```
 type DnsRecord struct {
 	pulumi.CustomResourceState

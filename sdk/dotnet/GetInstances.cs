@@ -15,9 +15,7 @@ namespace ediri.Vultr
         /// <summary>
         /// List information for Vultr instances.
         /// 
-        /// {{% examples %}}
         /// ## Example Usage
-        /// {{% example %}}
         /// 
         /// Get the information for all instances by `status`:
         /// 
@@ -50,8 +48,6 @@ namespace ediri.Vultr
         ///     };
         /// });
         /// ```
-        /// {{% /example %}}
-        /// {{% /examples %}}
         /// </summary>
         public static Task<GetInstancesResult> InvokeAsync(GetInstancesArgs? args = null, InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetInstancesResult>("vultr:index/getInstances:getInstances", args ?? new GetInstancesArgs(), options.WithDefaults());
@@ -59,9 +55,7 @@ namespace ediri.Vultr
         /// <summary>
         /// List information for Vultr instances.
         /// 
-        /// {{% examples %}}
         /// ## Example Usage
-        /// {{% example %}}
         /// 
         /// Get the information for all instances by `status`:
         /// 
@@ -94,8 +88,6 @@ namespace ediri.Vultr
         ///     };
         /// });
         /// ```
-        /// {{% /example %}}
-        /// {{% /examples %}}
         /// </summary>
         public static Output<GetInstancesResult> Invoke(GetInstancesInvokeArgs? args = null, InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.Invoke<GetInstancesResult>("vultr:index/getInstances:getInstances", args ?? new GetInstancesInvokeArgs(), options.WithDefaults());

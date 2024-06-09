@@ -1219,7 +1219,7 @@ class Instance(pulumi.CustomResource):
         Instances can be imported using the instance `ID`, e.g.
 
         ```sh
-         $ pulumi import vultr:index/instance:Instance my_instance b6a859c5-b299-49dd-8888-b1abbc517d08
+        $ pulumi import vultr:index/instance:Instance my_instance b6a859c5-b299-49dd-8888-b1abbc517d08
         ```
 
         :param str resource_name: The name of the resource.
@@ -1301,7 +1301,7 @@ class Instance(pulumi.CustomResource):
         Instances can be imported using the instance `ID`, e.g.
 
         ```sh
-         $ pulumi import vultr:index/instance:Instance my_instance b6a859c5-b299-49dd-8888-b1abbc517d08
+        $ pulumi import vultr:index/instance:Instance my_instance b6a859c5-b299-49dd-8888-b1abbc517d08
         ```
 
         :param str resource_name: The name of the resource.

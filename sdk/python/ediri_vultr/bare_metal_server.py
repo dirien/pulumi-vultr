@@ -23,6 +23,7 @@ class BareMetalServerArgs:
                  hostname: Optional[pulumi.Input[str]] = None,
                  image_id: Optional[pulumi.Input[str]] = None,
                  label: Optional[pulumi.Input[str]] = None,
+                 mdisk_mode: Optional[pulumi.Input[str]] = None,
                  os_id: Optional[pulumi.Input[int]] = None,
                  persistent_pxe: Optional[pulumi.Input[bool]] = None,
                  reserved_ipv4: Optional[pulumi.Input[str]] = None,
@@ -68,6 +69,8 @@ class BareMetalServerArgs:
             pulumi.set(__self__, "image_id", image_id)
         if label is not None:
             pulumi.set(__self__, "label", label)
+        if mdisk_mode is not None:
+            pulumi.set(__self__, "mdisk_mode", mdisk_mode)
         if os_id is not None:
             pulumi.set(__self__, "os_id", os_id)
         if persistent_pxe is not None:
@@ -196,6 +199,15 @@ class BareMetalServerArgs:
         pulumi.set(self, "label", value)
 
     @property
+    @pulumi.getter(name="mdiskMode")
+    def mdisk_mode(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "mdisk_mode")
+
+    @mdisk_mode.setter
+    def mdisk_mode(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "mdisk_mode", value)
+
+    @property
     @pulumi.getter(name="osId")
     def os_id(self) -> Optional[pulumi.Input[int]]:
         """
@@ -318,6 +330,7 @@ class _BareMetalServerState:
                  label: Optional[pulumi.Input[str]] = None,
                  mac_address: Optional[pulumi.Input[int]] = None,
                  main_ip: Optional[pulumi.Input[str]] = None,
+                 mdisk_mode: Optional[pulumi.Input[str]] = None,
                  netmask_v4: Optional[pulumi.Input[str]] = None,
                  os: Optional[pulumi.Input[str]] = None,
                  os_id: Optional[pulumi.Input[int]] = None,
@@ -398,6 +411,8 @@ class _BareMetalServerState:
             pulumi.set(__self__, "mac_address", mac_address)
         if main_ip is not None:
             pulumi.set(__self__, "main_ip", main_ip)
+        if mdisk_mode is not None:
+            pulumi.set(__self__, "mdisk_mode", mdisk_mode)
         if netmask_v4 is not None:
             pulumi.set(__self__, "netmask_v4", netmask_v4)
         if os is not None:
@@ -602,6 +617,15 @@ class _BareMetalServerState:
     @main_ip.setter
     def main_ip(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "main_ip", value)
+
+    @property
+    @pulumi.getter(name="mdiskMode")
+    def mdisk_mode(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "mdisk_mode")
+
+    @mdisk_mode.setter
+    def mdisk_mode(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "mdisk_mode", value)
 
     @property
     @pulumi.getter(name="netmaskV4")
@@ -829,6 +853,7 @@ class BareMetalServer(pulumi.CustomResource):
                  hostname: Optional[pulumi.Input[str]] = None,
                  image_id: Optional[pulumi.Input[str]] = None,
                  label: Optional[pulumi.Input[str]] = None,
+                 mdisk_mode: Optional[pulumi.Input[str]] = None,
                  os_id: Optional[pulumi.Input[int]] = None,
                  persistent_pxe: Optional[pulumi.Input[bool]] = None,
                  plan: Optional[pulumi.Input[str]] = None,
@@ -881,7 +906,7 @@ class BareMetalServer(pulumi.CustomResource):
         Bare Metal Servers can be imported using the server `ID`, e.g.
 
         ```sh
-         $ pulumi import vultr:index/bareMetalServer:BareMetalServer my_server b6a859c5-b299-49dd-8888-b1abbc517d08
+        $ pulumi import vultr:index/bareMetalServer:BareMetalServer my_server b6a859c5-b299-49dd-8888-b1abbc517d08
         ```
 
         :param str resource_name: The name of the resource.
@@ -950,7 +975,7 @@ class BareMetalServer(pulumi.CustomResource):
         Bare Metal Servers can be imported using the server `ID`, e.g.
 
         ```sh
-         $ pulumi import vultr:index/bareMetalServer:BareMetalServer my_server b6a859c5-b299-49dd-8888-b1abbc517d08
+        $ pulumi import vultr:index/bareMetalServer:BareMetalServer my_server b6a859c5-b299-49dd-8888-b1abbc517d08
         ```
 
         :param str resource_name: The name of the resource.
@@ -975,6 +1000,7 @@ class BareMetalServer(pulumi.CustomResource):
                  hostname: Optional[pulumi.Input[str]] = None,
                  image_id: Optional[pulumi.Input[str]] = None,
                  label: Optional[pulumi.Input[str]] = None,
+                 mdisk_mode: Optional[pulumi.Input[str]] = None,
                  os_id: Optional[pulumi.Input[int]] = None,
                  persistent_pxe: Optional[pulumi.Input[bool]] = None,
                  plan: Optional[pulumi.Input[str]] = None,
@@ -1002,6 +1028,7 @@ class BareMetalServer(pulumi.CustomResource):
             __props__.__dict__["hostname"] = hostname
             __props__.__dict__["image_id"] = image_id
             __props__.__dict__["label"] = label
+            __props__.__dict__["mdisk_mode"] = mdisk_mode
             __props__.__dict__["os_id"] = os_id
             __props__.__dict__["persistent_pxe"] = persistent_pxe
             if plan is None and not opts.urn:
@@ -1057,6 +1084,7 @@ class BareMetalServer(pulumi.CustomResource):
             label: Optional[pulumi.Input[str]] = None,
             mac_address: Optional[pulumi.Input[int]] = None,
             main_ip: Optional[pulumi.Input[str]] = None,
+            mdisk_mode: Optional[pulumi.Input[str]] = None,
             netmask_v4: Optional[pulumi.Input[str]] = None,
             os: Optional[pulumi.Input[str]] = None,
             os_id: Optional[pulumi.Input[int]] = None,
@@ -1132,6 +1160,7 @@ class BareMetalServer(pulumi.CustomResource):
         __props__.__dict__["label"] = label
         __props__.__dict__["mac_address"] = mac_address
         __props__.__dict__["main_ip"] = main_ip
+        __props__.__dict__["mdisk_mode"] = mdisk_mode
         __props__.__dict__["netmask_v4"] = netmask_v4
         __props__.__dict__["os"] = os
         __props__.__dict__["os_id"] = os_id
@@ -1263,6 +1292,11 @@ class BareMetalServer(pulumi.CustomResource):
         The server's main IP address.
         """
         return pulumi.get(self, "main_ip")
+
+    @property
+    @pulumi.getter(name="mdiskMode")
+    def mdisk_mode(self) -> pulumi.Output[Optional[str]]:
+        return pulumi.get(self, "mdisk_mode")
 
     @property
     @pulumi.getter(name="netmaskV4")
