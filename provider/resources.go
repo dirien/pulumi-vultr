@@ -15,14 +15,18 @@
 package vultr
 
 import (
+	"context"
+	_ "embed"
 	"fmt"
-	"github.com/dirien/pulumi-vultr/provider/v2/pkg/version"
+
 	"path/filepath"
 
+	"github.com/dirien/pulumi-vultr/provider/v2/pkg/version"
+	pfbridge "github.com/pulumi/pulumi-terraform-bridge/pf/tfbridge"
 	"github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfbridge"
-	shim "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfshim"
+	tfbridgetokens "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfbridge/tokens"
 	shimv2 "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfshim/sdk-v2"
-	"github.com/pulumi/pulumi/sdk/v3/go/common/resource"
+	"github.com/vultr/terraform-provider-vultr/shim"
 	"github.com/vultr/terraform-provider-vultr/vultr"
 )
 
@@ -35,19 +39,16 @@ const (
 	mainMod = "index" // the vultr module
 )
 
-// preConfigureCallback is called before the providerConfigure function of the underlying provider.
-// It should validate that the provider can be configured, and provide actionable errors in the case
-// it cannot be. Configuration variables can be read from `vars` using the `stringValue` function -
-// for example `stringValue(vars, "accessKey")`.
-func preConfigureCallback(vars resource.PropertyMap, c shim.ResourceConfig) error {
-	return nil
-}
+//go:embed cmd/pulumi-resource-vultr/bridge-metadata.json
+var metadata []byte
 
 // Provider returns additional overlaid schema and metadata associated with the provider..
 func Provider() tfbridge.ProviderInfo {
 	// Instantiate the Terraform provider
-	p := shimv2.NewProvider(vultr.Provider())
-
+	p := pfbridge.MuxShimWithPF(context.Background(),
+		shimv2.NewProvider(vultr.Provider()),
+		shim.Framework()(),
+	)
 	// Create a Pulumi provider mapping
 	prov := tfbridge.ProviderInfo{
 		P:    p,
@@ -80,7 +81,9 @@ func Provider() tfbridge.ProviderInfo {
 		Repository: "https://github.com/dirien/pulumi-vultr",
 		// The GitHub Org for the provider - defaults to `terraform-providers`. Note that this
 		// should match the TF provider module's require directive, not any replace directives.
-		GitHubOrg: "vultr",
+		GitHubOrg:    "vultr",
+		MetadataInfo: tfbridge.NewProviderMetadata(metadata),
+		Version:      version.Version,
 		Config: map[string]*tfbridge.SchemaInfo{
 			// Add any required configuration here, or remove the example below if
 			// no additional points are required.
@@ -107,7 +110,6 @@ func Provider() tfbridge.ProviderInfo {
 				},
 			},
 		},
-		PreConfigureCallback: preConfigureCallback,
 		Resources: map[string]*tfbridge.ResourceInfo{
 			// Map each resource in the Terraform provider to a Pulumi type. Two examples
 			// are below - the single line form is the common case. The multi-line form is
@@ -144,7 +146,7 @@ func Provider() tfbridge.ProviderInfo {
 			"vultr_startup_script":           {Tok: tfbridge.MakeResource(mainPkg, mainMod, "StartupScript")},
 			"vultr_user":                     {Tok: tfbridge.MakeResource(mainPkg, mainMod, "User")},
 			"vultr_vpc":                      {Tok: tfbridge.MakeResource(mainPkg, mainMod, "Vpc")},
-			"vultr_vpc2":					  {Tok: tfbridge.MakeResource(mainPkg, mainMod, "Vpc2")},	
+			"vultr_vpc2":                     {Tok: tfbridge.MakeResource(mainPkg, mainMod, "Vpc2")},
 			"vultr_database":                 {Tok: tfbridge.MakeResource(mainPkg, mainMod, "Database")},
 			"vultr_database_connection_pool": {Tok: tfbridge.MakeResource(mainPkg, mainMod, "DatabaseConnectionPool")},
 			"vultr_database_db":              {Tok: tfbridge.MakeResource(mainPkg, mainMod, "DatabaseDb")},
@@ -185,7 +187,7 @@ func Provider() tfbridge.ProviderInfo {
 			"vultr_vpc":                    {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getVpc")},
 			"vultr_vpc2":                   {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getVpc2")},
 			"vultr_database":               {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getDatabase")},
-			"vultr_instances":				{Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getInstances")},
+			"vultr_instances":              {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getInstances")},
 		},
 		JavaScript: &tfbridge.JavaScriptInfo{
 			PackageName: "@ediri/vultr",
@@ -227,6 +229,10 @@ func Provider() tfbridge.ProviderInfo {
 	}
 
 	prov.SetAutonaming(255, "-")
+	prov.MustComputeTokens(tfbridgetokens.SingleModule("vultr_", mainMod,
+		tfbridgetokens.MakeStandard(mainPkg)))
+
+	prov.MustApplyAutoAliases()
 
 	return prov
 }
