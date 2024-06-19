@@ -5,7 +5,14 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	prov "github.com/hashicorp/terraform-plugin-framework/provider"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/vultr/terraform-provider-vultr/vultr"
 )
+
+func NewProvider() *schema.Provider {
+	p := vultr.Provider()
+	return p
+}
 
 var _ prov.Provider = &VultrProvider{}
 

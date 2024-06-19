@@ -27,7 +27,6 @@ import (
 	tfbridgetokens "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfbridge/tokens"
 	shimv2 "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfshim/sdk-v2"
 	"github.com/vultr/terraform-provider-vultr/shim"
-	"github.com/vultr/terraform-provider-vultr/vultr"
 )
 
 // all of the token components used below.
@@ -46,7 +45,7 @@ var metadata []byte
 func Provider() tfbridge.ProviderInfo {
 	// Instantiate the Terraform provider
 	p := pfbridge.MuxShimWithPF(context.Background(),
-		shimv2.NewProvider(vultr.Provider()),
+		shimv2.NewProvider(shim.NewProvider()),
 		shim.Framework()(),
 	)
 	// Create a Pulumi provider mapping
