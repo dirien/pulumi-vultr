@@ -5,8 +5,11 @@ go 1.21
 toolchain go1.21.1
 
 require github.com/hashicorp/terraform-plugin-framework v1.9.0
-
 require (
+	github.com/vultr/terraform-provider-vultr v1.3.4-0.20240529173837-cfe34a57d60b
+)
+require (
+
 	github.com/fatih/color v1.16.0 // indirect
 	github.com/hashicorp/go-hclog v1.6.3 // indirect
 	github.com/hashicorp/terraform-plugin-go v0.23.0 // indirect

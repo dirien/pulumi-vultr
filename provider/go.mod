@@ -11,8 +11,6 @@ replace github.com/vultr/terraform-provider-vultr/shim => ./shim
 require (
 	github.com/pulumi/pulumi-terraform-bridge/pf v0.37.0
 	github.com/pulumi/pulumi-terraform-bridge/v3 v3.84.0
-	github.com/pulumi/pulumi/sdk/v3 v3.118.0
-	github.com/vultr/terraform-provider-vultr v1.3.4-0.20240529173837-cfe34a57d60b
 	github.com/vultr/terraform-provider-vultr/shim v0.0.0-00010101000000-000000000000
 )
 
@@ -178,6 +176,7 @@ require (
 	github.com/pulumi/pulumi-terraform-bridge/x/muxer v0.0.8 // indirect
 	github.com/pulumi/pulumi-yaml v1.7.0 // indirect
 	github.com/pulumi/pulumi/pkg/v3 v3.118.0 // indirect
+	github.com/pulumi/pulumi/sdk/v3 v3.118.0 // indirect
 	github.com/pulumi/schema-tools v0.1.2 // indirect
 	github.com/pulumi/terraform-diff-reader v0.0.2 // indirect
 	github.com/rivo/uniseg v0.4.4 // indirect
@@ -205,6 +204,7 @@ require (
 	github.com/vmihailenco/msgpack/v5 v5.4.1 // indirect
 	github.com/vmihailenco/tagparser/v2 v2.0.0 // indirect
 	github.com/vultr/govultr/v3 v3.7.0 // indirect
+	github.com/vultr/terraform-provider-vultr v1.3.4-0.20240529173837-cfe34a57d60b // indirect
 	github.com/xanzy/ssh-agent v0.3.3 // indirect
 	github.com/xeipuuv/gojsonpointer v0.0.0-20180127040702-4e3ac2762d5f // indirect
 	github.com/xeipuuv/gojsonreference v0.0.0-20180127040603-bd5ef7bd5415 // indirect
