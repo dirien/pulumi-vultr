@@ -91,10 +91,6 @@ type LoadBalancer struct {
 	Ipv6 pulumi.StringOutput `pulumi:"ipv6"`
 	// The load balancer's label.
 	Label pulumi.StringPtrOutput `pulumi:"label"`
-	// A private network ID that the load balancer should be attached to.
-	//
-	// Deprecated: private_network is deprecated and should no longer be used. Instead, use vpc
-	PrivateNetwork pulumi.StringPtrOutput `pulumi:"privateNetwork"`
 	// Boolean value that indicates if Proxy Protocol is enabled.
 	ProxyProtocol pulumi.BoolPtrOutput `pulumi:"proxyProtocol"`
 	// The region your load balancer is deployed in.
@@ -165,10 +161,6 @@ type loadBalancerState struct {
 	Ipv6 *string `pulumi:"ipv6"`
 	// The load balancer's label.
 	Label *string `pulumi:"label"`
-	// A private network ID that the load balancer should be attached to.
-	//
-	// Deprecated: private_network is deprecated and should no longer be used. Instead, use vpc
-	PrivateNetwork *string `pulumi:"privateNetwork"`
 	// Boolean value that indicates if Proxy Protocol is enabled.
 	ProxyProtocol *bool `pulumi:"proxyProtocol"`
 	// The region your load balancer is deployed in.
@@ -204,10 +196,6 @@ type LoadBalancerState struct {
 	Ipv6 pulumi.StringPtrInput
 	// The load balancer's label.
 	Label pulumi.StringPtrInput
-	// A private network ID that the load balancer should be attached to.
-	//
-	// Deprecated: private_network is deprecated and should no longer be used. Instead, use vpc
-	PrivateNetwork pulumi.StringPtrInput
 	// Boolean value that indicates if Proxy Protocol is enabled.
 	ProxyProtocol pulumi.BoolPtrInput
 	// The region your load balancer is deployed in.
@@ -241,10 +229,6 @@ type loadBalancerArgs struct {
 	HealthCheck *LoadBalancerHealthCheck `pulumi:"healthCheck"`
 	// The load balancer's label.
 	Label *string `pulumi:"label"`
-	// A private network ID that the load balancer should be attached to.
-	//
-	// Deprecated: private_network is deprecated and should no longer be used. Instead, use vpc
-	PrivateNetwork *string `pulumi:"privateNetwork"`
 	// Boolean value that indicates if Proxy Protocol is enabled.
 	ProxyProtocol *bool `pulumi:"proxyProtocol"`
 	// The region your load balancer is deployed in.
@@ -273,10 +257,6 @@ type LoadBalancerArgs struct {
 	HealthCheck LoadBalancerHealthCheckPtrInput
 	// The load balancer's label.
 	Label pulumi.StringPtrInput
-	// A private network ID that the load balancer should be attached to.
-	//
-	// Deprecated: private_network is deprecated and should no longer be used. Instead, use vpc
-	PrivateNetwork pulumi.StringPtrInput
 	// Boolean value that indicates if Proxy Protocol is enabled.
 	ProxyProtocol pulumi.BoolPtrInput
 	// The region your load balancer is deployed in.
@@ -424,13 +404,6 @@ func (o LoadBalancerOutput) Ipv6() pulumi.StringOutput {
 // The load balancer's label.
 func (o LoadBalancerOutput) Label() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *LoadBalancer) pulumi.StringPtrOutput { return v.Label }).(pulumi.StringPtrOutput)
-}
-
-// A private network ID that the load balancer should be attached to.
-//
-// Deprecated: private_network is deprecated and should no longer be used. Instead, use vpc
-func (o LoadBalancerOutput) PrivateNetwork() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *LoadBalancer) pulumi.StringPtrOutput { return v.PrivateNetwork }).(pulumi.StringPtrOutput)
 }
 
 // Boolean value that indicates if Proxy Protocol is enabled.

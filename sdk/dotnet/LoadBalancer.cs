@@ -127,12 +127,6 @@ namespace ediri.Vultr
         public Output<string?> Label { get; private set; } = null!;
 
         /// <summary>
-        /// A private network ID that the load balancer should be attached to.
-        /// </summary>
-        [Output("privateNetwork")]
-        public Output<string?> PrivateNetwork { get; private set; } = null!;
-
-        /// <summary>
         /// Boolean value that indicates if Proxy Protocol is enabled.
         /// </summary>
         [Output("proxyProtocol")]
@@ -276,12 +270,6 @@ namespace ediri.Vultr
         public Input<string>? Label { get; set; }
 
         /// <summary>
-        /// A private network ID that the load balancer should be attached to.
-        /// </summary>
-        [Input("privateNetwork")]
-        public Input<string>? PrivateNetwork { get; set; }
-
-        /// <summary>
         /// Boolean value that indicates if Proxy Protocol is enabled.
         /// </summary>
         [Input("proxyProtocol")]
@@ -396,12 +384,6 @@ namespace ediri.Vultr
         /// </summary>
         [Input("label")]
         public Input<string>? Label { get; set; }
-
-        /// <summary>
-        /// A private network ID that the load balancer should be attached to.
-        /// </summary>
-        [Input("privateNetwork")]
-        public Input<string>? PrivateNetwork { get; set; }
 
         /// <summary>
         /// Boolean value that indicates if Proxy Protocol is enabled.

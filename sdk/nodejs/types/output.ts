@@ -206,6 +206,48 @@ export interface GetBlockStorageFilter {
     values: string[];
 }
 
+export interface GetContainerRegistryFilter {
+    /**
+     * Attribute name to filter with.
+     */
+    name: string;
+    /**
+     * One or more values filter with.
+     */
+    values: string[];
+}
+
+export interface GetContainerRegistryRepository {
+    /**
+     * A count of the artifacts in the repository.
+     */
+    artifactCount: number;
+    /**
+     * A date-time of when the root user was created.
+     */
+    dateCreated: string;
+    /**
+     * The date-time that the repository was last updated.
+     */
+    dateModified: string;
+    /**
+     * A description of the repo, if set.
+     */
+    description: string;
+    /**
+     * The image name in the repository.
+     */
+    image: string;
+    /**
+     * The name of the repository.
+     */
+    name: string;
+    /**
+     * A count of the number of pulls against the repository.
+     */
+    pullCount: number;
+}
+
 export interface GetDatabaseFilter {
     /**
      * Attribute name to filter with.
@@ -342,6 +384,17 @@ export interface GetDatabaseReadReplica {
 }
 
 export interface GetFirewallGroupFilter {
+    /**
+     * Attribute name to filter with.
+     */
+    name: string;
+    /**
+     * One or more values filter with.
+     */
+    values: string[];
+}
+
+export interface GetInferenceFilter {
     /**
      * Attribute name to filter with.
      */
@@ -653,17 +706,6 @@ export interface GetOsFilter {
 }
 
 export interface GetPlanFilter {
-    /**
-     * Attribute name to filter with.
-     */
-    name: string;
-    /**
-     * One or more values filter with.
-     */
-    values: string[];
-}
-
-export interface GetPrivateNetworkFilter {
     /**
      * Attribute name to filter with.
      */

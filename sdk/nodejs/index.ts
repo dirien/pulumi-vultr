@@ -15,6 +15,11 @@ export type BlockStorage = import("./blockStorage").BlockStorage;
 export const BlockStorage: typeof import("./blockStorage").BlockStorage = null as any;
 utilities.lazyLoad(exports, ["BlockStorage"], () => require("./blockStorage"));
 
+export { ContainerRegistryArgs, ContainerRegistryState } from "./containerRegistry";
+export type ContainerRegistry = import("./containerRegistry").ContainerRegistry;
+export const ContainerRegistry: typeof import("./containerRegistry").ContainerRegistry = null as any;
+utilities.lazyLoad(exports, ["ContainerRegistry"], () => require("./containerRegistry"));
+
 export { DatabaseArgs, DatabaseState } from "./database";
 export type Database = import("./database").Database;
 export const Database: typeof import("./database").Database = null as any;
@@ -90,6 +95,11 @@ export const getBlockStorage: typeof import("./getBlockStorage").getBlockStorage
 export const getBlockStorageOutput: typeof import("./getBlockStorage").getBlockStorageOutput = null as any;
 utilities.lazyLoad(exports, ["getBlockStorage","getBlockStorageOutput"], () => require("./getBlockStorage"));
 
+export { GetContainerRegistryArgs, GetContainerRegistryResult, GetContainerRegistryOutputArgs } from "./getContainerRegistry";
+export const getContainerRegistry: typeof import("./getContainerRegistry").getContainerRegistry = null as any;
+export const getContainerRegistryOutput: typeof import("./getContainerRegistry").getContainerRegistryOutput = null as any;
+utilities.lazyLoad(exports, ["getContainerRegistry","getContainerRegistryOutput"], () => require("./getContainerRegistry"));
+
 export { GetDatabaseArgs, GetDatabaseResult, GetDatabaseOutputArgs } from "./getDatabase";
 export const getDatabase: typeof import("./getDatabase").getDatabase = null as any;
 export const getDatabaseOutput: typeof import("./getDatabase").getDatabaseOutput = null as any;
@@ -104,6 +114,11 @@ export { GetFirewallGroupArgs, GetFirewallGroupResult, GetFirewallGroupOutputArg
 export const getFirewallGroup: typeof import("./getFirewallGroup").getFirewallGroup = null as any;
 export const getFirewallGroupOutput: typeof import("./getFirewallGroup").getFirewallGroupOutput = null as any;
 utilities.lazyLoad(exports, ["getFirewallGroup","getFirewallGroupOutput"], () => require("./getFirewallGroup"));
+
+export { GetInferenceArgs, GetInferenceResult, GetInferenceOutputArgs } from "./getInference";
+export const getInference: typeof import("./getInference").getInference = null as any;
+export const getInferenceOutput: typeof import("./getInference").getInferenceOutput = null as any;
+utilities.lazyLoad(exports, ["getInference","getInferenceOutput"], () => require("./getInference"));
 
 export { GetInstanceArgs, GetInstanceResult, GetInstanceOutputArgs } from "./getInstance";
 export const getInstance: typeof import("./getInstance").getInstance = null as any;
@@ -160,11 +175,6 @@ export const getPlan: typeof import("./getPlan").getPlan = null as any;
 export const getPlanOutput: typeof import("./getPlan").getPlanOutput = null as any;
 utilities.lazyLoad(exports, ["getPlan","getPlanOutput"], () => require("./getPlan"));
 
-export { GetPrivateNetworkArgs, GetPrivateNetworkResult, GetPrivateNetworkOutputArgs } from "./getPrivateNetwork";
-export const getPrivateNetwork: typeof import("./getPrivateNetwork").getPrivateNetwork = null as any;
-export const getPrivateNetworkOutput: typeof import("./getPrivateNetwork").getPrivateNetworkOutput = null as any;
-utilities.lazyLoad(exports, ["getPrivateNetwork","getPrivateNetworkOutput"], () => require("./getPrivateNetwork"));
-
 export { GetRegionArgs, GetRegionResult, GetRegionOutputArgs } from "./getRegion";
 export const getRegion: typeof import("./getRegion").getRegion = null as any;
 export const getRegionOutput: typeof import("./getRegion").getRegionOutput = null as any;
@@ -215,6 +225,11 @@ export const getVpc2: typeof import("./getVpc2").getVpc2 = null as any;
 export const getVpc2Output: typeof import("./getVpc2").getVpc2Output = null as any;
 utilities.lazyLoad(exports, ["getVpc2","getVpc2Output"], () => require("./getVpc2"));
 
+export { InferenceArgs, InferenceState } from "./inference";
+export type Inference = import("./inference").Inference;
+export const Inference: typeof import("./inference").Inference = null as any;
+utilities.lazyLoad(exports, ["Inference"], () => require("./inference"));
+
 export { InstanceArgs, InstanceState } from "./instance";
 export type Instance = import("./instance").Instance;
 export const Instance: typeof import("./instance").Instance = null as any;
@@ -249,11 +264,6 @@ export { ObjectStorageArgs, ObjectStorageState } from "./objectStorage";
 export type ObjectStorage = import("./objectStorage").ObjectStorage;
 export const ObjectStorage: typeof import("./objectStorage").ObjectStorage = null as any;
 utilities.lazyLoad(exports, ["ObjectStorage"], () => require("./objectStorage"));
-
-export { PrivateNetworkArgs, PrivateNetworkState } from "./privateNetwork";
-export type PrivateNetwork = import("./privateNetwork").PrivateNetwork;
-export const PrivateNetwork: typeof import("./privateNetwork").PrivateNetwork = null as any;
-utilities.lazyLoad(exports, ["PrivateNetwork"], () => require("./privateNetwork"));
 
 export { ProviderArgs } from "./provider";
 export type Provider = import("./provider").Provider;
@@ -328,6 +338,8 @@ const _module = {
                 return new BareMetalServer(name, <any>undefined, { urn })
             case "vultr:index/blockStorage:BlockStorage":
                 return new BlockStorage(name, <any>undefined, { urn })
+            case "vultr:index/containerRegistry:ContainerRegistry":
+                return new ContainerRegistry(name, <any>undefined, { urn })
             case "vultr:index/database:Database":
                 return new Database(name, <any>undefined, { urn })
             case "vultr:index/databaseConnectionPool:DatabaseConnectionPool":
@@ -346,6 +358,8 @@ const _module = {
                 return new FirewallGroup(name, <any>undefined, { urn })
             case "vultr:index/firewallRule:FirewallRule":
                 return new FirewallRule(name, <any>undefined, { urn })
+            case "vultr:index/inference:Inference":
+                return new Inference(name, <any>undefined, { urn })
             case "vultr:index/instance:Instance":
                 return new Instance(name, <any>undefined, { urn })
             case "vultr:index/instanceIpv4:InstanceIpv4":
@@ -360,8 +374,6 @@ const _module = {
                 return new LoadBalancer(name, <any>undefined, { urn })
             case "vultr:index/objectStorage:ObjectStorage":
                 return new ObjectStorage(name, <any>undefined, { urn })
-            case "vultr:index/privateNetwork:PrivateNetwork":
-                return new PrivateNetwork(name, <any>undefined, { urn })
             case "vultr:index/reservedIp:ReservedIp":
                 return new ReservedIp(name, <any>undefined, { urn })
             case "vultr:index/reverseIpv4:ReverseIpv4":
@@ -389,6 +401,7 @@ const _module = {
 };
 pulumi.runtime.registerResourceModule("vultr", "index/bareMetalServer", _module)
 pulumi.runtime.registerResourceModule("vultr", "index/blockStorage", _module)
+pulumi.runtime.registerResourceModule("vultr", "index/containerRegistry", _module)
 pulumi.runtime.registerResourceModule("vultr", "index/database", _module)
 pulumi.runtime.registerResourceModule("vultr", "index/databaseConnectionPool", _module)
 pulumi.runtime.registerResourceModule("vultr", "index/databaseDb", _module)
@@ -398,6 +411,7 @@ pulumi.runtime.registerResourceModule("vultr", "index/dnsDomain", _module)
 pulumi.runtime.registerResourceModule("vultr", "index/dnsRecord", _module)
 pulumi.runtime.registerResourceModule("vultr", "index/firewallGroup", _module)
 pulumi.runtime.registerResourceModule("vultr", "index/firewallRule", _module)
+pulumi.runtime.registerResourceModule("vultr", "index/inference", _module)
 pulumi.runtime.registerResourceModule("vultr", "index/instance", _module)
 pulumi.runtime.registerResourceModule("vultr", "index/instanceIpv4", _module)
 pulumi.runtime.registerResourceModule("vultr", "index/isoPrivate", _module)
@@ -405,7 +419,6 @@ pulumi.runtime.registerResourceModule("vultr", "index/kubernetes", _module)
 pulumi.runtime.registerResourceModule("vultr", "index/kubernetesNodePools", _module)
 pulumi.runtime.registerResourceModule("vultr", "index/loadBalancer", _module)
 pulumi.runtime.registerResourceModule("vultr", "index/objectStorage", _module)
-pulumi.runtime.registerResourceModule("vultr", "index/privateNetwork", _module)
 pulumi.runtime.registerResourceModule("vultr", "index/reservedIp", _module)
 pulumi.runtime.registerResourceModule("vultr", "index/reverseIpv4", _module)
 pulumi.runtime.registerResourceModule("vultr", "index/reverseIpv6", _module)

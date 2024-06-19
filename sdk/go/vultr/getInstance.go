@@ -107,8 +107,7 @@ type LookupInstanceResult struct {
 	// The server's plan ID.
 	Plan string `pulumi:"plan"`
 	// Whether the server is powered on or not.
-	PowerStatus       string   `pulumi:"powerStatus"`
-	PrivateNetworkIds []string `pulumi:"privateNetworkIds"`
+	PowerStatus string `pulumi:"powerStatus"`
 	// The amount of memory available on the instance in MB.
 	Ram int `pulumi:"ram"`
 	// The region ID of the server.
@@ -280,10 +279,6 @@ func (o LookupInstanceResultOutput) Plan() pulumi.StringOutput {
 // Whether the server is powered on or not.
 func (o LookupInstanceResultOutput) PowerStatus() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupInstanceResult) string { return v.PowerStatus }).(pulumi.StringOutput)
-}
-
-func (o LookupInstanceResultOutput) PrivateNetworkIds() pulumi.StringArrayOutput {
-	return o.ApplyT(func(v LookupInstanceResult) []string { return v.PrivateNetworkIds }).(pulumi.StringArrayOutput)
 }
 
 // The amount of memory available on the instance in MB.

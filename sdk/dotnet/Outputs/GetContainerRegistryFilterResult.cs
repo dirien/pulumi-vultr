@@ -12,7 +12,7 @@ namespace ediri.Vultr.Outputs
 {
 
     [OutputType]
-    public sealed class GetPrivateNetworkFilterResult
+    public sealed class GetContainerRegistryFilterResult
     {
         /// <summary>
         /// Attribute name to filter with.
@@ -24,7 +24,7 @@ namespace ediri.Vultr.Outputs
         public readonly ImmutableArray<string> Values;
 
         [OutputConstructor]
-        private GetPrivateNetworkFilterResult(
+        private GetContainerRegistryFilterResult(
             string name,
 
             ImmutableArray<string> values)

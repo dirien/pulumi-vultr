@@ -25,6 +25,8 @@ func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi
 		r = &BareMetalServer{}
 	case "vultr:index/blockStorage:BlockStorage":
 		r = &BlockStorage{}
+	case "vultr:index/containerRegistry:ContainerRegistry":
+		r = &ContainerRegistry{}
 	case "vultr:index/database:Database":
 		r = &Database{}
 	case "vultr:index/databaseConnectionPool:DatabaseConnectionPool":
@@ -43,6 +45,8 @@ func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi
 		r = &FirewallGroup{}
 	case "vultr:index/firewallRule:FirewallRule":
 		r = &FirewallRule{}
+	case "vultr:index/inference:Inference":
+		r = &Inference{}
 	case "vultr:index/instance:Instance":
 		r = &Instance{}
 	case "vultr:index/instanceIpv4:InstanceIpv4":
@@ -57,8 +61,6 @@ func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi
 		r = &LoadBalancer{}
 	case "vultr:index/objectStorage:ObjectStorage":
 		r = &ObjectStorage{}
-	case "vultr:index/privateNetwork:PrivateNetwork":
-		r = &PrivateNetwork{}
 	case "vultr:index/reservedIp:ReservedIp":
 		r = &ReservedIp{}
 	case "vultr:index/reverseIpv4:ReverseIpv4":
@@ -122,6 +124,11 @@ func init() {
 	)
 	pulumi.RegisterResourceModule(
 		"vultr",
+		"index/containerRegistry",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"vultr",
 		"index/database",
 		&module{version},
 	)
@@ -167,6 +174,11 @@ func init() {
 	)
 	pulumi.RegisterResourceModule(
 		"vultr",
+		"index/inference",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"vultr",
 		"index/instance",
 		&module{version},
 	)
@@ -198,11 +210,6 @@ func init() {
 	pulumi.RegisterResourceModule(
 		"vultr",
 		"index/objectStorage",
-		&module{version},
-	)
-	pulumi.RegisterResourceModule(
-		"vultr",
-		"index/privateNetwork",
 		&module{version},
 	)
 	pulumi.RegisterResourceModule(

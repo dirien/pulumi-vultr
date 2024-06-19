@@ -24,7 +24,6 @@ class LoadBalancerArgs:
                  firewall_rules: Optional[pulumi.Input[Sequence[pulumi.Input['LoadBalancerFirewallRuleArgs']]]] = None,
                  health_check: Optional[pulumi.Input['LoadBalancerHealthCheckArgs']] = None,
                  label: Optional[pulumi.Input[str]] = None,
-                 private_network: Optional[pulumi.Input[str]] = None,
                  proxy_protocol: Optional[pulumi.Input[bool]] = None,
                  ssl: Optional[pulumi.Input['LoadBalancerSslArgs']] = None,
                  ssl_redirect: Optional[pulumi.Input[bool]] = None,
@@ -39,7 +38,6 @@ class LoadBalancerArgs:
         :param pulumi.Input[Sequence[pulumi.Input['LoadBalancerFirewallRuleArgs']]] firewall_rules: Defines the firewall rules for a load balancer.
         :param pulumi.Input['LoadBalancerHealthCheckArgs'] health_check: A block that defines the way load balancers should check for health. The configuration of a `health_check` is listed below.
         :param pulumi.Input[str] label: The load balancer's label.
-        :param pulumi.Input[str] private_network: A private network ID that the load balancer should be attached to.
         :param pulumi.Input[bool] proxy_protocol: Boolean value that indicates if Proxy Protocol is enabled.
         :param pulumi.Input['LoadBalancerSslArgs'] ssl: A block that supplies your ssl configuration to be used with HTTPS. The configuration of a `ssl` is listed below.
         :param pulumi.Input[bool] ssl_redirect: Boolean value that indicates if HTTP calls will be redirected to HTTPS.
@@ -59,11 +57,6 @@ class LoadBalancerArgs:
             pulumi.set(__self__, "health_check", health_check)
         if label is not None:
             pulumi.set(__self__, "label", label)
-        if private_network is not None:
-            warnings.warn("""private_network is deprecated and should no longer be used. Instead, use vpc""", DeprecationWarning)
-            pulumi.log.warn("""private_network is deprecated: private_network is deprecated and should no longer be used. Instead, use vpc""")
-        if private_network is not None:
-            pulumi.set(__self__, "private_network", private_network)
         if proxy_protocol is not None:
             pulumi.set(__self__, "proxy_protocol", proxy_protocol)
         if ssl is not None:
@@ -170,21 +163,6 @@ class LoadBalancerArgs:
         pulumi.set(self, "label", value)
 
     @property
-    @pulumi.getter(name="privateNetwork")
-    def private_network(self) -> Optional[pulumi.Input[str]]:
-        """
-        A private network ID that the load balancer should be attached to.
-        """
-        warnings.warn("""private_network is deprecated and should no longer be used. Instead, use vpc""", DeprecationWarning)
-        pulumi.log.warn("""private_network is deprecated: private_network is deprecated and should no longer be used. Instead, use vpc""")
-
-        return pulumi.get(self, "private_network")
-
-    @private_network.setter
-    def private_network(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "private_network", value)
-
-    @property
     @pulumi.getter(name="proxyProtocol")
     def proxy_protocol(self) -> Optional[pulumi.Input[bool]]:
         """
@@ -246,7 +224,6 @@ class _LoadBalancerState:
                  ipv4: Optional[pulumi.Input[str]] = None,
                  ipv6: Optional[pulumi.Input[str]] = None,
                  label: Optional[pulumi.Input[str]] = None,
-                 private_network: Optional[pulumi.Input[str]] = None,
                  proxy_protocol: Optional[pulumi.Input[bool]] = None,
                  region: Optional[pulumi.Input[str]] = None,
                  ssl: Optional[pulumi.Input['LoadBalancerSslArgs']] = None,
@@ -265,7 +242,6 @@ class _LoadBalancerState:
         :param pulumi.Input[str] ipv4: IPv4 address for your load balancer.
         :param pulumi.Input[str] ipv6: IPv6 address for your load balancer.
         :param pulumi.Input[str] label: The load balancer's label.
-        :param pulumi.Input[str] private_network: A private network ID that the load balancer should be attached to.
         :param pulumi.Input[bool] proxy_protocol: Boolean value that indicates if Proxy Protocol is enabled.
         :param pulumi.Input[str] region: The region your load balancer is deployed in.
         :param pulumi.Input['LoadBalancerSslArgs'] ssl: A block that supplies your ssl configuration to be used with HTTPS. The configuration of a `ssl` is listed below.
@@ -293,11 +269,6 @@ class _LoadBalancerState:
             pulumi.set(__self__, "ipv6", ipv6)
         if label is not None:
             pulumi.set(__self__, "label", label)
-        if private_network is not None:
-            warnings.warn("""private_network is deprecated and should no longer be used. Instead, use vpc""", DeprecationWarning)
-            pulumi.log.warn("""private_network is deprecated: private_network is deprecated and should no longer be used. Instead, use vpc""")
-        if private_network is not None:
-            pulumi.set(__self__, "private_network", private_network)
         if proxy_protocol is not None:
             pulumi.set(__self__, "proxy_protocol", proxy_protocol)
         if region is not None:
@@ -432,21 +403,6 @@ class _LoadBalancerState:
         pulumi.set(self, "label", value)
 
     @property
-    @pulumi.getter(name="privateNetwork")
-    def private_network(self) -> Optional[pulumi.Input[str]]:
-        """
-        A private network ID that the load balancer should be attached to.
-        """
-        warnings.warn("""private_network is deprecated and should no longer be used. Instead, use vpc""", DeprecationWarning)
-        pulumi.log.warn("""private_network is deprecated: private_network is deprecated and should no longer be used. Instead, use vpc""")
-
-        return pulumi.get(self, "private_network")
-
-    @private_network.setter
-    def private_network(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "private_network", value)
-
-    @property
     @pulumi.getter(name="proxyProtocol")
     def proxy_protocol(self) -> Optional[pulumi.Input[bool]]:
         """
@@ -531,7 +487,6 @@ class LoadBalancer(pulumi.CustomResource):
                  forwarding_rules: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['LoadBalancerForwardingRuleArgs']]]]] = None,
                  health_check: Optional[pulumi.Input[pulumi.InputType['LoadBalancerHealthCheckArgs']]] = None,
                  label: Optional[pulumi.Input[str]] = None,
-                 private_network: Optional[pulumi.Input[str]] = None,
                  proxy_protocol: Optional[pulumi.Input[bool]] = None,
                  region: Optional[pulumi.Input[str]] = None,
                  ssl: Optional[pulumi.Input[pulumi.InputType['LoadBalancerSslArgs']]] = None,
@@ -587,7 +542,6 @@ class LoadBalancer(pulumi.CustomResource):
         :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['LoadBalancerForwardingRuleArgs']]]] forwarding_rules: List of forwarding rules for a load balancer. The configuration of a `forwarding_rules` is listened below.
         :param pulumi.Input[pulumi.InputType['LoadBalancerHealthCheckArgs']] health_check: A block that defines the way load balancers should check for health. The configuration of a `health_check` is listed below.
         :param pulumi.Input[str] label: The load balancer's label.
-        :param pulumi.Input[str] private_network: A private network ID that the load balancer should be attached to.
         :param pulumi.Input[bool] proxy_protocol: Boolean value that indicates if Proxy Protocol is enabled.
         :param pulumi.Input[str] region: The region your load balancer is deployed in.
         :param pulumi.Input[pulumi.InputType['LoadBalancerSslArgs']] ssl: A block that supplies your ssl configuration to be used with HTTPS. The configuration of a `ssl` is listed below.
@@ -662,7 +616,6 @@ class LoadBalancer(pulumi.CustomResource):
                  forwarding_rules: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['LoadBalancerForwardingRuleArgs']]]]] = None,
                  health_check: Optional[pulumi.Input[pulumi.InputType['LoadBalancerHealthCheckArgs']]] = None,
                  label: Optional[pulumi.Input[str]] = None,
-                 private_network: Optional[pulumi.Input[str]] = None,
                  proxy_protocol: Optional[pulumi.Input[bool]] = None,
                  region: Optional[pulumi.Input[str]] = None,
                  ssl: Optional[pulumi.Input[pulumi.InputType['LoadBalancerSslArgs']]] = None,
@@ -686,7 +639,6 @@ class LoadBalancer(pulumi.CustomResource):
             __props__.__dict__["forwarding_rules"] = forwarding_rules
             __props__.__dict__["health_check"] = health_check
             __props__.__dict__["label"] = label
-            __props__.__dict__["private_network"] = private_network
             __props__.__dict__["proxy_protocol"] = proxy_protocol
             if region is None and not opts.urn:
                 raise TypeError("Missing required property 'region'")
@@ -718,7 +670,6 @@ class LoadBalancer(pulumi.CustomResource):
             ipv4: Optional[pulumi.Input[str]] = None,
             ipv6: Optional[pulumi.Input[str]] = None,
             label: Optional[pulumi.Input[str]] = None,
-            private_network: Optional[pulumi.Input[str]] = None,
             proxy_protocol: Optional[pulumi.Input[bool]] = None,
             region: Optional[pulumi.Input[str]] = None,
             ssl: Optional[pulumi.Input[pulumi.InputType['LoadBalancerSslArgs']]] = None,
@@ -742,7 +693,6 @@ class LoadBalancer(pulumi.CustomResource):
         :param pulumi.Input[str] ipv4: IPv4 address for your load balancer.
         :param pulumi.Input[str] ipv6: IPv6 address for your load balancer.
         :param pulumi.Input[str] label: The load balancer's label.
-        :param pulumi.Input[str] private_network: A private network ID that the load balancer should be attached to.
         :param pulumi.Input[bool] proxy_protocol: Boolean value that indicates if Proxy Protocol is enabled.
         :param pulumi.Input[str] region: The region your load balancer is deployed in.
         :param pulumi.Input[pulumi.InputType['LoadBalancerSslArgs']] ssl: A block that supplies your ssl configuration to be used with HTTPS. The configuration of a `ssl` is listed below.
@@ -764,7 +714,6 @@ class LoadBalancer(pulumi.CustomResource):
         __props__.__dict__["ipv4"] = ipv4
         __props__.__dict__["ipv6"] = ipv6
         __props__.__dict__["label"] = label
-        __props__.__dict__["private_network"] = private_network
         __props__.__dict__["proxy_protocol"] = proxy_protocol
         __props__.__dict__["region"] = region
         __props__.__dict__["ssl"] = ssl
@@ -852,17 +801,6 @@ class LoadBalancer(pulumi.CustomResource):
         The load balancer's label.
         """
         return pulumi.get(self, "label")
-
-    @property
-    @pulumi.getter(name="privateNetwork")
-    def private_network(self) -> pulumi.Output[Optional[str]]:
-        """
-        A private network ID that the load balancer should be attached to.
-        """
-        warnings.warn("""private_network is deprecated and should no longer be used. Instead, use vpc""", DeprecationWarning)
-        pulumi.log.warn("""private_network is deprecated: private_network is deprecated and should no longer be used. Instead, use vpc""")
-
-        return pulumi.get(self, "private_network")
 
     @property
     @pulumi.getter(name="proxyProtocol")

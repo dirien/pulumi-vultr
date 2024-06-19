@@ -186,10 +186,6 @@ namespace ediri.Vultr
         /// </summary>
         public readonly string Label;
         /// <summary>
-        /// (Deprecated: use `vpc` instead) Defines the private network the load balancer is attached to.
-        /// </summary>
-        public readonly string PrivateNetwork;
-        /// <summary>
         /// Boolean value that indicates if Proxy Protocol is enabled.
         /// </summary>
         public readonly bool? ProxyProtocol;
@@ -235,8 +231,6 @@ namespace ediri.Vultr
 
             string label,
 
-            string privateNetwork,
-
             bool? proxyProtocol,
 
             string region,
@@ -260,7 +254,6 @@ namespace ediri.Vultr
             Ipv4 = ipv4;
             Ipv6 = ipv6;
             Label = label;
-            PrivateNetwork = privateNetwork;
             ProxyProtocol = proxyProtocol;
             Region = region;
             Ssl = ssl;

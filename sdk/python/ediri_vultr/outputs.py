@@ -25,9 +25,12 @@ __all__ = [
     'GetBareMetalPlanFilterResult',
     'GetBareMetalServerFilterResult',
     'GetBlockStorageFilterResult',
+    'GetContainerRegistryFilterResult',
+    'GetContainerRegistryRepositoryResult',
     'GetDatabaseFilterResult',
     'GetDatabaseReadReplicaResult',
     'GetFirewallGroupFilterResult',
+    'GetInferenceFilterResult',
     'GetInstanceFilterResult',
     'GetInstanceIpv4FilterResult',
     'GetInstancesFilterResult',
@@ -42,7 +45,6 @@ __all__ = [
     'GetObjectStorageFilterResult',
     'GetOsFilterResult',
     'GetPlanFilterResult',
-    'GetPrivateNetworkFilterResult',
     'GetRegionFilterResult',
     'GetReservedIpFilterResult',
     'GetReverseIpv4FilterResult',
@@ -1327,6 +1329,119 @@ class GetBlockStorageFilterResult(dict):
 
 
 @pulumi.output_type
+class GetContainerRegistryFilterResult(dict):
+    def __init__(__self__, *,
+                 name: str,
+                 values: Sequence[str]):
+        """
+        :param str name: Attribute name to filter with.
+        :param Sequence[str] values: One or more values filter with.
+        """
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "values", values)
+
+    @property
+    @pulumi.getter
+    def name(self) -> str:
+        """
+        Attribute name to filter with.
+        """
+        return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter
+    def values(self) -> Sequence[str]:
+        """
+        One or more values filter with.
+        """
+        return pulumi.get(self, "values")
+
+
+@pulumi.output_type
+class GetContainerRegistryRepositoryResult(dict):
+    def __init__(__self__, *,
+                 artifact_count: int,
+                 date_created: str,
+                 date_modified: str,
+                 description: str,
+                 image: str,
+                 name: str,
+                 pull_count: int):
+        """
+        :param int artifact_count: A count of the artifacts in the repository.
+        :param str date_created: A date-time of when the root user was created.
+        :param str date_modified: The date-time that the repository was last updated.
+        :param str description: A description of the repo, if set.
+        :param str image: The image name in the repository.
+        :param str name: The name of the repository.
+        :param int pull_count: A count of the number of pulls against the repository.
+        """
+        pulumi.set(__self__, "artifact_count", artifact_count)
+        pulumi.set(__self__, "date_created", date_created)
+        pulumi.set(__self__, "date_modified", date_modified)
+        pulumi.set(__self__, "description", description)
+        pulumi.set(__self__, "image", image)
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "pull_count", pull_count)
+
+    @property
+    @pulumi.getter(name="artifactCount")
+    def artifact_count(self) -> int:
+        """
+        A count of the artifacts in the repository.
+        """
+        return pulumi.get(self, "artifact_count")
+
+    @property
+    @pulumi.getter(name="dateCreated")
+    def date_created(self) -> str:
+        """
+        A date-time of when the root user was created.
+        """
+        return pulumi.get(self, "date_created")
+
+    @property
+    @pulumi.getter(name="dateModified")
+    def date_modified(self) -> str:
+        """
+        The date-time that the repository was last updated.
+        """
+        return pulumi.get(self, "date_modified")
+
+    @property
+    @pulumi.getter
+    def description(self) -> str:
+        """
+        A description of the repo, if set.
+        """
+        return pulumi.get(self, "description")
+
+    @property
+    @pulumi.getter
+    def image(self) -> str:
+        """
+        The image name in the repository.
+        """
+        return pulumi.get(self, "image")
+
+    @property
+    @pulumi.getter
+    def name(self) -> str:
+        """
+        The name of the repository.
+        """
+        return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter(name="pullCount")
+    def pull_count(self) -> int:
+        """
+        A count of the number of pulls against the repository.
+        """
+        return pulumi.get(self, "pull_count")
+
+
+@pulumi.output_type
 class GetDatabaseFilterResult(dict):
     def __init__(__self__, *,
                  name: str,
@@ -1701,6 +1816,35 @@ class GetDatabaseReadReplicaResult(dict):
 
 @pulumi.output_type
 class GetFirewallGroupFilterResult(dict):
+    def __init__(__self__, *,
+                 name: str,
+                 values: Sequence[str]):
+        """
+        :param str name: Attribute name to filter with.
+        :param Sequence[str] values: One or more values filter with.
+        """
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "values", values)
+
+    @property
+    @pulumi.getter
+    def name(self) -> str:
+        """
+        Attribute name to filter with.
+        """
+        return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter
+    def values(self) -> Sequence[str]:
+        """
+        One or more values filter with.
+        """
+        return pulumi.get(self, "values")
+
+
+@pulumi.output_type
+class GetInferenceFilterResult(dict):
     def __init__(__self__, *,
                  name: str,
                  values: Sequence[str]):
@@ -2563,35 +2707,6 @@ class GetOsFilterResult(dict):
 
 @pulumi.output_type
 class GetPlanFilterResult(dict):
-    def __init__(__self__, *,
-                 name: str,
-                 values: Sequence[str]):
-        """
-        :param str name: Attribute name to filter with.
-        :param Sequence[str] values: One or more values filter with.
-        """
-        pulumi.set(__self__, "name", name)
-        pulumi.set(__self__, "values", values)
-
-    @property
-    @pulumi.getter
-    def name(self) -> str:
-        """
-        Attribute name to filter with.
-        """
-        return pulumi.get(self, "name")
-
-    @property
-    @pulumi.getter
-    def values(self) -> Sequence[str]:
-        """
-        One or more values filter with.
-        """
-        return pulumi.get(self, "values")
-
-
-@pulumi.output_type
-class GetPrivateNetworkFilterResult(dict):
     def __init__(__self__, *,
                  name: str,
                  values: Sequence[str]):

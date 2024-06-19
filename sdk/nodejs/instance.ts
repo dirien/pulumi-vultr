@@ -193,12 +193,6 @@ export class Instance extends pulumi.CustomResource {
      */
     public /*out*/ readonly powerStatus!: pulumi.Output<string>;
     /**
-     * (Deprecated: use `vpcIds` instead) A list of private network IDs to be attached to the server.
-     *
-     * @deprecated private_network_ids has been deprecated and should no longer be used. Instead, use vpc_ids
-     */
-    public readonly privateNetworkIds!: pulumi.Output<string[]>;
-    /**
      * The amount of memory available on the server in MB.
      */
     public /*out*/ readonly ram!: pulumi.Output<number>;
@@ -303,7 +297,6 @@ export class Instance extends pulumi.CustomResource {
             resourceInputs["osId"] = state ? state.osId : undefined;
             resourceInputs["plan"] = state ? state.plan : undefined;
             resourceInputs["powerStatus"] = state ? state.powerStatus : undefined;
-            resourceInputs["privateNetworkIds"] = state ? state.privateNetworkIds : undefined;
             resourceInputs["ram"] = state ? state.ram : undefined;
             resourceInputs["region"] = state ? state.region : undefined;
             resourceInputs["reservedIpId"] = state ? state.reservedIpId : undefined;
@@ -343,7 +336,6 @@ export class Instance extends pulumi.CustomResource {
             resourceInputs["label"] = args ? args.label : undefined;
             resourceInputs["osId"] = args ? args.osId : undefined;
             resourceInputs["plan"] = args ? args.plan : undefined;
-            resourceInputs["privateNetworkIds"] = args ? args.privateNetworkIds : undefined;
             resourceInputs["region"] = args ? args.region : undefined;
             resourceInputs["reservedIpId"] = args ? args.reservedIpId : undefined;
             resourceInputs["scriptId"] = args ? args.scriptId : undefined;
@@ -493,12 +485,6 @@ export interface InstanceState {
      */
     powerStatus?: pulumi.Input<string>;
     /**
-     * (Deprecated: use `vpcIds` instead) A list of private network IDs to be attached to the server.
-     *
-     * @deprecated private_network_ids has been deprecated and should no longer be used. Instead, use vpc_ids
-     */
-    privateNetworkIds?: pulumi.Input<pulumi.Input<string>[]>;
-    /**
      * The amount of memory available on the server in MB.
      */
     ram?: pulumi.Input<number>;
@@ -628,12 +614,6 @@ export interface InstanceArgs {
      * The ID of the plan that you want the instance to subscribe to. [See List Plans](https://www.vultr.com/api/#tag/plans)
      */
     plan: pulumi.Input<string>;
-    /**
-     * (Deprecated: use `vpcIds` instead) A list of private network IDs to be attached to the server.
-     *
-     * @deprecated private_network_ids has been deprecated and should no longer be used. Instead, use vpc_ids
-     */
-    privateNetworkIds?: pulumi.Input<pulumi.Input<string>[]>;
     /**
      * The ID of the region that the instance is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
      */

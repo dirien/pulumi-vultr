@@ -24,8 +24,10 @@ __all__ = [
     'GetBareMetalPlanFilterArgs',
     'GetBareMetalServerFilterArgs',
     'GetBlockStorageFilterArgs',
+    'GetContainerRegistryFilterArgs',
     'GetDatabaseFilterArgs',
     'GetFirewallGroupFilterArgs',
+    'GetInferenceFilterArgs',
     'GetInstanceFilterArgs',
     'GetInstanceIpv4FilterArgs',
     'GetInstancesFilterArgs',
@@ -37,7 +39,6 @@ __all__ = [
     'GetObjectStorageFilterArgs',
     'GetOsFilterArgs',
     'GetPlanFilterArgs',
-    'GetPrivateNetworkFilterArgs',
     'GetRegionFilterArgs',
     'GetReservedIpFilterArgs',
     'GetReverseIpv4FilterArgs',
@@ -1454,6 +1455,43 @@ class GetBlockStorageFilterArgs:
 
 
 @pulumi.input_type
+class GetContainerRegistryFilterArgs:
+    def __init__(__self__, *,
+                 name: str,
+                 values: Sequence[str]):
+        """
+        :param str name: Attribute name to filter with.
+        :param Sequence[str] values: One or more values filter with.
+        """
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "values", values)
+
+    @property
+    @pulumi.getter
+    def name(self) -> str:
+        """
+        Attribute name to filter with.
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: str):
+        pulumi.set(self, "name", value)
+
+    @property
+    @pulumi.getter
+    def values(self) -> Sequence[str]:
+        """
+        One or more values filter with.
+        """
+        return pulumi.get(self, "values")
+
+    @values.setter
+    def values(self, value: Sequence[str]):
+        pulumi.set(self, "values", value)
+
+
+@pulumi.input_type
 class GetDatabaseFilterArgs:
     def __init__(__self__, *,
                  name: str,
@@ -1492,6 +1530,43 @@ class GetDatabaseFilterArgs:
 
 @pulumi.input_type
 class GetFirewallGroupFilterArgs:
+    def __init__(__self__, *,
+                 name: str,
+                 values: Sequence[str]):
+        """
+        :param str name: Attribute name to filter with.
+        :param Sequence[str] values: One or more values filter with.
+        """
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "values", values)
+
+    @property
+    @pulumi.getter
+    def name(self) -> str:
+        """
+        Attribute name to filter with.
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: str):
+        pulumi.set(self, "name", value)
+
+    @property
+    @pulumi.getter
+    def values(self) -> Sequence[str]:
+        """
+        One or more values filter with.
+        """
+        return pulumi.get(self, "values")
+
+    @values.setter
+    def values(self, value: Sequence[str]):
+        pulumi.set(self, "values", value)
+
+
+@pulumi.input_type
+class GetInferenceFilterArgs:
     def __init__(__self__, *,
                  name: str,
                  values: Sequence[str]):
@@ -1899,43 +1974,6 @@ class GetOsFilterArgs:
 
 @pulumi.input_type
 class GetPlanFilterArgs:
-    def __init__(__self__, *,
-                 name: str,
-                 values: Sequence[str]):
-        """
-        :param str name: Attribute name to filter with.
-        :param Sequence[str] values: One or more values filter with.
-        """
-        pulumi.set(__self__, "name", name)
-        pulumi.set(__self__, "values", values)
-
-    @property
-    @pulumi.getter
-    def name(self) -> str:
-        """
-        Attribute name to filter with.
-        """
-        return pulumi.get(self, "name")
-
-    @name.setter
-    def name(self, value: str):
-        pulumi.set(self, "name", value)
-
-    @property
-    @pulumi.getter
-    def values(self) -> Sequence[str]:
-        """
-        One or more values filter with.
-        """
-        return pulumi.get(self, "values")
-
-    @values.setter
-    def values(self, value: Sequence[str]):
-        pulumi.set(self, "values", value)
-
-
-@pulumi.input_type
-class GetPrivateNetworkFilterArgs:
     def __init__(__self__, *,
                  name: str,
                  values: Sequence[str]):
