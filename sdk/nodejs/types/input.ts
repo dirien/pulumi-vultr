@@ -261,6 +261,28 @@ export interface GetBlockStorageFilterArgs {
     values: pulumi.Input<pulumi.Input<string>[]>;
 }
 
+export interface GetContainerRegistryFilter {
+    /**
+     * Attribute name to filter with.
+     */
+    name: string;
+    /**
+     * One or more values filter with.
+     */
+    values: string[];
+}
+
+export interface GetContainerRegistryFilterArgs {
+    /**
+     * Attribute name to filter with.
+     */
+    name: pulumi.Input<string>;
+    /**
+     * One or more values filter with.
+     */
+    values: pulumi.Input<pulumi.Input<string>[]>;
+}
+
 export interface GetDatabaseFilter {
     /**
      * Attribute name to filter with.
@@ -295,6 +317,28 @@ export interface GetFirewallGroupFilter {
 }
 
 export interface GetFirewallGroupFilterArgs {
+    /**
+     * Attribute name to filter with.
+     */
+    name: pulumi.Input<string>;
+    /**
+     * One or more values filter with.
+     */
+    values: pulumi.Input<pulumi.Input<string>[]>;
+}
+
+export interface GetInferenceFilter {
+    /**
+     * Attribute name to filter with.
+     */
+    name: string;
+    /**
+     * One or more values filter with.
+     */
+    values: string[];
+}
+
+export interface GetInferenceFilterArgs {
     /**
      * Attribute name to filter with.
      */
@@ -537,28 +581,6 @@ export interface GetPlanFilter {
 }
 
 export interface GetPlanFilterArgs {
-    /**
-     * Attribute name to filter with.
-     */
-    name: pulumi.Input<string>;
-    /**
-     * One or more values filter with.
-     */
-    values: pulumi.Input<pulumi.Input<string>[]>;
-}
-
-export interface GetPrivateNetworkFilter {
-    /**
-     * Attribute name to filter with.
-     */
-    name: string;
-    /**
-     * One or more values filter with.
-     */
-    values: string[];
-}
-
-export interface GetPrivateNetworkFilterArgs {
     /**
      * Attribute name to filter with.
      */

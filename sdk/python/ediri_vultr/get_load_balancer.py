@@ -23,7 +23,7 @@ class GetLoadBalancerResult:
     """
     A collection of values returned by getLoadBalancer.
     """
-    def __init__(__self__, attached_instances=None, balancing_algorithm=None, cookie_name=None, date_created=None, filters=None, firewall_rules=None, forwarding_rules=None, has_ssl=None, health_check=None, id=None, ipv4=None, ipv6=None, label=None, private_network=None, proxy_protocol=None, region=None, ssl=None, ssl_redirect=None, status=None):
+    def __init__(__self__, attached_instances=None, balancing_algorithm=None, cookie_name=None, date_created=None, filters=None, firewall_rules=None, forwarding_rules=None, has_ssl=None, health_check=None, id=None, ipv4=None, ipv6=None, label=None, proxy_protocol=None, region=None, ssl=None, ssl_redirect=None, status=None):
         if attached_instances and not isinstance(attached_instances, list):
             raise TypeError("Expected argument 'attached_instances' to be a list")
         pulumi.set(__self__, "attached_instances", attached_instances)
@@ -63,9 +63,6 @@ class GetLoadBalancerResult:
         if label and not isinstance(label, str):
             raise TypeError("Expected argument 'label' to be a str")
         pulumi.set(__self__, "label", label)
-        if private_network and not isinstance(private_network, str):
-            raise TypeError("Expected argument 'private_network' to be a str")
-        pulumi.set(__self__, "private_network", private_network)
         if proxy_protocol and not isinstance(proxy_protocol, bool):
             raise TypeError("Expected argument 'proxy_protocol' to be a bool")
         pulumi.set(__self__, "proxy_protocol", proxy_protocol)
@@ -178,14 +175,6 @@ class GetLoadBalancerResult:
         return pulumi.get(self, "label")
 
     @property
-    @pulumi.getter(name="privateNetwork")
-    def private_network(self) -> str:
-        """
-        (Deprecated: use `vpc` instead) Defines the private network the load balancer is attached to.
-        """
-        return pulumi.get(self, "private_network")
-
-    @property
     @pulumi.getter(name="proxyProtocol")
     def proxy_protocol(self) -> Optional[bool]:
         """
@@ -242,7 +231,6 @@ class AwaitableGetLoadBalancerResult(GetLoadBalancerResult):
             ipv4=self.ipv4,
             ipv6=self.ipv6,
             label=self.label,
-            private_network=self.private_network,
             proxy_protocol=self.proxy_protocol,
             region=self.region,
             ssl=self.ssl,
@@ -294,7 +282,6 @@ def get_load_balancer(filters: Optional[Sequence[pulumi.InputType['GetLoadBalanc
         ipv4=pulumi.get(__ret__, 'ipv4'),
         ipv6=pulumi.get(__ret__, 'ipv6'),
         label=pulumi.get(__ret__, 'label'),
-        private_network=pulumi.get(__ret__, 'private_network'),
         proxy_protocol=pulumi.get(__ret__, 'proxy_protocol'),
         region=pulumi.get(__ret__, 'region'),
         ssl=pulumi.get(__ret__, 'ssl'),

@@ -244,12 +244,6 @@ namespace ediri.Vultr
         public Output<string> PowerStatus { get; private set; } = null!;
 
         /// <summary>
-        /// (Deprecated: use `vpc_ids` instead) A list of private network IDs to be attached to the server.
-        /// </summary>
-        [Output("privateNetworkIds")]
-        public Output<ImmutableArray<string>> PrivateNetworkIds { get; private set; } = null!;
-
-        /// <summary>
         /// The amount of memory available on the server in MB.
         /// </summary>
         [Output("ram")]
@@ -491,19 +485,6 @@ namespace ediri.Vultr
         /// </summary>
         [Input("plan", required: true)]
         public Input<string> Plan { get; set; } = null!;
-
-        [Input("privateNetworkIds")]
-        private InputList<string>? _privateNetworkIds;
-
-        /// <summary>
-        /// (Deprecated: use `vpc_ids` instead) A list of private network IDs to be attached to the server.
-        /// </summary>
-        [Obsolete(@"private_network_ids has been deprecated and should no longer be used. Instead, use vpc_ids")]
-        public InputList<string> PrivateNetworkIds
-        {
-            get => _privateNetworkIds ?? (_privateNetworkIds = new InputList<string>());
-            set => _privateNetworkIds = value;
-        }
 
         /// <summary>
         /// The ID of the region that the instance is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
@@ -774,19 +755,6 @@ namespace ediri.Vultr
         /// </summary>
         [Input("powerStatus")]
         public Input<string>? PowerStatus { get; set; }
-
-        [Input("privateNetworkIds")]
-        private InputList<string>? _privateNetworkIds;
-
-        /// <summary>
-        /// (Deprecated: use `vpc_ids` instead) A list of private network IDs to be attached to the server.
-        /// </summary>
-        [Obsolete(@"private_network_ids has been deprecated and should no longer be used. Instead, use vpc_ids")]
-        public InputList<string> PrivateNetworkIds
-        {
-            get => _privateNetworkIds ?? (_privateNetworkIds = new InputList<string>());
-            set => _privateNetworkIds = value;
-        }
 
         /// <summary>
         /// The amount of memory available on the server in MB.

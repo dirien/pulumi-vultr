@@ -32,7 +32,6 @@ class InstanceArgs:
                  iso_id: Optional[pulumi.Input[str]] = None,
                  label: Optional[pulumi.Input[str]] = None,
                  os_id: Optional[pulumi.Input[int]] = None,
-                 private_network_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  reserved_ip_id: Optional[pulumi.Input[str]] = None,
                  script_id: Optional[pulumi.Input[str]] = None,
                  snapshot_id: Optional[pulumi.Input[str]] = None,
@@ -59,7 +58,6 @@ class InstanceArgs:
         :param pulumi.Input[str] iso_id: The ID of the ISO file to be installed on the server. [See List ISO](https://www.vultr.com/api/#operation/list-isos)
         :param pulumi.Input[str] label: A label for the server.
         :param pulumi.Input[int] os_id: The ID of the operating system to be installed on the server. [See List OS](https://www.vultr.com/api/#operation/list-os)
-        :param pulumi.Input[Sequence[pulumi.Input[str]]] private_network_ids: (Deprecated: use `vpc_ids` instead) A list of private network IDs to be attached to the server.
         :param pulumi.Input[str] reserved_ip_id: ID of the floating IP to use as the main IP of this server.
         :param pulumi.Input[str] script_id: The ID of the startup script you want added to the server.
         :param pulumi.Input[str] snapshot_id: The ID of the Vultr snapshot that the server will restore for the initial installation. [See List Snapshots](https://www.vultr.com/api/#operation/list-snapshots)
@@ -99,11 +97,6 @@ class InstanceArgs:
             pulumi.set(__self__, "label", label)
         if os_id is not None:
             pulumi.set(__self__, "os_id", os_id)
-        if private_network_ids is not None:
-            warnings.warn("""private_network_ids has been deprecated and should no longer be used. Instead, use vpc_ids""", DeprecationWarning)
-            pulumi.log.warn("""private_network_ids is deprecated: private_network_ids has been deprecated and should no longer be used. Instead, use vpc_ids""")
-        if private_network_ids is not None:
-            pulumi.set(__self__, "private_network_ids", private_network_ids)
         if reserved_ip_id is not None:
             pulumi.set(__self__, "reserved_ip_id", reserved_ip_id)
         if script_id is not None:
@@ -314,21 +307,6 @@ class InstanceArgs:
         pulumi.set(self, "os_id", value)
 
     @property
-    @pulumi.getter(name="privateNetworkIds")
-    def private_network_ids(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
-        """
-        (Deprecated: use `vpc_ids` instead) A list of private network IDs to be attached to the server.
-        """
-        warnings.warn("""private_network_ids has been deprecated and should no longer be used. Instead, use vpc_ids""", DeprecationWarning)
-        pulumi.log.warn("""private_network_ids is deprecated: private_network_ids has been deprecated and should no longer be used. Instead, use vpc_ids""")
-
-        return pulumi.get(self, "private_network_ids")
-
-    @private_network_ids.setter
-    def private_network_ids(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
-        pulumi.set(self, "private_network_ids", value)
-
-    @property
     @pulumi.getter(name="reservedIpId")
     def reserved_ip_id(self) -> Optional[pulumi.Input[str]]:
         """
@@ -455,7 +433,6 @@ class _InstanceState:
                  os_id: Optional[pulumi.Input[int]] = None,
                  plan: Optional[pulumi.Input[str]] = None,
                  power_status: Optional[pulumi.Input[str]] = None,
-                 private_network_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  ram: Optional[pulumi.Input[int]] = None,
                  region: Optional[pulumi.Input[str]] = None,
                  reserved_ip_id: Optional[pulumi.Input[str]] = None,
@@ -501,7 +478,6 @@ class _InstanceState:
         :param pulumi.Input[int] os_id: The ID of the operating system to be installed on the server. [See List OS](https://www.vultr.com/api/#operation/list-os)
         :param pulumi.Input[str] plan: The ID of the plan that you want the instance to subscribe to. [See List Plans](https://www.vultr.com/api/#tag/plans)
         :param pulumi.Input[str] power_status: Whether the server is powered on or not.
-        :param pulumi.Input[Sequence[pulumi.Input[str]]] private_network_ids: (Deprecated: use `vpc_ids` instead) A list of private network IDs to be attached to the server.
         :param pulumi.Input[int] ram: The amount of memory available on the server in MB.
         :param pulumi.Input[str] region: The ID of the region that the instance is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
         :param pulumi.Input[str] reserved_ip_id: ID of the floating IP to use as the main IP of this server.
@@ -573,11 +549,6 @@ class _InstanceState:
             pulumi.set(__self__, "plan", plan)
         if power_status is not None:
             pulumi.set(__self__, "power_status", power_status)
-        if private_network_ids is not None:
-            warnings.warn("""private_network_ids has been deprecated and should no longer be used. Instead, use vpc_ids""", DeprecationWarning)
-            pulumi.log.warn("""private_network_ids is deprecated: private_network_ids has been deprecated and should no longer be used. Instead, use vpc_ids""")
-        if private_network_ids is not None:
-            pulumi.set(__self__, "private_network_ids", private_network_ids)
         if ram is not None:
             pulumi.set(__self__, "ram", ram)
         if region is not None:
@@ -936,21 +907,6 @@ class _InstanceState:
         pulumi.set(self, "power_status", value)
 
     @property
-    @pulumi.getter(name="privateNetworkIds")
-    def private_network_ids(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
-        """
-        (Deprecated: use `vpc_ids` instead) A list of private network IDs to be attached to the server.
-        """
-        warnings.warn("""private_network_ids has been deprecated and should no longer be used. Instead, use vpc_ids""", DeprecationWarning)
-        pulumi.log.warn("""private_network_ids is deprecated: private_network_ids has been deprecated and should no longer be used. Instead, use vpc_ids""")
-
-        return pulumi.get(self, "private_network_ids")
-
-    @private_network_ids.setter
-    def private_network_ids(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]):
-        pulumi.set(self, "private_network_ids", value)
-
-    @property
     @pulumi.getter
     def ram(self) -> Optional[pulumi.Input[int]]:
         """
@@ -1163,7 +1119,6 @@ class Instance(pulumi.CustomResource):
                  label: Optional[pulumi.Input[str]] = None,
                  os_id: Optional[pulumi.Input[int]] = None,
                  plan: Optional[pulumi.Input[str]] = None,
-                 private_network_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  region: Optional[pulumi.Input[str]] = None,
                  reserved_ip_id: Optional[pulumi.Input[str]] = None,
                  script_id: Optional[pulumi.Input[str]] = None,
@@ -1239,7 +1194,6 @@ class Instance(pulumi.CustomResource):
         :param pulumi.Input[str] label: A label for the server.
         :param pulumi.Input[int] os_id: The ID of the operating system to be installed on the server. [See List OS](https://www.vultr.com/api/#operation/list-os)
         :param pulumi.Input[str] plan: The ID of the plan that you want the instance to subscribe to. [See List Plans](https://www.vultr.com/api/#tag/plans)
-        :param pulumi.Input[Sequence[pulumi.Input[str]]] private_network_ids: (Deprecated: use `vpc_ids` instead) A list of private network IDs to be attached to the server.
         :param pulumi.Input[str] region: The ID of the region that the instance is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
         :param pulumi.Input[str] reserved_ip_id: ID of the floating IP to use as the main IP of this server.
         :param pulumi.Input[str] script_id: The ID of the startup script you want added to the server.
@@ -1334,7 +1288,6 @@ class Instance(pulumi.CustomResource):
                  label: Optional[pulumi.Input[str]] = None,
                  os_id: Optional[pulumi.Input[int]] = None,
                  plan: Optional[pulumi.Input[str]] = None,
-                 private_network_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  region: Optional[pulumi.Input[str]] = None,
                  reserved_ip_id: Optional[pulumi.Input[str]] = None,
                  script_id: Optional[pulumi.Input[str]] = None,
@@ -1370,7 +1323,6 @@ class Instance(pulumi.CustomResource):
             if plan is None and not opts.urn:
                 raise TypeError("Missing required property 'plan'")
             __props__.__dict__["plan"] = plan
-            __props__.__dict__["private_network_ids"] = private_network_ids
             if region is None and not opts.urn:
                 raise TypeError("Missing required property 'region'")
             __props__.__dict__["region"] = region
@@ -1440,7 +1392,6 @@ class Instance(pulumi.CustomResource):
             os_id: Optional[pulumi.Input[int]] = None,
             plan: Optional[pulumi.Input[str]] = None,
             power_status: Optional[pulumi.Input[str]] = None,
-            private_network_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
             ram: Optional[pulumi.Input[int]] = None,
             region: Optional[pulumi.Input[str]] = None,
             reserved_ip_id: Optional[pulumi.Input[str]] = None,
@@ -1491,7 +1442,6 @@ class Instance(pulumi.CustomResource):
         :param pulumi.Input[int] os_id: The ID of the operating system to be installed on the server. [See List OS](https://www.vultr.com/api/#operation/list-os)
         :param pulumi.Input[str] plan: The ID of the plan that you want the instance to subscribe to. [See List Plans](https://www.vultr.com/api/#tag/plans)
         :param pulumi.Input[str] power_status: Whether the server is powered on or not.
-        :param pulumi.Input[Sequence[pulumi.Input[str]]] private_network_ids: (Deprecated: use `vpc_ids` instead) A list of private network IDs to be attached to the server.
         :param pulumi.Input[int] ram: The amount of memory available on the server in MB.
         :param pulumi.Input[str] region: The ID of the region that the instance is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
         :param pulumi.Input[str] reserved_ip_id: ID of the floating IP to use as the main IP of this server.
@@ -1540,7 +1490,6 @@ class Instance(pulumi.CustomResource):
         __props__.__dict__["os_id"] = os_id
         __props__.__dict__["plan"] = plan
         __props__.__dict__["power_status"] = power_status
-        __props__.__dict__["private_network_ids"] = private_network_ids
         __props__.__dict__["ram"] = ram
         __props__.__dict__["region"] = region
         __props__.__dict__["reserved_ip_id"] = reserved_ip_id
@@ -1774,17 +1723,6 @@ class Instance(pulumi.CustomResource):
         Whether the server is powered on or not.
         """
         return pulumi.get(self, "power_status")
-
-    @property
-    @pulumi.getter(name="privateNetworkIds")
-    def private_network_ids(self) -> pulumi.Output[Sequence[str]]:
-        """
-        (Deprecated: use `vpc_ids` instead) A list of private network IDs to be attached to the server.
-        """
-        warnings.warn("""private_network_ids has been deprecated and should no longer be used. Instead, use vpc_ids""", DeprecationWarning)
-        pulumi.log.warn("""private_network_ids is deprecated: private_network_ids has been deprecated and should no longer be used. Instead, use vpc_ids""")
-
-        return pulumi.get(self, "private_network_ids")
 
     @property
     @pulumi.getter

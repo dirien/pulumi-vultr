@@ -2445,6 +2445,263 @@ func (o GetBlockStorageFilterArrayOutput) Index(i pulumi.IntInput) GetBlockStora
 	}).(GetBlockStorageFilterOutput)
 }
 
+type GetContainerRegistryFilter struct {
+	// Attribute name to filter with.
+	Name string `pulumi:"name"`
+	// One or more values filter with.
+	Values []string `pulumi:"values"`
+}
+
+// GetContainerRegistryFilterInput is an input type that accepts GetContainerRegistryFilterArgs and GetContainerRegistryFilterOutput values.
+// You can construct a concrete instance of `GetContainerRegistryFilterInput` via:
+//
+//	GetContainerRegistryFilterArgs{...}
+type GetContainerRegistryFilterInput interface {
+	pulumi.Input
+
+	ToGetContainerRegistryFilterOutput() GetContainerRegistryFilterOutput
+	ToGetContainerRegistryFilterOutputWithContext(context.Context) GetContainerRegistryFilterOutput
+}
+
+type GetContainerRegistryFilterArgs struct {
+	// Attribute name to filter with.
+	Name pulumi.StringInput `pulumi:"name"`
+	// One or more values filter with.
+	Values pulumi.StringArrayInput `pulumi:"values"`
+}
+
+func (GetContainerRegistryFilterArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetContainerRegistryFilter)(nil)).Elem()
+}
+
+func (i GetContainerRegistryFilterArgs) ToGetContainerRegistryFilterOutput() GetContainerRegistryFilterOutput {
+	return i.ToGetContainerRegistryFilterOutputWithContext(context.Background())
+}
+
+func (i GetContainerRegistryFilterArgs) ToGetContainerRegistryFilterOutputWithContext(ctx context.Context) GetContainerRegistryFilterOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetContainerRegistryFilterOutput)
+}
+
+// GetContainerRegistryFilterArrayInput is an input type that accepts GetContainerRegistryFilterArray and GetContainerRegistryFilterArrayOutput values.
+// You can construct a concrete instance of `GetContainerRegistryFilterArrayInput` via:
+//
+//	GetContainerRegistryFilterArray{ GetContainerRegistryFilterArgs{...} }
+type GetContainerRegistryFilterArrayInput interface {
+	pulumi.Input
+
+	ToGetContainerRegistryFilterArrayOutput() GetContainerRegistryFilterArrayOutput
+	ToGetContainerRegistryFilterArrayOutputWithContext(context.Context) GetContainerRegistryFilterArrayOutput
+}
+
+type GetContainerRegistryFilterArray []GetContainerRegistryFilterInput
+
+func (GetContainerRegistryFilterArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetContainerRegistryFilter)(nil)).Elem()
+}
+
+func (i GetContainerRegistryFilterArray) ToGetContainerRegistryFilterArrayOutput() GetContainerRegistryFilterArrayOutput {
+	return i.ToGetContainerRegistryFilterArrayOutputWithContext(context.Background())
+}
+
+func (i GetContainerRegistryFilterArray) ToGetContainerRegistryFilterArrayOutputWithContext(ctx context.Context) GetContainerRegistryFilterArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetContainerRegistryFilterArrayOutput)
+}
+
+type GetContainerRegistryFilterOutput struct{ *pulumi.OutputState }
+
+func (GetContainerRegistryFilterOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetContainerRegistryFilter)(nil)).Elem()
+}
+
+func (o GetContainerRegistryFilterOutput) ToGetContainerRegistryFilterOutput() GetContainerRegistryFilterOutput {
+	return o
+}
+
+func (o GetContainerRegistryFilterOutput) ToGetContainerRegistryFilterOutputWithContext(ctx context.Context) GetContainerRegistryFilterOutput {
+	return o
+}
+
+// Attribute name to filter with.
+func (o GetContainerRegistryFilterOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v GetContainerRegistryFilter) string { return v.Name }).(pulumi.StringOutput)
+}
+
+// One or more values filter with.
+func (o GetContainerRegistryFilterOutput) Values() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetContainerRegistryFilter) []string { return v.Values }).(pulumi.StringArrayOutput)
+}
+
+type GetContainerRegistryFilterArrayOutput struct{ *pulumi.OutputState }
+
+func (GetContainerRegistryFilterArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetContainerRegistryFilter)(nil)).Elem()
+}
+
+func (o GetContainerRegistryFilterArrayOutput) ToGetContainerRegistryFilterArrayOutput() GetContainerRegistryFilterArrayOutput {
+	return o
+}
+
+func (o GetContainerRegistryFilterArrayOutput) ToGetContainerRegistryFilterArrayOutputWithContext(ctx context.Context) GetContainerRegistryFilterArrayOutput {
+	return o
+}
+
+func (o GetContainerRegistryFilterArrayOutput) Index(i pulumi.IntInput) GetContainerRegistryFilterOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetContainerRegistryFilter {
+		return vs[0].([]GetContainerRegistryFilter)[vs[1].(int)]
+	}).(GetContainerRegistryFilterOutput)
+}
+
+type GetContainerRegistryRepository struct {
+	// A count of the artifacts in the repository.
+	ArtifactCount int `pulumi:"artifactCount"`
+	// A date-time of when the root user was created.
+	DateCreated string `pulumi:"dateCreated"`
+	// The date-time that the repository was last updated.
+	DateModified string `pulumi:"dateModified"`
+	// A description of the repo, if set.
+	Description string `pulumi:"description"`
+	// The image name in the repository.
+	Image string `pulumi:"image"`
+	// The name of the repository.
+	Name string `pulumi:"name"`
+	// A count of the number of pulls against the repository.
+	PullCount int `pulumi:"pullCount"`
+}
+
+// GetContainerRegistryRepositoryInput is an input type that accepts GetContainerRegistryRepositoryArgs and GetContainerRegistryRepositoryOutput values.
+// You can construct a concrete instance of `GetContainerRegistryRepositoryInput` via:
+//
+//	GetContainerRegistryRepositoryArgs{...}
+type GetContainerRegistryRepositoryInput interface {
+	pulumi.Input
+
+	ToGetContainerRegistryRepositoryOutput() GetContainerRegistryRepositoryOutput
+	ToGetContainerRegistryRepositoryOutputWithContext(context.Context) GetContainerRegistryRepositoryOutput
+}
+
+type GetContainerRegistryRepositoryArgs struct {
+	// A count of the artifacts in the repository.
+	ArtifactCount pulumi.IntInput `pulumi:"artifactCount"`
+	// A date-time of when the root user was created.
+	DateCreated pulumi.StringInput `pulumi:"dateCreated"`
+	// The date-time that the repository was last updated.
+	DateModified pulumi.StringInput `pulumi:"dateModified"`
+	// A description of the repo, if set.
+	Description pulumi.StringInput `pulumi:"description"`
+	// The image name in the repository.
+	Image pulumi.StringInput `pulumi:"image"`
+	// The name of the repository.
+	Name pulumi.StringInput `pulumi:"name"`
+	// A count of the number of pulls against the repository.
+	PullCount pulumi.IntInput `pulumi:"pullCount"`
+}
+
+func (GetContainerRegistryRepositoryArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetContainerRegistryRepository)(nil)).Elem()
+}
+
+func (i GetContainerRegistryRepositoryArgs) ToGetContainerRegistryRepositoryOutput() GetContainerRegistryRepositoryOutput {
+	return i.ToGetContainerRegistryRepositoryOutputWithContext(context.Background())
+}
+
+func (i GetContainerRegistryRepositoryArgs) ToGetContainerRegistryRepositoryOutputWithContext(ctx context.Context) GetContainerRegistryRepositoryOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetContainerRegistryRepositoryOutput)
+}
+
+// GetContainerRegistryRepositoryArrayInput is an input type that accepts GetContainerRegistryRepositoryArray and GetContainerRegistryRepositoryArrayOutput values.
+// You can construct a concrete instance of `GetContainerRegistryRepositoryArrayInput` via:
+//
+//	GetContainerRegistryRepositoryArray{ GetContainerRegistryRepositoryArgs{...} }
+type GetContainerRegistryRepositoryArrayInput interface {
+	pulumi.Input
+
+	ToGetContainerRegistryRepositoryArrayOutput() GetContainerRegistryRepositoryArrayOutput
+	ToGetContainerRegistryRepositoryArrayOutputWithContext(context.Context) GetContainerRegistryRepositoryArrayOutput
+}
+
+type GetContainerRegistryRepositoryArray []GetContainerRegistryRepositoryInput
+
+func (GetContainerRegistryRepositoryArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetContainerRegistryRepository)(nil)).Elem()
+}
+
+func (i GetContainerRegistryRepositoryArray) ToGetContainerRegistryRepositoryArrayOutput() GetContainerRegistryRepositoryArrayOutput {
+	return i.ToGetContainerRegistryRepositoryArrayOutputWithContext(context.Background())
+}
+
+func (i GetContainerRegistryRepositoryArray) ToGetContainerRegistryRepositoryArrayOutputWithContext(ctx context.Context) GetContainerRegistryRepositoryArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetContainerRegistryRepositoryArrayOutput)
+}
+
+type GetContainerRegistryRepositoryOutput struct{ *pulumi.OutputState }
+
+func (GetContainerRegistryRepositoryOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetContainerRegistryRepository)(nil)).Elem()
+}
+
+func (o GetContainerRegistryRepositoryOutput) ToGetContainerRegistryRepositoryOutput() GetContainerRegistryRepositoryOutput {
+	return o
+}
+
+func (o GetContainerRegistryRepositoryOutput) ToGetContainerRegistryRepositoryOutputWithContext(ctx context.Context) GetContainerRegistryRepositoryOutput {
+	return o
+}
+
+// A count of the artifacts in the repository.
+func (o GetContainerRegistryRepositoryOutput) ArtifactCount() pulumi.IntOutput {
+	return o.ApplyT(func(v GetContainerRegistryRepository) int { return v.ArtifactCount }).(pulumi.IntOutput)
+}
+
+// A date-time of when the root user was created.
+func (o GetContainerRegistryRepositoryOutput) DateCreated() pulumi.StringOutput {
+	return o.ApplyT(func(v GetContainerRegistryRepository) string { return v.DateCreated }).(pulumi.StringOutput)
+}
+
+// The date-time that the repository was last updated.
+func (o GetContainerRegistryRepositoryOutput) DateModified() pulumi.StringOutput {
+	return o.ApplyT(func(v GetContainerRegistryRepository) string { return v.DateModified }).(pulumi.StringOutput)
+}
+
+// A description of the repo, if set.
+func (o GetContainerRegistryRepositoryOutput) Description() pulumi.StringOutput {
+	return o.ApplyT(func(v GetContainerRegistryRepository) string { return v.Description }).(pulumi.StringOutput)
+}
+
+// The image name in the repository.
+func (o GetContainerRegistryRepositoryOutput) Image() pulumi.StringOutput {
+	return o.ApplyT(func(v GetContainerRegistryRepository) string { return v.Image }).(pulumi.StringOutput)
+}
+
+// The name of the repository.
+func (o GetContainerRegistryRepositoryOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v GetContainerRegistryRepository) string { return v.Name }).(pulumi.StringOutput)
+}
+
+// A count of the number of pulls against the repository.
+func (o GetContainerRegistryRepositoryOutput) PullCount() pulumi.IntOutput {
+	return o.ApplyT(func(v GetContainerRegistryRepository) int { return v.PullCount }).(pulumi.IntOutput)
+}
+
+type GetContainerRegistryRepositoryArrayOutput struct{ *pulumi.OutputState }
+
+func (GetContainerRegistryRepositoryArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetContainerRegistryRepository)(nil)).Elem()
+}
+
+func (o GetContainerRegistryRepositoryArrayOutput) ToGetContainerRegistryRepositoryArrayOutput() GetContainerRegistryRepositoryArrayOutput {
+	return o
+}
+
+func (o GetContainerRegistryRepositoryArrayOutput) ToGetContainerRegistryRepositoryArrayOutputWithContext(ctx context.Context) GetContainerRegistryRepositoryArrayOutput {
+	return o
+}
+
+func (o GetContainerRegistryRepositoryArrayOutput) Index(i pulumi.IntInput) GetContainerRegistryRepositoryOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetContainerRegistryRepository {
+		return vs[0].([]GetContainerRegistryRepository)[vs[1].(int)]
+	}).(GetContainerRegistryRepositoryOutput)
+}
+
 type GetDatabaseFilter struct {
 	// Attribute name to filter with.
 	Name string `pulumi:"name"`
@@ -3019,6 +3276,112 @@ func (o GetFirewallGroupFilterArrayOutput) Index(i pulumi.IntInput) GetFirewallG
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetFirewallGroupFilter {
 		return vs[0].([]GetFirewallGroupFilter)[vs[1].(int)]
 	}).(GetFirewallGroupFilterOutput)
+}
+
+type GetInferenceFilter struct {
+	// Attribute name to filter with.
+	Name string `pulumi:"name"`
+	// One or more values filter with.
+	Values []string `pulumi:"values"`
+}
+
+// GetInferenceFilterInput is an input type that accepts GetInferenceFilterArgs and GetInferenceFilterOutput values.
+// You can construct a concrete instance of `GetInferenceFilterInput` via:
+//
+//	GetInferenceFilterArgs{...}
+type GetInferenceFilterInput interface {
+	pulumi.Input
+
+	ToGetInferenceFilterOutput() GetInferenceFilterOutput
+	ToGetInferenceFilterOutputWithContext(context.Context) GetInferenceFilterOutput
+}
+
+type GetInferenceFilterArgs struct {
+	// Attribute name to filter with.
+	Name pulumi.StringInput `pulumi:"name"`
+	// One or more values filter with.
+	Values pulumi.StringArrayInput `pulumi:"values"`
+}
+
+func (GetInferenceFilterArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetInferenceFilter)(nil)).Elem()
+}
+
+func (i GetInferenceFilterArgs) ToGetInferenceFilterOutput() GetInferenceFilterOutput {
+	return i.ToGetInferenceFilterOutputWithContext(context.Background())
+}
+
+func (i GetInferenceFilterArgs) ToGetInferenceFilterOutputWithContext(ctx context.Context) GetInferenceFilterOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetInferenceFilterOutput)
+}
+
+// GetInferenceFilterArrayInput is an input type that accepts GetInferenceFilterArray and GetInferenceFilterArrayOutput values.
+// You can construct a concrete instance of `GetInferenceFilterArrayInput` via:
+//
+//	GetInferenceFilterArray{ GetInferenceFilterArgs{...} }
+type GetInferenceFilterArrayInput interface {
+	pulumi.Input
+
+	ToGetInferenceFilterArrayOutput() GetInferenceFilterArrayOutput
+	ToGetInferenceFilterArrayOutputWithContext(context.Context) GetInferenceFilterArrayOutput
+}
+
+type GetInferenceFilterArray []GetInferenceFilterInput
+
+func (GetInferenceFilterArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetInferenceFilter)(nil)).Elem()
+}
+
+func (i GetInferenceFilterArray) ToGetInferenceFilterArrayOutput() GetInferenceFilterArrayOutput {
+	return i.ToGetInferenceFilterArrayOutputWithContext(context.Background())
+}
+
+func (i GetInferenceFilterArray) ToGetInferenceFilterArrayOutputWithContext(ctx context.Context) GetInferenceFilterArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetInferenceFilterArrayOutput)
+}
+
+type GetInferenceFilterOutput struct{ *pulumi.OutputState }
+
+func (GetInferenceFilterOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetInferenceFilter)(nil)).Elem()
+}
+
+func (o GetInferenceFilterOutput) ToGetInferenceFilterOutput() GetInferenceFilterOutput {
+	return o
+}
+
+func (o GetInferenceFilterOutput) ToGetInferenceFilterOutputWithContext(ctx context.Context) GetInferenceFilterOutput {
+	return o
+}
+
+// Attribute name to filter with.
+func (o GetInferenceFilterOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v GetInferenceFilter) string { return v.Name }).(pulumi.StringOutput)
+}
+
+// One or more values filter with.
+func (o GetInferenceFilterOutput) Values() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetInferenceFilter) []string { return v.Values }).(pulumi.StringArrayOutput)
+}
+
+type GetInferenceFilterArrayOutput struct{ *pulumi.OutputState }
+
+func (GetInferenceFilterArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetInferenceFilter)(nil)).Elem()
+}
+
+func (o GetInferenceFilterArrayOutput) ToGetInferenceFilterArrayOutput() GetInferenceFilterArrayOutput {
+	return o
+}
+
+func (o GetInferenceFilterArrayOutput) ToGetInferenceFilterArrayOutputWithContext(ctx context.Context) GetInferenceFilterArrayOutput {
+	return o
+}
+
+func (o GetInferenceFilterArrayOutput) Index(i pulumi.IntInput) GetInferenceFilterOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetInferenceFilter {
+		return vs[0].([]GetInferenceFilter)[vs[1].(int)]
+	}).(GetInferenceFilterOutput)
 }
 
 type GetInstanceFilter struct {
@@ -4877,112 +5240,6 @@ func (o GetPlanFilterArrayOutput) Index(i pulumi.IntInput) GetPlanFilterOutput {
 	}).(GetPlanFilterOutput)
 }
 
-type GetPrivateNetworkFilter struct {
-	// Attribute name to filter with.
-	Name string `pulumi:"name"`
-	// One or more values filter with.
-	Values []string `pulumi:"values"`
-}
-
-// GetPrivateNetworkFilterInput is an input type that accepts GetPrivateNetworkFilterArgs and GetPrivateNetworkFilterOutput values.
-// You can construct a concrete instance of `GetPrivateNetworkFilterInput` via:
-//
-//	GetPrivateNetworkFilterArgs{...}
-type GetPrivateNetworkFilterInput interface {
-	pulumi.Input
-
-	ToGetPrivateNetworkFilterOutput() GetPrivateNetworkFilterOutput
-	ToGetPrivateNetworkFilterOutputWithContext(context.Context) GetPrivateNetworkFilterOutput
-}
-
-type GetPrivateNetworkFilterArgs struct {
-	// Attribute name to filter with.
-	Name pulumi.StringInput `pulumi:"name"`
-	// One or more values filter with.
-	Values pulumi.StringArrayInput `pulumi:"values"`
-}
-
-func (GetPrivateNetworkFilterArgs) ElementType() reflect.Type {
-	return reflect.TypeOf((*GetPrivateNetworkFilter)(nil)).Elem()
-}
-
-func (i GetPrivateNetworkFilterArgs) ToGetPrivateNetworkFilterOutput() GetPrivateNetworkFilterOutput {
-	return i.ToGetPrivateNetworkFilterOutputWithContext(context.Background())
-}
-
-func (i GetPrivateNetworkFilterArgs) ToGetPrivateNetworkFilterOutputWithContext(ctx context.Context) GetPrivateNetworkFilterOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(GetPrivateNetworkFilterOutput)
-}
-
-// GetPrivateNetworkFilterArrayInput is an input type that accepts GetPrivateNetworkFilterArray and GetPrivateNetworkFilterArrayOutput values.
-// You can construct a concrete instance of `GetPrivateNetworkFilterArrayInput` via:
-//
-//	GetPrivateNetworkFilterArray{ GetPrivateNetworkFilterArgs{...} }
-type GetPrivateNetworkFilterArrayInput interface {
-	pulumi.Input
-
-	ToGetPrivateNetworkFilterArrayOutput() GetPrivateNetworkFilterArrayOutput
-	ToGetPrivateNetworkFilterArrayOutputWithContext(context.Context) GetPrivateNetworkFilterArrayOutput
-}
-
-type GetPrivateNetworkFilterArray []GetPrivateNetworkFilterInput
-
-func (GetPrivateNetworkFilterArray) ElementType() reflect.Type {
-	return reflect.TypeOf((*[]GetPrivateNetworkFilter)(nil)).Elem()
-}
-
-func (i GetPrivateNetworkFilterArray) ToGetPrivateNetworkFilterArrayOutput() GetPrivateNetworkFilterArrayOutput {
-	return i.ToGetPrivateNetworkFilterArrayOutputWithContext(context.Background())
-}
-
-func (i GetPrivateNetworkFilterArray) ToGetPrivateNetworkFilterArrayOutputWithContext(ctx context.Context) GetPrivateNetworkFilterArrayOutput {
-	return pulumi.ToOutputWithContext(ctx, i).(GetPrivateNetworkFilterArrayOutput)
-}
-
-type GetPrivateNetworkFilterOutput struct{ *pulumi.OutputState }
-
-func (GetPrivateNetworkFilterOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*GetPrivateNetworkFilter)(nil)).Elem()
-}
-
-func (o GetPrivateNetworkFilterOutput) ToGetPrivateNetworkFilterOutput() GetPrivateNetworkFilterOutput {
-	return o
-}
-
-func (o GetPrivateNetworkFilterOutput) ToGetPrivateNetworkFilterOutputWithContext(ctx context.Context) GetPrivateNetworkFilterOutput {
-	return o
-}
-
-// Attribute name to filter with.
-func (o GetPrivateNetworkFilterOutput) Name() pulumi.StringOutput {
-	return o.ApplyT(func(v GetPrivateNetworkFilter) string { return v.Name }).(pulumi.StringOutput)
-}
-
-// One or more values filter with.
-func (o GetPrivateNetworkFilterOutput) Values() pulumi.StringArrayOutput {
-	return o.ApplyT(func(v GetPrivateNetworkFilter) []string { return v.Values }).(pulumi.StringArrayOutput)
-}
-
-type GetPrivateNetworkFilterArrayOutput struct{ *pulumi.OutputState }
-
-func (GetPrivateNetworkFilterArrayOutput) ElementType() reflect.Type {
-	return reflect.TypeOf((*[]GetPrivateNetworkFilter)(nil)).Elem()
-}
-
-func (o GetPrivateNetworkFilterArrayOutput) ToGetPrivateNetworkFilterArrayOutput() GetPrivateNetworkFilterArrayOutput {
-	return o
-}
-
-func (o GetPrivateNetworkFilterArrayOutput) ToGetPrivateNetworkFilterArrayOutputWithContext(ctx context.Context) GetPrivateNetworkFilterArrayOutput {
-	return o
-}
-
-func (o GetPrivateNetworkFilterArrayOutput) Index(i pulumi.IntInput) GetPrivateNetworkFilterOutput {
-	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetPrivateNetworkFilter {
-		return vs[0].([]GetPrivateNetworkFilter)[vs[1].(int)]
-	}).(GetPrivateNetworkFilterOutput)
-}
-
 type GetRegionFilter struct {
 	// Attribute name to filter with.
 	Name string `pulumi:"name"`
@@ -6072,12 +6329,18 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*GetBareMetalServerFilterArrayInput)(nil)).Elem(), GetBareMetalServerFilterArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetBlockStorageFilterInput)(nil)).Elem(), GetBlockStorageFilterArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetBlockStorageFilterArrayInput)(nil)).Elem(), GetBlockStorageFilterArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetContainerRegistryFilterInput)(nil)).Elem(), GetContainerRegistryFilterArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetContainerRegistryFilterArrayInput)(nil)).Elem(), GetContainerRegistryFilterArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetContainerRegistryRepositoryInput)(nil)).Elem(), GetContainerRegistryRepositoryArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetContainerRegistryRepositoryArrayInput)(nil)).Elem(), GetContainerRegistryRepositoryArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetDatabaseFilterInput)(nil)).Elem(), GetDatabaseFilterArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetDatabaseFilterArrayInput)(nil)).Elem(), GetDatabaseFilterArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetDatabaseReadReplicaInput)(nil)).Elem(), GetDatabaseReadReplicaArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetDatabaseReadReplicaArrayInput)(nil)).Elem(), GetDatabaseReadReplicaArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetFirewallGroupFilterInput)(nil)).Elem(), GetFirewallGroupFilterArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetFirewallGroupFilterArrayInput)(nil)).Elem(), GetFirewallGroupFilterArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetInferenceFilterInput)(nil)).Elem(), GetInferenceFilterArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetInferenceFilterArrayInput)(nil)).Elem(), GetInferenceFilterArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetInstanceFilterInput)(nil)).Elem(), GetInstanceFilterArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetInstanceFilterArrayInput)(nil)).Elem(), GetInstanceFilterArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetInstanceIpv4FilterInput)(nil)).Elem(), GetInstanceIpv4FilterArgs{})
@@ -6106,8 +6369,6 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*GetOsFilterArrayInput)(nil)).Elem(), GetOsFilterArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetPlanFilterInput)(nil)).Elem(), GetPlanFilterArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetPlanFilterArrayInput)(nil)).Elem(), GetPlanFilterArray{})
-	pulumi.RegisterInputType(reflect.TypeOf((*GetPrivateNetworkFilterInput)(nil)).Elem(), GetPrivateNetworkFilterArgs{})
-	pulumi.RegisterInputType(reflect.TypeOf((*GetPrivateNetworkFilterArrayInput)(nil)).Elem(), GetPrivateNetworkFilterArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetRegionFilterInput)(nil)).Elem(), GetRegionFilterArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetRegionFilterArrayInput)(nil)).Elem(), GetRegionFilterArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetReservedIpFilterInput)(nil)).Elem(), GetReservedIpFilterArgs{})
@@ -6156,12 +6417,18 @@ func init() {
 	pulumi.RegisterOutputType(GetBareMetalServerFilterArrayOutput{})
 	pulumi.RegisterOutputType(GetBlockStorageFilterOutput{})
 	pulumi.RegisterOutputType(GetBlockStorageFilterArrayOutput{})
+	pulumi.RegisterOutputType(GetContainerRegistryFilterOutput{})
+	pulumi.RegisterOutputType(GetContainerRegistryFilterArrayOutput{})
+	pulumi.RegisterOutputType(GetContainerRegistryRepositoryOutput{})
+	pulumi.RegisterOutputType(GetContainerRegistryRepositoryArrayOutput{})
 	pulumi.RegisterOutputType(GetDatabaseFilterOutput{})
 	pulumi.RegisterOutputType(GetDatabaseFilterArrayOutput{})
 	pulumi.RegisterOutputType(GetDatabaseReadReplicaOutput{})
 	pulumi.RegisterOutputType(GetDatabaseReadReplicaArrayOutput{})
 	pulumi.RegisterOutputType(GetFirewallGroupFilterOutput{})
 	pulumi.RegisterOutputType(GetFirewallGroupFilterArrayOutput{})
+	pulumi.RegisterOutputType(GetInferenceFilterOutput{})
+	pulumi.RegisterOutputType(GetInferenceFilterArrayOutput{})
 	pulumi.RegisterOutputType(GetInstanceFilterOutput{})
 	pulumi.RegisterOutputType(GetInstanceFilterArrayOutput{})
 	pulumi.RegisterOutputType(GetInstanceIpv4FilterOutput{})
@@ -6190,8 +6457,6 @@ func init() {
 	pulumi.RegisterOutputType(GetOsFilterArrayOutput{})
 	pulumi.RegisterOutputType(GetPlanFilterOutput{})
 	pulumi.RegisterOutputType(GetPlanFilterArrayOutput{})
-	pulumi.RegisterOutputType(GetPrivateNetworkFilterOutput{})
-	pulumi.RegisterOutputType(GetPrivateNetworkFilterArrayOutput{})
 	pulumi.RegisterOutputType(GetRegionFilterOutput{})
 	pulumi.RegisterOutputType(GetRegionFilterArrayOutput{})
 	pulumi.RegisterOutputType(GetReservedIpFilterOutput{})

@@ -11,29 +11,29 @@ using Pulumi;
 namespace ediri.Vultr.Inputs
 {
 
-    public sealed class GetPrivateNetworkFilterInputArgs : global::Pulumi.ResourceArgs
+    public sealed class GetContainerRegistryFilterArgs : global::Pulumi.InvokeArgs
     {
         /// <summary>
         /// Attribute name to filter with.
         /// </summary>
         [Input("name", required: true)]
-        public Input<string> Name { get; set; } = null!;
+        public string Name { get; set; } = null!;
 
         [Input("values", required: true)]
-        private InputList<string>? _values;
+        private List<string>? _values;
 
         /// <summary>
         /// One or more values filter with.
         /// </summary>
-        public InputList<string> Values
+        public List<string> Values
         {
-            get => _values ?? (_values = new InputList<string>());
+            get => _values ?? (_values = new List<string>());
             set => _values = value;
         }
 
-        public GetPrivateNetworkFilterInputArgs()
+        public GetContainerRegistryFilterArgs()
         {
         }
-        public static new GetPrivateNetworkFilterInputArgs Empty => new GetPrivateNetworkFilterInputArgs();
+        public static new GetContainerRegistryFilterArgs Empty => new GetContainerRegistryFilterArgs();
     }
 }

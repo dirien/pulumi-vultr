@@ -149,10 +149,6 @@ type Instance struct {
 	Plan pulumi.StringOutput `pulumi:"plan"`
 	// Whether the server is powered on or not.
 	PowerStatus pulumi.StringOutput `pulumi:"powerStatus"`
-	// (Deprecated: use `vpcIds` instead) A list of private network IDs to be attached to the server.
-	//
-	// Deprecated: private_network_ids has been deprecated and should no longer be used. Instead, use vpc_ids
-	PrivateNetworkIds pulumi.StringArrayOutput `pulumi:"privateNetworkIds"`
 	// The amount of memory available on the server in MB.
 	Ram pulumi.IntOutput `pulumi:"ram"`
 	// The ID of the region that the instance is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
@@ -281,10 +277,6 @@ type instanceState struct {
 	Plan *string `pulumi:"plan"`
 	// Whether the server is powered on or not.
 	PowerStatus *string `pulumi:"powerStatus"`
-	// (Deprecated: use `vpcIds` instead) A list of private network IDs to be attached to the server.
-	//
-	// Deprecated: private_network_ids has been deprecated and should no longer be used. Instead, use vpc_ids
-	PrivateNetworkIds []string `pulumi:"privateNetworkIds"`
 	// The amount of memory available on the server in MB.
 	Ram *int `pulumi:"ram"`
 	// The ID of the region that the instance is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
@@ -374,10 +366,6 @@ type InstanceState struct {
 	Plan pulumi.StringPtrInput
 	// Whether the server is powered on or not.
 	PowerStatus pulumi.StringPtrInput
-	// (Deprecated: use `vpcIds` instead) A list of private network IDs to be attached to the server.
-	//
-	// Deprecated: private_network_ids has been deprecated and should no longer be used. Instead, use vpc_ids
-	PrivateNetworkIds pulumi.StringArrayInput
 	// The amount of memory available on the server in MB.
 	Ram pulumi.IntPtrInput
 	// The ID of the region that the instance is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
@@ -447,10 +435,6 @@ type instanceArgs struct {
 	OsId *int `pulumi:"osId"`
 	// The ID of the plan that you want the instance to subscribe to. [See List Plans](https://www.vultr.com/api/#tag/plans)
 	Plan string `pulumi:"plan"`
-	// (Deprecated: use `vpcIds` instead) A list of private network IDs to be attached to the server.
-	//
-	// Deprecated: private_network_ids has been deprecated and should no longer be used. Instead, use vpc_ids
-	PrivateNetworkIds []string `pulumi:"privateNetworkIds"`
 	// The ID of the region that the instance is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
 	Region string `pulumi:"region"`
 	// ID of the floating IP to use as the main IP of this server.
@@ -503,10 +487,6 @@ type InstanceArgs struct {
 	OsId pulumi.IntPtrInput
 	// The ID of the plan that you want the instance to subscribe to. [See List Plans](https://www.vultr.com/api/#tag/plans)
 	Plan pulumi.StringInput
-	// (Deprecated: use `vpcIds` instead) A list of private network IDs to be attached to the server.
-	//
-	// Deprecated: private_network_ids has been deprecated and should no longer be used. Instead, use vpc_ids
-	PrivateNetworkIds pulumi.StringArrayInput
 	// The ID of the region that the instance is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
 	Region pulumi.StringInput
 	// ID of the floating IP to use as the main IP of this server.
@@ -747,13 +727,6 @@ func (o InstanceOutput) Plan() pulumi.StringOutput {
 // Whether the server is powered on or not.
 func (o InstanceOutput) PowerStatus() pulumi.StringOutput {
 	return o.ApplyT(func(v *Instance) pulumi.StringOutput { return v.PowerStatus }).(pulumi.StringOutput)
-}
-
-// (Deprecated: use `vpcIds` instead) A list of private network IDs to be attached to the server.
-//
-// Deprecated: private_network_ids has been deprecated and should no longer be used. Instead, use vpc_ids
-func (o InstanceOutput) PrivateNetworkIds() pulumi.StringArrayOutput {
-	return o.ApplyT(func(v *Instance) pulumi.StringArrayOutput { return v.PrivateNetworkIds }).(pulumi.StringArrayOutput)
 }
 
 // The amount of memory available on the server in MB.

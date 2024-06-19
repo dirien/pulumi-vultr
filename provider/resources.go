@@ -135,7 +135,6 @@ func Provider() tfbridge.ProviderInfo {
 			"vultr_kubernetes_node_pools":    {Tok: tfbridge.MakeResource(mainPkg, mainMod, "KubernetesNodePools")},
 			"vultr_load_balancer":            {Tok: tfbridge.MakeResource(mainPkg, mainMod, "LoadBalancer")},
 			"vultr_object_storage":           {Tok: tfbridge.MakeResource(mainPkg, mainMod, "ObjectStorage")},
-			"vultr_private_network":          {Tok: tfbridge.MakeResource(mainPkg, mainMod, "PrivateNetwork")},
 			"vultr_reserved_ip":              {Tok: tfbridge.MakeResource(mainPkg, mainMod, "ReservedIp")},
 			"vultr_reverse_ipv4":             {Tok: tfbridge.MakeResource(mainPkg, mainMod, "ReverseIpv4")},
 			"vultr_reverse_ipv6":             {Tok: tfbridge.MakeResource(mainPkg, mainMod, "ReverseIpv6")},
@@ -174,7 +173,6 @@ func Provider() tfbridge.ProviderInfo {
 			"vultr_object_storage_cluster": {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getObjectStorageCluster")},
 			"vultr_os":                     {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getOs")},
 			"vultr_plan":                   {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getPlan")},
-			"vultr_private_network":        {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getPrivateNetwork")},
 			"vultr_region":                 {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getRegion")},
 			"vultr_reserved_ip":            {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getReservedIp")},
 			"vultr_reverse_ipv4":           {Tok: tfbridge.MakeDataSource(mainPkg, mainMod, "getReverseIpv4")},
@@ -231,7 +229,7 @@ func Provider() tfbridge.ProviderInfo {
 	prov.MustComputeTokens(tfbridgetokens.SingleModule("vultr_", mainMod,
 		tfbridgetokens.MakeStandard(mainPkg)))
 
-	prov.MustApplyAutoAliases()
+	//prov.MustApplyAutoAliases()
 
 	return prov
 }

@@ -97,10 +97,6 @@ export interface GetLoadBalancerResult {
      */
     readonly label: string;
     /**
-     * (Deprecated: use `vpc` instead) Defines the private network the load balancer is attached to.
-     */
-    readonly privateNetwork: string;
-    /**
      * Boolean value that indicates if Proxy Protocol is enabled.
      */
     readonly proxyProtocol?: boolean;

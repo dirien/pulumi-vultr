@@ -675,6 +675,73 @@
                 "values"
             ]
         },
+        "vultr:index/getContainerRegistryFilter:getContainerRegistryFilter": {
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Attribute name to filter with.\n"
+                },
+                "values": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "One or more values filter with.\n"
+                }
+            },
+            "type": "object",
+            "required": [
+                "name",
+                "values"
+            ]
+        },
+        "vultr:index/getContainerRegistryRepository:getContainerRegistryRepository": {
+            "properties": {
+                "artifactCount": {
+                    "type": "integer",
+                    "description": "A count of the artifacts in the repository.\n"
+                },
+                "dateCreated": {
+                    "type": "string",
+                    "description": "A date-time of when the root user was created.\n"
+                },
+                "dateModified": {
+                    "type": "string",
+                    "description": "The date-time that the repository was last updated.\n"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "A description of the repo, if set.\n"
+                },
+                "image": {
+                    "type": "string",
+                    "description": "The image name in the repository.\n"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "The name of the repository.\n"
+                },
+                "pullCount": {
+                    "type": "integer",
+                    "description": "A count of the number of pulls against the repository.\n"
+                }
+            },
+            "type": "object",
+            "required": [
+                "artifactCount",
+                "dateCreated",
+                "dateModified",
+                "description",
+                "image",
+                "name",
+                "pullCount"
+            ],
+            "language": {
+                "nodejs": {
+                    "requiredInputs": []
+                }
+            }
+        },
         "vultr:index/getDatabaseFilter:getDatabaseFilter": {
             "properties": {
                 "name": {
@@ -871,6 +938,26 @@
             }
         },
         "vultr:index/getFirewallGroupFilter:getFirewallGroupFilter": {
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Attribute name to filter with.\n"
+                },
+                "values": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "One or more values filter with.\n"
+                }
+            },
+            "type": "object",
+            "required": [
+                "name",
+                "values"
+            ]
+        },
+        "vultr:index/getInferenceFilter:getInferenceFilter": {
             "properties": {
                 "name": {
                     "type": "string",
@@ -1382,26 +1469,6 @@
             ]
         },
         "vultr:index/getPlanFilter:getPlanFilter": {
-            "properties": {
-                "name": {
-                    "type": "string",
-                    "description": "Attribute name to filter with.\n"
-                },
-                "values": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    },
-                    "description": "One or more values filter with.\n"
-                }
-            },
-            "type": "object",
-            "required": [
-                "name",
-                "values"
-            ]
-        },
-        "vultr:index/getPrivateNetworkFilter:getPrivateNetworkFilter": {
             "properties": {
                 "name": {
                     "type": "string",
@@ -2228,6 +2295,127 @@
                     "status": {
                         "type": "string",
                         "description": "Current status of your block storage.\n"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "vultr:index/containerRegistry:ContainerRegistry": {
+            "description": "Create and update a Vultr container registry.\n\n## Example Usage\n\nCreate a new container registry:\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@ediri/vultr\";\n\nconst vcr1 = new vultr.ContainerRegistry(\"vcr1\", {\n    name: \"examplecontainerregistry\",\n    plan: \"start_up\",\n    \"public\": false,\n    region: \"sjc\",\n});\n```\n```python\nimport pulumi\nimport ediri_vultr as vultr\n\nvcr1 = vultr.ContainerRegistry(\"vcr1\",\n    name=\"examplecontainerregistry\",\n    plan=\"start_up\",\n    public=False,\n    region=\"sjc\")\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vultr = ediri.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var vcr1 = new Vultr.ContainerRegistry(\"vcr1\", new()\n    {\n        Name = \"examplecontainerregistry\",\n        Plan = \"start_up\",\n        Public = false,\n        Region = \"sjc\",\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.NewContainerRegistry(ctx, \"vcr1\", \u0026vultr.ContainerRegistryArgs{\n\t\t\tName:   pulumi.String(\"examplecontainerregistry\"),\n\t\t\tPlan:   pulumi.String(\"start_up\"),\n\t\t\tPublic: pulumi.Bool(false),\n\t\t\tRegion: pulumi.String(\"sjc\"),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.ContainerRegistry;\nimport com.pulumi.vultr.ContainerRegistryArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var vcr1 = new ContainerRegistry(\"vcr1\", ContainerRegistryArgs.builder()\n            .name(\"examplecontainerregistry\")\n            .plan(\"start_up\")\n            .public_(false)\n            .region(\"sjc\")\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  vcr1:\n    type: vultr:ContainerRegistry\n    properties:\n      name: examplecontainerregistry\n      plan: start_up\n      public: false\n      region: sjc\n```\n\u003c!--End PulumiCodeChooser --\u003e\n\nThe `name` for container registries must be all lowercase and only contain alphanumeric characters.\n",
+            "properties": {
+                "dateCreated": {
+                    "type": "string",
+                    "description": "A date-time of when the root user was created.\n"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "The name for your container registry.  Must be lowercase and only alphanumeric characters.\n"
+                },
+                "plan": {
+                    "type": "string",
+                    "description": "The billing plan for the container registry. [See available plans](https://www.vultr.com/api/#tag/Container-Registry/operation/list-registry-plans)\n"
+                },
+                "public": {
+                    "type": "boolean",
+                    "description": "Boolean indicating if the container registry should be created with public visibility or if it should require credentials.\n"
+                },
+                "region": {
+                    "type": "string",
+                    "description": "The region where your container registry will be deployed. [See available regions](https://www.vultr.com/api/#tag/Container-Registry/operation/list-registry-regions)\n"
+                },
+                "rootUser": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "pulumi.json#/Any"
+                    },
+                    "description": "The user associated with the container registry.\n"
+                },
+                "storage": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "pulumi.json#/Any"
+                    },
+                    "description": "A listing of current storage usage relevant to the container registry.\n"
+                },
+                "urn": {
+                    "type": "string",
+                    "description": "The URN of the container registry.\n"
+                }
+            },
+            "required": [
+                "dateCreated",
+                "name",
+                "plan",
+                "public",
+                "region",
+                "rootUser",
+                "storage",
+                "urn"
+            ],
+            "inputProperties": {
+                "name": {
+                    "type": "string",
+                    "description": "The name for your container registry.  Must be lowercase and only alphanumeric characters.\n"
+                },
+                "plan": {
+                    "type": "string",
+                    "description": "The billing plan for the container registry. [See available plans](https://www.vultr.com/api/#tag/Container-Registry/operation/list-registry-plans)\n"
+                },
+                "public": {
+                    "type": "boolean",
+                    "description": "Boolean indicating if the container registry should be created with public visibility or if it should require credentials.\n"
+                },
+                "region": {
+                    "type": "string",
+                    "description": "The region where your container registry will be deployed. [See available regions](https://www.vultr.com/api/#tag/Container-Registry/operation/list-registry-regions)\n"
+                }
+            },
+            "requiredInputs": [
+                "name",
+                "plan",
+                "public",
+                "region"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering ContainerRegistry resources.\n",
+                "properties": {
+                    "dateCreated": {
+                        "type": "string",
+                        "description": "A date-time of when the root user was created.\n"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "The name for your container registry.  Must be lowercase and only alphanumeric characters.\n"
+                    },
+                    "plan": {
+                        "type": "string",
+                        "description": "The billing plan for the container registry. [See available plans](https://www.vultr.com/api/#tag/Container-Registry/operation/list-registry-plans)\n"
+                    },
+                    "public": {
+                        "type": "boolean",
+                        "description": "Boolean indicating if the container registry should be created with public visibility or if it should require credentials.\n"
+                    },
+                    "region": {
+                        "type": "string",
+                        "description": "The region where your container registry will be deployed. [See available regions](https://www.vultr.com/api/#tag/Container-Registry/operation/list-registry-regions)\n"
+                    },
+                    "rootUser": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "pulumi.json#/Any"
+                        },
+                        "description": "The user associated with the container registry.\n"
+                    },
+                    "storage": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "pulumi.json#/Any"
+                        },
+                        "description": "A listing of current storage usage relevant to the container registry.\n"
+                    },
+                    "urn": {
+                        "type": "string",
+                        "description": "The URN of the container registry.\n"
                     }
                 },
                 "type": "object"
@@ -3643,6 +3831,68 @@
                 "type": "object"
             }
         },
+        "vultr:index/inference:Inference": {
+            "description": "Provides a Vultr Serverless Inference resource. This can be used to create, read, modify, and delete managed inference subscriptions on your Vultr account.\n\n## Example Usage\n\nCreate a new inference subscription:\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@ediri/vultr\";\n\nconst myInferenceSubscription = new vultr.Inference(\"myInferenceSubscription\", {label: \"my_inference_label\"});\n```\n```python\nimport pulumi\nimport ediri_vultr as vultr\n\nmy_inference_subscription = vultr.Inference(\"myInferenceSubscription\", label=\"my_inference_label\")\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vultr = ediri.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var myInferenceSubscription = new Vultr.Inference(\"myInferenceSubscription\", new()\n    {\n        Label = \"my_inference_label\",\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.NewInference(ctx, \"myInferenceSubscription\", \u0026vultr.InferenceArgs{\n\t\t\tLabel: pulumi.String(\"my_inference_label\"),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.Inference;\nimport com.pulumi.vultr.InferenceArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var myInferenceSubscription = new Inference(\"myInferenceSubscription\", InferenceArgs.builder()\n            .label(\"my_inference_label\")\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  myInferenceSubscription:\n    type: vultr:Inference\n    properties:\n      label: my_inference_label\n```\n\u003c!--End PulumiCodeChooser --\u003e\n\n## Import\n\nInference subscriptions can be imported using the subscription's `ID`, e.g.\n\n```sh\n$ pulumi import vultr:index/inference:Inference my_inference_subscription b6a859c5-b299-49dd-8888-b1abbc517d08\n```\n\n",
+            "properties": {
+                "apiKey": {
+                    "type": "string",
+                    "description": "The inference subscription's API key for accessing the Vultr Inference API.\n"
+                },
+                "dateCreated": {
+                    "type": "string",
+                    "description": "The date the inference subscription was added to your Vultr account.\n"
+                },
+                "label": {
+                    "type": "string",
+                    "description": "A label for the inference subscription.\n"
+                },
+                "usage": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "pulumi.json#/Any"
+                    }
+                }
+            },
+            "required": [
+                "apiKey",
+                "dateCreated",
+                "label",
+                "usage"
+            ],
+            "inputProperties": {
+                "label": {
+                    "type": "string",
+                    "description": "A label for the inference subscription.\n"
+                }
+            },
+            "requiredInputs": [
+                "label"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering Inference resources.\n",
+                "properties": {
+                    "apiKey": {
+                        "type": "string",
+                        "description": "The inference subscription's API key for accessing the Vultr Inference API.\n"
+                    },
+                    "dateCreated": {
+                        "type": "string",
+                        "description": "The date the inference subscription was added to your Vultr account.\n"
+                    },
+                    "label": {
+                        "type": "string",
+                        "description": "A label for the inference subscription.\n"
+                    },
+                    "usage": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "pulumi.json#/Any"
+                        }
+                    }
+                },
+                "type": "object"
+            }
+        },
         "vultr:index/instance:Instance": {
             "description": "Provides a Vultr instance resource. This can be used to create, read, modify, and delete instances on your Vultr account.\n\n## Example Usage\n\nCreate a new instance:\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@ediri/vultr\";\n\nconst myInstance = new vultr.Instance(\"myInstance\", {\n    osId: 1743,\n    plan: \"vc2-1c-2gb\",\n    region: \"sea\",\n});\n```\n```python\nimport pulumi\nimport ediri_vultr as vultr\n\nmy_instance = vultr.Instance(\"myInstance\",\n    os_id=1743,\n    plan=\"vc2-1c-2gb\",\n    region=\"sea\")\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vultr = ediri.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var myInstance = new Vultr.Instance(\"myInstance\", new()\n    {\n        OsId = 1743,\n        Plan = \"vc2-1c-2gb\",\n        Region = \"sea\",\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.NewInstance(ctx, \"myInstance\", \u0026vultr.InstanceArgs{\n\t\t\tOsId:   pulumi.Int(1743),\n\t\t\tPlan:   pulumi.String(\"vc2-1c-2gb\"),\n\t\t\tRegion: pulumi.String(\"sea\"),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.Instance;\nimport com.pulumi.vultr.InstanceArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var myInstance = new Instance(\"myInstance\", InstanceArgs.builder()\n            .osId(1743)\n            .plan(\"vc2-1c-2gb\")\n            .region(\"sea\")\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  myInstance:\n    type: vultr:Instance\n    properties:\n      osId: 1743\n      plan: vc2-1c-2gb\n      region: sea\n```\n\u003c!--End PulumiCodeChooser --\u003e\n\nCreate a new instance with options:\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@ediri/vultr\";\n\nconst myInstance = new vultr.Instance(\"myInstance\", {\n    activationEmail: false,\n    backups: \"enabled\",\n    backupsSchedule: {\n        type: \"daily\",\n    },\n    ddosProtection: true,\n    disablePublicIpv4: true,\n    enableIpv6: true,\n    hostname: \"my-instance-hostname\",\n    label: \"my-instance-label\",\n    osId: 1743,\n    plan: \"vc2-1c-2gb\",\n    region: \"sea\",\n    tags: [\"my-instance-tag\"],\n});\n```\n```python\nimport pulumi\nimport ediri_vultr as vultr\n\nmy_instance = vultr.Instance(\"myInstance\",\n    activation_email=False,\n    backups=\"enabled\",\n    backups_schedule=vultr.InstanceBackupsScheduleArgs(\n        type=\"daily\",\n    ),\n    ddos_protection=True,\n    disable_public_ipv4=True,\n    enable_ipv6=True,\n    hostname=\"my-instance-hostname\",\n    label=\"my-instance-label\",\n    os_id=1743,\n    plan=\"vc2-1c-2gb\",\n    region=\"sea\",\n    tags=[\"my-instance-tag\"])\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vultr = ediri.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var myInstance = new Vultr.Instance(\"myInstance\", new()\n    {\n        ActivationEmail = false,\n        Backups = \"enabled\",\n        BackupsSchedule = new Vultr.Inputs.InstanceBackupsScheduleArgs\n        {\n            Type = \"daily\",\n        },\n        DdosProtection = true,\n        DisablePublicIpv4 = true,\n        EnableIpv6 = true,\n        Hostname = \"my-instance-hostname\",\n        Label = \"my-instance-label\",\n        OsId = 1743,\n        Plan = \"vc2-1c-2gb\",\n        Region = \"sea\",\n        Tags = new[]\n        {\n            \"my-instance-tag\",\n        },\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.NewInstance(ctx, \"myInstance\", \u0026vultr.InstanceArgs{\n\t\t\tActivationEmail: pulumi.Bool(false),\n\t\t\tBackups:         pulumi.String(\"enabled\"),\n\t\t\tBackupsSchedule: \u0026vultr.InstanceBackupsScheduleArgs{\n\t\t\t\tType: pulumi.String(\"daily\"),\n\t\t\t},\n\t\t\tDdosProtection:    pulumi.Bool(true),\n\t\t\tDisablePublicIpv4: pulumi.Bool(true),\n\t\t\tEnableIpv6:        pulumi.Bool(true),\n\t\t\tHostname:          pulumi.String(\"my-instance-hostname\"),\n\t\t\tLabel:             pulumi.String(\"my-instance-label\"),\n\t\t\tOsId:              pulumi.Int(1743),\n\t\t\tPlan:              pulumi.String(\"vc2-1c-2gb\"),\n\t\t\tRegion:            pulumi.String(\"sea\"),\n\t\t\tTags: pulumi.StringArray{\n\t\t\t\tpulumi.String(\"my-instance-tag\"),\n\t\t\t},\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.Instance;\nimport com.pulumi.vultr.InstanceArgs;\nimport com.pulumi.vultr.inputs.InstanceBackupsScheduleArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var myInstance = new Instance(\"myInstance\", InstanceArgs.builder()\n            .activationEmail(false)\n            .backups(\"enabled\")\n            .backupsSchedule(InstanceBackupsScheduleArgs.builder()\n                .type(\"daily\")\n                .build())\n            .ddosProtection(true)\n            .disablePublicIpv4(true)\n            .enableIpv6(true)\n            .hostname(\"my-instance-hostname\")\n            .label(\"my-instance-label\")\n            .osId(1743)\n            .plan(\"vc2-1c-2gb\")\n            .region(\"sea\")\n            .tags(\"my-instance-tag\")\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  myInstance:\n    type: vultr:Instance\n    properties:\n      activationEmail: false\n      backups: enabled\n      backupsSchedule:\n        type: daily\n      ddosProtection: true\n      disablePublicIpv4: true\n      enableIpv6: true\n      hostname: my-instance-hostname\n      label: my-instance-label\n      osId: 1743\n      plan: vc2-1c-2gb\n      region: sea\n      tags:\n        - my-instance-tag\n```\n\u003c!--End PulumiCodeChooser --\u003e\n\n## Import\n\nInstances can be imported using the instance `ID`, e.g.\n\n```sh\n$ pulumi import vultr:index/instance:Instance my_instance b6a859c5-b299-49dd-8888-b1abbc517d08\n```\n\n",
             "properties": {
@@ -3761,14 +4011,6 @@
                     "type": "string",
                     "description": "Whether the server is powered on or not.\n"
                 },
-                "privateNetworkIds": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    },
-                    "description": "(Deprecated: use `vpc_ids` instead) A list of private network IDs to be attached to the server.\n",
-                    "deprecationMessage": "private_network_ids has been deprecated and should no longer be used. Instead, use vpc_ids"
-                },
                 "ram": {
                     "type": "integer",
                     "description": "The amount of memory available on the server in MB.\n"
@@ -3866,7 +4108,6 @@
                 "osId",
                 "plan",
                 "powerStatus",
-                "privateNetworkIds",
                 "ram",
                 "region",
                 "reservedIpId",
@@ -3950,14 +4191,6 @@
                 "plan": {
                     "type": "string",
                     "description": "The ID of the plan that you want the instance to subscribe to. [See List Plans](https://www.vultr.com/api/#tag/plans)\n"
-                },
-                "privateNetworkIds": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    },
-                    "description": "(Deprecated: use `vpc_ids` instead) A list of private network IDs to be attached to the server.\n",
-                    "deprecationMessage": "private_network_ids has been deprecated and should no longer be used. Instead, use vpc_ids"
                 },
                 "region": {
                     "type": "string",
@@ -4141,14 +4374,6 @@
                     "powerStatus": {
                         "type": "string",
                         "description": "Whether the server is powered on or not.\n"
-                    },
-                    "privateNetworkIds": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        },
-                        "description": "(Deprecated: use `vpc_ids` instead) A list of private network IDs to be attached to the server.\n",
-                        "deprecationMessage": "private_network_ids has been deprecated and should no longer be used. Instead, use vpc_ids"
                     },
                     "ram": {
                         "type": "integer",
@@ -4815,11 +5040,6 @@
                     "type": "string",
                     "description": "The load balancer's label.\n"
                 },
-                "privateNetwork": {
-                    "type": "string",
-                    "description": "A private network ID that the load balancer should be attached to.\n",
-                    "deprecationMessage": "private_network is deprecated and should no longer be used. Instead, use vpc"
-                },
                 "proxyProtocol": {
                     "type": "boolean",
                     "description": "Boolean value that indicates if Proxy Protocol is enabled.\n"
@@ -4893,11 +5113,6 @@
                 "label": {
                     "type": "string",
                     "description": "The load balancer's label.\n"
-                },
-                "privateNetwork": {
-                    "type": "string",
-                    "description": "A private network ID that the load balancer should be attached to.\n",
-                    "deprecationMessage": "private_network is deprecated and should no longer be used. Instead, use vpc"
                 },
                 "proxyProtocol": {
                     "type": "boolean",
@@ -4976,11 +5191,6 @@
                     "label": {
                         "type": "string",
                         "description": "The load balancer's label.\n"
-                    },
-                    "privateNetwork": {
-                        "type": "string",
-                        "description": "A private network ID that the load balancer should be attached to.\n",
-                        "deprecationMessage": "private_network is deprecated and should no longer be used. Instead, use vpc"
                     },
                     "proxyProtocol": {
                         "type": "boolean",
@@ -5118,90 +5328,6 @@
                     "status": {
                         "type": "string",
                         "description": "Current status of this object storage subscription.\n"
-                    }
-                },
-                "type": "object"
-            }
-        },
-        "vultr:index/privateNetwork:PrivateNetwork": {
-            "description": "Deprecated: Use `vultr.Vpc` instead\n\nProvides a Vultr private network resource. This can be used to create, read, and delete private networks on your Vultr account.\n\n## Example Usage\n\nCreate a new private network with an automatically generated CIDR block:\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@ediri/vultr\";\n\nconst myNetwork = new vultr.PrivateNetwork(\"myNetwork\", {\n    description: \"my private network\",\n    region: \"ewr\",\n});\n```\n```python\nimport pulumi\nimport ediri_vultr as vultr\n\nmy_network = vultr.PrivateNetwork(\"myNetwork\",\n    description=\"my private network\",\n    region=\"ewr\")\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vultr = ediri.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var myNetwork = new Vultr.PrivateNetwork(\"myNetwork\", new()\n    {\n        Description = \"my private network\",\n        Region = \"ewr\",\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.NewPrivateNetwork(ctx, \"myNetwork\", \u0026vultr.PrivateNetworkArgs{\n\t\t\tDescription: pulumi.String(\"my private network\"),\n\t\t\tRegion:      pulumi.String(\"ewr\"),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.PrivateNetwork;\nimport com.pulumi.vultr.PrivateNetworkArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var myNetwork = new PrivateNetwork(\"myNetwork\", PrivateNetworkArgs.builder()\n            .description(\"my private network\")\n            .region(\"ewr\")\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  myNetwork:\n    type: vultr:PrivateNetwork\n    properties:\n      description: my private network\n      region: ewr\n```\n\u003c!--End PulumiCodeChooser --\u003e\n\nCreate a new private network with a specified CIDR block:\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@ediri/vultr\";\n\nconst myNetwork = new vultr.PrivateNetwork(\"myNetwork\", {\n    description: \"my private network\",\n    region: \"ewr\",\n    v4Subnet: \"10.0.0.0\",\n    v4SubnetMask: 24,\n});\n```\n```python\nimport pulumi\nimport ediri_vultr as vultr\n\nmy_network = vultr.PrivateNetwork(\"myNetwork\",\n    description=\"my private network\",\n    region=\"ewr\",\n    v4_subnet=\"10.0.0.0\",\n    v4_subnet_mask=24)\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vultr = ediri.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var myNetwork = new Vultr.PrivateNetwork(\"myNetwork\", new()\n    {\n        Description = \"my private network\",\n        Region = \"ewr\",\n        V4Subnet = \"10.0.0.0\",\n        V4SubnetMask = 24,\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.NewPrivateNetwork(ctx, \"myNetwork\", \u0026vultr.PrivateNetworkArgs{\n\t\t\tDescription:  pulumi.String(\"my private network\"),\n\t\t\tRegion:       pulumi.String(\"ewr\"),\n\t\t\tV4Subnet:     pulumi.String(\"10.0.0.0\"),\n\t\t\tV4SubnetMask: pulumi.Int(24),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.PrivateNetwork;\nimport com.pulumi.vultr.PrivateNetworkArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var myNetwork = new PrivateNetwork(\"myNetwork\", PrivateNetworkArgs.builder()\n            .description(\"my private network\")\n            .region(\"ewr\")\n            .v4Subnet(\"10.0.0.0\")\n            .v4SubnetMask(24)\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  myNetwork:\n    type: vultr:PrivateNetwork\n    properties:\n      description: my private network\n      region: ewr\n      v4Subnet: 10.0.0.0\n      v4SubnetMask: 24\n```\n\u003c!--End PulumiCodeChooser --\u003e\n\n## Import\n\nNetworks can be imported using the network `ID`, e.g.\n\n```sh\n$ pulumi import vultr:index/privateNetwork:PrivateNetwork my_network 0e04f918-575e-41cb-86f6-d729b354a5a1\n```\n\n",
-            "properties": {
-                "dateCreated": {
-                    "type": "string",
-                    "description": "The date that the network was added to your Vultr account.\n"
-                },
-                "description": {
-                    "type": "string",
-                    "description": "The description you want to give your network.\n"
-                },
-                "region": {
-                    "type": "string",
-                    "description": "The region ID that you want the network to be created in.\n"
-                },
-                "v4Subnet": {
-                    "type": "string",
-                    "description": "The IPv4 subnet to be used when attaching instances to this network.\n"
-                },
-                "v4SubnetMask": {
-                    "type": "integer",
-                    "description": "The number of bits for the netmask in CIDR notation. Example: 32\n"
-                }
-            },
-            "required": [
-                "dateCreated",
-                "region",
-                "v4Subnet",
-                "v4SubnetMask"
-            ],
-            "inputProperties": {
-                "description": {
-                    "type": "string",
-                    "description": "The description you want to give your network.\n"
-                },
-                "region": {
-                    "type": "string",
-                    "description": "The region ID that you want the network to be created in.\n",
-                    "willReplaceOnChanges": true
-                },
-                "v4Subnet": {
-                    "type": "string",
-                    "description": "The IPv4 subnet to be used when attaching instances to this network.\n",
-                    "willReplaceOnChanges": true
-                },
-                "v4SubnetMask": {
-                    "type": "integer",
-                    "description": "The number of bits for the netmask in CIDR notation. Example: 32\n",
-                    "willReplaceOnChanges": true
-                }
-            },
-            "requiredInputs": [
-                "region"
-            ],
-            "stateInputs": {
-                "description": "Input properties used for looking up and filtering PrivateNetwork resources.\n",
-                "properties": {
-                    "dateCreated": {
-                        "type": "string",
-                        "description": "The date that the network was added to your Vultr account.\n"
-                    },
-                    "description": {
-                        "type": "string",
-                        "description": "The description you want to give your network.\n"
-                    },
-                    "region": {
-                        "type": "string",
-                        "description": "The region ID that you want the network to be created in.\n",
-                        "willReplaceOnChanges": true
-                    },
-                    "v4Subnet": {
-                        "type": "string",
-                        "description": "The IPv4 subnet to be used when attaching instances to this network.\n",
-                        "willReplaceOnChanges": true
-                    },
-                    "v4SubnetMask": {
-                        "type": "integer",
-                        "description": "The number of bits for the netmask in CIDR notation. Example: 32\n",
-                        "willReplaceOnChanges": true
                     }
                 },
                 "type": "object"
@@ -6526,6 +6652,86 @@
                 ]
             }
         },
+        "vultr:index/getContainerRegistry:getContainerRegistry": {
+            "description": "Get information about a Vultr container registry.\n\n## Example Usage\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@pulumi/vultr\";\n\nconst vcr-ds = vultr.getContainerRegistry({\n    filters: [{\n        name: \"name\",\n        values: [\"examplecontainerregistry\"],\n    }],\n});\n```\n```python\nimport pulumi\nimport pulumi_vultr as vultr\n\nvcr_ds = vultr.get_container_registry(filters=[vultr.GetContainerRegistryFilterArgs(\n    name=\"name\",\n    values=[\"examplecontainerregistry\"],\n)])\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vultr = Pulumi.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var vcr_ds = Vultr.GetContainerRegistry.Invoke(new()\n    {\n        Filters = new[]\n        {\n            new Vultr.Inputs.GetContainerRegistryFilterInputArgs\n            {\n                Name = \"name\",\n                Values = new[]\n                {\n                    \"examplecontainerregistry\",\n                },\n            },\n        },\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.LookupContainerRegistry(ctx, \u0026vultr.LookupContainerRegistryArgs{\n\t\t\tFilters: []vultr.GetContainerRegistryFilter{\n\t\t\t\t{\n\t\t\t\t\tName: \"name\",\n\t\t\t\t\tValues: []string{\n\t\t\t\t\t\t\"examplecontainerregistry\",\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t},\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.VultrFunctions;\nimport com.pulumi.vultr.inputs.GetContainerRegistryArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var vcr-ds = VultrFunctions.getContainerRegistry(GetContainerRegistryArgs.builder()\n            .filters(GetContainerRegistryFilterArgs.builder()\n                .name(\"name\")\n                .values(\"examplecontainerregistry\")\n                .build())\n            .build());\n\n    }\n}\n```\n```yaml\nvariables:\n  vcr-ds:\n    fn::invoke:\n      Function: vultr:getContainerRegistry\n      Arguments:\n        filters:\n          - name: name\n            values:\n              - examplecontainerregistry\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
+            "inputs": {
+                "description": "A collection of arguments for invoking getContainerRegistry.\n",
+                "properties": {
+                    "filters": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/vultr:index/getContainerRegistryFilter:getContainerRegistryFilter"
+                        },
+                        "description": "Query parameters for finding the container registry.\n",
+                        "willReplaceOnChanges": true
+                    }
+                },
+                "type": "object"
+            },
+            "outputs": {
+                "description": "A collection of values returned by getContainerRegistry.\n",
+                "properties": {
+                    "dateCreated": {
+                        "type": "string",
+                        "description": "A date-time of when the root user was created.\n"
+                    },
+                    "filters": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/vultr:index/getContainerRegistryFilter:getContainerRegistryFilter"
+                        }
+                    },
+                    "id": {
+                        "type": "string",
+                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "The name of the repository.\n"
+                    },
+                    "public": {
+                        "type": "boolean",
+                        "description": "Boolean indicating whether or not the requires login credentials.\n"
+                    },
+                    "repositories": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/vultr:index/getContainerRegistryRepository:getContainerRegistryRepository"
+                        },
+                        "description": "Listing of the repositories created within the registry and their metadata.\n"
+                    },
+                    "rootUser": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "pulumi.json#/Any"
+                        },
+                        "description": "The user associated with the container registry.\n"
+                    },
+                    "storage": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "pulumi.json#/Any"
+                        },
+                        "description": "A listing of current storage usage relevant to the container registry.\n"
+                    },
+                    "urn": {
+                        "type": "string",
+                        "description": "The URN of the container registry.\n"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "dateCreated",
+                    "name",
+                    "public",
+                    "repositories",
+                    "rootUser",
+                    "storage",
+                    "urn",
+                    "id"
+                ]
+            }
+        },
         "vultr:index/getDatabase:getDatabase": {
             "description": "Get information about a Vultr database.\n\n## Example Usage\n\nGet the information for a database by `label`:\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@pulumi/vultr\";\n\nconst myDatabase = vultr.getDatabase({\n    filters: [{\n        name: \"label\",\n        values: [\"my-database-label\"],\n    }],\n});\n```\n```python\nimport pulumi\nimport pulumi_vultr as vultr\n\nmy_database = vultr.get_database(filters=[vultr.GetDatabaseFilterArgs(\n    name=\"label\",\n    values=[\"my-database-label\"],\n)])\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vultr = Pulumi.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var myDatabase = Vultr.GetDatabase.Invoke(new()\n    {\n        Filters = new[]\n        {\n            new Vultr.Inputs.GetDatabaseFilterInputArgs\n            {\n                Name = \"label\",\n                Values = new[]\n                {\n                    \"my-database-label\",\n                },\n            },\n        },\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.LookupDatabase(ctx, \u0026vultr.LookupDatabaseArgs{\n\t\t\tFilters: []vultr.GetDatabaseFilter{\n\t\t\t\t{\n\t\t\t\t\tName: \"label\",\n\t\t\t\t\tValues: []string{\n\t\t\t\t\t\t\"my-database-label\",\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t},\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.VultrFunctions;\nimport com.pulumi.vultr.inputs.GetDatabaseArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var myDatabase = VultrFunctions.getDatabase(GetDatabaseArgs.builder()\n            .filters(GetDatabaseFilterArgs.builder()\n                .name(\"label\")\n                .values(\"my-database-label\")\n                .build())\n            .build());\n\n    }\n}\n```\n```yaml\nvariables:\n  myDatabase:\n    fn::invoke:\n      Function: vultr:getDatabase\n      Arguments:\n        filters:\n          - name: label\n            values:\n              - my-database-label\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
             "inputs": {
@@ -6839,6 +7045,64 @@
                 ]
             }
         },
+        "vultr:index/getInference:getInference": {
+            "description": "Get information about a Vultr Serverless Inference subscription.\n\n## Example Usage\n\nGet the information for an inference subscription by `label`:\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@pulumi/vultr\";\n\nconst exampleInference = vultr.getInference({\n    filters: [{\n        name: \"label\",\n        values: [\"my_inference_label\"],\n    }],\n});\n```\n```python\nimport pulumi\nimport pulumi_vultr as vultr\n\nexample_inference = vultr.get_inference(filters=[vultr.GetInferenceFilterArgs(\n    name=\"label\",\n    values=[\"my_inference_label\"],\n)])\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vultr = Pulumi.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var exampleInference = Vultr.GetInference.Invoke(new()\n    {\n        Filters = new[]\n        {\n            new Vultr.Inputs.GetInferenceFilterInputArgs\n            {\n                Name = \"label\",\n                Values = new[]\n                {\n                    \"my_inference_label\",\n                },\n            },\n        },\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.LookupInference(ctx, \u0026vultr.LookupInferenceArgs{\n\t\t\tFilters: []vultr.GetInferenceFilter{\n\t\t\t\t{\n\t\t\t\t\tName: \"label\",\n\t\t\t\t\tValues: []string{\n\t\t\t\t\t\t\"my_inference_label\",\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t},\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.VultrFunctions;\nimport com.pulumi.vultr.inputs.GetInferenceArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var exampleInference = VultrFunctions.getInference(GetInferenceArgs.builder()\n            .filters(GetInferenceFilterArgs.builder()\n                .name(\"label\")\n                .values(\"my_inference_label\")\n                .build())\n            .build());\n\n    }\n}\n```\n```yaml\nvariables:\n  exampleInference:\n    fn::invoke:\n      Function: vultr:getInference\n      Arguments:\n        filters:\n          - name: label\n            values:\n              - my_inference_label\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
+            "inputs": {
+                "description": "A collection of arguments for invoking getInference.\n",
+                "properties": {
+                    "filters": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/vultr:index/getInferenceFilter:getInferenceFilter"
+                        },
+                        "description": "Query parameters for finding inference subscriptions.\n",
+                        "willReplaceOnChanges": true
+                    }
+                },
+                "type": "object"
+            },
+            "outputs": {
+                "description": "A collection of values returned by getInference.\n",
+                "properties": {
+                    "apiKey": {
+                        "type": "string",
+                        "description": "The inference subscription's API key for accessing the Vultr Inference API.\n"
+                    },
+                    "dateCreated": {
+                        "type": "string",
+                        "description": "The date the inference subscription was added to your Vultr account.\n"
+                    },
+                    "filters": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/vultr:index/getInferenceFilter:getInferenceFilter"
+                        }
+                    },
+                    "id": {
+                        "type": "string",
+                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                    },
+                    "label": {
+                        "type": "string",
+                        "description": "The inference subscription's label.\n"
+                    },
+                    "usage": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "pulumi.json#/Any"
+                        }
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "apiKey",
+                    "dateCreated",
+                    "label",
+                    "usage",
+                    "id"
+                ]
+            }
+        },
         "vultr:index/getInstance:getInstance": {
             "description": "Get information about a Vultr instance.\n\n## Example Usage\n\nGet the information for a instance by `label`:\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@pulumi/vultr\";\n\nconst myInstance = vultr.getInstance({\n    filters: [{\n        name: \"label\",\n        values: [\"my-instance-label\"],\n    }],\n});\n```\n```python\nimport pulumi\nimport pulumi_vultr as vultr\n\nmy_instance = vultr.get_instance(filters=[vultr.GetInstanceFilterArgs(\n    name=\"label\",\n    values=[\"my-instance-label\"],\n)])\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vultr = Pulumi.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var myInstance = Vultr.GetInstance.Invoke(new()\n    {\n        Filters = new[]\n        {\n            new Vultr.Inputs.GetInstanceFilterInputArgs\n            {\n                Name = \"label\",\n                Values = new[]\n                {\n                    \"my-instance-label\",\n                },\n            },\n        },\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.LookupInstance(ctx, \u0026vultr.LookupInstanceArgs{\n\t\t\tFilters: []vultr.GetInstanceFilter{\n\t\t\t\t{\n\t\t\t\t\tName: \"label\",\n\t\t\t\t\tValues: []string{\n\t\t\t\t\t\t\"my-instance-label\",\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t},\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.VultrFunctions;\nimport com.pulumi.vultr.inputs.GetInstanceArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var myInstance = VultrFunctions.getInstance(GetInstanceArgs.builder()\n            .filters(GetInstanceFilterArgs.builder()\n                .name(\"label\")\n                .values(\"my-instance-label\")\n                .build())\n            .build());\n\n    }\n}\n```\n```yaml\nvariables:\n  myInstance:\n    fn::invoke:\n      Function: vultr:getInstance\n      Arguments:\n        filters:\n          - name: label\n            values:\n              - my-instance-label\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
             "inputs": {
@@ -6956,12 +7220,6 @@
                         "type": "string",
                         "description": "Whether the server is powered on or not.\n"
                     },
-                    "privateNetworkIds": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
-                    },
                     "ram": {
                         "type": "integer",
                         "description": "The amount of memory available on the instance in MB.\n"
@@ -7038,7 +7296,6 @@
                     "osId",
                     "plan",
                     "powerStatus",
-                    "privateNetworkIds",
                     "ram",
                     "region",
                     "serverStatus",
@@ -7488,10 +7745,6 @@
                         "type": "string",
                         "description": "The load balancers label.\n"
                     },
-                    "privateNetwork": {
-                        "type": "string",
-                        "description": "(Deprecated: use `vpc` instead) Defines the private network the load balancer is attached to.\n"
-                    },
                     "proxyProtocol": {
                         "type": "boolean",
                         "description": "Boolean value that indicates if Proxy Protocol is enabled.\n"
@@ -7528,7 +7781,6 @@
                     "ipv4",
                     "ipv6",
                     "label",
-                    "privateNetwork",
                     "region",
                     "ssl",
                     "sslRedirect",
@@ -7806,67 +8058,6 @@
                     "ram",
                     "type",
                     "vcpuCount",
-                    "id"
-                ]
-            }
-        },
-        "vultr:index/getPrivateNetwork:getPrivateNetwork": {
-            "description": "Get information about a Vultr private network.\n\n## Example Usage\n\nGet the information for a private network by `description`:\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@pulumi/vultr\";\n\nconst myNetwork = vultr.getPrivateNetwork({\n    filters: [{\n        name: \"description\",\n        values: [\"my-network-description\"],\n    }],\n});\n```\n```python\nimport pulumi\nimport pulumi_vultr as vultr\n\nmy_network = vultr.get_private_network(filters=[vultr.GetPrivateNetworkFilterArgs(\n    name=\"description\",\n    values=[\"my-network-description\"],\n)])\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vultr = Pulumi.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var myNetwork = Vultr.GetPrivateNetwork.Invoke(new()\n    {\n        Filters = new[]\n        {\n            new Vultr.Inputs.GetPrivateNetworkFilterInputArgs\n            {\n                Name = \"description\",\n                Values = new[]\n                {\n                    \"my-network-description\",\n                },\n            },\n        },\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.LookupPrivateNetwork(ctx, \u0026vultr.LookupPrivateNetworkArgs{\n\t\t\tFilters: []vultr.GetPrivateNetworkFilter{\n\t\t\t\t{\n\t\t\t\t\tName: \"description\",\n\t\t\t\t\tValues: []string{\n\t\t\t\t\t\t\"my-network-description\",\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t},\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.VultrFunctions;\nimport com.pulumi.vultr.inputs.GetPrivateNetworkArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var myNetwork = VultrFunctions.getPrivateNetwork(GetPrivateNetworkArgs.builder()\n            .filters(GetPrivateNetworkFilterArgs.builder()\n                .name(\"description\")\n                .values(\"my-network-description\")\n                .build())\n            .build());\n\n    }\n}\n```\n```yaml\nvariables:\n  myNetwork:\n    fn::invoke:\n      Function: vultr:getPrivateNetwork\n      Arguments:\n        filters:\n          - name: description\n            values:\n              - my-network-description\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
-            "inputs": {
-                "description": "A collection of arguments for invoking getPrivateNetwork.\n",
-                "properties": {
-                    "filters": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/types/vultr:index/getPrivateNetworkFilter:getPrivateNetworkFilter"
-                        },
-                        "description": "Query parameters for finding private networks.\n",
-                        "willReplaceOnChanges": true
-                    }
-                },
-                "type": "object"
-            },
-            "outputs": {
-                "description": "A collection of values returned by getPrivateNetwork.\n",
-                "properties": {
-                    "dateCreated": {
-                        "type": "string",
-                        "description": "The date the private network was added to your Vultr account.\n"
-                    },
-                    "description": {
-                        "type": "string",
-                        "description": "The private network's description.\n"
-                    },
-                    "filters": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/types/vultr:index/getPrivateNetworkFilter:getPrivateNetworkFilter"
-                        }
-                    },
-                    "id": {
-                        "type": "string",
-                        "description": "The provider-assigned unique ID for this managed resource.\n"
-                    },
-                    "region": {
-                        "type": "string",
-                        "description": "The ID of the region that the private network is in.\n"
-                    },
-                    "v4Subnet": {
-                        "type": "string",
-                        "description": "The IPv4 network address. For example: 10.1.1.0.\n"
-                    },
-                    "v4SubnetMask": {
-                        "type": "integer",
-                        "description": "The number of bits for the netmask in CIDR notation. Example: 20\n"
-                    }
-                },
-                "type": "object",
-                "required": [
-                    "dateCreated",
-                    "description",
-                    "region",
-                    "v4Subnet",
-                    "v4SubnetMask",
                     "id"
                 ]
             }

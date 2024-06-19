@@ -131,7 +131,6 @@ export interface GetInstanceResult {
      * Whether the server is powered on or not.
      */
     readonly powerStatus: string;
-    readonly privateNetworkIds: string[];
     /**
      * The amount of memory available on the instance in MB.
      */

@@ -213,7 +213,6 @@ namespace ediri.Vultr
         /// Whether the server is powered on or not.
         /// </summary>
         public readonly string PowerStatus;
-        public readonly ImmutableArray<string> PrivateNetworkIds;
         /// <summary>
         /// The amount of memory available on the instance in MB.
         /// </summary>
@@ -304,8 +303,6 @@ namespace ediri.Vultr
 
             string powerStatus,
 
-            ImmutableArray<string> privateNetworkIds,
-
             int ram,
 
             string region,
@@ -351,7 +348,6 @@ namespace ediri.Vultr
             OsId = osId;
             Plan = plan;
             PowerStatus = powerStatus;
-            PrivateNetworkIds = privateNetworkIds;
             Ram = ram;
             Region = region;
             ServerStatus = serverStatus;

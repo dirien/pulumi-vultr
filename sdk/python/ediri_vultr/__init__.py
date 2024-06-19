@@ -7,6 +7,7 @@ import typing
 # Export this package's modules as members:
 from .bare_metal_server import *
 from .block_storage import *
+from .container_registry import *
 from .database import *
 from .database_connection_pool import *
 from .database_db import *
@@ -22,9 +23,11 @@ from .get_backup import *
 from .get_bare_metal_plan import *
 from .get_bare_metal_server import *
 from .get_block_storage import *
+from .get_container_registry import *
 from .get_database import *
 from .get_dns_domain import *
 from .get_firewall_group import *
+from .get_inference import *
 from .get_instance import *
 from .get_instance_ipv4 import *
 from .get_instances import *
@@ -36,7 +39,6 @@ from .get_object_storage import *
 from .get_object_storage_cluster import *
 from .get_os import *
 from .get_plan import *
-from .get_private_network import *
 from .get_region import *
 from .get_reserved_ip import *
 from .get_reverse_ipv4 import *
@@ -47,6 +49,7 @@ from .get_startup_script import *
 from .get_user import *
 from .get_vpc import *
 from .get_vpc2 import *
+from .inference import *
 from .instance import *
 from .instance_ipv4 import *
 from .iso_private import *
@@ -54,7 +57,6 @@ from .kubernetes import *
 from .kubernetes_node_pools import *
 from .load_balancer import *
 from .object_storage import *
-from .private_network import *
 from .provider import *
 from .reserved_ip import *
 from .reverse_ipv4 import *
@@ -93,6 +95,14 @@ _utilities.register(
   "fqn": "ediri_vultr",
   "classes": {
    "vultr:index/blockStorage:BlockStorage": "BlockStorage"
+  }
+ },
+ {
+  "pkg": "vultr",
+  "mod": "index/containerRegistry",
+  "fqn": "ediri_vultr",
+  "classes": {
+   "vultr:index/containerRegistry:ContainerRegistry": "ContainerRegistry"
   }
  },
  {
@@ -169,6 +179,14 @@ _utilities.register(
  },
  {
   "pkg": "vultr",
+  "mod": "index/inference",
+  "fqn": "ediri_vultr",
+  "classes": {
+   "vultr:index/inference:Inference": "Inference"
+  }
+ },
+ {
+  "pkg": "vultr",
   "mod": "index/instance",
   "fqn": "ediri_vultr",
   "classes": {
@@ -221,14 +239,6 @@ _utilities.register(
   "fqn": "ediri_vultr",
   "classes": {
    "vultr:index/objectStorage:ObjectStorage": "ObjectStorage"
-  }
- },
- {
-  "pkg": "vultr",
-  "mod": "index/privateNetwork",
-  "fqn": "ediri_vultr",
-  "classes": {
-   "vultr:index/privateNetwork:PrivateNetwork": "PrivateNetwork"
   }
  },
  {

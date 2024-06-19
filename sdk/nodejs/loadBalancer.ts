@@ -116,12 +116,6 @@ export class LoadBalancer extends pulumi.CustomResource {
      */
     public readonly label!: pulumi.Output<string | undefined>;
     /**
-     * A private network ID that the load balancer should be attached to.
-     *
-     * @deprecated private_network is deprecated and should no longer be used. Instead, use vpc
-     */
-    public readonly privateNetwork!: pulumi.Output<string | undefined>;
-    /**
      * Boolean value that indicates if Proxy Protocol is enabled.
      */
     public readonly proxyProtocol!: pulumi.Output<boolean | undefined>;
@@ -169,7 +163,6 @@ export class LoadBalancer extends pulumi.CustomResource {
             resourceInputs["ipv4"] = state ? state.ipv4 : undefined;
             resourceInputs["ipv6"] = state ? state.ipv6 : undefined;
             resourceInputs["label"] = state ? state.label : undefined;
-            resourceInputs["privateNetwork"] = state ? state.privateNetwork : undefined;
             resourceInputs["proxyProtocol"] = state ? state.proxyProtocol : undefined;
             resourceInputs["region"] = state ? state.region : undefined;
             resourceInputs["ssl"] = state ? state.ssl : undefined;
@@ -191,7 +184,6 @@ export class LoadBalancer extends pulumi.CustomResource {
             resourceInputs["forwardingRules"] = args ? args.forwardingRules : undefined;
             resourceInputs["healthCheck"] = args ? args.healthCheck : undefined;
             resourceInputs["label"] = args ? args.label : undefined;
-            resourceInputs["privateNetwork"] = args ? args.privateNetwork : undefined;
             resourceInputs["proxyProtocol"] = args ? args.proxyProtocol : undefined;
             resourceInputs["region"] = args ? args.region : undefined;
             resourceInputs["ssl"] = args ? args.ssl : undefined;
@@ -252,12 +244,6 @@ export interface LoadBalancerState {
      */
     label?: pulumi.Input<string>;
     /**
-     * A private network ID that the load balancer should be attached to.
-     *
-     * @deprecated private_network is deprecated and should no longer be used. Instead, use vpc
-     */
-    privateNetwork?: pulumi.Input<string>;
-    /**
      * Boolean value that indicates if Proxy Protocol is enabled.
      */
     proxyProtocol?: pulumi.Input<boolean>;
@@ -315,12 +301,6 @@ export interface LoadBalancerArgs {
      * The load balancer's label.
      */
     label?: pulumi.Input<string>;
-    /**
-     * A private network ID that the load balancer should be attached to.
-     *
-     * @deprecated private_network is deprecated and should no longer be used. Instead, use vpc
-     */
-    privateNetwork?: pulumi.Input<string>;
     /**
      * Boolean value that indicates if Proxy Protocol is enabled.
      */

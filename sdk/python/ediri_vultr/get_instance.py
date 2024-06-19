@@ -23,7 +23,7 @@ class GetInstanceResult:
     """
     A collection of values returned by getInstance.
     """
-    def __init__(__self__, allowed_bandwidth=None, app_id=None, backups=None, backups_schedule=None, date_created=None, disk=None, features=None, filters=None, firewall_group_id=None, gateway_v4=None, hostname=None, id=None, image_id=None, internal_ip=None, kvm=None, label=None, location=None, main_ip=None, netmask_v4=None, os=None, os_id=None, plan=None, power_status=None, private_network_ids=None, ram=None, region=None, server_status=None, status=None, tags=None, v6_main_ip=None, v6_network=None, v6_network_size=None, vcpu_count=None, vpc2_ids=None, vpc_ids=None):
+    def __init__(__self__, allowed_bandwidth=None, app_id=None, backups=None, backups_schedule=None, date_created=None, disk=None, features=None, filters=None, firewall_group_id=None, gateway_v4=None, hostname=None, id=None, image_id=None, internal_ip=None, kvm=None, label=None, location=None, main_ip=None, netmask_v4=None, os=None, os_id=None, plan=None, power_status=None, ram=None, region=None, server_status=None, status=None, tags=None, v6_main_ip=None, v6_network=None, v6_network_size=None, vcpu_count=None, vpc2_ids=None, vpc_ids=None):
         if allowed_bandwidth and not isinstance(allowed_bandwidth, int):
             raise TypeError("Expected argument 'allowed_bandwidth' to be a int")
         pulumi.set(__self__, "allowed_bandwidth", allowed_bandwidth)
@@ -93,9 +93,6 @@ class GetInstanceResult:
         if power_status and not isinstance(power_status, str):
             raise TypeError("Expected argument 'power_status' to be a str")
         pulumi.set(__self__, "power_status", power_status)
-        if private_network_ids and not isinstance(private_network_ids, list):
-            raise TypeError("Expected argument 'private_network_ids' to be a list")
-        pulumi.set(__self__, "private_network_ids", private_network_ids)
         if ram and not isinstance(ram, int):
             raise TypeError("Expected argument 'ram' to be a int")
         pulumi.set(__self__, "ram", ram)
@@ -306,11 +303,6 @@ class GetInstanceResult:
         return pulumi.get(self, "power_status")
 
     @property
-    @pulumi.getter(name="privateNetworkIds")
-    def private_network_ids(self) -> Sequence[str]:
-        return pulumi.get(self, "private_network_ids")
-
-    @property
     @pulumi.getter
     def ram(self) -> int:
         """
@@ -425,7 +417,6 @@ class AwaitableGetInstanceResult(GetInstanceResult):
             os_id=self.os_id,
             plan=self.plan,
             power_status=self.power_status,
-            private_network_ids=self.private_network_ids,
             ram=self.ram,
             region=self.region,
             server_status=self.server_status,
@@ -490,7 +481,6 @@ def get_instance(filters: Optional[Sequence[pulumi.InputType['GetInstanceFilterA
         os_id=pulumi.get(__ret__, 'os_id'),
         plan=pulumi.get(__ret__, 'plan'),
         power_status=pulumi.get(__ret__, 'power_status'),
-        private_network_ids=pulumi.get(__ret__, 'private_network_ids'),
         ram=pulumi.get(__ret__, 'ram'),
         region=pulumi.get(__ret__, 'region'),
         server_status=pulumi.get(__ret__, 'server_status'),

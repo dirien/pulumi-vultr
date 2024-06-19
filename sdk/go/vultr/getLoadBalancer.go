@@ -90,8 +90,6 @@ type LookupLoadBalancerResult struct {
 	Ipv6 string `pulumi:"ipv6"`
 	// The load balancers label.
 	Label string `pulumi:"label"`
-	// (Deprecated: use `vpc` instead) Defines the private network the load balancer is attached to.
-	PrivateNetwork string `pulumi:"privateNetwork"`
 	// Boolean value that indicates if Proxy Protocol is enabled.
 	ProxyProtocol *bool `pulumi:"proxyProtocol"`
 	// The region your load balancer is deployed in.
@@ -203,11 +201,6 @@ func (o LookupLoadBalancerResultOutput) Ipv6() pulumi.StringOutput {
 // The load balancers label.
 func (o LookupLoadBalancerResultOutput) Label() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupLoadBalancerResult) string { return v.Label }).(pulumi.StringOutput)
-}
-
-// (Deprecated: use `vpc` instead) Defines the private network the load balancer is attached to.
-func (o LookupLoadBalancerResultOutput) PrivateNetwork() pulumi.StringOutput {
-	return o.ApplyT(func(v LookupLoadBalancerResult) string { return v.PrivateNetwork }).(pulumi.StringOutput)
 }
 
 // Boolean value that indicates if Proxy Protocol is enabled.
