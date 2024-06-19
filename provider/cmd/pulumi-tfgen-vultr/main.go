@@ -16,11 +16,10 @@ package main
 
 import (
 	vultr "github.com/dirien/pulumi-vultr/provider/v2"
-	"github.com/dirien/pulumi-vultr/provider/v2/pkg/version"
-	"github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfgen"
+	"github.com/pulumi/pulumi-terraform-bridge/pf/tfgen"
 )
 
 func main() {
 	// Modify the path to point to the new provider
-	tfgen.Main("vultr", version.Version, vultr.Provider())
+	tfgen.Main("vultr", vultr.Provider())
 }

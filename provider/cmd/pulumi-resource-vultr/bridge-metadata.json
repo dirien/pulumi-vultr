@@ -1,0 +1,821 @@
+{
+    "auto-aliasing": {
+        "resources": {
+            "vultr_bare_metal_server": {
+                "current": "vultr:index/bareMetalServer:BareMetalServer",
+                "majorVersion": 2,
+                "fields": {
+                    "ssh_key_ids": {
+                        "maxItemsOne": false
+                    },
+                    "tags": {
+                        "maxItemsOne": false
+                    },
+                    "vpc2_ids": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "vultr_block_storage": {
+                "current": "vultr:index/blockStorage:BlockStorage",
+                "majorVersion": 2
+            },
+            "vultr_database": {
+                "current": "vultr:index/database:Database",
+                "majorVersion": 2,
+                "fields": {
+                    "mysql_sql_modes": {
+                        "maxItemsOne": false
+                    },
+                    "read_replicas": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "mysql_sql_modes": {
+                                    "maxItemsOne": false
+                                },
+                                "trusted_ips": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    },
+                    "trusted_ips": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "vultr_database_connection_pool": {
+                "current": "vultr:index/databaseConnectionPool:DatabaseConnectionPool",
+                "majorVersion": 2
+            },
+            "vultr_database_db": {
+                "current": "vultr:index/databaseDb:DatabaseDb",
+                "majorVersion": 2
+            },
+            "vultr_database_replica": {
+                "current": "vultr:index/databaseReplica:DatabaseReplica",
+                "majorVersion": 2,
+                "fields": {
+                    "mysql_sql_modes": {
+                        "maxItemsOne": false
+                    },
+                    "trusted_ips": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "vultr_database_user": {
+                "current": "vultr:index/databaseUser:DatabaseUser",
+                "majorVersion": 2,
+                "fields": {
+                    "access_control": {
+                        "maxItemsOne": true,
+                        "elem": {
+                            "fields": {
+                                "redis_acl_categories": {
+                                    "maxItemsOne": false
+                                },
+                                "redis_acl_channels": {
+                                    "maxItemsOne": false
+                                },
+                                "redis_acl_commands": {
+                                    "maxItemsOne": false
+                                },
+                                "redis_acl_keys": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "vultr_dns_domain": {
+                "current": "vultr:index/dnsDomain:DnsDomain",
+                "majorVersion": 2
+            },
+            "vultr_dns_record": {
+                "current": "vultr:index/dnsRecord:DnsRecord",
+                "majorVersion": 2
+            },
+            "vultr_firewall_group": {
+                "current": "vultr:index/firewallGroup:FirewallGroup",
+                "majorVersion": 2
+            },
+            "vultr_firewall_rule": {
+                "current": "vultr:index/firewallRule:FirewallRule",
+                "majorVersion": 2
+            },
+            "vultr_instance": {
+                "current": "vultr:index/instance:Instance",
+                "majorVersion": 2,
+                "fields": {
+                    "backups_schedule": {
+                        "maxItemsOne": true
+                    },
+                    "features": {
+                        "maxItemsOne": false
+                    },
+                    "private_network_ids": {
+                        "maxItemsOne": false
+                    },
+                    "ssh_key_ids": {
+                        "maxItemsOne": false
+                    },
+                    "tags": {
+                        "maxItemsOne": false
+                    },
+                    "vpc2_ids": {
+                        "maxItemsOne": false
+                    },
+                    "vpc_ids": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "vultr_instance_ipv4": {
+                "current": "vultr:index/instanceIpv4:InstanceIpv4",
+                "majorVersion": 2
+            },
+            "vultr_iso_private": {
+                "current": "vultr:index/isoPrivate:IsoPrivate",
+                "majorVersion": 2
+            },
+            "vultr_kubernetes": {
+                "current": "vultr:index/kubernetes:Kubernetes",
+                "majorVersion": 2,
+                "fields": {
+                    "node_pools": {
+                        "maxItemsOne": true,
+                        "elem": {
+                            "fields": {
+                                "nodes": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "vultr_kubernetes_node_pools": {
+                "current": "vultr:index/kubernetesNodePools:KubernetesNodePools",
+                "majorVersion": 2,
+                "fields": {
+                    "nodes": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "vultr_load_balancer": {
+                "current": "vultr:index/loadBalancer:LoadBalancer",
+                "majorVersion": 2,
+                "fields": {
+                    "attached_instances": {
+                        "maxItemsOne": false
+                    },
+                    "firewall_rules": {
+                        "maxItemsOne": false
+                    },
+                    "forwarding_rules": {
+                        "maxItemsOne": false
+                    },
+                    "health_check": {
+                        "maxItemsOne": true
+                    },
+                    "ssl": {
+                        "maxItemsOne": true
+                    }
+                }
+            },
+            "vultr_object_storage": {
+                "current": "vultr:index/objectStorage:ObjectStorage",
+                "majorVersion": 2
+            },
+            "vultr_private_network": {
+                "current": "vultr:index/privateNetwork:PrivateNetwork",
+                "majorVersion": 2
+            },
+            "vultr_reserved_ip": {
+                "current": "vultr:index/reservedIp:ReservedIp",
+                "majorVersion": 2
+            },
+            "vultr_reverse_ipv4": {
+                "current": "vultr:index/reverseIpv4:ReverseIpv4",
+                "majorVersion": 2
+            },
+            "vultr_reverse_ipv6": {
+                "current": "vultr:index/reverseIpv6:ReverseIpv6",
+                "majorVersion": 2
+            },
+            "vultr_snapshot": {
+                "current": "vultr:index/snapshot:Snapshot",
+                "majorVersion": 2
+            },
+            "vultr_snapshot_from_url": {
+                "current": "vultr:index/snapshotFromUrl:SnapshotFromUrl",
+                "majorVersion": 2
+            },
+            "vultr_ssh_key": {
+                "current": "vultr:index/sSHKey:SSHKey",
+                "majorVersion": 2
+            },
+            "vultr_startup_script": {
+                "current": "vultr:index/startupScript:StartupScript",
+                "majorVersion": 2
+            },
+            "vultr_user": {
+                "current": "vultr:index/user:User",
+                "majorVersion": 2,
+                "fields": {
+                    "acl": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "vultr_vpc": {
+                "current": "vultr:index/vpc:Vpc",
+                "majorVersion": 2
+            },
+            "vultr_vpc2": {
+                "current": "vultr:index/vpc2:Vpc2",
+                "majorVersion": 2
+            }
+        },
+        "datasources": {
+            "vultr_account": {
+                "current": "vultr:index/getAccount:getAccount",
+                "majorVersion": 2,
+                "fields": {
+                    "acl": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "vultr_application": {
+                "current": "vultr:index/getApplication:getApplication",
+                "majorVersion": 2,
+                "fields": {
+                    "filter": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "values": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "vultr_backup": {
+                "current": "vultr:index/getBackup:getBackup",
+                "majorVersion": 2,
+                "fields": {
+                    "backups": {
+                        "maxItemsOne": false
+                    },
+                    "filter": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "values": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "vultr_bare_metal_plan": {
+                "current": "vultr:index/getBareMetalPlan:getBareMetalPlan",
+                "majorVersion": 2,
+                "fields": {
+                    "filter": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "values": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    },
+                    "locations": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "vultr_bare_metal_server": {
+                "current": "vultr:index/getBareMetalServer:getBareMetalServer",
+                "majorVersion": 2,
+                "fields": {
+                    "features": {
+                        "maxItemsOne": false
+                    },
+                    "filter": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "values": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    },
+                    "tags": {
+                        "maxItemsOne": false
+                    },
+                    "vpc2_ids": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "vultr_block_storage": {
+                "current": "vultr:index/getBlockStorage:getBlockStorage",
+                "majorVersion": 2,
+                "fields": {
+                    "filter": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "values": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "vultr_database": {
+                "current": "vultr:index/getDatabase:getDatabase",
+                "majorVersion": 2,
+                "fields": {
+                    "filter": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "values": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    },
+                    "mysql_sql_modes": {
+                        "maxItemsOne": false
+                    },
+                    "read_replicas": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "mysql_sql_modes": {
+                                    "maxItemsOne": false
+                                },
+                                "trusted_ips": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    },
+                    "trusted_ips": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "vultr_dns_domain": {
+                "current": "vultr:index/getDnsDomain:getDnsDomain",
+                "majorVersion": 2
+            },
+            "vultr_firewall_group": {
+                "current": "vultr:index/getFirewallGroup:getFirewallGroup",
+                "majorVersion": 2,
+                "fields": {
+                    "filter": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "values": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "vultr_instance": {
+                "current": "vultr:index/getInstance:getInstance",
+                "majorVersion": 2,
+                "fields": {
+                    "features": {
+                        "maxItemsOne": false
+                    },
+                    "filter": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "values": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    },
+                    "private_network_ids": {
+                        "maxItemsOne": false
+                    },
+                    "tags": {
+                        "maxItemsOne": false
+                    },
+                    "vpc2_ids": {
+                        "maxItemsOne": false
+                    },
+                    "vpc_ids": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "vultr_instance_ipv4": {
+                "current": "vultr:index/getInstanceIpv4:getInstanceIpv4",
+                "majorVersion": 2,
+                "fields": {
+                    "filter": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "values": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "vultr_instances": {
+                "current": "vultr:index/getInstances:getInstances",
+                "majorVersion": 2,
+                "fields": {
+                    "filter": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "values": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    },
+                    "instances": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "features": {
+                                    "maxItemsOne": false
+                                },
+                                "private_network_ids": {
+                                    "maxItemsOne": false
+                                },
+                                "tags": {
+                                    "maxItemsOne": false
+                                },
+                                "vpc_ids": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "vultr_iso_private": {
+                "current": "vultr:index/getIsoPrivate:getIsoPrivate",
+                "majorVersion": 2,
+                "fields": {
+                    "filter": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "values": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "vultr_iso_public": {
+                "current": "vultr:index/getIsoPublic:getIsoPublic",
+                "majorVersion": 2,
+                "fields": {
+                    "filter": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "values": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "vultr_kubernetes": {
+                "current": "vultr:index/getKubernetes:getKubernetes",
+                "majorVersion": 2,
+                "fields": {
+                    "filter": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "values": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    },
+                    "node_pools": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "nodes": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "vultr_load_balancer": {
+                "current": "vultr:index/getLoadBalancer:getLoadBalancer",
+                "majorVersion": 2,
+                "fields": {
+                    "attached_instances": {
+                        "maxItemsOne": false
+                    },
+                    "filter": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "values": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    },
+                    "firewall_rules": {
+                        "maxItemsOne": false
+                    },
+                    "forwarding_rules": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "vultr_object_storage": {
+                "current": "vultr:index/getObjectStorage:getObjectStorage",
+                "majorVersion": 2,
+                "fields": {
+                    "filter": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "values": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "vultr_object_storage_cluster": {
+                "current": "vultr:index/getObjectStorageCluster:getObjectStorageCluster",
+                "majorVersion": 2,
+                "fields": {
+                    "filter": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "values": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "vultr_os": {
+                "current": "vultr:index/getOs:getOs",
+                "majorVersion": 2,
+                "fields": {
+                    "filter": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "values": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "vultr_plan": {
+                "current": "vultr:index/getPlan:getPlan",
+                "majorVersion": 2,
+                "fields": {
+                    "filter": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "values": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    },
+                    "locations": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "vultr_private_network": {
+                "current": "vultr:index/getPrivateNetwork:getPrivateNetwork",
+                "majorVersion": 2,
+                "fields": {
+                    "filter": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "values": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "vultr_region": {
+                "current": "vultr:index/getRegion:getRegion",
+                "majorVersion": 2,
+                "fields": {
+                    "filter": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "values": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    },
+                    "options": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "vultr_reserved_ip": {
+                "current": "vultr:index/getReservedIp:getReservedIp",
+                "majorVersion": 2,
+                "fields": {
+                    "filter": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "values": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "vultr_reverse_ipv4": {
+                "current": "vultr:index/getReverseIpv4:getReverseIpv4",
+                "majorVersion": 2,
+                "fields": {
+                    "filter": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "values": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "vultr_reverse_ipv6": {
+                "current": "vultr:index/getReverseIpv6:getReverseIpv6",
+                "majorVersion": 2,
+                "fields": {
+                    "filter": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "values": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "vultr_snapshot": {
+                "current": "vultr:index/getSnapshot:getSnapshot",
+                "majorVersion": 2,
+                "fields": {
+                    "filter": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "values": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "vultr_ssh_key": {
+                "current": "vultr:index/getSshKey:getSshKey",
+                "majorVersion": 2,
+                "fields": {
+                    "filter": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "values": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "vultr_startup_script": {
+                "current": "vultr:index/getStartupScript:getStartupScript",
+                "majorVersion": 2,
+                "fields": {
+                    "filter": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "values": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "vultr_user": {
+                "current": "vultr:index/getUser:getUser",
+                "majorVersion": 2,
+                "fields": {
+                    "acl": {
+                        "maxItemsOne": false
+                    },
+                    "filter": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "values": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "vultr_vpc": {
+                "current": "vultr:index/getVpc:getVpc",
+                "majorVersion": 2,
+                "fields": {
+                    "filter": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "values": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "vultr_vpc2": {
+                "current": "vultr:index/getVpc2:getVpc2",
+                "majorVersion": 2,
+                "fields": {
+                    "filter": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "values": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "auto-settings": {}
+}
