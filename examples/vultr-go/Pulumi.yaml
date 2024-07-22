@@ -1,3 +1,7 @@
 name: vultr-go
 description: A minimal Go Pulumi program
 runtime: go
+plugins:
+  providers:
+  - name: vultr
+    path: ../../bin
