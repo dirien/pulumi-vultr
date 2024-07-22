@@ -21,20 +21,13 @@ import (
 	_ "embed"
 
 	vultr "github.com/dirien/pulumi-vultr/provider/v2"
-	"github.com/pulumi/pulumi-terraform-bridge/pf/tfbridge"
+	pfbridge "github.com/pulumi/pulumi-terraform-bridge/pf/tfbridge"
 )
 
 //go:embed schema-embed.json
 var pulumiSchema []byte
 
-//go:embed bridge-metadata.json
-var bridgeMetadata []byte
-
 func main() {
-	meta := tfbridge.ProviderMetadata{
-		PackageSchema:  pulumiSchema,
-		BridgeMetadata: bridgeMetadata,
-	}
 	// Modify the path to point to the new provider
-	tfbridge.Main(context.Background(), "vultr", vultr.Provider(), meta)
+	pfbridge.MainWithMuxer(context.Background(), "vultr", vultr.Provider(), pulumiSchema)
 }
