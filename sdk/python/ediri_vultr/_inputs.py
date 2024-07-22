@@ -965,6 +965,7 @@ class LoadBalancerFirewallRuleArgs:
                  id: Optional[pulumi.Input[str]] = None):
         """
         :param pulumi.Input[str] ip_type: The type of ip this rule is - may be either v4 or v6.
+        :param pulumi.Input[int] port: The assigned port (integer) on the attached instances that the load balancer should check against. Default value is `80`.
         :param pulumi.Input[str] source: IP address with subnet that is allowed through the firewall. You may also pass in `cloudflare` which will allow only CloudFlares IP range.
         :param pulumi.Input[str] id: The load balancer ID.
         """
@@ -989,6 +990,9 @@ class LoadBalancerFirewallRuleArgs:
     @property
     @pulumi.getter
     def port(self) -> pulumi.Input[int]:
+        """
+        The assigned port (integer) on the attached instances that the load balancer should check against. Default value is `80`.
+        """
         return pulumi.get(self, "port")
 
     @port.setter

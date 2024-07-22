@@ -890,6 +890,7 @@ class LoadBalancerFirewallRule(dict):
                  id: Optional[str] = None):
         """
         :param str ip_type: The type of ip this rule is - may be either v4 or v6.
+        :param int port: The assigned port (integer) on the attached instances that the load balancer should check against. Default value is `80`.
         :param str source: IP address with subnet that is allowed through the firewall. You may also pass in `cloudflare` which will allow only CloudFlares IP range.
         :param str id: The load balancer ID.
         """
@@ -910,6 +911,9 @@ class LoadBalancerFirewallRule(dict):
     @property
     @pulumi.getter
     def port(self) -> int:
+        """
+        The assigned port (integer) on the attached instances that the load balancer should check against. Default value is `80`.
+        """
         return pulumi.get(self, "port")
 
     @property

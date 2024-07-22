@@ -22,6 +22,9 @@ namespace ediri.Vultr.Outputs
         /// The type of ip this rule is - may be either v4 or v6.
         /// </summary>
         public readonly string IpType;
+        /// <summary>
+        /// The assigned port (integer) on the attached instances that the load balancer should check against. Default value is `80`.
+        /// </summary>
         public readonly int Port;
         /// <summary>
         /// IP address with subnet that is allowed through the firewall. You may also pass in `cloudflare` which will allow only CloudFlares IP range.
