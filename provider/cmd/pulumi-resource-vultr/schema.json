@@ -451,7 +451,8 @@
                     "description": "The type of ip this rule is - may be either v4 or v6.\n"
                 },
                 "port": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description": "The assigned port (integer) on the attached instances that the load balancer should check against. Default value is `80`.\n"
                 },
                 "source": {
                     "type": "string",

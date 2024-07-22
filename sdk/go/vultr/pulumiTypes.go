@@ -1243,7 +1243,8 @@ type LoadBalancerFirewallRule struct {
 	Id *string `pulumi:"id"`
 	// The type of ip this rule is - may be either v4 or v6.
 	IpType string `pulumi:"ipType"`
-	Port   int    `pulumi:"port"`
+	// The assigned port (integer) on the attached instances that the load balancer should check against. Default value is `80`.
+	Port int `pulumi:"port"`
 	// IP address with subnet that is allowed through the firewall. You may also pass in `cloudflare` which will allow only CloudFlares IP range.
 	Source string `pulumi:"source"`
 }
@@ -1264,7 +1265,8 @@ type LoadBalancerFirewallRuleArgs struct {
 	Id pulumi.StringPtrInput `pulumi:"id"`
 	// The type of ip this rule is - may be either v4 or v6.
 	IpType pulumi.StringInput `pulumi:"ipType"`
-	Port   pulumi.IntInput    `pulumi:"port"`
+	// The assigned port (integer) on the attached instances that the load balancer should check against. Default value is `80`.
+	Port pulumi.IntInput `pulumi:"port"`
 	// IP address with subnet that is allowed through the firewall. You may also pass in `cloudflare` which will allow only CloudFlares IP range.
 	Source pulumi.StringInput `pulumi:"source"`
 }
@@ -1330,6 +1332,7 @@ func (o LoadBalancerFirewallRuleOutput) IpType() pulumi.StringOutput {
 	return o.ApplyT(func(v LoadBalancerFirewallRule) string { return v.IpType }).(pulumi.StringOutput)
 }
 
+// The assigned port (integer) on the attached instances that the load balancer should check against. Default value is `80`.
 func (o LoadBalancerFirewallRuleOutput) Port() pulumi.IntOutput {
 	return o.ApplyT(func(v LoadBalancerFirewallRule) int { return v.Port }).(pulumi.IntOutput)
 }

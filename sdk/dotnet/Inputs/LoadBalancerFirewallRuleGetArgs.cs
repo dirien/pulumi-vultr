@@ -25,6 +25,9 @@ namespace ediri.Vultr.Inputs
         [Input("ipType", required: true)]
         public Input<string> IpType { get; set; } = null!;
 
+        /// <summary>
+        /// The assigned port (integer) on the attached instances that the load balancer should check against. Default value is `80`.
+        /// </summary>
         [Input("port", required: true)]
         public Input<int> Port { get; set; } = null!;
 
