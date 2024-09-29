@@ -9,7 +9,7 @@ replace github.com/vultr/terraform-provider-vultr/shim => ./shim
 
 require (
 	github.com/pulumi/pulumi-terraform-bridge/pf v0.40.0
-	github.com/pulumi/pulumi-terraform-bridge/v3 v3.91.0
+	github.com/pulumi/pulumi-terraform-bridge/v3 v3.91.1
 	github.com/vultr/terraform-provider-vultr/shim v0.0.0-00010101000000-000000000000
 )
 
