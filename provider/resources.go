@@ -15,14 +15,12 @@
 package vultr
 
 import (
-	"context"
 	_ "embed"
 	"fmt"
 
 	"path/filepath"
 
 	"github.com/dirien/pulumi-vultr/provider/v2/pkg/version"
-	pfbridge "github.com/pulumi/pulumi-terraform-bridge/pf/tfbridge"
 	"github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfbridge"
 	tfbridgetokens "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfbridge/tokens"
 	shimv2 "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfshim/sdk-v2"
@@ -44,13 +42,10 @@ var metadata []byte
 // Provider returns additional overlaid schema and metadata associated with the provider..
 func Provider() tfbridge.ProviderInfo {
 	// Instantiate the Terraform provider
-	p := pfbridge.MuxShimWithPF(context.Background(),
-		shimv2.NewProvider(shim.NewProvider()),
-		shim.Framework()(),
-	)
+
 	// Create a Pulumi provider mapping
 	prov := tfbridge.ProviderInfo{
-		P:    p,
+		P:    shimv2.NewProvider(shim.NewProvider()),
 		Name: "vultr",
 		// DisplayName is a way to be able to change the casing of the provider
 		// name when being displayed on the Pulumi registry
