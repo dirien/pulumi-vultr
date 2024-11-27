@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -103,7 +108,7 @@ class AwaitableGetRegionResult(GetRegionResult):
             options=self.options)
 
 
-def get_region(filters: Optional[Sequence[pulumi.InputType['GetRegionFilterArgs']]] = None,
+def get_region(filters: Optional[Sequence[Union['GetRegionFilterArgs', 'GetRegionFilterArgsDict']]] = None,
                opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetRegionResult:
     """
     Get information about a Vultr region.
@@ -116,14 +121,14 @@ def get_region(filters: Optional[Sequence[pulumi.InputType['GetRegionFilterArgs'
     import pulumi
     import pulumi_vultr as vultr
 
-    my_region = vultr.get_region(filters=[vultr.GetRegionFilterArgs(
-        name="id",
-        values=["sea"],
-    )])
+    my_region = vultr.get_region(filters=[{
+        "name": "id",
+        "values": ["sea"],
+    }])
     ```
 
 
-    :param Sequence[pulumi.InputType['GetRegionFilterArgs']] filters: Query parameters for finding regions.
+    :param Sequence[Union['GetRegionFilterArgs', 'GetRegionFilterArgsDict']] filters: Query parameters for finding regions.
     """
     __args__ = dict()
     __args__['filters'] = filters
@@ -137,10 +142,7 @@ def get_region(filters: Optional[Sequence[pulumi.InputType['GetRegionFilterArgs'
         filters=pulumi.get(__ret__, 'filters'),
         id=pulumi.get(__ret__, 'id'),
         options=pulumi.get(__ret__, 'options'))
-
-
-@_utilities.lift_output_func(get_region)
-def get_region_output(filters: Optional[pulumi.Input[Optional[Sequence[pulumi.InputType['GetRegionFilterArgs']]]]] = None,
+def get_region_output(filters: Optional[pulumi.Input[Optional[Sequence[Union['GetRegionFilterArgs', 'GetRegionFilterArgsDict']]]]] = None,
                       opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetRegionResult]:
     """
     Get information about a Vultr region.
@@ -153,13 +155,23 @@ def get_region_output(filters: Optional[pulumi.Input[Optional[Sequence[pulumi.In
     import pulumi
     import pulumi_vultr as vultr
 
-    my_region = vultr.get_region(filters=[vultr.GetRegionFilterArgs(
-        name="id",
-        values=["sea"],
-    )])
+    my_region = vultr.get_region(filters=[{
+        "name": "id",
+        "values": ["sea"],
+    }])
     ```
 
 
-    :param Sequence[pulumi.InputType['GetRegionFilterArgs']] filters: Query parameters for finding regions.
+    :param Sequence[Union['GetRegionFilterArgs', 'GetRegionFilterArgsDict']] filters: Query parameters for finding regions.
     """
-    ...
+    __args__ = dict()
+    __args__['filters'] = filters
+    opts = pulumi.InvokeOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
+    __ret__ = pulumi.runtime.invoke_output('vultr:index/getRegion:getRegion', __args__, opts=opts, typ=GetRegionResult)
+    return __ret__.apply(lambda __response__: GetRegionResult(
+        city=pulumi.get(__response__, 'city'),
+        continent=pulumi.get(__response__, 'continent'),
+        country=pulumi.get(__response__, 'country'),
+        filters=pulumi.get(__response__, 'filters'),
+        id=pulumi.get(__response__, 'id'),
+        options=pulumi.get(__response__, 'options')))

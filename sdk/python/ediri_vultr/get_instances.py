@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -67,7 +72,7 @@ class AwaitableGetInstancesResult(GetInstancesResult):
             instances=self.instances)
 
 
-def get_instances(filters: Optional[Sequence[pulumi.InputType['GetInstancesFilterArgs']]] = None,
+def get_instances(filters: Optional[Sequence[Union['GetInstancesFilterArgs', 'GetInstancesFilterArgsDict']]] = None,
                   opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetInstancesResult:
     """
     List information for Vultr instances.
@@ -80,15 +85,15 @@ def get_instances(filters: Optional[Sequence[pulumi.InputType['GetInstancesFilte
     import pulumi
     import pulumi_vultr as vultr
 
-    active_instances = vultr.get_instances(filters=[vultr.GetInstancesFilterArgs(
-        name="status",
-        values=["active"],
-    )])
+    active_instances = vultr.get_instances(filters=[{
+        "name": "status",
+        "values": ["active"],
+    }])
     pulumi.export("instances", [__item.label for __item in active_instances.instances])
     ```
 
 
-    :param Sequence[pulumi.InputType['GetInstancesFilterArgs']] filters: Query parameters for finding instances.
+    :param Sequence[Union['GetInstancesFilterArgs', 'GetInstancesFilterArgsDict']] filters: Query parameters for finding instances.
     """
     __args__ = dict()
     __args__['filters'] = filters
@@ -99,10 +104,7 @@ def get_instances(filters: Optional[Sequence[pulumi.InputType['GetInstancesFilte
         filters=pulumi.get(__ret__, 'filters'),
         id=pulumi.get(__ret__, 'id'),
         instances=pulumi.get(__ret__, 'instances'))
-
-
-@_utilities.lift_output_func(get_instances)
-def get_instances_output(filters: Optional[pulumi.Input[Optional[Sequence[pulumi.InputType['GetInstancesFilterArgs']]]]] = None,
+def get_instances_output(filters: Optional[pulumi.Input[Optional[Sequence[Union['GetInstancesFilterArgs', 'GetInstancesFilterArgsDict']]]]] = None,
                          opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetInstancesResult]:
     """
     List information for Vultr instances.
@@ -115,14 +117,21 @@ def get_instances_output(filters: Optional[pulumi.Input[Optional[Sequence[pulumi
     import pulumi
     import pulumi_vultr as vultr
 
-    active_instances = vultr.get_instances(filters=[vultr.GetInstancesFilterArgs(
-        name="status",
-        values=["active"],
-    )])
+    active_instances = vultr.get_instances(filters=[{
+        "name": "status",
+        "values": ["active"],
+    }])
     pulumi.export("instances", [__item.label for __item in active_instances.instances])
     ```
 
 
-    :param Sequence[pulumi.InputType['GetInstancesFilterArgs']] filters: Query parameters for finding instances.
+    :param Sequence[Union['GetInstancesFilterArgs', 'GetInstancesFilterArgsDict']] filters: Query parameters for finding instances.
     """
-    ...
+    __args__ = dict()
+    __args__['filters'] = filters
+    opts = pulumi.InvokeOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
+    __ret__ = pulumi.runtime.invoke_output('vultr:index/getInstances:getInstances', __args__, opts=opts, typ=GetInstancesResult)
+    return __ret__.apply(lambda __response__: GetInstancesResult(
+        filters=pulumi.get(__response__, 'filters'),
+        id=pulumi.get(__response__, 'id'),
+        instances=pulumi.get(__response__, 'instances')))

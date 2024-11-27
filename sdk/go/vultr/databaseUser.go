@@ -46,13 +46,17 @@ import (
 type DatabaseUser struct {
 	pulumi.CustomResourceState
 
+	AccessCert    pulumi.StringOutput             `pulumi:"accessCert"`
 	AccessControl DatabaseUserAccessControlOutput `pulumi:"accessControl"`
+	AccessKey     pulumi.StringOutput             `pulumi:"accessKey"`
 	// The managed database ID you want to attach this user to.
 	DatabaseId pulumi.StringOutput `pulumi:"databaseId"`
 	// The encryption type of the new managed database user's password (MySQL engine types only - `cachingSha2Password`, `mysqlNativePassword`).
 	Encryption pulumi.StringOutput `pulumi:"encryption"`
 	// The password of the new managed database user.
 	Password pulumi.StringOutput `pulumi:"password"`
+	// The permission level for the database user (Kafka engine types only - `admin`, `read`, `write`, `readwrite`).
+	Permission pulumi.StringOutput `pulumi:"permission"`
 	// The username of the new managed database user.
 	Username pulumi.StringOutput `pulumi:"username"`
 }
@@ -93,25 +97,33 @@ func GetDatabaseUser(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering DatabaseUser resources.
 type databaseUserState struct {
+	AccessCert    *string                    `pulumi:"accessCert"`
 	AccessControl *DatabaseUserAccessControl `pulumi:"accessControl"`
+	AccessKey     *string                    `pulumi:"accessKey"`
 	// The managed database ID you want to attach this user to.
 	DatabaseId *string `pulumi:"databaseId"`
 	// The encryption type of the new managed database user's password (MySQL engine types only - `cachingSha2Password`, `mysqlNativePassword`).
 	Encryption *string `pulumi:"encryption"`
 	// The password of the new managed database user.
 	Password *string `pulumi:"password"`
+	// The permission level for the database user (Kafka engine types only - `admin`, `read`, `write`, `readwrite`).
+	Permission *string `pulumi:"permission"`
 	// The username of the new managed database user.
 	Username *string `pulumi:"username"`
 }
 
 type DatabaseUserState struct {
+	AccessCert    pulumi.StringPtrInput
 	AccessControl DatabaseUserAccessControlPtrInput
+	AccessKey     pulumi.StringPtrInput
 	// The managed database ID you want to attach this user to.
 	DatabaseId pulumi.StringPtrInput
 	// The encryption type of the new managed database user's password (MySQL engine types only - `cachingSha2Password`, `mysqlNativePassword`).
 	Encryption pulumi.StringPtrInput
 	// The password of the new managed database user.
 	Password pulumi.StringPtrInput
+	// The permission level for the database user (Kafka engine types only - `admin`, `read`, `write`, `readwrite`).
+	Permission pulumi.StringPtrInput
 	// The username of the new managed database user.
 	Username pulumi.StringPtrInput
 }
@@ -128,6 +140,8 @@ type databaseUserArgs struct {
 	Encryption *string `pulumi:"encryption"`
 	// The password of the new managed database user.
 	Password *string `pulumi:"password"`
+	// The permission level for the database user (Kafka engine types only - `admin`, `read`, `write`, `readwrite`).
+	Permission *string `pulumi:"permission"`
 	// The username of the new managed database user.
 	Username string `pulumi:"username"`
 }
@@ -141,6 +155,8 @@ type DatabaseUserArgs struct {
 	Encryption pulumi.StringPtrInput
 	// The password of the new managed database user.
 	Password pulumi.StringPtrInput
+	// The permission level for the database user (Kafka engine types only - `admin`, `read`, `write`, `readwrite`).
+	Permission pulumi.StringPtrInput
 	// The username of the new managed database user.
 	Username pulumi.StringInput
 }
@@ -232,8 +248,16 @@ func (o DatabaseUserOutput) ToDatabaseUserOutputWithContext(ctx context.Context)
 	return o
 }
 
+func (o DatabaseUserOutput) AccessCert() pulumi.StringOutput {
+	return o.ApplyT(func(v *DatabaseUser) pulumi.StringOutput { return v.AccessCert }).(pulumi.StringOutput)
+}
+
 func (o DatabaseUserOutput) AccessControl() DatabaseUserAccessControlOutput {
 	return o.ApplyT(func(v *DatabaseUser) DatabaseUserAccessControlOutput { return v.AccessControl }).(DatabaseUserAccessControlOutput)
+}
+
+func (o DatabaseUserOutput) AccessKey() pulumi.StringOutput {
+	return o.ApplyT(func(v *DatabaseUser) pulumi.StringOutput { return v.AccessKey }).(pulumi.StringOutput)
 }
 
 // The managed database ID you want to attach this user to.
@@ -249,6 +273,11 @@ func (o DatabaseUserOutput) Encryption() pulumi.StringOutput {
 // The password of the new managed database user.
 func (o DatabaseUserOutput) Password() pulumi.StringOutput {
 	return o.ApplyT(func(v *DatabaseUser) pulumi.StringOutput { return v.Password }).(pulumi.StringOutput)
+}
+
+// The permission level for the database user (Kafka engine types only - `admin`, `read`, `write`, `readwrite`).
+func (o DatabaseUserOutput) Permission() pulumi.StringOutput {
+	return o.ApplyT(func(v *DatabaseUser) pulumi.StringOutput { return v.Permission }).(pulumi.StringOutput)
 }
 
 // The username of the new managed database user.

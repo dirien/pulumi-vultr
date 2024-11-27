@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -103,7 +108,7 @@ class AwaitableGetUserResult(GetUserResult):
             name=self.name)
 
 
-def get_user(filters: Optional[Sequence[pulumi.InputType['GetUserFilterArgs']]] = None,
+def get_user(filters: Optional[Sequence[Union['GetUserFilterArgs', 'GetUserFilterArgsDict']]] = None,
              opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetUserResult:
     """
     Get information about a Vultr user associated with your account. This data source provides the name, email, access control list, and API status for a Vultr user associated with your account.
@@ -116,10 +121,10 @@ def get_user(filters: Optional[Sequence[pulumi.InputType['GetUserFilterArgs']]] 
     import pulumi
     import pulumi_vultr as vultr
 
-    my_user = vultr.get_user(filters=[vultr.GetUserFilterArgs(
-        name="email",
-        values=["jdoe@example.com"],
-    )])
+    my_user = vultr.get_user(filters=[{
+        "name": "email",
+        "values": ["jdoe@example.com"],
+    }])
     ```
 
     Get the information for a user by `name`:
@@ -128,14 +133,14 @@ def get_user(filters: Optional[Sequence[pulumi.InputType['GetUserFilterArgs']]] 
     import pulumi
     import pulumi_vultr as vultr
 
-    my_user = vultr.get_user(filters=[vultr.GetUserFilterArgs(
-        name="name",
-        values=["John Doe"],
-    )])
+    my_user = vultr.get_user(filters=[{
+        "name": "name",
+        "values": ["John Doe"],
+    }])
     ```
 
 
-    :param Sequence[pulumi.InputType['GetUserFilterArgs']] filters: Query parameters for finding users.
+    :param Sequence[Union['GetUserFilterArgs', 'GetUserFilterArgsDict']] filters: Query parameters for finding users.
     """
     __args__ = dict()
     __args__['filters'] = filters
@@ -149,10 +154,7 @@ def get_user(filters: Optional[Sequence[pulumi.InputType['GetUserFilterArgs']]] 
         filters=pulumi.get(__ret__, 'filters'),
         id=pulumi.get(__ret__, 'id'),
         name=pulumi.get(__ret__, 'name'))
-
-
-@_utilities.lift_output_func(get_user)
-def get_user_output(filters: Optional[pulumi.Input[Optional[Sequence[pulumi.InputType['GetUserFilterArgs']]]]] = None,
+def get_user_output(filters: Optional[pulumi.Input[Optional[Sequence[Union['GetUserFilterArgs', 'GetUserFilterArgsDict']]]]] = None,
                     opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetUserResult]:
     """
     Get information about a Vultr user associated with your account. This data source provides the name, email, access control list, and API status for a Vultr user associated with your account.
@@ -165,10 +167,10 @@ def get_user_output(filters: Optional[pulumi.Input[Optional[Sequence[pulumi.Inpu
     import pulumi
     import pulumi_vultr as vultr
 
-    my_user = vultr.get_user(filters=[vultr.GetUserFilterArgs(
-        name="email",
-        values=["jdoe@example.com"],
-    )])
+    my_user = vultr.get_user(filters=[{
+        "name": "email",
+        "values": ["jdoe@example.com"],
+    }])
     ```
 
     Get the information for a user by `name`:
@@ -177,13 +179,23 @@ def get_user_output(filters: Optional[pulumi.Input[Optional[Sequence[pulumi.Inpu
     import pulumi
     import pulumi_vultr as vultr
 
-    my_user = vultr.get_user(filters=[vultr.GetUserFilterArgs(
-        name="name",
-        values=["John Doe"],
-    )])
+    my_user = vultr.get_user(filters=[{
+        "name": "name",
+        "values": ["John Doe"],
+    }])
     ```
 
 
-    :param Sequence[pulumi.InputType['GetUserFilterArgs']] filters: Query parameters for finding users.
+    :param Sequence[Union['GetUserFilterArgs', 'GetUserFilterArgsDict']] filters: Query parameters for finding users.
     """
-    ...
+    __args__ = dict()
+    __args__['filters'] = filters
+    opts = pulumi.InvokeOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
+    __ret__ = pulumi.runtime.invoke_output('vultr:index/getUser:getUser', __args__, opts=opts, typ=GetUserResult)
+    return __ret__.apply(lambda __response__: GetUserResult(
+        acls=pulumi.get(__response__, 'acls'),
+        api_enabled=pulumi.get(__response__, 'api_enabled'),
+        email=pulumi.get(__response__, 'email'),
+        filters=pulumi.get(__response__, 'filters'),
+        id=pulumi.get(__response__, 'id'),
+        name=pulumi.get(__response__, 'name')))

@@ -78,14 +78,20 @@ type GetSshKeyResult struct {
 
 func GetSshKeyOutput(ctx *pulumi.Context, args GetSshKeyOutputArgs, opts ...pulumi.InvokeOption) GetSshKeyResultOutput {
 	return pulumi.ToOutputWithContext(context.Background(), args).
-		ApplyT(func(v interface{}) (GetSshKeyResult, error) {
+		ApplyT(func(v interface{}) (GetSshKeyResultOutput, error) {
 			args := v.(GetSshKeyArgs)
-			r, err := GetSshKey(ctx, &args, opts...)
-			var s GetSshKeyResult
-			if r != nil {
-				s = *r
+			opts = internal.PkgInvokeDefaultOpts(opts)
+			var rv GetSshKeyResult
+			secret, err := ctx.InvokePackageRaw("vultr:index/getSshKey:getSshKey", args, &rv, "", opts...)
+			if err != nil {
+				return GetSshKeyResultOutput{}, err
 			}
-			return s, err
+
+			output := pulumi.ToOutput(rv).(GetSshKeyResultOutput)
+			if secret {
+				return pulumi.ToSecret(output).(GetSshKeyResultOutput), nil
+			}
+			return output, nil
 		}).(GetSshKeyResultOutput)
 }
 

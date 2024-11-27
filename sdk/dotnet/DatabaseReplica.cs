@@ -79,7 +79,7 @@ namespace ediri.Vultr
         /// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
         /// </summary>
         [Output("ferretdbCredentials")]
-        public Output<ImmutableDictionary<string, object>> FerretdbCredentials { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, string>> FerretdbCredentials { get; private set; } = null!;
 
         /// <summary>
         /// The hostname assigned to the managed database read replica.
@@ -279,14 +279,14 @@ namespace ediri.Vultr
         public Input<string> DatabaseId { get; set; } = null!;
 
         [Input("ferretdbCredentials")]
-        private InputMap<object>? _ferretdbCredentials;
+        private InputMap<string>? _ferretdbCredentials;
 
         /// <summary>
         /// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
         /// </summary>
-        public InputMap<object> FerretdbCredentials
+        public InputMap<string> FerretdbCredentials
         {
-            get => _ferretdbCredentials ?? (_ferretdbCredentials = new InputMap<object>());
+            get => _ferretdbCredentials ?? (_ferretdbCredentials = new InputMap<string>());
             set => _ferretdbCredentials = value;
         }
 
@@ -413,14 +413,14 @@ namespace ediri.Vultr
         public Input<string>? Dbname { get; set; }
 
         [Input("ferretdbCredentials")]
-        private InputMap<object>? _ferretdbCredentials;
+        private InputMap<string>? _ferretdbCredentials;
 
         /// <summary>
         /// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
         /// </summary>
-        public InputMap<object> FerretdbCredentials
+        public InputMap<string> FerretdbCredentials
         {
-            get => _ferretdbCredentials ?? (_ferretdbCredentials = new InputMap<object>());
+            get => _ferretdbCredentials ?? (_ferretdbCredentials = new InputMap<string>());
             set => _ferretdbCredentials = value;
         }
 

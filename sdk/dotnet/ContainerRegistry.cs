@@ -75,13 +75,13 @@ namespace ediri.Vultr
         /// The user associated with the container registry.
         /// </summary>
         [Output("rootUser")]
-        public Output<ImmutableDictionary<string, object>> RootUser { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, string>> RootUser { get; private set; } = null!;
 
         /// <summary>
         /// A listing of current storage usage relevant to the container registry.
         /// </summary>
         [Output("storage")]
-        public Output<ImmutableDictionary<string, object>> Storage { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, string>> Storage { get; private set; } = null!;
 
         /// <summary>
         /// The URN of the container registry.
@@ -199,26 +199,26 @@ namespace ediri.Vultr
         public Input<string>? Region { get; set; }
 
         [Input("rootUser")]
-        private InputMap<object>? _rootUser;
+        private InputMap<string>? _rootUser;
 
         /// <summary>
         /// The user associated with the container registry.
         /// </summary>
-        public InputMap<object> RootUser
+        public InputMap<string> RootUser
         {
-            get => _rootUser ?? (_rootUser = new InputMap<object>());
+            get => _rootUser ?? (_rootUser = new InputMap<string>());
             set => _rootUser = value;
         }
 
         [Input("storage")]
-        private InputMap<object>? _storage;
+        private InputMap<string>? _storage;
 
         /// <summary>
         /// A listing of current storage usage relevant to the container registry.
         /// </summary>
-        public InputMap<object> Storage
+        public InputMap<string> Storage
         {
-            get => _storage ?? (_storage = new InputMap<object>());
+            get => _storage ?? (_storage = new InputMap<string>());
             set => _storage = value;
         }
 

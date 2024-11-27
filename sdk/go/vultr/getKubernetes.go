@@ -104,14 +104,20 @@ type LookupKubernetesResult struct {
 
 func LookupKubernetesOutput(ctx *pulumi.Context, args LookupKubernetesOutputArgs, opts ...pulumi.InvokeOption) LookupKubernetesResultOutput {
 	return pulumi.ToOutputWithContext(context.Background(), args).
-		ApplyT(func(v interface{}) (LookupKubernetesResult, error) {
+		ApplyT(func(v interface{}) (LookupKubernetesResultOutput, error) {
 			args := v.(LookupKubernetesArgs)
-			r, err := LookupKubernetes(ctx, &args, opts...)
-			var s LookupKubernetesResult
-			if r != nil {
-				s = *r
+			opts = internal.PkgInvokeDefaultOpts(opts)
+			var rv LookupKubernetesResult
+			secret, err := ctx.InvokePackageRaw("vultr:index/getKubernetes:getKubernetes", args, &rv, "", opts...)
+			if err != nil {
+				return LookupKubernetesResultOutput{}, err
 			}
-			return s, err
+
+			output := pulumi.ToOutput(rv).(LookupKubernetesResultOutput)
+			if secret {
+				return pulumi.ToSecret(output).(LookupKubernetesResultOutput), nil
+			}
+			return output, nil
 		}).(LookupKubernetesResultOutput)
 }
 

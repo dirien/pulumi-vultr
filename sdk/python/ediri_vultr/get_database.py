@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -23,7 +28,13 @@ class GetDatabaseResult:
     """
     A collection of values returned by getDatabase.
     """
-    def __init__(__self__, cluster_time_zone=None, database_engine=None, database_engine_version=None, date_created=None, dbname=None, ferretdb_credentials=None, filters=None, host=None, id=None, label=None, latest_backup=None, maintenance_dow=None, maintenance_time=None, mysql_long_query_time=None, mysql_require_primary_key=None, mysql_slow_query_log=None, mysql_sql_modes=None, password=None, plan=None, plan_disk=None, plan_ram=None, plan_replicas=None, plan_vcpus=None, port=None, public_host=None, read_replicas=None, redis_eviction_policy=None, region=None, status=None, tag=None, trusted_ips=None, user=None, vpc_id=None):
+    def __init__(__self__, access_cert=None, access_key=None, cluster_time_zone=None, database_engine=None, database_engine_version=None, date_created=None, dbname=None, ferretdb_credentials=None, filters=None, host=None, id=None, label=None, latest_backup=None, maintenance_dow=None, maintenance_time=None, mysql_long_query_time=None, mysql_require_primary_key=None, mysql_slow_query_log=None, mysql_sql_modes=None, password=None, plan=None, plan_brokers=None, plan_disk=None, plan_ram=None, plan_replicas=None, plan_vcpus=None, port=None, public_host=None, read_replicas=None, redis_eviction_policy=None, region=None, sasl_port=None, status=None, tag=None, trusted_ips=None, user=None, vpc_id=None):
+        if access_cert and not isinstance(access_cert, str):
+            raise TypeError("Expected argument 'access_cert' to be a str")
+        pulumi.set(__self__, "access_cert", access_cert)
+        if access_key and not isinstance(access_key, str):
+            raise TypeError("Expected argument 'access_key' to be a str")
+        pulumi.set(__self__, "access_key", access_key)
         if cluster_time_zone and not isinstance(cluster_time_zone, str):
             raise TypeError("Expected argument 'cluster_time_zone' to be a str")
         pulumi.set(__self__, "cluster_time_zone", cluster_time_zone)
@@ -81,6 +92,9 @@ class GetDatabaseResult:
         if plan and not isinstance(plan, str):
             raise TypeError("Expected argument 'plan' to be a str")
         pulumi.set(__self__, "plan", plan)
+        if plan_brokers and not isinstance(plan_brokers, int):
+            raise TypeError("Expected argument 'plan_brokers' to be a int")
+        pulumi.set(__self__, "plan_brokers", plan_brokers)
         if plan_disk and not isinstance(plan_disk, int):
             raise TypeError("Expected argument 'plan_disk' to be a int")
         pulumi.set(__self__, "plan_disk", plan_disk)
@@ -108,6 +122,9 @@ class GetDatabaseResult:
         if region and not isinstance(region, str):
             raise TypeError("Expected argument 'region' to be a str")
         pulumi.set(__self__, "region", region)
+        if sasl_port and not isinstance(sasl_port, str):
+            raise TypeError("Expected argument 'sasl_port' to be a str")
+        pulumi.set(__self__, "sasl_port", sasl_port)
         if status and not isinstance(status, str):
             raise TypeError("Expected argument 'status' to be a str")
         pulumi.set(__self__, "status", status)
@@ -123,6 +140,22 @@ class GetDatabaseResult:
         if vpc_id and not isinstance(vpc_id, str):
             raise TypeError("Expected argument 'vpc_id' to be a str")
         pulumi.set(__self__, "vpc_id", vpc_id)
+
+    @property
+    @pulumi.getter(name="accessCert")
+    def access_cert(self) -> str:
+        """
+        The certificate to authenticate the default user (Kafka engine types only).
+        """
+        return pulumi.get(self, "access_cert")
+
+    @property
+    @pulumi.getter(name="accessKey")
+    def access_key(self) -> str:
+        """
+        The private key to authenticate the default user (Kafka engine types only).
+        """
+        return pulumi.get(self, "access_key")
 
     @property
     @pulumi.getter(name="clusterTimeZone")
@@ -166,7 +199,7 @@ class GetDatabaseResult:
 
     @property
     @pulumi.getter(name="ferretdbCredentials")
-    def ferretdb_credentials(self) -> Mapping[str, Any]:
+    def ferretdb_credentials(self) -> Mapping[str, str]:
         """
         An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
         """
@@ -274,6 +307,11 @@ class GetDatabaseResult:
         return pulumi.get(self, "plan")
 
     @property
+    @pulumi.getter(name="planBrokers")
+    def plan_brokers(self) -> int:
+        return pulumi.get(self, "plan_brokers")
+
+    @property
     @pulumi.getter(name="planDisk")
     def plan_disk(self) -> int:
         """
@@ -346,6 +384,14 @@ class GetDatabaseResult:
         return pulumi.get(self, "region")
 
     @property
+    @pulumi.getter(name="saslPort")
+    def sasl_port(self) -> str:
+        """
+        The SASL connection port for the managed database (Kafka engine types only).
+        """
+        return pulumi.get(self, "sasl_port")
+
+    @property
     @pulumi.getter
     def status(self) -> str:
         """
@@ -392,6 +438,8 @@ class AwaitableGetDatabaseResult(GetDatabaseResult):
         if False:
             yield self
         return GetDatabaseResult(
+            access_cert=self.access_cert,
+            access_key=self.access_key,
             cluster_time_zone=self.cluster_time_zone,
             database_engine=self.database_engine,
             database_engine_version=self.database_engine_version,
@@ -411,6 +459,7 @@ class AwaitableGetDatabaseResult(GetDatabaseResult):
             mysql_sql_modes=self.mysql_sql_modes,
             password=self.password,
             plan=self.plan,
+            plan_brokers=self.plan_brokers,
             plan_disk=self.plan_disk,
             plan_ram=self.plan_ram,
             plan_replicas=self.plan_replicas,
@@ -420,6 +469,7 @@ class AwaitableGetDatabaseResult(GetDatabaseResult):
             read_replicas=self.read_replicas,
             redis_eviction_policy=self.redis_eviction_policy,
             region=self.region,
+            sasl_port=self.sasl_port,
             status=self.status,
             tag=self.tag,
             trusted_ips=self.trusted_ips,
@@ -427,7 +477,7 @@ class AwaitableGetDatabaseResult(GetDatabaseResult):
             vpc_id=self.vpc_id)
 
 
-def get_database(filters: Optional[Sequence[pulumi.InputType['GetDatabaseFilterArgs']]] = None,
+def get_database(filters: Optional[Sequence[Union['GetDatabaseFilterArgs', 'GetDatabaseFilterArgsDict']]] = None,
                  opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetDatabaseResult:
     """
     Get information about a Vultr database.
@@ -440,14 +490,14 @@ def get_database(filters: Optional[Sequence[pulumi.InputType['GetDatabaseFilterA
     import pulumi
     import pulumi_vultr as vultr
 
-    my_database = vultr.get_database(filters=[vultr.GetDatabaseFilterArgs(
-        name="label",
-        values=["my-database-label"],
-    )])
+    my_database = vultr.get_database(filters=[{
+        "name": "label",
+        "values": ["my-database-label"],
+    }])
     ```
 
 
-    :param Sequence[pulumi.InputType['GetDatabaseFilterArgs']] filters: Query parameters for finding databases.
+    :param Sequence[Union['GetDatabaseFilterArgs', 'GetDatabaseFilterArgsDict']] filters: Query parameters for finding databases.
     """
     __args__ = dict()
     __args__['filters'] = filters
@@ -455,6 +505,8 @@ def get_database(filters: Optional[Sequence[pulumi.InputType['GetDatabaseFilterA
     __ret__ = pulumi.runtime.invoke('vultr:index/getDatabase:getDatabase', __args__, opts=opts, typ=GetDatabaseResult).value
 
     return AwaitableGetDatabaseResult(
+        access_cert=pulumi.get(__ret__, 'access_cert'),
+        access_key=pulumi.get(__ret__, 'access_key'),
         cluster_time_zone=pulumi.get(__ret__, 'cluster_time_zone'),
         database_engine=pulumi.get(__ret__, 'database_engine'),
         database_engine_version=pulumi.get(__ret__, 'database_engine_version'),
@@ -474,6 +526,7 @@ def get_database(filters: Optional[Sequence[pulumi.InputType['GetDatabaseFilterA
         mysql_sql_modes=pulumi.get(__ret__, 'mysql_sql_modes'),
         password=pulumi.get(__ret__, 'password'),
         plan=pulumi.get(__ret__, 'plan'),
+        plan_brokers=pulumi.get(__ret__, 'plan_brokers'),
         plan_disk=pulumi.get(__ret__, 'plan_disk'),
         plan_ram=pulumi.get(__ret__, 'plan_ram'),
         plan_replicas=pulumi.get(__ret__, 'plan_replicas'),
@@ -483,15 +536,13 @@ def get_database(filters: Optional[Sequence[pulumi.InputType['GetDatabaseFilterA
         read_replicas=pulumi.get(__ret__, 'read_replicas'),
         redis_eviction_policy=pulumi.get(__ret__, 'redis_eviction_policy'),
         region=pulumi.get(__ret__, 'region'),
+        sasl_port=pulumi.get(__ret__, 'sasl_port'),
         status=pulumi.get(__ret__, 'status'),
         tag=pulumi.get(__ret__, 'tag'),
         trusted_ips=pulumi.get(__ret__, 'trusted_ips'),
         user=pulumi.get(__ret__, 'user'),
         vpc_id=pulumi.get(__ret__, 'vpc_id'))
-
-
-@_utilities.lift_output_func(get_database)
-def get_database_output(filters: Optional[pulumi.Input[Optional[Sequence[pulumi.InputType['GetDatabaseFilterArgs']]]]] = None,
+def get_database_output(filters: Optional[pulumi.Input[Optional[Sequence[Union['GetDatabaseFilterArgs', 'GetDatabaseFilterArgsDict']]]]] = None,
                         opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetDatabaseResult]:
     """
     Get information about a Vultr database.
@@ -504,13 +555,54 @@ def get_database_output(filters: Optional[pulumi.Input[Optional[Sequence[pulumi.
     import pulumi
     import pulumi_vultr as vultr
 
-    my_database = vultr.get_database(filters=[vultr.GetDatabaseFilterArgs(
-        name="label",
-        values=["my-database-label"],
-    )])
+    my_database = vultr.get_database(filters=[{
+        "name": "label",
+        "values": ["my-database-label"],
+    }])
     ```
 
 
-    :param Sequence[pulumi.InputType['GetDatabaseFilterArgs']] filters: Query parameters for finding databases.
+    :param Sequence[Union['GetDatabaseFilterArgs', 'GetDatabaseFilterArgsDict']] filters: Query parameters for finding databases.
     """
-    ...
+    __args__ = dict()
+    __args__['filters'] = filters
+    opts = pulumi.InvokeOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
+    __ret__ = pulumi.runtime.invoke_output('vultr:index/getDatabase:getDatabase', __args__, opts=opts, typ=GetDatabaseResult)
+    return __ret__.apply(lambda __response__: GetDatabaseResult(
+        access_cert=pulumi.get(__response__, 'access_cert'),
+        access_key=pulumi.get(__response__, 'access_key'),
+        cluster_time_zone=pulumi.get(__response__, 'cluster_time_zone'),
+        database_engine=pulumi.get(__response__, 'database_engine'),
+        database_engine_version=pulumi.get(__response__, 'database_engine_version'),
+        date_created=pulumi.get(__response__, 'date_created'),
+        dbname=pulumi.get(__response__, 'dbname'),
+        ferretdb_credentials=pulumi.get(__response__, 'ferretdb_credentials'),
+        filters=pulumi.get(__response__, 'filters'),
+        host=pulumi.get(__response__, 'host'),
+        id=pulumi.get(__response__, 'id'),
+        label=pulumi.get(__response__, 'label'),
+        latest_backup=pulumi.get(__response__, 'latest_backup'),
+        maintenance_dow=pulumi.get(__response__, 'maintenance_dow'),
+        maintenance_time=pulumi.get(__response__, 'maintenance_time'),
+        mysql_long_query_time=pulumi.get(__response__, 'mysql_long_query_time'),
+        mysql_require_primary_key=pulumi.get(__response__, 'mysql_require_primary_key'),
+        mysql_slow_query_log=pulumi.get(__response__, 'mysql_slow_query_log'),
+        mysql_sql_modes=pulumi.get(__response__, 'mysql_sql_modes'),
+        password=pulumi.get(__response__, 'password'),
+        plan=pulumi.get(__response__, 'plan'),
+        plan_brokers=pulumi.get(__response__, 'plan_brokers'),
+        plan_disk=pulumi.get(__response__, 'plan_disk'),
+        plan_ram=pulumi.get(__response__, 'plan_ram'),
+        plan_replicas=pulumi.get(__response__, 'plan_replicas'),
+        plan_vcpus=pulumi.get(__response__, 'plan_vcpus'),
+        port=pulumi.get(__response__, 'port'),
+        public_host=pulumi.get(__response__, 'public_host'),
+        read_replicas=pulumi.get(__response__, 'read_replicas'),
+        redis_eviction_policy=pulumi.get(__response__, 'redis_eviction_policy'),
+        region=pulumi.get(__response__, 'region'),
+        sasl_port=pulumi.get(__response__, 'sasl_port'),
+        status=pulumi.get(__response__, 'status'),
+        tag=pulumi.get(__response__, 'tag'),
+        trusted_ips=pulumi.get(__response__, 'trusted_ips'),
+        user=pulumi.get(__response__, 'user'),
+        vpc_id=pulumi.get(__response__, 'vpc_id')))

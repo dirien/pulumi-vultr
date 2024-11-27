@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -402,7 +407,7 @@ class Kubernetes(pulumi.CustomResource):
                  enable_firewall: Optional[pulumi.Input[bool]] = None,
                  ha_controlplanes: Optional[pulumi.Input[bool]] = None,
                  label: Optional[pulumi.Input[str]] = None,
-                 node_pools: Optional[pulumi.Input[pulumi.InputType['KubernetesNodePoolsArgs']]] = None,
+                 node_pools: Optional[pulumi.Input[Union['KubernetesNodePoolsArgs', 'KubernetesNodePoolsArgsDict']]] = None,
                  region: Optional[pulumi.Input[str]] = None,
                  version: Optional[pulumi.Input[str]] = None,
                  __props__=None):
@@ -417,14 +422,14 @@ class Kubernetes(pulumi.CustomResource):
 
         k8 = vultr.Kubernetes("k8",
             label="vke-test",
-            node_pools=vultr.KubernetesNodePoolsArgs(
-                auto_scaler=True,
-                label="vke-nodepool",
-                max_nodes=2,
-                min_nodes=1,
-                node_quantity=1,
-                plan="vc2-1c-2gb",
-            ),
+            node_pools={
+                "auto_scaler": True,
+                "label": "vke-nodepool",
+                "max_nodes": 2,
+                "min_nodes": 1,
+                "node_quantity": 1,
+                "plan": "vc2-1c-2gb",
+            },
             region="ewr",
             version="v1.28.2+1")
         ```
@@ -453,12 +458,26 @@ class Kubernetes(pulumi.CustomResource):
 
         There is still a requirement that there be one node pool attached to the cluster but this should allow more flexibility about which node pool that is.
 
+        ## Import
+
+        A kubernetes cluster created outside of terraform can be imported into the
+
+        terraform state using the UUID.  One thing to note is that all kubernetes
+
+        resources have a default node pool with a tag of `tf-vke-default`. In order to
+
+        avoid errors, ensure that there is a node pool with that tag set.
+
+        ```sh
+        $ pulumi import vultr:index/kubernetes:Kubernetes my-k8s 7365a98b-5a43-450f-bd27-d768827100e5
+        ```
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[bool] enable_firewall: Boolean indicating if the cluster should be created with a managed firewall.
         :param pulumi.Input[bool] ha_controlplanes: Boolean indicating if the cluster should be created with multiple, highly available controlplanes.
         :param pulumi.Input[str] label: The VKE clusters label.
-        :param pulumi.Input[pulumi.InputType['KubernetesNodePoolsArgs']] node_pools: Contains the default node pool that was deployed.
+        :param pulumi.Input[Union['KubernetesNodePoolsArgs', 'KubernetesNodePoolsArgsDict']] node_pools: Contains the default node pool that was deployed.
         :param pulumi.Input[str] region: The region your VKE cluster will be deployed in.
         :param pulumi.Input[str] version: The version your VKE cluster you want deployed. [See Available Version](https://www.vultr.com/api/#operation/get-kubernetes-versions)
         """
@@ -479,14 +498,14 @@ class Kubernetes(pulumi.CustomResource):
 
         k8 = vultr.Kubernetes("k8",
             label="vke-test",
-            node_pools=vultr.KubernetesNodePoolsArgs(
-                auto_scaler=True,
-                label="vke-nodepool",
-                max_nodes=2,
-                min_nodes=1,
-                node_quantity=1,
-                plan="vc2-1c-2gb",
-            ),
+            node_pools={
+                "auto_scaler": True,
+                "label": "vke-nodepool",
+                "max_nodes": 2,
+                "min_nodes": 1,
+                "node_quantity": 1,
+                "plan": "vc2-1c-2gb",
+            },
             region="ewr",
             version="v1.28.2+1")
         ```
@@ -515,6 +534,20 @@ class Kubernetes(pulumi.CustomResource):
 
         There is still a requirement that there be one node pool attached to the cluster but this should allow more flexibility about which node pool that is.
 
+        ## Import
+
+        A kubernetes cluster created outside of terraform can be imported into the
+
+        terraform state using the UUID.  One thing to note is that all kubernetes
+
+        resources have a default node pool with a tag of `tf-vke-default`. In order to
+
+        avoid errors, ensure that there is a node pool with that tag set.
+
+        ```sh
+        $ pulumi import vultr:index/kubernetes:Kubernetes my-k8s 7365a98b-5a43-450f-bd27-d768827100e5
+        ```
+
         :param str resource_name: The name of the resource.
         :param KubernetesArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -533,7 +566,7 @@ class Kubernetes(pulumi.CustomResource):
                  enable_firewall: Optional[pulumi.Input[bool]] = None,
                  ha_controlplanes: Optional[pulumi.Input[bool]] = None,
                  label: Optional[pulumi.Input[str]] = None,
-                 node_pools: Optional[pulumi.Input[pulumi.InputType['KubernetesNodePoolsArgs']]] = None,
+                 node_pools: Optional[pulumi.Input[Union['KubernetesNodePoolsArgs', 'KubernetesNodePoolsArgsDict']]] = None,
                  region: Optional[pulumi.Input[str]] = None,
                  version: Optional[pulumi.Input[str]] = None,
                  __props__=None):
@@ -592,7 +625,7 @@ class Kubernetes(pulumi.CustomResource):
             ip: Optional[pulumi.Input[str]] = None,
             kube_config: Optional[pulumi.Input[str]] = None,
             label: Optional[pulumi.Input[str]] = None,
-            node_pools: Optional[pulumi.Input[pulumi.InputType['KubernetesNodePoolsArgs']]] = None,
+            node_pools: Optional[pulumi.Input[Union['KubernetesNodePoolsArgs', 'KubernetesNodePoolsArgsDict']]] = None,
             region: Optional[pulumi.Input[str]] = None,
             service_subnet: Optional[pulumi.Input[str]] = None,
             status: Optional[pulumi.Input[str]] = None,
@@ -616,7 +649,7 @@ class Kubernetes(pulumi.CustomResource):
         :param pulumi.Input[str] ip: IP address of VKE cluster control plane.
         :param pulumi.Input[str] kube_config: Base64 encoded Kubeconfig for this VKE cluster.
         :param pulumi.Input[str] label: The VKE clusters label.
-        :param pulumi.Input[pulumi.InputType['KubernetesNodePoolsArgs']] node_pools: Contains the default node pool that was deployed.
+        :param pulumi.Input[Union['KubernetesNodePoolsArgs', 'KubernetesNodePoolsArgsDict']] node_pools: Contains the default node pool that was deployed.
         :param pulumi.Input[str] region: The region your VKE cluster will be deployed in.
         :param pulumi.Input[str] service_subnet: IP range that services will run on this cluster.
         :param pulumi.Input[str] status: Status of node.

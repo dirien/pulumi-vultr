@@ -27,7 +27,6 @@ import * as utilities from "./utilities";
  */
 export function getObjectStorage(args?: GetObjectStorageArgs, opts?: pulumi.InvokeOptions): Promise<GetObjectStorageResult> {
     args = args || {};
-
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("vultr:index/getObjectStorage:getObjectStorage", {
         "filters": args.filters,
@@ -110,7 +109,11 @@ export interface GetObjectStorageResult {
  * ```
  */
 export function getObjectStorageOutput(args?: GetObjectStorageOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetObjectStorageResult> {
-    return pulumi.output(args).apply((a: any) => getObjectStorage(a, opts))
+    args = args || {};
+    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
+    return pulumi.runtime.invokeOutput("vultr:index/getObjectStorage:getObjectStorage", {
+        "filters": args.filters,
+    }, opts);
 }
 
 /**

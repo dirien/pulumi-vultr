@@ -37,7 +37,7 @@ namespace ediri.Vultr.Outputs
         /// <summary>
         /// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
         /// </summary>
-        public readonly ImmutableDictionary<string, object>? FerretdbCredentials;
+        public readonly ImmutableDictionary<string, string>? FerretdbCredentials;
         /// <summary>
         /// The hostname assigned to the managed database.
         /// </summary>
@@ -95,7 +95,7 @@ namespace ediri.Vultr.Outputs
         /// </summary>
         public readonly int? PlanRam;
         /// <summary>
-        /// The number of standby nodes available on the managed database.
+        /// The number of standby nodes available on the managed database (excluded for Kafka engine types).
         /// </summary>
         public readonly int? PlanReplicas;
         /// <summary>
@@ -151,7 +151,7 @@ namespace ediri.Vultr.Outputs
 
             string? dbname,
 
-            ImmutableDictionary<string, object>? ferretdbCredentials,
+            ImmutableDictionary<string, string>? ferretdbCredentials,
 
             string? host,
 

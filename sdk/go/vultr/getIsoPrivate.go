@@ -84,14 +84,20 @@ type LookupIsoPrivateResult struct {
 
 func LookupIsoPrivateOutput(ctx *pulumi.Context, args LookupIsoPrivateOutputArgs, opts ...pulumi.InvokeOption) LookupIsoPrivateResultOutput {
 	return pulumi.ToOutputWithContext(context.Background(), args).
-		ApplyT(func(v interface{}) (LookupIsoPrivateResult, error) {
+		ApplyT(func(v interface{}) (LookupIsoPrivateResultOutput, error) {
 			args := v.(LookupIsoPrivateArgs)
-			r, err := LookupIsoPrivate(ctx, &args, opts...)
-			var s LookupIsoPrivateResult
-			if r != nil {
-				s = *r
+			opts = internal.PkgInvokeDefaultOpts(opts)
+			var rv LookupIsoPrivateResult
+			secret, err := ctx.InvokePackageRaw("vultr:index/getIsoPrivate:getIsoPrivate", args, &rv, "", opts...)
+			if err != nil {
+				return LookupIsoPrivateResultOutput{}, err
 			}
-			return s, err
+
+			output := pulumi.ToOutput(rv).(LookupIsoPrivateResultOutput)
+			if secret {
+				return pulumi.ToSecret(output).(LookupIsoPrivateResultOutput), nil
+			}
+			return output, nil
 		}).(LookupIsoPrivateResultOutput)
 }
 

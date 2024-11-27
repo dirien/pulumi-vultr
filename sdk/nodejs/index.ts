@@ -35,10 +35,20 @@ export type DatabaseDb = import("./databaseDb").DatabaseDb;
 export const DatabaseDb: typeof import("./databaseDb").DatabaseDb = null as any;
 utilities.lazyLoad(exports, ["DatabaseDb"], () => require("./databaseDb"));
 
+export { DatabaseQuotaArgs, DatabaseQuotaState } from "./databaseQuota";
+export type DatabaseQuota = import("./databaseQuota").DatabaseQuota;
+export const DatabaseQuota: typeof import("./databaseQuota").DatabaseQuota = null as any;
+utilities.lazyLoad(exports, ["DatabaseQuota"], () => require("./databaseQuota"));
+
 export { DatabaseReplicaArgs, DatabaseReplicaState } from "./databaseReplica";
 export type DatabaseReplica = import("./databaseReplica").DatabaseReplica;
 export const DatabaseReplica: typeof import("./databaseReplica").DatabaseReplica = null as any;
 utilities.lazyLoad(exports, ["DatabaseReplica"], () => require("./databaseReplica"));
+
+export { DatabaseTopicArgs, DatabaseTopicState } from "./databaseTopic";
+export type DatabaseTopic = import("./databaseTopic").DatabaseTopic;
+export const DatabaseTopic: typeof import("./databaseTopic").DatabaseTopic = null as any;
+utilities.lazyLoad(exports, ["DatabaseTopic"], () => require("./databaseTopic"));
 
 export { DatabaseUserArgs, DatabaseUserState } from "./databaseUser";
 export type DatabaseUser = import("./databaseUser").DatabaseUser;
@@ -346,8 +356,12 @@ const _module = {
                 return new DatabaseConnectionPool(name, <any>undefined, { urn })
             case "vultr:index/databaseDb:DatabaseDb":
                 return new DatabaseDb(name, <any>undefined, { urn })
+            case "vultr:index/databaseQuota:DatabaseQuota":
+                return new DatabaseQuota(name, <any>undefined, { urn })
             case "vultr:index/databaseReplica:DatabaseReplica":
                 return new DatabaseReplica(name, <any>undefined, { urn })
+            case "vultr:index/databaseTopic:DatabaseTopic":
+                return new DatabaseTopic(name, <any>undefined, { urn })
             case "vultr:index/databaseUser:DatabaseUser":
                 return new DatabaseUser(name, <any>undefined, { urn })
             case "vultr:index/dnsDomain:DnsDomain":
@@ -405,7 +419,9 @@ pulumi.runtime.registerResourceModule("vultr", "index/containerRegistry", _modul
 pulumi.runtime.registerResourceModule("vultr", "index/database", _module)
 pulumi.runtime.registerResourceModule("vultr", "index/databaseConnectionPool", _module)
 pulumi.runtime.registerResourceModule("vultr", "index/databaseDb", _module)
+pulumi.runtime.registerResourceModule("vultr", "index/databaseQuota", _module)
 pulumi.runtime.registerResourceModule("vultr", "index/databaseReplica", _module)
+pulumi.runtime.registerResourceModule("vultr", "index/databaseTopic", _module)
 pulumi.runtime.registerResourceModule("vultr", "index/databaseUser", _module)
 pulumi.runtime.registerResourceModule("vultr", "index/dnsDomain", _module)
 pulumi.runtime.registerResourceModule("vultr", "index/dnsRecord", _module)

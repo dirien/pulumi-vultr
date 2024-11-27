@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -38,6 +43,7 @@ class InstanceArgs:
                  ssh_key_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  user_data: Optional[pulumi.Input[str]] = None,
+                 user_scheme: Optional[pulumi.Input[str]] = None,
                  vpc2_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  vpc_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
         """
@@ -64,6 +70,7 @@ class InstanceArgs:
         :param pulumi.Input[Sequence[pulumi.Input[str]]] ssh_key_ids: A list of SSH key IDs to apply to the server on install (only valid for Linux/FreeBSD).
         :param pulumi.Input[Sequence[pulumi.Input[str]]] tags: A list of tags to apply to the instance.
         :param pulumi.Input[str] user_data: Generic data store, which some provisioning tools and cloud operating systems use as a configuration file. It is generally consumed only once after an instance has been launched, but individual needs may vary.
+        :param pulumi.Input[str] user_scheme: The scheme used for the default user. Possible values are `root` or `limited` (linux servers only).
         :param pulumi.Input[Sequence[pulumi.Input[str]]] vpc2_ids: A list of VPC 2.0 IDs to be attached to the server.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] vpc_ids: A list of VPC IDs to be attached to the server.
         """
@@ -109,6 +116,8 @@ class InstanceArgs:
             pulumi.set(__self__, "tags", tags)
         if user_data is not None:
             pulumi.set(__self__, "user_data", user_data)
+        if user_scheme is not None:
+            pulumi.set(__self__, "user_scheme", user_scheme)
         if vpc2_ids is not None:
             pulumi.set(__self__, "vpc2_ids", vpc2_ids)
         if vpc_ids is not None:
@@ -379,6 +388,18 @@ class InstanceArgs:
         pulumi.set(self, "user_data", value)
 
     @property
+    @pulumi.getter(name="userScheme")
+    def user_scheme(self) -> Optional[pulumi.Input[str]]:
+        """
+        The scheme used for the default user. Possible values are `root` or `limited` (linux servers only).
+        """
+        return pulumi.get(self, "user_scheme")
+
+    @user_scheme.setter
+    def user_scheme(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "user_scheme", value)
+
+    @property
     @pulumi.getter(name="vpc2Ids")
     def vpc2_ids(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
         """
@@ -443,6 +464,7 @@ class _InstanceState:
                  status: Optional[pulumi.Input[str]] = None,
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  user_data: Optional[pulumi.Input[str]] = None,
+                 user_scheme: Optional[pulumi.Input[str]] = None,
                  v6_main_ip: Optional[pulumi.Input[str]] = None,
                  v6_network: Optional[pulumi.Input[str]] = None,
                  v6_network_size: Optional[pulumi.Input[int]] = None,
@@ -488,6 +510,7 @@ class _InstanceState:
         :param pulumi.Input[str] status: The status of the server's subscription.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] tags: A list of tags to apply to the instance.
         :param pulumi.Input[str] user_data: Generic data store, which some provisioning tools and cloud operating systems use as a configuration file. It is generally consumed only once after an instance has been launched, but individual needs may vary.
+        :param pulumi.Input[str] user_scheme: The scheme used for the default user. Possible values are `root` or `limited` (linux servers only).
         :param pulumi.Input[str] v6_main_ip: The main IPv6 network address.
         :param pulumi.Input[str] v6_network: The IPv6 subnet.
         :param pulumi.Input[int] v6_network_size: The IPv6 network size in bits.
@@ -569,6 +592,8 @@ class _InstanceState:
             pulumi.set(__self__, "tags", tags)
         if user_data is not None:
             pulumi.set(__self__, "user_data", user_data)
+        if user_scheme is not None:
+            pulumi.set(__self__, "user_scheme", user_scheme)
         if v6_main_ip is not None:
             pulumi.set(__self__, "v6_main_ip", v6_main_ip)
         if v6_network is not None:
@@ -1027,6 +1052,18 @@ class _InstanceState:
         pulumi.set(self, "user_data", value)
 
     @property
+    @pulumi.getter(name="userScheme")
+    def user_scheme(self) -> Optional[pulumi.Input[str]]:
+        """
+        The scheme used for the default user. Possible values are `root` or `limited` (linux servers only).
+        """
+        return pulumi.get(self, "user_scheme")
+
+    @user_scheme.setter
+    def user_scheme(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "user_scheme", value)
+
+    @property
     @pulumi.getter(name="v6MainIp")
     def v6_main_ip(self) -> Optional[pulumi.Input[str]]:
         """
@@ -1108,7 +1145,7 @@ class Instance(pulumi.CustomResource):
                  app_id: Optional[pulumi.Input[int]] = None,
                  app_variables: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  backups: Optional[pulumi.Input[str]] = None,
-                 backups_schedule: Optional[pulumi.Input[pulumi.InputType['InstanceBackupsScheduleArgs']]] = None,
+                 backups_schedule: Optional[pulumi.Input[Union['InstanceBackupsScheduleArgs', 'InstanceBackupsScheduleArgsDict']]] = None,
                  ddos_protection: Optional[pulumi.Input[bool]] = None,
                  disable_public_ipv4: Optional[pulumi.Input[bool]] = None,
                  enable_ipv6: Optional[pulumi.Input[bool]] = None,
@@ -1126,6 +1163,7 @@ class Instance(pulumi.CustomResource):
                  ssh_key_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  user_data: Optional[pulumi.Input[str]] = None,
+                 user_scheme: Optional[pulumi.Input[str]] = None,
                  vpc2_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  vpc_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  __props__=None):
@@ -1155,9 +1193,9 @@ class Instance(pulumi.CustomResource):
         my_instance = vultr.Instance("myInstance",
             activation_email=False,
             backups="enabled",
-            backups_schedule=vultr.InstanceBackupsScheduleArgs(
-                type="daily",
-            ),
+            backups_schedule={
+                "type": "daily",
+            },
             ddos_protection=True,
             disable_public_ipv4=True,
             enable_ipv6=True,
@@ -1183,7 +1221,7 @@ class Instance(pulumi.CustomResource):
         :param pulumi.Input[int] app_id: The ID of the Vultr application to be installed on the server. [See List Applications](https://www.vultr.com/api/#operation/list-applications)
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] app_variables: A map of user-supplied variable keys and values for Vultr Marketplace apps. [See List Marketplace App Variables](https://www.vultr.com/api/#tag/marketplace/operation/list-marketplace-app-variables)
         :param pulumi.Input[str] backups: Whether automatic backups will be enabled for this server (these have an extra charge associated with them). Values can be enabled or disabled.
-        :param pulumi.Input[pulumi.InputType['InstanceBackupsScheduleArgs']] backups_schedule: A block that defines the way backups should be scheduled. While this is an optional field if `backups` are `enabled` this field is mandatory. The configuration of a `backups_schedule` is listed below.
+        :param pulumi.Input[Union['InstanceBackupsScheduleArgs', 'InstanceBackupsScheduleArgsDict']] backups_schedule: A block that defines the way backups should be scheduled. While this is an optional field if `backups` are `enabled` this field is mandatory. The configuration of a `backups_schedule` is listed below.
         :param pulumi.Input[bool] ddos_protection: Whether DDOS protection will be enabled on the server (there is an additional charge for this).
         :param pulumi.Input[bool] disable_public_ipv4: Whether the server has a public IPv4 address assigned (only possible with `enable_ipv6` set to `true`)
         :param pulumi.Input[bool] enable_ipv6: Whether the server has IPv6 networking activated.
@@ -1201,6 +1239,7 @@ class Instance(pulumi.CustomResource):
         :param pulumi.Input[Sequence[pulumi.Input[str]]] ssh_key_ids: A list of SSH key IDs to apply to the server on install (only valid for Linux/FreeBSD).
         :param pulumi.Input[Sequence[pulumi.Input[str]]] tags: A list of tags to apply to the instance.
         :param pulumi.Input[str] user_data: Generic data store, which some provisioning tools and cloud operating systems use as a configuration file. It is generally consumed only once after an instance has been launched, but individual needs may vary.
+        :param pulumi.Input[str] user_scheme: The scheme used for the default user. Possible values are `root` or `limited` (linux servers only).
         :param pulumi.Input[Sequence[pulumi.Input[str]]] vpc2_ids: A list of VPC 2.0 IDs to be attached to the server.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] vpc_ids: A list of VPC IDs to be attached to the server.
         """
@@ -1236,9 +1275,9 @@ class Instance(pulumi.CustomResource):
         my_instance = vultr.Instance("myInstance",
             activation_email=False,
             backups="enabled",
-            backups_schedule=vultr.InstanceBackupsScheduleArgs(
-                type="daily",
-            ),
+            backups_schedule={
+                "type": "daily",
+            },
             ddos_protection=True,
             disable_public_ipv4=True,
             enable_ipv6=True,
@@ -1277,7 +1316,7 @@ class Instance(pulumi.CustomResource):
                  app_id: Optional[pulumi.Input[int]] = None,
                  app_variables: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  backups: Optional[pulumi.Input[str]] = None,
-                 backups_schedule: Optional[pulumi.Input[pulumi.InputType['InstanceBackupsScheduleArgs']]] = None,
+                 backups_schedule: Optional[pulumi.Input[Union['InstanceBackupsScheduleArgs', 'InstanceBackupsScheduleArgsDict']]] = None,
                  ddos_protection: Optional[pulumi.Input[bool]] = None,
                  disable_public_ipv4: Optional[pulumi.Input[bool]] = None,
                  enable_ipv6: Optional[pulumi.Input[bool]] = None,
@@ -1295,6 +1334,7 @@ class Instance(pulumi.CustomResource):
                  ssh_key_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  user_data: Optional[pulumi.Input[str]] = None,
+                 user_scheme: Optional[pulumi.Input[str]] = None,
                  vpc2_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  vpc_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  __props__=None):
@@ -1332,6 +1372,7 @@ class Instance(pulumi.CustomResource):
             __props__.__dict__["ssh_key_ids"] = ssh_key_ids
             __props__.__dict__["tags"] = tags
             __props__.__dict__["user_data"] = user_data
+            __props__.__dict__["user_scheme"] = user_scheme
             __props__.__dict__["vpc2_ids"] = vpc2_ids
             __props__.__dict__["vpc_ids"] = vpc_ids
             __props__.__dict__["allowed_bandwidth"] = None
@@ -1370,7 +1411,7 @@ class Instance(pulumi.CustomResource):
             app_id: Optional[pulumi.Input[int]] = None,
             app_variables: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
             backups: Optional[pulumi.Input[str]] = None,
-            backups_schedule: Optional[pulumi.Input[pulumi.InputType['InstanceBackupsScheduleArgs']]] = None,
+            backups_schedule: Optional[pulumi.Input[Union['InstanceBackupsScheduleArgs', 'InstanceBackupsScheduleArgsDict']]] = None,
             date_created: Optional[pulumi.Input[str]] = None,
             ddos_protection: Optional[pulumi.Input[bool]] = None,
             default_password: Optional[pulumi.Input[str]] = None,
@@ -1402,6 +1443,7 @@ class Instance(pulumi.CustomResource):
             status: Optional[pulumi.Input[str]] = None,
             tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
             user_data: Optional[pulumi.Input[str]] = None,
+            user_scheme: Optional[pulumi.Input[str]] = None,
             v6_main_ip: Optional[pulumi.Input[str]] = None,
             v6_network: Optional[pulumi.Input[str]] = None,
             v6_network_size: Optional[pulumi.Input[int]] = None,
@@ -1420,7 +1462,7 @@ class Instance(pulumi.CustomResource):
         :param pulumi.Input[int] app_id: The ID of the Vultr application to be installed on the server. [See List Applications](https://www.vultr.com/api/#operation/list-applications)
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] app_variables: A map of user-supplied variable keys and values for Vultr Marketplace apps. [See List Marketplace App Variables](https://www.vultr.com/api/#tag/marketplace/operation/list-marketplace-app-variables)
         :param pulumi.Input[str] backups: Whether automatic backups will be enabled for this server (these have an extra charge associated with them). Values can be enabled or disabled.
-        :param pulumi.Input[pulumi.InputType['InstanceBackupsScheduleArgs']] backups_schedule: A block that defines the way backups should be scheduled. While this is an optional field if `backups` are `enabled` this field is mandatory. The configuration of a `backups_schedule` is listed below.
+        :param pulumi.Input[Union['InstanceBackupsScheduleArgs', 'InstanceBackupsScheduleArgsDict']] backups_schedule: A block that defines the way backups should be scheduled. While this is an optional field if `backups` are `enabled` this field is mandatory. The configuration of a `backups_schedule` is listed below.
         :param pulumi.Input[str] date_created: The date the server was added to your Vultr account.
         :param pulumi.Input[bool] ddos_protection: Whether DDOS protection will be enabled on the server (there is an additional charge for this).
         :param pulumi.Input[str] default_password: The server's default password.
@@ -1452,6 +1494,7 @@ class Instance(pulumi.CustomResource):
         :param pulumi.Input[str] status: The status of the server's subscription.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] tags: A list of tags to apply to the instance.
         :param pulumi.Input[str] user_data: Generic data store, which some provisioning tools and cloud operating systems use as a configuration file. It is generally consumed only once after an instance has been launched, but individual needs may vary.
+        :param pulumi.Input[str] user_scheme: The scheme used for the default user. Possible values are `root` or `limited` (linux servers only).
         :param pulumi.Input[str] v6_main_ip: The main IPv6 network address.
         :param pulumi.Input[str] v6_network: The IPv6 subnet.
         :param pulumi.Input[int] v6_network_size: The IPv6 network size in bits.
@@ -1500,6 +1543,7 @@ class Instance(pulumi.CustomResource):
         __props__.__dict__["status"] = status
         __props__.__dict__["tags"] = tags
         __props__.__dict__["user_data"] = user_data
+        __props__.__dict__["user_scheme"] = user_scheme
         __props__.__dict__["v6_main_ip"] = v6_main_ip
         __props__.__dict__["v6_network"] = v6_network
         __props__.__dict__["v6_network_size"] = v6_network_size
@@ -1803,6 +1847,14 @@ class Instance(pulumi.CustomResource):
         Generic data store, which some provisioning tools and cloud operating systems use as a configuration file. It is generally consumed only once after an instance has been launched, but individual needs may vary.
         """
         return pulumi.get(self, "user_data")
+
+    @property
+    @pulumi.getter(name="userScheme")
+    def user_scheme(self) -> pulumi.Output[Optional[str]]:
+        """
+        The scheme used for the default user. Possible values are `root` or `limited` (linux servers only).
+        """
+        return pulumi.get(self, "user_scheme")
 
     @property
     @pulumi.getter(name="v6MainIp")

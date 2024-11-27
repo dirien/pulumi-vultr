@@ -82,14 +82,20 @@ type LookupReverseIpv4Result struct {
 
 func LookupReverseIpv4Output(ctx *pulumi.Context, args LookupReverseIpv4OutputArgs, opts ...pulumi.InvokeOption) LookupReverseIpv4ResultOutput {
 	return pulumi.ToOutputWithContext(context.Background(), args).
-		ApplyT(func(v interface{}) (LookupReverseIpv4Result, error) {
+		ApplyT(func(v interface{}) (LookupReverseIpv4ResultOutput, error) {
 			args := v.(LookupReverseIpv4Args)
-			r, err := LookupReverseIpv4(ctx, &args, opts...)
-			var s LookupReverseIpv4Result
-			if r != nil {
-				s = *r
+			opts = internal.PkgInvokeDefaultOpts(opts)
+			var rv LookupReverseIpv4Result
+			secret, err := ctx.InvokePackageRaw("vultr:index/getReverseIpv4:getReverseIpv4", args, &rv, "", opts...)
+			if err != nil {
+				return LookupReverseIpv4ResultOutput{}, err
 			}
-			return s, err
+
+			output := pulumi.ToOutput(rv).(LookupReverseIpv4ResultOutput)
+			if secret {
+				return pulumi.ToSecret(output).(LookupReverseIpv4ResultOutput), nil
+			}
+			return output, nil
 		}).(LookupReverseIpv4ResultOutput)
 }
 

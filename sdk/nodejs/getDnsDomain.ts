@@ -21,7 +21,6 @@ import * as utilities from "./utilities";
  * ```
  */
 export function getDnsDomain(args: GetDnsDomainArgs, opts?: pulumi.InvokeOptions): Promise<GetDnsDomainResult> {
-
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("vultr:index/getDnsDomain:getDnsDomain", {
         "domain": args.domain,
@@ -76,7 +75,10 @@ export interface GetDnsDomainResult {
  * ```
  */
 export function getDnsDomainOutput(args: GetDnsDomainOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetDnsDomainResult> {
-    return pulumi.output(args).apply((a: any) => getDnsDomain(a, opts))
+    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
+    return pulumi.runtime.invokeOutput("vultr:index/getDnsDomain:getDnsDomain", {
+        "domain": args.domain,
+    }, opts);
 }
 
 /**

@@ -82,14 +82,20 @@ type LookupInstanceIpv4Result struct {
 
 func LookupInstanceIpv4Output(ctx *pulumi.Context, args LookupInstanceIpv4OutputArgs, opts ...pulumi.InvokeOption) LookupInstanceIpv4ResultOutput {
 	return pulumi.ToOutputWithContext(context.Background(), args).
-		ApplyT(func(v interface{}) (LookupInstanceIpv4Result, error) {
+		ApplyT(func(v interface{}) (LookupInstanceIpv4ResultOutput, error) {
 			args := v.(LookupInstanceIpv4Args)
-			r, err := LookupInstanceIpv4(ctx, &args, opts...)
-			var s LookupInstanceIpv4Result
-			if r != nil {
-				s = *r
+			opts = internal.PkgInvokeDefaultOpts(opts)
+			var rv LookupInstanceIpv4Result
+			secret, err := ctx.InvokePackageRaw("vultr:index/getInstanceIpv4:getInstanceIpv4", args, &rv, "", opts...)
+			if err != nil {
+				return LookupInstanceIpv4ResultOutput{}, err
 			}
-			return s, err
+
+			output := pulumi.ToOutput(rv).(LookupInstanceIpv4ResultOutput)
+			if secret {
+				return pulumi.ToSecret(output).(LookupInstanceIpv4ResultOutput), nil
+			}
+			return output, nil
 		}).(LookupInstanceIpv4ResultOutput)
 }
 

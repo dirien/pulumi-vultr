@@ -27,7 +27,6 @@ import * as utilities from "./utilities";
  */
 export function getReverseIpv4(args?: GetReverseIpv4Args, opts?: pulumi.InvokeOptions): Promise<GetReverseIpv4Result> {
     args = args || {};
-
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("vultr:index/getReverseIpv4:getReverseIpv4", {
         "filters": args.filters,
@@ -94,7 +93,11 @@ export interface GetReverseIpv4Result {
  * ```
  */
 export function getReverseIpv4Output(args?: GetReverseIpv4OutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetReverseIpv4Result> {
-    return pulumi.output(args).apply((a: any) => getReverseIpv4(a, opts))
+    args = args || {};
+    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
+    return pulumi.runtime.invokeOutput("vultr:index/getReverseIpv4:getReverseIpv4", {
+        "filters": args.filters,
+    }, opts);
 }
 
 /**

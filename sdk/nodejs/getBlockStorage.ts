@@ -27,7 +27,6 @@ import * as utilities from "./utilities";
  */
 export function getBlockStorage(args?: GetBlockStorageArgs, opts?: pulumi.InvokeOptions): Promise<GetBlockStorageResult> {
     args = args || {};
-
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("vultr:index/getBlockStorage:getBlockStorage", {
         "filters": args.filters,
@@ -110,7 +109,11 @@ export interface GetBlockStorageResult {
  * ```
  */
 export function getBlockStorageOutput(args?: GetBlockStorageOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetBlockStorageResult> {
-    return pulumi.output(args).apply((a: any) => getBlockStorage(a, opts))
+    args = args || {};
+    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
+    return pulumi.runtime.invokeOutput("vultr:index/getBlockStorage:getBlockStorage", {
+        "filters": args.filters,
+    }, opts);
 }
 
 /**

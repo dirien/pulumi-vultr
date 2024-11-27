@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -91,7 +96,7 @@ class AwaitableGetOsResult(GetOsResult):
             name=self.name)
 
 
-def get_os(filters: Optional[Sequence[pulumi.InputType['GetOsFilterArgs']]] = None,
+def get_os(filters: Optional[Sequence[Union['GetOsFilterArgs', 'GetOsFilterArgsDict']]] = None,
            opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetOsResult:
     """
     Get information about operating systems that can be launched when creating a Vultr VPS.
@@ -104,14 +109,14 @@ def get_os(filters: Optional[Sequence[pulumi.InputType['GetOsFilterArgs']]] = No
     import pulumi
     import pulumi_vultr as vultr
 
-    centos = vultr.get_os(filters=[vultr.GetOsFilterArgs(
-        name="name",
-        values=["CentOS 7 x64"],
-    )])
+    centos = vultr.get_os(filters=[{
+        "name": "name",
+        "values": ["CentOS 7 x64"],
+    }])
     ```
 
 
-    :param Sequence[pulumi.InputType['GetOsFilterArgs']] filters: Query parameters for finding operating systems.
+    :param Sequence[Union['GetOsFilterArgs', 'GetOsFilterArgsDict']] filters: Query parameters for finding operating systems.
     """
     __args__ = dict()
     __args__['filters'] = filters
@@ -124,10 +129,7 @@ def get_os(filters: Optional[Sequence[pulumi.InputType['GetOsFilterArgs']]] = No
         filters=pulumi.get(__ret__, 'filters'),
         id=pulumi.get(__ret__, 'id'),
         name=pulumi.get(__ret__, 'name'))
-
-
-@_utilities.lift_output_func(get_os)
-def get_os_output(filters: Optional[pulumi.Input[Optional[Sequence[pulumi.InputType['GetOsFilterArgs']]]]] = None,
+def get_os_output(filters: Optional[pulumi.Input[Optional[Sequence[Union['GetOsFilterArgs', 'GetOsFilterArgsDict']]]]] = None,
                   opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetOsResult]:
     """
     Get information about operating systems that can be launched when creating a Vultr VPS.
@@ -140,13 +142,22 @@ def get_os_output(filters: Optional[pulumi.Input[Optional[Sequence[pulumi.InputT
     import pulumi
     import pulumi_vultr as vultr
 
-    centos = vultr.get_os(filters=[vultr.GetOsFilterArgs(
-        name="name",
-        values=["CentOS 7 x64"],
-    )])
+    centos = vultr.get_os(filters=[{
+        "name": "name",
+        "values": ["CentOS 7 x64"],
+    }])
     ```
 
 
-    :param Sequence[pulumi.InputType['GetOsFilterArgs']] filters: Query parameters for finding operating systems.
+    :param Sequence[Union['GetOsFilterArgs', 'GetOsFilterArgsDict']] filters: Query parameters for finding operating systems.
     """
-    ...
+    __args__ = dict()
+    __args__['filters'] = filters
+    opts = pulumi.InvokeOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
+    __ret__ = pulumi.runtime.invoke_output('vultr:index/getOs:getOs', __args__, opts=opts, typ=GetOsResult)
+    return __ret__.apply(lambda __response__: GetOsResult(
+        arch=pulumi.get(__response__, 'arch'),
+        family=pulumi.get(__response__, 'family'),
+        filters=pulumi.get(__response__, 'filters'),
+        id=pulumi.get(__response__, 'id'),
+        name=pulumi.get(__response__, 'name')))

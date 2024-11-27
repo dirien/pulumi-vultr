@@ -52,7 +52,9 @@ export class DatabaseUser extends pulumi.CustomResource {
         return obj['__pulumiType'] === DatabaseUser.__pulumiType;
     }
 
+    public /*out*/ readonly accessCert!: pulumi.Output<string>;
     public readonly accessControl!: pulumi.Output<outputs.DatabaseUserAccessControl>;
+    public /*out*/ readonly accessKey!: pulumi.Output<string>;
     /**
      * The managed database ID you want to attach this user to.
      */
@@ -65,6 +67,10 @@ export class DatabaseUser extends pulumi.CustomResource {
      * The password of the new managed database user.
      */
     public readonly password!: pulumi.Output<string>;
+    /**
+     * The permission level for the database user (Kafka engine types only - `admin`, `read`, `write`, `readwrite`).
+     */
+    public readonly permission!: pulumi.Output<string>;
     /**
      * The username of the new managed database user.
      */
@@ -83,10 +89,13 @@ export class DatabaseUser extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as DatabaseUserState | undefined;
+            resourceInputs["accessCert"] = state ? state.accessCert : undefined;
             resourceInputs["accessControl"] = state ? state.accessControl : undefined;
+            resourceInputs["accessKey"] = state ? state.accessKey : undefined;
             resourceInputs["databaseId"] = state ? state.databaseId : undefined;
             resourceInputs["encryption"] = state ? state.encryption : undefined;
             resourceInputs["password"] = state ? state.password : undefined;
+            resourceInputs["permission"] = state ? state.permission : undefined;
             resourceInputs["username"] = state ? state.username : undefined;
         } else {
             const args = argsOrState as DatabaseUserArgs | undefined;
@@ -100,7 +109,10 @@ export class DatabaseUser extends pulumi.CustomResource {
             resourceInputs["databaseId"] = args ? args.databaseId : undefined;
             resourceInputs["encryption"] = args ? args.encryption : undefined;
             resourceInputs["password"] = args ? args.password : undefined;
+            resourceInputs["permission"] = args ? args.permission : undefined;
             resourceInputs["username"] = args ? args.username : undefined;
+            resourceInputs["accessCert"] = undefined /*out*/;
+            resourceInputs["accessKey"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(DatabaseUser.__pulumiType, name, resourceInputs, opts);
@@ -111,7 +123,9 @@ export class DatabaseUser extends pulumi.CustomResource {
  * Input properties used for looking up and filtering DatabaseUser resources.
  */
 export interface DatabaseUserState {
+    accessCert?: pulumi.Input<string>;
     accessControl?: pulumi.Input<inputs.DatabaseUserAccessControl>;
+    accessKey?: pulumi.Input<string>;
     /**
      * The managed database ID you want to attach this user to.
      */
@@ -124,6 +138,10 @@ export interface DatabaseUserState {
      * The password of the new managed database user.
      */
     password?: pulumi.Input<string>;
+    /**
+     * The permission level for the database user (Kafka engine types only - `admin`, `read`, `write`, `readwrite`).
+     */
+    permission?: pulumi.Input<string>;
     /**
      * The username of the new managed database user.
      */
@@ -147,6 +165,10 @@ export interface DatabaseUserArgs {
      * The password of the new managed database user.
      */
     password?: pulumi.Input<string>;
+    /**
+     * The permission level for the database user (Kafka engine types only - `admin`, `read`, `write`, `readwrite`).
+     */
+    permission?: pulumi.Input<string>;
     /**
      * The username of the new managed database user.
      */

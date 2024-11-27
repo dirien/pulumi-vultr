@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -91,7 +96,7 @@ class AwaitableGetObjectStorageClusterResult(GetObjectStorageClusterResult):
             region=self.region)
 
 
-def get_object_storage_cluster(filters: Optional[Sequence[pulumi.InputType['GetObjectStorageClusterFilterArgs']]] = None,
+def get_object_storage_cluster(filters: Optional[Sequence[Union['GetObjectStorageClusterFilterArgs', 'GetObjectStorageClusterFilterArgsDict']]] = None,
                                opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetObjectStorageClusterResult:
     """
     Get information about Object Storage Clusters on Vultr.
@@ -104,14 +109,14 @@ def get_object_storage_cluster(filters: Optional[Sequence[pulumi.InputType['GetO
     import pulumi
     import pulumi_vultr as vultr
 
-    s3 = vultr.get_object_storage_cluster(filters=[vultr.GetObjectStorageClusterFilterArgs(
-        name="region",
-        values=["ewr"],
-    )])
+    s3 = vultr.get_object_storage_cluster(filters=[{
+        "name": "region",
+        "values": ["ewr"],
+    }])
     ```
 
 
-    :param Sequence[pulumi.InputType['GetObjectStorageClusterFilterArgs']] filters: Query parameters for finding operating systems.
+    :param Sequence[Union['GetObjectStorageClusterFilterArgs', 'GetObjectStorageClusterFilterArgsDict']] filters: Query parameters for finding operating systems.
     """
     __args__ = dict()
     __args__['filters'] = filters
@@ -124,10 +129,7 @@ def get_object_storage_cluster(filters: Optional[Sequence[pulumi.InputType['GetO
         hostname=pulumi.get(__ret__, 'hostname'),
         id=pulumi.get(__ret__, 'id'),
         region=pulumi.get(__ret__, 'region'))
-
-
-@_utilities.lift_output_func(get_object_storage_cluster)
-def get_object_storage_cluster_output(filters: Optional[pulumi.Input[Optional[Sequence[pulumi.InputType['GetObjectStorageClusterFilterArgs']]]]] = None,
+def get_object_storage_cluster_output(filters: Optional[pulumi.Input[Optional[Sequence[Union['GetObjectStorageClusterFilterArgs', 'GetObjectStorageClusterFilterArgsDict']]]]] = None,
                                       opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetObjectStorageClusterResult]:
     """
     Get information about Object Storage Clusters on Vultr.
@@ -140,13 +142,22 @@ def get_object_storage_cluster_output(filters: Optional[pulumi.Input[Optional[Se
     import pulumi
     import pulumi_vultr as vultr
 
-    s3 = vultr.get_object_storage_cluster(filters=[vultr.GetObjectStorageClusterFilterArgs(
-        name="region",
-        values=["ewr"],
-    )])
+    s3 = vultr.get_object_storage_cluster(filters=[{
+        "name": "region",
+        "values": ["ewr"],
+    }])
     ```
 
 
-    :param Sequence[pulumi.InputType['GetObjectStorageClusterFilterArgs']] filters: Query parameters for finding operating systems.
+    :param Sequence[Union['GetObjectStorageClusterFilterArgs', 'GetObjectStorageClusterFilterArgsDict']] filters: Query parameters for finding operating systems.
     """
-    ...
+    __args__ = dict()
+    __args__['filters'] = filters
+    opts = pulumi.InvokeOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
+    __ret__ = pulumi.runtime.invoke_output('vultr:index/getObjectStorageCluster:getObjectStorageCluster', __args__, opts=opts, typ=GetObjectStorageClusterResult)
+    return __ret__.apply(lambda __response__: GetObjectStorageClusterResult(
+        deploy=pulumi.get(__response__, 'deploy'),
+        filters=pulumi.get(__response__, 'filters'),
+        hostname=pulumi.get(__response__, 'hostname'),
+        id=pulumi.get(__response__, 'id'),
+        region=pulumi.get(__response__, 'region')))

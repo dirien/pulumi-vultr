@@ -78,14 +78,20 @@ type GetIsoPublicResult struct {
 
 func GetIsoPublicOutput(ctx *pulumi.Context, args GetIsoPublicOutputArgs, opts ...pulumi.InvokeOption) GetIsoPublicResultOutput {
 	return pulumi.ToOutputWithContext(context.Background(), args).
-		ApplyT(func(v interface{}) (GetIsoPublicResult, error) {
+		ApplyT(func(v interface{}) (GetIsoPublicResultOutput, error) {
 			args := v.(GetIsoPublicArgs)
-			r, err := GetIsoPublic(ctx, &args, opts...)
-			var s GetIsoPublicResult
-			if r != nil {
-				s = *r
+			opts = internal.PkgInvokeDefaultOpts(opts)
+			var rv GetIsoPublicResult
+			secret, err := ctx.InvokePackageRaw("vultr:index/getIsoPublic:getIsoPublic", args, &rv, "", opts...)
+			if err != nil {
+				return GetIsoPublicResultOutput{}, err
 			}
-			return s, err
+
+			output := pulumi.ToOutput(rv).(GetIsoPublicResultOutput)
+			if secret {
+				return pulumi.ToSecret(output).(GetIsoPublicResultOutput), nil
+			}
+			return output, nil
 		}).(GetIsoPublicResultOutput)
 }
 

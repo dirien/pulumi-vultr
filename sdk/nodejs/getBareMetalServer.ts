@@ -27,7 +27,6 @@ import * as utilities from "./utilities";
  */
 export function getBareMetalServer(args?: GetBareMetalServerArgs, opts?: pulumi.InvokeOptions): Promise<GetBareMetalServerResult> {
     args = args || {};
-
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("vultr:index/getBareMetalServer:getBareMetalServer", {
         "filters": args.filters,
@@ -119,6 +118,10 @@ export interface GetBareMetalServerResult {
      * A list of tags applied to the server.
      */
     readonly tags: string[];
+    /**
+     * The scheme used for the default user (linux servers only).
+     */
+    readonly userScheme: string;
     readonly v6MainIp: string;
     readonly v6Network: string;
     readonly v6NetworkSize: number;
@@ -147,7 +150,11 @@ export interface GetBareMetalServerResult {
  * ```
  */
 export function getBareMetalServerOutput(args?: GetBareMetalServerOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetBareMetalServerResult> {
-    return pulumi.output(args).apply((a: any) => getBareMetalServer(a, opts))
+    args = args || {};
+    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
+    return pulumi.runtime.invokeOutput("vultr:index/getBareMetalServer:getBareMetalServer", {
+        "filters": args.filters,
+    }, opts);
 }
 
 /**

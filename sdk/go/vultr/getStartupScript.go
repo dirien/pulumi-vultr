@@ -82,14 +82,20 @@ type LookupStartupScriptResult struct {
 
 func LookupStartupScriptOutput(ctx *pulumi.Context, args LookupStartupScriptOutputArgs, opts ...pulumi.InvokeOption) LookupStartupScriptResultOutput {
 	return pulumi.ToOutputWithContext(context.Background(), args).
-		ApplyT(func(v interface{}) (LookupStartupScriptResult, error) {
+		ApplyT(func(v interface{}) (LookupStartupScriptResultOutput, error) {
 			args := v.(LookupStartupScriptArgs)
-			r, err := LookupStartupScript(ctx, &args, opts...)
-			var s LookupStartupScriptResult
-			if r != nil {
-				s = *r
+			opts = internal.PkgInvokeDefaultOpts(opts)
+			var rv LookupStartupScriptResult
+			secret, err := ctx.InvokePackageRaw("vultr:index/getStartupScript:getStartupScript", args, &rv, "", opts...)
+			if err != nil {
+				return LookupStartupScriptResultOutput{}, err
 			}
-			return s, err
+
+			output := pulumi.ToOutput(rv).(LookupStartupScriptResultOutput)
+			if secret {
+				return pulumi.ToSecret(output).(LookupStartupScriptResultOutput), nil
+			}
+			return output, nil
 		}).(LookupStartupScriptResultOutput)
 }
 

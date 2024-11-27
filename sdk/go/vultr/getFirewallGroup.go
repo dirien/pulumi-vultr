@@ -84,14 +84,20 @@ type LookupFirewallGroupResult struct {
 
 func LookupFirewallGroupOutput(ctx *pulumi.Context, args LookupFirewallGroupOutputArgs, opts ...pulumi.InvokeOption) LookupFirewallGroupResultOutput {
 	return pulumi.ToOutputWithContext(context.Background(), args).
-		ApplyT(func(v interface{}) (LookupFirewallGroupResult, error) {
+		ApplyT(func(v interface{}) (LookupFirewallGroupResultOutput, error) {
 			args := v.(LookupFirewallGroupArgs)
-			r, err := LookupFirewallGroup(ctx, &args, opts...)
-			var s LookupFirewallGroupResult
-			if r != nil {
-				s = *r
+			opts = internal.PkgInvokeDefaultOpts(opts)
+			var rv LookupFirewallGroupResult
+			secret, err := ctx.InvokePackageRaw("vultr:index/getFirewallGroup:getFirewallGroup", args, &rv, "", opts...)
+			if err != nil {
+				return LookupFirewallGroupResultOutput{}, err
 			}
-			return s, err
+
+			output := pulumi.ToOutput(rv).(LookupFirewallGroupResultOutput)
+			if secret {
+				return pulumi.ToSecret(output).(LookupFirewallGroupResultOutput), nil
+			}
+			return output, nil
 		}).(LookupFirewallGroupResultOutput)
 }
 

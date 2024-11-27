@@ -82,14 +82,20 @@ type LookupVpc2Result struct {
 
 func LookupVpc2Output(ctx *pulumi.Context, args LookupVpc2OutputArgs, opts ...pulumi.InvokeOption) LookupVpc2ResultOutput {
 	return pulumi.ToOutputWithContext(context.Background(), args).
-		ApplyT(func(v interface{}) (LookupVpc2Result, error) {
+		ApplyT(func(v interface{}) (LookupVpc2ResultOutput, error) {
 			args := v.(LookupVpc2Args)
-			r, err := LookupVpc2(ctx, &args, opts...)
-			var s LookupVpc2Result
-			if r != nil {
-				s = *r
+			opts = internal.PkgInvokeDefaultOpts(opts)
+			var rv LookupVpc2Result
+			secret, err := ctx.InvokePackageRaw("vultr:index/getVpc2:getVpc2", args, &rv, "", opts...)
+			if err != nil {
+				return LookupVpc2ResultOutput{}, err
 			}
-			return s, err
+
+			output := pulumi.ToOutput(rv).(LookupVpc2ResultOutput)
+			if secret {
+				return pulumi.ToSecret(output).(LookupVpc2ResultOutput), nil
+			}
+			return output, nil
 		}).(LookupVpc2ResultOutput)
 }
 

@@ -75,23 +75,29 @@ type LookupContainerRegistryResult struct {
 	// Listing of the repositories created within the registry and their metadata.
 	Repositories []GetContainerRegistryRepository `pulumi:"repositories"`
 	// The user associated with the container registry.
-	RootUser map[string]interface{} `pulumi:"rootUser"`
+	RootUser map[string]string `pulumi:"rootUser"`
 	// A listing of current storage usage relevant to the container registry.
-	Storage map[string]interface{} `pulumi:"storage"`
+	Storage map[string]string `pulumi:"storage"`
 	// The URN of the container registry.
 	Urn string `pulumi:"urn"`
 }
 
 func LookupContainerRegistryOutput(ctx *pulumi.Context, args LookupContainerRegistryOutputArgs, opts ...pulumi.InvokeOption) LookupContainerRegistryResultOutput {
 	return pulumi.ToOutputWithContext(context.Background(), args).
-		ApplyT(func(v interface{}) (LookupContainerRegistryResult, error) {
+		ApplyT(func(v interface{}) (LookupContainerRegistryResultOutput, error) {
 			args := v.(LookupContainerRegistryArgs)
-			r, err := LookupContainerRegistry(ctx, &args, opts...)
-			var s LookupContainerRegistryResult
-			if r != nil {
-				s = *r
+			opts = internal.PkgInvokeDefaultOpts(opts)
+			var rv LookupContainerRegistryResult
+			secret, err := ctx.InvokePackageRaw("vultr:index/getContainerRegistry:getContainerRegistry", args, &rv, "", opts...)
+			if err != nil {
+				return LookupContainerRegistryResultOutput{}, err
 			}
-			return s, err
+
+			output := pulumi.ToOutput(rv).(LookupContainerRegistryResultOutput)
+			if secret {
+				return pulumi.ToSecret(output).(LookupContainerRegistryResultOutput), nil
+			}
+			return output, nil
 		}).(LookupContainerRegistryResultOutput)
 }
 
@@ -150,13 +156,13 @@ func (o LookupContainerRegistryResultOutput) Repositories() GetContainerRegistry
 }
 
 // The user associated with the container registry.
-func (o LookupContainerRegistryResultOutput) RootUser() pulumi.MapOutput {
-	return o.ApplyT(func(v LookupContainerRegistryResult) map[string]interface{} { return v.RootUser }).(pulumi.MapOutput)
+func (o LookupContainerRegistryResultOutput) RootUser() pulumi.StringMapOutput {
+	return o.ApplyT(func(v LookupContainerRegistryResult) map[string]string { return v.RootUser }).(pulumi.StringMapOutput)
 }
 
 // A listing of current storage usage relevant to the container registry.
-func (o LookupContainerRegistryResultOutput) Storage() pulumi.MapOutput {
-	return o.ApplyT(func(v LookupContainerRegistryResult) map[string]interface{} { return v.Storage }).(pulumi.MapOutput)
+func (o LookupContainerRegistryResultOutput) Storage() pulumi.StringMapOutput {
+	return o.ApplyT(func(v LookupContainerRegistryResult) map[string]string { return v.Storage }).(pulumi.StringMapOutput)
 }
 
 // The URN of the container registry.

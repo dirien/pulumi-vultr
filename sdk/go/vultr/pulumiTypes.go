@@ -25,7 +25,7 @@ type DatabaseReadReplica struct {
 	// The managed database's default logical database.
 	Dbname *string `pulumi:"dbname"`
 	// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
-	FerretdbCredentials map[string]interface{} `pulumi:"ferretdbCredentials"`
+	FerretdbCredentials map[string]string `pulumi:"ferretdbCredentials"`
 	// The hostname assigned to the managed database.
 	Host *string `pulumi:"host"`
 	// The ID of the managed database.
@@ -54,7 +54,7 @@ type DatabaseReadReplica struct {
 	PlanDisk *int `pulumi:"planDisk"`
 	// The amount of memory available on the managed database in MB.
 	PlanRam *int `pulumi:"planRam"`
-	// The number of standby nodes available on the managed database.
+	// The number of standby nodes available on the managed database (excluded for Kafka engine types).
 	PlanReplicas *int `pulumi:"planReplicas"`
 	// The number of virtual CPUs available on the managed database.
 	PlanVcpus *int `pulumi:"planVcpus"`
@@ -101,7 +101,7 @@ type DatabaseReadReplicaArgs struct {
 	// The managed database's default logical database.
 	Dbname pulumi.StringPtrInput `pulumi:"dbname"`
 	// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
-	FerretdbCredentials pulumi.MapInput `pulumi:"ferretdbCredentials"`
+	FerretdbCredentials pulumi.StringMapInput `pulumi:"ferretdbCredentials"`
 	// The hostname assigned to the managed database.
 	Host pulumi.StringPtrInput `pulumi:"host"`
 	// The ID of the managed database.
@@ -130,7 +130,7 @@ type DatabaseReadReplicaArgs struct {
 	PlanDisk pulumi.IntPtrInput `pulumi:"planDisk"`
 	// The amount of memory available on the managed database in MB.
 	PlanRam pulumi.IntPtrInput `pulumi:"planRam"`
-	// The number of standby nodes available on the managed database.
+	// The number of standby nodes available on the managed database (excluded for Kafka engine types).
 	PlanReplicas pulumi.IntPtrInput `pulumi:"planReplicas"`
 	// The number of virtual CPUs available on the managed database.
 	PlanVcpus pulumi.IntPtrInput `pulumi:"planVcpus"`
@@ -231,8 +231,8 @@ func (o DatabaseReadReplicaOutput) Dbname() pulumi.StringPtrOutput {
 }
 
 // An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
-func (o DatabaseReadReplicaOutput) FerretdbCredentials() pulumi.MapOutput {
-	return o.ApplyT(func(v DatabaseReadReplica) map[string]interface{} { return v.FerretdbCredentials }).(pulumi.MapOutput)
+func (o DatabaseReadReplicaOutput) FerretdbCredentials() pulumi.StringMapOutput {
+	return o.ApplyT(func(v DatabaseReadReplica) map[string]string { return v.FerretdbCredentials }).(pulumi.StringMapOutput)
 }
 
 // The hostname assigned to the managed database.
@@ -305,7 +305,7 @@ func (o DatabaseReadReplicaOutput) PlanRam() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v DatabaseReadReplica) *int { return v.PlanRam }).(pulumi.IntPtrOutput)
 }
 
-// The number of standby nodes available on the managed database.
+// The number of standby nodes available on the managed database (excluded for Kafka engine types).
 func (o DatabaseReadReplicaOutput) PlanReplicas() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v DatabaseReadReplica) *int { return v.PlanReplicas }).(pulumi.IntPtrOutput)
 }
@@ -2823,7 +2823,7 @@ type GetDatabaseReadReplica struct {
 	// The managed database's default logical database.
 	Dbname string `pulumi:"dbname"`
 	// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
-	FerretdbCredentials map[string]interface{} `pulumi:"ferretdbCredentials"`
+	FerretdbCredentials map[string]string `pulumi:"ferretdbCredentials"`
 	// The hostname assigned to the managed database.
 	Host string `pulumi:"host"`
 	Id   string `pulumi:"id"`
@@ -2898,7 +2898,7 @@ type GetDatabaseReadReplicaArgs struct {
 	// The managed database's default logical database.
 	Dbname pulumi.StringInput `pulumi:"dbname"`
 	// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
-	FerretdbCredentials pulumi.MapInput `pulumi:"ferretdbCredentials"`
+	FerretdbCredentials pulumi.StringMapInput `pulumi:"ferretdbCredentials"`
 	// The hostname assigned to the managed database.
 	Host pulumi.StringInput `pulumi:"host"`
 	Id   pulumi.StringInput `pulumi:"id"`
@@ -3027,8 +3027,8 @@ func (o GetDatabaseReadReplicaOutput) Dbname() pulumi.StringOutput {
 }
 
 // An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
-func (o GetDatabaseReadReplicaOutput) FerretdbCredentials() pulumi.MapOutput {
-	return o.ApplyT(func(v GetDatabaseReadReplica) map[string]interface{} { return v.FerretdbCredentials }).(pulumi.MapOutput)
+func (o GetDatabaseReadReplicaOutput) FerretdbCredentials() pulumi.StringMapOutput {
+	return o.ApplyT(func(v GetDatabaseReadReplica) map[string]string { return v.FerretdbCredentials }).(pulumi.StringMapOutput)
 }
 
 // The hostname assigned to the managed database.
@@ -3712,7 +3712,7 @@ type GetInstancesInstance struct {
 	AppId   int    `pulumi:"appId"`
 	Backups string `pulumi:"backups"`
 	// The current configuration for backups
-	BackupsSchedule map[string]interface{} `pulumi:"backupsSchedule"`
+	BackupsSchedule map[string]string `pulumi:"backupsSchedule"`
 	// The date the server was added to your Vultr account.
 	DateCreated string `pulumi:"dateCreated"`
 	// The description of the disk(s) on the server.
@@ -3758,6 +3758,8 @@ type GetInstancesInstance struct {
 	Status string `pulumi:"status"`
 	// A list of tags applied to the instance.
 	Tags []string `pulumi:"tags"`
+	// The scheme used for the default user (linux servers only).
+	UserScheme string `pulumi:"userScheme"`
 	// The main IPv6 network address.
 	V6MainIp string `pulumi:"v6MainIp"`
 	// The IPv6 subnet.
@@ -3787,7 +3789,7 @@ type GetInstancesInstanceArgs struct {
 	AppId   pulumi.IntInput    `pulumi:"appId"`
 	Backups pulumi.StringInput `pulumi:"backups"`
 	// The current configuration for backups
-	BackupsSchedule pulumi.MapInput `pulumi:"backupsSchedule"`
+	BackupsSchedule pulumi.StringMapInput `pulumi:"backupsSchedule"`
 	// The date the server was added to your Vultr account.
 	DateCreated pulumi.StringInput `pulumi:"dateCreated"`
 	// The description of the disk(s) on the server.
@@ -3833,6 +3835,8 @@ type GetInstancesInstanceArgs struct {
 	Status pulumi.StringInput `pulumi:"status"`
 	// A list of tags applied to the instance.
 	Tags pulumi.StringArrayInput `pulumi:"tags"`
+	// The scheme used for the default user (linux servers only).
+	UserScheme pulumi.StringInput `pulumi:"userScheme"`
 	// The main IPv6 network address.
 	V6MainIp pulumi.StringInput `pulumi:"v6MainIp"`
 	// The IPv6 subnet.
@@ -3910,8 +3914,8 @@ func (o GetInstancesInstanceOutput) Backups() pulumi.StringOutput {
 }
 
 // The current configuration for backups
-func (o GetInstancesInstanceOutput) BackupsSchedule() pulumi.MapOutput {
-	return o.ApplyT(func(v GetInstancesInstance) map[string]interface{} { return v.BackupsSchedule }).(pulumi.MapOutput)
+func (o GetInstancesInstanceOutput) BackupsSchedule() pulumi.StringMapOutput {
+	return o.ApplyT(func(v GetInstancesInstance) map[string]string { return v.BackupsSchedule }).(pulumi.StringMapOutput)
 }
 
 // The date the server was added to your Vultr account.
@@ -4029,6 +4033,11 @@ func (o GetInstancesInstanceOutput) Status() pulumi.StringOutput {
 // A list of tags applied to the instance.
 func (o GetInstancesInstanceOutput) Tags() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v GetInstancesInstance) []string { return v.Tags }).(pulumi.StringArrayOutput)
+}
+
+// The scheme used for the default user (linux servers only).
+func (o GetInstancesInstanceOutput) UserScheme() pulumi.StringOutput {
+	return o.ApplyT(func(v GetInstancesInstance) string { return v.UserScheme }).(pulumi.StringOutput)
 }
 
 // The main IPv6 network address.

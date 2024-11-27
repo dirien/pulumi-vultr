@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -127,7 +132,7 @@ class AwaitableGetReservedIpResult(GetReservedIpResult):
             subnet_size=self.subnet_size)
 
 
-def get_reserved_ip(filters: Optional[Sequence[pulumi.InputType['GetReservedIpFilterArgs']]] = None,
+def get_reserved_ip(filters: Optional[Sequence[Union['GetReservedIpFilterArgs', 'GetReservedIpFilterArgsDict']]] = None,
                     opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetReservedIpResult:
     """
     Get information about a Vultr reserved IP address.
@@ -140,14 +145,14 @@ def get_reserved_ip(filters: Optional[Sequence[pulumi.InputType['GetReservedIpFi
     import pulumi
     import pulumi_vultr as vultr
 
-    my_reserved_ip = vultr.get_reserved_ip(filters=[vultr.GetReservedIpFilterArgs(
-        name="label",
-        values=["my-reserved-ip-label"],
-    )])
+    my_reserved_ip = vultr.get_reserved_ip(filters=[{
+        "name": "label",
+        "values": ["my-reserved-ip-label"],
+    }])
     ```
 
 
-    :param Sequence[pulumi.InputType['GetReservedIpFilterArgs']] filters: Query parameters for finding reserved IP addresses.
+    :param Sequence[Union['GetReservedIpFilterArgs', 'GetReservedIpFilterArgsDict']] filters: Query parameters for finding reserved IP addresses.
     """
     __args__ = dict()
     __args__['filters'] = filters
@@ -163,10 +168,7 @@ def get_reserved_ip(filters: Optional[Sequence[pulumi.InputType['GetReservedIpFi
         region=pulumi.get(__ret__, 'region'),
         subnet=pulumi.get(__ret__, 'subnet'),
         subnet_size=pulumi.get(__ret__, 'subnet_size'))
-
-
-@_utilities.lift_output_func(get_reserved_ip)
-def get_reserved_ip_output(filters: Optional[pulumi.Input[Optional[Sequence[pulumi.InputType['GetReservedIpFilterArgs']]]]] = None,
+def get_reserved_ip_output(filters: Optional[pulumi.Input[Optional[Sequence[Union['GetReservedIpFilterArgs', 'GetReservedIpFilterArgsDict']]]]] = None,
                            opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetReservedIpResult]:
     """
     Get information about a Vultr reserved IP address.
@@ -179,13 +181,25 @@ def get_reserved_ip_output(filters: Optional[pulumi.Input[Optional[Sequence[pulu
     import pulumi
     import pulumi_vultr as vultr
 
-    my_reserved_ip = vultr.get_reserved_ip(filters=[vultr.GetReservedIpFilterArgs(
-        name="label",
-        values=["my-reserved-ip-label"],
-    )])
+    my_reserved_ip = vultr.get_reserved_ip(filters=[{
+        "name": "label",
+        "values": ["my-reserved-ip-label"],
+    }])
     ```
 
 
-    :param Sequence[pulumi.InputType['GetReservedIpFilterArgs']] filters: Query parameters for finding reserved IP addresses.
+    :param Sequence[Union['GetReservedIpFilterArgs', 'GetReservedIpFilterArgsDict']] filters: Query parameters for finding reserved IP addresses.
     """
-    ...
+    __args__ = dict()
+    __args__['filters'] = filters
+    opts = pulumi.InvokeOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
+    __ret__ = pulumi.runtime.invoke_output('vultr:index/getReservedIp:getReservedIp', __args__, opts=opts, typ=GetReservedIpResult)
+    return __ret__.apply(lambda __response__: GetReservedIpResult(
+        filters=pulumi.get(__response__, 'filters'),
+        id=pulumi.get(__response__, 'id'),
+        instance_id=pulumi.get(__response__, 'instance_id'),
+        ip_type=pulumi.get(__response__, 'ip_type'),
+        label=pulumi.get(__response__, 'label'),
+        region=pulumi.get(__response__, 'region'),
+        subnet=pulumi.get(__response__, 'subnet'),
+        subnet_size=pulumi.get(__response__, 'subnet_size')))

@@ -71,7 +71,7 @@ type LookupInstanceResult struct {
 	AppId   int    `pulumi:"appId"`
 	Backups string `pulumi:"backups"`
 	// The current configuration for backups
-	BackupsSchedule map[string]interface{} `pulumi:"backupsSchedule"`
+	BackupsSchedule map[string]string `pulumi:"backupsSchedule"`
 	// The date the server was added to your Vultr account.
 	DateCreated string `pulumi:"dateCreated"`
 	// The description of the disk(s) on the server.
@@ -118,6 +118,8 @@ type LookupInstanceResult struct {
 	Status string `pulumi:"status"`
 	// A list of tags applied to the instance.
 	Tags []string `pulumi:"tags"`
+	// The scheme used for the default user (linux servers only).
+	UserScheme string `pulumi:"userScheme"`
 	// The main IPv6 network address.
 	V6MainIp string `pulumi:"v6MainIp"`
 	// The IPv6 subnet.
@@ -133,14 +135,20 @@ type LookupInstanceResult struct {
 
 func LookupInstanceOutput(ctx *pulumi.Context, args LookupInstanceOutputArgs, opts ...pulumi.InvokeOption) LookupInstanceResultOutput {
 	return pulumi.ToOutputWithContext(context.Background(), args).
-		ApplyT(func(v interface{}) (LookupInstanceResult, error) {
+		ApplyT(func(v interface{}) (LookupInstanceResultOutput, error) {
 			args := v.(LookupInstanceArgs)
-			r, err := LookupInstance(ctx, &args, opts...)
-			var s LookupInstanceResult
-			if r != nil {
-				s = *r
+			opts = internal.PkgInvokeDefaultOpts(opts)
+			var rv LookupInstanceResult
+			secret, err := ctx.InvokePackageRaw("vultr:index/getInstance:getInstance", args, &rv, "", opts...)
+			if err != nil {
+				return LookupInstanceResultOutput{}, err
 			}
-			return s, err
+
+			output := pulumi.ToOutput(rv).(LookupInstanceResultOutput)
+			if secret {
+				return pulumi.ToSecret(output).(LookupInstanceResultOutput), nil
+			}
+			return output, nil
 		}).(LookupInstanceResultOutput)
 }
 
@@ -184,8 +192,8 @@ func (o LookupInstanceResultOutput) Backups() pulumi.StringOutput {
 }
 
 // The current configuration for backups
-func (o LookupInstanceResultOutput) BackupsSchedule() pulumi.MapOutput {
-	return o.ApplyT(func(v LookupInstanceResult) map[string]interface{} { return v.BackupsSchedule }).(pulumi.MapOutput)
+func (o LookupInstanceResultOutput) BackupsSchedule() pulumi.StringMapOutput {
+	return o.ApplyT(func(v LookupInstanceResult) map[string]string { return v.BackupsSchedule }).(pulumi.StringMapOutput)
 }
 
 // The date the server was added to your Vultr account.
@@ -304,6 +312,11 @@ func (o LookupInstanceResultOutput) Status() pulumi.StringOutput {
 // A list of tags applied to the instance.
 func (o LookupInstanceResultOutput) Tags() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v LookupInstanceResult) []string { return v.Tags }).(pulumi.StringArrayOutput)
+}
+
+// The scheme used for the default user (linux servers only).
+func (o LookupInstanceResultOutput) UserScheme() pulumi.StringOutput {
+	return o.ApplyT(func(v LookupInstanceResult) string { return v.UserScheme }).(pulumi.StringOutput)
 }
 
 // The main IPv6 network address.

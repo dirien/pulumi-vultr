@@ -44,14 +44,14 @@ namespace ediri.Vultr.Inputs
         public Input<string>? Dbname { get; set; }
 
         [Input("ferretdbCredentials")]
-        private InputMap<object>? _ferretdbCredentials;
+        private InputMap<string>? _ferretdbCredentials;
 
         /// <summary>
         /// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
         /// </summary>
-        public InputMap<object> FerretdbCredentials
+        public InputMap<string> FerretdbCredentials
         {
-            get => _ferretdbCredentials ?? (_ferretdbCredentials = new InputMap<object>());
+            get => _ferretdbCredentials ?? (_ferretdbCredentials = new InputMap<string>());
             set => _ferretdbCredentials = value;
         }
 
@@ -146,7 +146,7 @@ namespace ediri.Vultr.Inputs
         public Input<int>? PlanRam { get; set; }
 
         /// <summary>
-        /// The number of standby nodes available on the managed database.
+        /// The number of standby nodes available on the managed database (excluded for Kafka engine types).
         /// </summary>
         [Input("planReplicas")]
         public Input<int>? PlanReplicas { get; set; }

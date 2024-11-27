@@ -27,7 +27,6 @@ import * as utilities from "./utilities";
  */
 export function getInstanceIpv4(args?: GetInstanceIpv4Args, opts?: pulumi.InvokeOptions): Promise<GetInstanceIpv4Result> {
     args = args || {};
-
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("vultr:index/getInstanceIpv4:getInstanceIpv4", {
         "filters": args.filters,
@@ -94,7 +93,11 @@ export interface GetInstanceIpv4Result {
  * ```
  */
 export function getInstanceIpv4Output(args?: GetInstanceIpv4OutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetInstanceIpv4Result> {
-    return pulumi.output(args).apply((a: any) => getInstanceIpv4(a, opts))
+    args = args || {};
+    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
+    return pulumi.runtime.invokeOutput("vultr:index/getInstanceIpv4:getInstanceIpv4", {
+        "filters": args.filters,
+    }, opts);
 }
 
 /**

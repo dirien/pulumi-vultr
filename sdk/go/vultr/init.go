@@ -33,8 +33,12 @@ func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi
 		r = &DatabaseConnectionPool{}
 	case "vultr:index/databaseDb:DatabaseDb":
 		r = &DatabaseDb{}
+	case "vultr:index/databaseQuota:DatabaseQuota":
+		r = &DatabaseQuota{}
 	case "vultr:index/databaseReplica:DatabaseReplica":
 		r = &DatabaseReplica{}
+	case "vultr:index/databaseTopic:DatabaseTopic":
+		r = &DatabaseTopic{}
 	case "vultr:index/databaseUser:DatabaseUser":
 		r = &DatabaseUser{}
 	case "vultr:index/dnsDomain:DnsDomain":
@@ -144,7 +148,17 @@ func init() {
 	)
 	pulumi.RegisterResourceModule(
 		"vultr",
+		"index/databaseQuota",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"vultr",
 		"index/databaseReplica",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"vultr",
+		"index/databaseTopic",
 		&module{version},
 	)
 	pulumi.RegisterResourceModule(

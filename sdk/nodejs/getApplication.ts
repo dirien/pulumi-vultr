@@ -27,7 +27,6 @@ import * as utilities from "./utilities";
  */
 export function getApplication(args?: GetApplicationArgs, opts?: pulumi.InvokeOptions): Promise<GetApplicationResult> {
     args = args || {};
-
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("vultr:index/getApplication:getApplication", {
         "filters": args.filters,
@@ -98,7 +97,11 @@ export interface GetApplicationResult {
  * ```
  */
 export function getApplicationOutput(args?: GetApplicationOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetApplicationResult> {
-    return pulumi.output(args).apply((a: any) => getApplication(a, opts))
+    args = args || {};
+    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
+    return pulumi.runtime.invokeOutput("vultr:index/getApplication:getApplication", {
+        "filters": args.filters,
+    }, opts);
 }
 
 /**

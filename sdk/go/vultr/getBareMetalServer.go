@@ -101,24 +101,32 @@ type LookupBareMetalServerResult struct {
 	// The status of the server's subscription.
 	Status string `pulumi:"status"`
 	// A list of tags applied to the server.
-	Tags          []string `pulumi:"tags"`
-	V6MainIp      string   `pulumi:"v6MainIp"`
-	V6Network     string   `pulumi:"v6Network"`
-	V6NetworkSize int      `pulumi:"v6NetworkSize"`
+	Tags []string `pulumi:"tags"`
+	// The scheme used for the default user (linux servers only).
+	UserScheme    string `pulumi:"userScheme"`
+	V6MainIp      string `pulumi:"v6MainIp"`
+	V6Network     string `pulumi:"v6Network"`
+	V6NetworkSize int    `pulumi:"v6NetworkSize"`
 	// A list of VPC 2.0 IDs attached to the server.
 	Vpc2Ids []string `pulumi:"vpc2Ids"`
 }
 
 func LookupBareMetalServerOutput(ctx *pulumi.Context, args LookupBareMetalServerOutputArgs, opts ...pulumi.InvokeOption) LookupBareMetalServerResultOutput {
 	return pulumi.ToOutputWithContext(context.Background(), args).
-		ApplyT(func(v interface{}) (LookupBareMetalServerResult, error) {
+		ApplyT(func(v interface{}) (LookupBareMetalServerResultOutput, error) {
 			args := v.(LookupBareMetalServerArgs)
-			r, err := LookupBareMetalServer(ctx, &args, opts...)
-			var s LookupBareMetalServerResult
-			if r != nil {
-				s = *r
+			opts = internal.PkgInvokeDefaultOpts(opts)
+			var rv LookupBareMetalServerResult
+			secret, err := ctx.InvokePackageRaw("vultr:index/getBareMetalServer:getBareMetalServer", args, &rv, "", opts...)
+			if err != nil {
+				return LookupBareMetalServerResultOutput{}, err
 			}
-			return s, err
+
+			output := pulumi.ToOutput(rv).(LookupBareMetalServerResultOutput)
+			if secret {
+				return pulumi.ToSecret(output).(LookupBareMetalServerResultOutput), nil
+			}
+			return output, nil
 		}).(LookupBareMetalServerResultOutput)
 }
 
@@ -242,6 +250,11 @@ func (o LookupBareMetalServerResultOutput) Status() pulumi.StringOutput {
 // A list of tags applied to the server.
 func (o LookupBareMetalServerResultOutput) Tags() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v LookupBareMetalServerResult) []string { return v.Tags }).(pulumi.StringArrayOutput)
+}
+
+// The scheme used for the default user (linux servers only).
+func (o LookupBareMetalServerResultOutput) UserScheme() pulumi.StringOutput {
+	return o.ApplyT(func(v LookupBareMetalServerResult) string { return v.UserScheme }).(pulumi.StringOutput)
 }
 
 func (o LookupBareMetalServerResultOutput) V6MainIp() pulumi.StringOutput {

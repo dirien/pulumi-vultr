@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -381,6 +386,26 @@ class KubernetesNodePools(pulumi.CustomResource):
             max_nodes=2)
         ```
 
+        ## Import
+
+        Node pool resources are able to be imported into terraform state like other
+
+        resources, however, since they rely on a kubernetes cluster, the import state
+
+        requires the UUID of the cluster as well. With that in mind, format the second
+
+        argument to the `pulumi import` command as a space delimited string of
+
+        UUIDs, the first is the cluster ID, the second is the node pool ID. It will
+
+        look like this:
+
+        "clusterID nodePoolID"
+
+        ```sh
+        $ pulumi import vultr:index/kubernetesNodePools:KubernetesNodePools my-k8s-np "7365a98b-5a43-450f-bd27-d768827100e5 ec330340-4f50-4526-858f-a39199f568ac"
+        ```
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[bool] auto_scaler: Enable the auto scaler for the default node pool.
@@ -418,6 +443,26 @@ class KubernetesNodePools(pulumi.CustomResource):
             auto_scaler=True,
             min_nodes=1,
             max_nodes=2)
+        ```
+
+        ## Import
+
+        Node pool resources are able to be imported into terraform state like other
+
+        resources, however, since they rely on a kubernetes cluster, the import state
+
+        requires the UUID of the cluster as well. With that in mind, format the second
+
+        argument to the `pulumi import` command as a space delimited string of
+
+        UUIDs, the first is the cluster ID, the second is the node pool ID. It will
+
+        look like this:
+
+        "clusterID nodePoolID"
+
+        ```sh
+        $ pulumi import vultr:index/kubernetesNodePools:KubernetesNodePools my-k8s-np "7365a98b-5a43-450f-bd27-d768827100e5 ec330340-4f50-4526-858f-a39199f568ac"
         ```
 
         :param str resource_name: The name of the resource.
@@ -490,7 +535,7 @@ class KubernetesNodePools(pulumi.CustomResource):
             max_nodes: Optional[pulumi.Input[int]] = None,
             min_nodes: Optional[pulumi.Input[int]] = None,
             node_quantity: Optional[pulumi.Input[int]] = None,
-            nodes: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['KubernetesNodePoolsNodeArgs']]]]] = None,
+            nodes: Optional[pulumi.Input[Sequence[pulumi.Input[Union['KubernetesNodePoolsNodeArgs', 'KubernetesNodePoolsNodeArgsDict']]]]] = None,
             plan: Optional[pulumi.Input[str]] = None,
             status: Optional[pulumi.Input[str]] = None,
             tag: Optional[pulumi.Input[str]] = None) -> 'KubernetesNodePools':
@@ -509,7 +554,7 @@ class KubernetesNodePools(pulumi.CustomResource):
         :param pulumi.Input[int] max_nodes: The maximum number of nodes to use with the auto scaler.
         :param pulumi.Input[int] min_nodes: The minimum number of nodes to use with the auto scaler.
         :param pulumi.Input[int] node_quantity: The number of nodes in this node pool.
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['KubernetesNodePoolsNodeArgs']]]] nodes: Array that contains information about nodes within this node pool.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['KubernetesNodePoolsNodeArgs', 'KubernetesNodePoolsNodeArgsDict']]]] nodes: Array that contains information about nodes within this node pool.
         :param pulumi.Input[str] plan: The plan to be used in this node pool. [See Plans List](https://www.vultr.com/api/#operation/list-plans) Note the minimum plan requirements must have at least 1 core and 2 gbs of memory.
         :param pulumi.Input[str] status: Status of node.
         :param pulumi.Input[str] tag: A tag that is assigned to this node pool.

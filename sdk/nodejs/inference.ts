@@ -66,7 +66,7 @@ export class Inference extends pulumi.CustomResource {
      * A label for the inference subscription.
      */
     public readonly label!: pulumi.Output<string>;
-    public /*out*/ readonly usage!: pulumi.Output<{[key: string]: any}>;
+    public /*out*/ readonly usage!: pulumi.Output<{[key: string]: string}>;
 
     /**
      * Create a Inference resource with the given unique name, arguments, and options.
@@ -116,7 +116,7 @@ export interface InferenceState {
      * A label for the inference subscription.
      */
     label?: pulumi.Input<string>;
-    usage?: pulumi.Input<{[key: string]: any}>;
+    usage?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
 }
 
 /**

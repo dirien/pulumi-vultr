@@ -27,7 +27,6 @@ import * as utilities from "./utilities";
  */
 export function getLoadBalancer(args?: GetLoadBalancerArgs, opts?: pulumi.InvokeOptions): Promise<GetLoadBalancerResult> {
     args = args || {};
-
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("vultr:index/getLoadBalancer:getLoadBalancer", {
         "filters": args.filters,
@@ -67,11 +66,11 @@ export interface GetLoadBalancerResult {
     readonly cookieName: string;
     readonly dateCreated: string;
     readonly filters?: outputs.GetLoadBalancerFilter[];
-    readonly firewallRules: {[key: string]: any}[];
+    readonly firewallRules: {[key: string]: string}[];
     /**
      * Defines the forwarding rules for a load balancer. The configuration of a `forwardingRules` is listened below.
      */
-    readonly forwardingRules: {[key: string]: any}[];
+    readonly forwardingRules: {[key: string]: string}[];
     /**
      * Boolean value that indicates if SSL is enabled.
      */
@@ -79,7 +78,7 @@ export interface GetLoadBalancerResult {
     /**
      * Defines the way load balancers should check for health. The configuration of a `healthCheck` is listed below.
      */
-    readonly healthCheck: {[key: string]: any};
+    readonly healthCheck: {[key: string]: string};
     /**
      * The provider-assigned unique ID for this managed resource.
      */
@@ -104,7 +103,7 @@ export interface GetLoadBalancerResult {
      * The region your load balancer is deployed in.
      */
     readonly region: string;
-    readonly ssl: {[key: string]: any};
+    readonly ssl: {[key: string]: string};
     /**
      * Boolean value that indicates if HTTP calls will be redirected to HTTPS.
      */
@@ -134,7 +133,12 @@ export interface GetLoadBalancerResult {
  * ```
  */
 export function getLoadBalancerOutput(args?: GetLoadBalancerOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetLoadBalancerResult> {
-    return pulumi.output(args).apply((a: any) => getLoadBalancer(a, opts))
+    args = args || {};
+    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
+    return pulumi.runtime.invokeOutput("vultr:index/getLoadBalancer:getLoadBalancer", {
+        "filters": args.filters,
+        "proxyProtocol": args.proxyProtocol,
+    }, opts);
 }
 
 /**

@@ -60,7 +60,7 @@ type DatabaseReplica struct {
 	// The managed database read replica's default logical database.
 	Dbname pulumi.StringOutput `pulumi:"dbname"`
 	// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
-	FerretdbCredentials pulumi.MapOutput `pulumi:"ferretdbCredentials"`
+	FerretdbCredentials pulumi.StringMapOutput `pulumi:"ferretdbCredentials"`
 	// The hostname assigned to the managed database read replica.
 	Host pulumi.StringOutput `pulumi:"host"`
 	// A label for the managed database read replica.
@@ -163,7 +163,7 @@ type databaseReplicaState struct {
 	// The managed database read replica's default logical database.
 	Dbname *string `pulumi:"dbname"`
 	// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
-	FerretdbCredentials map[string]interface{} `pulumi:"ferretdbCredentials"`
+	FerretdbCredentials map[string]string `pulumi:"ferretdbCredentials"`
 	// The hostname assigned to the managed database read replica.
 	Host *string `pulumi:"host"`
 	// A label for the managed database read replica.
@@ -228,7 +228,7 @@ type DatabaseReplicaState struct {
 	// The managed database read replica's default logical database.
 	Dbname pulumi.StringPtrInput
 	// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
-	FerretdbCredentials pulumi.MapInput
+	FerretdbCredentials pulumi.StringMapInput
 	// The hostname assigned to the managed database read replica.
 	Host pulumi.StringPtrInput
 	// A label for the managed database read replica.
@@ -287,7 +287,7 @@ type databaseReplicaArgs struct {
 	// The managed database ID you want to attach this replica to.
 	DatabaseId string `pulumi:"databaseId"`
 	// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
-	FerretdbCredentials map[string]interface{} `pulumi:"ferretdbCredentials"`
+	FerretdbCredentials map[string]string `pulumi:"ferretdbCredentials"`
 	// A label for the managed database read replica.
 	Label string `pulumi:"label"`
 	// The configuration value for the long query time (in seconds) on the managed database read replica (MySQL engine types only).
@@ -317,7 +317,7 @@ type DatabaseReplicaArgs struct {
 	// The managed database ID you want to attach this replica to.
 	DatabaseId pulumi.StringInput
 	// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
-	FerretdbCredentials pulumi.MapInput
+	FerretdbCredentials pulumi.StringMapInput
 	// A label for the managed database read replica.
 	Label pulumi.StringInput
 	// The configuration value for the long query time (in seconds) on the managed database read replica (MySQL engine types only).
@@ -460,8 +460,8 @@ func (o DatabaseReplicaOutput) Dbname() pulumi.StringOutput {
 }
 
 // An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
-func (o DatabaseReplicaOutput) FerretdbCredentials() pulumi.MapOutput {
-	return o.ApplyT(func(v *DatabaseReplica) pulumi.MapOutput { return v.FerretdbCredentials }).(pulumi.MapOutput)
+func (o DatabaseReplicaOutput) FerretdbCredentials() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *DatabaseReplica) pulumi.StringMapOutput { return v.FerretdbCredentials }).(pulumi.StringMapOutput)
 }
 
 // The hostname assigned to the managed database read replica.

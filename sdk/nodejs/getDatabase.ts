@@ -27,7 +27,6 @@ import * as utilities from "./utilities";
  */
 export function getDatabase(args?: GetDatabaseArgs, opts?: pulumi.InvokeOptions): Promise<GetDatabaseResult> {
     args = args || {};
-
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("vultr:index/getDatabase:getDatabase", {
         "filters": args.filters,
@@ -48,6 +47,14 @@ export interface GetDatabaseArgs {
  * A collection of values returned by getDatabase.
  */
 export interface GetDatabaseResult {
+    /**
+     * The certificate to authenticate the default user (Kafka engine types only).
+     */
+    readonly accessCert: string;
+    /**
+     * The private key to authenticate the default user (Kafka engine types only).
+     */
+    readonly accessKey: string;
     /**
      * The configured time zone for the Managed Database in TZ database format.
      */
@@ -71,7 +78,7 @@ export interface GetDatabaseResult {
     /**
      * An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
      */
-    readonly ferretdbCredentials: {[key: string]: any};
+    readonly ferretdbCredentials: {[key: string]: string};
     readonly filters?: outputs.GetDatabaseFilter[];
     /**
      * The hostname assigned to the managed database.
@@ -121,6 +128,7 @@ export interface GetDatabaseResult {
      * The managed database's plan ID.
      */
     readonly plan: string;
+    readonly planBrokers: number;
     /**
      * The description of the disk(s) on the managed database.
      */
@@ -157,6 +165,10 @@ export interface GetDatabaseResult {
      * The region ID of the managed database.
      */
     readonly region: string;
+    /**
+     * The SASL connection port for the managed database (Kafka engine types only).
+     */
+    readonly saslPort: string;
     /**
      * The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).
      */
@@ -198,7 +210,11 @@ export interface GetDatabaseResult {
  * ```
  */
 export function getDatabaseOutput(args?: GetDatabaseOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetDatabaseResult> {
-    return pulumi.output(args).apply((a: any) => getDatabase(a, opts))
+    args = args || {};
+    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
+    return pulumi.runtime.invokeOutput("vultr:index/getDatabase:getDatabase", {
+        "filters": args.filters,
+    }, opts);
 }
 
 /**

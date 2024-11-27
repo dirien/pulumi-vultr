@@ -72,16 +72,16 @@ type LookupLoadBalancerResult struct {
 	// The balancing algorithm for your load balancer.
 	BalancingAlgorithm string `pulumi:"balancingAlgorithm"`
 	// Name for your given sticky session.
-	CookieName    string                   `pulumi:"cookieName"`
-	DateCreated   string                   `pulumi:"dateCreated"`
-	Filters       []GetLoadBalancerFilter  `pulumi:"filters"`
-	FirewallRules []map[string]interface{} `pulumi:"firewallRules"`
+	CookieName    string                  `pulumi:"cookieName"`
+	DateCreated   string                  `pulumi:"dateCreated"`
+	Filters       []GetLoadBalancerFilter `pulumi:"filters"`
+	FirewallRules []map[string]string     `pulumi:"firewallRules"`
 	// Defines the forwarding rules for a load balancer. The configuration of a `forwardingRules` is listened below.
-	ForwardingRules []map[string]interface{} `pulumi:"forwardingRules"`
+	ForwardingRules []map[string]string `pulumi:"forwardingRules"`
 	// Boolean value that indicates if SSL is enabled.
 	HasSsl bool `pulumi:"hasSsl"`
 	// Defines the way load balancers should check for health. The configuration of a `healthCheck` is listed below.
-	HealthCheck map[string]interface{} `pulumi:"healthCheck"`
+	HealthCheck map[string]string `pulumi:"healthCheck"`
 	// The provider-assigned unique ID for this managed resource.
 	Id string `pulumi:"id"`
 	// IPv4 address for your load balancer.
@@ -93,8 +93,8 @@ type LookupLoadBalancerResult struct {
 	// Boolean value that indicates if Proxy Protocol is enabled.
 	ProxyProtocol *bool `pulumi:"proxyProtocol"`
 	// The region your load balancer is deployed in.
-	Region string                 `pulumi:"region"`
-	Ssl    map[string]interface{} `pulumi:"ssl"`
+	Region string            `pulumi:"region"`
+	Ssl    map[string]string `pulumi:"ssl"`
 	// Boolean value that indicates if HTTP calls will be redirected to HTTPS.
 	SslRedirect bool `pulumi:"sslRedirect"`
 	// Current status for the load balancer
@@ -103,14 +103,20 @@ type LookupLoadBalancerResult struct {
 
 func LookupLoadBalancerOutput(ctx *pulumi.Context, args LookupLoadBalancerOutputArgs, opts ...pulumi.InvokeOption) LookupLoadBalancerResultOutput {
 	return pulumi.ToOutputWithContext(context.Background(), args).
-		ApplyT(func(v interface{}) (LookupLoadBalancerResult, error) {
+		ApplyT(func(v interface{}) (LookupLoadBalancerResultOutput, error) {
 			args := v.(LookupLoadBalancerArgs)
-			r, err := LookupLoadBalancer(ctx, &args, opts...)
-			var s LookupLoadBalancerResult
-			if r != nil {
-				s = *r
+			opts = internal.PkgInvokeDefaultOpts(opts)
+			var rv LookupLoadBalancerResult
+			secret, err := ctx.InvokePackageRaw("vultr:index/getLoadBalancer:getLoadBalancer", args, &rv, "", opts...)
+			if err != nil {
+				return LookupLoadBalancerResultOutput{}, err
 			}
-			return s, err
+
+			output := pulumi.ToOutput(rv).(LookupLoadBalancerResultOutput)
+			if secret {
+				return pulumi.ToSecret(output).(LookupLoadBalancerResultOutput), nil
+			}
+			return output, nil
 		}).(LookupLoadBalancerResultOutput)
 }
 
@@ -164,13 +170,13 @@ func (o LookupLoadBalancerResultOutput) Filters() GetLoadBalancerFilterArrayOutp
 	return o.ApplyT(func(v LookupLoadBalancerResult) []GetLoadBalancerFilter { return v.Filters }).(GetLoadBalancerFilterArrayOutput)
 }
 
-func (o LookupLoadBalancerResultOutput) FirewallRules() pulumi.MapArrayOutput {
-	return o.ApplyT(func(v LookupLoadBalancerResult) []map[string]interface{} { return v.FirewallRules }).(pulumi.MapArrayOutput)
+func (o LookupLoadBalancerResultOutput) FirewallRules() pulumi.StringMapArrayOutput {
+	return o.ApplyT(func(v LookupLoadBalancerResult) []map[string]string { return v.FirewallRules }).(pulumi.StringMapArrayOutput)
 }
 
 // Defines the forwarding rules for a load balancer. The configuration of a `forwardingRules` is listened below.
-func (o LookupLoadBalancerResultOutput) ForwardingRules() pulumi.MapArrayOutput {
-	return o.ApplyT(func(v LookupLoadBalancerResult) []map[string]interface{} { return v.ForwardingRules }).(pulumi.MapArrayOutput)
+func (o LookupLoadBalancerResultOutput) ForwardingRules() pulumi.StringMapArrayOutput {
+	return o.ApplyT(func(v LookupLoadBalancerResult) []map[string]string { return v.ForwardingRules }).(pulumi.StringMapArrayOutput)
 }
 
 // Boolean value that indicates if SSL is enabled.
@@ -179,8 +185,8 @@ func (o LookupLoadBalancerResultOutput) HasSsl() pulumi.BoolOutput {
 }
 
 // Defines the way load balancers should check for health. The configuration of a `healthCheck` is listed below.
-func (o LookupLoadBalancerResultOutput) HealthCheck() pulumi.MapOutput {
-	return o.ApplyT(func(v LookupLoadBalancerResult) map[string]interface{} { return v.HealthCheck }).(pulumi.MapOutput)
+func (o LookupLoadBalancerResultOutput) HealthCheck() pulumi.StringMapOutput {
+	return o.ApplyT(func(v LookupLoadBalancerResult) map[string]string { return v.HealthCheck }).(pulumi.StringMapOutput)
 }
 
 // The provider-assigned unique ID for this managed resource.
@@ -213,8 +219,8 @@ func (o LookupLoadBalancerResultOutput) Region() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupLoadBalancerResult) string { return v.Region }).(pulumi.StringOutput)
 }
 
-func (o LookupLoadBalancerResultOutput) Ssl() pulumi.MapOutput {
-	return o.ApplyT(func(v LookupLoadBalancerResult) map[string]interface{} { return v.Ssl }).(pulumi.MapOutput)
+func (o LookupLoadBalancerResultOutput) Ssl() pulumi.StringMapOutput {
+	return o.ApplyT(func(v LookupLoadBalancerResult) map[string]string { return v.Ssl }).(pulumi.StringMapOutput)
 }
 
 // Boolean value that indicates if HTTP calls will be redirected to HTTPS.

@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -115,7 +120,7 @@ class AwaitableGetVpc2Result(GetVpc2Result):
             region=self.region)
 
 
-def get_vpc2(filters: Optional[Sequence[pulumi.InputType['GetVpc2FilterArgs']]] = None,
+def get_vpc2(filters: Optional[Sequence[Union['GetVpc2FilterArgs', 'GetVpc2FilterArgsDict']]] = None,
              opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetVpc2Result:
     """
     Get information about a Vultr VPC 2.0.
@@ -128,14 +133,14 @@ def get_vpc2(filters: Optional[Sequence[pulumi.InputType['GetVpc2FilterArgs']]] 
     import pulumi
     import pulumi_vultr as vultr
 
-    my_vpc2 = vultr.get_vpc2(filters=[vultr.GetVpc2FilterArgs(
-        name="description",
-        values=["my-vpc2-description"],
-    )])
+    my_vpc2 = vultr.get_vpc2(filters=[{
+        "name": "description",
+        "values": ["my-vpc2-description"],
+    }])
     ```
 
 
-    :param Sequence[pulumi.InputType['GetVpc2FilterArgs']] filters: Query parameters for finding VPCs 2.0.
+    :param Sequence[Union['GetVpc2FilterArgs', 'GetVpc2FilterArgsDict']] filters: Query parameters for finding VPCs 2.0.
     """
     __args__ = dict()
     __args__['filters'] = filters
@@ -150,10 +155,7 @@ def get_vpc2(filters: Optional[Sequence[pulumi.InputType['GetVpc2FilterArgs']]] 
         ip_block=pulumi.get(__ret__, 'ip_block'),
         prefix_length=pulumi.get(__ret__, 'prefix_length'),
         region=pulumi.get(__ret__, 'region'))
-
-
-@_utilities.lift_output_func(get_vpc2)
-def get_vpc2_output(filters: Optional[pulumi.Input[Optional[Sequence[pulumi.InputType['GetVpc2FilterArgs']]]]] = None,
+def get_vpc2_output(filters: Optional[pulumi.Input[Optional[Sequence[Union['GetVpc2FilterArgs', 'GetVpc2FilterArgsDict']]]]] = None,
                     opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetVpc2Result]:
     """
     Get information about a Vultr VPC 2.0.
@@ -166,13 +168,24 @@ def get_vpc2_output(filters: Optional[pulumi.Input[Optional[Sequence[pulumi.Inpu
     import pulumi
     import pulumi_vultr as vultr
 
-    my_vpc2 = vultr.get_vpc2(filters=[vultr.GetVpc2FilterArgs(
-        name="description",
-        values=["my-vpc2-description"],
-    )])
+    my_vpc2 = vultr.get_vpc2(filters=[{
+        "name": "description",
+        "values": ["my-vpc2-description"],
+    }])
     ```
 
 
-    :param Sequence[pulumi.InputType['GetVpc2FilterArgs']] filters: Query parameters for finding VPCs 2.0.
+    :param Sequence[Union['GetVpc2FilterArgs', 'GetVpc2FilterArgsDict']] filters: Query parameters for finding VPCs 2.0.
     """
-    ...
+    __args__ = dict()
+    __args__['filters'] = filters
+    opts = pulumi.InvokeOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
+    __ret__ = pulumi.runtime.invoke_output('vultr:index/getVpc2:getVpc2', __args__, opts=opts, typ=GetVpc2Result)
+    return __ret__.apply(lambda __response__: GetVpc2Result(
+        date_created=pulumi.get(__response__, 'date_created'),
+        description=pulumi.get(__response__, 'description'),
+        filters=pulumi.get(__response__, 'filters'),
+        id=pulumi.get(__response__, 'id'),
+        ip_block=pulumi.get(__response__, 'ip_block'),
+        prefix_length=pulumi.get(__response__, 'prefix_length'),
+        region=pulumi.get(__response__, 'region')))

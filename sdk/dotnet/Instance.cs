@@ -304,6 +304,12 @@ namespace ediri.Vultr
         public Output<string> UserData { get; private set; } = null!;
 
         /// <summary>
+        /// The scheme used for the default user. Possible values are `root` or `limited` (linux servers only).
+        /// </summary>
+        [Output("userScheme")]
+        public Output<string?> UserScheme { get; private set; } = null!;
+
+        /// <summary>
         /// The main IPv6 network address.
         /// </summary>
         [Output("v6MainIp")]
@@ -539,6 +545,12 @@ namespace ediri.Vultr
         /// </summary>
         [Input("userData")]
         public Input<string>? UserData { get; set; }
+
+        /// <summary>
+        /// The scheme used for the default user. Possible values are `root` or `limited` (linux servers only).
+        /// </summary>
+        [Input("userScheme")]
+        public Input<string>? UserScheme { get; set; }
 
         [Input("vpc2Ids")]
         private InputList<string>? _vpc2Ids;
@@ -827,6 +839,12 @@ namespace ediri.Vultr
         /// </summary>
         [Input("userData")]
         public Input<string>? UserData { get; set; }
+
+        /// <summary>
+        /// The scheme used for the default user. Possible values are `root` or `limited` (linux servers only).
+        /// </summary>
+        [Input("userScheme")]
+        public Input<string>? UserScheme { get; set; }
 
         /// <summary>
         /// The main IPv6 network address.

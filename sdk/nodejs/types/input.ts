@@ -29,7 +29,7 @@ export interface DatabaseReadReplica {
     /**
      * An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
      */
-    ferretdbCredentials?: pulumi.Input<{[key: string]: any}>;
+    ferretdbCredentials?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
      * The hostname assigned to the managed database.
      */
@@ -87,7 +87,7 @@ export interface DatabaseReadReplica {
      */
     planRam?: pulumi.Input<number>;
     /**
-     * The number of standby nodes available on the managed database.
+     * The number of standby nodes available on the managed database (excluded for Kafka engine types).
      */
     planReplicas?: pulumi.Input<number>;
     /**

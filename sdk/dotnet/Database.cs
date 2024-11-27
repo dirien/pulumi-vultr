@@ -75,6 +75,18 @@ namespace ediri.Vultr
     public partial class Database : global::Pulumi.CustomResource
     {
         /// <summary>
+        /// The certificate to authenticate the default user (Kafka engine types only).
+        /// </summary>
+        [Output("accessCert")]
+        public Output<string> AccessCert { get; private set; } = null!;
+
+        /// <summary>
+        /// The private key to authenticate the default user (Kafka engine types only).
+        /// </summary>
+        [Output("accessKey")]
+        public Output<string> AccessKey { get; private set; } = null!;
+
+        /// <summary>
         /// The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
         /// </summary>
         [Output("clusterTimeZone")]
@@ -108,7 +120,7 @@ namespace ediri.Vultr
         /// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
         /// </summary>
         [Output("ferretdbCredentials")]
-        public Output<ImmutableDictionary<string, object>> FerretdbCredentials { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, string>> FerretdbCredentials { get; private set; } = null!;
 
         /// <summary>
         /// The hostname assigned to the managed database.
@@ -144,7 +156,7 @@ namespace ediri.Vultr
         /// The configuration value for the long query time (in seconds) on the managed database (MySQL engine types only).
         /// </summary>
         [Output("mysqlLongQueryTime")]
-        public Output<int?> MysqlLongQueryTime { get; private set; } = null!;
+        public Output<int> MysqlLongQueryTime { get; private set; } = null!;
 
         /// <summary>
         /// The configuration value for whether primary keys are required on the managed database (MySQL engine types only).
@@ -156,7 +168,7 @@ namespace ediri.Vultr
         /// The configuration value for slow query logging on the managed database (MySQL engine types only).
         /// </summary>
         [Output("mysqlSlowQueryLog")]
-        public Output<bool?> MysqlSlowQueryLog { get; private set; } = null!;
+        public Output<bool> MysqlSlowQueryLog { get; private set; } = null!;
 
         /// <summary>
         /// A list of SQL modes to configure for the managed database (MySQL engine types only - `ALLOW_INVALID_DATES`, `ANSI`, `ANSI_QUOTES`, `ERROR_FOR_DIVISION_BY_ZERO`, `HIGH_NOT_PRECEDENCE`, `IGNORE_SPACE`, `NO_AUTO_VALUE_ON_ZERO`, `NO_DIR_IN_CREATE`, `NO_ENGINE_SUBSTITUTION`, `NO_UNSIGNED_SUBTRACTION`, `NO_ZERO_DATE`, `NO_ZERO_IN_DATE`, `ONLY_FULL_GROUP_BY`, `PIPES_AS_CONCAT`, `REAL_AS_FLOAT`, `STRICT_ALL_TABLES`, `STRICT_TRANS_TABLES`, `TIME_TRUNCATE_FRACTIONAL`, `TRADITIONAL`).
@@ -177,6 +189,12 @@ namespace ediri.Vultr
         public Output<string> Plan { get; private set; } = null!;
 
         /// <summary>
+        /// The number of brokers available on the managed database (Kafka engine types only).
+        /// </summary>
+        [Output("planBrokers")]
+        public Output<int> PlanBrokers { get; private set; } = null!;
+
+        /// <summary>
         /// The description of the disk(s) on the managed database.
         /// </summary>
         [Output("planDisk")]
@@ -189,7 +207,7 @@ namespace ediri.Vultr
         public Output<int> PlanRam { get; private set; } = null!;
 
         /// <summary>
-        /// The number of standby nodes available on the managed database.
+        /// The number of standby nodes available on the managed database (excluded for Kafka engine types).
         /// </summary>
         [Output("planReplicas")]
         public Output<int> PlanReplicas { get; private set; } = null!;
@@ -229,6 +247,12 @@ namespace ediri.Vultr
         /// </summary>
         [Output("region")]
         public Output<string> Region { get; private set; } = null!;
+
+        /// <summary>
+        /// The SASL connection port for the managed database (Kafka engine types only).
+        /// </summary>
+        [Output("saslPort")]
+        public Output<string> SaslPort { get; private set; } = null!;
 
         /// <summary>
         /// The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).
@@ -308,6 +332,18 @@ namespace ediri.Vultr
     public sealed class DatabaseArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
+        /// The certificate to authenticate the default user (Kafka engine types only).
+        /// </summary>
+        [Input("accessCert")]
+        public Input<string>? AccessCert { get; set; }
+
+        /// <summary>
+        /// The private key to authenticate the default user (Kafka engine types only).
+        /// </summary>
+        [Input("accessKey")]
+        public Input<string>? AccessKey { get; set; }
+
+        /// <summary>
         /// The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
         /// </summary>
         [Input("clusterTimeZone")]
@@ -326,14 +362,14 @@ namespace ediri.Vultr
         public Input<string> DatabaseEngineVersion { get; set; } = null!;
 
         [Input("ferretdbCredentials")]
-        private InputMap<object>? _ferretdbCredentials;
+        private InputMap<string>? _ferretdbCredentials;
 
         /// <summary>
         /// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
         /// </summary>
-        public InputMap<object> FerretdbCredentials
+        public InputMap<string> FerretdbCredentials
         {
-            get => _ferretdbCredentials ?? (_ferretdbCredentials = new InputMap<object>());
+            get => _ferretdbCredentials ?? (_ferretdbCredentials = new InputMap<string>());
             set => _ferretdbCredentials = value;
         }
 
@@ -398,10 +434,22 @@ namespace ediri.Vultr
         public Input<string> Plan { get; set; } = null!;
 
         /// <summary>
+        /// The number of brokers available on the managed database (Kafka engine types only).
+        /// </summary>
+        [Input("planBrokers")]
+        public Input<int>? PlanBrokers { get; set; }
+
+        /// <summary>
         /// The description of the disk(s) on the managed database.
         /// </summary>
         [Input("planDisk")]
         public Input<int>? PlanDisk { get; set; }
+
+        /// <summary>
+        /// The number of standby nodes available on the managed database (excluded for Kafka engine types).
+        /// </summary>
+        [Input("planReplicas")]
+        public Input<int>? PlanReplicas { get; set; }
 
         /// <summary>
         /// The public hostname assigned to the managed database (VPC-attached only).
@@ -432,6 +480,12 @@ namespace ediri.Vultr
         /// </summary>
         [Input("region", required: true)]
         public Input<string> Region { get; set; } = null!;
+
+        /// <summary>
+        /// The SASL connection port for the managed database (Kafka engine types only).
+        /// </summary>
+        [Input("saslPort")]
+        public Input<string>? SaslPort { get; set; }
 
         /// <summary>
         /// The tag to assign to the managed database.
@@ -466,6 +520,18 @@ namespace ediri.Vultr
     public sealed class DatabaseState : global::Pulumi.ResourceArgs
     {
         /// <summary>
+        /// The certificate to authenticate the default user (Kafka engine types only).
+        /// </summary>
+        [Input("accessCert")]
+        public Input<string>? AccessCert { get; set; }
+
+        /// <summary>
+        /// The private key to authenticate the default user (Kafka engine types only).
+        /// </summary>
+        [Input("accessKey")]
+        public Input<string>? AccessKey { get; set; }
+
+        /// <summary>
         /// The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
         /// </summary>
         [Input("clusterTimeZone")]
@@ -496,14 +562,14 @@ namespace ediri.Vultr
         public Input<string>? Dbname { get; set; }
 
         [Input("ferretdbCredentials")]
-        private InputMap<object>? _ferretdbCredentials;
+        private InputMap<string>? _ferretdbCredentials;
 
         /// <summary>
         /// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
         /// </summary>
-        public InputMap<object> FerretdbCredentials
+        public InputMap<string> FerretdbCredentials
         {
-            get => _ferretdbCredentials ?? (_ferretdbCredentials = new InputMap<object>());
+            get => _ferretdbCredentials ?? (_ferretdbCredentials = new InputMap<string>());
             set => _ferretdbCredentials = value;
         }
 
@@ -580,6 +646,12 @@ namespace ediri.Vultr
         public Input<string>? Plan { get; set; }
 
         /// <summary>
+        /// The number of brokers available on the managed database (Kafka engine types only).
+        /// </summary>
+        [Input("planBrokers")]
+        public Input<int>? PlanBrokers { get; set; }
+
+        /// <summary>
         /// The description of the disk(s) on the managed database.
         /// </summary>
         [Input("planDisk")]
@@ -592,7 +664,7 @@ namespace ediri.Vultr
         public Input<int>? PlanRam { get; set; }
 
         /// <summary>
-        /// The number of standby nodes available on the managed database.
+        /// The number of standby nodes available on the managed database (excluded for Kafka engine types).
         /// </summary>
         [Input("planReplicas")]
         public Input<int>? PlanReplicas { get; set; }
@@ -638,6 +710,12 @@ namespace ediri.Vultr
         /// </summary>
         [Input("region")]
         public Input<string>? Region { get; set; }
+
+        /// <summary>
+        /// The SASL connection port for the managed database (Kafka engine types only).
+        /// </summary>
+        [Input("saslPort")]
+        public Input<string>? SaslPort { get; set; }
 
         /// <summary>
         /// The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).

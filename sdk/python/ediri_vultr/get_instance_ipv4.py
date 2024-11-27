@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -115,7 +120,7 @@ class AwaitableGetInstanceIpv4Result(GetInstanceIpv4Result):
             reverse=self.reverse)
 
 
-def get_instance_ipv4(filters: Optional[Sequence[pulumi.InputType['GetInstanceIpv4FilterArgs']]] = None,
+def get_instance_ipv4(filters: Optional[Sequence[Union['GetInstanceIpv4FilterArgs', 'GetInstanceIpv4FilterArgsDict']]] = None,
                       opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetInstanceIpv4Result:
     """
     Get information about a Vultr instance IPv4.
@@ -128,14 +133,14 @@ def get_instance_ipv4(filters: Optional[Sequence[pulumi.InputType['GetInstanceIp
     import pulumi
     import pulumi_vultr as vultr
 
-    my_instance_ipv4 = vultr.get_instance_ipv4(filters=[vultr.GetInstanceIpv4FilterArgs(
-        name="ip",
-        values=["123.123.123.123"],
-    )])
+    my_instance_ipv4 = vultr.get_instance_ipv4(filters=[{
+        "name": "ip",
+        "values": ["123.123.123.123"],
+    }])
     ```
 
 
-    :param Sequence[pulumi.InputType['GetInstanceIpv4FilterArgs']] filters: Query parameters for finding IPv4 address.
+    :param Sequence[Union['GetInstanceIpv4FilterArgs', 'GetInstanceIpv4FilterArgsDict']] filters: Query parameters for finding IPv4 address.
     """
     __args__ = dict()
     __args__['filters'] = filters
@@ -150,10 +155,7 @@ def get_instance_ipv4(filters: Optional[Sequence[pulumi.InputType['GetInstanceIp
         ip=pulumi.get(__ret__, 'ip'),
         netmask=pulumi.get(__ret__, 'netmask'),
         reverse=pulumi.get(__ret__, 'reverse'))
-
-
-@_utilities.lift_output_func(get_instance_ipv4)
-def get_instance_ipv4_output(filters: Optional[pulumi.Input[Optional[Sequence[pulumi.InputType['GetInstanceIpv4FilterArgs']]]]] = None,
+def get_instance_ipv4_output(filters: Optional[pulumi.Input[Optional[Sequence[Union['GetInstanceIpv4FilterArgs', 'GetInstanceIpv4FilterArgsDict']]]]] = None,
                              opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetInstanceIpv4Result]:
     """
     Get information about a Vultr instance IPv4.
@@ -166,13 +168,24 @@ def get_instance_ipv4_output(filters: Optional[pulumi.Input[Optional[Sequence[pu
     import pulumi
     import pulumi_vultr as vultr
 
-    my_instance_ipv4 = vultr.get_instance_ipv4(filters=[vultr.GetInstanceIpv4FilterArgs(
-        name="ip",
-        values=["123.123.123.123"],
-    )])
+    my_instance_ipv4 = vultr.get_instance_ipv4(filters=[{
+        "name": "ip",
+        "values": ["123.123.123.123"],
+    }])
     ```
 
 
-    :param Sequence[pulumi.InputType['GetInstanceIpv4FilterArgs']] filters: Query parameters for finding IPv4 address.
+    :param Sequence[Union['GetInstanceIpv4FilterArgs', 'GetInstanceIpv4FilterArgsDict']] filters: Query parameters for finding IPv4 address.
     """
-    ...
+    __args__ = dict()
+    __args__['filters'] = filters
+    opts = pulumi.InvokeOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
+    __ret__ = pulumi.runtime.invoke_output('vultr:index/getInstanceIpv4:getInstanceIpv4', __args__, opts=opts, typ=GetInstanceIpv4Result)
+    return __ret__.apply(lambda __response__: GetInstanceIpv4Result(
+        filters=pulumi.get(__response__, 'filters'),
+        gateway=pulumi.get(__response__, 'gateway'),
+        id=pulumi.get(__response__, 'id'),
+        instance_id=pulumi.get(__response__, 'instance_id'),
+        ip=pulumi.get(__response__, 'ip'),
+        netmask=pulumi.get(__response__, 'netmask'),
+        reverse=pulumi.get(__response__, 'reverse')))

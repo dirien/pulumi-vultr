@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 
@@ -122,7 +127,7 @@ class DatabaseReadReplica(dict):
                  database_engine_version: Optional[str] = None,
                  date_created: Optional[str] = None,
                  dbname: Optional[str] = None,
-                 ferretdb_credentials: Optional[Mapping[str, Any]] = None,
+                 ferretdb_credentials: Optional[Mapping[str, str]] = None,
                  host: Optional[str] = None,
                  id: Optional[str] = None,
                  latest_backup: Optional[str] = None,
@@ -154,7 +159,7 @@ class DatabaseReadReplica(dict):
         :param str database_engine_version: The database engine version of the new managed database.
         :param str date_created: The date the managed database was added to your Vultr account.
         :param str dbname: The managed database's default logical database.
-        :param Mapping[str, Any] ferretdb_credentials: An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
+        :param Mapping[str, str] ferretdb_credentials: An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
         :param str host: The hostname assigned to the managed database.
         :param str id: The ID of the managed database.
         :param str latest_backup: The date of the latest backup available on the managed database.
@@ -168,7 +173,7 @@ class DatabaseReadReplica(dict):
         :param str plan: The ID of the plan that you want the managed database to subscribe to. [See List Managed Database Plans](https://www.vultr.com/api/#tag/managed-databases/operation/list-database-plans)
         :param int plan_disk: The description of the disk(s) on the managed database.
         :param int plan_ram: The amount of memory available on the managed database in MB.
-        :param int plan_replicas: The number of standby nodes available on the managed database.
+        :param int plan_replicas: The number of standby nodes available on the managed database (excluded for Kafka engine types).
         :param int plan_vcpus: The number of virtual CPUs available on the managed database.
         :param str port: The connection port for the managed database.
         :param str public_host: The public hostname assigned to the managed database (VPC-attached only).
@@ -298,7 +303,7 @@ class DatabaseReadReplica(dict):
 
     @property
     @pulumi.getter(name="ferretdbCredentials")
-    def ferretdb_credentials(self) -> Optional[Mapping[str, Any]]:
+    def ferretdb_credentials(self) -> Optional[Mapping[str, str]]:
         """
         An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
         """
@@ -412,7 +417,7 @@ class DatabaseReadReplica(dict):
     @pulumi.getter(name="planReplicas")
     def plan_replicas(self) -> Optional[int]:
         """
-        The number of standby nodes available on the managed database.
+        The number of standby nodes available on the managed database (excluded for Kafka engine types).
         """
         return pulumi.get(self, "plan_replicas")
 
@@ -1482,7 +1487,7 @@ class GetDatabaseReadReplicaResult(dict):
                  database_engine_version: str,
                  date_created: str,
                  dbname: str,
-                 ferretdb_credentials: Mapping[str, Any],
+                 ferretdb_credentials: Mapping[str, str],
                  host: str,
                  id: str,
                  label: str,
@@ -1514,7 +1519,7 @@ class GetDatabaseReadReplicaResult(dict):
         :param str database_engine_version: The database engine version of the managed database.
         :param str date_created: The date the managed database was added to your Vultr account.
         :param str dbname: The managed database's default logical database.
-        :param Mapping[str, Any] ferretdb_credentials: An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
+        :param Mapping[str, str] ferretdb_credentials: An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
         :param str host: The hostname assigned to the managed database.
         :param str label: The managed database's label.
         :param str latest_backup: The date of the latest backup available on the managed database.
@@ -1614,7 +1619,7 @@ class GetDatabaseReadReplicaResult(dict):
 
     @property
     @pulumi.getter(name="ferretdbCredentials")
-    def ferretdb_credentials(self) -> Mapping[str, Any]:
+    def ferretdb_credentials(self) -> Mapping[str, str]:
         """
         An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
         """
@@ -1969,7 +1974,7 @@ class GetInstancesInstanceResult(dict):
                  allowed_bandwidth: int,
                  app_id: int,
                  backups: str,
-                 backups_schedule: Mapping[str, Any],
+                 backups_schedule: Mapping[str, str],
                  date_created: str,
                  disk: int,
                  features: Sequence[str],
@@ -1994,6 +1999,7 @@ class GetInstancesInstanceResult(dict):
                  server_status: str,
                  status: str,
                  tags: Sequence[str],
+                 user_scheme: str,
                  v6_main_ip: str,
                  v6_network: str,
                  v6_network_size: int,
@@ -2002,7 +2008,7 @@ class GetInstancesInstanceResult(dict):
         """
         :param int allowed_bandwidth: The server's allowed bandwidth usage in GB.
         :param int app_id: The server's application ID.
-        :param Mapping[str, Any] backups_schedule: The current configuration for backups
+        :param Mapping[str, str] backups_schedule: The current configuration for backups
         :param str date_created: The date the server was added to your Vultr account.
         :param int disk: The description of the disk(s) on the server.
         :param Sequence[str] features: Array of which features are enabled.
@@ -2024,6 +2030,7 @@ class GetInstancesInstanceResult(dict):
         :param str server_status: A more detailed server status (none, locked, installingbooting, isomounting, ok).
         :param str status: The status of the server's subscription.
         :param Sequence[str] tags: A list of tags applied to the instance.
+        :param str user_scheme: The scheme used for the default user (linux servers only).
         :param str v6_main_ip: The main IPv6 network address.
         :param str v6_network: The IPv6 subnet.
         :param int v6_network_size: The IPv6 network size in bits.
@@ -2057,6 +2064,7 @@ class GetInstancesInstanceResult(dict):
         pulumi.set(__self__, "server_status", server_status)
         pulumi.set(__self__, "status", status)
         pulumi.set(__self__, "tags", tags)
+        pulumi.set(__self__, "user_scheme", user_scheme)
         pulumi.set(__self__, "v6_main_ip", v6_main_ip)
         pulumi.set(__self__, "v6_network", v6_network)
         pulumi.set(__self__, "v6_network_size", v6_network_size)
@@ -2086,7 +2094,7 @@ class GetInstancesInstanceResult(dict):
 
     @property
     @pulumi.getter(name="backupsSchedule")
-    def backups_schedule(self) -> Mapping[str, Any]:
+    def backups_schedule(self) -> Mapping[str, str]:
         """
         The current configuration for backups
         """
@@ -2274,6 +2282,14 @@ class GetInstancesInstanceResult(dict):
         A list of tags applied to the instance.
         """
         return pulumi.get(self, "tags")
+
+    @property
+    @pulumi.getter(name="userScheme")
+    def user_scheme(self) -> str:
+        """
+        The scheme used for the default user (linux servers only).
+        """
+        return pulumi.get(self, "user_scheme")
 
     @property
     @pulumi.getter(name="v6MainIp")

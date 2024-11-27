@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 
 __all__ = ['ContainerRegistryArgs', 'ContainerRegistry']
@@ -87,8 +92,8 @@ class _ContainerRegistryState:
                  plan: Optional[pulumi.Input[str]] = None,
                  public: Optional[pulumi.Input[bool]] = None,
                  region: Optional[pulumi.Input[str]] = None,
-                 root_user: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-                 storage: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 root_user: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
+                 storage: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  urn: Optional[pulumi.Input[str]] = None):
         """
         Input properties used for looking up and filtering ContainerRegistry resources.
@@ -97,8 +102,8 @@ class _ContainerRegistryState:
         :param pulumi.Input[str] plan: The billing plan for the container registry. [See available plans](https://www.vultr.com/api/#tag/Container-Registry/operation/list-registry-plans)
         :param pulumi.Input[bool] public: Boolean indicating if the container registry should be created with public visibility or if it should require credentials.
         :param pulumi.Input[str] region: The region where your container registry will be deployed. [See available regions](https://www.vultr.com/api/#tag/Container-Registry/operation/list-registry-regions)
-        :param pulumi.Input[Mapping[str, Any]] root_user: The user associated with the container registry.
-        :param pulumi.Input[Mapping[str, Any]] storage: A listing of current storage usage relevant to the container registry.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] root_user: The user associated with the container registry.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] storage: A listing of current storage usage relevant to the container registry.
         :param pulumi.Input[str] urn: The URN of the container registry.
         """
         if date_created is not None:
@@ -180,26 +185,26 @@ class _ContainerRegistryState:
 
     @property
     @pulumi.getter(name="rootUser")
-    def root_user(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def root_user(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
         """
         The user associated with the container registry.
         """
         return pulumi.get(self, "root_user")
 
     @root_user.setter
-    def root_user(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def root_user(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
         pulumi.set(self, "root_user", value)
 
     @property
     @pulumi.getter
-    def storage(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def storage(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
         """
         A listing of current storage usage relevant to the container registry.
         """
         return pulumi.get(self, "storage")
 
     @storage.setter
-    def storage(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def storage(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
         pulumi.set(self, "storage", value)
 
     @property
@@ -337,8 +342,8 @@ class ContainerRegistry(pulumi.CustomResource):
             plan: Optional[pulumi.Input[str]] = None,
             public: Optional[pulumi.Input[bool]] = None,
             region: Optional[pulumi.Input[str]] = None,
-            root_user: Optional[pulumi.Input[Mapping[str, Any]]] = None,
-            storage: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+            root_user: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
+            storage: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
             urn: Optional[pulumi.Input[str]] = None) -> 'ContainerRegistry':
         """
         Get an existing ContainerRegistry resource's state with the given name, id, and optional extra
@@ -352,8 +357,8 @@ class ContainerRegistry(pulumi.CustomResource):
         :param pulumi.Input[str] plan: The billing plan for the container registry. [See available plans](https://www.vultr.com/api/#tag/Container-Registry/operation/list-registry-plans)
         :param pulumi.Input[bool] public: Boolean indicating if the container registry should be created with public visibility or if it should require credentials.
         :param pulumi.Input[str] region: The region where your container registry will be deployed. [See available regions](https://www.vultr.com/api/#tag/Container-Registry/operation/list-registry-regions)
-        :param pulumi.Input[Mapping[str, Any]] root_user: The user associated with the container registry.
-        :param pulumi.Input[Mapping[str, Any]] storage: A listing of current storage usage relevant to the container registry.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] root_user: The user associated with the container registry.
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] storage: A listing of current storage usage relevant to the container registry.
         :param pulumi.Input[str] urn: The URN of the container registry.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
@@ -412,7 +417,7 @@ class ContainerRegistry(pulumi.CustomResource):
 
     @property
     @pulumi.getter(name="rootUser")
-    def root_user(self) -> pulumi.Output[Mapping[str, Any]]:
+    def root_user(self) -> pulumi.Output[Mapping[str, str]]:
         """
         The user associated with the container registry.
         """
@@ -420,7 +425,7 @@ class ContainerRegistry(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def storage(self) -> pulumi.Output[Mapping[str, Any]]:
+    def storage(self) -> pulumi.Output[Mapping[str, str]]:
         """
         A listing of current storage usage relevant to the container registry.
         """

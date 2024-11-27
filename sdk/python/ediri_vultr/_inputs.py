@@ -4,52 +4,227 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 
 __all__ = [
     'DatabaseReadReplicaArgs',
+    'DatabaseReadReplicaArgsDict',
     'DatabaseUserAccessControlArgs',
+    'DatabaseUserAccessControlArgsDict',
     'InstanceBackupsScheduleArgs',
+    'InstanceBackupsScheduleArgsDict',
     'KubernetesNodePoolsArgs',
+    'KubernetesNodePoolsArgsDict',
     'KubernetesNodePoolsNodeArgs',
+    'KubernetesNodePoolsNodeArgsDict',
     'LoadBalancerFirewallRuleArgs',
+    'LoadBalancerFirewallRuleArgsDict',
     'LoadBalancerForwardingRuleArgs',
+    'LoadBalancerForwardingRuleArgsDict',
     'LoadBalancerHealthCheckArgs',
+    'LoadBalancerHealthCheckArgsDict',
     'LoadBalancerSslArgs',
+    'LoadBalancerSslArgsDict',
     'GetApplicationFilterArgs',
+    'GetApplicationFilterArgsDict',
     'GetBackupFilterArgs',
+    'GetBackupFilterArgsDict',
     'GetBareMetalPlanFilterArgs',
+    'GetBareMetalPlanFilterArgsDict',
     'GetBareMetalServerFilterArgs',
+    'GetBareMetalServerFilterArgsDict',
     'GetBlockStorageFilterArgs',
+    'GetBlockStorageFilterArgsDict',
     'GetContainerRegistryFilterArgs',
+    'GetContainerRegistryFilterArgsDict',
     'GetDatabaseFilterArgs',
+    'GetDatabaseFilterArgsDict',
     'GetFirewallGroupFilterArgs',
+    'GetFirewallGroupFilterArgsDict',
     'GetInferenceFilterArgs',
+    'GetInferenceFilterArgsDict',
     'GetInstanceFilterArgs',
+    'GetInstanceFilterArgsDict',
     'GetInstanceIpv4FilterArgs',
+    'GetInstanceIpv4FilterArgsDict',
     'GetInstancesFilterArgs',
+    'GetInstancesFilterArgsDict',
     'GetIsoPrivateFilterArgs',
+    'GetIsoPrivateFilterArgsDict',
     'GetIsoPublicFilterArgs',
+    'GetIsoPublicFilterArgsDict',
     'GetKubernetesFilterArgs',
+    'GetKubernetesFilterArgsDict',
     'GetLoadBalancerFilterArgs',
+    'GetLoadBalancerFilterArgsDict',
     'GetObjectStorageClusterFilterArgs',
+    'GetObjectStorageClusterFilterArgsDict',
     'GetObjectStorageFilterArgs',
+    'GetObjectStorageFilterArgsDict',
     'GetOsFilterArgs',
+    'GetOsFilterArgsDict',
     'GetPlanFilterArgs',
+    'GetPlanFilterArgsDict',
     'GetRegionFilterArgs',
+    'GetRegionFilterArgsDict',
     'GetReservedIpFilterArgs',
+    'GetReservedIpFilterArgsDict',
     'GetReverseIpv4FilterArgs',
+    'GetReverseIpv4FilterArgsDict',
     'GetReverseIpv6FilterArgs',
+    'GetReverseIpv6FilterArgsDict',
     'GetSnapshotFilterArgs',
+    'GetSnapshotFilterArgsDict',
     'GetSshKeyFilterArgs',
+    'GetSshKeyFilterArgsDict',
     'GetStartupScriptFilterArgs',
+    'GetStartupScriptFilterArgsDict',
     'GetUserFilterArgs',
+    'GetUserFilterArgsDict',
     'GetVpc2FilterArgs',
+    'GetVpc2FilterArgsDict',
     'GetVpcFilterArgs',
+    'GetVpcFilterArgsDict',
 ]
+
+MYPY = False
+
+if not MYPY:
+    class DatabaseReadReplicaArgsDict(TypedDict):
+        label: pulumi.Input[str]
+        """
+        A label for the managed database.
+        """
+        region: pulumi.Input[str]
+        """
+        The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
+        """
+        cluster_time_zone: NotRequired[pulumi.Input[str]]
+        """
+        The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
+        """
+        database_engine: NotRequired[pulumi.Input[str]]
+        """
+        The database engine of the new managed database.
+        """
+        database_engine_version: NotRequired[pulumi.Input[str]]
+        """
+        The database engine version of the new managed database.
+        """
+        date_created: NotRequired[pulumi.Input[str]]
+        """
+        The date the managed database was added to your Vultr account.
+        """
+        dbname: NotRequired[pulumi.Input[str]]
+        """
+        The managed database's default logical database.
+        """
+        ferretdb_credentials: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[str]]]]
+        """
+        An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
+        """
+        host: NotRequired[pulumi.Input[str]]
+        """
+        The hostname assigned to the managed database.
+        """
+        id: NotRequired[pulumi.Input[str]]
+        """
+        The ID of the managed database.
+        """
+        latest_backup: NotRequired[pulumi.Input[str]]
+        """
+        The date of the latest backup available on the managed database.
+        """
+        maintenance_dow: NotRequired[pulumi.Input[str]]
+        """
+        The preferred maintenance day of week for the managed database.
+        """
+        maintenance_time: NotRequired[pulumi.Input[str]]
+        """
+        The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).
+        """
+        mysql_long_query_time: NotRequired[pulumi.Input[int]]
+        """
+        The configuration value for the long query time (in seconds) on the managed database (MySQL engine types only).
+        """
+        mysql_require_primary_key: NotRequired[pulumi.Input[bool]]
+        """
+        The configuration value for whether primary keys are required on the managed database (MySQL engine types only).
+        """
+        mysql_slow_query_log: NotRequired[pulumi.Input[bool]]
+        """
+        The configuration value for slow query logging on the managed database (MySQL engine types only).
+        """
+        mysql_sql_modes: NotRequired[pulumi.Input[Sequence[pulumi.Input[str]]]]
+        """
+        A list of SQL modes to configure for the managed database (MySQL engine types only - `ALLOW_INVALID_DATES`, `ANSI`, `ANSI_QUOTES`, `ERROR_FOR_DIVISION_BY_ZERO`, `HIGH_NOT_PRECEDENCE`, `IGNORE_SPACE`, `NO_AUTO_VALUE_ON_ZERO`, `NO_DIR_IN_CREATE`, `NO_ENGINE_SUBSTITUTION`, `NO_UNSIGNED_SUBTRACTION`, `NO_ZERO_DATE`, `NO_ZERO_IN_DATE`, `ONLY_FULL_GROUP_BY`, `PIPES_AS_CONCAT`, `REAL_AS_FLOAT`, `STRICT_ALL_TABLES`, `STRICT_TRANS_TABLES`, `TIME_TRUNCATE_FRACTIONAL`, `TRADITIONAL`).
+        """
+        password: NotRequired[pulumi.Input[str]]
+        """
+        The password for the managed database's primary admin user.
+        """
+        plan: NotRequired[pulumi.Input[str]]
+        """
+        The ID of the plan that you want the managed database to subscribe to. [See List Managed Database Plans](https://www.vultr.com/api/#tag/managed-databases/operation/list-database-plans)
+        """
+        plan_disk: NotRequired[pulumi.Input[int]]
+        """
+        The description of the disk(s) on the managed database.
+        """
+        plan_ram: NotRequired[pulumi.Input[int]]
+        """
+        The amount of memory available on the managed database in MB.
+        """
+        plan_replicas: NotRequired[pulumi.Input[int]]
+        """
+        The number of standby nodes available on the managed database (excluded for Kafka engine types).
+        """
+        plan_vcpus: NotRequired[pulumi.Input[int]]
+        """
+        The number of virtual CPUs available on the managed database.
+        """
+        port: NotRequired[pulumi.Input[str]]
+        """
+        The connection port for the managed database.
+        """
+        public_host: NotRequired[pulumi.Input[str]]
+        """
+        The public hostname assigned to the managed database (VPC-attached only).
+        """
+        redis_eviction_policy: NotRequired[pulumi.Input[str]]
+        """
+        The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
+        """
+        status: NotRequired[pulumi.Input[str]]
+        """
+        The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).
+        """
+        tag: NotRequired[pulumi.Input[str]]
+        """
+        The tag to assign to the managed database.
+        """
+        trusted_ips: NotRequired[pulumi.Input[Sequence[pulumi.Input[str]]]]
+        """
+        A list of allowed IP addresses for the managed database.
+        """
+        user: NotRequired[pulumi.Input[str]]
+        """
+        The primary admin user for the managed database.
+        """
+        vpc_id: NotRequired[pulumi.Input[str]]
+        """
+        The ID of the VPC Network to attach to the Managed Database.
+        """
+elif False:
+    DatabaseReadReplicaArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class DatabaseReadReplicaArgs:
@@ -61,7 +236,7 @@ class DatabaseReadReplicaArgs:
                  database_engine_version: Optional[pulumi.Input[str]] = None,
                  date_created: Optional[pulumi.Input[str]] = None,
                  dbname: Optional[pulumi.Input[str]] = None,
-                 ferretdb_credentials: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 ferretdb_credentials: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  host: Optional[pulumi.Input[str]] = None,
                  id: Optional[pulumi.Input[str]] = None,
                  latest_backup: Optional[pulumi.Input[str]] = None,
@@ -93,7 +268,7 @@ class DatabaseReadReplicaArgs:
         :param pulumi.Input[str] database_engine_version: The database engine version of the new managed database.
         :param pulumi.Input[str] date_created: The date the managed database was added to your Vultr account.
         :param pulumi.Input[str] dbname: The managed database's default logical database.
-        :param pulumi.Input[Mapping[str, Any]] ferretdb_credentials: An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] ferretdb_credentials: An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
         :param pulumi.Input[str] host: The hostname assigned to the managed database.
         :param pulumi.Input[str] id: The ID of the managed database.
         :param pulumi.Input[str] latest_backup: The date of the latest backup available on the managed database.
@@ -107,7 +282,7 @@ class DatabaseReadReplicaArgs:
         :param pulumi.Input[str] plan: The ID of the plan that you want the managed database to subscribe to. [See List Managed Database Plans](https://www.vultr.com/api/#tag/managed-databases/operation/list-database-plans)
         :param pulumi.Input[int] plan_disk: The description of the disk(s) on the managed database.
         :param pulumi.Input[int] plan_ram: The amount of memory available on the managed database in MB.
-        :param pulumi.Input[int] plan_replicas: The number of standby nodes available on the managed database.
+        :param pulumi.Input[int] plan_replicas: The number of standby nodes available on the managed database (excluded for Kafka engine types).
         :param pulumi.Input[int] plan_vcpus: The number of virtual CPUs available on the managed database.
         :param pulumi.Input[str] port: The connection port for the managed database.
         :param pulumi.Input[str] public_host: The public hostname assigned to the managed database (VPC-attached only).
@@ -265,14 +440,14 @@ class DatabaseReadReplicaArgs:
 
     @property
     @pulumi.getter(name="ferretdbCredentials")
-    def ferretdb_credentials(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def ferretdb_credentials(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
         """
         An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
         """
         return pulumi.get(self, "ferretdb_credentials")
 
     @ferretdb_credentials.setter
-    def ferretdb_credentials(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def ferretdb_credentials(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
         pulumi.set(self, "ferretdb_credentials", value)
 
     @property
@@ -435,7 +610,7 @@ class DatabaseReadReplicaArgs:
     @pulumi.getter(name="planReplicas")
     def plan_replicas(self) -> Optional[pulumi.Input[int]]:
         """
-        The number of standby nodes available on the managed database.
+        The number of standby nodes available on the managed database (excluded for Kafka engine types).
         """
         return pulumi.get(self, "plan_replicas")
 
@@ -552,6 +727,27 @@ class DatabaseReadReplicaArgs:
         pulumi.set(self, "vpc_id", value)
 
 
+if not MYPY:
+    class DatabaseUserAccessControlArgsDict(TypedDict):
+        redis_acl_categories: pulumi.Input[Sequence[pulumi.Input[str]]]
+        """
+        The list of command category rules for this managed database user.
+        """
+        redis_acl_channels: pulumi.Input[Sequence[pulumi.Input[str]]]
+        """
+        The list of publish/subscribe channel patterns for this managed database user.
+        """
+        redis_acl_commands: pulumi.Input[Sequence[pulumi.Input[str]]]
+        """
+        The list of individual command rules for this managed database user.
+        """
+        redis_acl_keys: pulumi.Input[Sequence[pulumi.Input[str]]]
+        """
+        The list of access rules for this managed database user.
+        """
+elif False:
+    DatabaseUserAccessControlArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class DatabaseUserAccessControlArgs:
     def __init__(__self__, *,
@@ -618,6 +814,27 @@ class DatabaseUserAccessControlArgs:
     def redis_acl_keys(self, value: pulumi.Input[Sequence[pulumi.Input[str]]]):
         pulumi.set(self, "redis_acl_keys", value)
 
+
+if not MYPY:
+    class InstanceBackupsScheduleArgsDict(TypedDict):
+        type: pulumi.Input[str]
+        """
+        Type of backup schedule Possible values are `daily`, `weekly`, `monthly`, `daily_alt_even`, or `daily_alt_odd`.
+        """
+        dom: NotRequired[pulumi.Input[int]]
+        """
+        Day of month to run. Use values between 1 and 28.
+        """
+        dow: NotRequired[pulumi.Input[int]]
+        """
+        Day of week to run. `1 = Sunday`, `2 = Monday`, `3 = Tuesday`, `4 = Wednesday`, `5 = Thursday`, `6 = Friday`, `7 = Saturday`
+        """
+        hour: NotRequired[pulumi.Input[int]]
+        """
+        Hour of day to run in UTC.
+        """
+elif False:
+    InstanceBackupsScheduleArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class InstanceBackupsScheduleArgs:
@@ -688,6 +905,59 @@ class InstanceBackupsScheduleArgs:
     def hour(self, value: Optional[pulumi.Input[int]]):
         pulumi.set(self, "hour", value)
 
+
+if not MYPY:
+    class KubernetesNodePoolsArgsDict(TypedDict):
+        label: pulumi.Input[str]
+        """
+        The label to be used as a prefix for nodes in this node pool.
+        """
+        node_quantity: pulumi.Input[int]
+        """
+        The number of nodes in this node pool.
+        """
+        plan: pulumi.Input[str]
+        """
+        The plan to be used in this node pool. [See Plans List](https://www.vultr.com/api/#operation/list-plans) Note the minimum plan requirements must have at least 1 core and 2 gbs of memory.
+        """
+        auto_scaler: NotRequired[pulumi.Input[bool]]
+        """
+        Enable the auto scaler for the default node pool.
+        """
+        date_created: NotRequired[pulumi.Input[str]]
+        """
+        Date node was created.
+        """
+        date_updated: NotRequired[pulumi.Input[str]]
+        """
+        Date of node pool updates.
+        """
+        id: NotRequired[pulumi.Input[str]]
+        """
+        ID of node.
+        """
+        max_nodes: NotRequired[pulumi.Input[int]]
+        """
+        The maximum number of nodes to use with the auto scaler.
+        """
+        min_nodes: NotRequired[pulumi.Input[int]]
+        """
+        The minimum number of nodes to use with the auto scaler.
+        """
+        nodes: NotRequired[pulumi.Input[Sequence[pulumi.Input['KubernetesNodePoolsNodeArgsDict']]]]
+        """
+        Array that contains information about nodes within this node pool.
+        """
+        status: NotRequired[pulumi.Input[str]]
+        """
+        Status of node.
+        """
+        tag: NotRequired[pulumi.Input[str]]
+        """
+        Tag for node pool.
+        """
+elif False:
+    KubernetesNodePoolsArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class KubernetesNodePoolsArgs:
@@ -885,6 +1155,27 @@ class KubernetesNodePoolsArgs:
         pulumi.set(self, "tag", value)
 
 
+if not MYPY:
+    class KubernetesNodePoolsNodeArgsDict(TypedDict):
+        date_created: NotRequired[pulumi.Input[str]]
+        """
+        Date node was created.
+        """
+        id: NotRequired[pulumi.Input[str]]
+        """
+        ID of node.
+        """
+        label: NotRequired[pulumi.Input[str]]
+        """
+        The label to be used as a prefix for nodes in this node pool.
+        """
+        status: NotRequired[pulumi.Input[str]]
+        """
+        Status of node.
+        """
+elif False:
+    KubernetesNodePoolsNodeArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class KubernetesNodePoolsNodeArgs:
     def __init__(__self__, *,
@@ -956,6 +1247,27 @@ class KubernetesNodePoolsNodeArgs:
         pulumi.set(self, "status", value)
 
 
+if not MYPY:
+    class LoadBalancerFirewallRuleArgsDict(TypedDict):
+        ip_type: pulumi.Input[str]
+        """
+        The type of ip this rule is - may be either v4 or v6.
+        """
+        port: pulumi.Input[int]
+        """
+        The assigned port (integer) on the attached instances that the load balancer should check against. Default value is `80`.
+        """
+        source: pulumi.Input[str]
+        """
+        IP address with subnet that is allowed through the firewall. You may also pass in `cloudflare` which will allow only CloudFlares IP range.
+        """
+        id: NotRequired[pulumi.Input[str]]
+        """
+        The load balancer ID.
+        """
+elif False:
+    LoadBalancerFirewallRuleArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class LoadBalancerFirewallRuleArgs:
     def __init__(__self__, *,
@@ -1023,6 +1335,28 @@ class LoadBalancerFirewallRuleArgs:
     def id(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "id", value)
 
+
+if not MYPY:
+    class LoadBalancerForwardingRuleArgsDict(TypedDict):
+        backend_port: pulumi.Input[int]
+        """
+        Port on instance side.
+        """
+        backend_protocol: pulumi.Input[str]
+        """
+        Protocol on instance side. Possible values: "http", "https", "tcp".
+        """
+        frontend_port: pulumi.Input[int]
+        """
+        Port on load balancer side.
+        """
+        frontend_protocol: pulumi.Input[str]
+        """
+        Protocol on load balancer side. Possible values: "http", "https", "tcp".
+        """
+        rule_id: NotRequired[pulumi.Input[str]]
+elif False:
+    LoadBalancerForwardingRuleArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class LoadBalancerForwardingRuleArgs:
@@ -1102,6 +1436,39 @@ class LoadBalancerForwardingRuleArgs:
     def rule_id(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "rule_id", value)
 
+
+if not MYPY:
+    class LoadBalancerHealthCheckArgsDict(TypedDict):
+        port: pulumi.Input[int]
+        """
+        The assigned port (integer) on the attached instances that the load balancer should check against. Default value is `80`.
+        """
+        protocol: pulumi.Input[str]
+        """
+        The protocol used to traffic requests to the load balancer. Possible values are `http`, or `tcp`. Default value is `http`.
+        """
+        check_interval: NotRequired[pulumi.Input[int]]
+        """
+        Time in seconds to perform health check. Default value is 15.
+        """
+        healthy_threshold: NotRequired[pulumi.Input[int]]
+        """
+        Number of failed attempts encountered before failover. Default value is 5.
+        """
+        path: NotRequired[pulumi.Input[str]]
+        """
+        The path on the attached instances that the load balancer should check against. Default value is `/`
+        """
+        response_timeout: NotRequired[pulumi.Input[int]]
+        """
+        Time in seconds to wait for a health check response. Default value is 5.
+        """
+        unhealthy_threshold: NotRequired[pulumi.Input[int]]
+        """
+        Number of failed attempts encountered before failover. Default value is 5.
+        """
+elif False:
+    LoadBalancerHealthCheckArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class LoadBalancerHealthCheckArgs:
@@ -1220,6 +1587,23 @@ class LoadBalancerHealthCheckArgs:
         pulumi.set(self, "unhealthy_threshold", value)
 
 
+if not MYPY:
+    class LoadBalancerSslArgsDict(TypedDict):
+        certificate: pulumi.Input[str]
+        """
+        The SSL Certificate.
+        """
+        private_key: pulumi.Input[str]
+        """
+        The SSL certificates private key.
+        """
+        chain: NotRequired[pulumi.Input[str]]
+        """
+        The SSL certificate chain.
+        """
+elif False:
+    LoadBalancerSslArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class LoadBalancerSslArgs:
     def __init__(__self__, *,
@@ -1273,6 +1657,19 @@ class LoadBalancerSslArgs:
         pulumi.set(self, "chain", value)
 
 
+if not MYPY:
+    class GetApplicationFilterArgsDict(TypedDict):
+        name: str
+        """
+        Attribute name to filter with.
+        """
+        values: Sequence[str]
+        """
+        One or more values filter with.
+        """
+elif False:
+    GetApplicationFilterArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class GetApplicationFilterArgs:
     def __init__(__self__, *,
@@ -1309,6 +1706,19 @@ class GetApplicationFilterArgs:
     def values(self, value: Sequence[str]):
         pulumi.set(self, "values", value)
 
+
+if not MYPY:
+    class GetBackupFilterArgsDict(TypedDict):
+        name: str
+        """
+        Attribute name to filter with.
+        """
+        values: Sequence[str]
+        """
+        One or more values filter with.
+        """
+elif False:
+    GetBackupFilterArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class GetBackupFilterArgs:
@@ -1347,6 +1757,19 @@ class GetBackupFilterArgs:
         pulumi.set(self, "values", value)
 
 
+if not MYPY:
+    class GetBareMetalPlanFilterArgsDict(TypedDict):
+        name: str
+        """
+        Attribute name to filter with.
+        """
+        values: Sequence[str]
+        """
+        One or more values filter with.
+        """
+elif False:
+    GetBareMetalPlanFilterArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class GetBareMetalPlanFilterArgs:
     def __init__(__self__, *,
@@ -1383,6 +1806,19 @@ class GetBareMetalPlanFilterArgs:
     def values(self, value: Sequence[str]):
         pulumi.set(self, "values", value)
 
+
+if not MYPY:
+    class GetBareMetalServerFilterArgsDict(TypedDict):
+        name: str
+        """
+        Attribute name to filter with.
+        """
+        values: Sequence[str]
+        """
+        One or more values filter with.
+        """
+elif False:
+    GetBareMetalServerFilterArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class GetBareMetalServerFilterArgs:
@@ -1421,6 +1857,19 @@ class GetBareMetalServerFilterArgs:
         pulumi.set(self, "values", value)
 
 
+if not MYPY:
+    class GetBlockStorageFilterArgsDict(TypedDict):
+        name: str
+        """
+        Attribute name to filter with.
+        """
+        values: Sequence[str]
+        """
+        One or more values filter with.
+        """
+elif False:
+    GetBlockStorageFilterArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class GetBlockStorageFilterArgs:
     def __init__(__self__, *,
@@ -1457,6 +1906,19 @@ class GetBlockStorageFilterArgs:
     def values(self, value: Sequence[str]):
         pulumi.set(self, "values", value)
 
+
+if not MYPY:
+    class GetContainerRegistryFilterArgsDict(TypedDict):
+        name: str
+        """
+        Attribute name to filter with.
+        """
+        values: Sequence[str]
+        """
+        One or more values filter with.
+        """
+elif False:
+    GetContainerRegistryFilterArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class GetContainerRegistryFilterArgs:
@@ -1495,6 +1957,19 @@ class GetContainerRegistryFilterArgs:
         pulumi.set(self, "values", value)
 
 
+if not MYPY:
+    class GetDatabaseFilterArgsDict(TypedDict):
+        name: str
+        """
+        Attribute name to filter with.
+        """
+        values: Sequence[str]
+        """
+        One or more values filter with.
+        """
+elif False:
+    GetDatabaseFilterArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class GetDatabaseFilterArgs:
     def __init__(__self__, *,
@@ -1531,6 +2006,19 @@ class GetDatabaseFilterArgs:
     def values(self, value: Sequence[str]):
         pulumi.set(self, "values", value)
 
+
+if not MYPY:
+    class GetFirewallGroupFilterArgsDict(TypedDict):
+        name: str
+        """
+        Attribute name to filter with.
+        """
+        values: Sequence[str]
+        """
+        One or more values filter with.
+        """
+elif False:
+    GetFirewallGroupFilterArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class GetFirewallGroupFilterArgs:
@@ -1569,6 +2057,19 @@ class GetFirewallGroupFilterArgs:
         pulumi.set(self, "values", value)
 
 
+if not MYPY:
+    class GetInferenceFilterArgsDict(TypedDict):
+        name: str
+        """
+        Attribute name to filter with.
+        """
+        values: Sequence[str]
+        """
+        One or more values filter with.
+        """
+elif False:
+    GetInferenceFilterArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class GetInferenceFilterArgs:
     def __init__(__self__, *,
@@ -1605,6 +2106,19 @@ class GetInferenceFilterArgs:
     def values(self, value: Sequence[str]):
         pulumi.set(self, "values", value)
 
+
+if not MYPY:
+    class GetInstanceFilterArgsDict(TypedDict):
+        name: str
+        """
+        Attribute name to filter with.
+        """
+        values: Sequence[str]
+        """
+        One or more values filter with.
+        """
+elif False:
+    GetInstanceFilterArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class GetInstanceFilterArgs:
@@ -1643,6 +2157,19 @@ class GetInstanceFilterArgs:
         pulumi.set(self, "values", value)
 
 
+if not MYPY:
+    class GetInstanceIpv4FilterArgsDict(TypedDict):
+        name: str
+        """
+        Attribute name to filter with.
+        """
+        values: Sequence[str]
+        """
+        One or more values to filter with.
+        """
+elif False:
+    GetInstanceIpv4FilterArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class GetInstanceIpv4FilterArgs:
     def __init__(__self__, *,
@@ -1679,6 +2206,19 @@ class GetInstanceIpv4FilterArgs:
     def values(self, value: Sequence[str]):
         pulumi.set(self, "values", value)
 
+
+if not MYPY:
+    class GetInstancesFilterArgsDict(TypedDict):
+        name: str
+        """
+        Attribute name to filter with.
+        """
+        values: Sequence[str]
+        """
+        One or more values filter with.
+        """
+elif False:
+    GetInstancesFilterArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class GetInstancesFilterArgs:
@@ -1717,6 +2257,19 @@ class GetInstancesFilterArgs:
         pulumi.set(self, "values", value)
 
 
+if not MYPY:
+    class GetIsoPrivateFilterArgsDict(TypedDict):
+        name: str
+        """
+        Attribute name to filter with.
+        """
+        values: Sequence[str]
+        """
+        One or more values filter with.
+        """
+elif False:
+    GetIsoPrivateFilterArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class GetIsoPrivateFilterArgs:
     def __init__(__self__, *,
@@ -1753,6 +2306,19 @@ class GetIsoPrivateFilterArgs:
     def values(self, value: Sequence[str]):
         pulumi.set(self, "values", value)
 
+
+if not MYPY:
+    class GetIsoPublicFilterArgsDict(TypedDict):
+        name: str
+        """
+        Attribute name to filter with.
+        """
+        values: Sequence[str]
+        """
+        One or more values filter with.
+        """
+elif False:
+    GetIsoPublicFilterArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class GetIsoPublicFilterArgs:
@@ -1791,6 +2357,19 @@ class GetIsoPublicFilterArgs:
         pulumi.set(self, "values", value)
 
 
+if not MYPY:
+    class GetKubernetesFilterArgsDict(TypedDict):
+        name: str
+        """
+        Attribute name to filter with.
+        """
+        values: Sequence[str]
+        """
+        One or more values filter with.
+        """
+elif False:
+    GetKubernetesFilterArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class GetKubernetesFilterArgs:
     def __init__(__self__, *,
@@ -1827,6 +2406,19 @@ class GetKubernetesFilterArgs:
     def values(self, value: Sequence[str]):
         pulumi.set(self, "values", value)
 
+
+if not MYPY:
+    class GetLoadBalancerFilterArgsDict(TypedDict):
+        name: str
+        """
+        Attribute name to filter with.
+        """
+        values: Sequence[str]
+        """
+        One or more values filter with.
+        """
+elif False:
+    GetLoadBalancerFilterArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class GetLoadBalancerFilterArgs:
@@ -1865,6 +2457,19 @@ class GetLoadBalancerFilterArgs:
         pulumi.set(self, "values", value)
 
 
+if not MYPY:
+    class GetObjectStorageClusterFilterArgsDict(TypedDict):
+        name: str
+        """
+        Attribute name to filter with.
+        """
+        values: Sequence[str]
+        """
+        One or more values filter with.
+        """
+elif False:
+    GetObjectStorageClusterFilterArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class GetObjectStorageClusterFilterArgs:
     def __init__(__self__, *,
@@ -1901,6 +2506,19 @@ class GetObjectStorageClusterFilterArgs:
     def values(self, value: Sequence[str]):
         pulumi.set(self, "values", value)
 
+
+if not MYPY:
+    class GetObjectStorageFilterArgsDict(TypedDict):
+        name: str
+        """
+        Attribute name to filter with.
+        """
+        values: Sequence[str]
+        """
+        One or more values filter with.
+        """
+elif False:
+    GetObjectStorageFilterArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class GetObjectStorageFilterArgs:
@@ -1939,6 +2557,19 @@ class GetObjectStorageFilterArgs:
         pulumi.set(self, "values", value)
 
 
+if not MYPY:
+    class GetOsFilterArgsDict(TypedDict):
+        name: str
+        """
+        Attribute name to filter with.
+        """
+        values: Sequence[str]
+        """
+        One or more values filter with.
+        """
+elif False:
+    GetOsFilterArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class GetOsFilterArgs:
     def __init__(__self__, *,
@@ -1975,6 +2606,19 @@ class GetOsFilterArgs:
     def values(self, value: Sequence[str]):
         pulumi.set(self, "values", value)
 
+
+if not MYPY:
+    class GetPlanFilterArgsDict(TypedDict):
+        name: str
+        """
+        Attribute name to filter with.
+        """
+        values: Sequence[str]
+        """
+        One or more values filter with.
+        """
+elif False:
+    GetPlanFilterArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class GetPlanFilterArgs:
@@ -2013,6 +2657,19 @@ class GetPlanFilterArgs:
         pulumi.set(self, "values", value)
 
 
+if not MYPY:
+    class GetRegionFilterArgsDict(TypedDict):
+        name: str
+        """
+        Attribute name to filter with.
+        """
+        values: Sequence[str]
+        """
+        One or more values filter with.
+        """
+elif False:
+    GetRegionFilterArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class GetRegionFilterArgs:
     def __init__(__self__, *,
@@ -2049,6 +2706,19 @@ class GetRegionFilterArgs:
     def values(self, value: Sequence[str]):
         pulumi.set(self, "values", value)
 
+
+if not MYPY:
+    class GetReservedIpFilterArgsDict(TypedDict):
+        name: str
+        """
+        Attribute name to filter with.
+        """
+        values: Sequence[str]
+        """
+        One or more values filter with.
+        """
+elif False:
+    GetReservedIpFilterArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class GetReservedIpFilterArgs:
@@ -2087,6 +2757,19 @@ class GetReservedIpFilterArgs:
         pulumi.set(self, "values", value)
 
 
+if not MYPY:
+    class GetReverseIpv4FilterArgsDict(TypedDict):
+        name: str
+        """
+        Attribute name to filter with.
+        """
+        values: Sequence[str]
+        """
+        One or more values to filter with.
+        """
+elif False:
+    GetReverseIpv4FilterArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class GetReverseIpv4FilterArgs:
     def __init__(__self__, *,
@@ -2123,6 +2806,19 @@ class GetReverseIpv4FilterArgs:
     def values(self, value: Sequence[str]):
         pulumi.set(self, "values", value)
 
+
+if not MYPY:
+    class GetReverseIpv6FilterArgsDict(TypedDict):
+        name: str
+        """
+        Attribute name to filter with.
+        """
+        values: Sequence[str]
+        """
+        One or more values to filter with.
+        """
+elif False:
+    GetReverseIpv6FilterArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class GetReverseIpv6FilterArgs:
@@ -2161,6 +2857,19 @@ class GetReverseIpv6FilterArgs:
         pulumi.set(self, "values", value)
 
 
+if not MYPY:
+    class GetSnapshotFilterArgsDict(TypedDict):
+        name: str
+        """
+        Attribute name to filter with.
+        """
+        values: Sequence[str]
+        """
+        One or more values filter with.
+        """
+elif False:
+    GetSnapshotFilterArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class GetSnapshotFilterArgs:
     def __init__(__self__, *,
@@ -2197,6 +2906,19 @@ class GetSnapshotFilterArgs:
     def values(self, value: Sequence[str]):
         pulumi.set(self, "values", value)
 
+
+if not MYPY:
+    class GetSshKeyFilterArgsDict(TypedDict):
+        name: str
+        """
+        Attribute name to filter with.
+        """
+        values: Sequence[str]
+        """
+        One or more values filter with.
+        """
+elif False:
+    GetSshKeyFilterArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class GetSshKeyFilterArgs:
@@ -2235,6 +2957,19 @@ class GetSshKeyFilterArgs:
         pulumi.set(self, "values", value)
 
 
+if not MYPY:
+    class GetStartupScriptFilterArgsDict(TypedDict):
+        name: str
+        """
+        Attribute name to filter with.
+        """
+        values: Sequence[str]
+        """
+        One or more values filter with.
+        """
+elif False:
+    GetStartupScriptFilterArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class GetStartupScriptFilterArgs:
     def __init__(__self__, *,
@@ -2271,6 +3006,19 @@ class GetStartupScriptFilterArgs:
     def values(self, value: Sequence[str]):
         pulumi.set(self, "values", value)
 
+
+if not MYPY:
+    class GetUserFilterArgsDict(TypedDict):
+        name: str
+        """
+        Attribute name to filter with.
+        """
+        values: Sequence[str]
+        """
+        One or more values filter with.
+        """
+elif False:
+    GetUserFilterArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class GetUserFilterArgs:
@@ -2309,6 +3057,19 @@ class GetUserFilterArgs:
         pulumi.set(self, "values", value)
 
 
+if not MYPY:
+    class GetVpc2FilterArgsDict(TypedDict):
+        name: str
+        """
+        Attribute name to filter with.
+        """
+        values: Sequence[str]
+        """
+        One or more values filter with.
+        """
+elif False:
+    GetVpc2FilterArgsDict: TypeAlias = Mapping[str, Any]
+
 @pulumi.input_type
 class GetVpc2FilterArgs:
     def __init__(__self__, *,
@@ -2345,6 +3106,19 @@ class GetVpc2FilterArgs:
     def values(self, value: Sequence[str]):
         pulumi.set(self, "values", value)
 
+
+if not MYPY:
+    class GetVpcFilterArgsDict(TypedDict):
+        name: str
+        """
+        Attribute name to filter with.
+        """
+        values: Sequence[str]
+        """
+        One or more values filter with.
+        """
+elif False:
+    GetVpcFilterArgsDict: TypeAlias = Mapping[str, Any]
 
 @pulumi.input_type
 class GetVpcFilterArgs:

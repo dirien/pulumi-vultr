@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -163,7 +168,7 @@ class AwaitableGetObjectStorageResult(GetObjectStorageResult):
             status=self.status)
 
 
-def get_object_storage(filters: Optional[Sequence[pulumi.InputType['GetObjectStorageFilterArgs']]] = None,
+def get_object_storage(filters: Optional[Sequence[Union['GetObjectStorageFilterArgs', 'GetObjectStorageFilterArgsDict']]] = None,
                        opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetObjectStorageResult:
     """
     Get information about an Object Storage subscription on Vultr.
@@ -176,14 +181,14 @@ def get_object_storage(filters: Optional[Sequence[pulumi.InputType['GetObjectSto
     import pulumi
     import pulumi_vultr as vultr
 
-    s3 = vultr.get_object_storage(filters=[vultr.GetObjectStorageFilterArgs(
-        name="label",
-        values=["my-s3"],
-    )])
+    s3 = vultr.get_object_storage(filters=[{
+        "name": "label",
+        "values": ["my-s3"],
+    }])
     ```
 
 
-    :param Sequence[pulumi.InputType['GetObjectStorageFilterArgs']] filters: Query parameters for finding operating systems.
+    :param Sequence[Union['GetObjectStorageFilterArgs', 'GetObjectStorageFilterArgsDict']] filters: Query parameters for finding operating systems.
     """
     __args__ = dict()
     __args__['filters'] = filters
@@ -202,10 +207,7 @@ def get_object_storage(filters: Optional[Sequence[pulumi.InputType['GetObjectSto
         s3_hostname=pulumi.get(__ret__, 's3_hostname'),
         s3_secret_key=pulumi.get(__ret__, 's3_secret_key'),
         status=pulumi.get(__ret__, 'status'))
-
-
-@_utilities.lift_output_func(get_object_storage)
-def get_object_storage_output(filters: Optional[pulumi.Input[Optional[Sequence[pulumi.InputType['GetObjectStorageFilterArgs']]]]] = None,
+def get_object_storage_output(filters: Optional[pulumi.Input[Optional[Sequence[Union['GetObjectStorageFilterArgs', 'GetObjectStorageFilterArgsDict']]]]] = None,
                               opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetObjectStorageResult]:
     """
     Get information about an Object Storage subscription on Vultr.
@@ -218,13 +220,28 @@ def get_object_storage_output(filters: Optional[pulumi.Input[Optional[Sequence[p
     import pulumi
     import pulumi_vultr as vultr
 
-    s3 = vultr.get_object_storage(filters=[vultr.GetObjectStorageFilterArgs(
-        name="label",
-        values=["my-s3"],
-    )])
+    s3 = vultr.get_object_storage(filters=[{
+        "name": "label",
+        "values": ["my-s3"],
+    }])
     ```
 
 
-    :param Sequence[pulumi.InputType['GetObjectStorageFilterArgs']] filters: Query parameters for finding operating systems.
+    :param Sequence[Union['GetObjectStorageFilterArgs', 'GetObjectStorageFilterArgsDict']] filters: Query parameters for finding operating systems.
     """
-    ...
+    __args__ = dict()
+    __args__['filters'] = filters
+    opts = pulumi.InvokeOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
+    __ret__ = pulumi.runtime.invoke_output('vultr:index/getObjectStorage:getObjectStorage', __args__, opts=opts, typ=GetObjectStorageResult)
+    return __ret__.apply(lambda __response__: GetObjectStorageResult(
+        cluster_id=pulumi.get(__response__, 'cluster_id'),
+        date_created=pulumi.get(__response__, 'date_created'),
+        filters=pulumi.get(__response__, 'filters'),
+        id=pulumi.get(__response__, 'id'),
+        label=pulumi.get(__response__, 'label'),
+        location=pulumi.get(__response__, 'location'),
+        region=pulumi.get(__response__, 'region'),
+        s3_access_key=pulumi.get(__response__, 's3_access_key'),
+        s3_hostname=pulumi.get(__response__, 's3_hostname'),
+        s3_secret_key=pulumi.get(__response__, 's3_secret_key'),
+        status=pulumi.get(__response__, 'status')))

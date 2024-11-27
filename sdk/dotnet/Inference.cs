@@ -63,7 +63,7 @@ namespace ediri.Vultr
         public Output<string> Label { get; private set; } = null!;
 
         [Output("usage")]
-        public Output<ImmutableDictionary<string, object>> Usage { get; private set; } = null!;
+        public Output<ImmutableDictionary<string, string>> Usage { get; private set; } = null!;
 
 
         /// <summary>
@@ -145,10 +145,10 @@ namespace ediri.Vultr
         public Input<string>? Label { get; set; }
 
         [Input("usage")]
-        private InputMap<object>? _usage;
-        public InputMap<object> Usage
+        private InputMap<string>? _usage;
+        public InputMap<string> Usage
         {
-            get => _usage ?? (_usage = new InputMap<object>());
+            get => _usage ?? (_usage = new InputMap<string>());
             set => _usage = value;
         }
 

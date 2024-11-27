@@ -91,14 +91,20 @@ type GetPlanResult struct {
 
 func GetPlanOutput(ctx *pulumi.Context, args GetPlanOutputArgs, opts ...pulumi.InvokeOption) GetPlanResultOutput {
 	return pulumi.ToOutputWithContext(context.Background(), args).
-		ApplyT(func(v interface{}) (GetPlanResult, error) {
+		ApplyT(func(v interface{}) (GetPlanResultOutput, error) {
 			args := v.(GetPlanArgs)
-			r, err := GetPlan(ctx, &args, opts...)
-			var s GetPlanResult
-			if r != nil {
-				s = *r
+			opts = internal.PkgInvokeDefaultOpts(opts)
+			var rv GetPlanResult
+			secret, err := ctx.InvokePackageRaw("vultr:index/getPlan:getPlan", args, &rv, "", opts...)
+			if err != nil {
+				return GetPlanResultOutput{}, err
 			}
-			return s, err
+
+			output := pulumi.ToOutput(rv).(GetPlanResultOutput)
+			if secret {
+				return pulumi.ToSecret(output).(GetPlanResultOutput), nil
+			}
+			return output, nil
 		}).(GetPlanResultOutput)
 }
 

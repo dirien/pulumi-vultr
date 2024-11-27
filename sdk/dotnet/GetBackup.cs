@@ -130,7 +130,7 @@ namespace ediri.Vultr
     [OutputType]
     public sealed class GetBackupResult
     {
-        public readonly ImmutableArray<ImmutableDictionary<string, object>> Backups;
+        public readonly ImmutableArray<ImmutableDictionary<string, string>> Backups;
         public readonly ImmutableArray<Outputs.GetBackupFilterResult> Filters;
         /// <summary>
         /// The provider-assigned unique ID for this managed resource.
@@ -139,7 +139,7 @@ namespace ediri.Vultr
 
         [OutputConstructor]
         private GetBackupResult(
-            ImmutableArray<ImmutableDictionary<string, object>> backups,
+            ImmutableArray<ImmutableDictionary<string, string>> backups,
 
             ImmutableArray<Outputs.GetBackupFilterResult> filters,
 

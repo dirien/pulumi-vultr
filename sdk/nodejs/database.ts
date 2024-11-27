@@ -82,6 +82,14 @@ export class Database extends pulumi.CustomResource {
     }
 
     /**
+     * The certificate to authenticate the default user (Kafka engine types only).
+     */
+    public readonly accessCert!: pulumi.Output<string>;
+    /**
+     * The private key to authenticate the default user (Kafka engine types only).
+     */
+    public readonly accessKey!: pulumi.Output<string>;
+    /**
      * The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
      */
     public readonly clusterTimeZone!: pulumi.Output<string>;
@@ -104,7 +112,7 @@ export class Database extends pulumi.CustomResource {
     /**
      * An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
      */
-    public readonly ferretdbCredentials!: pulumi.Output<{[key: string]: any}>;
+    public readonly ferretdbCredentials!: pulumi.Output<{[key: string]: string}>;
     /**
      * The hostname assigned to the managed database.
      */
@@ -128,7 +136,7 @@ export class Database extends pulumi.CustomResource {
     /**
      * The configuration value for the long query time (in seconds) on the managed database (MySQL engine types only).
      */
-    public readonly mysqlLongQueryTime!: pulumi.Output<number | undefined>;
+    public readonly mysqlLongQueryTime!: pulumi.Output<number>;
     /**
      * The configuration value for whether primary keys are required on the managed database (MySQL engine types only).
      */
@@ -136,7 +144,7 @@ export class Database extends pulumi.CustomResource {
     /**
      * The configuration value for slow query logging on the managed database (MySQL engine types only).
      */
-    public readonly mysqlSlowQueryLog!: pulumi.Output<boolean | undefined>;
+    public readonly mysqlSlowQueryLog!: pulumi.Output<boolean>;
     /**
      * A list of SQL modes to configure for the managed database (MySQL engine types only - `ALLOW_INVALID_DATES`, `ANSI`, `ANSI_QUOTES`, `ERROR_FOR_DIVISION_BY_ZERO`, `HIGH_NOT_PRECEDENCE`, `IGNORE_SPACE`, `NO_AUTO_VALUE_ON_ZERO`, `NO_DIR_IN_CREATE`, `NO_ENGINE_SUBSTITUTION`, `NO_UNSIGNED_SUBTRACTION`, `NO_ZERO_DATE`, `NO_ZERO_IN_DATE`, `ONLY_FULL_GROUP_BY`, `PIPES_AS_CONCAT`, `REAL_AS_FLOAT`, `STRICT_ALL_TABLES`, `STRICT_TRANS_TABLES`, `TIME_TRUNCATE_FRACTIONAL`, `TRADITIONAL`).
      */
@@ -150,6 +158,10 @@ export class Database extends pulumi.CustomResource {
      */
     public readonly plan!: pulumi.Output<string>;
     /**
+     * The number of brokers available on the managed database (Kafka engine types only).
+     */
+    public readonly planBrokers!: pulumi.Output<number>;
+    /**
      * The description of the disk(s) on the managed database.
      */
     public readonly planDisk!: pulumi.Output<number>;
@@ -158,9 +170,9 @@ export class Database extends pulumi.CustomResource {
      */
     public /*out*/ readonly planRam!: pulumi.Output<number>;
     /**
-     * The number of standby nodes available on the managed database.
+     * The number of standby nodes available on the managed database (excluded for Kafka engine types).
      */
-    public /*out*/ readonly planReplicas!: pulumi.Output<number>;
+    public readonly planReplicas!: pulumi.Output<number>;
     /**
      * The number of virtual CPUs available on the managed database.
      */
@@ -185,6 +197,10 @@ export class Database extends pulumi.CustomResource {
      * The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
      */
     public readonly region!: pulumi.Output<string>;
+    /**
+     * The SASL connection port for the managed database (Kafka engine types only).
+     */
+    public readonly saslPort!: pulumi.Output<string>;
     /**
      * The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).
      */
@@ -219,6 +235,8 @@ export class Database extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as DatabaseState | undefined;
+            resourceInputs["accessCert"] = state ? state.accessCert : undefined;
+            resourceInputs["accessKey"] = state ? state.accessKey : undefined;
             resourceInputs["clusterTimeZone"] = state ? state.clusterTimeZone : undefined;
             resourceInputs["databaseEngine"] = state ? state.databaseEngine : undefined;
             resourceInputs["databaseEngineVersion"] = state ? state.databaseEngineVersion : undefined;
@@ -236,6 +254,7 @@ export class Database extends pulumi.CustomResource {
             resourceInputs["mysqlSqlModes"] = state ? state.mysqlSqlModes : undefined;
             resourceInputs["password"] = state ? state.password : undefined;
             resourceInputs["plan"] = state ? state.plan : undefined;
+            resourceInputs["planBrokers"] = state ? state.planBrokers : undefined;
             resourceInputs["planDisk"] = state ? state.planDisk : undefined;
             resourceInputs["planRam"] = state ? state.planRam : undefined;
             resourceInputs["planReplicas"] = state ? state.planReplicas : undefined;
@@ -245,6 +264,7 @@ export class Database extends pulumi.CustomResource {
             resourceInputs["readReplicas"] = state ? state.readReplicas : undefined;
             resourceInputs["redisEvictionPolicy"] = state ? state.redisEvictionPolicy : undefined;
             resourceInputs["region"] = state ? state.region : undefined;
+            resourceInputs["saslPort"] = state ? state.saslPort : undefined;
             resourceInputs["status"] = state ? state.status : undefined;
             resourceInputs["tag"] = state ? state.tag : undefined;
             resourceInputs["trustedIps"] = state ? state.trustedIps : undefined;
@@ -267,6 +287,8 @@ export class Database extends pulumi.CustomResource {
             if ((!args || args.region === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'region'");
             }
+            resourceInputs["accessCert"] = args ? args.accessCert : undefined;
+            resourceInputs["accessKey"] = args ? args.accessKey : undefined;
             resourceInputs["clusterTimeZone"] = args ? args.clusterTimeZone : undefined;
             resourceInputs["databaseEngine"] = args ? args.databaseEngine : undefined;
             resourceInputs["databaseEngineVersion"] = args ? args.databaseEngineVersion : undefined;
@@ -280,11 +302,14 @@ export class Database extends pulumi.CustomResource {
             resourceInputs["mysqlSqlModes"] = args ? args.mysqlSqlModes : undefined;
             resourceInputs["password"] = args ? args.password : undefined;
             resourceInputs["plan"] = args ? args.plan : undefined;
+            resourceInputs["planBrokers"] = args ? args.planBrokers : undefined;
             resourceInputs["planDisk"] = args ? args.planDisk : undefined;
+            resourceInputs["planReplicas"] = args ? args.planReplicas : undefined;
             resourceInputs["publicHost"] = args ? args.publicHost : undefined;
             resourceInputs["readReplicas"] = args ? args.readReplicas : undefined;
             resourceInputs["redisEvictionPolicy"] = args ? args.redisEvictionPolicy : undefined;
             resourceInputs["region"] = args ? args.region : undefined;
+            resourceInputs["saslPort"] = args ? args.saslPort : undefined;
             resourceInputs["tag"] = args ? args.tag : undefined;
             resourceInputs["trustedIps"] = args ? args.trustedIps : undefined;
             resourceInputs["vpcId"] = args ? args.vpcId : undefined;
@@ -293,7 +318,6 @@ export class Database extends pulumi.CustomResource {
             resourceInputs["host"] = undefined /*out*/;
             resourceInputs["latestBackup"] = undefined /*out*/;
             resourceInputs["planRam"] = undefined /*out*/;
-            resourceInputs["planReplicas"] = undefined /*out*/;
             resourceInputs["planVcpus"] = undefined /*out*/;
             resourceInputs["port"] = undefined /*out*/;
             resourceInputs["status"] = undefined /*out*/;
@@ -308,6 +332,14 @@ export class Database extends pulumi.CustomResource {
  * Input properties used for looking up and filtering Database resources.
  */
 export interface DatabaseState {
+    /**
+     * The certificate to authenticate the default user (Kafka engine types only).
+     */
+    accessCert?: pulumi.Input<string>;
+    /**
+     * The private key to authenticate the default user (Kafka engine types only).
+     */
+    accessKey?: pulumi.Input<string>;
     /**
      * The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
      */
@@ -331,7 +363,7 @@ export interface DatabaseState {
     /**
      * An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
      */
-    ferretdbCredentials?: pulumi.Input<{[key: string]: any}>;
+    ferretdbCredentials?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
      * The hostname assigned to the managed database.
      */
@@ -377,6 +409,10 @@ export interface DatabaseState {
      */
     plan?: pulumi.Input<string>;
     /**
+     * The number of brokers available on the managed database (Kafka engine types only).
+     */
+    planBrokers?: pulumi.Input<number>;
+    /**
      * The description of the disk(s) on the managed database.
      */
     planDisk?: pulumi.Input<number>;
@@ -385,7 +421,7 @@ export interface DatabaseState {
      */
     planRam?: pulumi.Input<number>;
     /**
-     * The number of standby nodes available on the managed database.
+     * The number of standby nodes available on the managed database (excluded for Kafka engine types).
      */
     planReplicas?: pulumi.Input<number>;
     /**
@@ -413,6 +449,10 @@ export interface DatabaseState {
      */
     region?: pulumi.Input<string>;
     /**
+     * The SASL connection port for the managed database (Kafka engine types only).
+     */
+    saslPort?: pulumi.Input<string>;
+    /**
      * The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).
      */
     status?: pulumi.Input<string>;
@@ -439,6 +479,14 @@ export interface DatabaseState {
  */
 export interface DatabaseArgs {
     /**
+     * The certificate to authenticate the default user (Kafka engine types only).
+     */
+    accessCert?: pulumi.Input<string>;
+    /**
+     * The private key to authenticate the default user (Kafka engine types only).
+     */
+    accessKey?: pulumi.Input<string>;
+    /**
      * The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
      */
     clusterTimeZone?: pulumi.Input<string>;
@@ -453,7 +501,7 @@ export interface DatabaseArgs {
     /**
      * An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
      */
-    ferretdbCredentials?: pulumi.Input<{[key: string]: any}>;
+    ferretdbCredentials?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
      * A label for the managed database.
      */
@@ -491,9 +539,17 @@ export interface DatabaseArgs {
      */
     plan: pulumi.Input<string>;
     /**
+     * The number of brokers available on the managed database (Kafka engine types only).
+     */
+    planBrokers?: pulumi.Input<number>;
+    /**
      * The description of the disk(s) on the managed database.
      */
     planDisk?: pulumi.Input<number>;
+    /**
+     * The number of standby nodes available on the managed database (excluded for Kafka engine types).
+     */
+    planReplicas?: pulumi.Input<number>;
     /**
      * The public hostname assigned to the managed database (VPC-attached only).
      */
@@ -510,6 +566,10 @@ export interface DatabaseArgs {
      * The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
      */
     region: pulumi.Input<string>;
+    /**
+     * The SASL connection port for the managed database (Kafka engine types only).
+     */
+    saslPort?: pulumi.Input<string>;
     /**
      * The tag to assign to the managed database.
      */

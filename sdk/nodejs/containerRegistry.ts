@@ -76,11 +76,11 @@ export class ContainerRegistry extends pulumi.CustomResource {
     /**
      * The user associated with the container registry.
      */
-    public /*out*/ readonly rootUser!: pulumi.Output<{[key: string]: any}>;
+    public /*out*/ readonly rootUser!: pulumi.Output<{[key: string]: string}>;
     /**
      * A listing of current storage usage relevant to the container registry.
      */
-    public /*out*/ readonly storage!: pulumi.Output<{[key: string]: any}>;
+    public /*out*/ readonly storage!: pulumi.Output<{[key: string]: string}>;
     /**
      * The URN of the container registry.
      */
@@ -162,11 +162,11 @@ export interface ContainerRegistryState {
     /**
      * The user associated with the container registry.
      */
-    rootUser?: pulumi.Input<{[key: string]: any}>;
+    rootUser?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
      * A listing of current storage usage relevant to the container registry.
      */
-    storage?: pulumi.Input<{[key: string]: any}>;
+    storage?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
      * The URN of the container registry.
      */

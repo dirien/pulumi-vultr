@@ -156,11 +156,11 @@ namespace ediri.Vultr
         public readonly string CookieName;
         public readonly string DateCreated;
         public readonly ImmutableArray<Outputs.GetLoadBalancerFilterResult> Filters;
-        public readonly ImmutableArray<ImmutableDictionary<string, object>> FirewallRules;
+        public readonly ImmutableArray<ImmutableDictionary<string, string>> FirewallRules;
         /// <summary>
         /// Defines the forwarding rules for a load balancer. The configuration of a `forwarding_rules` is listened below.
         /// </summary>
-        public readonly ImmutableArray<ImmutableDictionary<string, object>> ForwardingRules;
+        public readonly ImmutableArray<ImmutableDictionary<string, string>> ForwardingRules;
         /// <summary>
         /// Boolean value that indicates if SSL is enabled.
         /// </summary>
@@ -168,7 +168,7 @@ namespace ediri.Vultr
         /// <summary>
         /// Defines the way load balancers should check for health. The configuration of a `health_check` is listed below.
         /// </summary>
-        public readonly ImmutableDictionary<string, object> HealthCheck;
+        public readonly ImmutableDictionary<string, string> HealthCheck;
         /// <summary>
         /// The provider-assigned unique ID for this managed resource.
         /// </summary>
@@ -193,7 +193,7 @@ namespace ediri.Vultr
         /// The region your load balancer is deployed in.
         /// </summary>
         public readonly string Region;
-        public readonly ImmutableDictionary<string, object> Ssl;
+        public readonly ImmutableDictionary<string, string> Ssl;
         /// <summary>
         /// Boolean value that indicates if HTTP calls will be redirected to HTTPS.
         /// </summary>
@@ -215,13 +215,13 @@ namespace ediri.Vultr
 
             ImmutableArray<Outputs.GetLoadBalancerFilterResult> filters,
 
-            ImmutableArray<ImmutableDictionary<string, object>> firewallRules,
+            ImmutableArray<ImmutableDictionary<string, string>> firewallRules,
 
-            ImmutableArray<ImmutableDictionary<string, object>> forwardingRules,
+            ImmutableArray<ImmutableDictionary<string, string>> forwardingRules,
 
             bool hasSsl,
 
-            ImmutableDictionary<string, object> healthCheck,
+            ImmutableDictionary<string, string> healthCheck,
 
             string id,
 
@@ -235,7 +235,7 @@ namespace ediri.Vultr
 
             string region,
 
-            ImmutableDictionary<string, object> ssl,
+            ImmutableDictionary<string, string> ssl,
 
             bool sslRedirect,
 

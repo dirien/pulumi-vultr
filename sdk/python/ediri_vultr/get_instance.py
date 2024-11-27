@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -23,7 +28,7 @@ class GetInstanceResult:
     """
     A collection of values returned by getInstance.
     """
-    def __init__(__self__, allowed_bandwidth=None, app_id=None, backups=None, backups_schedule=None, date_created=None, disk=None, features=None, filters=None, firewall_group_id=None, gateway_v4=None, hostname=None, id=None, image_id=None, internal_ip=None, kvm=None, label=None, location=None, main_ip=None, netmask_v4=None, os=None, os_id=None, plan=None, power_status=None, ram=None, region=None, server_status=None, status=None, tags=None, v6_main_ip=None, v6_network=None, v6_network_size=None, vcpu_count=None, vpc2_ids=None, vpc_ids=None):
+    def __init__(__self__, allowed_bandwidth=None, app_id=None, backups=None, backups_schedule=None, date_created=None, disk=None, features=None, filters=None, firewall_group_id=None, gateway_v4=None, hostname=None, id=None, image_id=None, internal_ip=None, kvm=None, label=None, location=None, main_ip=None, netmask_v4=None, os=None, os_id=None, plan=None, power_status=None, ram=None, region=None, server_status=None, status=None, tags=None, user_scheme=None, v6_main_ip=None, v6_network=None, v6_network_size=None, vcpu_count=None, vpc2_ids=None, vpc_ids=None):
         if allowed_bandwidth and not isinstance(allowed_bandwidth, int):
             raise TypeError("Expected argument 'allowed_bandwidth' to be a int")
         pulumi.set(__self__, "allowed_bandwidth", allowed_bandwidth)
@@ -108,6 +113,9 @@ class GetInstanceResult:
         if tags and not isinstance(tags, list):
             raise TypeError("Expected argument 'tags' to be a list")
         pulumi.set(__self__, "tags", tags)
+        if user_scheme and not isinstance(user_scheme, str):
+            raise TypeError("Expected argument 'user_scheme' to be a str")
+        pulumi.set(__self__, "user_scheme", user_scheme)
         if v6_main_ip and not isinstance(v6_main_ip, str):
             raise TypeError("Expected argument 'v6_main_ip' to be a str")
         pulumi.set(__self__, "v6_main_ip", v6_main_ip)
@@ -150,7 +158,7 @@ class GetInstanceResult:
 
     @property
     @pulumi.getter(name="backupsSchedule")
-    def backups_schedule(self) -> Mapping[str, Any]:
+    def backups_schedule(self) -> Mapping[str, str]:
         """
         The current configuration for backups
         """
@@ -343,6 +351,14 @@ class GetInstanceResult:
         return pulumi.get(self, "tags")
 
     @property
+    @pulumi.getter(name="userScheme")
+    def user_scheme(self) -> str:
+        """
+        The scheme used for the default user (linux servers only).
+        """
+        return pulumi.get(self, "user_scheme")
+
+    @property
     @pulumi.getter(name="v6MainIp")
     def v6_main_ip(self) -> str:
         """
@@ -422,6 +438,7 @@ class AwaitableGetInstanceResult(GetInstanceResult):
             server_status=self.server_status,
             status=self.status,
             tags=self.tags,
+            user_scheme=self.user_scheme,
             v6_main_ip=self.v6_main_ip,
             v6_network=self.v6_network,
             v6_network_size=self.v6_network_size,
@@ -430,7 +447,7 @@ class AwaitableGetInstanceResult(GetInstanceResult):
             vpc_ids=self.vpc_ids)
 
 
-def get_instance(filters: Optional[Sequence[pulumi.InputType['GetInstanceFilterArgs']]] = None,
+def get_instance(filters: Optional[Sequence[Union['GetInstanceFilterArgs', 'GetInstanceFilterArgsDict']]] = None,
                  opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetInstanceResult:
     """
     Get information about a Vultr instance.
@@ -443,14 +460,14 @@ def get_instance(filters: Optional[Sequence[pulumi.InputType['GetInstanceFilterA
     import pulumi
     import pulumi_vultr as vultr
 
-    my_instance = vultr.get_instance(filters=[vultr.GetInstanceFilterArgs(
-        name="label",
-        values=["my-instance-label"],
-    )])
+    my_instance = vultr.get_instance(filters=[{
+        "name": "label",
+        "values": ["my-instance-label"],
+    }])
     ```
 
 
-    :param Sequence[pulumi.InputType['GetInstanceFilterArgs']] filters: Query parameters for finding instances.
+    :param Sequence[Union['GetInstanceFilterArgs', 'GetInstanceFilterArgsDict']] filters: Query parameters for finding instances.
     """
     __args__ = dict()
     __args__['filters'] = filters
@@ -486,16 +503,14 @@ def get_instance(filters: Optional[Sequence[pulumi.InputType['GetInstanceFilterA
         server_status=pulumi.get(__ret__, 'server_status'),
         status=pulumi.get(__ret__, 'status'),
         tags=pulumi.get(__ret__, 'tags'),
+        user_scheme=pulumi.get(__ret__, 'user_scheme'),
         v6_main_ip=pulumi.get(__ret__, 'v6_main_ip'),
         v6_network=pulumi.get(__ret__, 'v6_network'),
         v6_network_size=pulumi.get(__ret__, 'v6_network_size'),
         vcpu_count=pulumi.get(__ret__, 'vcpu_count'),
         vpc2_ids=pulumi.get(__ret__, 'vpc2_ids'),
         vpc_ids=pulumi.get(__ret__, 'vpc_ids'))
-
-
-@_utilities.lift_output_func(get_instance)
-def get_instance_output(filters: Optional[pulumi.Input[Optional[Sequence[pulumi.InputType['GetInstanceFilterArgs']]]]] = None,
+def get_instance_output(filters: Optional[pulumi.Input[Optional[Sequence[Union['GetInstanceFilterArgs', 'GetInstanceFilterArgsDict']]]]] = None,
                         opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetInstanceResult]:
     """
     Get information about a Vultr instance.
@@ -508,13 +523,52 @@ def get_instance_output(filters: Optional[pulumi.Input[Optional[Sequence[pulumi.
     import pulumi
     import pulumi_vultr as vultr
 
-    my_instance = vultr.get_instance(filters=[vultr.GetInstanceFilterArgs(
-        name="label",
-        values=["my-instance-label"],
-    )])
+    my_instance = vultr.get_instance(filters=[{
+        "name": "label",
+        "values": ["my-instance-label"],
+    }])
     ```
 
 
-    :param Sequence[pulumi.InputType['GetInstanceFilterArgs']] filters: Query parameters for finding instances.
+    :param Sequence[Union['GetInstanceFilterArgs', 'GetInstanceFilterArgsDict']] filters: Query parameters for finding instances.
     """
-    ...
+    __args__ = dict()
+    __args__['filters'] = filters
+    opts = pulumi.InvokeOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
+    __ret__ = pulumi.runtime.invoke_output('vultr:index/getInstance:getInstance', __args__, opts=opts, typ=GetInstanceResult)
+    return __ret__.apply(lambda __response__: GetInstanceResult(
+        allowed_bandwidth=pulumi.get(__response__, 'allowed_bandwidth'),
+        app_id=pulumi.get(__response__, 'app_id'),
+        backups=pulumi.get(__response__, 'backups'),
+        backups_schedule=pulumi.get(__response__, 'backups_schedule'),
+        date_created=pulumi.get(__response__, 'date_created'),
+        disk=pulumi.get(__response__, 'disk'),
+        features=pulumi.get(__response__, 'features'),
+        filters=pulumi.get(__response__, 'filters'),
+        firewall_group_id=pulumi.get(__response__, 'firewall_group_id'),
+        gateway_v4=pulumi.get(__response__, 'gateway_v4'),
+        hostname=pulumi.get(__response__, 'hostname'),
+        id=pulumi.get(__response__, 'id'),
+        image_id=pulumi.get(__response__, 'image_id'),
+        internal_ip=pulumi.get(__response__, 'internal_ip'),
+        kvm=pulumi.get(__response__, 'kvm'),
+        label=pulumi.get(__response__, 'label'),
+        location=pulumi.get(__response__, 'location'),
+        main_ip=pulumi.get(__response__, 'main_ip'),
+        netmask_v4=pulumi.get(__response__, 'netmask_v4'),
+        os=pulumi.get(__response__, 'os'),
+        os_id=pulumi.get(__response__, 'os_id'),
+        plan=pulumi.get(__response__, 'plan'),
+        power_status=pulumi.get(__response__, 'power_status'),
+        ram=pulumi.get(__response__, 'ram'),
+        region=pulumi.get(__response__, 'region'),
+        server_status=pulumi.get(__response__, 'server_status'),
+        status=pulumi.get(__response__, 'status'),
+        tags=pulumi.get(__response__, 'tags'),
+        user_scheme=pulumi.get(__response__, 'user_scheme'),
+        v6_main_ip=pulumi.get(__response__, 'v6_main_ip'),
+        v6_network=pulumi.get(__response__, 'v6_network'),
+        v6_network_size=pulumi.get(__response__, 'v6_network_size'),
+        vcpu_count=pulumi.get(__response__, 'vcpu_count'),
+        vpc2_ids=pulumi.get(__response__, 'vpc2_ids'),
+        vpc_ids=pulumi.get(__response__, 'vpc_ids')))

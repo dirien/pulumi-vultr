@@ -78,7 +78,7 @@ export class DatabaseReplica extends pulumi.CustomResource {
     /**
      * An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
      */
-    public readonly ferretdbCredentials!: pulumi.Output<{[key: string]: any}>;
+    public readonly ferretdbCredentials!: pulumi.Output<{[key: string]: string}>;
     /**
      * The hostname assigned to the managed database read replica.
      */
@@ -299,7 +299,7 @@ export interface DatabaseReplicaState {
     /**
      * An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
      */
-    ferretdbCredentials?: pulumi.Input<{[key: string]: any}>;
+    ferretdbCredentials?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
      * The hostname assigned to the managed database read replica.
      */
@@ -409,7 +409,7 @@ export interface DatabaseReplicaArgs {
     /**
      * An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
      */
-    ferretdbCredentials?: pulumi.Input<{[key: string]: any}>;
+    ferretdbCredentials?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
      * A label for the managed database read replica.
      */

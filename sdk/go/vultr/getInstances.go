@@ -26,31 +26,25 @@ import (
 //	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 //
 // )
-//
-//	func main() {
-//		pulumi.Run(func(ctx *pulumi.Context) error {
-//			activeInstances, err := vultr.GetInstances(ctx, &vultr.GetInstancesArgs{
-//				Filters: []vultr.GetInstancesFilter{
-//					{
-//						Name: "status",
-//						Values: []string{
-//							"active",
-//						},
-//					},
-//				},
-//			}, nil)
-//			if err != nil {
-//				return err
-//			}
-//			var splat0 []*string
-//			for _, val0 := range activeInstances.Instances {
-//				splat0 = append(splat0, val0.Label)
-//			}
-//			ctx.Export("instances", splat0)
-//			return nil
-//		})
-//	}
-//
+// func main() {
+// pulumi.Run(func(ctx *pulumi.Context) error {
+// activeInstances, err := vultr.GetInstances(ctx, &vultr.GetInstancesArgs{
+// Filters: []vultr.GetInstancesFilter{
+// {
+// Name: "status",
+// Values: []string{
+// "active",
+// },
+// },
+// },
+// }, nil);
+// if err != nil {
+// return err
+// }
+// ctx.Export("instances", pulumi.StringArray(%!v(PANIC=Format method: fatal: A failure has occurred: unlowered splat expression @ #-functions-%svultr:index-getInstances:getInstances.pp:8,11-45)))
+// return nil
+// })
+// }
 // ```
 func GetInstances(ctx *pulumi.Context, args *GetInstancesArgs, opts ...pulumi.InvokeOption) (*GetInstancesResult, error) {
 	opts = internal.PkgInvokeDefaultOpts(opts)
@@ -79,14 +73,20 @@ type GetInstancesResult struct {
 
 func GetInstancesOutput(ctx *pulumi.Context, args GetInstancesOutputArgs, opts ...pulumi.InvokeOption) GetInstancesResultOutput {
 	return pulumi.ToOutputWithContext(context.Background(), args).
-		ApplyT(func(v interface{}) (GetInstancesResult, error) {
+		ApplyT(func(v interface{}) (GetInstancesResultOutput, error) {
 			args := v.(GetInstancesArgs)
-			r, err := GetInstances(ctx, &args, opts...)
-			var s GetInstancesResult
-			if r != nil {
-				s = *r
+			opts = internal.PkgInvokeDefaultOpts(opts)
+			var rv GetInstancesResult
+			secret, err := ctx.InvokePackageRaw("vultr:index/getInstances:getInstances", args, &rv, "", opts...)
+			if err != nil {
+				return GetInstancesResultOutput{}, err
 			}
-			return s, err
+
+			output := pulumi.ToOutput(rv).(GetInstancesResultOutput)
+			if secret {
+				return pulumi.ToSecret(output).(GetInstancesResultOutput), nil
+			}
+			return output, nil
 		}).(GetInstancesResultOutput)
 }
 

@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -20,13 +25,15 @@ class DatabaseUserArgs:
                  username: pulumi.Input[str],
                  access_control: Optional[pulumi.Input['DatabaseUserAccessControlArgs']] = None,
                  encryption: Optional[pulumi.Input[str]] = None,
-                 password: Optional[pulumi.Input[str]] = None):
+                 password: Optional[pulumi.Input[str]] = None,
+                 permission: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a DatabaseUser resource.
         :param pulumi.Input[str] database_id: The managed database ID you want to attach this user to.
         :param pulumi.Input[str] username: The username of the new managed database user.
         :param pulumi.Input[str] encryption: The encryption type of the new managed database user's password (MySQL engine types only - `caching_sha2_password`, `mysql_native_password`).
         :param pulumi.Input[str] password: The password of the new managed database user.
+        :param pulumi.Input[str] permission: The permission level for the database user (Kafka engine types only - `admin`, `read`, `write`, `readwrite`).
         """
         pulumi.set(__self__, "database_id", database_id)
         pulumi.set(__self__, "username", username)
@@ -36,6 +43,8 @@ class DatabaseUserArgs:
             pulumi.set(__self__, "encryption", encryption)
         if password is not None:
             pulumi.set(__self__, "password", password)
+        if permission is not None:
+            pulumi.set(__self__, "permission", permission)
 
     @property
     @pulumi.getter(name="databaseId")
@@ -94,32 +103,63 @@ class DatabaseUserArgs:
     def password(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "password", value)
 
+    @property
+    @pulumi.getter
+    def permission(self) -> Optional[pulumi.Input[str]]:
+        """
+        The permission level for the database user (Kafka engine types only - `admin`, `read`, `write`, `readwrite`).
+        """
+        return pulumi.get(self, "permission")
+
+    @permission.setter
+    def permission(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "permission", value)
+
 
 @pulumi.input_type
 class _DatabaseUserState:
     def __init__(__self__, *,
+                 access_cert: Optional[pulumi.Input[str]] = None,
                  access_control: Optional[pulumi.Input['DatabaseUserAccessControlArgs']] = None,
+                 access_key: Optional[pulumi.Input[str]] = None,
                  database_id: Optional[pulumi.Input[str]] = None,
                  encryption: Optional[pulumi.Input[str]] = None,
                  password: Optional[pulumi.Input[str]] = None,
+                 permission: Optional[pulumi.Input[str]] = None,
                  username: Optional[pulumi.Input[str]] = None):
         """
         Input properties used for looking up and filtering DatabaseUser resources.
         :param pulumi.Input[str] database_id: The managed database ID you want to attach this user to.
         :param pulumi.Input[str] encryption: The encryption type of the new managed database user's password (MySQL engine types only - `caching_sha2_password`, `mysql_native_password`).
         :param pulumi.Input[str] password: The password of the new managed database user.
+        :param pulumi.Input[str] permission: The permission level for the database user (Kafka engine types only - `admin`, `read`, `write`, `readwrite`).
         :param pulumi.Input[str] username: The username of the new managed database user.
         """
+        if access_cert is not None:
+            pulumi.set(__self__, "access_cert", access_cert)
         if access_control is not None:
             pulumi.set(__self__, "access_control", access_control)
+        if access_key is not None:
+            pulumi.set(__self__, "access_key", access_key)
         if database_id is not None:
             pulumi.set(__self__, "database_id", database_id)
         if encryption is not None:
             pulumi.set(__self__, "encryption", encryption)
         if password is not None:
             pulumi.set(__self__, "password", password)
+        if permission is not None:
+            pulumi.set(__self__, "permission", permission)
         if username is not None:
             pulumi.set(__self__, "username", username)
+
+    @property
+    @pulumi.getter(name="accessCert")
+    def access_cert(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "access_cert")
+
+    @access_cert.setter
+    def access_cert(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "access_cert", value)
 
     @property
     @pulumi.getter(name="accessControl")
@@ -129,6 +169,15 @@ class _DatabaseUserState:
     @access_control.setter
     def access_control(self, value: Optional[pulumi.Input['DatabaseUserAccessControlArgs']]):
         pulumi.set(self, "access_control", value)
+
+    @property
+    @pulumi.getter(name="accessKey")
+    def access_key(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "access_key")
+
+    @access_key.setter
+    def access_key(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "access_key", value)
 
     @property
     @pulumi.getter(name="databaseId")
@@ -168,6 +217,18 @@ class _DatabaseUserState:
 
     @property
     @pulumi.getter
+    def permission(self) -> Optional[pulumi.Input[str]]:
+        """
+        The permission level for the database user (Kafka engine types only - `admin`, `read`, `write`, `readwrite`).
+        """
+        return pulumi.get(self, "permission")
+
+    @permission.setter
+    def permission(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "permission", value)
+
+    @property
+    @pulumi.getter
     def username(self) -> Optional[pulumi.Input[str]]:
         """
         The username of the new managed database user.
@@ -184,10 +245,11 @@ class DatabaseUser(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 access_control: Optional[pulumi.Input[pulumi.InputType['DatabaseUserAccessControlArgs']]] = None,
+                 access_control: Optional[pulumi.Input[Union['DatabaseUserAccessControlArgs', 'DatabaseUserAccessControlArgsDict']]] = None,
                  database_id: Optional[pulumi.Input[str]] = None,
                  encryption: Optional[pulumi.Input[str]] = None,
                  password: Optional[pulumi.Input[str]] = None,
+                 permission: Optional[pulumi.Input[str]] = None,
                  username: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
@@ -212,6 +274,7 @@ class DatabaseUser(pulumi.CustomResource):
         :param pulumi.Input[str] database_id: The managed database ID you want to attach this user to.
         :param pulumi.Input[str] encryption: The encryption type of the new managed database user's password (MySQL engine types only - `caching_sha2_password`, `mysql_native_password`).
         :param pulumi.Input[str] password: The password of the new managed database user.
+        :param pulumi.Input[str] permission: The permission level for the database user (Kafka engine types only - `admin`, `read`, `write`, `readwrite`).
         :param pulumi.Input[str] username: The username of the new managed database user.
         """
         ...
@@ -252,10 +315,11 @@ class DatabaseUser(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 access_control: Optional[pulumi.Input[pulumi.InputType['DatabaseUserAccessControlArgs']]] = None,
+                 access_control: Optional[pulumi.Input[Union['DatabaseUserAccessControlArgs', 'DatabaseUserAccessControlArgsDict']]] = None,
                  database_id: Optional[pulumi.Input[str]] = None,
                  encryption: Optional[pulumi.Input[str]] = None,
                  password: Optional[pulumi.Input[str]] = None,
+                 permission: Optional[pulumi.Input[str]] = None,
                  username: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
@@ -272,9 +336,12 @@ class DatabaseUser(pulumi.CustomResource):
             __props__.__dict__["database_id"] = database_id
             __props__.__dict__["encryption"] = encryption
             __props__.__dict__["password"] = password
+            __props__.__dict__["permission"] = permission
             if username is None and not opts.urn:
                 raise TypeError("Missing required property 'username'")
             __props__.__dict__["username"] = username
+            __props__.__dict__["access_cert"] = None
+            __props__.__dict__["access_key"] = None
         super(DatabaseUser, __self__).__init__(
             'vultr:index/databaseUser:DatabaseUser',
             resource_name,
@@ -285,10 +352,13 @@ class DatabaseUser(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
-            access_control: Optional[pulumi.Input[pulumi.InputType['DatabaseUserAccessControlArgs']]] = None,
+            access_cert: Optional[pulumi.Input[str]] = None,
+            access_control: Optional[pulumi.Input[Union['DatabaseUserAccessControlArgs', 'DatabaseUserAccessControlArgsDict']]] = None,
+            access_key: Optional[pulumi.Input[str]] = None,
             database_id: Optional[pulumi.Input[str]] = None,
             encryption: Optional[pulumi.Input[str]] = None,
             password: Optional[pulumi.Input[str]] = None,
+            permission: Optional[pulumi.Input[str]] = None,
             username: Optional[pulumi.Input[str]] = None) -> 'DatabaseUser':
         """
         Get an existing DatabaseUser resource's state with the given name, id, and optional extra
@@ -300,23 +370,37 @@ class DatabaseUser(pulumi.CustomResource):
         :param pulumi.Input[str] database_id: The managed database ID you want to attach this user to.
         :param pulumi.Input[str] encryption: The encryption type of the new managed database user's password (MySQL engine types only - `caching_sha2_password`, `mysql_native_password`).
         :param pulumi.Input[str] password: The password of the new managed database user.
+        :param pulumi.Input[str] permission: The permission level for the database user (Kafka engine types only - `admin`, `read`, `write`, `readwrite`).
         :param pulumi.Input[str] username: The username of the new managed database user.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
         __props__ = _DatabaseUserState.__new__(_DatabaseUserState)
 
+        __props__.__dict__["access_cert"] = access_cert
         __props__.__dict__["access_control"] = access_control
+        __props__.__dict__["access_key"] = access_key
         __props__.__dict__["database_id"] = database_id
         __props__.__dict__["encryption"] = encryption
         __props__.__dict__["password"] = password
+        __props__.__dict__["permission"] = permission
         __props__.__dict__["username"] = username
         return DatabaseUser(resource_name, opts=opts, __props__=__props__)
+
+    @property
+    @pulumi.getter(name="accessCert")
+    def access_cert(self) -> pulumi.Output[str]:
+        return pulumi.get(self, "access_cert")
 
     @property
     @pulumi.getter(name="accessControl")
     def access_control(self) -> pulumi.Output['outputs.DatabaseUserAccessControl']:
         return pulumi.get(self, "access_control")
+
+    @property
+    @pulumi.getter(name="accessKey")
+    def access_key(self) -> pulumi.Output[str]:
+        return pulumi.get(self, "access_key")
 
     @property
     @pulumi.getter(name="databaseId")
@@ -341,6 +425,14 @@ class DatabaseUser(pulumi.CustomResource):
         The password of the new managed database user.
         """
         return pulumi.get(self, "password")
+
+    @property
+    @pulumi.getter
+    def permission(self) -> pulumi.Output[str]:
+        """
+        The permission level for the database user (Kafka engine types only - `admin`, `read`, `write`, `readwrite`).
+        """
+        return pulumi.get(self, "permission")
 
     @property
     @pulumi.getter
