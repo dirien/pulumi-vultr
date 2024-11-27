@@ -131,6 +131,14 @@ namespace ediri.Vultr
     public sealed class GetDatabaseResult
     {
         /// <summary>
+        /// The certificate to authenticate the default user (Kafka engine types only).
+        /// </summary>
+        public readonly string AccessCert;
+        /// <summary>
+        /// The private key to authenticate the default user (Kafka engine types only).
+        /// </summary>
+        public readonly string AccessKey;
+        /// <summary>
         /// The configured time zone for the Managed Database in TZ database format.
         /// </summary>
         public readonly string ClusterTimeZone;
@@ -153,7 +161,7 @@ namespace ediri.Vultr
         /// <summary>
         /// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
         /// </summary>
-        public readonly ImmutableDictionary<string, object> FerretdbCredentials;
+        public readonly ImmutableDictionary<string, string> FerretdbCredentials;
         public readonly ImmutableArray<Outputs.GetDatabaseFilterResult> Filters;
         /// <summary>
         /// The hostname assigned to the managed database.
@@ -203,6 +211,7 @@ namespace ediri.Vultr
         /// The managed database's plan ID.
         /// </summary>
         public readonly string Plan;
+        public readonly int PlanBrokers;
         /// <summary>
         /// The description of the disk(s) on the managed database.
         /// </summary>
@@ -240,6 +249,10 @@ namespace ediri.Vultr
         /// </summary>
         public readonly string Region;
         /// <summary>
+        /// The SASL connection port for the managed database (Kafka engine types only).
+        /// </summary>
+        public readonly string SaslPort;
+        /// <summary>
         /// The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).
         /// </summary>
         public readonly string Status;
@@ -262,6 +275,10 @@ namespace ediri.Vultr
 
         [OutputConstructor]
         private GetDatabaseResult(
+            string accessCert,
+
+            string accessKey,
+
             string clusterTimeZone,
 
             string databaseEngine,
@@ -272,7 +289,7 @@ namespace ediri.Vultr
 
             string dbname,
 
-            ImmutableDictionary<string, object> ferretdbCredentials,
+            ImmutableDictionary<string, string> ferretdbCredentials,
 
             ImmutableArray<Outputs.GetDatabaseFilterResult> filters,
 
@@ -300,6 +317,8 @@ namespace ediri.Vultr
 
             string plan,
 
+            int planBrokers,
+
             int planDisk,
 
             int planRam,
@@ -318,6 +337,8 @@ namespace ediri.Vultr
 
             string region,
 
+            string saslPort,
+
             string status,
 
             string tag,
@@ -328,6 +349,8 @@ namespace ediri.Vultr
 
             string vpcId)
         {
+            AccessCert = accessCert;
+            AccessKey = accessKey;
             ClusterTimeZone = clusterTimeZone;
             DatabaseEngine = databaseEngine;
             DatabaseEngineVersion = databaseEngineVersion;
@@ -347,6 +370,7 @@ namespace ediri.Vultr
             MysqlSqlModes = mysqlSqlModes;
             Password = password;
             Plan = plan;
+            PlanBrokers = planBrokers;
             PlanDisk = planDisk;
             PlanRam = planRam;
             PlanReplicas = planReplicas;
@@ -356,6 +380,7 @@ namespace ediri.Vultr
             ReadReplicas = readReplicas;
             RedisEvictionPolicy = redisEvictionPolicy;
             Region = region;
+            SaslPort = saslPort;
             Status = status;
             Tag = tag;
             TrustedIps = trustedIps;

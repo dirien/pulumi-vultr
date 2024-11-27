@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -36,7 +41,7 @@ class GetBackupResult:
 
     @property
     @pulumi.getter
-    def backups(self) -> Sequence[Mapping[str, Any]]:
+    def backups(self) -> Sequence[Mapping[str, str]]:
         return pulumi.get(self, "backups")
 
     @property
@@ -64,7 +69,7 @@ class AwaitableGetBackupResult(GetBackupResult):
             id=self.id)
 
 
-def get_backup(filters: Optional[Sequence[pulumi.InputType['GetBackupFilterArgs']]] = None,
+def get_backup(filters: Optional[Sequence[Union['GetBackupFilterArgs', 'GetBackupFilterArgsDict']]] = None,
                opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetBackupResult:
     """
     Get information about a Vultr backup. This data source provides a list of backups which contain the description, size, status, and the creation date for your Vultr backup.
@@ -77,14 +82,14 @@ def get_backup(filters: Optional[Sequence[pulumi.InputType['GetBackupFilterArgs'
     import pulumi
     import pulumi_vultr as vultr
 
-    my_backup = vultr.get_backup(filters=[vultr.GetBackupFilterArgs(
-        name="description",
-        values=["my-backup-description"],
-    )])
+    my_backup = vultr.get_backup(filters=[{
+        "name": "description",
+        "values": ["my-backup-description"],
+    }])
     ```
 
 
-    :param Sequence[pulumi.InputType['GetBackupFilterArgs']] filters: Query parameters for finding backups.
+    :param Sequence[Union['GetBackupFilterArgs', 'GetBackupFilterArgsDict']] filters: Query parameters for finding backups.
     """
     __args__ = dict()
     __args__['filters'] = filters
@@ -95,10 +100,7 @@ def get_backup(filters: Optional[Sequence[pulumi.InputType['GetBackupFilterArgs'
         backups=pulumi.get(__ret__, 'backups'),
         filters=pulumi.get(__ret__, 'filters'),
         id=pulumi.get(__ret__, 'id'))
-
-
-@_utilities.lift_output_func(get_backup)
-def get_backup_output(filters: Optional[pulumi.Input[Optional[Sequence[pulumi.InputType['GetBackupFilterArgs']]]]] = None,
+def get_backup_output(filters: Optional[pulumi.Input[Optional[Sequence[Union['GetBackupFilterArgs', 'GetBackupFilterArgsDict']]]]] = None,
                       opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetBackupResult]:
     """
     Get information about a Vultr backup. This data source provides a list of backups which contain the description, size, status, and the creation date for your Vultr backup.
@@ -111,13 +113,20 @@ def get_backup_output(filters: Optional[pulumi.Input[Optional[Sequence[pulumi.In
     import pulumi
     import pulumi_vultr as vultr
 
-    my_backup = vultr.get_backup(filters=[vultr.GetBackupFilterArgs(
-        name="description",
-        values=["my-backup-description"],
-    )])
+    my_backup = vultr.get_backup(filters=[{
+        "name": "description",
+        "values": ["my-backup-description"],
+    }])
     ```
 
 
-    :param Sequence[pulumi.InputType['GetBackupFilterArgs']] filters: Query parameters for finding backups.
+    :param Sequence[Union['GetBackupFilterArgs', 'GetBackupFilterArgsDict']] filters: Query parameters for finding backups.
     """
-    ...
+    __args__ = dict()
+    __args__['filters'] = filters
+    opts = pulumi.InvokeOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
+    __ret__ = pulumi.runtime.invoke_output('vultr:index/getBackup:getBackup', __args__, opts=opts, typ=GetBackupResult)
+    return __ret__.apply(lambda __response__: GetBackupResult(
+        backups=pulumi.get(__response__, 'backups'),
+        filters=pulumi.get(__response__, 'filters'),
+        id=pulumi.get(__response__, 'id')))

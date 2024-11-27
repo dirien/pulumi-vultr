@@ -26,7 +26,7 @@ namespace ediri.Vultr.Outputs
         /// <summary>
         /// The current configuration for backups
         /// </summary>
-        public readonly ImmutableDictionary<string, object> BackupsSchedule;
+        public readonly ImmutableDictionary<string, string> BackupsSchedule;
         /// <summary>
         /// The date the server was added to your Vultr account.
         /// </summary>
@@ -115,6 +115,10 @@ namespace ediri.Vultr.Outputs
         /// </summary>
         public readonly ImmutableArray<string> Tags;
         /// <summary>
+        /// The scheme used for the default user (linux servers only).
+        /// </summary>
+        public readonly string UserScheme;
+        /// <summary>
         /// The main IPv6 network address.
         /// </summary>
         public readonly string V6MainIp;
@@ -140,7 +144,7 @@ namespace ediri.Vultr.Outputs
 
             string backups,
 
-            ImmutableDictionary<string, object> backupsSchedule,
+            ImmutableDictionary<string, string> backupsSchedule,
 
             string dateCreated,
 
@@ -190,6 +194,8 @@ namespace ediri.Vultr.Outputs
 
             ImmutableArray<string> tags,
 
+            string userScheme,
+
             string v6MainIp,
 
             string v6Network,
@@ -228,6 +234,7 @@ namespace ediri.Vultr.Outputs
             ServerStatus = serverStatus;
             Status = status;
             Tags = tags;
+            UserScheme = userScheme;
             V6MainIp = v6MainIp;
             V6Network = v6Network;
             V6NetworkSize = v6NetworkSize;

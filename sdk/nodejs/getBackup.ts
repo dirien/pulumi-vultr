@@ -27,7 +27,6 @@ import * as utilities from "./utilities";
  */
 export function getBackup(args?: GetBackupArgs, opts?: pulumi.InvokeOptions): Promise<GetBackupResult> {
     args = args || {};
-
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("vultr:index/getBackup:getBackup", {
         "filters": args.filters,
@@ -48,7 +47,7 @@ export interface GetBackupArgs {
  * A collection of values returned by getBackup.
  */
 export interface GetBackupResult {
-    readonly backups: {[key: string]: any}[];
+    readonly backups: {[key: string]: string}[];
     readonly filters?: outputs.GetBackupFilter[];
     /**
      * The provider-assigned unique ID for this managed resource.
@@ -75,7 +74,11 @@ export interface GetBackupResult {
  * ```
  */
 export function getBackupOutput(args?: GetBackupOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetBackupResult> {
-    return pulumi.output(args).apply((a: any) => getBackup(a, opts))
+    args = args || {};
+    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
+    return pulumi.runtime.invokeOutput("vultr:index/getBackup:getBackup", {
+        "filters": args.filters,
+    }, opts);
 }
 
 /**

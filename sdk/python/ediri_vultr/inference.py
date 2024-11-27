@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 
 __all__ = ['InferenceArgs', 'Inference']
@@ -40,7 +45,7 @@ class _InferenceState:
                  api_key: Optional[pulumi.Input[str]] = None,
                  date_created: Optional[pulumi.Input[str]] = None,
                  label: Optional[pulumi.Input[str]] = None,
-                 usage: Optional[pulumi.Input[Mapping[str, Any]]] = None):
+                 usage: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None):
         """
         Input properties used for looking up and filtering Inference resources.
         :param pulumi.Input[str] api_key: The inference subscription's API key for accessing the Vultr Inference API.
@@ -94,11 +99,11 @@ class _InferenceState:
 
     @property
     @pulumi.getter
-    def usage(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def usage(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
         return pulumi.get(self, "usage")
 
     @usage.setter
-    def usage(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def usage(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
         pulumi.set(self, "usage", value)
 
 
@@ -207,7 +212,7 @@ class Inference(pulumi.CustomResource):
             api_key: Optional[pulumi.Input[str]] = None,
             date_created: Optional[pulumi.Input[str]] = None,
             label: Optional[pulumi.Input[str]] = None,
-            usage: Optional[pulumi.Input[Mapping[str, Any]]] = None) -> 'Inference':
+            usage: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None) -> 'Inference':
         """
         Get an existing Inference resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -255,6 +260,6 @@ class Inference(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def usage(self) -> pulumi.Output[Mapping[str, Any]]:
+    def usage(self) -> pulumi.Output[Mapping[str, str]]:
         return pulumi.get(self, "usage")
 

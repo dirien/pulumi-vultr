@@ -150,11 +150,11 @@ namespace ediri.Vultr
         /// <summary>
         /// The user associated with the container registry.
         /// </summary>
-        public readonly ImmutableDictionary<string, object> RootUser;
+        public readonly ImmutableDictionary<string, string> RootUser;
         /// <summary>
         /// A listing of current storage usage relevant to the container registry.
         /// </summary>
-        public readonly ImmutableDictionary<string, object> Storage;
+        public readonly ImmutableDictionary<string, string> Storage;
         /// <summary>
         /// The URN of the container registry.
         /// </summary>
@@ -174,9 +174,9 @@ namespace ediri.Vultr
 
             ImmutableArray<Outputs.GetContainerRegistryRepositoryResult> repositories,
 
-            ImmutableDictionary<string, object> rootUser,
+            ImmutableDictionary<string, string> rootUser,
 
-            ImmutableDictionary<string, object> storage,
+            ImmutableDictionary<string, string> storage,
 
             string urn)
         {

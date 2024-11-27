@@ -57,8 +57,8 @@ type Inference struct {
 	// The date the inference subscription was added to your Vultr account.
 	DateCreated pulumi.StringOutput `pulumi:"dateCreated"`
 	// A label for the inference subscription.
-	Label pulumi.StringOutput `pulumi:"label"`
-	Usage pulumi.MapOutput    `pulumi:"usage"`
+	Label pulumi.StringOutput    `pulumi:"label"`
+	Usage pulumi.StringMapOutput `pulumi:"usage"`
 }
 
 // NewInference registers a new resource with the given unique name, arguments, and options.
@@ -99,8 +99,8 @@ type inferenceState struct {
 	// The date the inference subscription was added to your Vultr account.
 	DateCreated *string `pulumi:"dateCreated"`
 	// A label for the inference subscription.
-	Label *string                `pulumi:"label"`
-	Usage map[string]interface{} `pulumi:"usage"`
+	Label *string           `pulumi:"label"`
+	Usage map[string]string `pulumi:"usage"`
 }
 
 type InferenceState struct {
@@ -110,7 +110,7 @@ type InferenceState struct {
 	DateCreated pulumi.StringPtrInput
 	// A label for the inference subscription.
 	Label pulumi.StringPtrInput
-	Usage pulumi.MapInput
+	Usage pulumi.StringMapInput
 }
 
 func (InferenceState) ElementType() reflect.Type {
@@ -230,8 +230,8 @@ func (o InferenceOutput) Label() pulumi.StringOutput {
 	return o.ApplyT(func(v *Inference) pulumi.StringOutput { return v.Label }).(pulumi.StringOutput)
 }
 
-func (o InferenceOutput) Usage() pulumi.MapOutput {
-	return o.ApplyT(func(v *Inference) pulumi.MapOutput { return v.Usage }).(pulumi.MapOutput)
+func (o InferenceOutput) Usage() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *Inference) pulumi.StringMapOutput { return v.Usage }).(pulumi.StringMapOutput)
 }
 
 type InferenceArrayOutput struct{ *pulumi.OutputState }

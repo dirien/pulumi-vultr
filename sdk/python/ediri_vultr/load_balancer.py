@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -483,13 +488,13 @@ class LoadBalancer(pulumi.CustomResource):
                  attached_instances: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  balancing_algorithm: Optional[pulumi.Input[str]] = None,
                  cookie_name: Optional[pulumi.Input[str]] = None,
-                 firewall_rules: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['LoadBalancerFirewallRuleArgs']]]]] = None,
-                 forwarding_rules: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['LoadBalancerForwardingRuleArgs']]]]] = None,
-                 health_check: Optional[pulumi.Input[pulumi.InputType['LoadBalancerHealthCheckArgs']]] = None,
+                 firewall_rules: Optional[pulumi.Input[Sequence[pulumi.Input[Union['LoadBalancerFirewallRuleArgs', 'LoadBalancerFirewallRuleArgsDict']]]]] = None,
+                 forwarding_rules: Optional[pulumi.Input[Sequence[pulumi.Input[Union['LoadBalancerForwardingRuleArgs', 'LoadBalancerForwardingRuleArgsDict']]]]] = None,
+                 health_check: Optional[pulumi.Input[Union['LoadBalancerHealthCheckArgs', 'LoadBalancerHealthCheckArgsDict']]] = None,
                  label: Optional[pulumi.Input[str]] = None,
                  proxy_protocol: Optional[pulumi.Input[bool]] = None,
                  region: Optional[pulumi.Input[str]] = None,
-                 ssl: Optional[pulumi.Input[pulumi.InputType['LoadBalancerSslArgs']]] = None,
+                 ssl: Optional[pulumi.Input[Union['LoadBalancerSslArgs', 'LoadBalancerSslArgsDict']]] = None,
                  ssl_redirect: Optional[pulumi.Input[bool]] = None,
                  vpc: Optional[pulumi.Input[str]] = None,
                  __props__=None):
@@ -506,21 +511,21 @@ class LoadBalancer(pulumi.CustomResource):
 
         lb = vultr.LoadBalancer("lb",
             balancing_algorithm="roundrobin",
-            forwarding_rules=[vultr.LoadBalancerForwardingRuleArgs(
-                backend_port=81,
-                backend_protocol="http",
-                frontend_port=82,
-                frontend_protocol="http",
-            )],
-            health_check=vultr.LoadBalancerHealthCheckArgs(
-                check_interval=3,
-                healthy_threshold=4,
-                path="/test",
-                port=8080,
-                protocol="http",
-                response_timeout=1,
-                unhealthy_threshold=2,
-            ),
+            forwarding_rules=[{
+                "backend_port": 81,
+                "backend_protocol": "http",
+                "frontend_port": 82,
+                "frontend_protocol": "http",
+            }],
+            health_check={
+                "check_interval": 3,
+                "healthy_threshold": 4,
+                "path": "/test",
+                "port": 8080,
+                "protocol": "http",
+                "response_timeout": 1,
+                "unhealthy_threshold": 2,
+            },
             label="vultr-load-balancer",
             region="ewr")
         ```
@@ -538,13 +543,13 @@ class LoadBalancer(pulumi.CustomResource):
         :param pulumi.Input[Sequence[pulumi.Input[str]]] attached_instances: Array of instances that are currently attached to the load balancer.
         :param pulumi.Input[str] balancing_algorithm: The balancing algorithm for your load balancer. Options are `roundrobin` or `leastconn`. Default value is `roundrobin`
         :param pulumi.Input[str] cookie_name: Name for your given sticky session.
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['LoadBalancerFirewallRuleArgs']]]] firewall_rules: Defines the firewall rules for a load balancer.
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['LoadBalancerForwardingRuleArgs']]]] forwarding_rules: List of forwarding rules for a load balancer. The configuration of a `forwarding_rules` is listened below.
-        :param pulumi.Input[pulumi.InputType['LoadBalancerHealthCheckArgs']] health_check: A block that defines the way load balancers should check for health. The configuration of a `health_check` is listed below.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['LoadBalancerFirewallRuleArgs', 'LoadBalancerFirewallRuleArgsDict']]]] firewall_rules: Defines the firewall rules for a load balancer.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['LoadBalancerForwardingRuleArgs', 'LoadBalancerForwardingRuleArgsDict']]]] forwarding_rules: List of forwarding rules for a load balancer. The configuration of a `forwarding_rules` is listened below.
+        :param pulumi.Input[Union['LoadBalancerHealthCheckArgs', 'LoadBalancerHealthCheckArgsDict']] health_check: A block that defines the way load balancers should check for health. The configuration of a `health_check` is listed below.
         :param pulumi.Input[str] label: The load balancer's label.
         :param pulumi.Input[bool] proxy_protocol: Boolean value that indicates if Proxy Protocol is enabled.
         :param pulumi.Input[str] region: The region your load balancer is deployed in.
-        :param pulumi.Input[pulumi.InputType['LoadBalancerSslArgs']] ssl: A block that supplies your ssl configuration to be used with HTTPS. The configuration of a `ssl` is listed below.
+        :param pulumi.Input[Union['LoadBalancerSslArgs', 'LoadBalancerSslArgsDict']] ssl: A block that supplies your ssl configuration to be used with HTTPS. The configuration of a `ssl` is listed below.
         :param pulumi.Input[bool] ssl_redirect: Boolean value that indicates if HTTP calls will be redirected to HTTPS.
         :param pulumi.Input[str] vpc: A VPC ID that the load balancer should be attached to.
         """
@@ -567,21 +572,21 @@ class LoadBalancer(pulumi.CustomResource):
 
         lb = vultr.LoadBalancer("lb",
             balancing_algorithm="roundrobin",
-            forwarding_rules=[vultr.LoadBalancerForwardingRuleArgs(
-                backend_port=81,
-                backend_protocol="http",
-                frontend_port=82,
-                frontend_protocol="http",
-            )],
-            health_check=vultr.LoadBalancerHealthCheckArgs(
-                check_interval=3,
-                healthy_threshold=4,
-                path="/test",
-                port=8080,
-                protocol="http",
-                response_timeout=1,
-                unhealthy_threshold=2,
-            ),
+            forwarding_rules=[{
+                "backend_port": 81,
+                "backend_protocol": "http",
+                "frontend_port": 82,
+                "frontend_protocol": "http",
+            }],
+            health_check={
+                "check_interval": 3,
+                "healthy_threshold": 4,
+                "path": "/test",
+                "port": 8080,
+                "protocol": "http",
+                "response_timeout": 1,
+                "unhealthy_threshold": 2,
+            },
             label="vultr-load-balancer",
             region="ewr")
         ```
@@ -612,13 +617,13 @@ class LoadBalancer(pulumi.CustomResource):
                  attached_instances: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  balancing_algorithm: Optional[pulumi.Input[str]] = None,
                  cookie_name: Optional[pulumi.Input[str]] = None,
-                 firewall_rules: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['LoadBalancerFirewallRuleArgs']]]]] = None,
-                 forwarding_rules: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['LoadBalancerForwardingRuleArgs']]]]] = None,
-                 health_check: Optional[pulumi.Input[pulumi.InputType['LoadBalancerHealthCheckArgs']]] = None,
+                 firewall_rules: Optional[pulumi.Input[Sequence[pulumi.Input[Union['LoadBalancerFirewallRuleArgs', 'LoadBalancerFirewallRuleArgsDict']]]]] = None,
+                 forwarding_rules: Optional[pulumi.Input[Sequence[pulumi.Input[Union['LoadBalancerForwardingRuleArgs', 'LoadBalancerForwardingRuleArgsDict']]]]] = None,
+                 health_check: Optional[pulumi.Input[Union['LoadBalancerHealthCheckArgs', 'LoadBalancerHealthCheckArgsDict']]] = None,
                  label: Optional[pulumi.Input[str]] = None,
                  proxy_protocol: Optional[pulumi.Input[bool]] = None,
                  region: Optional[pulumi.Input[str]] = None,
-                 ssl: Optional[pulumi.Input[pulumi.InputType['LoadBalancerSslArgs']]] = None,
+                 ssl: Optional[pulumi.Input[Union['LoadBalancerSslArgs', 'LoadBalancerSslArgsDict']]] = None,
                  ssl_redirect: Optional[pulumi.Input[bool]] = None,
                  vpc: Optional[pulumi.Input[str]] = None,
                  __props__=None):
@@ -663,16 +668,16 @@ class LoadBalancer(pulumi.CustomResource):
             attached_instances: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
             balancing_algorithm: Optional[pulumi.Input[str]] = None,
             cookie_name: Optional[pulumi.Input[str]] = None,
-            firewall_rules: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['LoadBalancerFirewallRuleArgs']]]]] = None,
-            forwarding_rules: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['LoadBalancerForwardingRuleArgs']]]]] = None,
+            firewall_rules: Optional[pulumi.Input[Sequence[pulumi.Input[Union['LoadBalancerFirewallRuleArgs', 'LoadBalancerFirewallRuleArgsDict']]]]] = None,
+            forwarding_rules: Optional[pulumi.Input[Sequence[pulumi.Input[Union['LoadBalancerForwardingRuleArgs', 'LoadBalancerForwardingRuleArgsDict']]]]] = None,
             has_ssl: Optional[pulumi.Input[bool]] = None,
-            health_check: Optional[pulumi.Input[pulumi.InputType['LoadBalancerHealthCheckArgs']]] = None,
+            health_check: Optional[pulumi.Input[Union['LoadBalancerHealthCheckArgs', 'LoadBalancerHealthCheckArgsDict']]] = None,
             ipv4: Optional[pulumi.Input[str]] = None,
             ipv6: Optional[pulumi.Input[str]] = None,
             label: Optional[pulumi.Input[str]] = None,
             proxy_protocol: Optional[pulumi.Input[bool]] = None,
             region: Optional[pulumi.Input[str]] = None,
-            ssl: Optional[pulumi.Input[pulumi.InputType['LoadBalancerSslArgs']]] = None,
+            ssl: Optional[pulumi.Input[Union['LoadBalancerSslArgs', 'LoadBalancerSslArgsDict']]] = None,
             ssl_redirect: Optional[pulumi.Input[bool]] = None,
             status: Optional[pulumi.Input[str]] = None,
             vpc: Optional[pulumi.Input[str]] = None) -> 'LoadBalancer':
@@ -686,16 +691,16 @@ class LoadBalancer(pulumi.CustomResource):
         :param pulumi.Input[Sequence[pulumi.Input[str]]] attached_instances: Array of instances that are currently attached to the load balancer.
         :param pulumi.Input[str] balancing_algorithm: The balancing algorithm for your load balancer. Options are `roundrobin` or `leastconn`. Default value is `roundrobin`
         :param pulumi.Input[str] cookie_name: Name for your given sticky session.
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['LoadBalancerFirewallRuleArgs']]]] firewall_rules: Defines the firewall rules for a load balancer.
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['LoadBalancerForwardingRuleArgs']]]] forwarding_rules: List of forwarding rules for a load balancer. The configuration of a `forwarding_rules` is listened below.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['LoadBalancerFirewallRuleArgs', 'LoadBalancerFirewallRuleArgsDict']]]] firewall_rules: Defines the firewall rules for a load balancer.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['LoadBalancerForwardingRuleArgs', 'LoadBalancerForwardingRuleArgsDict']]]] forwarding_rules: List of forwarding rules for a load balancer. The configuration of a `forwarding_rules` is listened below.
         :param pulumi.Input[bool] has_ssl: Boolean value that indicates if SSL is enabled.
-        :param pulumi.Input[pulumi.InputType['LoadBalancerHealthCheckArgs']] health_check: A block that defines the way load balancers should check for health. The configuration of a `health_check` is listed below.
+        :param pulumi.Input[Union['LoadBalancerHealthCheckArgs', 'LoadBalancerHealthCheckArgsDict']] health_check: A block that defines the way load balancers should check for health. The configuration of a `health_check` is listed below.
         :param pulumi.Input[str] ipv4: IPv4 address for your load balancer.
         :param pulumi.Input[str] ipv6: IPv6 address for your load balancer.
         :param pulumi.Input[str] label: The load balancer's label.
         :param pulumi.Input[bool] proxy_protocol: Boolean value that indicates if Proxy Protocol is enabled.
         :param pulumi.Input[str] region: The region your load balancer is deployed in.
-        :param pulumi.Input[pulumi.InputType['LoadBalancerSslArgs']] ssl: A block that supplies your ssl configuration to be used with HTTPS. The configuration of a `ssl` is listed below.
+        :param pulumi.Input[Union['LoadBalancerSslArgs', 'LoadBalancerSslArgsDict']] ssl: A block that supplies your ssl configuration to be used with HTTPS. The configuration of a `ssl` is listed below.
         :param pulumi.Input[bool] ssl_redirect: Boolean value that indicates if HTTP calls will be redirected to HTTPS.
         :param pulumi.Input[str] status: Current status for the load balancer
         :param pulumi.Input[str] vpc: A VPC ID that the load balancer should be attached to.

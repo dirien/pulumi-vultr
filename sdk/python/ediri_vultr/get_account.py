@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 
 __all__ = [
@@ -156,9 +161,6 @@ def get_account(opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetAcco
         last_payment_date=pulumi.get(__ret__, 'last_payment_date'),
         name=pulumi.get(__ret__, 'name'),
         pending_charges=pulumi.get(__ret__, 'pending_charges'))
-
-
-@_utilities.lift_output_func(get_account)
 def get_account_output(opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetAccountResult]:
     """
     Get information about your Vultr account. This data source provides the balance, pending charges, last payment date, and last payment amount for your Vultr account.
@@ -174,4 +176,15 @@ def get_account_output(opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Ou
     my_account = vultr.get_account()
     ```
     """
-    ...
+    __args__ = dict()
+    opts = pulumi.InvokeOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
+    __ret__ = pulumi.runtime.invoke_output('vultr:index/getAccount:getAccount', __args__, opts=opts, typ=GetAccountResult)
+    return __ret__.apply(lambda __response__: GetAccountResult(
+        acls=pulumi.get(__response__, 'acls'),
+        balance=pulumi.get(__response__, 'balance'),
+        email=pulumi.get(__response__, 'email'),
+        id=pulumi.get(__response__, 'id'),
+        last_payment_amount=pulumi.get(__response__, 'last_payment_amount'),
+        last_payment_date=pulumi.get(__response__, 'last_payment_date'),
+        name=pulumi.get(__response__, 'name'),
+        pending_charges=pulumi.get(__response__, 'pending_charges')))

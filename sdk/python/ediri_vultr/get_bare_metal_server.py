@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -23,7 +28,7 @@ class GetBareMetalServerResult:
     """
     A collection of values returned by getBareMetalServer.
     """
-    def __init__(__self__, app_id=None, cpu_count=None, date_created=None, disk=None, features=None, filters=None, gateway_v4=None, id=None, image_id=None, label=None, mac_address=None, main_ip=None, netmask_v4=None, os=None, os_id=None, plan=None, ram=None, region=None, status=None, tags=None, v6_main_ip=None, v6_network=None, v6_network_size=None, vpc2_ids=None):
+    def __init__(__self__, app_id=None, cpu_count=None, date_created=None, disk=None, features=None, filters=None, gateway_v4=None, id=None, image_id=None, label=None, mac_address=None, main_ip=None, netmask_v4=None, os=None, os_id=None, plan=None, ram=None, region=None, status=None, tags=None, user_scheme=None, v6_main_ip=None, v6_network=None, v6_network_size=None, vpc2_ids=None):
         if app_id and not isinstance(app_id, int):
             raise TypeError("Expected argument 'app_id' to be a int")
         pulumi.set(__self__, "app_id", app_id)
@@ -84,6 +89,9 @@ class GetBareMetalServerResult:
         if tags and not isinstance(tags, list):
             raise TypeError("Expected argument 'tags' to be a list")
         pulumi.set(__self__, "tags", tags)
+        if user_scheme and not isinstance(user_scheme, str):
+            raise TypeError("Expected argument 'user_scheme' to be a str")
+        pulumi.set(__self__, "user_scheme", user_scheme)
         if v6_main_ip and not isinstance(v6_main_ip, str):
             raise TypeError("Expected argument 'v6_main_ip' to be a str")
         pulumi.set(__self__, "v6_main_ip", v6_main_ip)
@@ -249,6 +257,14 @@ class GetBareMetalServerResult:
         return pulumi.get(self, "tags")
 
     @property
+    @pulumi.getter(name="userScheme")
+    def user_scheme(self) -> str:
+        """
+        The scheme used for the default user (linux servers only).
+        """
+        return pulumi.get(self, "user_scheme")
+
+    @property
     @pulumi.getter(name="v6MainIp")
     def v6_main_ip(self) -> str:
         return pulumi.get(self, "v6_main_ip")
@@ -298,13 +314,14 @@ class AwaitableGetBareMetalServerResult(GetBareMetalServerResult):
             region=self.region,
             status=self.status,
             tags=self.tags,
+            user_scheme=self.user_scheme,
             v6_main_ip=self.v6_main_ip,
             v6_network=self.v6_network,
             v6_network_size=self.v6_network_size,
             vpc2_ids=self.vpc2_ids)
 
 
-def get_bare_metal_server(filters: Optional[Sequence[pulumi.InputType['GetBareMetalServerFilterArgs']]] = None,
+def get_bare_metal_server(filters: Optional[Sequence[Union['GetBareMetalServerFilterArgs', 'GetBareMetalServerFilterArgsDict']]] = None,
                           opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetBareMetalServerResult:
     """
     Get information about a Vultr bare metal server.
@@ -317,14 +334,14 @@ def get_bare_metal_server(filters: Optional[Sequence[pulumi.InputType['GetBareMe
     import pulumi
     import pulumi_vultr as vultr
 
-    my_server = vultr.get_bare_metal_server(filters=[vultr.GetBareMetalServerFilterArgs(
-        name="label",
-        values=["my-server-label"],
-    )])
+    my_server = vultr.get_bare_metal_server(filters=[{
+        "name": "label",
+        "values": ["my-server-label"],
+    }])
     ```
 
 
-    :param Sequence[pulumi.InputType['GetBareMetalServerFilterArgs']] filters: Query parameters for finding servers.
+    :param Sequence[Union['GetBareMetalServerFilterArgs', 'GetBareMetalServerFilterArgsDict']] filters: Query parameters for finding servers.
     """
     __args__ = dict()
     __args__['filters'] = filters
@@ -352,14 +369,12 @@ def get_bare_metal_server(filters: Optional[Sequence[pulumi.InputType['GetBareMe
         region=pulumi.get(__ret__, 'region'),
         status=pulumi.get(__ret__, 'status'),
         tags=pulumi.get(__ret__, 'tags'),
+        user_scheme=pulumi.get(__ret__, 'user_scheme'),
         v6_main_ip=pulumi.get(__ret__, 'v6_main_ip'),
         v6_network=pulumi.get(__ret__, 'v6_network'),
         v6_network_size=pulumi.get(__ret__, 'v6_network_size'),
         vpc2_ids=pulumi.get(__ret__, 'vpc2_ids'))
-
-
-@_utilities.lift_output_func(get_bare_metal_server)
-def get_bare_metal_server_output(filters: Optional[pulumi.Input[Optional[Sequence[pulumi.InputType['GetBareMetalServerFilterArgs']]]]] = None,
+def get_bare_metal_server_output(filters: Optional[pulumi.Input[Optional[Sequence[Union['GetBareMetalServerFilterArgs', 'GetBareMetalServerFilterArgsDict']]]]] = None,
                                  opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetBareMetalServerResult]:
     """
     Get information about a Vultr bare metal server.
@@ -372,13 +387,42 @@ def get_bare_metal_server_output(filters: Optional[pulumi.Input[Optional[Sequenc
     import pulumi
     import pulumi_vultr as vultr
 
-    my_server = vultr.get_bare_metal_server(filters=[vultr.GetBareMetalServerFilterArgs(
-        name="label",
-        values=["my-server-label"],
-    )])
+    my_server = vultr.get_bare_metal_server(filters=[{
+        "name": "label",
+        "values": ["my-server-label"],
+    }])
     ```
 
 
-    :param Sequence[pulumi.InputType['GetBareMetalServerFilterArgs']] filters: Query parameters for finding servers.
+    :param Sequence[Union['GetBareMetalServerFilterArgs', 'GetBareMetalServerFilterArgsDict']] filters: Query parameters for finding servers.
     """
-    ...
+    __args__ = dict()
+    __args__['filters'] = filters
+    opts = pulumi.InvokeOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
+    __ret__ = pulumi.runtime.invoke_output('vultr:index/getBareMetalServer:getBareMetalServer', __args__, opts=opts, typ=GetBareMetalServerResult)
+    return __ret__.apply(lambda __response__: GetBareMetalServerResult(
+        app_id=pulumi.get(__response__, 'app_id'),
+        cpu_count=pulumi.get(__response__, 'cpu_count'),
+        date_created=pulumi.get(__response__, 'date_created'),
+        disk=pulumi.get(__response__, 'disk'),
+        features=pulumi.get(__response__, 'features'),
+        filters=pulumi.get(__response__, 'filters'),
+        gateway_v4=pulumi.get(__response__, 'gateway_v4'),
+        id=pulumi.get(__response__, 'id'),
+        image_id=pulumi.get(__response__, 'image_id'),
+        label=pulumi.get(__response__, 'label'),
+        mac_address=pulumi.get(__response__, 'mac_address'),
+        main_ip=pulumi.get(__response__, 'main_ip'),
+        netmask_v4=pulumi.get(__response__, 'netmask_v4'),
+        os=pulumi.get(__response__, 'os'),
+        os_id=pulumi.get(__response__, 'os_id'),
+        plan=pulumi.get(__response__, 'plan'),
+        ram=pulumi.get(__response__, 'ram'),
+        region=pulumi.get(__response__, 'region'),
+        status=pulumi.get(__response__, 'status'),
+        tags=pulumi.get(__response__, 'tags'),
+        user_scheme=pulumi.get(__response__, 'user_scheme'),
+        v6_main_ip=pulumi.get(__response__, 'v6_main_ip'),
+        v6_network=pulumi.get(__response__, 'v6_network'),
+        v6_network_size=pulumi.get(__response__, 'v6_network_size'),
+        vpc2_ids=pulumi.get(__response__, 'vpc2_ids')))

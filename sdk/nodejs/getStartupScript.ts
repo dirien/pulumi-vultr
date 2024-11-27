@@ -27,7 +27,6 @@ import * as utilities from "./utilities";
  */
 export function getStartupScript(args?: GetStartupScriptArgs, opts?: pulumi.InvokeOptions): Promise<GetStartupScriptResult> {
     args = args || {};
-
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("vultr:index/getStartupScript:getStartupScript", {
         "filters": args.filters,
@@ -94,7 +93,11 @@ export interface GetStartupScriptResult {
  * ```
  */
 export function getStartupScriptOutput(args?: GetStartupScriptOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetStartupScriptResult> {
-    return pulumi.output(args).apply((a: any) => getStartupScript(a, opts))
+    args = args || {};
+    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
+    return pulumi.runtime.invokeOutput("vultr:index/getStartupScript:getStartupScript", {
+        "filters": args.filters,
+    }, opts);
 }
 
 /**

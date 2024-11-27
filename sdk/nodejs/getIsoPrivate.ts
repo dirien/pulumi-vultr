@@ -27,7 +27,6 @@ import * as utilities from "./utilities";
  */
 export function getIsoPrivate(args?: GetIsoPrivateArgs, opts?: pulumi.InvokeOptions): Promise<GetIsoPrivateResult> {
     args = args || {};
-
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("vultr:index/getIsoPrivate:getIsoPrivate", {
         "filters": args.filters,
@@ -98,7 +97,11 @@ export interface GetIsoPrivateResult {
  * ```
  */
 export function getIsoPrivateOutput(args?: GetIsoPrivateOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetIsoPrivateResult> {
-    return pulumi.output(args).apply((a: any) => getIsoPrivate(a, opts))
+    args = args || {};
+    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
+    return pulumi.runtime.invokeOutput("vultr:index/getIsoPrivate:getIsoPrivate", {
+        "filters": args.filters,
+    }, opts);
 }
 
 /**

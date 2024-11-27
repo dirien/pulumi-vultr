@@ -146,6 +146,8 @@ type BareMetalServer struct {
 	Tags pulumi.StringArrayOutput `pulumi:"tags"`
 	// Generic data store, which some provisioning tools and cloud operating systems use as a configuration file. It is generally consumed only once after an instance has been launched, but individual needs may vary.
 	UserData pulumi.StringOutput `pulumi:"userData"`
+	// The scheme used for the default user. Possible values are `root` or `limited` (linux servers only).
+	UserScheme pulumi.StringPtrOutput `pulumi:"userScheme"`
 	// The main IPv6 network address.
 	V6MainIp pulumi.StringOutput `pulumi:"v6MainIp"`
 	// The IPv6 subnet.
@@ -252,6 +254,8 @@ type bareMetalServerState struct {
 	Tags []string `pulumi:"tags"`
 	// Generic data store, which some provisioning tools and cloud operating systems use as a configuration file. It is generally consumed only once after an instance has been launched, but individual needs may vary.
 	UserData *string `pulumi:"userData"`
+	// The scheme used for the default user. Possible values are `root` or `limited` (linux servers only).
+	UserScheme *string `pulumi:"userScheme"`
 	// The main IPv6 network address.
 	V6MainIp *string `pulumi:"v6MainIp"`
 	// The IPv6 subnet.
@@ -319,6 +323,8 @@ type BareMetalServerState struct {
 	Tags pulumi.StringArrayInput
 	// Generic data store, which some provisioning tools and cloud operating systems use as a configuration file. It is generally consumed only once after an instance has been launched, but individual needs may vary.
 	UserData pulumi.StringPtrInput
+	// The scheme used for the default user. Possible values are `root` or `limited` (linux servers only).
+	UserScheme pulumi.StringPtrInput
 	// The main IPv6 network address.
 	V6MainIp pulumi.StringPtrInput
 	// The IPv6 subnet.
@@ -368,6 +374,8 @@ type bareMetalServerArgs struct {
 	Tags []string `pulumi:"tags"`
 	// Generic data store, which some provisioning tools and cloud operating systems use as a configuration file. It is generally consumed only once after an instance has been launched, but individual needs may vary.
 	UserData *string `pulumi:"userData"`
+	// The scheme used for the default user. Possible values are `root` or `limited` (linux servers only).
+	UserScheme *string `pulumi:"userScheme"`
 	// A list of VPC 2.0 IDs to be attached to the server.
 	Vpc2Ids []string `pulumi:"vpc2Ids"`
 }
@@ -408,6 +416,8 @@ type BareMetalServerArgs struct {
 	Tags pulumi.StringArrayInput
 	// Generic data store, which some provisioning tools and cloud operating systems use as a configuration file. It is generally consumed only once after an instance has been launched, but individual needs may vary.
 	UserData pulumi.StringPtrInput
+	// The scheme used for the default user. Possible values are `root` or `limited` (linux servers only).
+	UserScheme pulumi.StringPtrInput
 	// A list of VPC 2.0 IDs to be attached to the server.
 	Vpc2Ids pulumi.StringArrayInput
 }
@@ -640,6 +650,11 @@ func (o BareMetalServerOutput) Tags() pulumi.StringArrayOutput {
 // Generic data store, which some provisioning tools and cloud operating systems use as a configuration file. It is generally consumed only once after an instance has been launched, but individual needs may vary.
 func (o BareMetalServerOutput) UserData() pulumi.StringOutput {
 	return o.ApplyT(func(v *BareMetalServer) pulumi.StringOutput { return v.UserData }).(pulumi.StringOutput)
+}
+
+// The scheme used for the default user. Possible values are `root` or `limited` (linux servers only).
+func (o BareMetalServerOutput) UserScheme() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *BareMetalServer) pulumi.StringPtrOutput { return v.UserScheme }).(pulumi.StringPtrOutput)
 }
 
 // The main IPv6 network address.

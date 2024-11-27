@@ -27,7 +27,6 @@ import * as utilities from "./utilities";
  */
 export function getPlan(args?: GetPlanArgs, opts?: pulumi.InvokeOptions): Promise<GetPlanResult> {
     args = args || {};
-
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("vultr:index/getPlan:getPlan", {
         "filters": args.filters,
@@ -111,7 +110,11 @@ export interface GetPlanResult {
  * ```
  */
 export function getPlanOutput(args?: GetPlanOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetPlanResult> {
-    return pulumi.output(args).apply((a: any) => getPlan(a, opts))
+    args = args || {};
+    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
+    return pulumi.runtime.invokeOutput("vultr:index/getPlan:getPlan", {
+        "filters": args.filters,
+    }, opts);
 }
 
 /**

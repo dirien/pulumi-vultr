@@ -73,20 +73,26 @@ type LookupInferenceResult struct {
 	// The provider-assigned unique ID for this managed resource.
 	Id string `pulumi:"id"`
 	// The inference subscription's label.
-	Label string                 `pulumi:"label"`
-	Usage map[string]interface{} `pulumi:"usage"`
+	Label string            `pulumi:"label"`
+	Usage map[string]string `pulumi:"usage"`
 }
 
 func LookupInferenceOutput(ctx *pulumi.Context, args LookupInferenceOutputArgs, opts ...pulumi.InvokeOption) LookupInferenceResultOutput {
 	return pulumi.ToOutputWithContext(context.Background(), args).
-		ApplyT(func(v interface{}) (LookupInferenceResult, error) {
+		ApplyT(func(v interface{}) (LookupInferenceResultOutput, error) {
 			args := v.(LookupInferenceArgs)
-			r, err := LookupInference(ctx, &args, opts...)
-			var s LookupInferenceResult
-			if r != nil {
-				s = *r
+			opts = internal.PkgInvokeDefaultOpts(opts)
+			var rv LookupInferenceResult
+			secret, err := ctx.InvokePackageRaw("vultr:index/getInference:getInference", args, &rv, "", opts...)
+			if err != nil {
+				return LookupInferenceResultOutput{}, err
 			}
-			return s, err
+
+			output := pulumi.ToOutput(rv).(LookupInferenceResultOutput)
+			if secret {
+				return pulumi.ToSecret(output).(LookupInferenceResultOutput), nil
+			}
+			return output, nil
 		}).(LookupInferenceResultOutput)
 }
 
@@ -139,8 +145,8 @@ func (o LookupInferenceResultOutput) Label() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupInferenceResult) string { return v.Label }).(pulumi.StringOutput)
 }
 
-func (o LookupInferenceResultOutput) Usage() pulumi.MapOutput {
-	return o.ApplyT(func(v LookupInferenceResult) map[string]interface{} { return v.Usage }).(pulumi.MapOutput)
+func (o LookupInferenceResultOutput) Usage() pulumi.StringMapOutput {
+	return o.ApplyT(func(v LookupInferenceResult) map[string]string { return v.Usage }).(pulumi.StringMapOutput)
 }
 
 func init() {

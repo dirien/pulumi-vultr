@@ -90,14 +90,20 @@ type LookupBlockStorageResult struct {
 
 func LookupBlockStorageOutput(ctx *pulumi.Context, args LookupBlockStorageOutputArgs, opts ...pulumi.InvokeOption) LookupBlockStorageResultOutput {
 	return pulumi.ToOutputWithContext(context.Background(), args).
-		ApplyT(func(v interface{}) (LookupBlockStorageResult, error) {
+		ApplyT(func(v interface{}) (LookupBlockStorageResultOutput, error) {
 			args := v.(LookupBlockStorageArgs)
-			r, err := LookupBlockStorage(ctx, &args, opts...)
-			var s LookupBlockStorageResult
-			if r != nil {
-				s = *r
+			opts = internal.PkgInvokeDefaultOpts(opts)
+			var rv LookupBlockStorageResult
+			secret, err := ctx.InvokePackageRaw("vultr:index/getBlockStorage:getBlockStorage", args, &rv, "", opts...)
+			if err != nil {
+				return LookupBlockStorageResultOutput{}, err
 			}
-			return s, err
+
+			output := pulumi.ToOutput(rv).(LookupBlockStorageResultOutput)
+			if secret {
+				return pulumi.ToSecret(output).(LookupBlockStorageResultOutput), nil
+			}
+			return output, nil
 		}).(LookupBlockStorageResultOutput)
 }
 

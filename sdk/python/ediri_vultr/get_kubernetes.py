@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -247,7 +252,7 @@ class AwaitableGetKubernetesResult(GetKubernetesResult):
             version=self.version)
 
 
-def get_kubernetes(filters: Optional[Sequence[pulumi.InputType['GetKubernetesFilterArgs']]] = None,
+def get_kubernetes(filters: Optional[Sequence[Union['GetKubernetesFilterArgs', 'GetKubernetesFilterArgsDict']]] = None,
                    opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetKubernetesResult:
     """
     Get information about a Vultr Kubernetes Engine (VKE) Cluster.
@@ -260,14 +265,14 @@ def get_kubernetes(filters: Optional[Sequence[pulumi.InputType['GetKubernetesFil
     import pulumi
     import pulumi_vultr as vultr
 
-    my_vke = vultr.get_kubernetes(filters=[vultr.GetKubernetesFilterArgs(
-        name="label",
-        values=["my-lb-label"],
-    )])
+    my_vke = vultr.get_kubernetes(filters=[{
+        "name": "label",
+        "values": ["my-lb-label"],
+    }])
     ```
 
 
-    :param Sequence[pulumi.InputType['GetKubernetesFilterArgs']] filters: Query parameters for finding VKE.
+    :param Sequence[Union['GetKubernetesFilterArgs', 'GetKubernetesFilterArgsDict']] filters: Query parameters for finding VKE.
     """
     __args__ = dict()
     __args__['filters'] = filters
@@ -293,10 +298,7 @@ def get_kubernetes(filters: Optional[Sequence[pulumi.InputType['GetKubernetesFil
         service_subnet=pulumi.get(__ret__, 'service_subnet'),
         status=pulumi.get(__ret__, 'status'),
         version=pulumi.get(__ret__, 'version'))
-
-
-@_utilities.lift_output_func(get_kubernetes)
-def get_kubernetes_output(filters: Optional[pulumi.Input[Optional[Sequence[pulumi.InputType['GetKubernetesFilterArgs']]]]] = None,
+def get_kubernetes_output(filters: Optional[pulumi.Input[Optional[Sequence[Union['GetKubernetesFilterArgs', 'GetKubernetesFilterArgsDict']]]]] = None,
                           opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetKubernetesResult]:
     """
     Get information about a Vultr Kubernetes Engine (VKE) Cluster.
@@ -309,13 +311,35 @@ def get_kubernetes_output(filters: Optional[pulumi.Input[Optional[Sequence[pulum
     import pulumi
     import pulumi_vultr as vultr
 
-    my_vke = vultr.get_kubernetes(filters=[vultr.GetKubernetesFilterArgs(
-        name="label",
-        values=["my-lb-label"],
-    )])
+    my_vke = vultr.get_kubernetes(filters=[{
+        "name": "label",
+        "values": ["my-lb-label"],
+    }])
     ```
 
 
-    :param Sequence[pulumi.InputType['GetKubernetesFilterArgs']] filters: Query parameters for finding VKE.
+    :param Sequence[Union['GetKubernetesFilterArgs', 'GetKubernetesFilterArgsDict']] filters: Query parameters for finding VKE.
     """
-    ...
+    __args__ = dict()
+    __args__['filters'] = filters
+    opts = pulumi.InvokeOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
+    __ret__ = pulumi.runtime.invoke_output('vultr:index/getKubernetes:getKubernetes', __args__, opts=opts, typ=GetKubernetesResult)
+    return __ret__.apply(lambda __response__: GetKubernetesResult(
+        client_certificate=pulumi.get(__response__, 'client_certificate'),
+        client_key=pulumi.get(__response__, 'client_key'),
+        cluster_ca_certificate=pulumi.get(__response__, 'cluster_ca_certificate'),
+        cluster_subnet=pulumi.get(__response__, 'cluster_subnet'),
+        date_created=pulumi.get(__response__, 'date_created'),
+        endpoint=pulumi.get(__response__, 'endpoint'),
+        filters=pulumi.get(__response__, 'filters'),
+        firewall_group_id=pulumi.get(__response__, 'firewall_group_id'),
+        ha_controlplanes=pulumi.get(__response__, 'ha_controlplanes'),
+        id=pulumi.get(__response__, 'id'),
+        ip=pulumi.get(__response__, 'ip'),
+        kube_config=pulumi.get(__response__, 'kube_config'),
+        label=pulumi.get(__response__, 'label'),
+        node_pools=pulumi.get(__response__, 'node_pools'),
+        region=pulumi.get(__response__, 'region'),
+        service_subnet=pulumi.get(__response__, 'service_subnet'),
+        status=pulumi.get(__response__, 'status'),
+        version=pulumi.get(__response__, 'version')))

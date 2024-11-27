@@ -65,22 +65,28 @@ type GetBackupArgs struct {
 
 // A collection of values returned by getBackup.
 type GetBackupResult struct {
-	Backups []map[string]interface{} `pulumi:"backups"`
-	Filters []GetBackupFilter        `pulumi:"filters"`
+	Backups []map[string]string `pulumi:"backups"`
+	Filters []GetBackupFilter   `pulumi:"filters"`
 	// The provider-assigned unique ID for this managed resource.
 	Id string `pulumi:"id"`
 }
 
 func GetBackupOutput(ctx *pulumi.Context, args GetBackupOutputArgs, opts ...pulumi.InvokeOption) GetBackupResultOutput {
 	return pulumi.ToOutputWithContext(context.Background(), args).
-		ApplyT(func(v interface{}) (GetBackupResult, error) {
+		ApplyT(func(v interface{}) (GetBackupResultOutput, error) {
 			args := v.(GetBackupArgs)
-			r, err := GetBackup(ctx, &args, opts...)
-			var s GetBackupResult
-			if r != nil {
-				s = *r
+			opts = internal.PkgInvokeDefaultOpts(opts)
+			var rv GetBackupResult
+			secret, err := ctx.InvokePackageRaw("vultr:index/getBackup:getBackup", args, &rv, "", opts...)
+			if err != nil {
+				return GetBackupResultOutput{}, err
 			}
-			return s, err
+
+			output := pulumi.ToOutput(rv).(GetBackupResultOutput)
+			if secret {
+				return pulumi.ToSecret(output).(GetBackupResultOutput), nil
+			}
+			return output, nil
 		}).(GetBackupResultOutput)
 }
 
@@ -109,8 +115,8 @@ func (o GetBackupResultOutput) ToGetBackupResultOutputWithContext(ctx context.Co
 	return o
 }
 
-func (o GetBackupResultOutput) Backups() pulumi.MapArrayOutput {
-	return o.ApplyT(func(v GetBackupResult) []map[string]interface{} { return v.Backups }).(pulumi.MapArrayOutput)
+func (o GetBackupResultOutput) Backups() pulumi.StringMapArrayOutput {
+	return o.ApplyT(func(v GetBackupResult) []map[string]string { return v.Backups }).(pulumi.StringMapArrayOutput)
 }
 
 func (o GetBackupResultOutput) Filters() GetBackupFilterArrayOutput {

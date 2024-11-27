@@ -11,7 +11,9 @@ from .container_registry import *
 from .database import *
 from .database_connection_pool import *
 from .database_db import *
+from .database_quota import *
 from .database_replica import *
+from .database_topic import *
 from .database_user import *
 from .dns_domain import *
 from .dns_record import *
@@ -131,10 +133,26 @@ _utilities.register(
  },
  {
   "pkg": "vultr",
+  "mod": "index/databaseQuota",
+  "fqn": "ediri_vultr",
+  "classes": {
+   "vultr:index/databaseQuota:DatabaseQuota": "DatabaseQuota"
+  }
+ },
+ {
+  "pkg": "vultr",
   "mod": "index/databaseReplica",
   "fqn": "ediri_vultr",
   "classes": {
    "vultr:index/databaseReplica:DatabaseReplica": "DatabaseReplica"
+  }
+ },
+ {
+  "pkg": "vultr",
+  "mod": "index/databaseTopic",
+  "fqn": "ediri_vultr",
+  "classes": {
+   "vultr:index/databaseTopic:DatabaseTopic": "DatabaseTopic"
   }
  },
  {

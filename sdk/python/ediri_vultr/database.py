@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -21,8 +26,10 @@ class DatabaseArgs:
                  label: pulumi.Input[str],
                  plan: pulumi.Input[str],
                  region: pulumi.Input[str],
+                 access_cert: Optional[pulumi.Input[str]] = None,
+                 access_key: Optional[pulumi.Input[str]] = None,
                  cluster_time_zone: Optional[pulumi.Input[str]] = None,
-                 ferretdb_credentials: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 ferretdb_credentials: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  maintenance_dow: Optional[pulumi.Input[str]] = None,
                  maintenance_time: Optional[pulumi.Input[str]] = None,
                  mysql_long_query_time: Optional[pulumi.Input[int]] = None,
@@ -30,10 +37,13 @@ class DatabaseArgs:
                  mysql_slow_query_log: Optional[pulumi.Input[bool]] = None,
                  mysql_sql_modes: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  password: Optional[pulumi.Input[str]] = None,
+                 plan_brokers: Optional[pulumi.Input[int]] = None,
                  plan_disk: Optional[pulumi.Input[int]] = None,
+                 plan_replicas: Optional[pulumi.Input[int]] = None,
                  public_host: Optional[pulumi.Input[str]] = None,
                  read_replicas: Optional[pulumi.Input[Sequence[pulumi.Input['DatabaseReadReplicaArgs']]]] = None,
                  redis_eviction_policy: Optional[pulumi.Input[str]] = None,
+                 sasl_port: Optional[pulumi.Input[str]] = None,
                  tag: Optional[pulumi.Input[str]] = None,
                  trusted_ips: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  vpc_id: Optional[pulumi.Input[str]] = None):
@@ -44,8 +54,10 @@ class DatabaseArgs:
         :param pulumi.Input[str] label: A label for the managed database.
         :param pulumi.Input[str] plan: The ID of the plan that you want the managed database to subscribe to. [See List Managed Database Plans](https://www.vultr.com/api/#tag/managed-databases/operation/list-database-plans)
         :param pulumi.Input[str] region: The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
+        :param pulumi.Input[str] access_cert: The certificate to authenticate the default user (Kafka engine types only).
+        :param pulumi.Input[str] access_key: The private key to authenticate the default user (Kafka engine types only).
         :param pulumi.Input[str] cluster_time_zone: The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
-        :param pulumi.Input[Mapping[str, Any]] ferretdb_credentials: An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] ferretdb_credentials: An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
         :param pulumi.Input[str] maintenance_dow: The preferred maintenance day of week for the managed database.
         :param pulumi.Input[str] maintenance_time: The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).
         :param pulumi.Input[int] mysql_long_query_time: The configuration value for the long query time (in seconds) on the managed database (MySQL engine types only).
@@ -53,10 +65,13 @@ class DatabaseArgs:
         :param pulumi.Input[bool] mysql_slow_query_log: The configuration value for slow query logging on the managed database (MySQL engine types only).
         :param pulumi.Input[Sequence[pulumi.Input[str]]] mysql_sql_modes: A list of SQL modes to configure for the managed database (MySQL engine types only - `ALLOW_INVALID_DATES`, `ANSI`, `ANSI_QUOTES`, `ERROR_FOR_DIVISION_BY_ZERO`, `HIGH_NOT_PRECEDENCE`, `IGNORE_SPACE`, `NO_AUTO_VALUE_ON_ZERO`, `NO_DIR_IN_CREATE`, `NO_ENGINE_SUBSTITUTION`, `NO_UNSIGNED_SUBTRACTION`, `NO_ZERO_DATE`, `NO_ZERO_IN_DATE`, `ONLY_FULL_GROUP_BY`, `PIPES_AS_CONCAT`, `REAL_AS_FLOAT`, `STRICT_ALL_TABLES`, `STRICT_TRANS_TABLES`, `TIME_TRUNCATE_FRACTIONAL`, `TRADITIONAL`).
         :param pulumi.Input[str] password: The password for the managed database's primary admin user.
+        :param pulumi.Input[int] plan_brokers: The number of brokers available on the managed database (Kafka engine types only).
         :param pulumi.Input[int] plan_disk: The description of the disk(s) on the managed database.
+        :param pulumi.Input[int] plan_replicas: The number of standby nodes available on the managed database (excluded for Kafka engine types).
         :param pulumi.Input[str] public_host: The public hostname assigned to the managed database (VPC-attached only).
         :param pulumi.Input[Sequence[pulumi.Input['DatabaseReadReplicaArgs']]] read_replicas: A list of read replicas attached to the managed database.
         :param pulumi.Input[str] redis_eviction_policy: The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
+        :param pulumi.Input[str] sasl_port: The SASL connection port for the managed database (Kafka engine types only).
         :param pulumi.Input[str] tag: The tag to assign to the managed database.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] trusted_ips: A list of allowed IP addresses for the managed database.
         :param pulumi.Input[str] vpc_id: The ID of the VPC Network to attach to the Managed Database.
@@ -66,6 +81,10 @@ class DatabaseArgs:
         pulumi.set(__self__, "label", label)
         pulumi.set(__self__, "plan", plan)
         pulumi.set(__self__, "region", region)
+        if access_cert is not None:
+            pulumi.set(__self__, "access_cert", access_cert)
+        if access_key is not None:
+            pulumi.set(__self__, "access_key", access_key)
         if cluster_time_zone is not None:
             pulumi.set(__self__, "cluster_time_zone", cluster_time_zone)
         if ferretdb_credentials is not None:
@@ -84,14 +103,20 @@ class DatabaseArgs:
             pulumi.set(__self__, "mysql_sql_modes", mysql_sql_modes)
         if password is not None:
             pulumi.set(__self__, "password", password)
+        if plan_brokers is not None:
+            pulumi.set(__self__, "plan_brokers", plan_brokers)
         if plan_disk is not None:
             pulumi.set(__self__, "plan_disk", plan_disk)
+        if plan_replicas is not None:
+            pulumi.set(__self__, "plan_replicas", plan_replicas)
         if public_host is not None:
             pulumi.set(__self__, "public_host", public_host)
         if read_replicas is not None:
             pulumi.set(__self__, "read_replicas", read_replicas)
         if redis_eviction_policy is not None:
             pulumi.set(__self__, "redis_eviction_policy", redis_eviction_policy)
+        if sasl_port is not None:
+            pulumi.set(__self__, "sasl_port", sasl_port)
         if tag is not None:
             pulumi.set(__self__, "tag", tag)
         if trusted_ips is not None:
@@ -160,6 +185,30 @@ class DatabaseArgs:
         pulumi.set(self, "region", value)
 
     @property
+    @pulumi.getter(name="accessCert")
+    def access_cert(self) -> Optional[pulumi.Input[str]]:
+        """
+        The certificate to authenticate the default user (Kafka engine types only).
+        """
+        return pulumi.get(self, "access_cert")
+
+    @access_cert.setter
+    def access_cert(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "access_cert", value)
+
+    @property
+    @pulumi.getter(name="accessKey")
+    def access_key(self) -> Optional[pulumi.Input[str]]:
+        """
+        The private key to authenticate the default user (Kafka engine types only).
+        """
+        return pulumi.get(self, "access_key")
+
+    @access_key.setter
+    def access_key(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "access_key", value)
+
+    @property
     @pulumi.getter(name="clusterTimeZone")
     def cluster_time_zone(self) -> Optional[pulumi.Input[str]]:
         """
@@ -173,14 +222,14 @@ class DatabaseArgs:
 
     @property
     @pulumi.getter(name="ferretdbCredentials")
-    def ferretdb_credentials(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def ferretdb_credentials(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
         """
         An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
         """
         return pulumi.get(self, "ferretdb_credentials")
 
     @ferretdb_credentials.setter
-    def ferretdb_credentials(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def ferretdb_credentials(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
         pulumi.set(self, "ferretdb_credentials", value)
 
     @property
@@ -268,6 +317,18 @@ class DatabaseArgs:
         pulumi.set(self, "password", value)
 
     @property
+    @pulumi.getter(name="planBrokers")
+    def plan_brokers(self) -> Optional[pulumi.Input[int]]:
+        """
+        The number of brokers available on the managed database (Kafka engine types only).
+        """
+        return pulumi.get(self, "plan_brokers")
+
+    @plan_brokers.setter
+    def plan_brokers(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "plan_brokers", value)
+
+    @property
     @pulumi.getter(name="planDisk")
     def plan_disk(self) -> Optional[pulumi.Input[int]]:
         """
@@ -278,6 +339,18 @@ class DatabaseArgs:
     @plan_disk.setter
     def plan_disk(self, value: Optional[pulumi.Input[int]]):
         pulumi.set(self, "plan_disk", value)
+
+    @property
+    @pulumi.getter(name="planReplicas")
+    def plan_replicas(self) -> Optional[pulumi.Input[int]]:
+        """
+        The number of standby nodes available on the managed database (excluded for Kafka engine types).
+        """
+        return pulumi.get(self, "plan_replicas")
+
+    @plan_replicas.setter
+    def plan_replicas(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "plan_replicas", value)
 
     @property
     @pulumi.getter(name="publicHost")
@@ -314,6 +387,18 @@ class DatabaseArgs:
     @redis_eviction_policy.setter
     def redis_eviction_policy(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "redis_eviction_policy", value)
+
+    @property
+    @pulumi.getter(name="saslPort")
+    def sasl_port(self) -> Optional[pulumi.Input[str]]:
+        """
+        The SASL connection port for the managed database (Kafka engine types only).
+        """
+        return pulumi.get(self, "sasl_port")
+
+    @sasl_port.setter
+    def sasl_port(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "sasl_port", value)
 
     @property
     @pulumi.getter
@@ -355,12 +440,14 @@ class DatabaseArgs:
 @pulumi.input_type
 class _DatabaseState:
     def __init__(__self__, *,
+                 access_cert: Optional[pulumi.Input[str]] = None,
+                 access_key: Optional[pulumi.Input[str]] = None,
                  cluster_time_zone: Optional[pulumi.Input[str]] = None,
                  database_engine: Optional[pulumi.Input[str]] = None,
                  database_engine_version: Optional[pulumi.Input[str]] = None,
                  date_created: Optional[pulumi.Input[str]] = None,
                  dbname: Optional[pulumi.Input[str]] = None,
-                 ferretdb_credentials: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 ferretdb_credentials: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  host: Optional[pulumi.Input[str]] = None,
                  label: Optional[pulumi.Input[str]] = None,
                  latest_backup: Optional[pulumi.Input[str]] = None,
@@ -372,6 +459,7 @@ class _DatabaseState:
                  mysql_sql_modes: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  password: Optional[pulumi.Input[str]] = None,
                  plan: Optional[pulumi.Input[str]] = None,
+                 plan_brokers: Optional[pulumi.Input[int]] = None,
                  plan_disk: Optional[pulumi.Input[int]] = None,
                  plan_ram: Optional[pulumi.Input[int]] = None,
                  plan_replicas: Optional[pulumi.Input[int]] = None,
@@ -381,6 +469,7 @@ class _DatabaseState:
                  read_replicas: Optional[pulumi.Input[Sequence[pulumi.Input['DatabaseReadReplicaArgs']]]] = None,
                  redis_eviction_policy: Optional[pulumi.Input[str]] = None,
                  region: Optional[pulumi.Input[str]] = None,
+                 sasl_port: Optional[pulumi.Input[str]] = None,
                  status: Optional[pulumi.Input[str]] = None,
                  tag: Optional[pulumi.Input[str]] = None,
                  trusted_ips: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
@@ -388,12 +477,14 @@ class _DatabaseState:
                  vpc_id: Optional[pulumi.Input[str]] = None):
         """
         Input properties used for looking up and filtering Database resources.
+        :param pulumi.Input[str] access_cert: The certificate to authenticate the default user (Kafka engine types only).
+        :param pulumi.Input[str] access_key: The private key to authenticate the default user (Kafka engine types only).
         :param pulumi.Input[str] cluster_time_zone: The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
         :param pulumi.Input[str] database_engine: The database engine of the new managed database.
         :param pulumi.Input[str] database_engine_version: The database engine version of the new managed database.
         :param pulumi.Input[str] date_created: The date the managed database was added to your Vultr account.
         :param pulumi.Input[str] dbname: The managed database's default logical database.
-        :param pulumi.Input[Mapping[str, Any]] ferretdb_credentials: An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] ferretdb_credentials: An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
         :param pulumi.Input[str] host: The hostname assigned to the managed database.
         :param pulumi.Input[str] label: A label for the managed database.
         :param pulumi.Input[str] latest_backup: The date of the latest backup available on the managed database.
@@ -405,21 +496,27 @@ class _DatabaseState:
         :param pulumi.Input[Sequence[pulumi.Input[str]]] mysql_sql_modes: A list of SQL modes to configure for the managed database (MySQL engine types only - `ALLOW_INVALID_DATES`, `ANSI`, `ANSI_QUOTES`, `ERROR_FOR_DIVISION_BY_ZERO`, `HIGH_NOT_PRECEDENCE`, `IGNORE_SPACE`, `NO_AUTO_VALUE_ON_ZERO`, `NO_DIR_IN_CREATE`, `NO_ENGINE_SUBSTITUTION`, `NO_UNSIGNED_SUBTRACTION`, `NO_ZERO_DATE`, `NO_ZERO_IN_DATE`, `ONLY_FULL_GROUP_BY`, `PIPES_AS_CONCAT`, `REAL_AS_FLOAT`, `STRICT_ALL_TABLES`, `STRICT_TRANS_TABLES`, `TIME_TRUNCATE_FRACTIONAL`, `TRADITIONAL`).
         :param pulumi.Input[str] password: The password for the managed database's primary admin user.
         :param pulumi.Input[str] plan: The ID of the plan that you want the managed database to subscribe to. [See List Managed Database Plans](https://www.vultr.com/api/#tag/managed-databases/operation/list-database-plans)
+        :param pulumi.Input[int] plan_brokers: The number of brokers available on the managed database (Kafka engine types only).
         :param pulumi.Input[int] plan_disk: The description of the disk(s) on the managed database.
         :param pulumi.Input[int] plan_ram: The amount of memory available on the managed database in MB.
-        :param pulumi.Input[int] plan_replicas: The number of standby nodes available on the managed database.
+        :param pulumi.Input[int] plan_replicas: The number of standby nodes available on the managed database (excluded for Kafka engine types).
         :param pulumi.Input[int] plan_vcpus: The number of virtual CPUs available on the managed database.
         :param pulumi.Input[str] port: The connection port for the managed database.
         :param pulumi.Input[str] public_host: The public hostname assigned to the managed database (VPC-attached only).
         :param pulumi.Input[Sequence[pulumi.Input['DatabaseReadReplicaArgs']]] read_replicas: A list of read replicas attached to the managed database.
         :param pulumi.Input[str] redis_eviction_policy: The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
         :param pulumi.Input[str] region: The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
+        :param pulumi.Input[str] sasl_port: The SASL connection port for the managed database (Kafka engine types only).
         :param pulumi.Input[str] status: The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).
         :param pulumi.Input[str] tag: The tag to assign to the managed database.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] trusted_ips: A list of allowed IP addresses for the managed database.
         :param pulumi.Input[str] user: The primary admin user for the managed database.
         :param pulumi.Input[str] vpc_id: The ID of the VPC Network to attach to the Managed Database.
         """
+        if access_cert is not None:
+            pulumi.set(__self__, "access_cert", access_cert)
+        if access_key is not None:
+            pulumi.set(__self__, "access_key", access_key)
         if cluster_time_zone is not None:
             pulumi.set(__self__, "cluster_time_zone", cluster_time_zone)
         if database_engine is not None:
@@ -454,6 +551,8 @@ class _DatabaseState:
             pulumi.set(__self__, "password", password)
         if plan is not None:
             pulumi.set(__self__, "plan", plan)
+        if plan_brokers is not None:
+            pulumi.set(__self__, "plan_brokers", plan_brokers)
         if plan_disk is not None:
             pulumi.set(__self__, "plan_disk", plan_disk)
         if plan_ram is not None:
@@ -472,6 +571,8 @@ class _DatabaseState:
             pulumi.set(__self__, "redis_eviction_policy", redis_eviction_policy)
         if region is not None:
             pulumi.set(__self__, "region", region)
+        if sasl_port is not None:
+            pulumi.set(__self__, "sasl_port", sasl_port)
         if status is not None:
             pulumi.set(__self__, "status", status)
         if tag is not None:
@@ -482,6 +583,30 @@ class _DatabaseState:
             pulumi.set(__self__, "user", user)
         if vpc_id is not None:
             pulumi.set(__self__, "vpc_id", vpc_id)
+
+    @property
+    @pulumi.getter(name="accessCert")
+    def access_cert(self) -> Optional[pulumi.Input[str]]:
+        """
+        The certificate to authenticate the default user (Kafka engine types only).
+        """
+        return pulumi.get(self, "access_cert")
+
+    @access_cert.setter
+    def access_cert(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "access_cert", value)
+
+    @property
+    @pulumi.getter(name="accessKey")
+    def access_key(self) -> Optional[pulumi.Input[str]]:
+        """
+        The private key to authenticate the default user (Kafka engine types only).
+        """
+        return pulumi.get(self, "access_key")
+
+    @access_key.setter
+    def access_key(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "access_key", value)
 
     @property
     @pulumi.getter(name="clusterTimeZone")
@@ -545,14 +670,14 @@ class _DatabaseState:
 
     @property
     @pulumi.getter(name="ferretdbCredentials")
-    def ferretdb_credentials(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def ferretdb_credentials(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
         """
         An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
         """
         return pulumi.get(self, "ferretdb_credentials")
 
     @ferretdb_credentials.setter
-    def ferretdb_credentials(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def ferretdb_credentials(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
         pulumi.set(self, "ferretdb_credentials", value)
 
     @property
@@ -688,6 +813,18 @@ class _DatabaseState:
         pulumi.set(self, "plan", value)
 
     @property
+    @pulumi.getter(name="planBrokers")
+    def plan_brokers(self) -> Optional[pulumi.Input[int]]:
+        """
+        The number of brokers available on the managed database (Kafka engine types only).
+        """
+        return pulumi.get(self, "plan_brokers")
+
+    @plan_brokers.setter
+    def plan_brokers(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "plan_brokers", value)
+
+    @property
     @pulumi.getter(name="planDisk")
     def plan_disk(self) -> Optional[pulumi.Input[int]]:
         """
@@ -715,7 +852,7 @@ class _DatabaseState:
     @pulumi.getter(name="planReplicas")
     def plan_replicas(self) -> Optional[pulumi.Input[int]]:
         """
-        The number of standby nodes available on the managed database.
+        The number of standby nodes available on the managed database (excluded for Kafka engine types).
         """
         return pulumi.get(self, "plan_replicas")
 
@@ -796,6 +933,18 @@ class _DatabaseState:
         pulumi.set(self, "region", value)
 
     @property
+    @pulumi.getter(name="saslPort")
+    def sasl_port(self) -> Optional[pulumi.Input[str]]:
+        """
+        The SASL connection port for the managed database (Kafka engine types only).
+        """
+        return pulumi.get(self, "sasl_port")
+
+    @sasl_port.setter
+    def sasl_port(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "sasl_port", value)
+
+    @property
     @pulumi.getter
     def status(self) -> Optional[pulumi.Input[str]]:
         """
@@ -861,10 +1010,12 @@ class Database(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
+                 access_cert: Optional[pulumi.Input[str]] = None,
+                 access_key: Optional[pulumi.Input[str]] = None,
                  cluster_time_zone: Optional[pulumi.Input[str]] = None,
                  database_engine: Optional[pulumi.Input[str]] = None,
                  database_engine_version: Optional[pulumi.Input[str]] = None,
-                 ferretdb_credentials: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 ferretdb_credentials: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  label: Optional[pulumi.Input[str]] = None,
                  maintenance_dow: Optional[pulumi.Input[str]] = None,
                  maintenance_time: Optional[pulumi.Input[str]] = None,
@@ -874,11 +1025,14 @@ class Database(pulumi.CustomResource):
                  mysql_sql_modes: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  password: Optional[pulumi.Input[str]] = None,
                  plan: Optional[pulumi.Input[str]] = None,
+                 plan_brokers: Optional[pulumi.Input[int]] = None,
                  plan_disk: Optional[pulumi.Input[int]] = None,
+                 plan_replicas: Optional[pulumi.Input[int]] = None,
                  public_host: Optional[pulumi.Input[str]] = None,
-                 read_replicas: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['DatabaseReadReplicaArgs']]]]] = None,
+                 read_replicas: Optional[pulumi.Input[Sequence[pulumi.Input[Union['DatabaseReadReplicaArgs', 'DatabaseReadReplicaArgsDict']]]]] = None,
                  redis_eviction_policy: Optional[pulumi.Input[str]] = None,
                  region: Optional[pulumi.Input[str]] = None,
+                 sasl_port: Optional[pulumi.Input[str]] = None,
                  tag: Optional[pulumi.Input[str]] = None,
                  trusted_ips: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  vpc_id: Optional[pulumi.Input[str]] = None,
@@ -930,10 +1084,12 @@ class Database(pulumi.CustomResource):
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] access_cert: The certificate to authenticate the default user (Kafka engine types only).
+        :param pulumi.Input[str] access_key: The private key to authenticate the default user (Kafka engine types only).
         :param pulumi.Input[str] cluster_time_zone: The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
         :param pulumi.Input[str] database_engine: The database engine of the new managed database.
         :param pulumi.Input[str] database_engine_version: The database engine version of the new managed database.
-        :param pulumi.Input[Mapping[str, Any]] ferretdb_credentials: An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] ferretdb_credentials: An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
         :param pulumi.Input[str] label: A label for the managed database.
         :param pulumi.Input[str] maintenance_dow: The preferred maintenance day of week for the managed database.
         :param pulumi.Input[str] maintenance_time: The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).
@@ -943,11 +1099,14 @@ class Database(pulumi.CustomResource):
         :param pulumi.Input[Sequence[pulumi.Input[str]]] mysql_sql_modes: A list of SQL modes to configure for the managed database (MySQL engine types only - `ALLOW_INVALID_DATES`, `ANSI`, `ANSI_QUOTES`, `ERROR_FOR_DIVISION_BY_ZERO`, `HIGH_NOT_PRECEDENCE`, `IGNORE_SPACE`, `NO_AUTO_VALUE_ON_ZERO`, `NO_DIR_IN_CREATE`, `NO_ENGINE_SUBSTITUTION`, `NO_UNSIGNED_SUBTRACTION`, `NO_ZERO_DATE`, `NO_ZERO_IN_DATE`, `ONLY_FULL_GROUP_BY`, `PIPES_AS_CONCAT`, `REAL_AS_FLOAT`, `STRICT_ALL_TABLES`, `STRICT_TRANS_TABLES`, `TIME_TRUNCATE_FRACTIONAL`, `TRADITIONAL`).
         :param pulumi.Input[str] password: The password for the managed database's primary admin user.
         :param pulumi.Input[str] plan: The ID of the plan that you want the managed database to subscribe to. [See List Managed Database Plans](https://www.vultr.com/api/#tag/managed-databases/operation/list-database-plans)
+        :param pulumi.Input[int] plan_brokers: The number of brokers available on the managed database (Kafka engine types only).
         :param pulumi.Input[int] plan_disk: The description of the disk(s) on the managed database.
+        :param pulumi.Input[int] plan_replicas: The number of standby nodes available on the managed database (excluded for Kafka engine types).
         :param pulumi.Input[str] public_host: The public hostname assigned to the managed database (VPC-attached only).
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['DatabaseReadReplicaArgs']]]] read_replicas: A list of read replicas attached to the managed database.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['DatabaseReadReplicaArgs', 'DatabaseReadReplicaArgsDict']]]] read_replicas: A list of read replicas attached to the managed database.
         :param pulumi.Input[str] redis_eviction_policy: The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
         :param pulumi.Input[str] region: The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
+        :param pulumi.Input[str] sasl_port: The SASL connection port for the managed database (Kafka engine types only).
         :param pulumi.Input[str] tag: The tag to assign to the managed database.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] trusted_ips: A list of allowed IP addresses for the managed database.
         :param pulumi.Input[str] vpc_id: The ID of the VPC Network to attach to the Managed Database.
@@ -1018,10 +1177,12 @@ class Database(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
+                 access_cert: Optional[pulumi.Input[str]] = None,
+                 access_key: Optional[pulumi.Input[str]] = None,
                  cluster_time_zone: Optional[pulumi.Input[str]] = None,
                  database_engine: Optional[pulumi.Input[str]] = None,
                  database_engine_version: Optional[pulumi.Input[str]] = None,
-                 ferretdb_credentials: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 ferretdb_credentials: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  label: Optional[pulumi.Input[str]] = None,
                  maintenance_dow: Optional[pulumi.Input[str]] = None,
                  maintenance_time: Optional[pulumi.Input[str]] = None,
@@ -1031,11 +1192,14 @@ class Database(pulumi.CustomResource):
                  mysql_sql_modes: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  password: Optional[pulumi.Input[str]] = None,
                  plan: Optional[pulumi.Input[str]] = None,
+                 plan_brokers: Optional[pulumi.Input[int]] = None,
                  plan_disk: Optional[pulumi.Input[int]] = None,
+                 plan_replicas: Optional[pulumi.Input[int]] = None,
                  public_host: Optional[pulumi.Input[str]] = None,
-                 read_replicas: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['DatabaseReadReplicaArgs']]]]] = None,
+                 read_replicas: Optional[pulumi.Input[Sequence[pulumi.Input[Union['DatabaseReadReplicaArgs', 'DatabaseReadReplicaArgsDict']]]]] = None,
                  redis_eviction_policy: Optional[pulumi.Input[str]] = None,
                  region: Optional[pulumi.Input[str]] = None,
+                 sasl_port: Optional[pulumi.Input[str]] = None,
                  tag: Optional[pulumi.Input[str]] = None,
                  trusted_ips: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  vpc_id: Optional[pulumi.Input[str]] = None,
@@ -1048,6 +1212,8 @@ class Database(pulumi.CustomResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = DatabaseArgs.__new__(DatabaseArgs)
 
+            __props__.__dict__["access_cert"] = access_cert
+            __props__.__dict__["access_key"] = access_key
             __props__.__dict__["cluster_time_zone"] = cluster_time_zone
             if database_engine is None and not opts.urn:
                 raise TypeError("Missing required property 'database_engine'")
@@ -1069,13 +1235,16 @@ class Database(pulumi.CustomResource):
             if plan is None and not opts.urn:
                 raise TypeError("Missing required property 'plan'")
             __props__.__dict__["plan"] = plan
+            __props__.__dict__["plan_brokers"] = plan_brokers
             __props__.__dict__["plan_disk"] = plan_disk
+            __props__.__dict__["plan_replicas"] = plan_replicas
             __props__.__dict__["public_host"] = public_host
             __props__.__dict__["read_replicas"] = read_replicas
             __props__.__dict__["redis_eviction_policy"] = redis_eviction_policy
             if region is None and not opts.urn:
                 raise TypeError("Missing required property 'region'")
             __props__.__dict__["region"] = region
+            __props__.__dict__["sasl_port"] = sasl_port
             __props__.__dict__["tag"] = tag
             __props__.__dict__["trusted_ips"] = trusted_ips
             __props__.__dict__["vpc_id"] = vpc_id
@@ -1084,7 +1253,6 @@ class Database(pulumi.CustomResource):
             __props__.__dict__["host"] = None
             __props__.__dict__["latest_backup"] = None
             __props__.__dict__["plan_ram"] = None
-            __props__.__dict__["plan_replicas"] = None
             __props__.__dict__["plan_vcpus"] = None
             __props__.__dict__["port"] = None
             __props__.__dict__["status"] = None
@@ -1099,12 +1267,14 @@ class Database(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
+            access_cert: Optional[pulumi.Input[str]] = None,
+            access_key: Optional[pulumi.Input[str]] = None,
             cluster_time_zone: Optional[pulumi.Input[str]] = None,
             database_engine: Optional[pulumi.Input[str]] = None,
             database_engine_version: Optional[pulumi.Input[str]] = None,
             date_created: Optional[pulumi.Input[str]] = None,
             dbname: Optional[pulumi.Input[str]] = None,
-            ferretdb_credentials: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+            ferretdb_credentials: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
             host: Optional[pulumi.Input[str]] = None,
             label: Optional[pulumi.Input[str]] = None,
             latest_backup: Optional[pulumi.Input[str]] = None,
@@ -1116,15 +1286,17 @@ class Database(pulumi.CustomResource):
             mysql_sql_modes: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
             password: Optional[pulumi.Input[str]] = None,
             plan: Optional[pulumi.Input[str]] = None,
+            plan_brokers: Optional[pulumi.Input[int]] = None,
             plan_disk: Optional[pulumi.Input[int]] = None,
             plan_ram: Optional[pulumi.Input[int]] = None,
             plan_replicas: Optional[pulumi.Input[int]] = None,
             plan_vcpus: Optional[pulumi.Input[int]] = None,
             port: Optional[pulumi.Input[str]] = None,
             public_host: Optional[pulumi.Input[str]] = None,
-            read_replicas: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['DatabaseReadReplicaArgs']]]]] = None,
+            read_replicas: Optional[pulumi.Input[Sequence[pulumi.Input[Union['DatabaseReadReplicaArgs', 'DatabaseReadReplicaArgsDict']]]]] = None,
             redis_eviction_policy: Optional[pulumi.Input[str]] = None,
             region: Optional[pulumi.Input[str]] = None,
+            sasl_port: Optional[pulumi.Input[str]] = None,
             status: Optional[pulumi.Input[str]] = None,
             tag: Optional[pulumi.Input[str]] = None,
             trusted_ips: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
@@ -1137,12 +1309,14 @@ class Database(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[str] access_cert: The certificate to authenticate the default user (Kafka engine types only).
+        :param pulumi.Input[str] access_key: The private key to authenticate the default user (Kafka engine types only).
         :param pulumi.Input[str] cluster_time_zone: The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
         :param pulumi.Input[str] database_engine: The database engine of the new managed database.
         :param pulumi.Input[str] database_engine_version: The database engine version of the new managed database.
         :param pulumi.Input[str] date_created: The date the managed database was added to your Vultr account.
         :param pulumi.Input[str] dbname: The managed database's default logical database.
-        :param pulumi.Input[Mapping[str, Any]] ferretdb_credentials: An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] ferretdb_credentials: An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
         :param pulumi.Input[str] host: The hostname assigned to the managed database.
         :param pulumi.Input[str] label: A label for the managed database.
         :param pulumi.Input[str] latest_backup: The date of the latest backup available on the managed database.
@@ -1154,15 +1328,17 @@ class Database(pulumi.CustomResource):
         :param pulumi.Input[Sequence[pulumi.Input[str]]] mysql_sql_modes: A list of SQL modes to configure for the managed database (MySQL engine types only - `ALLOW_INVALID_DATES`, `ANSI`, `ANSI_QUOTES`, `ERROR_FOR_DIVISION_BY_ZERO`, `HIGH_NOT_PRECEDENCE`, `IGNORE_SPACE`, `NO_AUTO_VALUE_ON_ZERO`, `NO_DIR_IN_CREATE`, `NO_ENGINE_SUBSTITUTION`, `NO_UNSIGNED_SUBTRACTION`, `NO_ZERO_DATE`, `NO_ZERO_IN_DATE`, `ONLY_FULL_GROUP_BY`, `PIPES_AS_CONCAT`, `REAL_AS_FLOAT`, `STRICT_ALL_TABLES`, `STRICT_TRANS_TABLES`, `TIME_TRUNCATE_FRACTIONAL`, `TRADITIONAL`).
         :param pulumi.Input[str] password: The password for the managed database's primary admin user.
         :param pulumi.Input[str] plan: The ID of the plan that you want the managed database to subscribe to. [See List Managed Database Plans](https://www.vultr.com/api/#tag/managed-databases/operation/list-database-plans)
+        :param pulumi.Input[int] plan_brokers: The number of brokers available on the managed database (Kafka engine types only).
         :param pulumi.Input[int] plan_disk: The description of the disk(s) on the managed database.
         :param pulumi.Input[int] plan_ram: The amount of memory available on the managed database in MB.
-        :param pulumi.Input[int] plan_replicas: The number of standby nodes available on the managed database.
+        :param pulumi.Input[int] plan_replicas: The number of standby nodes available on the managed database (excluded for Kafka engine types).
         :param pulumi.Input[int] plan_vcpus: The number of virtual CPUs available on the managed database.
         :param pulumi.Input[str] port: The connection port for the managed database.
         :param pulumi.Input[str] public_host: The public hostname assigned to the managed database (VPC-attached only).
-        :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['DatabaseReadReplicaArgs']]]] read_replicas: A list of read replicas attached to the managed database.
+        :param pulumi.Input[Sequence[pulumi.Input[Union['DatabaseReadReplicaArgs', 'DatabaseReadReplicaArgsDict']]]] read_replicas: A list of read replicas attached to the managed database.
         :param pulumi.Input[str] redis_eviction_policy: The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
         :param pulumi.Input[str] region: The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
+        :param pulumi.Input[str] sasl_port: The SASL connection port for the managed database (Kafka engine types only).
         :param pulumi.Input[str] status: The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).
         :param pulumi.Input[str] tag: The tag to assign to the managed database.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] trusted_ips: A list of allowed IP addresses for the managed database.
@@ -1173,6 +1349,8 @@ class Database(pulumi.CustomResource):
 
         __props__ = _DatabaseState.__new__(_DatabaseState)
 
+        __props__.__dict__["access_cert"] = access_cert
+        __props__.__dict__["access_key"] = access_key
         __props__.__dict__["cluster_time_zone"] = cluster_time_zone
         __props__.__dict__["database_engine"] = database_engine
         __props__.__dict__["database_engine_version"] = database_engine_version
@@ -1190,6 +1368,7 @@ class Database(pulumi.CustomResource):
         __props__.__dict__["mysql_sql_modes"] = mysql_sql_modes
         __props__.__dict__["password"] = password
         __props__.__dict__["plan"] = plan
+        __props__.__dict__["plan_brokers"] = plan_brokers
         __props__.__dict__["plan_disk"] = plan_disk
         __props__.__dict__["plan_ram"] = plan_ram
         __props__.__dict__["plan_replicas"] = plan_replicas
@@ -1199,12 +1378,29 @@ class Database(pulumi.CustomResource):
         __props__.__dict__["read_replicas"] = read_replicas
         __props__.__dict__["redis_eviction_policy"] = redis_eviction_policy
         __props__.__dict__["region"] = region
+        __props__.__dict__["sasl_port"] = sasl_port
         __props__.__dict__["status"] = status
         __props__.__dict__["tag"] = tag
         __props__.__dict__["trusted_ips"] = trusted_ips
         __props__.__dict__["user"] = user
         __props__.__dict__["vpc_id"] = vpc_id
         return Database(resource_name, opts=opts, __props__=__props__)
+
+    @property
+    @pulumi.getter(name="accessCert")
+    def access_cert(self) -> pulumi.Output[str]:
+        """
+        The certificate to authenticate the default user (Kafka engine types only).
+        """
+        return pulumi.get(self, "access_cert")
+
+    @property
+    @pulumi.getter(name="accessKey")
+    def access_key(self) -> pulumi.Output[str]:
+        """
+        The private key to authenticate the default user (Kafka engine types only).
+        """
+        return pulumi.get(self, "access_key")
 
     @property
     @pulumi.getter(name="clusterTimeZone")
@@ -1248,7 +1444,7 @@ class Database(pulumi.CustomResource):
 
     @property
     @pulumi.getter(name="ferretdbCredentials")
-    def ferretdb_credentials(self) -> pulumi.Output[Mapping[str, Any]]:
+    def ferretdb_credentials(self) -> pulumi.Output[Mapping[str, str]]:
         """
         An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
         """
@@ -1296,7 +1492,7 @@ class Database(pulumi.CustomResource):
 
     @property
     @pulumi.getter(name="mysqlLongQueryTime")
-    def mysql_long_query_time(self) -> pulumi.Output[Optional[int]]:
+    def mysql_long_query_time(self) -> pulumi.Output[int]:
         """
         The configuration value for the long query time (in seconds) on the managed database (MySQL engine types only).
         """
@@ -1312,7 +1508,7 @@ class Database(pulumi.CustomResource):
 
     @property
     @pulumi.getter(name="mysqlSlowQueryLog")
-    def mysql_slow_query_log(self) -> pulumi.Output[Optional[bool]]:
+    def mysql_slow_query_log(self) -> pulumi.Output[bool]:
         """
         The configuration value for slow query logging on the managed database (MySQL engine types only).
         """
@@ -1343,6 +1539,14 @@ class Database(pulumi.CustomResource):
         return pulumi.get(self, "plan")
 
     @property
+    @pulumi.getter(name="planBrokers")
+    def plan_brokers(self) -> pulumi.Output[int]:
+        """
+        The number of brokers available on the managed database (Kafka engine types only).
+        """
+        return pulumi.get(self, "plan_brokers")
+
+    @property
     @pulumi.getter(name="planDisk")
     def plan_disk(self) -> pulumi.Output[int]:
         """
@@ -1362,7 +1566,7 @@ class Database(pulumi.CustomResource):
     @pulumi.getter(name="planReplicas")
     def plan_replicas(self) -> pulumi.Output[int]:
         """
-        The number of standby nodes available on the managed database.
+        The number of standby nodes available on the managed database (excluded for Kafka engine types).
         """
         return pulumi.get(self, "plan_replicas")
 
@@ -1413,6 +1617,14 @@ class Database(pulumi.CustomResource):
         The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
         """
         return pulumi.get(self, "region")
+
+    @property
+    @pulumi.getter(name="saslPort")
+    def sasl_port(self) -> pulumi.Output[str]:
+        """
+        The SASL connection port for the managed database (Kafka engine types only).
+        """
+        return pulumi.get(self, "sasl_port")
 
     @property
     @pulumi.getter

@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -127,7 +132,7 @@ class AwaitableGetFirewallGroupResult(GetFirewallGroupResult):
             rule_count=self.rule_count)
 
 
-def get_firewall_group(filters: Optional[Sequence[pulumi.InputType['GetFirewallGroupFilterArgs']]] = None,
+def get_firewall_group(filters: Optional[Sequence[Union['GetFirewallGroupFilterArgs', 'GetFirewallGroupFilterArgsDict']]] = None,
                        opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetFirewallGroupResult:
     """
     Get information about a firewall group on your Vultr account.
@@ -140,14 +145,14 @@ def get_firewall_group(filters: Optional[Sequence[pulumi.InputType['GetFirewallG
     import pulumi
     import pulumi_vultr as vultr
 
-    my_fwg = vultr.get_firewall_group(filters=[vultr.GetFirewallGroupFilterArgs(
-        name="description",
-        values=["fwg-description"],
-    )])
+    my_fwg = vultr.get_firewall_group(filters=[{
+        "name": "description",
+        "values": ["fwg-description"],
+    }])
     ```
 
 
-    :param Sequence[pulumi.InputType['GetFirewallGroupFilterArgs']] filters: Query parameters for finding firewall groups.
+    :param Sequence[Union['GetFirewallGroupFilterArgs', 'GetFirewallGroupFilterArgsDict']] filters: Query parameters for finding firewall groups.
     """
     __args__ = dict()
     __args__['filters'] = filters
@@ -163,10 +168,7 @@ def get_firewall_group(filters: Optional[Sequence[pulumi.InputType['GetFirewallG
         instance_count=pulumi.get(__ret__, 'instance_count'),
         max_rule_count=pulumi.get(__ret__, 'max_rule_count'),
         rule_count=pulumi.get(__ret__, 'rule_count'))
-
-
-@_utilities.lift_output_func(get_firewall_group)
-def get_firewall_group_output(filters: Optional[pulumi.Input[Optional[Sequence[pulumi.InputType['GetFirewallGroupFilterArgs']]]]] = None,
+def get_firewall_group_output(filters: Optional[pulumi.Input[Optional[Sequence[Union['GetFirewallGroupFilterArgs', 'GetFirewallGroupFilterArgsDict']]]]] = None,
                               opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetFirewallGroupResult]:
     """
     Get information about a firewall group on your Vultr account.
@@ -179,13 +181,25 @@ def get_firewall_group_output(filters: Optional[pulumi.Input[Optional[Sequence[p
     import pulumi
     import pulumi_vultr as vultr
 
-    my_fwg = vultr.get_firewall_group(filters=[vultr.GetFirewallGroupFilterArgs(
-        name="description",
-        values=["fwg-description"],
-    )])
+    my_fwg = vultr.get_firewall_group(filters=[{
+        "name": "description",
+        "values": ["fwg-description"],
+    }])
     ```
 
 
-    :param Sequence[pulumi.InputType['GetFirewallGroupFilterArgs']] filters: Query parameters for finding firewall groups.
+    :param Sequence[Union['GetFirewallGroupFilterArgs', 'GetFirewallGroupFilterArgsDict']] filters: Query parameters for finding firewall groups.
     """
-    ...
+    __args__ = dict()
+    __args__['filters'] = filters
+    opts = pulumi.InvokeOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
+    __ret__ = pulumi.runtime.invoke_output('vultr:index/getFirewallGroup:getFirewallGroup', __args__, opts=opts, typ=GetFirewallGroupResult)
+    return __ret__.apply(lambda __response__: GetFirewallGroupResult(
+        date_created=pulumi.get(__response__, 'date_created'),
+        date_modified=pulumi.get(__response__, 'date_modified'),
+        description=pulumi.get(__response__, 'description'),
+        filters=pulumi.get(__response__, 'filters'),
+        id=pulumi.get(__response__, 'id'),
+        instance_count=pulumi.get(__response__, 'instance_count'),
+        max_rule_count=pulumi.get(__response__, 'max_rule_count'),
+        rule_count=pulumi.get(__response__, 'rule_count')))

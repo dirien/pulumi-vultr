@@ -25,7 +25,6 @@ import * as utilities from "./utilities";
  */
 export function getContainerRegistry(args?: GetContainerRegistryArgs, opts?: pulumi.InvokeOptions): Promise<GetContainerRegistryResult> {
     args = args || {};
-
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("vultr:index/getContainerRegistry:getContainerRegistry", {
         "filters": args.filters,
@@ -70,11 +69,11 @@ export interface GetContainerRegistryResult {
     /**
      * The user associated with the container registry.
      */
-    readonly rootUser: {[key: string]: any};
+    readonly rootUser: {[key: string]: string};
     /**
      * A listing of current storage usage relevant to the container registry.
      */
-    readonly storage: {[key: string]: any};
+    readonly storage: {[key: string]: string};
     /**
      * The URN of the container registry.
      */
@@ -98,7 +97,11 @@ export interface GetContainerRegistryResult {
  * ```
  */
 export function getContainerRegistryOutput(args?: GetContainerRegistryOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetContainerRegistryResult> {
-    return pulumi.output(args).apply((a: any) => getContainerRegistry(a, opts))
+    args = args || {};
+    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
+    return pulumi.runtime.invokeOutput("vultr:index/getContainerRegistry:getContainerRegistry", {
+        "filters": args.filters,
+    }, opts);
 }
 
 /**

@@ -65,6 +65,10 @@ type LookupDatabaseArgs struct {
 
 // A collection of values returned by getDatabase.
 type LookupDatabaseResult struct {
+	// The certificate to authenticate the default user (Kafka engine types only).
+	AccessCert string `pulumi:"accessCert"`
+	// The private key to authenticate the default user (Kafka engine types only).
+	AccessKey string `pulumi:"accessKey"`
 	// The configured time zone for the Managed Database in TZ database format.
 	ClusterTimeZone string `pulumi:"clusterTimeZone"`
 	// The database engine of the managed database.
@@ -76,8 +80,8 @@ type LookupDatabaseResult struct {
 	// The managed database's default logical database.
 	Dbname string `pulumi:"dbname"`
 	// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
-	FerretdbCredentials map[string]interface{} `pulumi:"ferretdbCredentials"`
-	Filters             []GetDatabaseFilter    `pulumi:"filters"`
+	FerretdbCredentials map[string]string   `pulumi:"ferretdbCredentials"`
+	Filters             []GetDatabaseFilter `pulumi:"filters"`
 	// The hostname assigned to the managed database.
 	Host string `pulumi:"host"`
 	// The provider-assigned unique ID for this managed resource.
@@ -101,7 +105,8 @@ type LookupDatabaseResult struct {
 	// The password for the managed database's primary admin user.
 	Password string `pulumi:"password"`
 	// The managed database's plan ID.
-	Plan string `pulumi:"plan"`
+	Plan        string `pulumi:"plan"`
+	PlanBrokers int    `pulumi:"planBrokers"`
 	// The description of the disk(s) on the managed database.
 	PlanDisk int `pulumi:"planDisk"`
 	// The amount of memory available on the managed database in MB.
@@ -120,6 +125,8 @@ type LookupDatabaseResult struct {
 	RedisEvictionPolicy string `pulumi:"redisEvictionPolicy"`
 	// The region ID of the managed database.
 	Region string `pulumi:"region"`
+	// The SASL connection port for the managed database (Kafka engine types only).
+	SaslPort string `pulumi:"saslPort"`
 	// The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).
 	Status string `pulumi:"status"`
 	// The managed database's tag.
@@ -134,14 +141,20 @@ type LookupDatabaseResult struct {
 
 func LookupDatabaseOutput(ctx *pulumi.Context, args LookupDatabaseOutputArgs, opts ...pulumi.InvokeOption) LookupDatabaseResultOutput {
 	return pulumi.ToOutputWithContext(context.Background(), args).
-		ApplyT(func(v interface{}) (LookupDatabaseResult, error) {
+		ApplyT(func(v interface{}) (LookupDatabaseResultOutput, error) {
 			args := v.(LookupDatabaseArgs)
-			r, err := LookupDatabase(ctx, &args, opts...)
-			var s LookupDatabaseResult
-			if r != nil {
-				s = *r
+			opts = internal.PkgInvokeDefaultOpts(opts)
+			var rv LookupDatabaseResult
+			secret, err := ctx.InvokePackageRaw("vultr:index/getDatabase:getDatabase", args, &rv, "", opts...)
+			if err != nil {
+				return LookupDatabaseResultOutput{}, err
 			}
-			return s, err
+
+			output := pulumi.ToOutput(rv).(LookupDatabaseResultOutput)
+			if secret {
+				return pulumi.ToSecret(output).(LookupDatabaseResultOutput), nil
+			}
+			return output, nil
 		}).(LookupDatabaseResultOutput)
 }
 
@@ -170,6 +183,16 @@ func (o LookupDatabaseResultOutput) ToLookupDatabaseResultOutputWithContext(ctx 
 	return o
 }
 
+// The certificate to authenticate the default user (Kafka engine types only).
+func (o LookupDatabaseResultOutput) AccessCert() pulumi.StringOutput {
+	return o.ApplyT(func(v LookupDatabaseResult) string { return v.AccessCert }).(pulumi.StringOutput)
+}
+
+// The private key to authenticate the default user (Kafka engine types only).
+func (o LookupDatabaseResultOutput) AccessKey() pulumi.StringOutput {
+	return o.ApplyT(func(v LookupDatabaseResult) string { return v.AccessKey }).(pulumi.StringOutput)
+}
+
 // The configured time zone for the Managed Database in TZ database format.
 func (o LookupDatabaseResultOutput) ClusterTimeZone() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupDatabaseResult) string { return v.ClusterTimeZone }).(pulumi.StringOutput)
@@ -196,8 +219,8 @@ func (o LookupDatabaseResultOutput) Dbname() pulumi.StringOutput {
 }
 
 // An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
-func (o LookupDatabaseResultOutput) FerretdbCredentials() pulumi.MapOutput {
-	return o.ApplyT(func(v LookupDatabaseResult) map[string]interface{} { return v.FerretdbCredentials }).(pulumi.MapOutput)
+func (o LookupDatabaseResultOutput) FerretdbCredentials() pulumi.StringMapOutput {
+	return o.ApplyT(func(v LookupDatabaseResult) map[string]string { return v.FerretdbCredentials }).(pulumi.StringMapOutput)
 }
 
 func (o LookupDatabaseResultOutput) Filters() GetDatabaseFilterArrayOutput {
@@ -264,6 +287,10 @@ func (o LookupDatabaseResultOutput) Plan() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupDatabaseResult) string { return v.Plan }).(pulumi.StringOutput)
 }
 
+func (o LookupDatabaseResultOutput) PlanBrokers() pulumi.IntOutput {
+	return o.ApplyT(func(v LookupDatabaseResult) int { return v.PlanBrokers }).(pulumi.IntOutput)
+}
+
 // The description of the disk(s) on the managed database.
 func (o LookupDatabaseResultOutput) PlanDisk() pulumi.IntOutput {
 	return o.ApplyT(func(v LookupDatabaseResult) int { return v.PlanDisk }).(pulumi.IntOutput)
@@ -307,6 +334,11 @@ func (o LookupDatabaseResultOutput) RedisEvictionPolicy() pulumi.StringOutput {
 // The region ID of the managed database.
 func (o LookupDatabaseResultOutput) Region() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupDatabaseResult) string { return v.Region }).(pulumi.StringOutput)
+}
+
+// The SASL connection port for the managed database (Kafka engine types only).
+func (o LookupDatabaseResultOutput) SaslPort() pulumi.StringOutput {
+	return o.ApplyT(func(v LookupDatabaseResult) string { return v.SaslPort }).(pulumi.StringOutput)
 }
 
 // The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).

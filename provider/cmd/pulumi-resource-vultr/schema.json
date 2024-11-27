@@ -171,7 +171,7 @@
                 },
                 "planReplicas": {
                     "type": "integer",
-                    "description": "The number of standby nodes available on the managed database.\n"
+                    "description": "The number of standby nodes available on the managed database (excluded for Kafka engine types).\n"
                 },
                 "planVcpus": {
                     "type": "integer",
@@ -1160,6 +1160,10 @@
                     },
                     "description": "A list of tags applied to the instance.\n"
                 },
+                "userScheme": {
+                    "type": "string",
+                    "description": "The scheme used for the default user (linux servers only).\n"
+                },
                 "v6MainIp": {
                     "type": "string",
                     "description": "The main IPv6 network address.\n"
@@ -1213,6 +1217,7 @@
                 "serverStatus",
                 "status",
                 "tags",
+                "userScheme",
                 "v6MainIp",
                 "v6Network",
                 "v6NetworkSize",
@@ -1858,6 +1863,10 @@
                     "type": "string",
                     "description": "Generic data store, which some provisioning tools and cloud operating systems use as a configuration file. It is generally consumed only once after an instance has been launched, but individual needs may vary.\n"
                 },
+                "userScheme": {
+                    "type": "string",
+                    "description": "The scheme used for the default user. Possible values are `root` or `limited` (linux servers only).\n"
+                },
                 "v6MainIp": {
                     "type": "string",
                     "description": "The main IPv6 network address.\n"
@@ -1991,6 +2000,11 @@
                 "userData": {
                     "type": "string",
                     "description": "Generic data store, which some provisioning tools and cloud operating systems use as a configuration file. It is generally consumed only once after an instance has been launched, but individual needs may vary.\n",
+                    "willReplaceOnChanges": true
+                },
+                "userScheme": {
+                    "type": "string",
+                    "description": "The scheme used for the default user. Possible values are `root` or `limited` (linux servers only).\n",
                     "willReplaceOnChanges": true
                 },
                 "vpc2Ids": {
@@ -2142,6 +2156,11 @@
                     "userData": {
                         "type": "string",
                         "description": "Generic data store, which some provisioning tools and cloud operating systems use as a configuration file. It is generally consumed only once after an instance has been launched, but individual needs may vary.\n",
+                        "willReplaceOnChanges": true
+                    },
+                    "userScheme": {
+                        "type": "string",
+                        "description": "The scheme used for the default user. Possible values are `root` or `limited` (linux servers only).\n",
                         "willReplaceOnChanges": true
                     },
                     "v6MainIp": {
@@ -2425,6 +2444,14 @@
         "vultr:index/database:Database": {
             "description": "Provides a Vultr database resource. This can be used to create, read, modify, and delete managed databases on your Vultr account.\n\n## Example Usage\n\nCreate a new database:\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@ediri/vultr\";\n\nconst myDatabase = new vultr.Database(\"myDatabase\", {\n    databaseEngine: \"pg\",\n    databaseEngineVersion: \"15\",\n    label: \"my_database_label\",\n    plan: \"vultr-dbaas-startup-cc-1-55-2\",\n    region: \"ewr\",\n});\n```\n```python\nimport pulumi\nimport ediri_vultr as vultr\n\nmy_database = vultr.Database(\"myDatabase\",\n    database_engine=\"pg\",\n    database_engine_version=\"15\",\n    label=\"my_database_label\",\n    plan=\"vultr-dbaas-startup-cc-1-55-2\",\n    region=\"ewr\")\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vultr = ediri.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var myDatabase = new Vultr.Database(\"myDatabase\", new()\n    {\n        DatabaseEngine = \"pg\",\n        DatabaseEngineVersion = \"15\",\n        Label = \"my_database_label\",\n        Plan = \"vultr-dbaas-startup-cc-1-55-2\",\n        Region = \"ewr\",\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.NewDatabase(ctx, \"myDatabase\", \u0026vultr.DatabaseArgs{\n\t\t\tDatabaseEngine:        pulumi.String(\"pg\"),\n\t\t\tDatabaseEngineVersion: pulumi.String(\"15\"),\n\t\t\tLabel:                 pulumi.String(\"my_database_label\"),\n\t\t\tPlan:                  pulumi.String(\"vultr-dbaas-startup-cc-1-55-2\"),\n\t\t\tRegion:                pulumi.String(\"ewr\"),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.Database;\nimport com.pulumi.vultr.DatabaseArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var myDatabase = new Database(\"myDatabase\", DatabaseArgs.builder()\n            .databaseEngine(\"pg\")\n            .databaseEngineVersion(\"15\")\n            .label(\"my_database_label\")\n            .plan(\"vultr-dbaas-startup-cc-1-55-2\")\n            .region(\"ewr\")\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  myDatabase:\n    type: vultr:Database\n    properties:\n      databaseEngine: pg\n      databaseEngineVersion: '15'\n      label: my_database_label\n      plan: vultr-dbaas-startup-cc-1-55-2\n      region: ewr\n```\n\u003c!--End PulumiCodeChooser --\u003e\n\nCreate a new database with options:\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@ediri/vultr\";\n\nconst myDatabase = new vultr.Database(\"myDatabase\", {\n    clusterTimeZone: \"America/New_York\",\n    databaseEngine: \"pg\",\n    databaseEngineVersion: \"15\",\n    label: \"my_database_label\",\n    maintenanceDow: \"sunday\",\n    maintenanceTime: \"01:00\",\n    plan: \"vultr-dbaas-startup-cc-1-55-2\",\n    region: \"ewr\",\n    tag: \"some tag\",\n});\n```\n```python\nimport pulumi\nimport ediri_vultr as vultr\n\nmy_database = vultr.Database(\"myDatabase\",\n    cluster_time_zone=\"America/New_York\",\n    database_engine=\"pg\",\n    database_engine_version=\"15\",\n    label=\"my_database_label\",\n    maintenance_dow=\"sunday\",\n    maintenance_time=\"01:00\",\n    plan=\"vultr-dbaas-startup-cc-1-55-2\",\n    region=\"ewr\",\n    tag=\"some tag\")\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vultr = ediri.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var myDatabase = new Vultr.Database(\"myDatabase\", new()\n    {\n        ClusterTimeZone = \"America/New_York\",\n        DatabaseEngine = \"pg\",\n        DatabaseEngineVersion = \"15\",\n        Label = \"my_database_label\",\n        MaintenanceDow = \"sunday\",\n        MaintenanceTime = \"01:00\",\n        Plan = \"vultr-dbaas-startup-cc-1-55-2\",\n        Region = \"ewr\",\n        Tag = \"some tag\",\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.NewDatabase(ctx, \"myDatabase\", \u0026vultr.DatabaseArgs{\n\t\t\tClusterTimeZone:       pulumi.String(\"America/New_York\"),\n\t\t\tDatabaseEngine:        pulumi.String(\"pg\"),\n\t\t\tDatabaseEngineVersion: pulumi.String(\"15\"),\n\t\t\tLabel:                 pulumi.String(\"my_database_label\"),\n\t\t\tMaintenanceDow:        pulumi.String(\"sunday\"),\n\t\t\tMaintenanceTime:       pulumi.String(\"01:00\"),\n\t\t\tPlan:                  pulumi.String(\"vultr-dbaas-startup-cc-1-55-2\"),\n\t\t\tRegion:                pulumi.String(\"ewr\"),\n\t\t\tTag:                   pulumi.String(\"some tag\"),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.Database;\nimport com.pulumi.vultr.DatabaseArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var myDatabase = new Database(\"myDatabase\", DatabaseArgs.builder()\n            .clusterTimeZone(\"America/New_York\")\n            .databaseEngine(\"pg\")\n            .databaseEngineVersion(\"15\")\n            .label(\"my_database_label\")\n            .maintenanceDow(\"sunday\")\n            .maintenanceTime(\"01:00\")\n            .plan(\"vultr-dbaas-startup-cc-1-55-2\")\n            .region(\"ewr\")\n            .tag(\"some tag\")\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  myDatabase:\n    type: vultr:Database\n    properties:\n      clusterTimeZone: America/New_York\n      databaseEngine: pg\n      databaseEngineVersion: '15'\n      label: my_database_label\n      maintenanceDow: sunday\n      maintenanceTime: 01:00\n      plan: vultr-dbaas-startup-cc-1-55-2\n      region: ewr\n      tag: some tag\n```\n\u003c!--End PulumiCodeChooser --\u003e\n\n## Import\n\nDatabase can be imported using the database `ID`, e.g.\n\n```sh\n$ pulumi import vultr:index/database:Database my_database b6a859c5-b299-49dd-8888-b1abbc517d08\n```\n\n",
             "properties": {
+                "accessCert": {
+                    "type": "string",
+                    "description": "The certificate to authenticate the default user (Kafka engine types only).\n"
+                },
+                "accessKey": {
+                    "type": "string",
+                    "description": "The private key to authenticate the default user (Kafka engine types only).\n"
+                },
                 "clusterTimeZone": {
                     "type": "string",
                     "description": "The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).\n"
@@ -2499,6 +2526,10 @@
                     "type": "string",
                     "description": "The ID of the plan that you want the managed database to subscribe to. [See List Managed Database Plans](https://www.vultr.com/api/#tag/managed-databases/operation/list-database-plans)\n"
                 },
+                "planBrokers": {
+                    "type": "integer",
+                    "description": "The number of brokers available on the managed database (Kafka engine types only).\n"
+                },
                 "planDisk": {
                     "type": "integer",
                     "description": "The description of the disk(s) on the managed database.\n"
@@ -2509,7 +2540,7 @@
                 },
                 "planReplicas": {
                     "type": "integer",
-                    "description": "The number of standby nodes available on the managed database.\n"
+                    "description": "The number of standby nodes available on the managed database (excluded for Kafka engine types).\n"
                 },
                 "planVcpus": {
                     "type": "integer",
@@ -2538,6 +2569,10 @@
                     "type": "string",
                     "description": "The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)\n"
                 },
+                "saslPort": {
+                    "type": "string",
+                    "description": "The SASL connection port for the managed database (Kafka engine types only).\n"
+                },
                 "status": {
                     "type": "string",
                     "description": "The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).\n"
@@ -2563,6 +2598,8 @@
                 }
             },
             "required": [
+                "accessCert",
+                "accessKey",
                 "clusterTimeZone",
                 "databaseEngine",
                 "databaseEngineVersion",
@@ -2574,8 +2611,11 @@
                 "latestBackup",
                 "maintenanceDow",
                 "maintenanceTime",
+                "mysqlLongQueryTime",
+                "mysqlSlowQueryLog",
                 "password",
                 "plan",
+                "planBrokers",
                 "planDisk",
                 "planRam",
                 "planReplicas",
@@ -2585,10 +2625,19 @@
                 "readReplicas",
                 "redisEvictionPolicy",
                 "region",
+                "saslPort",
                 "status",
                 "user"
             ],
             "inputProperties": {
+                "accessCert": {
+                    "type": "string",
+                    "description": "The certificate to authenticate the default user (Kafka engine types only).\n"
+                },
+                "accessKey": {
+                    "type": "string",
+                    "description": "The private key to authenticate the default user (Kafka engine types only).\n"
+                },
                 "clusterTimeZone": {
                     "type": "string",
                     "description": "The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).\n"
@@ -2648,9 +2697,17 @@
                     "type": "string",
                     "description": "The ID of the plan that you want the managed database to subscribe to. [See List Managed Database Plans](https://www.vultr.com/api/#tag/managed-databases/operation/list-database-plans)\n"
                 },
+                "planBrokers": {
+                    "type": "integer",
+                    "description": "The number of brokers available on the managed database (Kafka engine types only).\n"
+                },
                 "planDisk": {
                     "type": "integer",
                     "description": "The description of the disk(s) on the managed database.\n"
+                },
+                "planReplicas": {
+                    "type": "integer",
+                    "description": "The number of standby nodes available on the managed database (excluded for Kafka engine types).\n"
                 },
                 "publicHost": {
                     "type": "string",
@@ -2670,6 +2727,10 @@
                 "region": {
                     "type": "string",
                     "description": "The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)\n"
+                },
+                "saslPort": {
+                    "type": "string",
+                    "description": "The SASL connection port for the managed database (Kafka engine types only).\n"
                 },
                 "tag": {
                     "type": "string",
@@ -2697,6 +2758,14 @@
             "stateInputs": {
                 "description": "Input properties used for looking up and filtering Database resources.\n",
                 "properties": {
+                    "accessCert": {
+                        "type": "string",
+                        "description": "The certificate to authenticate the default user (Kafka engine types only).\n"
+                    },
+                    "accessKey": {
+                        "type": "string",
+                        "description": "The private key to authenticate the default user (Kafka engine types only).\n"
+                    },
                     "clusterTimeZone": {
                         "type": "string",
                         "description": "The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).\n"
@@ -2772,6 +2841,10 @@
                         "type": "string",
                         "description": "The ID of the plan that you want the managed database to subscribe to. [See List Managed Database Plans](https://www.vultr.com/api/#tag/managed-databases/operation/list-database-plans)\n"
                     },
+                    "planBrokers": {
+                        "type": "integer",
+                        "description": "The number of brokers available on the managed database (Kafka engine types only).\n"
+                    },
                     "planDisk": {
                         "type": "integer",
                         "description": "The description of the disk(s) on the managed database.\n"
@@ -2782,7 +2855,7 @@
                     },
                     "planReplicas": {
                         "type": "integer",
-                        "description": "The number of standby nodes available on the managed database.\n"
+                        "description": "The number of standby nodes available on the managed database (excluded for Kafka engine types).\n"
                     },
                     "planVcpus": {
                         "type": "integer",
@@ -2810,6 +2883,10 @@
                     "region": {
                         "type": "string",
                         "description": "The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)\n"
+                    },
+                    "saslPort": {
+                        "type": "string",
+                        "description": "The SASL connection port for the managed database (Kafka engine types only).\n"
                     },
                     "status": {
                         "type": "string",
@@ -2984,6 +3061,119 @@
                     "name": {
                         "type": "string",
                         "description": "The name of the new managed database logical DB.\n",
+                        "willReplaceOnChanges": true
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "vultr:index/databaseQuota:DatabaseQuota": {
+            "description": "Provides a Vultr database quota resource. This can be used to create, read, and delete quotas for a managed database on your Vultr account.\n\n## Example Usage\n\nCreate a new database quota:\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@ediri/vultr\";\n\nconst myDatabaseQuota = new vultr.DatabaseQuota(\"myDatabaseQuota\", {\n    databaseId: vultr_database.my_database.id,\n    clientId: \"my_database_quota\",\n    consumerByteRate: 3,\n    producerByteRate: 2,\n    requestPercentage: 120,\n    user: \"my_database_user\",\n});\n```\n```python\nimport pulumi\nimport ediri_vultr as vultr\n\nmy_database_quota = vultr.DatabaseQuota(\"myDatabaseQuota\",\n    database_id=vultr_database[\"my_database\"][\"id\"],\n    client_id=\"my_database_quota\",\n    consumer_byte_rate=3,\n    producer_byte_rate=2,\n    request_percentage=120,\n    user=\"my_database_user\")\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vultr = ediri.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var myDatabaseQuota = new Vultr.DatabaseQuota(\"myDatabaseQuota\", new()\n    {\n        DatabaseId = vultr_database.My_database.Id,\n        ClientId = \"my_database_quota\",\n        ConsumerByteRate = 3,\n        ProducerByteRate = 2,\n        RequestPercentage = 120,\n        User = \"my_database_user\",\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.NewDatabaseQuota(ctx, \"myDatabaseQuota\", \u0026vultr.DatabaseQuotaArgs{\n\t\t\tDatabaseId:        pulumi.Any(vultr_database.My_database.Id),\n\t\t\tClientId:          pulumi.String(\"my_database_quota\"),\n\t\t\tConsumerByteRate:  pulumi.Int(3),\n\t\t\tProducerByteRate:  pulumi.Int(2),\n\t\t\tRequestPercentage: pulumi.Int(120),\n\t\t\tUser:              pulumi.String(\"my_database_user\"),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.DatabaseQuota;\nimport com.pulumi.vultr.DatabaseQuotaArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var myDatabaseQuota = new DatabaseQuota(\"myDatabaseQuota\", DatabaseQuotaArgs.builder()\n            .databaseId(vultr_database.my_database().id())\n            .clientId(\"my_database_quota\")\n            .consumerByteRate(\"3\")\n            .producerByteRate(\"2\")\n            .requestPercentage(\"120\")\n            .user(\"my_database_user\")\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  myDatabaseQuota:\n    type: vultr:DatabaseQuota\n    properties:\n      databaseId: ${vultr_database.my_database.id}\n      clientId: my_database_quota\n      consumerByteRate: '3'\n      producerByteRate: '2'\n      requestPercentage: '120'\n      user: my_database_user\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
+            "properties": {
+                "clientId": {
+                    "type": "string",
+                    "description": "The client ID for the new database quota.\n"
+                },
+                "consumerByteRate": {
+                    "type": "integer",
+                    "description": "The consumer byte rate for the new managed database quota.\n"
+                },
+                "databaseId": {
+                    "type": "string",
+                    "description": "The managed database ID you want to attach this quota to.\n"
+                },
+                "producerByteRate": {
+                    "type": "integer",
+                    "description": "The producer byte rate for the new managed database quota.\n"
+                },
+                "requestPercentage": {
+                    "type": "integer",
+                    "description": "The CPU request percentage for the new managed database quota.\n"
+                },
+                "user": {
+                    "type": "string",
+                    "description": "The user for the new managed database quota.\n"
+                }
+            },
+            "required": [
+                "clientId",
+                "consumerByteRate",
+                "databaseId",
+                "producerByteRate",
+                "requestPercentage",
+                "user"
+            ],
+            "inputProperties": {
+                "clientId": {
+                    "type": "string",
+                    "description": "The client ID for the new database quota.\n",
+                    "willReplaceOnChanges": true
+                },
+                "consumerByteRate": {
+                    "type": "integer",
+                    "description": "The consumer byte rate for the new managed database quota.\n",
+                    "willReplaceOnChanges": true
+                },
+                "databaseId": {
+                    "type": "string",
+                    "description": "The managed database ID you want to attach this quota to.\n",
+                    "willReplaceOnChanges": true
+                },
+                "producerByteRate": {
+                    "type": "integer",
+                    "description": "The producer byte rate for the new managed database quota.\n",
+                    "willReplaceOnChanges": true
+                },
+                "requestPercentage": {
+                    "type": "integer",
+                    "description": "The CPU request percentage for the new managed database quota.\n",
+                    "willReplaceOnChanges": true
+                },
+                "user": {
+                    "type": "string",
+                    "description": "The user for the new managed database quota.\n",
+                    "willReplaceOnChanges": true
+                }
+            },
+            "requiredInputs": [
+                "clientId",
+                "consumerByteRate",
+                "databaseId",
+                "producerByteRate",
+                "requestPercentage",
+                "user"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering DatabaseQuota resources.\n",
+                "properties": {
+                    "clientId": {
+                        "type": "string",
+                        "description": "The client ID for the new database quota.\n",
+                        "willReplaceOnChanges": true
+                    },
+                    "consumerByteRate": {
+                        "type": "integer",
+                        "description": "The consumer byte rate for the new managed database quota.\n",
+                        "willReplaceOnChanges": true
+                    },
+                    "databaseId": {
+                        "type": "string",
+                        "description": "The managed database ID you want to attach this quota to.\n",
+                        "willReplaceOnChanges": true
+                    },
+                    "producerByteRate": {
+                        "type": "integer",
+                        "description": "The producer byte rate for the new managed database quota.\n",
+                        "willReplaceOnChanges": true
+                    },
+                    "requestPercentage": {
+                        "type": "integer",
+                        "description": "The CPU request percentage for the new managed database quota.\n",
+                        "willReplaceOnChanges": true
+                    },
+                    "user": {
+                        "type": "string",
+                        "description": "The user for the new managed database quota.\n",
                         "willReplaceOnChanges": true
                     }
                 },
@@ -3370,11 +3560,120 @@
                 "type": "object"
             }
         },
+        "vultr:index/databaseTopic:DatabaseTopic": {
+            "description": "Provides a Vultr database topic resource. This can be used to create, read, modify, and delete topics for a managed database on your Vultr account.\n\n## Example Usage\n\nCreate a new database topic:\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@ediri/vultr\";\n\nconst myDatabaseTopic = new vultr.DatabaseTopic(\"myDatabaseTopic\", {\n    databaseId: vultr_database.my_database.id,\n    name: \"my_database_topic\",\n    partitions: 3,\n    replication: 2,\n    retentionHours: 120,\n    retentionBytes: -1,\n});\n```\n```python\nimport pulumi\nimport ediri_vultr as vultr\n\nmy_database_topic = vultr.DatabaseTopic(\"myDatabaseTopic\",\n    database_id=vultr_database[\"my_database\"][\"id\"],\n    name=\"my_database_topic\",\n    partitions=3,\n    replication=2,\n    retention_hours=120,\n    retention_bytes=-1)\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vultr = ediri.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var myDatabaseTopic = new Vultr.DatabaseTopic(\"myDatabaseTopic\", new()\n    {\n        DatabaseId = vultr_database.My_database.Id,\n        Name = \"my_database_topic\",\n        Partitions = 3,\n        Replication = 2,\n        RetentionHours = 120,\n        RetentionBytes = -1,\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.NewDatabaseTopic(ctx, \"myDatabaseTopic\", \u0026vultr.DatabaseTopicArgs{\n\t\t\tDatabaseId:     pulumi.Any(vultr_database.My_database.Id),\n\t\t\tName:           pulumi.String(\"my_database_topic\"),\n\t\t\tPartitions:     pulumi.Int(3),\n\t\t\tReplication:    pulumi.Int(2),\n\t\t\tRetentionHours: pulumi.Int(120),\n\t\t\tRetentionBytes: pulumi.Int(-1),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.DatabaseTopic;\nimport com.pulumi.vultr.DatabaseTopicArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var myDatabaseTopic = new DatabaseTopic(\"myDatabaseTopic\", DatabaseTopicArgs.builder()\n            .databaseId(vultr_database.my_database().id())\n            .name(\"my_database_topic\")\n            .partitions(\"3\")\n            .replication(\"2\")\n            .retentionHours(\"120\")\n            .retentionBytes(\"-1\")\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  myDatabaseTopic:\n    type: vultr:DatabaseTopic\n    properties:\n      databaseId: ${vultr_database.my_database.id}\n      name: my_database_topic\n      partitions: '3'\n      replication: '2'\n      retentionHours: '120'\n      retentionBytes: '-1'\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
+            "properties": {
+                "databaseId": {
+                    "type": "string",
+                    "description": "The managed database ID you want to attach this topic to.\n"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "The name for the new managed database topic.\n"
+                },
+                "partitions": {
+                    "type": "integer",
+                    "description": "The number of partitions for the new managed database topic.\n"
+                },
+                "replication": {
+                    "type": "integer",
+                    "description": "The replication factor for the new managed database topic.\n"
+                },
+                "retentionBytes": {
+                    "type": "integer",
+                    "description": "The retention bytes for the new managed database topic.\n"
+                },
+                "retentionHours": {
+                    "type": "integer",
+                    "description": "The retention hours for the new managed database topic.\n"
+                }
+            },
+            "required": [
+                "databaseId",
+                "name",
+                "partitions",
+                "replication",
+                "retentionBytes",
+                "retentionHours"
+            ],
+            "inputProperties": {
+                "databaseId": {
+                    "type": "string",
+                    "description": "The managed database ID you want to attach this topic to.\n",
+                    "willReplaceOnChanges": true
+                },
+                "name": {
+                    "type": "string",
+                    "description": "The name for the new managed database topic.\n"
+                },
+                "partitions": {
+                    "type": "integer",
+                    "description": "The number of partitions for the new managed database topic.\n"
+                },
+                "replication": {
+                    "type": "integer",
+                    "description": "The replication factor for the new managed database topic.\n"
+                },
+                "retentionBytes": {
+                    "type": "integer",
+                    "description": "The retention bytes for the new managed database topic.\n"
+                },
+                "retentionHours": {
+                    "type": "integer",
+                    "description": "The retention hours for the new managed database topic.\n"
+                }
+            },
+            "requiredInputs": [
+                "databaseId",
+                "name",
+                "partitions",
+                "replication",
+                "retentionBytes",
+                "retentionHours"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering DatabaseTopic resources.\n",
+                "properties": {
+                    "databaseId": {
+                        "type": "string",
+                        "description": "The managed database ID you want to attach this topic to.\n",
+                        "willReplaceOnChanges": true
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "The name for the new managed database topic.\n"
+                    },
+                    "partitions": {
+                        "type": "integer",
+                        "description": "The number of partitions for the new managed database topic.\n"
+                    },
+                    "replication": {
+                        "type": "integer",
+                        "description": "The replication factor for the new managed database topic.\n"
+                    },
+                    "retentionBytes": {
+                        "type": "integer",
+                        "description": "The retention bytes for the new managed database topic.\n"
+                    },
+                    "retentionHours": {
+                        "type": "integer",
+                        "description": "The retention hours for the new managed database topic.\n"
+                    }
+                },
+                "type": "object"
+            }
+        },
         "vultr:index/databaseUser:DatabaseUser": {
             "description": "Provides a Vultr database user resource. This can be used to create, read, modify, and delete users for a managed database on your Vultr account.\n\n## Example Usage\n\nCreate a new database user:\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@ediri/vultr\";\n\nconst myDatabaseUser = new vultr.DatabaseUser(\"myDatabaseUser\", {\n    databaseId: vultr_database.my_database.id,\n    username: \"my_database_user\",\n    password: \"randomTestPW40298\",\n});\n```\n```python\nimport pulumi\nimport ediri_vultr as vultr\n\nmy_database_user = vultr.DatabaseUser(\"myDatabaseUser\",\n    database_id=vultr_database[\"my_database\"][\"id\"],\n    username=\"my_database_user\",\n    password=\"randomTestPW40298\")\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vultr = ediri.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var myDatabaseUser = new Vultr.DatabaseUser(\"myDatabaseUser\", new()\n    {\n        DatabaseId = vultr_database.My_database.Id,\n        Username = \"my_database_user\",\n        Password = \"randomTestPW40298\",\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.NewDatabaseUser(ctx, \"myDatabaseUser\", \u0026vultr.DatabaseUserArgs{\n\t\t\tDatabaseId: pulumi.Any(vultr_database.My_database.Id),\n\t\t\tUsername:   pulumi.String(\"my_database_user\"),\n\t\t\tPassword:   pulumi.String(\"randomTestPW40298\"),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.DatabaseUser;\nimport com.pulumi.vultr.DatabaseUserArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var myDatabaseUser = new DatabaseUser(\"myDatabaseUser\", DatabaseUserArgs.builder()\n            .databaseId(vultr_database.my_database().id())\n            .username(\"my_database_user\")\n            .password(\"randomTestPW40298\")\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  myDatabaseUser:\n    type: vultr:DatabaseUser\n    properties:\n      databaseId: ${vultr_database.my_database.id}\n      username: my_database_user\n      password: randomTestPW40298\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
             "properties": {
+                "accessCert": {
+                    "type": "string"
+                },
                 "accessControl": {
                     "$ref": "#/types/vultr:index/DatabaseUserAccessControl:DatabaseUserAccessControl"
+                },
+                "accessKey": {
+                    "type": "string"
                 },
                 "databaseId": {
                     "type": "string",
@@ -3388,16 +3687,23 @@
                     "type": "string",
                     "description": "The password of the new managed database user.\n"
                 },
+                "permission": {
+                    "type": "string",
+                    "description": "The permission level for the database user (Kafka engine types only - `admin`, `read`, `write`, `readwrite`).\n"
+                },
                 "username": {
                     "type": "string",
                     "description": "The username of the new managed database user.\n"
                 }
             },
             "required": [
+                "accessCert",
                 "accessControl",
+                "accessKey",
                 "databaseId",
                 "encryption",
                 "password",
+                "permission",
                 "username"
             ],
             "inputProperties": {
@@ -3417,6 +3723,10 @@
                     "type": "string",
                     "description": "The password of the new managed database user.\n"
                 },
+                "permission": {
+                    "type": "string",
+                    "description": "The permission level for the database user (Kafka engine types only - `admin`, `read`, `write`, `readwrite`).\n"
+                },
                 "username": {
                     "type": "string",
                     "description": "The username of the new managed database user.\n"
@@ -3429,8 +3739,14 @@
             "stateInputs": {
                 "description": "Input properties used for looking up and filtering DatabaseUser resources.\n",
                 "properties": {
+                    "accessCert": {
+                        "type": "string"
+                    },
                     "accessControl": {
                         "$ref": "#/types/vultr:index/DatabaseUserAccessControl:DatabaseUserAccessControl"
+                    },
+                    "accessKey": {
+                        "type": "string"
                     },
                     "databaseId": {
                         "type": "string",
@@ -3444,6 +3760,10 @@
                     "password": {
                         "type": "string",
                         "description": "The password of the new managed database user.\n"
+                    },
+                    "permission": {
+                        "type": "string",
+                        "description": "The permission level for the database user (Kafka engine types only - `admin`, `read`, `write`, `readwrite`).\n"
                     },
                     "username": {
                         "type": "string",
@@ -4058,6 +4378,10 @@
                     "type": "string",
                     "description": "Generic data store, which some provisioning tools and cloud operating systems use as a configuration file. It is generally consumed only once after an instance has been launched, but individual needs may vary.\n"
                 },
+                "userScheme": {
+                    "type": "string",
+                    "description": "The scheme used for the default user. Possible values are `root` or `limited` (linux servers only).\n"
+                },
                 "v6MainIp": {
                     "type": "string",
                     "description": "The main IPv6 network address.\n"
@@ -4231,6 +4555,11 @@
                 "userData": {
                     "type": "string",
                     "description": "Generic data store, which some provisioning tools and cloud operating systems use as a configuration file. It is generally consumed only once after an instance has been launched, but individual needs may vary.\n",
+                    "willReplaceOnChanges": true
+                },
+                "userScheme": {
+                    "type": "string",
+                    "description": "The scheme used for the default user. Possible values are `root` or `limited` (linux servers only).\n",
                     "willReplaceOnChanges": true
                 },
                 "vpc2Ids": {
@@ -4428,6 +4757,11 @@
                         "description": "Generic data store, which some provisioning tools and cloud operating systems use as a configuration file. It is generally consumed only once after an instance has been launched, but individual needs may vary.\n",
                         "willReplaceOnChanges": true
                     },
+                    "userScheme": {
+                        "type": "string",
+                        "description": "The scheme used for the default user. Possible values are `root` or `limited` (linux servers only).\n",
+                        "willReplaceOnChanges": true
+                    },
                     "v6MainIp": {
                         "type": "string",
                         "description": "The main IPv6 network address.\n"
@@ -4617,7 +4951,7 @@
             }
         },
         "vultr:index/kubernetes:Kubernetes": {
-            "description": "## Example Usage\n\nCreate a new VKE cluster:\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@ediri/vultr\";\n\nconst k8 = new vultr.Kubernetes(\"k8\", {\n    label: \"vke-test\",\n    nodePools: {\n        autoScaler: true,\n        label: \"vke-nodepool\",\n        maxNodes: 2,\n        minNodes: 1,\n        nodeQuantity: 1,\n        plan: \"vc2-1c-2gb\",\n    },\n    region: \"ewr\",\n    version: \"v1.28.2+1\",\n});\n```\n```python\nimport pulumi\nimport ediri_vultr as vultr\n\nk8 = vultr.Kubernetes(\"k8\",\n    label=\"vke-test\",\n    node_pools={\n        \"auto_scaler\": True,\n        \"label\": \"vke-nodepool\",\n        \"max_nodes\": 2,\n        \"min_nodes\": 1,\n        \"node_quantity\": 1,\n        \"plan\": \"vc2-1c-2gb\",\n    },\n    region=\"ewr\",\n    version=\"v1.28.2+1\")\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vultr = ediri.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var k8 = new Vultr.Kubernetes(\"k8\", new()\n    {\n        Label = \"vke-test\",\n        NodePools = new Vultr.Inputs.KubernetesNodePoolsArgs\n        {\n            AutoScaler = true,\n            Label = \"vke-nodepool\",\n            MaxNodes = 2,\n            MinNodes = 1,\n            NodeQuantity = 1,\n            Plan = \"vc2-1c-2gb\",\n        },\n        Region = \"ewr\",\n        Version = \"v1.28.2+1\",\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.NewKubernetes(ctx, \"k8\", \u0026vultr.KubernetesArgs{\n\t\t\tLabel: pulumi.String(\"vke-test\"),\n\t\t\tNodePools: \u0026vultr.KubernetesNodePoolsTypeArgs{\n\t\t\t\tAutoScaler:   pulumi.Bool(true),\n\t\t\t\tLabel:        pulumi.String(\"vke-nodepool\"),\n\t\t\t\tMaxNodes:     pulumi.Int(2),\n\t\t\t\tMinNodes:     pulumi.Int(1),\n\t\t\t\tNodeQuantity: pulumi.Int(1),\n\t\t\t\tPlan:         pulumi.String(\"vc2-1c-2gb\"),\n\t\t\t},\n\t\t\tRegion:  pulumi.String(\"ewr\"),\n\t\t\tVersion: pulumi.String(\"v1.28.2+1\"),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.Kubernetes;\nimport com.pulumi.vultr.KubernetesArgs;\nimport com.pulumi.vultr.inputs.KubernetesNodePoolsArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var k8 = new Kubernetes(\"k8\", KubernetesArgs.builder()\n            .label(\"vke-test\")\n            .nodePools(KubernetesNodePoolsArgs.builder()\n                .autoScaler(true)\n                .label(\"vke-nodepool\")\n                .maxNodes(2)\n                .minNodes(1)\n                .nodeQuantity(1)\n                .plan(\"vc2-1c-2gb\")\n                .build())\n            .region(\"ewr\")\n            .version(\"v1.28.2+1\")\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  k8:\n    type: vultr:Kubernetes\n    properties:\n      label: vke-test\n      nodePools:\n        autoScaler: true\n        label: vke-nodepool\n        maxNodes: 2\n        minNodes: 1\n        nodeQuantity: 1\n        plan: vc2-1c-2gb\n      region: ewr\n      version: v1.28.2+1\n```\n\u003c!--End PulumiCodeChooser --\u003e\n\nA default node pool is required when first creating the resource but it can be removed at a later point so long as there is a separate `vultr.KubernetesNodePools` resource attached. For example:\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@ediri/vultr\";\n\nconst k8 = new vultr.Kubernetes(\"k8\", {\n    region: \"ewr\",\n    label: \"vke-test\",\n    version: \"v1.28.2+1\",\n});\n// This resource must be created and attached to the cluster\n// before removing the default node from the vultr_kubernetes resource\nconst np = new vultr.KubernetesNodePools(\"np\", {\n    clusterId: k8.id,\n    nodeQuantity: 1,\n    plan: \"vc2-1c-2gb\",\n    label: \"vke-nodepool\",\n    autoScaler: true,\n    minNodes: 1,\n    maxNodes: 2,\n});\n```\n```python\nimport pulumi\nimport ediri_vultr as vultr\n\nk8 = vultr.Kubernetes(\"k8\",\n    region=\"ewr\",\n    label=\"vke-test\",\n    version=\"v1.28.2+1\")\n# This resource must be created and attached to the cluster\n# before removing the default node from the vultr_kubernetes resource\nnp = vultr.KubernetesNodePools(\"np\",\n    cluster_id=k8.id,\n    node_quantity=1,\n    plan=\"vc2-1c-2gb\",\n    label=\"vke-nodepool\",\n    auto_scaler=True,\n    min_nodes=1,\n    max_nodes=2)\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vultr = ediri.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var k8 = new Vultr.Kubernetes(\"k8\", new()\n    {\n        Region = \"ewr\",\n        Label = \"vke-test\",\n        Version = \"v1.28.2+1\",\n    });\n\n    // This resource must be created and attached to the cluster\n    // before removing the default node from the vultr_kubernetes resource\n    var np = new Vultr.KubernetesNodePools(\"np\", new()\n    {\n        ClusterId = k8.Id,\n        NodeQuantity = 1,\n        Plan = \"vc2-1c-2gb\",\n        Label = \"vke-nodepool\",\n        AutoScaler = true,\n        MinNodes = 1,\n        MaxNodes = 2,\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\tk8, err := vultr.NewKubernetes(ctx, \"k8\", \u0026vultr.KubernetesArgs{\n\t\t\tRegion:  pulumi.String(\"ewr\"),\n\t\t\tLabel:   pulumi.String(\"vke-test\"),\n\t\t\tVersion: pulumi.String(\"v1.28.2+1\"),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\t// This resource must be created and attached to the cluster\n\t\t// before removing the default node from the vultr_kubernetes resource\n\t\t_, err = vultr.NewKubernetesNodePools(ctx, \"np\", \u0026vultr.KubernetesNodePoolsArgs{\n\t\t\tClusterId:    k8.ID(),\n\t\t\tNodeQuantity: pulumi.Int(1),\n\t\t\tPlan:         pulumi.String(\"vc2-1c-2gb\"),\n\t\t\tLabel:        pulumi.String(\"vke-nodepool\"),\n\t\t\tAutoScaler:   pulumi.Bool(true),\n\t\t\tMinNodes:     pulumi.Int(1),\n\t\t\tMaxNodes:     pulumi.Int(2),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.Kubernetes;\nimport com.pulumi.vultr.KubernetesArgs;\nimport com.pulumi.vultr.KubernetesNodePools;\nimport com.pulumi.vultr.KubernetesNodePoolsArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var k8 = new Kubernetes(\"k8\", KubernetesArgs.builder()\n            .region(\"ewr\")\n            .label(\"vke-test\")\n            .version(\"v1.28.2+1\")\n            .build());\n\n        // This resource must be created and attached to the cluster\n        // before removing the default node from the vultr_kubernetes resource\n        var np = new KubernetesNodePools(\"np\", KubernetesNodePoolsArgs.builder()\n            .clusterId(k8.id())\n            .nodeQuantity(1)\n            .plan(\"vc2-1c-2gb\")\n            .label(\"vke-nodepool\")\n            .autoScaler(true)\n            .minNodes(1)\n            .maxNodes(2)\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  k8:\n    type: vultr:Kubernetes\n    properties:\n      region: ewr\n      label: vke-test\n      version: v1.28.2+1\n  # This resource must be created and attached to the cluster\n  # before removing the default node from the vultr_kubernetes resource\n  np:\n    type: vultr:KubernetesNodePools\n    properties:\n      clusterId: ${k8.id}\n      nodeQuantity: 1\n      plan: vc2-1c-2gb\n      label: vke-nodepool\n      autoScaler: true\n      minNodes: 1\n      maxNodes: 2\n```\n\u003c!--End PulumiCodeChooser --\u003e\n\nThere is still a requirement that there be one node pool attached to the cluster but this should allow more flexibility about which node pool that is.\n",
+            "description": "## Example Usage\n\nCreate a new VKE cluster:\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@ediri/vultr\";\n\nconst k8 = new vultr.Kubernetes(\"k8\", {\n    label: \"vke-test\",\n    nodePools: {\n        autoScaler: true,\n        label: \"vke-nodepool\",\n        maxNodes: 2,\n        minNodes: 1,\n        nodeQuantity: 1,\n        plan: \"vc2-1c-2gb\",\n    },\n    region: \"ewr\",\n    version: \"v1.28.2+1\",\n});\n```\n```python\nimport pulumi\nimport ediri_vultr as vultr\n\nk8 = vultr.Kubernetes(\"k8\",\n    label=\"vke-test\",\n    node_pools={\n        \"auto_scaler\": True,\n        \"label\": \"vke-nodepool\",\n        \"max_nodes\": 2,\n        \"min_nodes\": 1,\n        \"node_quantity\": 1,\n        \"plan\": \"vc2-1c-2gb\",\n    },\n    region=\"ewr\",\n    version=\"v1.28.2+1\")\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vultr = ediri.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var k8 = new Vultr.Kubernetes(\"k8\", new()\n    {\n        Label = \"vke-test\",\n        NodePools = new Vultr.Inputs.KubernetesNodePoolsArgs\n        {\n            AutoScaler = true,\n            Label = \"vke-nodepool\",\n            MaxNodes = 2,\n            MinNodes = 1,\n            NodeQuantity = 1,\n            Plan = \"vc2-1c-2gb\",\n        },\n        Region = \"ewr\",\n        Version = \"v1.28.2+1\",\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.NewKubernetes(ctx, \"k8\", \u0026vultr.KubernetesArgs{\n\t\t\tLabel: pulumi.String(\"vke-test\"),\n\t\t\tNodePools: \u0026vultr.KubernetesNodePoolsTypeArgs{\n\t\t\t\tAutoScaler:   pulumi.Bool(true),\n\t\t\t\tLabel:        pulumi.String(\"vke-nodepool\"),\n\t\t\t\tMaxNodes:     pulumi.Int(2),\n\t\t\t\tMinNodes:     pulumi.Int(1),\n\t\t\t\tNodeQuantity: pulumi.Int(1),\n\t\t\t\tPlan:         pulumi.String(\"vc2-1c-2gb\"),\n\t\t\t},\n\t\t\tRegion:  pulumi.String(\"ewr\"),\n\t\t\tVersion: pulumi.String(\"v1.28.2+1\"),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.Kubernetes;\nimport com.pulumi.vultr.KubernetesArgs;\nimport com.pulumi.vultr.inputs.KubernetesNodePoolsArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var k8 = new Kubernetes(\"k8\", KubernetesArgs.builder()\n            .label(\"vke-test\")\n            .nodePools(KubernetesNodePoolsArgs.builder()\n                .autoScaler(true)\n                .label(\"vke-nodepool\")\n                .maxNodes(2)\n                .minNodes(1)\n                .nodeQuantity(1)\n                .plan(\"vc2-1c-2gb\")\n                .build())\n            .region(\"ewr\")\n            .version(\"v1.28.2+1\")\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  k8:\n    type: vultr:Kubernetes\n    properties:\n      label: vke-test\n      nodePools:\n        autoScaler: true\n        label: vke-nodepool\n        maxNodes: 2\n        minNodes: 1\n        nodeQuantity: 1\n        plan: vc2-1c-2gb\n      region: ewr\n      version: v1.28.2+1\n```\n\u003c!--End PulumiCodeChooser --\u003e\n\nA default node pool is required when first creating the resource but it can be removed at a later point so long as there is a separate `vultr.KubernetesNodePools` resource attached. For example:\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@ediri/vultr\";\n\nconst k8 = new vultr.Kubernetes(\"k8\", {\n    region: \"ewr\",\n    label: \"vke-test\",\n    version: \"v1.28.2+1\",\n});\n// This resource must be created and attached to the cluster\n// before removing the default node from the vultr_kubernetes resource\nconst np = new vultr.KubernetesNodePools(\"np\", {\n    clusterId: k8.id,\n    nodeQuantity: 1,\n    plan: \"vc2-1c-2gb\",\n    label: \"vke-nodepool\",\n    autoScaler: true,\n    minNodes: 1,\n    maxNodes: 2,\n});\n```\n```python\nimport pulumi\nimport ediri_vultr as vultr\n\nk8 = vultr.Kubernetes(\"k8\",\n    region=\"ewr\",\n    label=\"vke-test\",\n    version=\"v1.28.2+1\")\n# This resource must be created and attached to the cluster\n# before removing the default node from the vultr_kubernetes resource\nnp = vultr.KubernetesNodePools(\"np\",\n    cluster_id=k8.id,\n    node_quantity=1,\n    plan=\"vc2-1c-2gb\",\n    label=\"vke-nodepool\",\n    auto_scaler=True,\n    min_nodes=1,\n    max_nodes=2)\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vultr = ediri.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var k8 = new Vultr.Kubernetes(\"k8\", new()\n    {\n        Region = \"ewr\",\n        Label = \"vke-test\",\n        Version = \"v1.28.2+1\",\n    });\n\n    // This resource must be created and attached to the cluster\n    // before removing the default node from the vultr_kubernetes resource\n    var np = new Vultr.KubernetesNodePools(\"np\", new()\n    {\n        ClusterId = k8.Id,\n        NodeQuantity = 1,\n        Plan = \"vc2-1c-2gb\",\n        Label = \"vke-nodepool\",\n        AutoScaler = true,\n        MinNodes = 1,\n        MaxNodes = 2,\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\tk8, err := vultr.NewKubernetes(ctx, \"k8\", \u0026vultr.KubernetesArgs{\n\t\t\tRegion:  pulumi.String(\"ewr\"),\n\t\t\tLabel:   pulumi.String(\"vke-test\"),\n\t\t\tVersion: pulumi.String(\"v1.28.2+1\"),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\t// This resource must be created and attached to the cluster\n\t\t// before removing the default node from the vultr_kubernetes resource\n\t\t_, err = vultr.NewKubernetesNodePools(ctx, \"np\", \u0026vultr.KubernetesNodePoolsArgs{\n\t\t\tClusterId:    k8.ID(),\n\t\t\tNodeQuantity: pulumi.Int(1),\n\t\t\tPlan:         pulumi.String(\"vc2-1c-2gb\"),\n\t\t\tLabel:        pulumi.String(\"vke-nodepool\"),\n\t\t\tAutoScaler:   pulumi.Bool(true),\n\t\t\tMinNodes:     pulumi.Int(1),\n\t\t\tMaxNodes:     pulumi.Int(2),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.Kubernetes;\nimport com.pulumi.vultr.KubernetesArgs;\nimport com.pulumi.vultr.KubernetesNodePools;\nimport com.pulumi.vultr.KubernetesNodePoolsArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var k8 = new Kubernetes(\"k8\", KubernetesArgs.builder()\n            .region(\"ewr\")\n            .label(\"vke-test\")\n            .version(\"v1.28.2+1\")\n            .build());\n\n        // This resource must be created and attached to the cluster\n        // before removing the default node from the vultr_kubernetes resource\n        var np = new KubernetesNodePools(\"np\", KubernetesNodePoolsArgs.builder()\n            .clusterId(k8.id())\n            .nodeQuantity(1)\n            .plan(\"vc2-1c-2gb\")\n            .label(\"vke-nodepool\")\n            .autoScaler(true)\n            .minNodes(1)\n            .maxNodes(2)\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  k8:\n    type: vultr:Kubernetes\n    properties:\n      region: ewr\n      label: vke-test\n      version: v1.28.2+1\n  # This resource must be created and attached to the cluster\n  # before removing the default node from the vultr_kubernetes resource\n  np:\n    type: vultr:KubernetesNodePools\n    properties:\n      clusterId: ${k8.id}\n      nodeQuantity: 1\n      plan: vc2-1c-2gb\n      label: vke-nodepool\n      autoScaler: true\n      minNodes: 1\n      maxNodes: 2\n```\n\u003c!--End PulumiCodeChooser --\u003e\n\nThere is still a requirement that there be one node pool attached to the cluster but this should allow more flexibility about which node pool that is.\n\n## Import\n\nA kubernetes cluster created outside of terraform can be imported into the\n\nterraform state using the UUID.  One thing to note is that all kubernetes\n\nresources have a default node pool with a tag of `tf-vke-default`. In order to\n\navoid errors, ensure that there is a node pool with that tag set.\n\n```sh\n$ pulumi import vultr:index/kubernetes:Kubernetes my-k8s 7365a98b-5a43-450f-bd27-d768827100e5\n```\n\n",
             "properties": {
                 "clientCertificate": {
                     "type": "string",
@@ -4825,7 +5159,7 @@
             }
         },
         "vultr:index/kubernetesNodePools:KubernetesNodePools": {
-            "description": "Deploy additional node pools to an existing Vultr Kubernetes Engine (VKE) cluster.\n\n## Example Usage\n\nCreate a new VKE cluster:\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@ediri/vultr\";\n\nconst np_1 = new vultr.KubernetesNodePools(\"np-1\", {\n    clusterId: vultr_kubernetes.k8.id,\n    nodeQuantity: 1,\n    plan: \"vc2-2c-4gb\",\n    label: \"my-label\",\n    tag: \"my-tag\",\n    autoScaler: true,\n    minNodes: 1,\n    maxNodes: 2,\n});\n```\n```python\nimport pulumi\nimport ediri_vultr as vultr\n\nnp_1 = vultr.KubernetesNodePools(\"np-1\",\n    cluster_id=vultr_kubernetes[\"k8\"][\"id\"],\n    node_quantity=1,\n    plan=\"vc2-2c-4gb\",\n    label=\"my-label\",\n    tag=\"my-tag\",\n    auto_scaler=True,\n    min_nodes=1,\n    max_nodes=2)\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vultr = ediri.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var np_1 = new Vultr.KubernetesNodePools(\"np-1\", new()\n    {\n        ClusterId = vultr_kubernetes.K8.Id,\n        NodeQuantity = 1,\n        Plan = \"vc2-2c-4gb\",\n        Label = \"my-label\",\n        Tag = \"my-tag\",\n        AutoScaler = true,\n        MinNodes = 1,\n        MaxNodes = 2,\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.NewKubernetesNodePools(ctx, \"np-1\", \u0026vultr.KubernetesNodePoolsArgs{\n\t\t\tClusterId:    pulumi.Any(vultr_kubernetes.K8.Id),\n\t\t\tNodeQuantity: pulumi.Int(1),\n\t\t\tPlan:         pulumi.String(\"vc2-2c-4gb\"),\n\t\t\tLabel:        pulumi.String(\"my-label\"),\n\t\t\tTag:          pulumi.String(\"my-tag\"),\n\t\t\tAutoScaler:   pulumi.Bool(true),\n\t\t\tMinNodes:     pulumi.Int(1),\n\t\t\tMaxNodes:     pulumi.Int(2),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.KubernetesNodePools;\nimport com.pulumi.vultr.KubernetesNodePoolsArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var np_1 = new KubernetesNodePools(\"np-1\", KubernetesNodePoolsArgs.builder()\n            .clusterId(vultr_kubernetes.k8().id())\n            .nodeQuantity(1)\n            .plan(\"vc2-2c-4gb\")\n            .label(\"my-label\")\n            .tag(\"my-tag\")\n            .autoScaler(true)\n            .minNodes(1)\n            .maxNodes(2)\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  np-1:\n    type: vultr:KubernetesNodePools\n    properties:\n      clusterId: ${vultr_kubernetes.k8.id}\n      nodeQuantity: 1\n      plan: vc2-2c-4gb\n      label: my-label\n      tag: my-tag\n      autoScaler: true\n      minNodes: 1\n      maxNodes: 2\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
+            "description": "Deploy additional node pools to an existing Vultr Kubernetes Engine (VKE) cluster.\n\n## Example Usage\n\nCreate a new VKE cluster:\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@ediri/vultr\";\n\nconst np_1 = new vultr.KubernetesNodePools(\"np-1\", {\n    clusterId: vultr_kubernetes.k8.id,\n    nodeQuantity: 1,\n    plan: \"vc2-2c-4gb\",\n    label: \"my-label\",\n    tag: \"my-tag\",\n    autoScaler: true,\n    minNodes: 1,\n    maxNodes: 2,\n});\n```\n```python\nimport pulumi\nimport ediri_vultr as vultr\n\nnp_1 = vultr.KubernetesNodePools(\"np-1\",\n    cluster_id=vultr_kubernetes[\"k8\"][\"id\"],\n    node_quantity=1,\n    plan=\"vc2-2c-4gb\",\n    label=\"my-label\",\n    tag=\"my-tag\",\n    auto_scaler=True,\n    min_nodes=1,\n    max_nodes=2)\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vultr = ediri.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var np_1 = new Vultr.KubernetesNodePools(\"np-1\", new()\n    {\n        ClusterId = vultr_kubernetes.K8.Id,\n        NodeQuantity = 1,\n        Plan = \"vc2-2c-4gb\",\n        Label = \"my-label\",\n        Tag = \"my-tag\",\n        AutoScaler = true,\n        MinNodes = 1,\n        MaxNodes = 2,\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.NewKubernetesNodePools(ctx, \"np-1\", \u0026vultr.KubernetesNodePoolsArgs{\n\t\t\tClusterId:    pulumi.Any(vultr_kubernetes.K8.Id),\n\t\t\tNodeQuantity: pulumi.Int(1),\n\t\t\tPlan:         pulumi.String(\"vc2-2c-4gb\"),\n\t\t\tLabel:        pulumi.String(\"my-label\"),\n\t\t\tTag:          pulumi.String(\"my-tag\"),\n\t\t\tAutoScaler:   pulumi.Bool(true),\n\t\t\tMinNodes:     pulumi.Int(1),\n\t\t\tMaxNodes:     pulumi.Int(2),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.KubernetesNodePools;\nimport com.pulumi.vultr.KubernetesNodePoolsArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var np_1 = new KubernetesNodePools(\"np-1\", KubernetesNodePoolsArgs.builder()\n            .clusterId(vultr_kubernetes.k8().id())\n            .nodeQuantity(1)\n            .plan(\"vc2-2c-4gb\")\n            .label(\"my-label\")\n            .tag(\"my-tag\")\n            .autoScaler(true)\n            .minNodes(1)\n            .maxNodes(2)\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  np-1:\n    type: vultr:KubernetesNodePools\n    properties:\n      clusterId: ${vultr_kubernetes.k8.id}\n      nodeQuantity: 1\n      plan: vc2-2c-4gb\n      label: my-label\n      tag: my-tag\n      autoScaler: true\n      minNodes: 1\n      maxNodes: 2\n```\n\u003c!--End PulumiCodeChooser --\u003e\n\n## Import\n\nNode pool resources are able to be imported into terraform state like other\n\nresources, however, since they rely on a kubernetes cluster, the import state\n\nrequires the UUID of the cluster as well. With that in mind, format the second\n\nargument to the `pulumi import` command as a space delimited string of\n\nUUIDs, the first is the cluster ID, the second is the node pool ID. It will\n\nlook like this:\n\n\"clusterID nodePoolID\"\n\n```sh\n$ pulumi import vultr:index/kubernetesNodePools:KubernetesNodePools my-k8s-np \"7365a98b-5a43-450f-bd27-d768827100e5 ec330340-4f50-4526-858f-a39199f568ac\"\n```\n\n",
             "properties": {
                 "autoScaler": {
                     "type": "boolean",
@@ -6169,7 +6503,7 @@
     },
     "functions": {
         "vultr:index/getAccount:getAccount": {
-            "description": "Get information about your Vultr account. This data source provides the balance, pending charges, last payment date, and last payment amount for your Vultr account.\n\n## Example Usage\n\nGet the information for an account:\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@pulumi/vultr\";\n\nconst myAccount = vultr.getAccount({});\n```\n```python\nimport pulumi\nimport pulumi_vultr as vultr\n\nmy_account = vultr.get_account()\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vultr = Pulumi.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var myAccount = Vultr.GetAccount.Invoke();\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.GetAccount(ctx, nil, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.VultrFunctions;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var myAccount = VultrFunctions.getAccount();\n\n    }\n}\n```\n```yaml\nvariables:\n  myAccount:\n    fn::invoke:\n      Function: vultr:getAccount\n      Arguments: {}\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
+            "description": "Get information about your Vultr account. This data source provides the balance, pending charges, last payment date, and last payment amount for your Vultr account.\n\n## Example Usage\n\nGet the information for an account:\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@pulumi/vultr\";\n\nconst myAccount = vultr.getAccount({});\n```\n```python\nimport pulumi\nimport pulumi_vultr as vultr\n\nmy_account = vultr.get_account()\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vultr = Pulumi.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var myAccount = Vultr.GetAccount.Invoke();\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.GetAccount(ctx, map[string]interface{}{}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.VultrFunctions;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var myAccount = VultrFunctions.getAccount();\n\n    }\n}\n```\n```yaml\nvariables:\n  myAccount:\n    fn::invoke:\n      Function: vultr:getAccount\n      Arguments: {}\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
             "outputs": {
                 "description": "A collection of values returned by getAccount.\n",
                 "properties": {
@@ -6527,6 +6861,10 @@
                         },
                         "description": "A list of tags applied to the server.\n"
                     },
+                    "userScheme": {
+                        "type": "string",
+                        "description": "The scheme used for the default user (linux servers only).\n"
+                    },
                     "v6MainIp": {
                         "type": "string"
                     },
@@ -6564,6 +6902,7 @@
                     "region",
                     "status",
                     "tags",
+                    "userScheme",
                     "v6MainIp",
                     "v6Network",
                     "v6NetworkSize",
@@ -6752,6 +7091,14 @@
             "outputs": {
                 "description": "A collection of values returned by getDatabase.\n",
                 "properties": {
+                    "accessCert": {
+                        "type": "string",
+                        "description": "The certificate to authenticate the default user (Kafka engine types only).\n"
+                    },
+                    "accessKey": {
+                        "type": "string",
+                        "description": "The private key to authenticate the default user (Kafka engine types only).\n"
+                    },
                     "clusterTimeZone": {
                         "type": "string",
                         "description": "The configured time zone for the Managed Database in TZ database format.\n"
@@ -6836,6 +7183,9 @@
                         "type": "string",
                         "description": "The managed database's plan ID.\n"
                     },
+                    "planBrokers": {
+                        "type": "integer"
+                    },
                     "planDisk": {
                         "type": "integer",
                         "description": "The description of the disk(s) on the managed database.\n"
@@ -6875,6 +7225,10 @@
                         "type": "string",
                         "description": "The region ID of the managed database.\n"
                     },
+                    "saslPort": {
+                        "type": "string",
+                        "description": "The SASL connection port for the managed database (Kafka engine types only).\n"
+                    },
                     "status": {
                         "type": "string",
                         "description": "The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).\n"
@@ -6901,6 +7255,8 @@
                 },
                 "type": "object",
                 "required": [
+                    "accessCert",
+                    "accessKey",
                     "clusterTimeZone",
                     "databaseEngine",
                     "databaseEngineVersion",
@@ -6918,6 +7274,7 @@
                     "mysqlSqlModes",
                     "password",
                     "plan",
+                    "planBrokers",
                     "planDisk",
                     "planRam",
                     "planReplicas",
@@ -6927,6 +7284,7 @@
                     "readReplicas",
                     "redisEvictionPolicy",
                     "region",
+                    "saslPort",
                     "status",
                     "tag",
                     "trustedIps",
@@ -7244,6 +7602,10 @@
                         },
                         "description": "A list of tags applied to the instance.\n"
                     },
+                    "userScheme": {
+                        "type": "string",
+                        "description": "The scheme used for the default user (linux servers only).\n"
+                    },
                     "v6MainIp": {
                         "type": "string",
                         "description": "The main IPv6 network address.\n"
@@ -7302,6 +7664,7 @@
                     "serverStatus",
                     "status",
                     "tags",
+                    "userScheme",
                     "v6MainIp",
                     "v6Network",
                     "v6NetworkSize",

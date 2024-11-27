@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -127,7 +132,7 @@ class AwaitableGetApplicationResult(GetApplicationResult):
             vendor=self.vendor)
 
 
-def get_application(filters: Optional[Sequence[pulumi.InputType['GetApplicationFilterArgs']]] = None,
+def get_application(filters: Optional[Sequence[Union['GetApplicationFilterArgs', 'GetApplicationFilterArgsDict']]] = None,
                     opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetApplicationResult:
     """
     Get information about applications that can be launched when creating a Vultr VPS.
@@ -140,14 +145,14 @@ def get_application(filters: Optional[Sequence[pulumi.InputType['GetApplicationF
     import pulumi
     import pulumi_vultr as vultr
 
-    docker = vultr.get_application(filters=[vultr.GetApplicationFilterArgs(
-        name="deploy_name",
-        values=["Docker on CentOS 7 x64"],
-    )])
+    docker = vultr.get_application(filters=[{
+        "name": "deploy_name",
+        "values": ["Docker on CentOS 7 x64"],
+    }])
     ```
 
 
-    :param Sequence[pulumi.InputType['GetApplicationFilterArgs']] filters: Query parameters for finding applications.
+    :param Sequence[Union['GetApplicationFilterArgs', 'GetApplicationFilterArgsDict']] filters: Query parameters for finding applications.
     """
     __args__ = dict()
     __args__['filters'] = filters
@@ -163,10 +168,7 @@ def get_application(filters: Optional[Sequence[pulumi.InputType['GetApplicationF
         short_name=pulumi.get(__ret__, 'short_name'),
         type=pulumi.get(__ret__, 'type'),
         vendor=pulumi.get(__ret__, 'vendor'))
-
-
-@_utilities.lift_output_func(get_application)
-def get_application_output(filters: Optional[pulumi.Input[Optional[Sequence[pulumi.InputType['GetApplicationFilterArgs']]]]] = None,
+def get_application_output(filters: Optional[pulumi.Input[Optional[Sequence[Union['GetApplicationFilterArgs', 'GetApplicationFilterArgsDict']]]]] = None,
                            opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetApplicationResult]:
     """
     Get information about applications that can be launched when creating a Vultr VPS.
@@ -179,13 +181,25 @@ def get_application_output(filters: Optional[pulumi.Input[Optional[Sequence[pulu
     import pulumi
     import pulumi_vultr as vultr
 
-    docker = vultr.get_application(filters=[vultr.GetApplicationFilterArgs(
-        name="deploy_name",
-        values=["Docker on CentOS 7 x64"],
-    )])
+    docker = vultr.get_application(filters=[{
+        "name": "deploy_name",
+        "values": ["Docker on CentOS 7 x64"],
+    }])
     ```
 
 
-    :param Sequence[pulumi.InputType['GetApplicationFilterArgs']] filters: Query parameters for finding applications.
+    :param Sequence[Union['GetApplicationFilterArgs', 'GetApplicationFilterArgsDict']] filters: Query parameters for finding applications.
     """
-    ...
+    __args__ = dict()
+    __args__['filters'] = filters
+    opts = pulumi.InvokeOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
+    __ret__ = pulumi.runtime.invoke_output('vultr:index/getApplication:getApplication', __args__, opts=opts, typ=GetApplicationResult)
+    return __ret__.apply(lambda __response__: GetApplicationResult(
+        deploy_name=pulumi.get(__response__, 'deploy_name'),
+        filters=pulumi.get(__response__, 'filters'),
+        id=pulumi.get(__response__, 'id'),
+        image_id=pulumi.get(__response__, 'image_id'),
+        name=pulumi.get(__response__, 'name'),
+        short_name=pulumi.get(__response__, 'short_name'),
+        type=pulumi.get(__response__, 'type'),
+        vendor=pulumi.get(__response__, 'vendor')))

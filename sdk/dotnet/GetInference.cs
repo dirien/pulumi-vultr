@@ -147,7 +147,7 @@ namespace ediri.Vultr
         /// The inference subscription's label.
         /// </summary>
         public readonly string Label;
-        public readonly ImmutableDictionary<string, object> Usage;
+        public readonly ImmutableDictionary<string, string> Usage;
 
         [OutputConstructor]
         private GetInferenceResult(
@@ -161,7 +161,7 @@ namespace ediri.Vultr
 
             string label,
 
-            ImmutableDictionary<string, object> usage)
+            ImmutableDictionary<string, string> usage)
         {
             ApiKey = apiKey;
             DateCreated = dateCreated;

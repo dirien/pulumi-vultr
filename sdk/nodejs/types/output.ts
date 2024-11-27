@@ -29,7 +29,7 @@ export interface DatabaseReadReplica {
     /**
      * An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
      */
-    ferretdbCredentials: {[key: string]: any};
+    ferretdbCredentials: {[key: string]: string};
     /**
      * The hostname assigned to the managed database.
      */
@@ -87,7 +87,7 @@ export interface DatabaseReadReplica {
      */
     planRam: number;
     /**
-     * The number of standby nodes available on the managed database.
+     * The number of standby nodes available on the managed database (excluded for Kafka engine types).
      */
     planReplicas: number;
     /**
@@ -283,7 +283,7 @@ export interface GetDatabaseReadReplica {
     /**
      * An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
      */
-    ferretdbCredentials: {[key: string]: any};
+    ferretdbCredentials: {[key: string]: string};
     /**
      * The hostname assigned to the managed database.
      */
@@ -451,7 +451,7 @@ export interface GetInstancesInstance {
     /**
      * The current configuration for backups
      */
-    backupsSchedule: {[key: string]: any};
+    backupsSchedule: {[key: string]: string};
     /**
      * The date the server was added to your Vultr account.
      */
@@ -539,6 +539,10 @@ export interface GetInstancesInstance {
      * A list of tags applied to the instance.
      */
     tags: string[];
+    /**
+     * The scheme used for the default user (linux servers only).
+     */
+    userScheme: string;
     /**
      * The main IPv6 network address.
      */

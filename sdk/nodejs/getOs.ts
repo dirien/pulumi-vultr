@@ -27,7 +27,6 @@ import * as utilities from "./utilities";
  */
 export function getOs(args?: GetOsArgs, opts?: pulumi.InvokeOptions): Promise<GetOsResult> {
     args = args || {};
-
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("vultr:index/getOs:getOs", {
         "filters": args.filters,
@@ -86,7 +85,11 @@ export interface GetOsResult {
  * ```
  */
 export function getOsOutput(args?: GetOsOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetOsResult> {
-    return pulumi.output(args).apply((a: any) => getOs(a, opts))
+    args = args || {};
+    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
+    return pulumi.runtime.invokeOutput("vultr:index/getOs:getOs", {
+        "filters": args.filters,
+    }, opts);
 }
 
 /**

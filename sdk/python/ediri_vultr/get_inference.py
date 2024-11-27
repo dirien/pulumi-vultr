@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -82,7 +87,7 @@ class GetInferenceResult:
 
     @property
     @pulumi.getter
-    def usage(self) -> Mapping[str, Any]:
+    def usage(self) -> Mapping[str, str]:
         return pulumi.get(self, "usage")
 
 
@@ -100,7 +105,7 @@ class AwaitableGetInferenceResult(GetInferenceResult):
             usage=self.usage)
 
 
-def get_inference(filters: Optional[Sequence[pulumi.InputType['GetInferenceFilterArgs']]] = None,
+def get_inference(filters: Optional[Sequence[Union['GetInferenceFilterArgs', 'GetInferenceFilterArgsDict']]] = None,
                   opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetInferenceResult:
     """
     Get information about a Vultr Serverless Inference subscription.
@@ -113,14 +118,14 @@ def get_inference(filters: Optional[Sequence[pulumi.InputType['GetInferenceFilte
     import pulumi
     import pulumi_vultr as vultr
 
-    example_inference = vultr.get_inference(filters=[vultr.GetInferenceFilterArgs(
-        name="label",
-        values=["my_inference_label"],
-    )])
+    example_inference = vultr.get_inference(filters=[{
+        "name": "label",
+        "values": ["my_inference_label"],
+    }])
     ```
 
 
-    :param Sequence[pulumi.InputType['GetInferenceFilterArgs']] filters: Query parameters for finding inference subscriptions.
+    :param Sequence[Union['GetInferenceFilterArgs', 'GetInferenceFilterArgsDict']] filters: Query parameters for finding inference subscriptions.
     """
     __args__ = dict()
     __args__['filters'] = filters
@@ -134,10 +139,7 @@ def get_inference(filters: Optional[Sequence[pulumi.InputType['GetInferenceFilte
         id=pulumi.get(__ret__, 'id'),
         label=pulumi.get(__ret__, 'label'),
         usage=pulumi.get(__ret__, 'usage'))
-
-
-@_utilities.lift_output_func(get_inference)
-def get_inference_output(filters: Optional[pulumi.Input[Optional[Sequence[pulumi.InputType['GetInferenceFilterArgs']]]]] = None,
+def get_inference_output(filters: Optional[pulumi.Input[Optional[Sequence[Union['GetInferenceFilterArgs', 'GetInferenceFilterArgsDict']]]]] = None,
                          opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetInferenceResult]:
     """
     Get information about a Vultr Serverless Inference subscription.
@@ -150,13 +152,23 @@ def get_inference_output(filters: Optional[pulumi.Input[Optional[Sequence[pulumi
     import pulumi
     import pulumi_vultr as vultr
 
-    example_inference = vultr.get_inference(filters=[vultr.GetInferenceFilterArgs(
-        name="label",
-        values=["my_inference_label"],
-    )])
+    example_inference = vultr.get_inference(filters=[{
+        "name": "label",
+        "values": ["my_inference_label"],
+    }])
     ```
 
 
-    :param Sequence[pulumi.InputType['GetInferenceFilterArgs']] filters: Query parameters for finding inference subscriptions.
+    :param Sequence[Union['GetInferenceFilterArgs', 'GetInferenceFilterArgsDict']] filters: Query parameters for finding inference subscriptions.
     """
-    ...
+    __args__ = dict()
+    __args__['filters'] = filters
+    opts = pulumi.InvokeOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
+    __ret__ = pulumi.runtime.invoke_output('vultr:index/getInference:getInference', __args__, opts=opts, typ=GetInferenceResult)
+    return __ret__.apply(lambda __response__: GetInferenceResult(
+        api_key=pulumi.get(__response__, 'api_key'),
+        date_created=pulumi.get(__response__, 'date_created'),
+        filters=pulumi.get(__response__, 'filters'),
+        id=pulumi.get(__response__, 'id'),
+        label=pulumi.get(__response__, 'label'),
+        usage=pulumi.get(__response__, 'usage')))

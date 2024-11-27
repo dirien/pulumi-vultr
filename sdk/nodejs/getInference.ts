@@ -27,7 +27,6 @@ import * as utilities from "./utilities";
  */
 export function getInference(args?: GetInferenceArgs, opts?: pulumi.InvokeOptions): Promise<GetInferenceResult> {
     args = args || {};
-
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("vultr:index/getInference:getInference", {
         "filters": args.filters,
@@ -65,7 +64,7 @@ export interface GetInferenceResult {
      * The inference subscription's label.
      */
     readonly label: string;
-    readonly usage: {[key: string]: any};
+    readonly usage: {[key: string]: string};
 }
 /**
  * Get information about a Vultr Serverless Inference subscription.
@@ -87,7 +86,11 @@ export interface GetInferenceResult {
  * ```
  */
 export function getInferenceOutput(args?: GetInferenceOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetInferenceResult> {
-    return pulumi.output(args).apply((a: any) => getInference(a, opts))
+    args = args || {};
+    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
+    return pulumi.runtime.invokeOutput("vultr:index/getInference:getInference", {
+        "filters": args.filters,
+    }, opts);
 }
 
 /**

@@ -27,7 +27,6 @@ import * as utilities from "./utilities";
  */
 export function getIsoPublic(args?: GetIsoPublicArgs, opts?: pulumi.InvokeOptions): Promise<GetIsoPublicResult> {
     args = args || {};
-
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("vultr:index/getIsoPublic:getIsoPublic", {
         "filters": args.filters,
@@ -86,7 +85,11 @@ export interface GetIsoPublicResult {
  * ```
  */
 export function getIsoPublicOutput(args?: GetIsoPublicOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetIsoPublicResult> {
-    return pulumi.output(args).apply((a: any) => getIsoPublic(a, opts))
+    args = args || {};
+    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
+    return pulumi.runtime.invokeOutput("vultr:index/getIsoPublic:getIsoPublic", {
+        "filters": args.filters,
+    }, opts);
 }
 
 /**

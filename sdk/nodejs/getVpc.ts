@@ -27,7 +27,6 @@ import * as utilities from "./utilities";
  */
 export function getVpc(args?: GetVpcArgs, opts?: pulumi.InvokeOptions): Promise<GetVpcResult> {
     args = args || {};
-
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("vultr:index/getVpc:getVpc", {
         "filters": args.filters,
@@ -94,7 +93,11 @@ export interface GetVpcResult {
  * ```
  */
 export function getVpcOutput(args?: GetVpcOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetVpcResult> {
-    return pulumi.output(args).apply((a: any) => getVpc(a, opts))
+    args = args || {};
+    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
+    return pulumi.runtime.invokeOutput("vultr:index/getVpc:getVpc", {
+        "filters": args.filters,
+    }, opts);
 }
 
 /**

@@ -38,8 +38,14 @@ namespace ediri.Vultr
     [VultrResourceType("vultr:index/databaseUser:DatabaseUser")]
     public partial class DatabaseUser : global::Pulumi.CustomResource
     {
+        [Output("accessCert")]
+        public Output<string> AccessCert { get; private set; } = null!;
+
         [Output("accessControl")]
         public Output<Outputs.DatabaseUserAccessControl> AccessControl { get; private set; } = null!;
+
+        [Output("accessKey")]
+        public Output<string> AccessKey { get; private set; } = null!;
 
         /// <summary>
         /// The managed database ID you want to attach this user to.
@@ -58,6 +64,12 @@ namespace ediri.Vultr
         /// </summary>
         [Output("password")]
         public Output<string> Password { get; private set; } = null!;
+
+        /// <summary>
+        /// The permission level for the database user (Kafka engine types only - `admin`, `read`, `write`, `readwrite`).
+        /// </summary>
+        [Output("permission")]
+        public Output<string> Permission { get; private set; } = null!;
 
         /// <summary>
         /// The username of the new managed database user.
@@ -134,6 +146,12 @@ namespace ediri.Vultr
         public Input<string>? Password { get; set; }
 
         /// <summary>
+        /// The permission level for the database user (Kafka engine types only - `admin`, `read`, `write`, `readwrite`).
+        /// </summary>
+        [Input("permission")]
+        public Input<string>? Permission { get; set; }
+
+        /// <summary>
         /// The username of the new managed database user.
         /// </summary>
         [Input("username", required: true)]
@@ -147,8 +165,14 @@ namespace ediri.Vultr
 
     public sealed class DatabaseUserState : global::Pulumi.ResourceArgs
     {
+        [Input("accessCert")]
+        public Input<string>? AccessCert { get; set; }
+
         [Input("accessControl")]
         public Input<Inputs.DatabaseUserAccessControlGetArgs>? AccessControl { get; set; }
+
+        [Input("accessKey")]
+        public Input<string>? AccessKey { get; set; }
 
         /// <summary>
         /// The managed database ID you want to attach this user to.
@@ -167,6 +191,12 @@ namespace ediri.Vultr
         /// </summary>
         [Input("password")]
         public Input<string>? Password { get; set; }
+
+        /// <summary>
+        /// The permission level for the database user (Kafka engine types only - `admin`, `read`, `write`, `readwrite`).
+        /// </summary>
+        [Input("permission")]
+        public Input<string>? Permission { get; set; }
 
         /// <summary>
         /// The username of the new managed database user.

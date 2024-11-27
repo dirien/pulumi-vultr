@@ -27,7 +27,6 @@ import * as utilities from "./utilities";
  */
 export function getSshKey(args?: GetSshKeyArgs, opts?: pulumi.InvokeOptions): Promise<GetSshKeyResult> {
     args = args || {};
-
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("vultr:index/getSshKey:getSshKey", {
         "filters": args.filters,
@@ -86,7 +85,11 @@ export interface GetSshKeyResult {
  * ```
  */
 export function getSshKeyOutput(args?: GetSshKeyOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetSshKeyResult> {
-    return pulumi.output(args).apply((a: any) => getSshKey(a, opts))
+    args = args || {};
+    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
+    return pulumi.runtime.invokeOutput("vultr:index/getSshKey:getSshKey", {
+        "filters": args.filters,
+    }, opts);
 }
 
 /**

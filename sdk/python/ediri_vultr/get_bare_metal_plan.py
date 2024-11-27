@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -172,7 +177,7 @@ class AwaitableGetBareMetalPlanResult(GetBareMetalPlanResult):
             type=self.type)
 
 
-def get_bare_metal_plan(filters: Optional[Sequence[pulumi.InputType['GetBareMetalPlanFilterArgs']]] = None,
+def get_bare_metal_plan(filters: Optional[Sequence[Union['GetBareMetalPlanFilterArgs', 'GetBareMetalPlanFilterArgsDict']]] = None,
                         opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetBareMetalPlanResult:
     """
     Get information about a Vultr bare metal server plan.
@@ -185,14 +190,14 @@ def get_bare_metal_plan(filters: Optional[Sequence[pulumi.InputType['GetBareMeta
     import pulumi
     import pulumi_vultr as vultr
 
-    my_plan = vultr.get_bare_metal_plan(filters=[vultr.GetBareMetalPlanFilterArgs(
-        name="id",
-        values=["vbm-4c-32gb"],
-    )])
+    my_plan = vultr.get_bare_metal_plan(filters=[{
+        "name": "id",
+        "values": ["vbm-4c-32gb"],
+    }])
     ```
 
 
-    :param Sequence[pulumi.InputType['GetBareMetalPlanFilterArgs']] filters: Query parameters for finding plans.
+    :param Sequence[Union['GetBareMetalPlanFilterArgs', 'GetBareMetalPlanFilterArgsDict']] filters: Query parameters for finding plans.
     """
     __args__ = dict()
     __args__['filters'] = filters
@@ -212,10 +217,7 @@ def get_bare_metal_plan(filters: Optional[Sequence[pulumi.InputType['GetBareMeta
         monthly_cost=pulumi.get(__ret__, 'monthly_cost'),
         ram=pulumi.get(__ret__, 'ram'),
         type=pulumi.get(__ret__, 'type'))
-
-
-@_utilities.lift_output_func(get_bare_metal_plan)
-def get_bare_metal_plan_output(filters: Optional[pulumi.Input[Optional[Sequence[pulumi.InputType['GetBareMetalPlanFilterArgs']]]]] = None,
+def get_bare_metal_plan_output(filters: Optional[pulumi.Input[Optional[Sequence[Union['GetBareMetalPlanFilterArgs', 'GetBareMetalPlanFilterArgsDict']]]]] = None,
                                opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetBareMetalPlanResult]:
     """
     Get information about a Vultr bare metal server plan.
@@ -228,13 +230,29 @@ def get_bare_metal_plan_output(filters: Optional[pulumi.Input[Optional[Sequence[
     import pulumi
     import pulumi_vultr as vultr
 
-    my_plan = vultr.get_bare_metal_plan(filters=[vultr.GetBareMetalPlanFilterArgs(
-        name="id",
-        values=["vbm-4c-32gb"],
-    )])
+    my_plan = vultr.get_bare_metal_plan(filters=[{
+        "name": "id",
+        "values": ["vbm-4c-32gb"],
+    }])
     ```
 
 
-    :param Sequence[pulumi.InputType['GetBareMetalPlanFilterArgs']] filters: Query parameters for finding plans.
+    :param Sequence[Union['GetBareMetalPlanFilterArgs', 'GetBareMetalPlanFilterArgsDict']] filters: Query parameters for finding plans.
     """
-    ...
+    __args__ = dict()
+    __args__['filters'] = filters
+    opts = pulumi.InvokeOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
+    __ret__ = pulumi.runtime.invoke_output('vultr:index/getBareMetalPlan:getBareMetalPlan', __args__, opts=opts, typ=GetBareMetalPlanResult)
+    return __ret__.apply(lambda __response__: GetBareMetalPlanResult(
+        bandwidth=pulumi.get(__response__, 'bandwidth'),
+        cpu_count=pulumi.get(__response__, 'cpu_count'),
+        cpu_model=pulumi.get(__response__, 'cpu_model'),
+        cpu_threads=pulumi.get(__response__, 'cpu_threads'),
+        disk=pulumi.get(__response__, 'disk'),
+        disk_count=pulumi.get(__response__, 'disk_count'),
+        filters=pulumi.get(__response__, 'filters'),
+        id=pulumi.get(__response__, 'id'),
+        locations=pulumi.get(__response__, 'locations'),
+        monthly_cost=pulumi.get(__response__, 'monthly_cost'),
+        ram=pulumi.get(__response__, 'ram'),
+        type=pulumi.get(__response__, 'type')))

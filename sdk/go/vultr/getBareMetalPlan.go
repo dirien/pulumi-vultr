@@ -91,14 +91,20 @@ type GetBareMetalPlanResult struct {
 
 func GetBareMetalPlanOutput(ctx *pulumi.Context, args GetBareMetalPlanOutputArgs, opts ...pulumi.InvokeOption) GetBareMetalPlanResultOutput {
 	return pulumi.ToOutputWithContext(context.Background(), args).
-		ApplyT(func(v interface{}) (GetBareMetalPlanResult, error) {
+		ApplyT(func(v interface{}) (GetBareMetalPlanResultOutput, error) {
 			args := v.(GetBareMetalPlanArgs)
-			r, err := GetBareMetalPlan(ctx, &args, opts...)
-			var s GetBareMetalPlanResult
-			if r != nil {
-				s = *r
+			opts = internal.PkgInvokeDefaultOpts(opts)
+			var rv GetBareMetalPlanResult
+			secret, err := ctx.InvokePackageRaw("vultr:index/getBareMetalPlan:getBareMetalPlan", args, &rv, "", opts...)
+			if err != nil {
+				return GetBareMetalPlanResultOutput{}, err
 			}
-			return s, err
+
+			output := pulumi.ToOutput(rv).(GetBareMetalPlanResultOutput)
+			if secret {
+				return pulumi.ToSecret(output).(GetBareMetalPlanResultOutput), nil
+			}
+			return output, nil
 		}).(GetBareMetalPlanResultOutput)
 }
 

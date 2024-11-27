@@ -27,7 +27,6 @@ import * as utilities from "./utilities";
  */
 export function getBareMetalPlan(args?: GetBareMetalPlanArgs, opts?: pulumi.InvokeOptions): Promise<GetBareMetalPlanResult> {
     args = args || {};
-
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("vultr:index/getBareMetalPlan:getBareMetalPlan", {
         "filters": args.filters,
@@ -111,7 +110,11 @@ export interface GetBareMetalPlanResult {
  * ```
  */
 export function getBareMetalPlanOutput(args?: GetBareMetalPlanOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetBareMetalPlanResult> {
-    return pulumi.output(args).apply((a: any) => getBareMetalPlan(a, opts))
+    args = args || {};
+    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
+    return pulumi.runtime.invokeOutput("vultr:index/getBareMetalPlan:getBareMetalPlan", {
+        "filters": args.filters,
+    }, opts);
 }
 
 /**

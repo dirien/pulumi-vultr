@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -163,7 +168,7 @@ class AwaitableGetBlockStorageResult(GetBlockStorageResult):
             status=self.status)
 
 
-def get_block_storage(filters: Optional[Sequence[pulumi.InputType['GetBlockStorageFilterArgs']]] = None,
+def get_block_storage(filters: Optional[Sequence[Union['GetBlockStorageFilterArgs', 'GetBlockStorageFilterArgsDict']]] = None,
                       opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetBlockStorageResult:
     """
     Get information about a Vultr block storage subscription.
@@ -176,14 +181,14 @@ def get_block_storage(filters: Optional[Sequence[pulumi.InputType['GetBlockStora
     import pulumi
     import pulumi_vultr as vultr
 
-    my_block_storage = vultr.get_block_storage(filters=[vultr.GetBlockStorageFilterArgs(
-        name="label",
-        values=["my-block-storage-label"],
-    )])
+    my_block_storage = vultr.get_block_storage(filters=[{
+        "name": "label",
+        "values": ["my-block-storage-label"],
+    }])
     ```
 
 
-    :param Sequence[pulumi.InputType['GetBlockStorageFilterArgs']] filters: Query parameters for finding block storage subscriptions.
+    :param Sequence[Union['GetBlockStorageFilterArgs', 'GetBlockStorageFilterArgsDict']] filters: Query parameters for finding block storage subscriptions.
     """
     __args__ = dict()
     __args__['filters'] = filters
@@ -202,10 +207,7 @@ def get_block_storage(filters: Optional[Sequence[pulumi.InputType['GetBlockStora
         region=pulumi.get(__ret__, 'region'),
         size_gb=pulumi.get(__ret__, 'size_gb'),
         status=pulumi.get(__ret__, 'status'))
-
-
-@_utilities.lift_output_func(get_block_storage)
-def get_block_storage_output(filters: Optional[pulumi.Input[Optional[Sequence[pulumi.InputType['GetBlockStorageFilterArgs']]]]] = None,
+def get_block_storage_output(filters: Optional[pulumi.Input[Optional[Sequence[Union['GetBlockStorageFilterArgs', 'GetBlockStorageFilterArgsDict']]]]] = None,
                              opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetBlockStorageResult]:
     """
     Get information about a Vultr block storage subscription.
@@ -218,13 +220,28 @@ def get_block_storage_output(filters: Optional[pulumi.Input[Optional[Sequence[pu
     import pulumi
     import pulumi_vultr as vultr
 
-    my_block_storage = vultr.get_block_storage(filters=[vultr.GetBlockStorageFilterArgs(
-        name="label",
-        values=["my-block-storage-label"],
-    )])
+    my_block_storage = vultr.get_block_storage(filters=[{
+        "name": "label",
+        "values": ["my-block-storage-label"],
+    }])
     ```
 
 
-    :param Sequence[pulumi.InputType['GetBlockStorageFilterArgs']] filters: Query parameters for finding block storage subscriptions.
+    :param Sequence[Union['GetBlockStorageFilterArgs', 'GetBlockStorageFilterArgsDict']] filters: Query parameters for finding block storage subscriptions.
     """
-    ...
+    __args__ = dict()
+    __args__['filters'] = filters
+    opts = pulumi.InvokeOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
+    __ret__ = pulumi.runtime.invoke_output('vultr:index/getBlockStorage:getBlockStorage', __args__, opts=opts, typ=GetBlockStorageResult)
+    return __ret__.apply(lambda __response__: GetBlockStorageResult(
+        attached_to_instance=pulumi.get(__response__, 'attached_to_instance'),
+        block_type=pulumi.get(__response__, 'block_type'),
+        cost=pulumi.get(__response__, 'cost'),
+        date_created=pulumi.get(__response__, 'date_created'),
+        filters=pulumi.get(__response__, 'filters'),
+        id=pulumi.get(__response__, 'id'),
+        label=pulumi.get(__response__, 'label'),
+        mount_id=pulumi.get(__response__, 'mount_id'),
+        region=pulumi.get(__response__, 'region'),
+        size_gb=pulumi.get(__response__, 'size_gb'),
+        status=pulumi.get(__response__, 'status')))

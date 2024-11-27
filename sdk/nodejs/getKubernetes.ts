@@ -27,7 +27,6 @@ import * as utilities from "./utilities";
  */
 export function getKubernetes(args?: GetKubernetesArgs, opts?: pulumi.InvokeOptions): Promise<GetKubernetesResult> {
     args = args || {};
-
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("vultr:index/getKubernetes:getKubernetes", {
         "filters": args.filters,
@@ -138,7 +137,11 @@ export interface GetKubernetesResult {
  * ```
  */
 export function getKubernetesOutput(args?: GetKubernetesOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetKubernetesResult> {
-    return pulumi.output(args).apply((a: any) => getKubernetes(a, opts))
+    args = args || {};
+    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
+    return pulumi.runtime.invokeOutput("vultr:index/getKubernetes:getKubernetes", {
+        "filters": args.filters,
+    }, opts);
 }
 
 /**

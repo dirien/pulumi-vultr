@@ -27,7 +27,6 @@ import * as utilities from "./utilities";
  */
 export function getFirewallGroup(args?: GetFirewallGroupArgs, opts?: pulumi.InvokeOptions): Promise<GetFirewallGroupResult> {
     args = args || {};
-
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("vultr:index/getFirewallGroup:getFirewallGroup", {
         "filters": args.filters,
@@ -98,7 +97,11 @@ export interface GetFirewallGroupResult {
  * ```
  */
 export function getFirewallGroupOutput(args?: GetFirewallGroupOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetFirewallGroupResult> {
-    return pulumi.output(args).apply((a: any) => getFirewallGroup(a, opts))
+    args = args || {};
+    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
+    return pulumi.runtime.invokeOutput("vultr:index/getFirewallGroup:getFirewallGroup", {
+        "filters": args.filters,
+    }, opts);
 }
 
 /**

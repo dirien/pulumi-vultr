@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 
 __all__ = ['DatabaseReplicaArgs', 'DatabaseReplica']
@@ -17,7 +22,7 @@ class DatabaseReplicaArgs:
                  database_id: pulumi.Input[str],
                  label: pulumi.Input[str],
                  region: pulumi.Input[str],
-                 ferretdb_credentials: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 ferretdb_credentials: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  mysql_long_query_time: Optional[pulumi.Input[int]] = None,
                  mysql_require_primary_key: Optional[pulumi.Input[bool]] = None,
                  mysql_slow_query_log: Optional[pulumi.Input[bool]] = None,
@@ -32,7 +37,7 @@ class DatabaseReplicaArgs:
         :param pulumi.Input[str] database_id: The managed database ID you want to attach this replica to.
         :param pulumi.Input[str] label: A label for the managed database read replica.
         :param pulumi.Input[str] region: The ID of the region that the managed database read replica is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
-        :param pulumi.Input[Mapping[str, Any]] ferretdb_credentials: An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] ferretdb_credentials: An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
         :param pulumi.Input[int] mysql_long_query_time: The configuration value for the long query time (in seconds) on the managed database read replica (MySQL engine types only).
         :param pulumi.Input[bool] mysql_require_primary_key: The configuration value for whether primary keys are required on the managed database read replica (MySQL engine types only).
         :param pulumi.Input[bool] mysql_slow_query_log: The configuration value for slow query logging on the managed database read replica (MySQL engine types only).
@@ -105,14 +110,14 @@ class DatabaseReplicaArgs:
 
     @property
     @pulumi.getter(name="ferretdbCredentials")
-    def ferretdb_credentials(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def ferretdb_credentials(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
         """
         An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
         """
         return pulumi.get(self, "ferretdb_credentials")
 
     @ferretdb_credentials.setter
-    def ferretdb_credentials(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def ferretdb_credentials(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
         pulumi.set(self, "ferretdb_credentials", value)
 
     @property
@@ -233,7 +238,7 @@ class _DatabaseReplicaState:
                  database_id: Optional[pulumi.Input[str]] = None,
                  date_created: Optional[pulumi.Input[str]] = None,
                  dbname: Optional[pulumi.Input[str]] = None,
-                 ferretdb_credentials: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 ferretdb_credentials: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  host: Optional[pulumi.Input[str]] = None,
                  label: Optional[pulumi.Input[str]] = None,
                  latest_backup: Optional[pulumi.Input[str]] = None,
@@ -266,7 +271,7 @@ class _DatabaseReplicaState:
         :param pulumi.Input[str] database_id: The managed database ID you want to attach this replica to.
         :param pulumi.Input[str] date_created: The date the managed database read replica was added to your Vultr account.
         :param pulumi.Input[str] dbname: The managed database read replica's default logical database.
-        :param pulumi.Input[Mapping[str, Any]] ferretdb_credentials: An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] ferretdb_credentials: An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
         :param pulumi.Input[str] host: The hostname assigned to the managed database read replica.
         :param pulumi.Input[str] label: A label for the managed database read replica.
         :param pulumi.Input[str] latest_backup: The date of the latest backup available on the managed database read replica.
@@ -429,14 +434,14 @@ class _DatabaseReplicaState:
 
     @property
     @pulumi.getter(name="ferretdbCredentials")
-    def ferretdb_credentials(self) -> Optional[pulumi.Input[Mapping[str, Any]]]:
+    def ferretdb_credentials(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]:
         """
         An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
         """
         return pulumi.get(self, "ferretdb_credentials")
 
     @ferretdb_credentials.setter
-    def ferretdb_credentials(self, value: Optional[pulumi.Input[Mapping[str, Any]]]):
+    def ferretdb_credentials(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]]):
         pulumi.set(self, "ferretdb_credentials", value)
 
     @property
@@ -734,7 +739,7 @@ class DatabaseReplica(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  database_id: Optional[pulumi.Input[str]] = None,
-                 ferretdb_credentials: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 ferretdb_credentials: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  label: Optional[pulumi.Input[str]] = None,
                  mysql_long_query_time: Optional[pulumi.Input[int]] = None,
                  mysql_require_primary_key: Optional[pulumi.Input[bool]] = None,
@@ -768,7 +773,7 @@ class DatabaseReplica(pulumi.CustomResource):
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[str] database_id: The managed database ID you want to attach this replica to.
-        :param pulumi.Input[Mapping[str, Any]] ferretdb_credentials: An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] ferretdb_credentials: An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
         :param pulumi.Input[str] label: A label for the managed database read replica.
         :param pulumi.Input[int] mysql_long_query_time: The configuration value for the long query time (in seconds) on the managed database read replica (MySQL engine types only).
         :param pulumi.Input[bool] mysql_require_primary_key: The configuration value for whether primary keys are required on the managed database read replica (MySQL engine types only).
@@ -821,7 +826,7 @@ class DatabaseReplica(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  database_id: Optional[pulumi.Input[str]] = None,
-                 ferretdb_credentials: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+                 ferretdb_credentials: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  label: Optional[pulumi.Input[str]] = None,
                  mysql_long_query_time: Optional[pulumi.Input[int]] = None,
                  mysql_require_primary_key: Optional[pulumi.Input[bool]] = None,
@@ -895,7 +900,7 @@ class DatabaseReplica(pulumi.CustomResource):
             database_id: Optional[pulumi.Input[str]] = None,
             date_created: Optional[pulumi.Input[str]] = None,
             dbname: Optional[pulumi.Input[str]] = None,
-            ferretdb_credentials: Optional[pulumi.Input[Mapping[str, Any]]] = None,
+            ferretdb_credentials: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
             host: Optional[pulumi.Input[str]] = None,
             label: Optional[pulumi.Input[str]] = None,
             latest_backup: Optional[pulumi.Input[str]] = None,
@@ -933,7 +938,7 @@ class DatabaseReplica(pulumi.CustomResource):
         :param pulumi.Input[str] database_id: The managed database ID you want to attach this replica to.
         :param pulumi.Input[str] date_created: The date the managed database read replica was added to your Vultr account.
         :param pulumi.Input[str] dbname: The managed database read replica's default logical database.
-        :param pulumi.Input[Mapping[str, Any]] ferretdb_credentials: An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
+        :param pulumi.Input[Mapping[str, pulumi.Input[str]]] ferretdb_credentials: An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
         :param pulumi.Input[str] host: The hostname assigned to the managed database read replica.
         :param pulumi.Input[str] label: A label for the managed database read replica.
         :param pulumi.Input[str] latest_backup: The date of the latest backup available on the managed database read replica.
@@ -1046,7 +1051,7 @@ class DatabaseReplica(pulumi.CustomResource):
 
     @property
     @pulumi.getter(name="ferretdbCredentials")
-    def ferretdb_credentials(self) -> pulumi.Output[Mapping[str, Any]]:
+    def ferretdb_credentials(self) -> pulumi.Output[Mapping[str, str]]:
         """
         An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
         """

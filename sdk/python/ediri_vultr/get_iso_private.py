@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -127,7 +132,7 @@ class AwaitableGetIsoPrivateResult(GetIsoPrivateResult):
             status=self.status)
 
 
-def get_iso_private(filters: Optional[Sequence[pulumi.InputType['GetIsoPrivateFilterArgs']]] = None,
+def get_iso_private(filters: Optional[Sequence[Union['GetIsoPrivateFilterArgs', 'GetIsoPrivateFilterArgsDict']]] = None,
                     opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetIsoPrivateResult:
     """
     Get information about an ISO file uploaded to your Vultr account.
@@ -140,14 +145,14 @@ def get_iso_private(filters: Optional[Sequence[pulumi.InputType['GetIsoPrivateFi
     import pulumi
     import pulumi_vultr as vultr
 
-    my_iso = vultr.get_iso_private(filters=[vultr.GetIsoPrivateFilterArgs(
-        name="filename",
-        values=["my-iso-filename"],
-    )])
+    my_iso = vultr.get_iso_private(filters=[{
+        "name": "filename",
+        "values": ["my-iso-filename"],
+    }])
     ```
 
 
-    :param Sequence[pulumi.InputType['GetIsoPrivateFilterArgs']] filters: Query parameters for finding ISO files.
+    :param Sequence[Union['GetIsoPrivateFilterArgs', 'GetIsoPrivateFilterArgsDict']] filters: Query parameters for finding ISO files.
     """
     __args__ = dict()
     __args__['filters'] = filters
@@ -163,10 +168,7 @@ def get_iso_private(filters: Optional[Sequence[pulumi.InputType['GetIsoPrivateFi
         sha512sum=pulumi.get(__ret__, 'sha512sum'),
         size=pulumi.get(__ret__, 'size'),
         status=pulumi.get(__ret__, 'status'))
-
-
-@_utilities.lift_output_func(get_iso_private)
-def get_iso_private_output(filters: Optional[pulumi.Input[Optional[Sequence[pulumi.InputType['GetIsoPrivateFilterArgs']]]]] = None,
+def get_iso_private_output(filters: Optional[pulumi.Input[Optional[Sequence[Union['GetIsoPrivateFilterArgs', 'GetIsoPrivateFilterArgsDict']]]]] = None,
                            opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetIsoPrivateResult]:
     """
     Get information about an ISO file uploaded to your Vultr account.
@@ -179,13 +181,25 @@ def get_iso_private_output(filters: Optional[pulumi.Input[Optional[Sequence[pulu
     import pulumi
     import pulumi_vultr as vultr
 
-    my_iso = vultr.get_iso_private(filters=[vultr.GetIsoPrivateFilterArgs(
-        name="filename",
-        values=["my-iso-filename"],
-    )])
+    my_iso = vultr.get_iso_private(filters=[{
+        "name": "filename",
+        "values": ["my-iso-filename"],
+    }])
     ```
 
 
-    :param Sequence[pulumi.InputType['GetIsoPrivateFilterArgs']] filters: Query parameters for finding ISO files.
+    :param Sequence[Union['GetIsoPrivateFilterArgs', 'GetIsoPrivateFilterArgsDict']] filters: Query parameters for finding ISO files.
     """
-    ...
+    __args__ = dict()
+    __args__['filters'] = filters
+    opts = pulumi.InvokeOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
+    __ret__ = pulumi.runtime.invoke_output('vultr:index/getIsoPrivate:getIsoPrivate', __args__, opts=opts, typ=GetIsoPrivateResult)
+    return __ret__.apply(lambda __response__: GetIsoPrivateResult(
+        date_created=pulumi.get(__response__, 'date_created'),
+        filename=pulumi.get(__response__, 'filename'),
+        filters=pulumi.get(__response__, 'filters'),
+        id=pulumi.get(__response__, 'id'),
+        md5sum=pulumi.get(__response__, 'md5sum'),
+        sha512sum=pulumi.get(__response__, 'sha512sum'),
+        size=pulumi.get(__response__, 'size'),
+        status=pulumi.get(__response__, 'status')))

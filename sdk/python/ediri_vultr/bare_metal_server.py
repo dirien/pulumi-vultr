@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 
 __all__ = ['BareMetalServerArgs', 'BareMetalServer']
@@ -32,6 +37,7 @@ class BareMetalServerArgs:
                  ssh_key_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  user_data: Optional[pulumi.Input[str]] = None,
+                 user_scheme: Optional[pulumi.Input[str]] = None,
                  vpc2_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
         """
         The set of arguments for constructing a BareMetalServer resource.
@@ -51,6 +57,7 @@ class BareMetalServerArgs:
         :param pulumi.Input[Sequence[pulumi.Input[str]]] ssh_key_ids: A list of SSH key IDs to apply to the server on install (only valid for Linux/FreeBSD).
         :param pulumi.Input[Sequence[pulumi.Input[str]]] tags: A list of tags to apply to the servier.
         :param pulumi.Input[str] user_data: Generic data store, which some provisioning tools and cloud operating systems use as a configuration file. It is generally consumed only once after an instance has been launched, but individual needs may vary.
+        :param pulumi.Input[str] user_scheme: The scheme used for the default user. Possible values are `root` or `limited` (linux servers only).
         :param pulumi.Input[Sequence[pulumi.Input[str]]] vpc2_ids: A list of VPC 2.0 IDs to be attached to the server.
         """
         pulumi.set(__self__, "plan", plan)
@@ -87,6 +94,8 @@ class BareMetalServerArgs:
             pulumi.set(__self__, "tags", tags)
         if user_data is not None:
             pulumi.set(__self__, "user_data", user_data)
+        if user_scheme is not None:
+            pulumi.set(__self__, "user_scheme", user_scheme)
         if vpc2_ids is not None:
             pulumi.set(__self__, "vpc2_ids", vpc2_ids)
 
@@ -301,6 +310,18 @@ class BareMetalServerArgs:
         pulumi.set(self, "user_data", value)
 
     @property
+    @pulumi.getter(name="userScheme")
+    def user_scheme(self) -> Optional[pulumi.Input[str]]:
+        """
+        The scheme used for the default user. Possible values are `root` or `limited` (linux servers only).
+        """
+        return pulumi.get(self, "user_scheme")
+
+    @user_scheme.setter
+    def user_scheme(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "user_scheme", value)
+
+    @property
     @pulumi.getter(name="vpc2Ids")
     def vpc2_ids(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[str]]]]:
         """
@@ -345,6 +366,7 @@ class _BareMetalServerState:
                  status: Optional[pulumi.Input[str]] = None,
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  user_data: Optional[pulumi.Input[str]] = None,
+                 user_scheme: Optional[pulumi.Input[str]] = None,
                  v6_main_ip: Optional[pulumi.Input[str]] = None,
                  v6_network: Optional[pulumi.Input[str]] = None,
                  v6_network_size: Optional[pulumi.Input[int]] = None,
@@ -378,6 +400,7 @@ class _BareMetalServerState:
         :param pulumi.Input[str] status: The status of the server's subscription.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] tags: A list of tags to apply to the servier.
         :param pulumi.Input[str] user_data: Generic data store, which some provisioning tools and cloud operating systems use as a configuration file. It is generally consumed only once after an instance has been launched, but individual needs may vary.
+        :param pulumi.Input[str] user_scheme: The scheme used for the default user. Possible values are `root` or `limited` (linux servers only).
         :param pulumi.Input[str] v6_main_ip: The main IPv6 network address.
         :param pulumi.Input[str] v6_network: The IPv6 subnet.
         :param pulumi.Input[int] v6_network_size: The IPv6 network size in bits.
@@ -441,6 +464,8 @@ class _BareMetalServerState:
             pulumi.set(__self__, "tags", tags)
         if user_data is not None:
             pulumi.set(__self__, "user_data", user_data)
+        if user_scheme is not None:
+            pulumi.set(__self__, "user_scheme", user_scheme)
         if v6_main_ip is not None:
             pulumi.set(__self__, "v6_main_ip", v6_main_ip)
         if v6_network is not None:
@@ -793,6 +818,18 @@ class _BareMetalServerState:
         pulumi.set(self, "user_data", value)
 
     @property
+    @pulumi.getter(name="userScheme")
+    def user_scheme(self) -> Optional[pulumi.Input[str]]:
+        """
+        The scheme used for the default user. Possible values are `root` or `limited` (linux servers only).
+        """
+        return pulumi.get(self, "user_scheme")
+
+    @user_scheme.setter
+    def user_scheme(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "user_scheme", value)
+
+    @property
     @pulumi.getter(name="v6MainIp")
     def v6_main_ip(self) -> Optional[pulumi.Input[str]]:
         """
@@ -864,6 +901,7 @@ class BareMetalServer(pulumi.CustomResource):
                  ssh_key_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  user_data: Optional[pulumi.Input[str]] = None,
+                 user_scheme: Optional[pulumi.Input[str]] = None,
                  vpc2_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  __props__=None):
         """
@@ -927,6 +965,7 @@ class BareMetalServer(pulumi.CustomResource):
         :param pulumi.Input[Sequence[pulumi.Input[str]]] ssh_key_ids: A list of SSH key IDs to apply to the server on install (only valid for Linux/FreeBSD).
         :param pulumi.Input[Sequence[pulumi.Input[str]]] tags: A list of tags to apply to the servier.
         :param pulumi.Input[str] user_data: Generic data store, which some provisioning tools and cloud operating systems use as a configuration file. It is generally consumed only once after an instance has been launched, but individual needs may vary.
+        :param pulumi.Input[str] user_scheme: The scheme used for the default user. Possible values are `root` or `limited` (linux servers only).
         :param pulumi.Input[Sequence[pulumi.Input[str]]] vpc2_ids: A list of VPC 2.0 IDs to be attached to the server.
         """
         ...
@@ -1011,6 +1050,7 @@ class BareMetalServer(pulumi.CustomResource):
                  ssh_key_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  user_data: Optional[pulumi.Input[str]] = None,
+                 user_scheme: Optional[pulumi.Input[str]] = None,
                  vpc2_ids: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
@@ -1043,6 +1083,7 @@ class BareMetalServer(pulumi.CustomResource):
             __props__.__dict__["ssh_key_ids"] = ssh_key_ids
             __props__.__dict__["tags"] = tags
             __props__.__dict__["user_data"] = user_data
+            __props__.__dict__["user_scheme"] = user_scheme
             __props__.__dict__["vpc2_ids"] = vpc2_ids
             __props__.__dict__["cpu_count"] = None
             __props__.__dict__["date_created"] = None
@@ -1099,6 +1140,7 @@ class BareMetalServer(pulumi.CustomResource):
             status: Optional[pulumi.Input[str]] = None,
             tags: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
             user_data: Optional[pulumi.Input[str]] = None,
+            user_scheme: Optional[pulumi.Input[str]] = None,
             v6_main_ip: Optional[pulumi.Input[str]] = None,
             v6_network: Optional[pulumi.Input[str]] = None,
             v6_network_size: Optional[pulumi.Input[int]] = None,
@@ -1137,6 +1179,7 @@ class BareMetalServer(pulumi.CustomResource):
         :param pulumi.Input[str] status: The status of the server's subscription.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] tags: A list of tags to apply to the servier.
         :param pulumi.Input[str] user_data: Generic data store, which some provisioning tools and cloud operating systems use as a configuration file. It is generally consumed only once after an instance has been launched, but individual needs may vary.
+        :param pulumi.Input[str] user_scheme: The scheme used for the default user. Possible values are `root` or `limited` (linux servers only).
         :param pulumi.Input[str] v6_main_ip: The main IPv6 network address.
         :param pulumi.Input[str] v6_network: The IPv6 subnet.
         :param pulumi.Input[int] v6_network_size: The IPv6 network size in bits.
@@ -1175,6 +1218,7 @@ class BareMetalServer(pulumi.CustomResource):
         __props__.__dict__["status"] = status
         __props__.__dict__["tags"] = tags
         __props__.__dict__["user_data"] = user_data
+        __props__.__dict__["user_scheme"] = user_scheme
         __props__.__dict__["v6_main_ip"] = v6_main_ip
         __props__.__dict__["v6_network"] = v6_network
         __props__.__dict__["v6_network_size"] = v6_network_size
@@ -1406,6 +1450,14 @@ class BareMetalServer(pulumi.CustomResource):
         Generic data store, which some provisioning tools and cloud operating systems use as a configuration file. It is generally consumed only once after an instance has been launched, but individual needs may vary.
         """
         return pulumi.get(self, "user_data")
+
+    @property
+    @pulumi.getter(name="userScheme")
+    def user_scheme(self) -> pulumi.Output[Optional[str]]:
+        """
+        The scheme used for the default user. Possible values are `root` or `limited` (linux servers only).
+        """
+        return pulumi.get(self, "user_scheme")
 
     @property
     @pulumi.getter(name="v6MainIp")

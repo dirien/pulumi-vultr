@@ -233,6 +233,10 @@ export class Instance extends pulumi.CustomResource {
      */
     public readonly userData!: pulumi.Output<string>;
     /**
+     * The scheme used for the default user. Possible values are `root` or `limited` (linux servers only).
+     */
+    public readonly userScheme!: pulumi.Output<string | undefined>;
+    /**
      * The main IPv6 network address.
      */
     public /*out*/ readonly v6MainIp!: pulumi.Output<string>;
@@ -307,6 +311,7 @@ export class Instance extends pulumi.CustomResource {
             resourceInputs["status"] = state ? state.status : undefined;
             resourceInputs["tags"] = state ? state.tags : undefined;
             resourceInputs["userData"] = state ? state.userData : undefined;
+            resourceInputs["userScheme"] = state ? state.userScheme : undefined;
             resourceInputs["v6MainIp"] = state ? state.v6MainIp : undefined;
             resourceInputs["v6Network"] = state ? state.v6Network : undefined;
             resourceInputs["v6NetworkSize"] = state ? state.v6NetworkSize : undefined;
@@ -343,6 +348,7 @@ export class Instance extends pulumi.CustomResource {
             resourceInputs["sshKeyIds"] = args ? args.sshKeyIds : undefined;
             resourceInputs["tags"] = args ? args.tags : undefined;
             resourceInputs["userData"] = args ? args.userData : undefined;
+            resourceInputs["userScheme"] = args ? args.userScheme : undefined;
             resourceInputs["vpc2Ids"] = args ? args.vpc2Ids : undefined;
             resourceInputs["vpcIds"] = args ? args.vpcIds : undefined;
             resourceInputs["allowedBandwidth"] = undefined /*out*/;
@@ -525,6 +531,10 @@ export interface InstanceState {
      */
     userData?: pulumi.Input<string>;
     /**
+     * The scheme used for the default user. Possible values are `root` or `limited` (linux servers only).
+     */
+    userScheme?: pulumi.Input<string>;
+    /**
      * The main IPv6 network address.
      */
     v6MainIp?: pulumi.Input<string>;
@@ -642,6 +652,10 @@ export interface InstanceArgs {
      * Generic data store, which some provisioning tools and cloud operating systems use as a configuration file. It is generally consumed only once after an instance has been launched, but individual needs may vary.
      */
     userData?: pulumi.Input<string>;
+    /**
+     * The scheme used for the default user. Possible values are `root` or `limited` (linux servers only).
+     */
+    userScheme?: pulumi.Input<string>;
     /**
      * A list of VPC 2.0 IDs to be attached to the server.
      */

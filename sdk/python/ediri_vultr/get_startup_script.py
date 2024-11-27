@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -115,7 +120,7 @@ class AwaitableGetStartupScriptResult(GetStartupScriptResult):
             type=self.type)
 
 
-def get_startup_script(filters: Optional[Sequence[pulumi.InputType['GetStartupScriptFilterArgs']]] = None,
+def get_startup_script(filters: Optional[Sequence[Union['GetStartupScriptFilterArgs', 'GetStartupScriptFilterArgsDict']]] = None,
                        opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetStartupScriptResult:
     """
     Get information about a Vultr startup script. This data source provides the name, script, type, creation date, and the last modification date for your Vultr startup script.
@@ -128,14 +133,14 @@ def get_startup_script(filters: Optional[Sequence[pulumi.InputType['GetStartupSc
     import pulumi
     import pulumi_vultr as vultr
 
-    my_startup_script = vultr.get_startup_script(filters=[vultr.GetStartupScriptFilterArgs(
-        name="name",
-        values=["my-startup-script-name"],
-    )])
+    my_startup_script = vultr.get_startup_script(filters=[{
+        "name": "name",
+        "values": ["my-startup-script-name"],
+    }])
     ```
 
 
-    :param Sequence[pulumi.InputType['GetStartupScriptFilterArgs']] filters: Query parameters for finding startup scripts.
+    :param Sequence[Union['GetStartupScriptFilterArgs', 'GetStartupScriptFilterArgsDict']] filters: Query parameters for finding startup scripts.
     """
     __args__ = dict()
     __args__['filters'] = filters
@@ -150,10 +155,7 @@ def get_startup_script(filters: Optional[Sequence[pulumi.InputType['GetStartupSc
         name=pulumi.get(__ret__, 'name'),
         script=pulumi.get(__ret__, 'script'),
         type=pulumi.get(__ret__, 'type'))
-
-
-@_utilities.lift_output_func(get_startup_script)
-def get_startup_script_output(filters: Optional[pulumi.Input[Optional[Sequence[pulumi.InputType['GetStartupScriptFilterArgs']]]]] = None,
+def get_startup_script_output(filters: Optional[pulumi.Input[Optional[Sequence[Union['GetStartupScriptFilterArgs', 'GetStartupScriptFilterArgsDict']]]]] = None,
                               opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetStartupScriptResult]:
     """
     Get information about a Vultr startup script. This data source provides the name, script, type, creation date, and the last modification date for your Vultr startup script.
@@ -166,13 +168,24 @@ def get_startup_script_output(filters: Optional[pulumi.Input[Optional[Sequence[p
     import pulumi
     import pulumi_vultr as vultr
 
-    my_startup_script = vultr.get_startup_script(filters=[vultr.GetStartupScriptFilterArgs(
-        name="name",
-        values=["my-startup-script-name"],
-    )])
+    my_startup_script = vultr.get_startup_script(filters=[{
+        "name": "name",
+        "values": ["my-startup-script-name"],
+    }])
     ```
 
 
-    :param Sequence[pulumi.InputType['GetStartupScriptFilterArgs']] filters: Query parameters for finding startup scripts.
+    :param Sequence[Union['GetStartupScriptFilterArgs', 'GetStartupScriptFilterArgsDict']] filters: Query parameters for finding startup scripts.
     """
-    ...
+    __args__ = dict()
+    __args__['filters'] = filters
+    opts = pulumi.InvokeOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
+    __ret__ = pulumi.runtime.invoke_output('vultr:index/getStartupScript:getStartupScript', __args__, opts=opts, typ=GetStartupScriptResult)
+    return __ret__.apply(lambda __response__: GetStartupScriptResult(
+        date_created=pulumi.get(__response__, 'date_created'),
+        date_modified=pulumi.get(__response__, 'date_modified'),
+        filters=pulumi.get(__response__, 'filters'),
+        id=pulumi.get(__response__, 'id'),
+        name=pulumi.get(__response__, 'name'),
+        script=pulumi.get(__response__, 'script'),
+        type=pulumi.get(__response__, 'type')))

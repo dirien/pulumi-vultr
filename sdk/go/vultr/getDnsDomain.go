@@ -70,14 +70,20 @@ type LookupDnsDomainResult struct {
 
 func LookupDnsDomainOutput(ctx *pulumi.Context, args LookupDnsDomainOutputArgs, opts ...pulumi.InvokeOption) LookupDnsDomainResultOutput {
 	return pulumi.ToOutputWithContext(context.Background(), args).
-		ApplyT(func(v interface{}) (LookupDnsDomainResult, error) {
+		ApplyT(func(v interface{}) (LookupDnsDomainResultOutput, error) {
 			args := v.(LookupDnsDomainArgs)
-			r, err := LookupDnsDomain(ctx, &args, opts...)
-			var s LookupDnsDomainResult
-			if r != nil {
-				s = *r
+			opts = internal.PkgInvokeDefaultOpts(opts)
+			var rv LookupDnsDomainResult
+			secret, err := ctx.InvokePackageRaw("vultr:index/getDnsDomain:getDnsDomain", args, &rv, "", opts...)
+			if err != nil {
+				return LookupDnsDomainResultOutput{}, err
 			}
-			return s, err
+
+			output := pulumi.ToOutput(rv).(LookupDnsDomainResultOutput)
+			if secret {
+				return pulumi.ToSecret(output).(LookupDnsDomainResultOutput), nil
+			}
+			return output, nil
 		}).(LookupDnsDomainResultOutput)
 }
 

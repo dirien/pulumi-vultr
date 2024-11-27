@@ -78,14 +78,20 @@ type GetOsResult struct {
 
 func GetOsOutput(ctx *pulumi.Context, args GetOsOutputArgs, opts ...pulumi.InvokeOption) GetOsResultOutput {
 	return pulumi.ToOutputWithContext(context.Background(), args).
-		ApplyT(func(v interface{}) (GetOsResult, error) {
+		ApplyT(func(v interface{}) (GetOsResultOutput, error) {
 			args := v.(GetOsArgs)
-			r, err := GetOs(ctx, &args, opts...)
-			var s GetOsResult
-			if r != nil {
-				s = *r
+			opts = internal.PkgInvokeDefaultOpts(opts)
+			var rv GetOsResult
+			secret, err := ctx.InvokePackageRaw("vultr:index/getOs:getOs", args, &rv, "", opts...)
+			if err != nil {
+				return GetOsResultOutput{}, err
 			}
-			return s, err
+
+			output := pulumi.ToOutput(rv).(GetOsResultOutput)
+			if secret {
+				return pulumi.ToSecret(output).(GetOsResultOutput), nil
+			}
+			return output, nil
 		}).(GetOsResultOutput)
 }
 

@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -172,7 +177,7 @@ class AwaitableGetPlanResult(GetPlanResult):
             vcpu_count=self.vcpu_count)
 
 
-def get_plan(filters: Optional[Sequence[pulumi.InputType['GetPlanFilterArgs']]] = None,
+def get_plan(filters: Optional[Sequence[Union['GetPlanFilterArgs', 'GetPlanFilterArgsDict']]] = None,
              opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetPlanResult:
     """
     Get information about a Vultr plan.
@@ -185,14 +190,14 @@ def get_plan(filters: Optional[Sequence[pulumi.InputType['GetPlanFilterArgs']]] 
     import pulumi
     import pulumi_vultr as vultr
 
-    my_plan = vultr.get_plan(filters=[vultr.GetPlanFilterArgs(
-        name="id",
-        values=["vc2-1c-2gb"],
-    )])
+    my_plan = vultr.get_plan(filters=[{
+        "name": "id",
+        "values": ["vc2-1c-2gb"],
+    }])
     ```
 
 
-    :param Sequence[pulumi.InputType['GetPlanFilterArgs']] filters: Query parameters for finding plans.
+    :param Sequence[Union['GetPlanFilterArgs', 'GetPlanFilterArgsDict']] filters: Query parameters for finding plans.
     """
     __args__ = dict()
     __args__['filters'] = filters
@@ -212,10 +217,7 @@ def get_plan(filters: Optional[Sequence[pulumi.InputType['GetPlanFilterArgs']]] 
         ram=pulumi.get(__ret__, 'ram'),
         type=pulumi.get(__ret__, 'type'),
         vcpu_count=pulumi.get(__ret__, 'vcpu_count'))
-
-
-@_utilities.lift_output_func(get_plan)
-def get_plan_output(filters: Optional[pulumi.Input[Optional[Sequence[pulumi.InputType['GetPlanFilterArgs']]]]] = None,
+def get_plan_output(filters: Optional[pulumi.Input[Optional[Sequence[Union['GetPlanFilterArgs', 'GetPlanFilterArgsDict']]]]] = None,
                     opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetPlanResult]:
     """
     Get information about a Vultr plan.
@@ -228,13 +230,29 @@ def get_plan_output(filters: Optional[pulumi.Input[Optional[Sequence[pulumi.Inpu
     import pulumi
     import pulumi_vultr as vultr
 
-    my_plan = vultr.get_plan(filters=[vultr.GetPlanFilterArgs(
-        name="id",
-        values=["vc2-1c-2gb"],
-    )])
+    my_plan = vultr.get_plan(filters=[{
+        "name": "id",
+        "values": ["vc2-1c-2gb"],
+    }])
     ```
 
 
-    :param Sequence[pulumi.InputType['GetPlanFilterArgs']] filters: Query parameters for finding plans.
+    :param Sequence[Union['GetPlanFilterArgs', 'GetPlanFilterArgsDict']] filters: Query parameters for finding plans.
     """
-    ...
+    __args__ = dict()
+    __args__['filters'] = filters
+    opts = pulumi.InvokeOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
+    __ret__ = pulumi.runtime.invoke_output('vultr:index/getPlan:getPlan', __args__, opts=opts, typ=GetPlanResult)
+    return __ret__.apply(lambda __response__: GetPlanResult(
+        bandwidth=pulumi.get(__response__, 'bandwidth'),
+        disk=pulumi.get(__response__, 'disk'),
+        disk_count=pulumi.get(__response__, 'disk_count'),
+        filters=pulumi.get(__response__, 'filters'),
+        gpu_type=pulumi.get(__response__, 'gpu_type'),
+        gpu_vram=pulumi.get(__response__, 'gpu_vram'),
+        id=pulumi.get(__response__, 'id'),
+        locations=pulumi.get(__response__, 'locations'),
+        monthly_cost=pulumi.get(__response__, 'monthly_cost'),
+        ram=pulumi.get(__response__, 'ram'),
+        type=pulumi.get(__response__, 'type'),
+        vcpu_count=pulumi.get(__response__, 'vcpu_count')))

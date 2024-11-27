@@ -90,6 +90,10 @@ import (
 type Database struct {
 	pulumi.CustomResourceState
 
+	// The certificate to authenticate the default user (Kafka engine types only).
+	AccessCert pulumi.StringOutput `pulumi:"accessCert"`
+	// The private key to authenticate the default user (Kafka engine types only).
+	AccessKey pulumi.StringOutput `pulumi:"accessKey"`
 	// The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
 	ClusterTimeZone pulumi.StringOutput `pulumi:"clusterTimeZone"`
 	// The database engine of the new managed database.
@@ -101,7 +105,7 @@ type Database struct {
 	// The managed database's default logical database.
 	Dbname pulumi.StringOutput `pulumi:"dbname"`
 	// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
-	FerretdbCredentials pulumi.MapOutput `pulumi:"ferretdbCredentials"`
+	FerretdbCredentials pulumi.StringMapOutput `pulumi:"ferretdbCredentials"`
 	// The hostname assigned to the managed database.
 	Host pulumi.StringOutput `pulumi:"host"`
 	// A label for the managed database.
@@ -113,22 +117,24 @@ type Database struct {
 	// The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).
 	MaintenanceTime pulumi.StringOutput `pulumi:"maintenanceTime"`
 	// The configuration value for the long query time (in seconds) on the managed database (MySQL engine types only).
-	MysqlLongQueryTime pulumi.IntPtrOutput `pulumi:"mysqlLongQueryTime"`
+	MysqlLongQueryTime pulumi.IntOutput `pulumi:"mysqlLongQueryTime"`
 	// The configuration value for whether primary keys are required on the managed database (MySQL engine types only).
 	MysqlRequirePrimaryKey pulumi.BoolPtrOutput `pulumi:"mysqlRequirePrimaryKey"`
 	// The configuration value for slow query logging on the managed database (MySQL engine types only).
-	MysqlSlowQueryLog pulumi.BoolPtrOutput `pulumi:"mysqlSlowQueryLog"`
+	MysqlSlowQueryLog pulumi.BoolOutput `pulumi:"mysqlSlowQueryLog"`
 	// A list of SQL modes to configure for the managed database (MySQL engine types only - `ALLOW_INVALID_DATES`, `ANSI`, `ANSI_QUOTES`, `ERROR_FOR_DIVISION_BY_ZERO`, `HIGH_NOT_PRECEDENCE`, `IGNORE_SPACE`, `NO_AUTO_VALUE_ON_ZERO`, `NO_DIR_IN_CREATE`, `NO_ENGINE_SUBSTITUTION`, `NO_UNSIGNED_SUBTRACTION`, `NO_ZERO_DATE`, `NO_ZERO_IN_DATE`, `ONLY_FULL_GROUP_BY`, `PIPES_AS_CONCAT`, `REAL_AS_FLOAT`, `STRICT_ALL_TABLES`, `STRICT_TRANS_TABLES`, `TIME_TRUNCATE_FRACTIONAL`, `TRADITIONAL`).
 	MysqlSqlModes pulumi.StringArrayOutput `pulumi:"mysqlSqlModes"`
 	// The password for the managed database's primary admin user.
 	Password pulumi.StringOutput `pulumi:"password"`
 	// The ID of the plan that you want the managed database to subscribe to. [See List Managed Database Plans](https://www.vultr.com/api/#tag/managed-databases/operation/list-database-plans)
 	Plan pulumi.StringOutput `pulumi:"plan"`
+	// The number of brokers available on the managed database (Kafka engine types only).
+	PlanBrokers pulumi.IntOutput `pulumi:"planBrokers"`
 	// The description of the disk(s) on the managed database.
 	PlanDisk pulumi.IntOutput `pulumi:"planDisk"`
 	// The amount of memory available on the managed database in MB.
 	PlanRam pulumi.IntOutput `pulumi:"planRam"`
-	// The number of standby nodes available on the managed database.
+	// The number of standby nodes available on the managed database (excluded for Kafka engine types).
 	PlanReplicas pulumi.IntOutput `pulumi:"planReplicas"`
 	// The number of virtual CPUs available on the managed database.
 	PlanVcpus pulumi.IntOutput `pulumi:"planVcpus"`
@@ -142,6 +148,8 @@ type Database struct {
 	RedisEvictionPolicy pulumi.StringOutput `pulumi:"redisEvictionPolicy"`
 	// The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
 	Region pulumi.StringOutput `pulumi:"region"`
+	// The SASL connection port for the managed database (Kafka engine types only).
+	SaslPort pulumi.StringOutput `pulumi:"saslPort"`
 	// The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).
 	Status pulumi.StringOutput `pulumi:"status"`
 	// The tag to assign to the managed database.
@@ -199,6 +207,10 @@ func GetDatabase(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering Database resources.
 type databaseState struct {
+	// The certificate to authenticate the default user (Kafka engine types only).
+	AccessCert *string `pulumi:"accessCert"`
+	// The private key to authenticate the default user (Kafka engine types only).
+	AccessKey *string `pulumi:"accessKey"`
 	// The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
 	ClusterTimeZone *string `pulumi:"clusterTimeZone"`
 	// The database engine of the new managed database.
@@ -210,7 +222,7 @@ type databaseState struct {
 	// The managed database's default logical database.
 	Dbname *string `pulumi:"dbname"`
 	// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
-	FerretdbCredentials map[string]interface{} `pulumi:"ferretdbCredentials"`
+	FerretdbCredentials map[string]string `pulumi:"ferretdbCredentials"`
 	// The hostname assigned to the managed database.
 	Host *string `pulumi:"host"`
 	// A label for the managed database.
@@ -233,11 +245,13 @@ type databaseState struct {
 	Password *string `pulumi:"password"`
 	// The ID of the plan that you want the managed database to subscribe to. [See List Managed Database Plans](https://www.vultr.com/api/#tag/managed-databases/operation/list-database-plans)
 	Plan *string `pulumi:"plan"`
+	// The number of brokers available on the managed database (Kafka engine types only).
+	PlanBrokers *int `pulumi:"planBrokers"`
 	// The description of the disk(s) on the managed database.
 	PlanDisk *int `pulumi:"planDisk"`
 	// The amount of memory available on the managed database in MB.
 	PlanRam *int `pulumi:"planRam"`
-	// The number of standby nodes available on the managed database.
+	// The number of standby nodes available on the managed database (excluded for Kafka engine types).
 	PlanReplicas *int `pulumi:"planReplicas"`
 	// The number of virtual CPUs available on the managed database.
 	PlanVcpus *int `pulumi:"planVcpus"`
@@ -251,6 +265,8 @@ type databaseState struct {
 	RedisEvictionPolicy *string `pulumi:"redisEvictionPolicy"`
 	// The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
 	Region *string `pulumi:"region"`
+	// The SASL connection port for the managed database (Kafka engine types only).
+	SaslPort *string `pulumi:"saslPort"`
 	// The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).
 	Status *string `pulumi:"status"`
 	// The tag to assign to the managed database.
@@ -264,6 +280,10 @@ type databaseState struct {
 }
 
 type DatabaseState struct {
+	// The certificate to authenticate the default user (Kafka engine types only).
+	AccessCert pulumi.StringPtrInput
+	// The private key to authenticate the default user (Kafka engine types only).
+	AccessKey pulumi.StringPtrInput
 	// The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
 	ClusterTimeZone pulumi.StringPtrInput
 	// The database engine of the new managed database.
@@ -275,7 +295,7 @@ type DatabaseState struct {
 	// The managed database's default logical database.
 	Dbname pulumi.StringPtrInput
 	// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
-	FerretdbCredentials pulumi.MapInput
+	FerretdbCredentials pulumi.StringMapInput
 	// The hostname assigned to the managed database.
 	Host pulumi.StringPtrInput
 	// A label for the managed database.
@@ -298,11 +318,13 @@ type DatabaseState struct {
 	Password pulumi.StringPtrInput
 	// The ID of the plan that you want the managed database to subscribe to. [See List Managed Database Plans](https://www.vultr.com/api/#tag/managed-databases/operation/list-database-plans)
 	Plan pulumi.StringPtrInput
+	// The number of brokers available on the managed database (Kafka engine types only).
+	PlanBrokers pulumi.IntPtrInput
 	// The description of the disk(s) on the managed database.
 	PlanDisk pulumi.IntPtrInput
 	// The amount of memory available on the managed database in MB.
 	PlanRam pulumi.IntPtrInput
-	// The number of standby nodes available on the managed database.
+	// The number of standby nodes available on the managed database (excluded for Kafka engine types).
 	PlanReplicas pulumi.IntPtrInput
 	// The number of virtual CPUs available on the managed database.
 	PlanVcpus pulumi.IntPtrInput
@@ -316,6 +338,8 @@ type DatabaseState struct {
 	RedisEvictionPolicy pulumi.StringPtrInput
 	// The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
 	Region pulumi.StringPtrInput
+	// The SASL connection port for the managed database (Kafka engine types only).
+	SaslPort pulumi.StringPtrInput
 	// The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).
 	Status pulumi.StringPtrInput
 	// The tag to assign to the managed database.
@@ -333,6 +357,10 @@ func (DatabaseState) ElementType() reflect.Type {
 }
 
 type databaseArgs struct {
+	// The certificate to authenticate the default user (Kafka engine types only).
+	AccessCert *string `pulumi:"accessCert"`
+	// The private key to authenticate the default user (Kafka engine types only).
+	AccessKey *string `pulumi:"accessKey"`
 	// The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
 	ClusterTimeZone *string `pulumi:"clusterTimeZone"`
 	// The database engine of the new managed database.
@@ -340,7 +368,7 @@ type databaseArgs struct {
 	// The database engine version of the new managed database.
 	DatabaseEngineVersion string `pulumi:"databaseEngineVersion"`
 	// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
-	FerretdbCredentials map[string]interface{} `pulumi:"ferretdbCredentials"`
+	FerretdbCredentials map[string]string `pulumi:"ferretdbCredentials"`
 	// A label for the managed database.
 	Label string `pulumi:"label"`
 	// The preferred maintenance day of week for the managed database.
@@ -359,8 +387,12 @@ type databaseArgs struct {
 	Password *string `pulumi:"password"`
 	// The ID of the plan that you want the managed database to subscribe to. [See List Managed Database Plans](https://www.vultr.com/api/#tag/managed-databases/operation/list-database-plans)
 	Plan string `pulumi:"plan"`
+	// The number of brokers available on the managed database (Kafka engine types only).
+	PlanBrokers *int `pulumi:"planBrokers"`
 	// The description of the disk(s) on the managed database.
 	PlanDisk *int `pulumi:"planDisk"`
+	// The number of standby nodes available on the managed database (excluded for Kafka engine types).
+	PlanReplicas *int `pulumi:"planReplicas"`
 	// The public hostname assigned to the managed database (VPC-attached only).
 	PublicHost *string `pulumi:"publicHost"`
 	// A list of read replicas attached to the managed database.
@@ -369,6 +401,8 @@ type databaseArgs struct {
 	RedisEvictionPolicy *string `pulumi:"redisEvictionPolicy"`
 	// The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
 	Region string `pulumi:"region"`
+	// The SASL connection port for the managed database (Kafka engine types only).
+	SaslPort *string `pulumi:"saslPort"`
 	// The tag to assign to the managed database.
 	Tag *string `pulumi:"tag"`
 	// A list of allowed IP addresses for the managed database.
@@ -379,6 +413,10 @@ type databaseArgs struct {
 
 // The set of arguments for constructing a Database resource.
 type DatabaseArgs struct {
+	// The certificate to authenticate the default user (Kafka engine types only).
+	AccessCert pulumi.StringPtrInput
+	// The private key to authenticate the default user (Kafka engine types only).
+	AccessKey pulumi.StringPtrInput
 	// The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
 	ClusterTimeZone pulumi.StringPtrInput
 	// The database engine of the new managed database.
@@ -386,7 +424,7 @@ type DatabaseArgs struct {
 	// The database engine version of the new managed database.
 	DatabaseEngineVersion pulumi.StringInput
 	// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
-	FerretdbCredentials pulumi.MapInput
+	FerretdbCredentials pulumi.StringMapInput
 	// A label for the managed database.
 	Label pulumi.StringInput
 	// The preferred maintenance day of week for the managed database.
@@ -405,8 +443,12 @@ type DatabaseArgs struct {
 	Password pulumi.StringPtrInput
 	// The ID of the plan that you want the managed database to subscribe to. [See List Managed Database Plans](https://www.vultr.com/api/#tag/managed-databases/operation/list-database-plans)
 	Plan pulumi.StringInput
+	// The number of brokers available on the managed database (Kafka engine types only).
+	PlanBrokers pulumi.IntPtrInput
 	// The description of the disk(s) on the managed database.
 	PlanDisk pulumi.IntPtrInput
+	// The number of standby nodes available on the managed database (excluded for Kafka engine types).
+	PlanReplicas pulumi.IntPtrInput
 	// The public hostname assigned to the managed database (VPC-attached only).
 	PublicHost pulumi.StringPtrInput
 	// A list of read replicas attached to the managed database.
@@ -415,6 +457,8 @@ type DatabaseArgs struct {
 	RedisEvictionPolicy pulumi.StringPtrInput
 	// The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
 	Region pulumi.StringInput
+	// The SASL connection port for the managed database (Kafka engine types only).
+	SaslPort pulumi.StringPtrInput
 	// The tag to assign to the managed database.
 	Tag pulumi.StringPtrInput
 	// A list of allowed IP addresses for the managed database.
@@ -510,6 +554,16 @@ func (o DatabaseOutput) ToDatabaseOutputWithContext(ctx context.Context) Databas
 	return o
 }
 
+// The certificate to authenticate the default user (Kafka engine types only).
+func (o DatabaseOutput) AccessCert() pulumi.StringOutput {
+	return o.ApplyT(func(v *Database) pulumi.StringOutput { return v.AccessCert }).(pulumi.StringOutput)
+}
+
+// The private key to authenticate the default user (Kafka engine types only).
+func (o DatabaseOutput) AccessKey() pulumi.StringOutput {
+	return o.ApplyT(func(v *Database) pulumi.StringOutput { return v.AccessKey }).(pulumi.StringOutput)
+}
+
 // The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
 func (o DatabaseOutput) ClusterTimeZone() pulumi.StringOutput {
 	return o.ApplyT(func(v *Database) pulumi.StringOutput { return v.ClusterTimeZone }).(pulumi.StringOutput)
@@ -536,8 +590,8 @@ func (o DatabaseOutput) Dbname() pulumi.StringOutput {
 }
 
 // An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
-func (o DatabaseOutput) FerretdbCredentials() pulumi.MapOutput {
-	return o.ApplyT(func(v *Database) pulumi.MapOutput { return v.FerretdbCredentials }).(pulumi.MapOutput)
+func (o DatabaseOutput) FerretdbCredentials() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *Database) pulumi.StringMapOutput { return v.FerretdbCredentials }).(pulumi.StringMapOutput)
 }
 
 // The hostname assigned to the managed database.
@@ -566,8 +620,8 @@ func (o DatabaseOutput) MaintenanceTime() pulumi.StringOutput {
 }
 
 // The configuration value for the long query time (in seconds) on the managed database (MySQL engine types only).
-func (o DatabaseOutput) MysqlLongQueryTime() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v *Database) pulumi.IntPtrOutput { return v.MysqlLongQueryTime }).(pulumi.IntPtrOutput)
+func (o DatabaseOutput) MysqlLongQueryTime() pulumi.IntOutput {
+	return o.ApplyT(func(v *Database) pulumi.IntOutput { return v.MysqlLongQueryTime }).(pulumi.IntOutput)
 }
 
 // The configuration value for whether primary keys are required on the managed database (MySQL engine types only).
@@ -576,8 +630,8 @@ func (o DatabaseOutput) MysqlRequirePrimaryKey() pulumi.BoolPtrOutput {
 }
 
 // The configuration value for slow query logging on the managed database (MySQL engine types only).
-func (o DatabaseOutput) MysqlSlowQueryLog() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v *Database) pulumi.BoolPtrOutput { return v.MysqlSlowQueryLog }).(pulumi.BoolPtrOutput)
+func (o DatabaseOutput) MysqlSlowQueryLog() pulumi.BoolOutput {
+	return o.ApplyT(func(v *Database) pulumi.BoolOutput { return v.MysqlSlowQueryLog }).(pulumi.BoolOutput)
 }
 
 // A list of SQL modes to configure for the managed database (MySQL engine types only - `ALLOW_INVALID_DATES`, `ANSI`, `ANSI_QUOTES`, `ERROR_FOR_DIVISION_BY_ZERO`, `HIGH_NOT_PRECEDENCE`, `IGNORE_SPACE`, `NO_AUTO_VALUE_ON_ZERO`, `NO_DIR_IN_CREATE`, `NO_ENGINE_SUBSTITUTION`, `NO_UNSIGNED_SUBTRACTION`, `NO_ZERO_DATE`, `NO_ZERO_IN_DATE`, `ONLY_FULL_GROUP_BY`, `PIPES_AS_CONCAT`, `REAL_AS_FLOAT`, `STRICT_ALL_TABLES`, `STRICT_TRANS_TABLES`, `TIME_TRUNCATE_FRACTIONAL`, `TRADITIONAL`).
@@ -595,6 +649,11 @@ func (o DatabaseOutput) Plan() pulumi.StringOutput {
 	return o.ApplyT(func(v *Database) pulumi.StringOutput { return v.Plan }).(pulumi.StringOutput)
 }
 
+// The number of brokers available on the managed database (Kafka engine types only).
+func (o DatabaseOutput) PlanBrokers() pulumi.IntOutput {
+	return o.ApplyT(func(v *Database) pulumi.IntOutput { return v.PlanBrokers }).(pulumi.IntOutput)
+}
+
 // The description of the disk(s) on the managed database.
 func (o DatabaseOutput) PlanDisk() pulumi.IntOutput {
 	return o.ApplyT(func(v *Database) pulumi.IntOutput { return v.PlanDisk }).(pulumi.IntOutput)
@@ -605,7 +664,7 @@ func (o DatabaseOutput) PlanRam() pulumi.IntOutput {
 	return o.ApplyT(func(v *Database) pulumi.IntOutput { return v.PlanRam }).(pulumi.IntOutput)
 }
 
-// The number of standby nodes available on the managed database.
+// The number of standby nodes available on the managed database (excluded for Kafka engine types).
 func (o DatabaseOutput) PlanReplicas() pulumi.IntOutput {
 	return o.ApplyT(func(v *Database) pulumi.IntOutput { return v.PlanReplicas }).(pulumi.IntOutput)
 }
@@ -638,6 +697,11 @@ func (o DatabaseOutput) RedisEvictionPolicy() pulumi.StringOutput {
 // The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
 func (o DatabaseOutput) Region() pulumi.StringOutput {
 	return o.ApplyT(func(v *Database) pulumi.StringOutput { return v.Region }).(pulumi.StringOutput)
+}
+
+// The SASL connection port for the managed database (Kafka engine types only).
+func (o DatabaseOutput) SaslPort() pulumi.StringOutput {
+	return o.ApplyT(func(v *Database) pulumi.StringOutput { return v.SaslPort }).(pulumi.StringOutput)
 }
 
 // The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).

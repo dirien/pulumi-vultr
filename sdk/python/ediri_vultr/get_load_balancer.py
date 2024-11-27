@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -115,12 +120,12 @@ class GetLoadBalancerResult:
 
     @property
     @pulumi.getter(name="firewallRules")
-    def firewall_rules(self) -> Sequence[Mapping[str, Any]]:
+    def firewall_rules(self) -> Sequence[Mapping[str, str]]:
         return pulumi.get(self, "firewall_rules")
 
     @property
     @pulumi.getter(name="forwardingRules")
-    def forwarding_rules(self) -> Sequence[Mapping[str, Any]]:
+    def forwarding_rules(self) -> Sequence[Mapping[str, str]]:
         """
         Defines the forwarding rules for a load balancer. The configuration of a `forwarding_rules` is listened below.
         """
@@ -136,7 +141,7 @@ class GetLoadBalancerResult:
 
     @property
     @pulumi.getter(name="healthCheck")
-    def health_check(self) -> Mapping[str, Any]:
+    def health_check(self) -> Mapping[str, str]:
         """
         Defines the way load balancers should check for health. The configuration of a `health_check` is listed below.
         """
@@ -192,7 +197,7 @@ class GetLoadBalancerResult:
 
     @property
     @pulumi.getter
-    def ssl(self) -> Mapping[str, Any]:
+    def ssl(self) -> Mapping[str, str]:
         return pulumi.get(self, "ssl")
 
     @property
@@ -238,7 +243,7 @@ class AwaitableGetLoadBalancerResult(GetLoadBalancerResult):
             status=self.status)
 
 
-def get_load_balancer(filters: Optional[Sequence[pulumi.InputType['GetLoadBalancerFilterArgs']]] = None,
+def get_load_balancer(filters: Optional[Sequence[Union['GetLoadBalancerFilterArgs', 'GetLoadBalancerFilterArgsDict']]] = None,
                       proxy_protocol: Optional[bool] = None,
                       opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetLoadBalancerResult:
     """
@@ -252,14 +257,14 @@ def get_load_balancer(filters: Optional[Sequence[pulumi.InputType['GetLoadBalanc
     import pulumi
     import pulumi_vultr as vultr
 
-    my_lb = vultr.get_load_balancer(filters=[vultr.GetLoadBalancerFilterArgs(
-        name="label",
-        values=["my-lb-label"],
-    )])
+    my_lb = vultr.get_load_balancer(filters=[{
+        "name": "label",
+        "values": ["my-lb-label"],
+    }])
     ```
 
 
-    :param Sequence[pulumi.InputType['GetLoadBalancerFilterArgs']] filters: Query parameters for finding load balancers.
+    :param Sequence[Union['GetLoadBalancerFilterArgs', 'GetLoadBalancerFilterArgsDict']] filters: Query parameters for finding load balancers.
     :param bool proxy_protocol: Boolean value that indicates if Proxy Protocol is enabled.
     """
     __args__ = dict()
@@ -287,10 +292,7 @@ def get_load_balancer(filters: Optional[Sequence[pulumi.InputType['GetLoadBalanc
         ssl=pulumi.get(__ret__, 'ssl'),
         ssl_redirect=pulumi.get(__ret__, 'ssl_redirect'),
         status=pulumi.get(__ret__, 'status'))
-
-
-@_utilities.lift_output_func(get_load_balancer)
-def get_load_balancer_output(filters: Optional[pulumi.Input[Optional[Sequence[pulumi.InputType['GetLoadBalancerFilterArgs']]]]] = None,
+def get_load_balancer_output(filters: Optional[pulumi.Input[Optional[Sequence[Union['GetLoadBalancerFilterArgs', 'GetLoadBalancerFilterArgsDict']]]]] = None,
                              proxy_protocol: Optional[pulumi.Input[Optional[bool]]] = None,
                              opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetLoadBalancerResult]:
     """
@@ -304,14 +306,37 @@ def get_load_balancer_output(filters: Optional[pulumi.Input[Optional[Sequence[pu
     import pulumi
     import pulumi_vultr as vultr
 
-    my_lb = vultr.get_load_balancer(filters=[vultr.GetLoadBalancerFilterArgs(
-        name="label",
-        values=["my-lb-label"],
-    )])
+    my_lb = vultr.get_load_balancer(filters=[{
+        "name": "label",
+        "values": ["my-lb-label"],
+    }])
     ```
 
 
-    :param Sequence[pulumi.InputType['GetLoadBalancerFilterArgs']] filters: Query parameters for finding load balancers.
+    :param Sequence[Union['GetLoadBalancerFilterArgs', 'GetLoadBalancerFilterArgsDict']] filters: Query parameters for finding load balancers.
     :param bool proxy_protocol: Boolean value that indicates if Proxy Protocol is enabled.
     """
-    ...
+    __args__ = dict()
+    __args__['filters'] = filters
+    __args__['proxyProtocol'] = proxy_protocol
+    opts = pulumi.InvokeOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
+    __ret__ = pulumi.runtime.invoke_output('vultr:index/getLoadBalancer:getLoadBalancer', __args__, opts=opts, typ=GetLoadBalancerResult)
+    return __ret__.apply(lambda __response__: GetLoadBalancerResult(
+        attached_instances=pulumi.get(__response__, 'attached_instances'),
+        balancing_algorithm=pulumi.get(__response__, 'balancing_algorithm'),
+        cookie_name=pulumi.get(__response__, 'cookie_name'),
+        date_created=pulumi.get(__response__, 'date_created'),
+        filters=pulumi.get(__response__, 'filters'),
+        firewall_rules=pulumi.get(__response__, 'firewall_rules'),
+        forwarding_rules=pulumi.get(__response__, 'forwarding_rules'),
+        has_ssl=pulumi.get(__response__, 'has_ssl'),
+        health_check=pulumi.get(__response__, 'health_check'),
+        id=pulumi.get(__response__, 'id'),
+        ipv4=pulumi.get(__response__, 'ipv4'),
+        ipv6=pulumi.get(__response__, 'ipv6'),
+        label=pulumi.get(__response__, 'label'),
+        proxy_protocol=pulumi.get(__response__, 'proxy_protocol'),
+        region=pulumi.get(__response__, 'region'),
+        ssl=pulumi.get(__response__, 'ssl'),
+        ssl_redirect=pulumi.get(__response__, 'ssl_redirect'),
+        status=pulumi.get(__response__, 'status')))

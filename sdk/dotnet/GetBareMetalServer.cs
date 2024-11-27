@@ -201,6 +201,10 @@ namespace ediri.Vultr
         /// A list of tags applied to the server.
         /// </summary>
         public readonly ImmutableArray<string> Tags;
+        /// <summary>
+        /// The scheme used for the default user (linux servers only).
+        /// </summary>
+        public readonly string UserScheme;
         public readonly string V6MainIp;
         public readonly string V6Network;
         public readonly int V6NetworkSize;
@@ -251,6 +255,8 @@ namespace ediri.Vultr
 
             ImmutableArray<string> tags,
 
+            string userScheme,
+
             string v6MainIp,
 
             string v6Network,
@@ -279,6 +285,7 @@ namespace ediri.Vultr
             Region = region;
             Status = status;
             Tags = tags;
+            UserScheme = userScheme;
             V6MainIp = v6MainIp;
             V6Network = v6Network;
             V6NetworkSize = v6NetworkSize;

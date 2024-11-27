@@ -27,7 +27,6 @@ import * as utilities from "./utilities";
  */
 export function getInstance(args?: GetInstanceArgs, opts?: pulumi.InvokeOptions): Promise<GetInstanceResult> {
     args = args || {};
-
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("vultr:index/getInstance:getInstance", {
         "filters": args.filters,
@@ -60,7 +59,7 @@ export interface GetInstanceResult {
     /**
      * The current configuration for backups
      */
-    readonly backupsSchedule: {[key: string]: any};
+    readonly backupsSchedule: {[key: string]: string};
     /**
      * The date the server was added to your Vultr account.
      */
@@ -152,6 +151,10 @@ export interface GetInstanceResult {
      */
     readonly tags: string[];
     /**
+     * The scheme used for the default user (linux servers only).
+     */
+    readonly userScheme: string;
+    /**
      * The main IPv6 network address.
      */
     readonly v6MainIp: string;
@@ -193,7 +196,11 @@ export interface GetInstanceResult {
  * ```
  */
 export function getInstanceOutput(args?: GetInstanceOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetInstanceResult> {
-    return pulumi.output(args).apply((a: any) => getInstance(a, opts))
+    args = args || {};
+    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
+    return pulumi.runtime.invokeOutput("vultr:index/getInstance:getInstance", {
+        "filters": args.filters,
+    }, opts);
 }
 
 /**

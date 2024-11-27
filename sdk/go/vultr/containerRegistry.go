@@ -60,9 +60,9 @@ type ContainerRegistry struct {
 	// The region where your container registry will be deployed. [See available regions](https://www.vultr.com/api/#tag/Container-Registry/operation/list-registry-regions)
 	Region pulumi.StringOutput `pulumi:"region"`
 	// The user associated with the container registry.
-	RootUser pulumi.MapOutput `pulumi:"rootUser"`
+	RootUser pulumi.StringMapOutput `pulumi:"rootUser"`
 	// A listing of current storage usage relevant to the container registry.
-	Storage pulumi.MapOutput `pulumi:"storage"`
+	Storage pulumi.StringMapOutput `pulumi:"storage"`
 	// The URN of the container registry.
 	Urn pulumi.StringOutput `pulumi:"urn"`
 }
@@ -120,9 +120,9 @@ type containerRegistryState struct {
 	// The region where your container registry will be deployed. [See available regions](https://www.vultr.com/api/#tag/Container-Registry/operation/list-registry-regions)
 	Region *string `pulumi:"region"`
 	// The user associated with the container registry.
-	RootUser map[string]interface{} `pulumi:"rootUser"`
+	RootUser map[string]string `pulumi:"rootUser"`
 	// A listing of current storage usage relevant to the container registry.
-	Storage map[string]interface{} `pulumi:"storage"`
+	Storage map[string]string `pulumi:"storage"`
 	// The URN of the container registry.
 	Urn *string `pulumi:"urn"`
 }
@@ -139,9 +139,9 @@ type ContainerRegistryState struct {
 	// The region where your container registry will be deployed. [See available regions](https://www.vultr.com/api/#tag/Container-Registry/operation/list-registry-regions)
 	Region pulumi.StringPtrInput
 	// The user associated with the container registry.
-	RootUser pulumi.MapInput
+	RootUser pulumi.StringMapInput
 	// A listing of current storage usage relevant to the container registry.
-	Storage pulumi.MapInput
+	Storage pulumi.StringMapInput
 	// The URN of the container registry.
 	Urn pulumi.StringPtrInput
 }
@@ -286,13 +286,13 @@ func (o ContainerRegistryOutput) Region() pulumi.StringOutput {
 }
 
 // The user associated with the container registry.
-func (o ContainerRegistryOutput) RootUser() pulumi.MapOutput {
-	return o.ApplyT(func(v *ContainerRegistry) pulumi.MapOutput { return v.RootUser }).(pulumi.MapOutput)
+func (o ContainerRegistryOutput) RootUser() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *ContainerRegistry) pulumi.StringMapOutput { return v.RootUser }).(pulumi.StringMapOutput)
 }
 
 // A listing of current storage usage relevant to the container registry.
-func (o ContainerRegistryOutput) Storage() pulumi.MapOutput {
-	return o.ApplyT(func(v *ContainerRegistry) pulumi.MapOutput { return v.Storage }).(pulumi.MapOutput)
+func (o ContainerRegistryOutput) Storage() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *ContainerRegistry) pulumi.StringMapOutput { return v.Storage }).(pulumi.StringMapOutput)
 }
 
 // The URN of the container registry.

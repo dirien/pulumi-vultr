@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -91,7 +96,7 @@ class AwaitableGetReverseIpv6Result(GetReverseIpv6Result):
             reverse=self.reverse)
 
 
-def get_reverse_ipv6(filters: Optional[Sequence[pulumi.InputType['GetReverseIpv6FilterArgs']]] = None,
+def get_reverse_ipv6(filters: Optional[Sequence[Union['GetReverseIpv6FilterArgs', 'GetReverseIpv6FilterArgsDict']]] = None,
                      opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetReverseIpv6Result:
     """
     Get information about a Vultr Reverse IPv6.
@@ -104,14 +109,14 @@ def get_reverse_ipv6(filters: Optional[Sequence[pulumi.InputType['GetReverseIpv6
     import pulumi
     import pulumi_vultr as vultr
 
-    my_reverse_ipv6 = vultr.get_reverse_ipv6(filters=[vultr.GetReverseIpv6FilterArgs(
-        name="reverse",
-        values=["host.example.com"],
-    )])
+    my_reverse_ipv6 = vultr.get_reverse_ipv6(filters=[{
+        "name": "reverse",
+        "values": ["host.example.com"],
+    }])
     ```
 
 
-    :param Sequence[pulumi.InputType['GetReverseIpv6FilterArgs']] filters: Query parameters for finding IPv6 reverse DNS records.
+    :param Sequence[Union['GetReverseIpv6FilterArgs', 'GetReverseIpv6FilterArgsDict']] filters: Query parameters for finding IPv6 reverse DNS records.
     """
     __args__ = dict()
     __args__['filters'] = filters
@@ -124,10 +129,7 @@ def get_reverse_ipv6(filters: Optional[Sequence[pulumi.InputType['GetReverseIpv6
         instance_id=pulumi.get(__ret__, 'instance_id'),
         ip=pulumi.get(__ret__, 'ip'),
         reverse=pulumi.get(__ret__, 'reverse'))
-
-
-@_utilities.lift_output_func(get_reverse_ipv6)
-def get_reverse_ipv6_output(filters: Optional[pulumi.Input[Optional[Sequence[pulumi.InputType['GetReverseIpv6FilterArgs']]]]] = None,
+def get_reverse_ipv6_output(filters: Optional[pulumi.Input[Optional[Sequence[Union['GetReverseIpv6FilterArgs', 'GetReverseIpv6FilterArgsDict']]]]] = None,
                             opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetReverseIpv6Result]:
     """
     Get information about a Vultr Reverse IPv6.
@@ -140,13 +142,22 @@ def get_reverse_ipv6_output(filters: Optional[pulumi.Input[Optional[Sequence[pul
     import pulumi
     import pulumi_vultr as vultr
 
-    my_reverse_ipv6 = vultr.get_reverse_ipv6(filters=[vultr.GetReverseIpv6FilterArgs(
-        name="reverse",
-        values=["host.example.com"],
-    )])
+    my_reverse_ipv6 = vultr.get_reverse_ipv6(filters=[{
+        "name": "reverse",
+        "values": ["host.example.com"],
+    }])
     ```
 
 
-    :param Sequence[pulumi.InputType['GetReverseIpv6FilterArgs']] filters: Query parameters for finding IPv6 reverse DNS records.
+    :param Sequence[Union['GetReverseIpv6FilterArgs', 'GetReverseIpv6FilterArgsDict']] filters: Query parameters for finding IPv6 reverse DNS records.
     """
-    ...
+    __args__ = dict()
+    __args__['filters'] = filters
+    opts = pulumi.InvokeOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
+    __ret__ = pulumi.runtime.invoke_output('vultr:index/getReverseIpv6:getReverseIpv6', __args__, opts=opts, typ=GetReverseIpv6Result)
+    return __ret__.apply(lambda __response__: GetReverseIpv6Result(
+        filters=pulumi.get(__response__, 'filters'),
+        id=pulumi.get(__response__, 'id'),
+        instance_id=pulumi.get(__response__, 'instance_id'),
+        ip=pulumi.get(__response__, 'ip'),
+        reverse=pulumi.get(__response__, 'reverse')))

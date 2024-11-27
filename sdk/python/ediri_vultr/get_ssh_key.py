@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -91,7 +96,7 @@ class AwaitableGetSshKeyResult(GetSshKeyResult):
             ssh_key=self.ssh_key)
 
 
-def get_ssh_key(filters: Optional[Sequence[pulumi.InputType['GetSshKeyFilterArgs']]] = None,
+def get_ssh_key(filters: Optional[Sequence[Union['GetSshKeyFilterArgs', 'GetSshKeyFilterArgsDict']]] = None,
                 opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetSshKeyResult:
     """
     Get information about a Vultr SSH key. This data source provides the name, public SSH key, and the creation date for your Vultr SSH key.
@@ -104,14 +109,14 @@ def get_ssh_key(filters: Optional[Sequence[pulumi.InputType['GetSshKeyFilterArgs
     import pulumi
     import pulumi_vultr as vultr
 
-    my_ssh_key = vultr.get_ssh_key(filters=[vultr.GetSshKeyFilterArgs(
-        name="name",
-        values=["my-ssh-key-name"],
-    )])
+    my_ssh_key = vultr.get_ssh_key(filters=[{
+        "name": "name",
+        "values": ["my-ssh-key-name"],
+    }])
     ```
 
 
-    :param Sequence[pulumi.InputType['GetSshKeyFilterArgs']] filters: Query parameters for finding SSH keys.
+    :param Sequence[Union['GetSshKeyFilterArgs', 'GetSshKeyFilterArgsDict']] filters: Query parameters for finding SSH keys.
     """
     __args__ = dict()
     __args__['filters'] = filters
@@ -124,10 +129,7 @@ def get_ssh_key(filters: Optional[Sequence[pulumi.InputType['GetSshKeyFilterArgs
         id=pulumi.get(__ret__, 'id'),
         name=pulumi.get(__ret__, 'name'),
         ssh_key=pulumi.get(__ret__, 'ssh_key'))
-
-
-@_utilities.lift_output_func(get_ssh_key)
-def get_ssh_key_output(filters: Optional[pulumi.Input[Optional[Sequence[pulumi.InputType['GetSshKeyFilterArgs']]]]] = None,
+def get_ssh_key_output(filters: Optional[pulumi.Input[Optional[Sequence[Union['GetSshKeyFilterArgs', 'GetSshKeyFilterArgsDict']]]]] = None,
                        opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetSshKeyResult]:
     """
     Get information about a Vultr SSH key. This data source provides the name, public SSH key, and the creation date for your Vultr SSH key.
@@ -140,13 +142,22 @@ def get_ssh_key_output(filters: Optional[pulumi.Input[Optional[Sequence[pulumi.I
     import pulumi
     import pulumi_vultr as vultr
 
-    my_ssh_key = vultr.get_ssh_key(filters=[vultr.GetSshKeyFilterArgs(
-        name="name",
-        values=["my-ssh-key-name"],
-    )])
+    my_ssh_key = vultr.get_ssh_key(filters=[{
+        "name": "name",
+        "values": ["my-ssh-key-name"],
+    }])
     ```
 
 
-    :param Sequence[pulumi.InputType['GetSshKeyFilterArgs']] filters: Query parameters for finding SSH keys.
+    :param Sequence[Union['GetSshKeyFilterArgs', 'GetSshKeyFilterArgsDict']] filters: Query parameters for finding SSH keys.
     """
-    ...
+    __args__ = dict()
+    __args__['filters'] = filters
+    opts = pulumi.InvokeOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
+    __ret__ = pulumi.runtime.invoke_output('vultr:index/getSshKey:getSshKey', __args__, opts=opts, typ=GetSshKeyResult)
+    return __ret__.apply(lambda __response__: GetSshKeyResult(
+        date_created=pulumi.get(__response__, 'date_created'),
+        filters=pulumi.get(__response__, 'filters'),
+        id=pulumi.get(__response__, 'id'),
+        name=pulumi.get(__response__, 'name'),
+        ssh_key=pulumi.get(__response__, 'ssh_key')))

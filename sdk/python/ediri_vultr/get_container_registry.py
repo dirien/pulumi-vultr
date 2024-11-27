@@ -4,9 +4,14 @@
 
 import copy
 import warnings
+import sys
 import pulumi
 import pulumi.runtime
 from typing import Any, Mapping, Optional, Sequence, Union, overload
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, TypedDict, TypeAlias
+else:
+    from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
 from . import outputs
 from ._inputs import *
@@ -99,7 +104,7 @@ class GetContainerRegistryResult:
 
     @property
     @pulumi.getter(name="rootUser")
-    def root_user(self) -> Mapping[str, Any]:
+    def root_user(self) -> Mapping[str, str]:
         """
         The user associated with the container registry.
         """
@@ -107,7 +112,7 @@ class GetContainerRegistryResult:
 
     @property
     @pulumi.getter
-    def storage(self) -> Mapping[str, Any]:
+    def storage(self) -> Mapping[str, str]:
         """
         A listing of current storage usage relevant to the container registry.
         """
@@ -139,7 +144,7 @@ class AwaitableGetContainerRegistryResult(GetContainerRegistryResult):
             urn=self.urn)
 
 
-def get_container_registry(filters: Optional[Sequence[pulumi.InputType['GetContainerRegistryFilterArgs']]] = None,
+def get_container_registry(filters: Optional[Sequence[Union['GetContainerRegistryFilterArgs', 'GetContainerRegistryFilterArgsDict']]] = None,
                            opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetContainerRegistryResult:
     """
     Get information about a Vultr container registry.
@@ -150,14 +155,14 @@ def get_container_registry(filters: Optional[Sequence[pulumi.InputType['GetConta
     import pulumi
     import pulumi_vultr as vultr
 
-    vcr_ds = vultr.get_container_registry(filters=[vultr.GetContainerRegistryFilterArgs(
-        name="name",
-        values=["examplecontainerregistry"],
-    )])
+    vcr_ds = vultr.get_container_registry(filters=[{
+        "name": "name",
+        "values": ["examplecontainerregistry"],
+    }])
     ```
 
 
-    :param Sequence[pulumi.InputType['GetContainerRegistryFilterArgs']] filters: Query parameters for finding the container registry.
+    :param Sequence[Union['GetContainerRegistryFilterArgs', 'GetContainerRegistryFilterArgsDict']] filters: Query parameters for finding the container registry.
     """
     __args__ = dict()
     __args__['filters'] = filters
@@ -174,10 +179,7 @@ def get_container_registry(filters: Optional[Sequence[pulumi.InputType['GetConta
         root_user=pulumi.get(__ret__, 'root_user'),
         storage=pulumi.get(__ret__, 'storage'),
         urn=pulumi.get(__ret__, 'urn'))
-
-
-@_utilities.lift_output_func(get_container_registry)
-def get_container_registry_output(filters: Optional[pulumi.Input[Optional[Sequence[pulumi.InputType['GetContainerRegistryFilterArgs']]]]] = None,
+def get_container_registry_output(filters: Optional[pulumi.Input[Optional[Sequence[Union['GetContainerRegistryFilterArgs', 'GetContainerRegistryFilterArgsDict']]]]] = None,
                                   opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetContainerRegistryResult]:
     """
     Get information about a Vultr container registry.
@@ -188,13 +190,26 @@ def get_container_registry_output(filters: Optional[pulumi.Input[Optional[Sequen
     import pulumi
     import pulumi_vultr as vultr
 
-    vcr_ds = vultr.get_container_registry(filters=[vultr.GetContainerRegistryFilterArgs(
-        name="name",
-        values=["examplecontainerregistry"],
-    )])
+    vcr_ds = vultr.get_container_registry(filters=[{
+        "name": "name",
+        "values": ["examplecontainerregistry"],
+    }])
     ```
 
 
-    :param Sequence[pulumi.InputType['GetContainerRegistryFilterArgs']] filters: Query parameters for finding the container registry.
+    :param Sequence[Union['GetContainerRegistryFilterArgs', 'GetContainerRegistryFilterArgsDict']] filters: Query parameters for finding the container registry.
     """
-    ...
+    __args__ = dict()
+    __args__['filters'] = filters
+    opts = pulumi.InvokeOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
+    __ret__ = pulumi.runtime.invoke_output('vultr:index/getContainerRegistry:getContainerRegistry', __args__, opts=opts, typ=GetContainerRegistryResult)
+    return __ret__.apply(lambda __response__: GetContainerRegistryResult(
+        date_created=pulumi.get(__response__, 'date_created'),
+        filters=pulumi.get(__response__, 'filters'),
+        id=pulumi.get(__response__, 'id'),
+        name=pulumi.get(__response__, 'name'),
+        public=pulumi.get(__response__, 'public'),
+        repositories=pulumi.get(__response__, 'repositories'),
+        root_user=pulumi.get(__response__, 'root_user'),
+        storage=pulumi.get(__response__, 'storage'),
+        urn=pulumi.get(__response__, 'urn')))

@@ -27,7 +27,6 @@ import * as utilities from "./utilities";
  */
 export function getObjectStorageCluster(args?: GetObjectStorageClusterArgs, opts?: pulumi.InvokeOptions): Promise<GetObjectStorageClusterResult> {
     args = args || {};
-
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("vultr:index/getObjectStorageCluster:getObjectStorageCluster", {
         "filters": args.filters,
@@ -86,7 +85,11 @@ export interface GetObjectStorageClusterResult {
  * ```
  */
 export function getObjectStorageClusterOutput(args?: GetObjectStorageClusterOutputArgs, opts?: pulumi.InvokeOptions): pulumi.Output<GetObjectStorageClusterResult> {
-    return pulumi.output(args).apply((a: any) => getObjectStorageCluster(a, opts))
+    args = args || {};
+    opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
+    return pulumi.runtime.invokeOutput("vultr:index/getObjectStorageCluster:getObjectStorageCluster", {
+        "filters": args.filters,
+    }, opts);
 }
 
 /**
