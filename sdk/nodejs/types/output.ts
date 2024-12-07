@@ -27,6 +27,10 @@ export interface DatabaseReadReplica {
      */
     dbname: string;
     /**
+     * The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
+     */
+    evictionPolicy: string;
+    /**
      * An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
      */
     ferretdbCredentials: {[key: string]: string};
@@ -103,10 +107,6 @@ export interface DatabaseReadReplica {
      */
     publicHost: string;
     /**
-     * The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
-     */
-    redisEvictionPolicy: string;
-    /**
      * The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
      */
     region: string;
@@ -134,21 +134,21 @@ export interface DatabaseReadReplica {
 
 export interface DatabaseUserAccessControl {
     /**
-     * The list of command category rules for this managed database user.
+     * List of command category rules for this managed database user (Redis engine types only).
      */
-    redisAclCategories: string[];
+    aclCategories: string[];
     /**
-     * The list of publish/subscribe channel patterns for this managed database user.
+     * List of publish/subscribe channel patterns for this managed database user (Redis engine types only).
      */
-    redisAclChannels: string[];
+    aclChannels: string[];
     /**
-     * The list of individual command rules for this managed database user.
+     * List of individual command rules for this managed database user (Redis engine types only).
      */
-    redisAclCommands: string[];
+    aclCommands: string[];
     /**
-     * The list of access rules for this managed database user.
+     * List of access rules for this managed database user (Redis engine types only).
      */
-    redisAclKeys: string[];
+    aclKeys: string[];
 }
 
 export interface GetApplicationFilter {
@@ -281,6 +281,10 @@ export interface GetDatabaseReadReplica {
      */
     dbname: string;
     /**
+     * The configuration value for the data eviction policy on the managed database (Redis engine types only).
+     */
+    evictionPolicy: string;
+    /**
      * An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
      */
     ferretdbCredentials: {[key: string]: string};
@@ -353,10 +357,6 @@ export interface GetDatabaseReadReplica {
      * The public hostname assigned to the managed database (VPC-attached only).
      */
     publicHost: string;
-    /**
-     * The configuration value for the data eviction policy on the managed database (Redis engine types only).
-     */
-    redisEvictionPolicy: string;
     /**
      * The region ID of the managed database.
      */

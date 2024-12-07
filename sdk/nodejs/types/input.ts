@@ -27,6 +27,10 @@ export interface DatabaseReadReplica {
      */
     dbname?: pulumi.Input<string>;
     /**
+     * The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
+     */
+    evictionPolicy?: pulumi.Input<string>;
+    /**
      * An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
      */
     ferretdbCredentials?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
@@ -103,10 +107,6 @@ export interface DatabaseReadReplica {
      */
     publicHost?: pulumi.Input<string>;
     /**
-     * The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
-     */
-    redisEvictionPolicy?: pulumi.Input<string>;
-    /**
      * The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
      */
     region: pulumi.Input<string>;
@@ -134,21 +134,21 @@ export interface DatabaseReadReplica {
 
 export interface DatabaseUserAccessControl {
     /**
-     * The list of command category rules for this managed database user.
+     * List of command category rules for this managed database user (Redis engine types only).
      */
-    redisAclCategories: pulumi.Input<pulumi.Input<string>[]>;
+    aclCategories: pulumi.Input<pulumi.Input<string>[]>;
     /**
-     * The list of publish/subscribe channel patterns for this managed database user.
+     * List of publish/subscribe channel patterns for this managed database user (Redis engine types only).
      */
-    redisAclChannels: pulumi.Input<pulumi.Input<string>[]>;
+    aclChannels: pulumi.Input<pulumi.Input<string>[]>;
     /**
-     * The list of individual command rules for this managed database user.
+     * List of individual command rules for this managed database user (Redis engine types only).
      */
-    redisAclCommands: pulumi.Input<pulumi.Input<string>[]>;
+    aclCommands: pulumi.Input<pulumi.Input<string>[]>;
     /**
-     * The list of access rules for this managed database user.
+     * List of access rules for this managed database user (Redis engine types only).
      */
-    redisAclKeys: pulumi.Input<pulumi.Input<string>[]>;
+    aclKeys: pulumi.Input<pulumi.Input<string>[]>;
 }
 
 export interface GetApplicationFilter {

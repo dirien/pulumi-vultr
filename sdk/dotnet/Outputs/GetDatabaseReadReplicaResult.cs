@@ -35,6 +35,10 @@ namespace ediri.Vultr.Outputs
         /// </summary>
         public readonly string Dbname;
         /// <summary>
+        /// The configuration value for the data eviction policy on the managed database (Redis engine types only).
+        /// </summary>
+        public readonly string EvictionPolicy;
+        /// <summary>
         /// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
         /// </summary>
         public readonly ImmutableDictionary<string, string> FerretdbCredentials;
@@ -108,10 +112,6 @@ namespace ediri.Vultr.Outputs
         /// </summary>
         public readonly string PublicHost;
         /// <summary>
-        /// The configuration value for the data eviction policy on the managed database (Redis engine types only).
-        /// </summary>
-        public readonly string RedisEvictionPolicy;
-        /// <summary>
         /// The region ID of the managed database.
         /// </summary>
         public readonly string Region;
@@ -147,6 +147,8 @@ namespace ediri.Vultr.Outputs
             string dateCreated,
 
             string dbname,
+
+            string evictionPolicy,
 
             ImmutableDictionary<string, string> ferretdbCredentials,
 
@@ -186,8 +188,6 @@ namespace ediri.Vultr.Outputs
 
             string publicHost,
 
-            string redisEvictionPolicy,
-
             string region,
 
             string status,
@@ -205,6 +205,7 @@ namespace ediri.Vultr.Outputs
             DatabaseEngineVersion = databaseEngineVersion;
             DateCreated = dateCreated;
             Dbname = dbname;
+            EvictionPolicy = evictionPolicy;
             FerretdbCredentials = ferretdbCredentials;
             Host = host;
             Id = id;
@@ -224,7 +225,6 @@ namespace ediri.Vultr.Outputs
             PlanVcpus = planVcpus;
             Port = port;
             PublicHost = publicHost;
-            RedisEvictionPolicy = redisEvictionPolicy;
             Region = region;
             Status = status;
             Tag = tag;
