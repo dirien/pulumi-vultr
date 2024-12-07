@@ -29,6 +29,7 @@ class DatabaseArgs:
                  access_cert: Optional[pulumi.Input[str]] = None,
                  access_key: Optional[pulumi.Input[str]] = None,
                  cluster_time_zone: Optional[pulumi.Input[str]] = None,
+                 eviction_policy: Optional[pulumi.Input[str]] = None,
                  ferretdb_credentials: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  maintenance_dow: Optional[pulumi.Input[str]] = None,
                  maintenance_time: Optional[pulumi.Input[str]] = None,
@@ -42,7 +43,6 @@ class DatabaseArgs:
                  plan_replicas: Optional[pulumi.Input[int]] = None,
                  public_host: Optional[pulumi.Input[str]] = None,
                  read_replicas: Optional[pulumi.Input[Sequence[pulumi.Input['DatabaseReadReplicaArgs']]]] = None,
-                 redis_eviction_policy: Optional[pulumi.Input[str]] = None,
                  sasl_port: Optional[pulumi.Input[str]] = None,
                  tag: Optional[pulumi.Input[str]] = None,
                  trusted_ips: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
@@ -57,6 +57,7 @@ class DatabaseArgs:
         :param pulumi.Input[str] access_cert: The certificate to authenticate the default user (Kafka engine types only).
         :param pulumi.Input[str] access_key: The private key to authenticate the default user (Kafka engine types only).
         :param pulumi.Input[str] cluster_time_zone: The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
+        :param pulumi.Input[str] eviction_policy: The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] ferretdb_credentials: An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
         :param pulumi.Input[str] maintenance_dow: The preferred maintenance day of week for the managed database.
         :param pulumi.Input[str] maintenance_time: The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).
@@ -70,7 +71,6 @@ class DatabaseArgs:
         :param pulumi.Input[int] plan_replicas: The number of standby nodes available on the managed database (excluded for Kafka engine types).
         :param pulumi.Input[str] public_host: The public hostname assigned to the managed database (VPC-attached only).
         :param pulumi.Input[Sequence[pulumi.Input['DatabaseReadReplicaArgs']]] read_replicas: A list of read replicas attached to the managed database.
-        :param pulumi.Input[str] redis_eviction_policy: The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
         :param pulumi.Input[str] sasl_port: The SASL connection port for the managed database (Kafka engine types only).
         :param pulumi.Input[str] tag: The tag to assign to the managed database.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] trusted_ips: A list of allowed IP addresses for the managed database.
@@ -87,6 +87,8 @@ class DatabaseArgs:
             pulumi.set(__self__, "access_key", access_key)
         if cluster_time_zone is not None:
             pulumi.set(__self__, "cluster_time_zone", cluster_time_zone)
+        if eviction_policy is not None:
+            pulumi.set(__self__, "eviction_policy", eviction_policy)
         if ferretdb_credentials is not None:
             pulumi.set(__self__, "ferretdb_credentials", ferretdb_credentials)
         if maintenance_dow is not None:
@@ -113,8 +115,6 @@ class DatabaseArgs:
             pulumi.set(__self__, "public_host", public_host)
         if read_replicas is not None:
             pulumi.set(__self__, "read_replicas", read_replicas)
-        if redis_eviction_policy is not None:
-            pulumi.set(__self__, "redis_eviction_policy", redis_eviction_policy)
         if sasl_port is not None:
             pulumi.set(__self__, "sasl_port", sasl_port)
         if tag is not None:
@@ -219,6 +219,18 @@ class DatabaseArgs:
     @cluster_time_zone.setter
     def cluster_time_zone(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "cluster_time_zone", value)
+
+    @property
+    @pulumi.getter(name="evictionPolicy")
+    def eviction_policy(self) -> Optional[pulumi.Input[str]]:
+        """
+        The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
+        """
+        return pulumi.get(self, "eviction_policy")
+
+    @eviction_policy.setter
+    def eviction_policy(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "eviction_policy", value)
 
     @property
     @pulumi.getter(name="ferretdbCredentials")
@@ -377,18 +389,6 @@ class DatabaseArgs:
         pulumi.set(self, "read_replicas", value)
 
     @property
-    @pulumi.getter(name="redisEvictionPolicy")
-    def redis_eviction_policy(self) -> Optional[pulumi.Input[str]]:
-        """
-        The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
-        """
-        return pulumi.get(self, "redis_eviction_policy")
-
-    @redis_eviction_policy.setter
-    def redis_eviction_policy(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "redis_eviction_policy", value)
-
-    @property
     @pulumi.getter(name="saslPort")
     def sasl_port(self) -> Optional[pulumi.Input[str]]:
         """
@@ -447,6 +447,7 @@ class _DatabaseState:
                  database_engine_version: Optional[pulumi.Input[str]] = None,
                  date_created: Optional[pulumi.Input[str]] = None,
                  dbname: Optional[pulumi.Input[str]] = None,
+                 eviction_policy: Optional[pulumi.Input[str]] = None,
                  ferretdb_credentials: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  host: Optional[pulumi.Input[str]] = None,
                  label: Optional[pulumi.Input[str]] = None,
@@ -467,7 +468,6 @@ class _DatabaseState:
                  port: Optional[pulumi.Input[str]] = None,
                  public_host: Optional[pulumi.Input[str]] = None,
                  read_replicas: Optional[pulumi.Input[Sequence[pulumi.Input['DatabaseReadReplicaArgs']]]] = None,
-                 redis_eviction_policy: Optional[pulumi.Input[str]] = None,
                  region: Optional[pulumi.Input[str]] = None,
                  sasl_port: Optional[pulumi.Input[str]] = None,
                  status: Optional[pulumi.Input[str]] = None,
@@ -484,6 +484,7 @@ class _DatabaseState:
         :param pulumi.Input[str] database_engine_version: The database engine version of the new managed database.
         :param pulumi.Input[str] date_created: The date the managed database was added to your Vultr account.
         :param pulumi.Input[str] dbname: The managed database's default logical database.
+        :param pulumi.Input[str] eviction_policy: The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] ferretdb_credentials: An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
         :param pulumi.Input[str] host: The hostname assigned to the managed database.
         :param pulumi.Input[str] label: A label for the managed database.
@@ -504,7 +505,6 @@ class _DatabaseState:
         :param pulumi.Input[str] port: The connection port for the managed database.
         :param pulumi.Input[str] public_host: The public hostname assigned to the managed database (VPC-attached only).
         :param pulumi.Input[Sequence[pulumi.Input['DatabaseReadReplicaArgs']]] read_replicas: A list of read replicas attached to the managed database.
-        :param pulumi.Input[str] redis_eviction_policy: The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
         :param pulumi.Input[str] region: The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
         :param pulumi.Input[str] sasl_port: The SASL connection port for the managed database (Kafka engine types only).
         :param pulumi.Input[str] status: The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).
@@ -527,6 +527,8 @@ class _DatabaseState:
             pulumi.set(__self__, "date_created", date_created)
         if dbname is not None:
             pulumi.set(__self__, "dbname", dbname)
+        if eviction_policy is not None:
+            pulumi.set(__self__, "eviction_policy", eviction_policy)
         if ferretdb_credentials is not None:
             pulumi.set(__self__, "ferretdb_credentials", ferretdb_credentials)
         if host is not None:
@@ -567,8 +569,6 @@ class _DatabaseState:
             pulumi.set(__self__, "public_host", public_host)
         if read_replicas is not None:
             pulumi.set(__self__, "read_replicas", read_replicas)
-        if redis_eviction_policy is not None:
-            pulumi.set(__self__, "redis_eviction_policy", redis_eviction_policy)
         if region is not None:
             pulumi.set(__self__, "region", region)
         if sasl_port is not None:
@@ -667,6 +667,18 @@ class _DatabaseState:
     @dbname.setter
     def dbname(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "dbname", value)
+
+    @property
+    @pulumi.getter(name="evictionPolicy")
+    def eviction_policy(self) -> Optional[pulumi.Input[str]]:
+        """
+        The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
+        """
+        return pulumi.get(self, "eviction_policy")
+
+    @eviction_policy.setter
+    def eviction_policy(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "eviction_policy", value)
 
     @property
     @pulumi.getter(name="ferretdbCredentials")
@@ -909,18 +921,6 @@ class _DatabaseState:
         pulumi.set(self, "read_replicas", value)
 
     @property
-    @pulumi.getter(name="redisEvictionPolicy")
-    def redis_eviction_policy(self) -> Optional[pulumi.Input[str]]:
-        """
-        The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
-        """
-        return pulumi.get(self, "redis_eviction_policy")
-
-    @redis_eviction_policy.setter
-    def redis_eviction_policy(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "redis_eviction_policy", value)
-
-    @property
     @pulumi.getter
     def region(self) -> Optional[pulumi.Input[str]]:
         """
@@ -1015,6 +1015,7 @@ class Database(pulumi.CustomResource):
                  cluster_time_zone: Optional[pulumi.Input[str]] = None,
                  database_engine: Optional[pulumi.Input[str]] = None,
                  database_engine_version: Optional[pulumi.Input[str]] = None,
+                 eviction_policy: Optional[pulumi.Input[str]] = None,
                  ferretdb_credentials: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  label: Optional[pulumi.Input[str]] = None,
                  maintenance_dow: Optional[pulumi.Input[str]] = None,
@@ -1030,7 +1031,6 @@ class Database(pulumi.CustomResource):
                  plan_replicas: Optional[pulumi.Input[int]] = None,
                  public_host: Optional[pulumi.Input[str]] = None,
                  read_replicas: Optional[pulumi.Input[Sequence[pulumi.Input[Union['DatabaseReadReplicaArgs', 'DatabaseReadReplicaArgsDict']]]]] = None,
-                 redis_eviction_policy: Optional[pulumi.Input[str]] = None,
                  region: Optional[pulumi.Input[str]] = None,
                  sasl_port: Optional[pulumi.Input[str]] = None,
                  tag: Optional[pulumi.Input[str]] = None,
@@ -1089,6 +1089,7 @@ class Database(pulumi.CustomResource):
         :param pulumi.Input[str] cluster_time_zone: The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
         :param pulumi.Input[str] database_engine: The database engine of the new managed database.
         :param pulumi.Input[str] database_engine_version: The database engine version of the new managed database.
+        :param pulumi.Input[str] eviction_policy: The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] ferretdb_credentials: An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
         :param pulumi.Input[str] label: A label for the managed database.
         :param pulumi.Input[str] maintenance_dow: The preferred maintenance day of week for the managed database.
@@ -1104,7 +1105,6 @@ class Database(pulumi.CustomResource):
         :param pulumi.Input[int] plan_replicas: The number of standby nodes available on the managed database (excluded for Kafka engine types).
         :param pulumi.Input[str] public_host: The public hostname assigned to the managed database (VPC-attached only).
         :param pulumi.Input[Sequence[pulumi.Input[Union['DatabaseReadReplicaArgs', 'DatabaseReadReplicaArgsDict']]]] read_replicas: A list of read replicas attached to the managed database.
-        :param pulumi.Input[str] redis_eviction_policy: The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
         :param pulumi.Input[str] region: The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
         :param pulumi.Input[str] sasl_port: The SASL connection port for the managed database (Kafka engine types only).
         :param pulumi.Input[str] tag: The tag to assign to the managed database.
@@ -1182,6 +1182,7 @@ class Database(pulumi.CustomResource):
                  cluster_time_zone: Optional[pulumi.Input[str]] = None,
                  database_engine: Optional[pulumi.Input[str]] = None,
                  database_engine_version: Optional[pulumi.Input[str]] = None,
+                 eviction_policy: Optional[pulumi.Input[str]] = None,
                  ferretdb_credentials: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  label: Optional[pulumi.Input[str]] = None,
                  maintenance_dow: Optional[pulumi.Input[str]] = None,
@@ -1197,7 +1198,6 @@ class Database(pulumi.CustomResource):
                  plan_replicas: Optional[pulumi.Input[int]] = None,
                  public_host: Optional[pulumi.Input[str]] = None,
                  read_replicas: Optional[pulumi.Input[Sequence[pulumi.Input[Union['DatabaseReadReplicaArgs', 'DatabaseReadReplicaArgsDict']]]]] = None,
-                 redis_eviction_policy: Optional[pulumi.Input[str]] = None,
                  region: Optional[pulumi.Input[str]] = None,
                  sasl_port: Optional[pulumi.Input[str]] = None,
                  tag: Optional[pulumi.Input[str]] = None,
@@ -1221,6 +1221,7 @@ class Database(pulumi.CustomResource):
             if database_engine_version is None and not opts.urn:
                 raise TypeError("Missing required property 'database_engine_version'")
             __props__.__dict__["database_engine_version"] = database_engine_version
+            __props__.__dict__["eviction_policy"] = eviction_policy
             __props__.__dict__["ferretdb_credentials"] = ferretdb_credentials
             if label is None and not opts.urn:
                 raise TypeError("Missing required property 'label'")
@@ -1240,7 +1241,6 @@ class Database(pulumi.CustomResource):
             __props__.__dict__["plan_replicas"] = plan_replicas
             __props__.__dict__["public_host"] = public_host
             __props__.__dict__["read_replicas"] = read_replicas
-            __props__.__dict__["redis_eviction_policy"] = redis_eviction_policy
             if region is None and not opts.urn:
                 raise TypeError("Missing required property 'region'")
             __props__.__dict__["region"] = region
@@ -1274,6 +1274,7 @@ class Database(pulumi.CustomResource):
             database_engine_version: Optional[pulumi.Input[str]] = None,
             date_created: Optional[pulumi.Input[str]] = None,
             dbname: Optional[pulumi.Input[str]] = None,
+            eviction_policy: Optional[pulumi.Input[str]] = None,
             ferretdb_credentials: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
             host: Optional[pulumi.Input[str]] = None,
             label: Optional[pulumi.Input[str]] = None,
@@ -1294,7 +1295,6 @@ class Database(pulumi.CustomResource):
             port: Optional[pulumi.Input[str]] = None,
             public_host: Optional[pulumi.Input[str]] = None,
             read_replicas: Optional[pulumi.Input[Sequence[pulumi.Input[Union['DatabaseReadReplicaArgs', 'DatabaseReadReplicaArgsDict']]]]] = None,
-            redis_eviction_policy: Optional[pulumi.Input[str]] = None,
             region: Optional[pulumi.Input[str]] = None,
             sasl_port: Optional[pulumi.Input[str]] = None,
             status: Optional[pulumi.Input[str]] = None,
@@ -1316,6 +1316,7 @@ class Database(pulumi.CustomResource):
         :param pulumi.Input[str] database_engine_version: The database engine version of the new managed database.
         :param pulumi.Input[str] date_created: The date the managed database was added to your Vultr account.
         :param pulumi.Input[str] dbname: The managed database's default logical database.
+        :param pulumi.Input[str] eviction_policy: The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] ferretdb_credentials: An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
         :param pulumi.Input[str] host: The hostname assigned to the managed database.
         :param pulumi.Input[str] label: A label for the managed database.
@@ -1336,7 +1337,6 @@ class Database(pulumi.CustomResource):
         :param pulumi.Input[str] port: The connection port for the managed database.
         :param pulumi.Input[str] public_host: The public hostname assigned to the managed database (VPC-attached only).
         :param pulumi.Input[Sequence[pulumi.Input[Union['DatabaseReadReplicaArgs', 'DatabaseReadReplicaArgsDict']]]] read_replicas: A list of read replicas attached to the managed database.
-        :param pulumi.Input[str] redis_eviction_policy: The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
         :param pulumi.Input[str] region: The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
         :param pulumi.Input[str] sasl_port: The SASL connection port for the managed database (Kafka engine types only).
         :param pulumi.Input[str] status: The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).
@@ -1356,6 +1356,7 @@ class Database(pulumi.CustomResource):
         __props__.__dict__["database_engine_version"] = database_engine_version
         __props__.__dict__["date_created"] = date_created
         __props__.__dict__["dbname"] = dbname
+        __props__.__dict__["eviction_policy"] = eviction_policy
         __props__.__dict__["ferretdb_credentials"] = ferretdb_credentials
         __props__.__dict__["host"] = host
         __props__.__dict__["label"] = label
@@ -1376,7 +1377,6 @@ class Database(pulumi.CustomResource):
         __props__.__dict__["port"] = port
         __props__.__dict__["public_host"] = public_host
         __props__.__dict__["read_replicas"] = read_replicas
-        __props__.__dict__["redis_eviction_policy"] = redis_eviction_policy
         __props__.__dict__["region"] = region
         __props__.__dict__["sasl_port"] = sasl_port
         __props__.__dict__["status"] = status
@@ -1441,6 +1441,14 @@ class Database(pulumi.CustomResource):
         The managed database's default logical database.
         """
         return pulumi.get(self, "dbname")
+
+    @property
+    @pulumi.getter(name="evictionPolicy")
+    def eviction_policy(self) -> pulumi.Output[str]:
+        """
+        The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
+        """
+        return pulumi.get(self, "eviction_policy")
 
     @property
     @pulumi.getter(name="ferretdbCredentials")
@@ -1601,14 +1609,6 @@ class Database(pulumi.CustomResource):
         A list of read replicas attached to the managed database.
         """
         return pulumi.get(self, "read_replicas")
-
-    @property
-    @pulumi.getter(name="redisEvictionPolicy")
-    def redis_eviction_policy(self) -> pulumi.Output[str]:
-        """
-        The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
-        """
-        return pulumi.get(self, "redis_eviction_policy")
 
     @property
     @pulumi.getter

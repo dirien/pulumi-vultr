@@ -73,6 +73,10 @@ export class Snapshot extends pulumi.CustomResource {
     public /*out*/ readonly dateCreated!: pulumi.Output<string>;
     /**
      * The description for the given snapshot.
+     *
+     * Snapshots often exceed the default timeout built in to all create requests in
+     * the provider. In order to customize that, you may specify a custome value in a
+     * `timeouts` block of the resource definition
      */
     public readonly description!: pulumi.Output<string | undefined>;
     /**
@@ -144,6 +148,10 @@ export interface SnapshotState {
     dateCreated?: pulumi.Input<string>;
     /**
      * The description for the given snapshot.
+     *
+     * Snapshots often exceed the default timeout built in to all create requests in
+     * the provider. In order to customize that, you may specify a custome value in a
+     * `timeouts` block of the resource definition
      */
     description?: pulumi.Input<string>;
     /**
@@ -170,6 +178,10 @@ export interface SnapshotState {
 export interface SnapshotArgs {
     /**
      * The description for the given snapshot.
+     *
+     * Snapshots often exceed the default timeout built in to all create requests in
+     * the provider. In order to customize that, you may specify a custome value in a
+     * `timeouts` block of the resource definition
      */
     description?: pulumi.Input<string>;
     /**

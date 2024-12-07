@@ -76,6 +76,10 @@ export interface GetDatabaseResult {
      */
     readonly dbname: string;
     /**
+     * The configuration value for the data eviction policy on the managed database (Redis engine types only).
+     */
+    readonly evictionPolicy: string;
+    /**
      * An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
      */
     readonly ferretdbCredentials: {[key: string]: string};
@@ -157,10 +161,6 @@ export interface GetDatabaseResult {
      * A list of read replicas attached to the managed database.
      */
     readonly readReplicas: outputs.GetDatabaseReadReplica[];
-    /**
-     * The configuration value for the data eviction policy on the managed database (Redis engine types only).
-     */
-    readonly redisEvictionPolicy: string;
     /**
      * The region ID of the managed database.
      */

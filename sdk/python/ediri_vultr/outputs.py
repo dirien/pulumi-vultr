@@ -75,6 +75,8 @@ class DatabaseReadReplica(dict):
             suggest = "database_engine_version"
         elif key == "dateCreated":
             suggest = "date_created"
+        elif key == "evictionPolicy":
+            suggest = "eviction_policy"
         elif key == "ferretdbCredentials":
             suggest = "ferretdb_credentials"
         elif key == "latestBackup":
@@ -101,8 +103,6 @@ class DatabaseReadReplica(dict):
             suggest = "plan_vcpus"
         elif key == "publicHost":
             suggest = "public_host"
-        elif key == "redisEvictionPolicy":
-            suggest = "redis_eviction_policy"
         elif key == "trustedIps":
             suggest = "trusted_ips"
         elif key == "vpcId":
@@ -127,6 +127,7 @@ class DatabaseReadReplica(dict):
                  database_engine_version: Optional[str] = None,
                  date_created: Optional[str] = None,
                  dbname: Optional[str] = None,
+                 eviction_policy: Optional[str] = None,
                  ferretdb_credentials: Optional[Mapping[str, str]] = None,
                  host: Optional[str] = None,
                  id: Optional[str] = None,
@@ -145,7 +146,6 @@ class DatabaseReadReplica(dict):
                  plan_vcpus: Optional[int] = None,
                  port: Optional[str] = None,
                  public_host: Optional[str] = None,
-                 redis_eviction_policy: Optional[str] = None,
                  status: Optional[str] = None,
                  tag: Optional[str] = None,
                  trusted_ips: Optional[Sequence[str]] = None,
@@ -159,6 +159,7 @@ class DatabaseReadReplica(dict):
         :param str database_engine_version: The database engine version of the new managed database.
         :param str date_created: The date the managed database was added to your Vultr account.
         :param str dbname: The managed database's default logical database.
+        :param str eviction_policy: The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
         :param Mapping[str, str] ferretdb_credentials: An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
         :param str host: The hostname assigned to the managed database.
         :param str id: The ID of the managed database.
@@ -177,7 +178,6 @@ class DatabaseReadReplica(dict):
         :param int plan_vcpus: The number of virtual CPUs available on the managed database.
         :param str port: The connection port for the managed database.
         :param str public_host: The public hostname assigned to the managed database (VPC-attached only).
-        :param str redis_eviction_policy: The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
         :param str status: The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).
         :param str tag: The tag to assign to the managed database.
         :param Sequence[str] trusted_ips: A list of allowed IP addresses for the managed database.
@@ -196,6 +196,8 @@ class DatabaseReadReplica(dict):
             pulumi.set(__self__, "date_created", date_created)
         if dbname is not None:
             pulumi.set(__self__, "dbname", dbname)
+        if eviction_policy is not None:
+            pulumi.set(__self__, "eviction_policy", eviction_policy)
         if ferretdb_credentials is not None:
             pulumi.set(__self__, "ferretdb_credentials", ferretdb_credentials)
         if host is not None:
@@ -232,8 +234,6 @@ class DatabaseReadReplica(dict):
             pulumi.set(__self__, "port", port)
         if public_host is not None:
             pulumi.set(__self__, "public_host", public_host)
-        if redis_eviction_policy is not None:
-            pulumi.set(__self__, "redis_eviction_policy", redis_eviction_policy)
         if status is not None:
             pulumi.set(__self__, "status", status)
         if tag is not None:
@@ -300,6 +300,14 @@ class DatabaseReadReplica(dict):
         The managed database's default logical database.
         """
         return pulumi.get(self, "dbname")
+
+    @property
+    @pulumi.getter(name="evictionPolicy")
+    def eviction_policy(self) -> Optional[str]:
+        """
+        The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
+        """
+        return pulumi.get(self, "eviction_policy")
 
     @property
     @pulumi.getter(name="ferretdbCredentials")
@@ -446,14 +454,6 @@ class DatabaseReadReplica(dict):
         return pulumi.get(self, "public_host")
 
     @property
-    @pulumi.getter(name="redisEvictionPolicy")
-    def redis_eviction_policy(self) -> Optional[str]:
-        """
-        The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
-        """
-        return pulumi.get(self, "redis_eviction_policy")
-
-    @property
     @pulumi.getter
     def status(self) -> Optional[str]:
         """
@@ -499,14 +499,14 @@ class DatabaseUserAccessControl(dict):
     @staticmethod
     def __key_warning(key: str):
         suggest = None
-        if key == "redisAclCategories":
-            suggest = "redis_acl_categories"
-        elif key == "redisAclChannels":
-            suggest = "redis_acl_channels"
-        elif key == "redisAclCommands":
-            suggest = "redis_acl_commands"
-        elif key == "redisAclKeys":
-            suggest = "redis_acl_keys"
+        if key == "aclCategories":
+            suggest = "acl_categories"
+        elif key == "aclChannels":
+            suggest = "acl_channels"
+        elif key == "aclCommands":
+            suggest = "acl_commands"
+        elif key == "aclKeys":
+            suggest = "acl_keys"
 
         if suggest:
             pulumi.log.warn(f"Key '{key}' not found in DatabaseUserAccessControl. Access the value via the '{suggest}' property getter instead.")
@@ -520,52 +520,52 @@ class DatabaseUserAccessControl(dict):
         return super().get(key, default)
 
     def __init__(__self__, *,
-                 redis_acl_categories: Sequence[str],
-                 redis_acl_channels: Sequence[str],
-                 redis_acl_commands: Sequence[str],
-                 redis_acl_keys: Sequence[str]):
+                 acl_categories: Sequence[str],
+                 acl_channels: Sequence[str],
+                 acl_commands: Sequence[str],
+                 acl_keys: Sequence[str]):
         """
-        :param Sequence[str] redis_acl_categories: The list of command category rules for this managed database user.
-        :param Sequence[str] redis_acl_channels: The list of publish/subscribe channel patterns for this managed database user.
-        :param Sequence[str] redis_acl_commands: The list of individual command rules for this managed database user.
-        :param Sequence[str] redis_acl_keys: The list of access rules for this managed database user.
+        :param Sequence[str] acl_categories: List of command category rules for this managed database user (Redis engine types only).
+        :param Sequence[str] acl_channels: List of publish/subscribe channel patterns for this managed database user (Redis engine types only).
+        :param Sequence[str] acl_commands: List of individual command rules for this managed database user (Redis engine types only).
+        :param Sequence[str] acl_keys: List of access rules for this managed database user (Redis engine types only).
         """
-        pulumi.set(__self__, "redis_acl_categories", redis_acl_categories)
-        pulumi.set(__self__, "redis_acl_channels", redis_acl_channels)
-        pulumi.set(__self__, "redis_acl_commands", redis_acl_commands)
-        pulumi.set(__self__, "redis_acl_keys", redis_acl_keys)
+        pulumi.set(__self__, "acl_categories", acl_categories)
+        pulumi.set(__self__, "acl_channels", acl_channels)
+        pulumi.set(__self__, "acl_commands", acl_commands)
+        pulumi.set(__self__, "acl_keys", acl_keys)
 
     @property
-    @pulumi.getter(name="redisAclCategories")
-    def redis_acl_categories(self) -> Sequence[str]:
+    @pulumi.getter(name="aclCategories")
+    def acl_categories(self) -> Sequence[str]:
         """
-        The list of command category rules for this managed database user.
+        List of command category rules for this managed database user (Redis engine types only).
         """
-        return pulumi.get(self, "redis_acl_categories")
+        return pulumi.get(self, "acl_categories")
 
     @property
-    @pulumi.getter(name="redisAclChannels")
-    def redis_acl_channels(self) -> Sequence[str]:
+    @pulumi.getter(name="aclChannels")
+    def acl_channels(self) -> Sequence[str]:
         """
-        The list of publish/subscribe channel patterns for this managed database user.
+        List of publish/subscribe channel patterns for this managed database user (Redis engine types only).
         """
-        return pulumi.get(self, "redis_acl_channels")
+        return pulumi.get(self, "acl_channels")
 
     @property
-    @pulumi.getter(name="redisAclCommands")
-    def redis_acl_commands(self) -> Sequence[str]:
+    @pulumi.getter(name="aclCommands")
+    def acl_commands(self) -> Sequence[str]:
         """
-        The list of individual command rules for this managed database user.
+        List of individual command rules for this managed database user (Redis engine types only).
         """
-        return pulumi.get(self, "redis_acl_commands")
+        return pulumi.get(self, "acl_commands")
 
     @property
-    @pulumi.getter(name="redisAclKeys")
-    def redis_acl_keys(self) -> Sequence[str]:
+    @pulumi.getter(name="aclKeys")
+    def acl_keys(self) -> Sequence[str]:
         """
-        The list of access rules for this managed database user.
+        List of access rules for this managed database user (Redis engine types only).
         """
-        return pulumi.get(self, "redis_acl_keys")
+        return pulumi.get(self, "acl_keys")
 
 
 @pulumi.output_type
@@ -1487,6 +1487,7 @@ class GetDatabaseReadReplicaResult(dict):
                  database_engine_version: str,
                  date_created: str,
                  dbname: str,
+                 eviction_policy: str,
                  ferretdb_credentials: Mapping[str, str],
                  host: str,
                  id: str,
@@ -1506,7 +1507,6 @@ class GetDatabaseReadReplicaResult(dict):
                  plan_vcpus: int,
                  port: str,
                  public_host: str,
-                 redis_eviction_policy: str,
                  region: str,
                  status: str,
                  tag: str,
@@ -1519,6 +1519,7 @@ class GetDatabaseReadReplicaResult(dict):
         :param str database_engine_version: The database engine version of the managed database.
         :param str date_created: The date the managed database was added to your Vultr account.
         :param str dbname: The managed database's default logical database.
+        :param str eviction_policy: The configuration value for the data eviction policy on the managed database (Redis engine types only).
         :param Mapping[str, str] ferretdb_credentials: An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
         :param str host: The hostname assigned to the managed database.
         :param str label: The managed database's label.
@@ -1537,7 +1538,6 @@ class GetDatabaseReadReplicaResult(dict):
         :param int plan_vcpus: The number of virtual CPUs available on the managed database.
         :param str port: The connection port for the managed database.
         :param str public_host: The public hostname assigned to the managed database (VPC-attached only).
-        :param str redis_eviction_policy: The configuration value for the data eviction policy on the managed database (Redis engine types only).
         :param str region: The region ID of the managed database.
         :param str status: The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).
         :param str tag: The managed database's tag.
@@ -1550,6 +1550,7 @@ class GetDatabaseReadReplicaResult(dict):
         pulumi.set(__self__, "database_engine_version", database_engine_version)
         pulumi.set(__self__, "date_created", date_created)
         pulumi.set(__self__, "dbname", dbname)
+        pulumi.set(__self__, "eviction_policy", eviction_policy)
         pulumi.set(__self__, "ferretdb_credentials", ferretdb_credentials)
         pulumi.set(__self__, "host", host)
         pulumi.set(__self__, "id", id)
@@ -1569,7 +1570,6 @@ class GetDatabaseReadReplicaResult(dict):
         pulumi.set(__self__, "plan_vcpus", plan_vcpus)
         pulumi.set(__self__, "port", port)
         pulumi.set(__self__, "public_host", public_host)
-        pulumi.set(__self__, "redis_eviction_policy", redis_eviction_policy)
         pulumi.set(__self__, "region", region)
         pulumi.set(__self__, "status", status)
         pulumi.set(__self__, "tag", tag)
@@ -1616,6 +1616,14 @@ class GetDatabaseReadReplicaResult(dict):
         The managed database's default logical database.
         """
         return pulumi.get(self, "dbname")
+
+    @property
+    @pulumi.getter(name="evictionPolicy")
+    def eviction_policy(self) -> str:
+        """
+        The configuration value for the data eviction policy on the managed database (Redis engine types only).
+        """
+        return pulumi.get(self, "eviction_policy")
 
     @property
     @pulumi.getter(name="ferretdbCredentials")
@@ -1765,14 +1773,6 @@ class GetDatabaseReadReplicaResult(dict):
         The public hostname assigned to the managed database (VPC-attached only).
         """
         return pulumi.get(self, "public_host")
-
-    @property
-    @pulumi.getter(name="redisEvictionPolicy")
-    def redis_eviction_policy(self) -> str:
-        """
-        The configuration value for the data eviction policy on the managed database (Redis engine types only).
-        """
-        return pulumi.get(self, "redis_eviction_policy")
 
     @property
     @pulumi.getter

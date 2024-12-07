@@ -79,6 +79,8 @@ type LookupDatabaseResult struct {
 	DateCreated string `pulumi:"dateCreated"`
 	// The managed database's default logical database.
 	Dbname string `pulumi:"dbname"`
+	// The configuration value for the data eviction policy on the managed database (Redis engine types only).
+	EvictionPolicy string `pulumi:"evictionPolicy"`
 	// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
 	FerretdbCredentials map[string]string   `pulumi:"ferretdbCredentials"`
 	Filters             []GetDatabaseFilter `pulumi:"filters"`
@@ -121,8 +123,6 @@ type LookupDatabaseResult struct {
 	PublicHost string `pulumi:"publicHost"`
 	// A list of read replicas attached to the managed database.
 	ReadReplicas []GetDatabaseReadReplica `pulumi:"readReplicas"`
-	// The configuration value for the data eviction policy on the managed database (Redis engine types only).
-	RedisEvictionPolicy string `pulumi:"redisEvictionPolicy"`
 	// The region ID of the managed database.
 	Region string `pulumi:"region"`
 	// The SASL connection port for the managed database (Kafka engine types only).
@@ -216,6 +216,11 @@ func (o LookupDatabaseResultOutput) DateCreated() pulumi.StringOutput {
 // The managed database's default logical database.
 func (o LookupDatabaseResultOutput) Dbname() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupDatabaseResult) string { return v.Dbname }).(pulumi.StringOutput)
+}
+
+// The configuration value for the data eviction policy on the managed database (Redis engine types only).
+func (o LookupDatabaseResultOutput) EvictionPolicy() pulumi.StringOutput {
+	return o.ApplyT(func(v LookupDatabaseResult) string { return v.EvictionPolicy }).(pulumi.StringOutput)
 }
 
 // An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
@@ -324,11 +329,6 @@ func (o LookupDatabaseResultOutput) PublicHost() pulumi.StringOutput {
 // A list of read replicas attached to the managed database.
 func (o LookupDatabaseResultOutput) ReadReplicas() GetDatabaseReadReplicaArrayOutput {
 	return o.ApplyT(func(v LookupDatabaseResult) []GetDatabaseReadReplica { return v.ReadReplicas }).(GetDatabaseReadReplicaArrayOutput)
-}
-
-// The configuration value for the data eviction policy on the managed database (Redis engine types only).
-func (o LookupDatabaseResultOutput) RedisEvictionPolicy() pulumi.StringOutput {
-	return o.ApplyT(func(v LookupDatabaseResult) string { return v.RedisEvictionPolicy }).(pulumi.StringOutput)
 }
 
 // The region ID of the managed database.

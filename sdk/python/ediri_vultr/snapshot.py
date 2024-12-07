@@ -25,6 +25,10 @@ class SnapshotArgs:
         The set of arguments for constructing a Snapshot resource.
         :param pulumi.Input[str] instance_id: ID of a given instance that you want to create a snapshot from.
         :param pulumi.Input[str] description: The description for the given snapshot.
+               
+               Snapshots often exceed the default timeout built in to all create requests in
+               the provider. In order to customize that, you may specify a custome value in a
+               `timeouts` block of the resource definition
         """
         pulumi.set(__self__, "instance_id", instance_id)
         if description is not None:
@@ -47,6 +51,10 @@ class SnapshotArgs:
     def description(self) -> Optional[pulumi.Input[str]]:
         """
         The description for the given snapshot.
+
+        Snapshots often exceed the default timeout built in to all create requests in
+        the provider. In order to customize that, you may specify a custome value in a
+        `timeouts` block of the resource definition
         """
         return pulumi.get(self, "description")
 
@@ -70,6 +78,10 @@ class _SnapshotState:
         :param pulumi.Input[int] app_id: The app id which the snapshot is associated with.
         :param pulumi.Input[str] date_created: The date the snapshot was created.
         :param pulumi.Input[str] description: The description for the given snapshot.
+               
+               Snapshots often exceed the default timeout built in to all create requests in
+               the provider. In order to customize that, you may specify a custome value in a
+               `timeouts` block of the resource definition
         :param pulumi.Input[str] instance_id: ID of a given instance that you want to create a snapshot from.
         :param pulumi.Input[int] os_id: The os id which the snapshot is associated with.
         :param pulumi.Input[int] size: The size of the snapshot in Bytes.
@@ -119,6 +131,10 @@ class _SnapshotState:
     def description(self) -> Optional[pulumi.Input[str]]:
         """
         The description for the given snapshot.
+
+        Snapshots often exceed the default timeout built in to all create requests in
+        the provider. In order to customize that, you may specify a custome value in a
+        `timeouts` block of the resource definition
         """
         return pulumi.get(self, "description")
 
@@ -215,6 +231,10 @@ class Snapshot(pulumi.CustomResource):
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[str] description: The description for the given snapshot.
+               
+               Snapshots often exceed the default timeout built in to all create requests in
+               the provider. In order to customize that, you may specify a custome value in a
+               `timeouts` block of the resource definition
         :param pulumi.Input[str] instance_id: ID of a given instance that you want to create a snapshot from.
         """
         ...
@@ -314,6 +334,10 @@ class Snapshot(pulumi.CustomResource):
         :param pulumi.Input[int] app_id: The app id which the snapshot is associated with.
         :param pulumi.Input[str] date_created: The date the snapshot was created.
         :param pulumi.Input[str] description: The description for the given snapshot.
+               
+               Snapshots often exceed the default timeout built in to all create requests in
+               the provider. In order to customize that, you may specify a custome value in a
+               `timeouts` block of the resource definition
         :param pulumi.Input[str] instance_id: ID of a given instance that you want to create a snapshot from.
         :param pulumi.Input[int] os_id: The os id which the snapshot is associated with.
         :param pulumi.Input[int] size: The size of the snapshot in Bytes.
@@ -353,6 +377,10 @@ class Snapshot(pulumi.CustomResource):
     def description(self) -> pulumi.Output[Optional[str]]:
         """
         The description for the given snapshot.
+
+        Snapshots often exceed the default timeout built in to all create requests in
+        the provider. In order to customize that, you may specify a custome value in a
+        `timeouts` block of the resource definition
         """
         return pulumi.get(self, "description")
 

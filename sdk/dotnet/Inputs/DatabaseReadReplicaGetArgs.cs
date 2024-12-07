@@ -43,6 +43,12 @@ namespace ediri.Vultr.Inputs
         [Input("dbname")]
         public Input<string>? Dbname { get; set; }
 
+        /// <summary>
+        /// The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
+        /// </summary>
+        [Input("evictionPolicy")]
+        public Input<string>? EvictionPolicy { get; set; }
+
         [Input("ferretdbCredentials")]
         private InputMap<string>? _ferretdbCredentials;
 
@@ -168,12 +174,6 @@ namespace ediri.Vultr.Inputs
         /// </summary>
         [Input("publicHost")]
         public Input<string>? PublicHost { get; set; }
-
-        /// <summary>
-        /// The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
-        /// </summary>
-        [Input("redisEvictionPolicy")]
-        public Input<string>? RedisEvictionPolicy { get; set; }
 
         /// <summary>
         /// The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)

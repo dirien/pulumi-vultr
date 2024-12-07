@@ -110,6 +110,10 @@ export class Database extends pulumi.CustomResource {
      */
     public /*out*/ readonly dbname!: pulumi.Output<string>;
     /**
+     * The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
+     */
+    public readonly evictionPolicy!: pulumi.Output<string>;
+    /**
      * An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
      */
     public readonly ferretdbCredentials!: pulumi.Output<{[key: string]: string}>;
@@ -190,10 +194,6 @@ export class Database extends pulumi.CustomResource {
      */
     public readonly readReplicas!: pulumi.Output<outputs.DatabaseReadReplica[]>;
     /**
-     * The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
-     */
-    public readonly redisEvictionPolicy!: pulumi.Output<string>;
-    /**
      * The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
      */
     public readonly region!: pulumi.Output<string>;
@@ -242,6 +242,7 @@ export class Database extends pulumi.CustomResource {
             resourceInputs["databaseEngineVersion"] = state ? state.databaseEngineVersion : undefined;
             resourceInputs["dateCreated"] = state ? state.dateCreated : undefined;
             resourceInputs["dbname"] = state ? state.dbname : undefined;
+            resourceInputs["evictionPolicy"] = state ? state.evictionPolicy : undefined;
             resourceInputs["ferretdbCredentials"] = state ? state.ferretdbCredentials : undefined;
             resourceInputs["host"] = state ? state.host : undefined;
             resourceInputs["label"] = state ? state.label : undefined;
@@ -262,7 +263,6 @@ export class Database extends pulumi.CustomResource {
             resourceInputs["port"] = state ? state.port : undefined;
             resourceInputs["publicHost"] = state ? state.publicHost : undefined;
             resourceInputs["readReplicas"] = state ? state.readReplicas : undefined;
-            resourceInputs["redisEvictionPolicy"] = state ? state.redisEvictionPolicy : undefined;
             resourceInputs["region"] = state ? state.region : undefined;
             resourceInputs["saslPort"] = state ? state.saslPort : undefined;
             resourceInputs["status"] = state ? state.status : undefined;
@@ -292,6 +292,7 @@ export class Database extends pulumi.CustomResource {
             resourceInputs["clusterTimeZone"] = args ? args.clusterTimeZone : undefined;
             resourceInputs["databaseEngine"] = args ? args.databaseEngine : undefined;
             resourceInputs["databaseEngineVersion"] = args ? args.databaseEngineVersion : undefined;
+            resourceInputs["evictionPolicy"] = args ? args.evictionPolicy : undefined;
             resourceInputs["ferretdbCredentials"] = args ? args.ferretdbCredentials : undefined;
             resourceInputs["label"] = args ? args.label : undefined;
             resourceInputs["maintenanceDow"] = args ? args.maintenanceDow : undefined;
@@ -307,7 +308,6 @@ export class Database extends pulumi.CustomResource {
             resourceInputs["planReplicas"] = args ? args.planReplicas : undefined;
             resourceInputs["publicHost"] = args ? args.publicHost : undefined;
             resourceInputs["readReplicas"] = args ? args.readReplicas : undefined;
-            resourceInputs["redisEvictionPolicy"] = args ? args.redisEvictionPolicy : undefined;
             resourceInputs["region"] = args ? args.region : undefined;
             resourceInputs["saslPort"] = args ? args.saslPort : undefined;
             resourceInputs["tag"] = args ? args.tag : undefined;
@@ -360,6 +360,10 @@ export interface DatabaseState {
      * The managed database's default logical database.
      */
     dbname?: pulumi.Input<string>;
+    /**
+     * The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
+     */
+    evictionPolicy?: pulumi.Input<string>;
     /**
      * An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
      */
@@ -441,10 +445,6 @@ export interface DatabaseState {
      */
     readReplicas?: pulumi.Input<pulumi.Input<inputs.DatabaseReadReplica>[]>;
     /**
-     * The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
-     */
-    redisEvictionPolicy?: pulumi.Input<string>;
-    /**
      * The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
      */
     region?: pulumi.Input<string>;
@@ -498,6 +498,10 @@ export interface DatabaseArgs {
      * The database engine version of the new managed database.
      */
     databaseEngineVersion: pulumi.Input<string>;
+    /**
+     * The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
+     */
+    evictionPolicy?: pulumi.Input<string>;
     /**
      * An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
      */
@@ -558,10 +562,6 @@ export interface DatabaseArgs {
      * A list of read replicas attached to the managed database.
      */
     readReplicas?: pulumi.Input<pulumi.Input<inputs.DatabaseReadReplica>[]>;
-    /**
-     * The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
-     */
-    redisEvictionPolicy?: pulumi.Input<string>;
     /**
      * The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
      */

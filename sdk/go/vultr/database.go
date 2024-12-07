@@ -104,6 +104,8 @@ type Database struct {
 	DateCreated pulumi.StringOutput `pulumi:"dateCreated"`
 	// The managed database's default logical database.
 	Dbname pulumi.StringOutput `pulumi:"dbname"`
+	// The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
+	EvictionPolicy pulumi.StringOutput `pulumi:"evictionPolicy"`
 	// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
 	FerretdbCredentials pulumi.StringMapOutput `pulumi:"ferretdbCredentials"`
 	// The hostname assigned to the managed database.
@@ -144,8 +146,6 @@ type Database struct {
 	PublicHost pulumi.StringOutput `pulumi:"publicHost"`
 	// A list of read replicas attached to the managed database.
 	ReadReplicas DatabaseReadReplicaArrayOutput `pulumi:"readReplicas"`
-	// The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
-	RedisEvictionPolicy pulumi.StringOutput `pulumi:"redisEvictionPolicy"`
 	// The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
 	Region pulumi.StringOutput `pulumi:"region"`
 	// The SASL connection port for the managed database (Kafka engine types only).
@@ -221,6 +221,8 @@ type databaseState struct {
 	DateCreated *string `pulumi:"dateCreated"`
 	// The managed database's default logical database.
 	Dbname *string `pulumi:"dbname"`
+	// The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
+	EvictionPolicy *string `pulumi:"evictionPolicy"`
 	// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
 	FerretdbCredentials map[string]string `pulumi:"ferretdbCredentials"`
 	// The hostname assigned to the managed database.
@@ -261,8 +263,6 @@ type databaseState struct {
 	PublicHost *string `pulumi:"publicHost"`
 	// A list of read replicas attached to the managed database.
 	ReadReplicas []DatabaseReadReplica `pulumi:"readReplicas"`
-	// The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
-	RedisEvictionPolicy *string `pulumi:"redisEvictionPolicy"`
 	// The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
 	Region *string `pulumi:"region"`
 	// The SASL connection port for the managed database (Kafka engine types only).
@@ -294,6 +294,8 @@ type DatabaseState struct {
 	DateCreated pulumi.StringPtrInput
 	// The managed database's default logical database.
 	Dbname pulumi.StringPtrInput
+	// The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
+	EvictionPolicy pulumi.StringPtrInput
 	// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
 	FerretdbCredentials pulumi.StringMapInput
 	// The hostname assigned to the managed database.
@@ -334,8 +336,6 @@ type DatabaseState struct {
 	PublicHost pulumi.StringPtrInput
 	// A list of read replicas attached to the managed database.
 	ReadReplicas DatabaseReadReplicaArrayInput
-	// The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
-	RedisEvictionPolicy pulumi.StringPtrInput
 	// The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
 	Region pulumi.StringPtrInput
 	// The SASL connection port for the managed database (Kafka engine types only).
@@ -367,6 +367,8 @@ type databaseArgs struct {
 	DatabaseEngine string `pulumi:"databaseEngine"`
 	// The database engine version of the new managed database.
 	DatabaseEngineVersion string `pulumi:"databaseEngineVersion"`
+	// The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
+	EvictionPolicy *string `pulumi:"evictionPolicy"`
 	// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
 	FerretdbCredentials map[string]string `pulumi:"ferretdbCredentials"`
 	// A label for the managed database.
@@ -397,8 +399,6 @@ type databaseArgs struct {
 	PublicHost *string `pulumi:"publicHost"`
 	// A list of read replicas attached to the managed database.
 	ReadReplicas []DatabaseReadReplica `pulumi:"readReplicas"`
-	// The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
-	RedisEvictionPolicy *string `pulumi:"redisEvictionPolicy"`
 	// The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
 	Region string `pulumi:"region"`
 	// The SASL connection port for the managed database (Kafka engine types only).
@@ -423,6 +423,8 @@ type DatabaseArgs struct {
 	DatabaseEngine pulumi.StringInput
 	// The database engine version of the new managed database.
 	DatabaseEngineVersion pulumi.StringInput
+	// The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
+	EvictionPolicy pulumi.StringPtrInput
 	// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
 	FerretdbCredentials pulumi.StringMapInput
 	// A label for the managed database.
@@ -453,8 +455,6 @@ type DatabaseArgs struct {
 	PublicHost pulumi.StringPtrInput
 	// A list of read replicas attached to the managed database.
 	ReadReplicas DatabaseReadReplicaArrayInput
-	// The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
-	RedisEvictionPolicy pulumi.StringPtrInput
 	// The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
 	Region pulumi.StringInput
 	// The SASL connection port for the managed database (Kafka engine types only).
@@ -589,6 +589,11 @@ func (o DatabaseOutput) Dbname() pulumi.StringOutput {
 	return o.ApplyT(func(v *Database) pulumi.StringOutput { return v.Dbname }).(pulumi.StringOutput)
 }
 
+// The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
+func (o DatabaseOutput) EvictionPolicy() pulumi.StringOutput {
+	return o.ApplyT(func(v *Database) pulumi.StringOutput { return v.EvictionPolicy }).(pulumi.StringOutput)
+}
+
 // An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
 func (o DatabaseOutput) FerretdbCredentials() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *Database) pulumi.StringMapOutput { return v.FerretdbCredentials }).(pulumi.StringMapOutput)
@@ -687,11 +692,6 @@ func (o DatabaseOutput) PublicHost() pulumi.StringOutput {
 // A list of read replicas attached to the managed database.
 func (o DatabaseOutput) ReadReplicas() DatabaseReadReplicaArrayOutput {
 	return o.ApplyT(func(v *Database) DatabaseReadReplicaArrayOutput { return v.ReadReplicas }).(DatabaseReadReplicaArrayOutput)
-}
-
-// The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
-func (o DatabaseOutput) RedisEvictionPolicy() pulumi.StringOutput {
-	return o.ApplyT(func(v *Database) pulumi.StringOutput { return v.RedisEvictionPolicy }).(pulumi.StringOutput)
 }
 
 // The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)

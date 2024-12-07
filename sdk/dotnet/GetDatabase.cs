@@ -159,6 +159,10 @@ namespace ediri.Vultr
         /// </summary>
         public readonly string Dbname;
         /// <summary>
+        /// The configuration value for the data eviction policy on the managed database (Redis engine types only).
+        /// </summary>
+        public readonly string EvictionPolicy;
+        /// <summary>
         /// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
         /// </summary>
         public readonly ImmutableDictionary<string, string> FerretdbCredentials;
@@ -241,10 +245,6 @@ namespace ediri.Vultr
         /// </summary>
         public readonly ImmutableArray<Outputs.GetDatabaseReadReplicaResult> ReadReplicas;
         /// <summary>
-        /// The configuration value for the data eviction policy on the managed database (Redis engine types only).
-        /// </summary>
-        public readonly string RedisEvictionPolicy;
-        /// <summary>
         /// The region ID of the managed database.
         /// </summary>
         public readonly string Region;
@@ -288,6 +288,8 @@ namespace ediri.Vultr
             string dateCreated,
 
             string dbname,
+
+            string evictionPolicy,
 
             ImmutableDictionary<string, string> ferretdbCredentials,
 
@@ -333,8 +335,6 @@ namespace ediri.Vultr
 
             ImmutableArray<Outputs.GetDatabaseReadReplicaResult> readReplicas,
 
-            string redisEvictionPolicy,
-
             string region,
 
             string saslPort,
@@ -356,6 +356,7 @@ namespace ediri.Vultr
             DatabaseEngineVersion = databaseEngineVersion;
             DateCreated = dateCreated;
             Dbname = dbname;
+            EvictionPolicy = evictionPolicy;
             FerretdbCredentials = ferretdbCredentials;
             Filters = filters;
             Host = host;
@@ -378,7 +379,6 @@ namespace ediri.Vultr
             Port = port;
             PublicHost = publicHost;
             ReadReplicas = readReplicas;
-            RedisEvictionPolicy = redisEvictionPolicy;
             Region = region;
             SaslPort = saslPort;
             Status = status;

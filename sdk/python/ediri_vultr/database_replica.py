@@ -22,6 +22,7 @@ class DatabaseReplicaArgs:
                  database_id: pulumi.Input[str],
                  label: pulumi.Input[str],
                  region: pulumi.Input[str],
+                 eviction_policy: Optional[pulumi.Input[str]] = None,
                  ferretdb_credentials: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  mysql_long_query_time: Optional[pulumi.Input[int]] = None,
                  mysql_require_primary_key: Optional[pulumi.Input[bool]] = None,
@@ -29,7 +30,6 @@ class DatabaseReplicaArgs:
                  mysql_sql_modes: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  plan_disk: Optional[pulumi.Input[int]] = None,
                  public_host: Optional[pulumi.Input[str]] = None,
-                 redis_eviction_policy: Optional[pulumi.Input[str]] = None,
                  tag: Optional[pulumi.Input[str]] = None,
                  trusted_ips: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None):
         """
@@ -37,6 +37,7 @@ class DatabaseReplicaArgs:
         :param pulumi.Input[str] database_id: The managed database ID you want to attach this replica to.
         :param pulumi.Input[str] label: A label for the managed database read replica.
         :param pulumi.Input[str] region: The ID of the region that the managed database read replica is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
+        :param pulumi.Input[str] eviction_policy: The configuration value for the data eviction policy on the managed database read replica (Redis engine types only).
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] ferretdb_credentials: An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
         :param pulumi.Input[int] mysql_long_query_time: The configuration value for the long query time (in seconds) on the managed database read replica (MySQL engine types only).
         :param pulumi.Input[bool] mysql_require_primary_key: The configuration value for whether primary keys are required on the managed database read replica (MySQL engine types only).
@@ -44,13 +45,14 @@ class DatabaseReplicaArgs:
         :param pulumi.Input[Sequence[pulumi.Input[str]]] mysql_sql_modes: A list of SQL modes currently configured for the managed database read replica (MySQL engine types only).
         :param pulumi.Input[int] plan_disk: The description of the disk(s) on the managed database read replica.
         :param pulumi.Input[str] public_host: The public hostname assigned to the managed database read replica (VPC-attached only).
-        :param pulumi.Input[str] redis_eviction_policy: The configuration value for the data eviction policy on the managed database read replica (Redis engine types only).
         :param pulumi.Input[str] tag: The tag to assign to the managed database read replica.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] trusted_ips: A list of allowed IP addresses for the managed database read replica.
         """
         pulumi.set(__self__, "database_id", database_id)
         pulumi.set(__self__, "label", label)
         pulumi.set(__self__, "region", region)
+        if eviction_policy is not None:
+            pulumi.set(__self__, "eviction_policy", eviction_policy)
         if ferretdb_credentials is not None:
             pulumi.set(__self__, "ferretdb_credentials", ferretdb_credentials)
         if mysql_long_query_time is not None:
@@ -65,8 +67,6 @@ class DatabaseReplicaArgs:
             pulumi.set(__self__, "plan_disk", plan_disk)
         if public_host is not None:
             pulumi.set(__self__, "public_host", public_host)
-        if redis_eviction_policy is not None:
-            pulumi.set(__self__, "redis_eviction_policy", redis_eviction_policy)
         if tag is not None:
             pulumi.set(__self__, "tag", tag)
         if trusted_ips is not None:
@@ -107,6 +107,18 @@ class DatabaseReplicaArgs:
     @region.setter
     def region(self, value: pulumi.Input[str]):
         pulumi.set(self, "region", value)
+
+    @property
+    @pulumi.getter(name="evictionPolicy")
+    def eviction_policy(self) -> Optional[pulumi.Input[str]]:
+        """
+        The configuration value for the data eviction policy on the managed database read replica (Redis engine types only).
+        """
+        return pulumi.get(self, "eviction_policy")
+
+    @eviction_policy.setter
+    def eviction_policy(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "eviction_policy", value)
 
     @property
     @pulumi.getter(name="ferretdbCredentials")
@@ -193,18 +205,6 @@ class DatabaseReplicaArgs:
         pulumi.set(self, "public_host", value)
 
     @property
-    @pulumi.getter(name="redisEvictionPolicy")
-    def redis_eviction_policy(self) -> Optional[pulumi.Input[str]]:
-        """
-        The configuration value for the data eviction policy on the managed database read replica (Redis engine types only).
-        """
-        return pulumi.get(self, "redis_eviction_policy")
-
-    @redis_eviction_policy.setter
-    def redis_eviction_policy(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "redis_eviction_policy", value)
-
-    @property
     @pulumi.getter
     def tag(self) -> Optional[pulumi.Input[str]]:
         """
@@ -238,6 +238,7 @@ class _DatabaseReplicaState:
                  database_id: Optional[pulumi.Input[str]] = None,
                  date_created: Optional[pulumi.Input[str]] = None,
                  dbname: Optional[pulumi.Input[str]] = None,
+                 eviction_policy: Optional[pulumi.Input[str]] = None,
                  ferretdb_credentials: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  host: Optional[pulumi.Input[str]] = None,
                  label: Optional[pulumi.Input[str]] = None,
@@ -256,7 +257,6 @@ class _DatabaseReplicaState:
                  plan_vcpus: Optional[pulumi.Input[int]] = None,
                  port: Optional[pulumi.Input[str]] = None,
                  public_host: Optional[pulumi.Input[str]] = None,
-                 redis_eviction_policy: Optional[pulumi.Input[str]] = None,
                  region: Optional[pulumi.Input[str]] = None,
                  status: Optional[pulumi.Input[str]] = None,
                  tag: Optional[pulumi.Input[str]] = None,
@@ -271,6 +271,7 @@ class _DatabaseReplicaState:
         :param pulumi.Input[str] database_id: The managed database ID you want to attach this replica to.
         :param pulumi.Input[str] date_created: The date the managed database read replica was added to your Vultr account.
         :param pulumi.Input[str] dbname: The managed database read replica's default logical database.
+        :param pulumi.Input[str] eviction_policy: The configuration value for the data eviction policy on the managed database read replica (Redis engine types only).
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] ferretdb_credentials: An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
         :param pulumi.Input[str] host: The hostname assigned to the managed database read replica.
         :param pulumi.Input[str] label: A label for the managed database read replica.
@@ -289,7 +290,6 @@ class _DatabaseReplicaState:
         :param pulumi.Input[int] plan_vcpus: The number of virtual CPUs available on the managed database read replica.
         :param pulumi.Input[str] port: The connection port for the managed database read replica.
         :param pulumi.Input[str] public_host: The public hostname assigned to the managed database read replica (VPC-attached only).
-        :param pulumi.Input[str] redis_eviction_policy: The configuration value for the data eviction policy on the managed database read replica (Redis engine types only).
         :param pulumi.Input[str] region: The ID of the region that the managed database read replica is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
         :param pulumi.Input[str] status: The current status of the managed database read replica (poweroff, rebuilding, rebalancing, configuring, running).
         :param pulumi.Input[str] tag: The tag to assign to the managed database read replica.
@@ -309,6 +309,8 @@ class _DatabaseReplicaState:
             pulumi.set(__self__, "date_created", date_created)
         if dbname is not None:
             pulumi.set(__self__, "dbname", dbname)
+        if eviction_policy is not None:
+            pulumi.set(__self__, "eviction_policy", eviction_policy)
         if ferretdb_credentials is not None:
             pulumi.set(__self__, "ferretdb_credentials", ferretdb_credentials)
         if host is not None:
@@ -345,8 +347,6 @@ class _DatabaseReplicaState:
             pulumi.set(__self__, "port", port)
         if public_host is not None:
             pulumi.set(__self__, "public_host", public_host)
-        if redis_eviction_policy is not None:
-            pulumi.set(__self__, "redis_eviction_policy", redis_eviction_policy)
         if region is not None:
             pulumi.set(__self__, "region", region)
         if status is not None:
@@ -431,6 +431,18 @@ class _DatabaseReplicaState:
     @dbname.setter
     def dbname(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "dbname", value)
+
+    @property
+    @pulumi.getter(name="evictionPolicy")
+    def eviction_policy(self) -> Optional[pulumi.Input[str]]:
+        """
+        The configuration value for the data eviction policy on the managed database read replica (Redis engine types only).
+        """
+        return pulumi.get(self, "eviction_policy")
+
+    @eviction_policy.setter
+    def eviction_policy(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "eviction_policy", value)
 
     @property
     @pulumi.getter(name="ferretdbCredentials")
@@ -649,18 +661,6 @@ class _DatabaseReplicaState:
         pulumi.set(self, "public_host", value)
 
     @property
-    @pulumi.getter(name="redisEvictionPolicy")
-    def redis_eviction_policy(self) -> Optional[pulumi.Input[str]]:
-        """
-        The configuration value for the data eviction policy on the managed database read replica (Redis engine types only).
-        """
-        return pulumi.get(self, "redis_eviction_policy")
-
-    @redis_eviction_policy.setter
-    def redis_eviction_policy(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "redis_eviction_policy", value)
-
-    @property
     @pulumi.getter
     def region(self) -> Optional[pulumi.Input[str]]:
         """
@@ -739,6 +739,7 @@ class DatabaseReplica(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  database_id: Optional[pulumi.Input[str]] = None,
+                 eviction_policy: Optional[pulumi.Input[str]] = None,
                  ferretdb_credentials: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  label: Optional[pulumi.Input[str]] = None,
                  mysql_long_query_time: Optional[pulumi.Input[int]] = None,
@@ -747,7 +748,6 @@ class DatabaseReplica(pulumi.CustomResource):
                  mysql_sql_modes: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  plan_disk: Optional[pulumi.Input[int]] = None,
                  public_host: Optional[pulumi.Input[str]] = None,
-                 redis_eviction_policy: Optional[pulumi.Input[str]] = None,
                  region: Optional[pulumi.Input[str]] = None,
                  tag: Optional[pulumi.Input[str]] = None,
                  trusted_ips: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
@@ -773,6 +773,7 @@ class DatabaseReplica(pulumi.CustomResource):
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[str] database_id: The managed database ID you want to attach this replica to.
+        :param pulumi.Input[str] eviction_policy: The configuration value for the data eviction policy on the managed database read replica (Redis engine types only).
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] ferretdb_credentials: An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
         :param pulumi.Input[str] label: A label for the managed database read replica.
         :param pulumi.Input[int] mysql_long_query_time: The configuration value for the long query time (in seconds) on the managed database read replica (MySQL engine types only).
@@ -781,7 +782,6 @@ class DatabaseReplica(pulumi.CustomResource):
         :param pulumi.Input[Sequence[pulumi.Input[str]]] mysql_sql_modes: A list of SQL modes currently configured for the managed database read replica (MySQL engine types only).
         :param pulumi.Input[int] plan_disk: The description of the disk(s) on the managed database read replica.
         :param pulumi.Input[str] public_host: The public hostname assigned to the managed database read replica (VPC-attached only).
-        :param pulumi.Input[str] redis_eviction_policy: The configuration value for the data eviction policy on the managed database read replica (Redis engine types only).
         :param pulumi.Input[str] region: The ID of the region that the managed database read replica is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
         :param pulumi.Input[str] tag: The tag to assign to the managed database read replica.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] trusted_ips: A list of allowed IP addresses for the managed database read replica.
@@ -826,6 +826,7 @@ class DatabaseReplica(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  database_id: Optional[pulumi.Input[str]] = None,
+                 eviction_policy: Optional[pulumi.Input[str]] = None,
                  ferretdb_credentials: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  label: Optional[pulumi.Input[str]] = None,
                  mysql_long_query_time: Optional[pulumi.Input[int]] = None,
@@ -834,7 +835,6 @@ class DatabaseReplica(pulumi.CustomResource):
                  mysql_sql_modes: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
                  plan_disk: Optional[pulumi.Input[int]] = None,
                  public_host: Optional[pulumi.Input[str]] = None,
-                 redis_eviction_policy: Optional[pulumi.Input[str]] = None,
                  region: Optional[pulumi.Input[str]] = None,
                  tag: Optional[pulumi.Input[str]] = None,
                  trusted_ips: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
@@ -850,6 +850,7 @@ class DatabaseReplica(pulumi.CustomResource):
             if database_id is None and not opts.urn:
                 raise TypeError("Missing required property 'database_id'")
             __props__.__dict__["database_id"] = database_id
+            __props__.__dict__["eviction_policy"] = eviction_policy
             __props__.__dict__["ferretdb_credentials"] = ferretdb_credentials
             if label is None and not opts.urn:
                 raise TypeError("Missing required property 'label'")
@@ -860,7 +861,6 @@ class DatabaseReplica(pulumi.CustomResource):
             __props__.__dict__["mysql_sql_modes"] = mysql_sql_modes
             __props__.__dict__["plan_disk"] = plan_disk
             __props__.__dict__["public_host"] = public_host
-            __props__.__dict__["redis_eviction_policy"] = redis_eviction_policy
             if region is None and not opts.urn:
                 raise TypeError("Missing required property 'region'")
             __props__.__dict__["region"] = region
@@ -900,6 +900,7 @@ class DatabaseReplica(pulumi.CustomResource):
             database_id: Optional[pulumi.Input[str]] = None,
             date_created: Optional[pulumi.Input[str]] = None,
             dbname: Optional[pulumi.Input[str]] = None,
+            eviction_policy: Optional[pulumi.Input[str]] = None,
             ferretdb_credentials: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
             host: Optional[pulumi.Input[str]] = None,
             label: Optional[pulumi.Input[str]] = None,
@@ -918,7 +919,6 @@ class DatabaseReplica(pulumi.CustomResource):
             plan_vcpus: Optional[pulumi.Input[int]] = None,
             port: Optional[pulumi.Input[str]] = None,
             public_host: Optional[pulumi.Input[str]] = None,
-            redis_eviction_policy: Optional[pulumi.Input[str]] = None,
             region: Optional[pulumi.Input[str]] = None,
             status: Optional[pulumi.Input[str]] = None,
             tag: Optional[pulumi.Input[str]] = None,
@@ -938,6 +938,7 @@ class DatabaseReplica(pulumi.CustomResource):
         :param pulumi.Input[str] database_id: The managed database ID you want to attach this replica to.
         :param pulumi.Input[str] date_created: The date the managed database read replica was added to your Vultr account.
         :param pulumi.Input[str] dbname: The managed database read replica's default logical database.
+        :param pulumi.Input[str] eviction_policy: The configuration value for the data eviction policy on the managed database read replica (Redis engine types only).
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] ferretdb_credentials: An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
         :param pulumi.Input[str] host: The hostname assigned to the managed database read replica.
         :param pulumi.Input[str] label: A label for the managed database read replica.
@@ -956,7 +957,6 @@ class DatabaseReplica(pulumi.CustomResource):
         :param pulumi.Input[int] plan_vcpus: The number of virtual CPUs available on the managed database read replica.
         :param pulumi.Input[str] port: The connection port for the managed database read replica.
         :param pulumi.Input[str] public_host: The public hostname assigned to the managed database read replica (VPC-attached only).
-        :param pulumi.Input[str] redis_eviction_policy: The configuration value for the data eviction policy on the managed database read replica (Redis engine types only).
         :param pulumi.Input[str] region: The ID of the region that the managed database read replica is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
         :param pulumi.Input[str] status: The current status of the managed database read replica (poweroff, rebuilding, rebalancing, configuring, running).
         :param pulumi.Input[str] tag: The tag to assign to the managed database read replica.
@@ -974,6 +974,7 @@ class DatabaseReplica(pulumi.CustomResource):
         __props__.__dict__["database_id"] = database_id
         __props__.__dict__["date_created"] = date_created
         __props__.__dict__["dbname"] = dbname
+        __props__.__dict__["eviction_policy"] = eviction_policy
         __props__.__dict__["ferretdb_credentials"] = ferretdb_credentials
         __props__.__dict__["host"] = host
         __props__.__dict__["label"] = label
@@ -992,7 +993,6 @@ class DatabaseReplica(pulumi.CustomResource):
         __props__.__dict__["plan_vcpus"] = plan_vcpus
         __props__.__dict__["port"] = port
         __props__.__dict__["public_host"] = public_host
-        __props__.__dict__["redis_eviction_policy"] = redis_eviction_policy
         __props__.__dict__["region"] = region
         __props__.__dict__["status"] = status
         __props__.__dict__["tag"] = tag
@@ -1048,6 +1048,14 @@ class DatabaseReplica(pulumi.CustomResource):
         The managed database read replica's default logical database.
         """
         return pulumi.get(self, "dbname")
+
+    @property
+    @pulumi.getter(name="evictionPolicy")
+    def eviction_policy(self) -> pulumi.Output[str]:
+        """
+        The configuration value for the data eviction policy on the managed database read replica (Redis engine types only).
+        """
+        return pulumi.get(self, "eviction_policy")
 
     @property
     @pulumi.getter(name="ferretdbCredentials")
@@ -1192,14 +1200,6 @@ class DatabaseReplica(pulumi.CustomResource):
         The public hostname assigned to the managed database read replica (VPC-attached only).
         """
         return pulumi.get(self, "public_host")
-
-    @property
-    @pulumi.getter(name="redisEvictionPolicy")
-    def redis_eviction_policy(self) -> pulumi.Output[str]:
-        """
-        The configuration value for the data eviction policy on the managed database read replica (Redis engine types only).
-        """
-        return pulumi.get(self, "redis_eviction_policy")
 
     @property
     @pulumi.getter

@@ -67,6 +67,10 @@ namespace ediri.Vultr
 
         /// <summary>
         /// The description for the given snapshot.
+        /// 
+        /// Snapshots often exceed the default timeout built in to all create requests in
+        /// the provider. In order to customize that, you may specify a custome value in a
+        /// `timeouts` block of the resource definition
         /// </summary>
         [Output("description")]
         public Output<string?> Description { get; private set; } = null!;
@@ -144,6 +148,10 @@ namespace ediri.Vultr
     {
         /// <summary>
         /// The description for the given snapshot.
+        /// 
+        /// Snapshots often exceed the default timeout built in to all create requests in
+        /// the provider. In order to customize that, you may specify a custome value in a
+        /// `timeouts` block of the resource definition
         /// </summary>
         [Input("description")]
         public Input<string>? Description { get; set; }
@@ -176,6 +184,10 @@ namespace ediri.Vultr
 
         /// <summary>
         /// The description for the given snapshot.
+        /// 
+        /// Snapshots often exceed the default timeout built in to all create requests in
+        /// the provider. In order to customize that, you may specify a custome value in a
+        /// `timeouts` block of the resource definition
         /// </summary>
         [Input("description")]
         public Input<string>? Description { get; set; }

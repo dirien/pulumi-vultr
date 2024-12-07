@@ -158,8 +158,8 @@ require (
 	github.com/vmihailenco/msgpack v4.0.4+incompatible // indirect
 	github.com/vmihailenco/msgpack/v5 v5.4.1 // indirect
 	github.com/vmihailenco/tagparser/v2 v2.0.0 // indirect
-	github.com/vultr/govultr/v3 v3.11.2 // indirect
-	github.com/vultr/terraform-provider-vultr v1.3.4-0.20241107154417-f537f0001d71 // indirect
+	github.com/vultr/govultr/v3 v3.12.0 // indirect
+	github.com/vultr/terraform-provider-vultr v1.3.4-0.20241206212436-2b7f234ae4fa // indirect
 	github.com/xanzy/ssh-agent v0.3.3 // indirect
 	github.com/yuin/goldmark v1.7.4 // indirect
 	github.com/zclconf/go-cty v1.15.0 // indirect
@@ -174,7 +174,7 @@ require (
 	golang.org/x/exp v0.0.0-20240604190554-fc45aab8b7f8 // indirect
 	golang.org/x/mod v0.21.0 // indirect
 	golang.org/x/net v0.28.0 // indirect
-	golang.org/x/oauth2 v0.23.0 // indirect
+	golang.org/x/oauth2 v0.24.0 // indirect
 	golang.org/x/sync v0.8.0 // indirect
 	golang.org/x/sys v0.26.0 // indirect
 	golang.org/x/term v0.25.0 // indirect

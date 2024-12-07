@@ -28,7 +28,7 @@ class GetDatabaseResult:
     """
     A collection of values returned by getDatabase.
     """
-    def __init__(__self__, access_cert=None, access_key=None, cluster_time_zone=None, database_engine=None, database_engine_version=None, date_created=None, dbname=None, ferretdb_credentials=None, filters=None, host=None, id=None, label=None, latest_backup=None, maintenance_dow=None, maintenance_time=None, mysql_long_query_time=None, mysql_require_primary_key=None, mysql_slow_query_log=None, mysql_sql_modes=None, password=None, plan=None, plan_brokers=None, plan_disk=None, plan_ram=None, plan_replicas=None, plan_vcpus=None, port=None, public_host=None, read_replicas=None, redis_eviction_policy=None, region=None, sasl_port=None, status=None, tag=None, trusted_ips=None, user=None, vpc_id=None):
+    def __init__(__self__, access_cert=None, access_key=None, cluster_time_zone=None, database_engine=None, database_engine_version=None, date_created=None, dbname=None, eviction_policy=None, ferretdb_credentials=None, filters=None, host=None, id=None, label=None, latest_backup=None, maintenance_dow=None, maintenance_time=None, mysql_long_query_time=None, mysql_require_primary_key=None, mysql_slow_query_log=None, mysql_sql_modes=None, password=None, plan=None, plan_brokers=None, plan_disk=None, plan_ram=None, plan_replicas=None, plan_vcpus=None, port=None, public_host=None, read_replicas=None, region=None, sasl_port=None, status=None, tag=None, trusted_ips=None, user=None, vpc_id=None):
         if access_cert and not isinstance(access_cert, str):
             raise TypeError("Expected argument 'access_cert' to be a str")
         pulumi.set(__self__, "access_cert", access_cert)
@@ -50,6 +50,9 @@ class GetDatabaseResult:
         if dbname and not isinstance(dbname, str):
             raise TypeError("Expected argument 'dbname' to be a str")
         pulumi.set(__self__, "dbname", dbname)
+        if eviction_policy and not isinstance(eviction_policy, str):
+            raise TypeError("Expected argument 'eviction_policy' to be a str")
+        pulumi.set(__self__, "eviction_policy", eviction_policy)
         if ferretdb_credentials and not isinstance(ferretdb_credentials, dict):
             raise TypeError("Expected argument 'ferretdb_credentials' to be a dict")
         pulumi.set(__self__, "ferretdb_credentials", ferretdb_credentials)
@@ -116,9 +119,6 @@ class GetDatabaseResult:
         if read_replicas and not isinstance(read_replicas, list):
             raise TypeError("Expected argument 'read_replicas' to be a list")
         pulumi.set(__self__, "read_replicas", read_replicas)
-        if redis_eviction_policy and not isinstance(redis_eviction_policy, str):
-            raise TypeError("Expected argument 'redis_eviction_policy' to be a str")
-        pulumi.set(__self__, "redis_eviction_policy", redis_eviction_policy)
         if region and not isinstance(region, str):
             raise TypeError("Expected argument 'region' to be a str")
         pulumi.set(__self__, "region", region)
@@ -196,6 +196,14 @@ class GetDatabaseResult:
         The managed database's default logical database.
         """
         return pulumi.get(self, "dbname")
+
+    @property
+    @pulumi.getter(name="evictionPolicy")
+    def eviction_policy(self) -> str:
+        """
+        The configuration value for the data eviction policy on the managed database (Redis engine types only).
+        """
+        return pulumi.get(self, "eviction_policy")
 
     @property
     @pulumi.getter(name="ferretdbCredentials")
@@ -368,14 +376,6 @@ class GetDatabaseResult:
         return pulumi.get(self, "read_replicas")
 
     @property
-    @pulumi.getter(name="redisEvictionPolicy")
-    def redis_eviction_policy(self) -> str:
-        """
-        The configuration value for the data eviction policy on the managed database (Redis engine types only).
-        """
-        return pulumi.get(self, "redis_eviction_policy")
-
-    @property
     @pulumi.getter
     def region(self) -> str:
         """
@@ -445,6 +445,7 @@ class AwaitableGetDatabaseResult(GetDatabaseResult):
             database_engine_version=self.database_engine_version,
             date_created=self.date_created,
             dbname=self.dbname,
+            eviction_policy=self.eviction_policy,
             ferretdb_credentials=self.ferretdb_credentials,
             filters=self.filters,
             host=self.host,
@@ -467,7 +468,6 @@ class AwaitableGetDatabaseResult(GetDatabaseResult):
             port=self.port,
             public_host=self.public_host,
             read_replicas=self.read_replicas,
-            redis_eviction_policy=self.redis_eviction_policy,
             region=self.region,
             sasl_port=self.sasl_port,
             status=self.status,
@@ -512,6 +512,7 @@ def get_database(filters: Optional[Sequence[Union['GetDatabaseFilterArgs', 'GetD
         database_engine_version=pulumi.get(__ret__, 'database_engine_version'),
         date_created=pulumi.get(__ret__, 'date_created'),
         dbname=pulumi.get(__ret__, 'dbname'),
+        eviction_policy=pulumi.get(__ret__, 'eviction_policy'),
         ferretdb_credentials=pulumi.get(__ret__, 'ferretdb_credentials'),
         filters=pulumi.get(__ret__, 'filters'),
         host=pulumi.get(__ret__, 'host'),
@@ -534,7 +535,6 @@ def get_database(filters: Optional[Sequence[Union['GetDatabaseFilterArgs', 'GetD
         port=pulumi.get(__ret__, 'port'),
         public_host=pulumi.get(__ret__, 'public_host'),
         read_replicas=pulumi.get(__ret__, 'read_replicas'),
-        redis_eviction_policy=pulumi.get(__ret__, 'redis_eviction_policy'),
         region=pulumi.get(__ret__, 'region'),
         sasl_port=pulumi.get(__ret__, 'sasl_port'),
         status=pulumi.get(__ret__, 'status'),
@@ -576,6 +576,7 @@ def get_database_output(filters: Optional[pulumi.Input[Optional[Sequence[Union['
         database_engine_version=pulumi.get(__response__, 'database_engine_version'),
         date_created=pulumi.get(__response__, 'date_created'),
         dbname=pulumi.get(__response__, 'dbname'),
+        eviction_policy=pulumi.get(__response__, 'eviction_policy'),
         ferretdb_credentials=pulumi.get(__response__, 'ferretdb_credentials'),
         filters=pulumi.get(__response__, 'filters'),
         host=pulumi.get(__response__, 'host'),
@@ -598,7 +599,6 @@ def get_database_output(filters: Optional[pulumi.Input[Optional[Sequence[Union['
         port=pulumi.get(__response__, 'port'),
         public_host=pulumi.get(__response__, 'public_host'),
         read_replicas=pulumi.get(__response__, 'read_replicas'),
-        redis_eviction_policy=pulumi.get(__response__, 'redis_eviction_policy'),
         region=pulumi.get(__response__, 'region'),
         sasl_port=pulumi.get(__response__, 'sasl_port'),
         status=pulumi.get(__response__, 'status'),

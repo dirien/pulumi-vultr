@@ -59,6 +59,8 @@ type DatabaseReplica struct {
 	DateCreated pulumi.StringOutput `pulumi:"dateCreated"`
 	// The managed database read replica's default logical database.
 	Dbname pulumi.StringOutput `pulumi:"dbname"`
+	// The configuration value for the data eviction policy on the managed database read replica (Redis engine types only).
+	EvictionPolicy pulumi.StringOutput `pulumi:"evictionPolicy"`
 	// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
 	FerretdbCredentials pulumi.StringMapOutput `pulumi:"ferretdbCredentials"`
 	// The hostname assigned to the managed database read replica.
@@ -95,8 +97,6 @@ type DatabaseReplica struct {
 	Port pulumi.StringOutput `pulumi:"port"`
 	// The public hostname assigned to the managed database read replica (VPC-attached only).
 	PublicHost pulumi.StringOutput `pulumi:"publicHost"`
-	// The configuration value for the data eviction policy on the managed database read replica (Redis engine types only).
-	RedisEvictionPolicy pulumi.StringOutput `pulumi:"redisEvictionPolicy"`
 	// The ID of the region that the managed database read replica is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
 	Region pulumi.StringOutput `pulumi:"region"`
 	// The current status of the managed database read replica (poweroff, rebuilding, rebalancing, configuring, running).
@@ -162,6 +162,8 @@ type databaseReplicaState struct {
 	DateCreated *string `pulumi:"dateCreated"`
 	// The managed database read replica's default logical database.
 	Dbname *string `pulumi:"dbname"`
+	// The configuration value for the data eviction policy on the managed database read replica (Redis engine types only).
+	EvictionPolicy *string `pulumi:"evictionPolicy"`
 	// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
 	FerretdbCredentials map[string]string `pulumi:"ferretdbCredentials"`
 	// The hostname assigned to the managed database read replica.
@@ -198,8 +200,6 @@ type databaseReplicaState struct {
 	Port *string `pulumi:"port"`
 	// The public hostname assigned to the managed database read replica (VPC-attached only).
 	PublicHost *string `pulumi:"publicHost"`
-	// The configuration value for the data eviction policy on the managed database read replica (Redis engine types only).
-	RedisEvictionPolicy *string `pulumi:"redisEvictionPolicy"`
 	// The ID of the region that the managed database read replica is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
 	Region *string `pulumi:"region"`
 	// The current status of the managed database read replica (poweroff, rebuilding, rebalancing, configuring, running).
@@ -227,6 +227,8 @@ type DatabaseReplicaState struct {
 	DateCreated pulumi.StringPtrInput
 	// The managed database read replica's default logical database.
 	Dbname pulumi.StringPtrInput
+	// The configuration value for the data eviction policy on the managed database read replica (Redis engine types only).
+	EvictionPolicy pulumi.StringPtrInput
 	// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
 	FerretdbCredentials pulumi.StringMapInput
 	// The hostname assigned to the managed database read replica.
@@ -263,8 +265,6 @@ type DatabaseReplicaState struct {
 	Port pulumi.StringPtrInput
 	// The public hostname assigned to the managed database read replica (VPC-attached only).
 	PublicHost pulumi.StringPtrInput
-	// The configuration value for the data eviction policy on the managed database read replica (Redis engine types only).
-	RedisEvictionPolicy pulumi.StringPtrInput
 	// The ID of the region that the managed database read replica is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
 	Region pulumi.StringPtrInput
 	// The current status of the managed database read replica (poweroff, rebuilding, rebalancing, configuring, running).
@@ -286,6 +286,8 @@ func (DatabaseReplicaState) ElementType() reflect.Type {
 type databaseReplicaArgs struct {
 	// The managed database ID you want to attach this replica to.
 	DatabaseId string `pulumi:"databaseId"`
+	// The configuration value for the data eviction policy on the managed database read replica (Redis engine types only).
+	EvictionPolicy *string `pulumi:"evictionPolicy"`
 	// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
 	FerretdbCredentials map[string]string `pulumi:"ferretdbCredentials"`
 	// A label for the managed database read replica.
@@ -302,8 +304,6 @@ type databaseReplicaArgs struct {
 	PlanDisk *int `pulumi:"planDisk"`
 	// The public hostname assigned to the managed database read replica (VPC-attached only).
 	PublicHost *string `pulumi:"publicHost"`
-	// The configuration value for the data eviction policy on the managed database read replica (Redis engine types only).
-	RedisEvictionPolicy *string `pulumi:"redisEvictionPolicy"`
 	// The ID of the region that the managed database read replica is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
 	Region string `pulumi:"region"`
 	// The tag to assign to the managed database read replica.
@@ -316,6 +316,8 @@ type databaseReplicaArgs struct {
 type DatabaseReplicaArgs struct {
 	// The managed database ID you want to attach this replica to.
 	DatabaseId pulumi.StringInput
+	// The configuration value for the data eviction policy on the managed database read replica (Redis engine types only).
+	EvictionPolicy pulumi.StringPtrInput
 	// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
 	FerretdbCredentials pulumi.StringMapInput
 	// A label for the managed database read replica.
@@ -332,8 +334,6 @@ type DatabaseReplicaArgs struct {
 	PlanDisk pulumi.IntPtrInput
 	// The public hostname assigned to the managed database read replica (VPC-attached only).
 	PublicHost pulumi.StringPtrInput
-	// The configuration value for the data eviction policy on the managed database read replica (Redis engine types only).
-	RedisEvictionPolicy pulumi.StringPtrInput
 	// The ID of the region that the managed database read replica is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
 	Region pulumi.StringInput
 	// The tag to assign to the managed database read replica.
@@ -459,6 +459,11 @@ func (o DatabaseReplicaOutput) Dbname() pulumi.StringOutput {
 	return o.ApplyT(func(v *DatabaseReplica) pulumi.StringOutput { return v.Dbname }).(pulumi.StringOutput)
 }
 
+// The configuration value for the data eviction policy on the managed database read replica (Redis engine types only).
+func (o DatabaseReplicaOutput) EvictionPolicy() pulumi.StringOutput {
+	return o.ApplyT(func(v *DatabaseReplica) pulumi.StringOutput { return v.EvictionPolicy }).(pulumi.StringOutput)
+}
+
 // An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
 func (o DatabaseReplicaOutput) FerretdbCredentials() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *DatabaseReplica) pulumi.StringMapOutput { return v.FerretdbCredentials }).(pulumi.StringMapOutput)
@@ -547,11 +552,6 @@ func (o DatabaseReplicaOutput) Port() pulumi.StringOutput {
 // The public hostname assigned to the managed database read replica (VPC-attached only).
 func (o DatabaseReplicaOutput) PublicHost() pulumi.StringOutput {
 	return o.ApplyT(func(v *DatabaseReplica) pulumi.StringOutput { return v.PublicHost }).(pulumi.StringOutput)
-}
-
-// The configuration value for the data eviction policy on the managed database read replica (Redis engine types only).
-func (o DatabaseReplicaOutput) RedisEvictionPolicy() pulumi.StringOutput {
-	return o.ApplyT(func(v *DatabaseReplica) pulumi.StringOutput { return v.RedisEvictionPolicy }).(pulumi.StringOutput)
 }
 
 // The ID of the region that the managed database read replica is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
