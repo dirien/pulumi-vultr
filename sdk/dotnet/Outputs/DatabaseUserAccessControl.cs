@@ -15,36 +15,36 @@ namespace ediri.Vultr.Outputs
     public sealed class DatabaseUserAccessControl
     {
         /// <summary>
-        /// The list of command category rules for this managed database user.
+        /// List of command category rules for this managed database user (Redis engine types only).
         /// </summary>
-        public readonly ImmutableArray<string> RedisAclCategories;
+        public readonly ImmutableArray<string> AclCategories;
         /// <summary>
-        /// The list of publish/subscribe channel patterns for this managed database user.
+        /// List of publish/subscribe channel patterns for this managed database user (Redis engine types only).
         /// </summary>
-        public readonly ImmutableArray<string> RedisAclChannels;
+        public readonly ImmutableArray<string> AclChannels;
         /// <summary>
-        /// The list of individual command rules for this managed database user.
+        /// List of individual command rules for this managed database user (Redis engine types only).
         /// </summary>
-        public readonly ImmutableArray<string> RedisAclCommands;
+        public readonly ImmutableArray<string> AclCommands;
         /// <summary>
-        /// The list of access rules for this managed database user.
+        /// List of access rules for this managed database user (Redis engine types only).
         /// </summary>
-        public readonly ImmutableArray<string> RedisAclKeys;
+        public readonly ImmutableArray<string> AclKeys;
 
         [OutputConstructor]
         private DatabaseUserAccessControl(
-            ImmutableArray<string> redisAclCategories,
+            ImmutableArray<string> aclCategories,
 
-            ImmutableArray<string> redisAclChannels,
+            ImmutableArray<string> aclChannels,
 
-            ImmutableArray<string> redisAclCommands,
+            ImmutableArray<string> aclCommands,
 
-            ImmutableArray<string> redisAclKeys)
+            ImmutableArray<string> aclKeys)
         {
-            RedisAclCategories = redisAclCategories;
-            RedisAclChannels = redisAclChannels;
-            RedisAclCommands = redisAclCommands;
-            RedisAclKeys = redisAclKeys;
+            AclCategories = aclCategories;
+            AclChannels = aclChannels;
+            AclCommands = aclCommands;
+            AclKeys = aclKeys;
         }
     }
 }

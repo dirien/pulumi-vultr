@@ -67,6 +67,10 @@ type Snapshot struct {
 	// The date the snapshot was created.
 	DateCreated pulumi.StringOutput `pulumi:"dateCreated"`
 	// The description for the given snapshot.
+	//
+	// Snapshots often exceed the default timeout built in to all create requests in
+	// the provider. In order to customize that, you may specify a custome value in a
+	// `timeouts` block of the resource definition
 	Description pulumi.StringPtrOutput `pulumi:"description"`
 	// ID of a given instance that you want to create a snapshot from.
 	InstanceId pulumi.StringOutput `pulumi:"instanceId"`
@@ -116,6 +120,10 @@ type snapshotState struct {
 	// The date the snapshot was created.
 	DateCreated *string `pulumi:"dateCreated"`
 	// The description for the given snapshot.
+	//
+	// Snapshots often exceed the default timeout built in to all create requests in
+	// the provider. In order to customize that, you may specify a custome value in a
+	// `timeouts` block of the resource definition
 	Description *string `pulumi:"description"`
 	// ID of a given instance that you want to create a snapshot from.
 	InstanceId *string `pulumi:"instanceId"`
@@ -133,6 +141,10 @@ type SnapshotState struct {
 	// The date the snapshot was created.
 	DateCreated pulumi.StringPtrInput
 	// The description for the given snapshot.
+	//
+	// Snapshots often exceed the default timeout built in to all create requests in
+	// the provider. In order to customize that, you may specify a custome value in a
+	// `timeouts` block of the resource definition
 	Description pulumi.StringPtrInput
 	// ID of a given instance that you want to create a snapshot from.
 	InstanceId pulumi.StringPtrInput
@@ -150,6 +162,10 @@ func (SnapshotState) ElementType() reflect.Type {
 
 type snapshotArgs struct {
 	// The description for the given snapshot.
+	//
+	// Snapshots often exceed the default timeout built in to all create requests in
+	// the provider. In order to customize that, you may specify a custome value in a
+	// `timeouts` block of the resource definition
 	Description *string `pulumi:"description"`
 	// ID of a given instance that you want to create a snapshot from.
 	InstanceId string `pulumi:"instanceId"`
@@ -158,6 +174,10 @@ type snapshotArgs struct {
 // The set of arguments for constructing a Snapshot resource.
 type SnapshotArgs struct {
 	// The description for the given snapshot.
+	//
+	// Snapshots often exceed the default timeout built in to all create requests in
+	// the provider. In order to customize that, you may specify a custome value in a
+	// `timeouts` block of the resource definition
 	Description pulumi.StringPtrInput
 	// ID of a given instance that you want to create a snapshot from.
 	InstanceId pulumi.StringInput
@@ -261,6 +281,10 @@ func (o SnapshotOutput) DateCreated() pulumi.StringOutput {
 }
 
 // The description for the given snapshot.
+//
+// Snapshots often exceed the default timeout built in to all create requests in
+// the provider. In order to customize that, you may specify a custome value in a
+// `timeouts` block of the resource definition
 func (o SnapshotOutput) Description() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Snapshot) pulumi.StringPtrOutput { return v.Description }).(pulumi.StringPtrOutput)
 }

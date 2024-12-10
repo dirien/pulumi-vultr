@@ -127,6 +127,10 @@ if not MYPY:
         """
         The managed database's default logical database.
         """
+        eviction_policy: NotRequired[pulumi.Input[str]]
+        """
+        The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
+        """
         ferretdb_credentials: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[str]]]]
         """
         An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
@@ -199,10 +203,6 @@ if not MYPY:
         """
         The public hostname assigned to the managed database (VPC-attached only).
         """
-        redis_eviction_policy: NotRequired[pulumi.Input[str]]
-        """
-        The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
-        """
         status: NotRequired[pulumi.Input[str]]
         """
         The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).
@@ -236,6 +236,7 @@ class DatabaseReadReplicaArgs:
                  database_engine_version: Optional[pulumi.Input[str]] = None,
                  date_created: Optional[pulumi.Input[str]] = None,
                  dbname: Optional[pulumi.Input[str]] = None,
+                 eviction_policy: Optional[pulumi.Input[str]] = None,
                  ferretdb_credentials: Optional[pulumi.Input[Mapping[str, pulumi.Input[str]]]] = None,
                  host: Optional[pulumi.Input[str]] = None,
                  id: Optional[pulumi.Input[str]] = None,
@@ -254,7 +255,6 @@ class DatabaseReadReplicaArgs:
                  plan_vcpus: Optional[pulumi.Input[int]] = None,
                  port: Optional[pulumi.Input[str]] = None,
                  public_host: Optional[pulumi.Input[str]] = None,
-                 redis_eviction_policy: Optional[pulumi.Input[str]] = None,
                  status: Optional[pulumi.Input[str]] = None,
                  tag: Optional[pulumi.Input[str]] = None,
                  trusted_ips: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
@@ -268,6 +268,7 @@ class DatabaseReadReplicaArgs:
         :param pulumi.Input[str] database_engine_version: The database engine version of the new managed database.
         :param pulumi.Input[str] date_created: The date the managed database was added to your Vultr account.
         :param pulumi.Input[str] dbname: The managed database's default logical database.
+        :param pulumi.Input[str] eviction_policy: The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] ferretdb_credentials: An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
         :param pulumi.Input[str] host: The hostname assigned to the managed database.
         :param pulumi.Input[str] id: The ID of the managed database.
@@ -286,7 +287,6 @@ class DatabaseReadReplicaArgs:
         :param pulumi.Input[int] plan_vcpus: The number of virtual CPUs available on the managed database.
         :param pulumi.Input[str] port: The connection port for the managed database.
         :param pulumi.Input[str] public_host: The public hostname assigned to the managed database (VPC-attached only).
-        :param pulumi.Input[str] redis_eviction_policy: The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
         :param pulumi.Input[str] status: The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).
         :param pulumi.Input[str] tag: The tag to assign to the managed database.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] trusted_ips: A list of allowed IP addresses for the managed database.
@@ -305,6 +305,8 @@ class DatabaseReadReplicaArgs:
             pulumi.set(__self__, "date_created", date_created)
         if dbname is not None:
             pulumi.set(__self__, "dbname", dbname)
+        if eviction_policy is not None:
+            pulumi.set(__self__, "eviction_policy", eviction_policy)
         if ferretdb_credentials is not None:
             pulumi.set(__self__, "ferretdb_credentials", ferretdb_credentials)
         if host is not None:
@@ -341,8 +343,6 @@ class DatabaseReadReplicaArgs:
             pulumi.set(__self__, "port", port)
         if public_host is not None:
             pulumi.set(__self__, "public_host", public_host)
-        if redis_eviction_policy is not None:
-            pulumi.set(__self__, "redis_eviction_policy", redis_eviction_policy)
         if status is not None:
             pulumi.set(__self__, "status", status)
         if tag is not None:
@@ -437,6 +437,18 @@ class DatabaseReadReplicaArgs:
     @dbname.setter
     def dbname(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "dbname", value)
+
+    @property
+    @pulumi.getter(name="evictionPolicy")
+    def eviction_policy(self) -> Optional[pulumi.Input[str]]:
+        """
+        The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
+        """
+        return pulumi.get(self, "eviction_policy")
+
+    @eviction_policy.setter
+    def eviction_policy(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "eviction_policy", value)
 
     @property
     @pulumi.getter(name="ferretdbCredentials")
@@ -655,18 +667,6 @@ class DatabaseReadReplicaArgs:
         pulumi.set(self, "public_host", value)
 
     @property
-    @pulumi.getter(name="redisEvictionPolicy")
-    def redis_eviction_policy(self) -> Optional[pulumi.Input[str]]:
-        """
-        The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
-        """
-        return pulumi.get(self, "redis_eviction_policy")
-
-    @redis_eviction_policy.setter
-    def redis_eviction_policy(self, value: Optional[pulumi.Input[str]]):
-        pulumi.set(self, "redis_eviction_policy", value)
-
-    @property
     @pulumi.getter
     def status(self) -> Optional[pulumi.Input[str]]:
         """
@@ -729,21 +729,21 @@ class DatabaseReadReplicaArgs:
 
 if not MYPY:
     class DatabaseUserAccessControlArgsDict(TypedDict):
-        redis_acl_categories: pulumi.Input[Sequence[pulumi.Input[str]]]
+        acl_categories: pulumi.Input[Sequence[pulumi.Input[str]]]
         """
-        The list of command category rules for this managed database user.
+        List of command category rules for this managed database user (Redis engine types only).
         """
-        redis_acl_channels: pulumi.Input[Sequence[pulumi.Input[str]]]
+        acl_channels: pulumi.Input[Sequence[pulumi.Input[str]]]
         """
-        The list of publish/subscribe channel patterns for this managed database user.
+        List of publish/subscribe channel patterns for this managed database user (Redis engine types only).
         """
-        redis_acl_commands: pulumi.Input[Sequence[pulumi.Input[str]]]
+        acl_commands: pulumi.Input[Sequence[pulumi.Input[str]]]
         """
-        The list of individual command rules for this managed database user.
+        List of individual command rules for this managed database user (Redis engine types only).
         """
-        redis_acl_keys: pulumi.Input[Sequence[pulumi.Input[str]]]
+        acl_keys: pulumi.Input[Sequence[pulumi.Input[str]]]
         """
-        The list of access rules for this managed database user.
+        List of access rules for this managed database user (Redis engine types only).
         """
 elif False:
     DatabaseUserAccessControlArgsDict: TypeAlias = Mapping[str, Any]
@@ -751,68 +751,68 @@ elif False:
 @pulumi.input_type
 class DatabaseUserAccessControlArgs:
     def __init__(__self__, *,
-                 redis_acl_categories: pulumi.Input[Sequence[pulumi.Input[str]]],
-                 redis_acl_channels: pulumi.Input[Sequence[pulumi.Input[str]]],
-                 redis_acl_commands: pulumi.Input[Sequence[pulumi.Input[str]]],
-                 redis_acl_keys: pulumi.Input[Sequence[pulumi.Input[str]]]):
+                 acl_categories: pulumi.Input[Sequence[pulumi.Input[str]]],
+                 acl_channels: pulumi.Input[Sequence[pulumi.Input[str]]],
+                 acl_commands: pulumi.Input[Sequence[pulumi.Input[str]]],
+                 acl_keys: pulumi.Input[Sequence[pulumi.Input[str]]]):
         """
-        :param pulumi.Input[Sequence[pulumi.Input[str]]] redis_acl_categories: The list of command category rules for this managed database user.
-        :param pulumi.Input[Sequence[pulumi.Input[str]]] redis_acl_channels: The list of publish/subscribe channel patterns for this managed database user.
-        :param pulumi.Input[Sequence[pulumi.Input[str]]] redis_acl_commands: The list of individual command rules for this managed database user.
-        :param pulumi.Input[Sequence[pulumi.Input[str]]] redis_acl_keys: The list of access rules for this managed database user.
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] acl_categories: List of command category rules for this managed database user (Redis engine types only).
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] acl_channels: List of publish/subscribe channel patterns for this managed database user (Redis engine types only).
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] acl_commands: List of individual command rules for this managed database user (Redis engine types only).
+        :param pulumi.Input[Sequence[pulumi.Input[str]]] acl_keys: List of access rules for this managed database user (Redis engine types only).
         """
-        pulumi.set(__self__, "redis_acl_categories", redis_acl_categories)
-        pulumi.set(__self__, "redis_acl_channels", redis_acl_channels)
-        pulumi.set(__self__, "redis_acl_commands", redis_acl_commands)
-        pulumi.set(__self__, "redis_acl_keys", redis_acl_keys)
+        pulumi.set(__self__, "acl_categories", acl_categories)
+        pulumi.set(__self__, "acl_channels", acl_channels)
+        pulumi.set(__self__, "acl_commands", acl_commands)
+        pulumi.set(__self__, "acl_keys", acl_keys)
 
     @property
-    @pulumi.getter(name="redisAclCategories")
-    def redis_acl_categories(self) -> pulumi.Input[Sequence[pulumi.Input[str]]]:
+    @pulumi.getter(name="aclCategories")
+    def acl_categories(self) -> pulumi.Input[Sequence[pulumi.Input[str]]]:
         """
-        The list of command category rules for this managed database user.
+        List of command category rules for this managed database user (Redis engine types only).
         """
-        return pulumi.get(self, "redis_acl_categories")
+        return pulumi.get(self, "acl_categories")
 
-    @redis_acl_categories.setter
-    def redis_acl_categories(self, value: pulumi.Input[Sequence[pulumi.Input[str]]]):
-        pulumi.set(self, "redis_acl_categories", value)
-
-    @property
-    @pulumi.getter(name="redisAclChannels")
-    def redis_acl_channels(self) -> pulumi.Input[Sequence[pulumi.Input[str]]]:
-        """
-        The list of publish/subscribe channel patterns for this managed database user.
-        """
-        return pulumi.get(self, "redis_acl_channels")
-
-    @redis_acl_channels.setter
-    def redis_acl_channels(self, value: pulumi.Input[Sequence[pulumi.Input[str]]]):
-        pulumi.set(self, "redis_acl_channels", value)
+    @acl_categories.setter
+    def acl_categories(self, value: pulumi.Input[Sequence[pulumi.Input[str]]]):
+        pulumi.set(self, "acl_categories", value)
 
     @property
-    @pulumi.getter(name="redisAclCommands")
-    def redis_acl_commands(self) -> pulumi.Input[Sequence[pulumi.Input[str]]]:
+    @pulumi.getter(name="aclChannels")
+    def acl_channels(self) -> pulumi.Input[Sequence[pulumi.Input[str]]]:
         """
-        The list of individual command rules for this managed database user.
+        List of publish/subscribe channel patterns for this managed database user (Redis engine types only).
         """
-        return pulumi.get(self, "redis_acl_commands")
+        return pulumi.get(self, "acl_channels")
 
-    @redis_acl_commands.setter
-    def redis_acl_commands(self, value: pulumi.Input[Sequence[pulumi.Input[str]]]):
-        pulumi.set(self, "redis_acl_commands", value)
+    @acl_channels.setter
+    def acl_channels(self, value: pulumi.Input[Sequence[pulumi.Input[str]]]):
+        pulumi.set(self, "acl_channels", value)
 
     @property
-    @pulumi.getter(name="redisAclKeys")
-    def redis_acl_keys(self) -> pulumi.Input[Sequence[pulumi.Input[str]]]:
+    @pulumi.getter(name="aclCommands")
+    def acl_commands(self) -> pulumi.Input[Sequence[pulumi.Input[str]]]:
         """
-        The list of access rules for this managed database user.
+        List of individual command rules for this managed database user (Redis engine types only).
         """
-        return pulumi.get(self, "redis_acl_keys")
+        return pulumi.get(self, "acl_commands")
 
-    @redis_acl_keys.setter
-    def redis_acl_keys(self, value: pulumi.Input[Sequence[pulumi.Input[str]]]):
-        pulumi.set(self, "redis_acl_keys", value)
+    @acl_commands.setter
+    def acl_commands(self, value: pulumi.Input[Sequence[pulumi.Input[str]]]):
+        pulumi.set(self, "acl_commands", value)
+
+    @property
+    @pulumi.getter(name="aclKeys")
+    def acl_keys(self) -> pulumi.Input[Sequence[pulumi.Input[str]]]:
+        """
+        List of access rules for this managed database user (Redis engine types only).
+        """
+        return pulumi.get(self, "acl_keys")
+
+    @acl_keys.setter
+    def acl_keys(self, value: pulumi.Input[Sequence[pulumi.Input[str]]]):
+        pulumi.set(self, "acl_keys", value)
 
 
 if not MYPY:

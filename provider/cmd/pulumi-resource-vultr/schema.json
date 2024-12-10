@@ -103,6 +103,10 @@
                     "type": "string",
                     "description": "The managed database's default logical database.\n"
                 },
+                "evictionPolicy": {
+                    "type": "string",
+                    "description": "The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).\n"
+                },
                 "ferretdbCredentials": {
                     "type": "object",
                     "additionalProperties": {
@@ -185,10 +189,6 @@
                     "type": "string",
                     "description": "The public hostname assigned to the managed database (VPC-attached only).\n"
                 },
-                "redisEvictionPolicy": {
-                    "type": "string",
-                    "description": "The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).\n"
-                },
                 "region": {
                     "type": "string",
                     "description": "The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)\n"
@@ -230,6 +230,7 @@
                         "databaseEngineVersion",
                         "dateCreated",
                         "dbname",
+                        "evictionPolicy",
                         "ferretdbCredentials",
                         "host",
                         "id",
@@ -249,7 +250,6 @@
                         "planVcpus",
                         "port",
                         "publicHost",
-                        "redisEvictionPolicy",
                         "region",
                         "status",
                         "tag",
@@ -262,41 +262,41 @@
         },
         "vultr:index/DatabaseUserAccessControl:DatabaseUserAccessControl": {
             "properties": {
-                "redisAclCategories": {
+                "aclCategories": {
                     "type": "array",
                     "items": {
                         "type": "string"
                     },
-                    "description": "The list of command category rules for this managed database user.\n"
+                    "description": "List of command category rules for this managed database user (Redis engine types only).\n"
                 },
-                "redisAclChannels": {
+                "aclChannels": {
                     "type": "array",
                     "items": {
                         "type": "string"
                     },
-                    "description": "The list of publish/subscribe channel patterns for this managed database user.\n"
+                    "description": "List of publish/subscribe channel patterns for this managed database user (Redis engine types only).\n"
                 },
-                "redisAclCommands": {
+                "aclCommands": {
                     "type": "array",
                     "items": {
                         "type": "string"
                     },
-                    "description": "The list of individual command rules for this managed database user.\n"
+                    "description": "List of individual command rules for this managed database user (Redis engine types only).\n"
                 },
-                "redisAclKeys": {
+                "aclKeys": {
                     "type": "array",
                     "items": {
                         "type": "string"
                     },
-                    "description": "The list of access rules for this managed database user.\n"
+                    "description": "List of access rules for this managed database user (Redis engine types only).\n"
                 }
             },
             "type": "object",
             "required": [
-                "redisAclCategories",
-                "redisAclChannels",
-                "redisAclCommands",
-                "redisAclKeys"
+                "aclCategories",
+                "aclChannels",
+                "aclCommands",
+                "aclKeys"
             ]
         },
         "vultr:index/InstanceBackupsSchedule:InstanceBackupsSchedule": {
@@ -785,6 +785,10 @@
                     "type": "string",
                     "description": "The managed database's default logical database.\n"
                 },
+                "evictionPolicy": {
+                    "type": "string",
+                    "description": "The configuration value for the data eviction policy on the managed database (Redis engine types only).\n"
+                },
                 "ferretdbCredentials": {
                     "type": "object",
                     "additionalProperties": {
@@ -866,10 +870,6 @@
                     "type": "string",
                     "description": "The public hostname assigned to the managed database (VPC-attached only).\n"
                 },
-                "redisEvictionPolicy": {
-                    "type": "string",
-                    "description": "The configuration value for the data eviction policy on the managed database (Redis engine types only).\n"
-                },
                 "region": {
                     "type": "string",
                     "description": "The region ID of the managed database.\n"
@@ -905,6 +905,7 @@
                 "databaseEngineVersion",
                 "dateCreated",
                 "dbname",
+                "evictionPolicy",
                 "ferretdbCredentials",
                 "host",
                 "id",
@@ -924,7 +925,6 @@
                 "planVcpus",
                 "port",
                 "publicHost",
-                "redisEvictionPolicy",
                 "region",
                 "status",
                 "tag",
@@ -2472,6 +2472,10 @@
                     "type": "string",
                     "description": "The managed database's default logical database.\n"
                 },
+                "evictionPolicy": {
+                    "type": "string",
+                    "description": "The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).\n"
+                },
                 "ferretdbCredentials": {
                     "type": "object",
                     "additionalProperties": {
@@ -2561,10 +2565,6 @@
                     },
                     "description": "A list of read replicas attached to the managed database.\n"
                 },
-                "redisEvictionPolicy": {
-                    "type": "string",
-                    "description": "The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).\n"
-                },
                 "region": {
                     "type": "string",
                     "description": "The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)\n"
@@ -2605,6 +2605,7 @@
                 "databaseEngineVersion",
                 "dateCreated",
                 "dbname",
+                "evictionPolicy",
                 "ferretdbCredentials",
                 "host",
                 "label",
@@ -2623,7 +2624,6 @@
                 "port",
                 "publicHost",
                 "readReplicas",
-                "redisEvictionPolicy",
                 "region",
                 "saslPort",
                 "status",
@@ -2650,6 +2650,10 @@
                 "databaseEngineVersion": {
                     "type": "string",
                     "description": "The database engine version of the new managed database.\n"
+                },
+                "evictionPolicy": {
+                    "type": "string",
+                    "description": "The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).\n"
                 },
                 "ferretdbCredentials": {
                     "type": "object",
@@ -2720,10 +2724,6 @@
                     },
                     "description": "A list of read replicas attached to the managed database.\n"
                 },
-                "redisEvictionPolicy": {
-                    "type": "string",
-                    "description": "The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).\n"
-                },
                 "region": {
                     "type": "string",
                     "description": "The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)\n"
@@ -2786,6 +2786,10 @@
                     "dbname": {
                         "type": "string",
                         "description": "The managed database's default logical database.\n"
+                    },
+                    "evictionPolicy": {
+                        "type": "string",
+                        "description": "The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).\n"
                     },
                     "ferretdbCredentials": {
                         "type": "object",
@@ -2875,10 +2879,6 @@
                             "$ref": "#/types/vultr:index/DatabaseReadReplica:DatabaseReadReplica"
                         },
                         "description": "A list of read replicas attached to the managed database.\n"
-                    },
-                    "redisEvictionPolicy": {
-                        "type": "string",
-                        "description": "The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).\n"
                     },
                     "region": {
                         "type": "string",
@@ -3207,6 +3207,10 @@
                     "type": "string",
                     "description": "The managed database read replica's default logical database.\n"
                 },
+                "evictionPolicy": {
+                    "type": "string",
+                    "description": "The configuration value for the data eviction policy on the managed database read replica (Redis engine types only).\n"
+                },
                 "ferretdbCredentials": {
                     "type": "object",
                     "additionalProperties": {
@@ -3285,10 +3289,6 @@
                     "type": "string",
                     "description": "The public hostname assigned to the managed database read replica (VPC-attached only).\n"
                 },
-                "redisEvictionPolicy": {
-                    "type": "string",
-                    "description": "The configuration value for the data eviction policy on the managed database read replica (Redis engine types only).\n"
-                },
                 "region": {
                     "type": "string",
                     "description": "The ID of the region that the managed database read replica is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)\n"
@@ -3324,6 +3324,7 @@
                 "databaseId",
                 "dateCreated",
                 "dbname",
+                "evictionPolicy",
                 "ferretdbCredentials",
                 "host",
                 "label",
@@ -3342,7 +3343,6 @@
                 "planVcpus",
                 "port",
                 "publicHost",
-                "redisEvictionPolicy",
                 "region",
                 "status",
                 "tag",
@@ -3355,6 +3355,10 @@
                     "type": "string",
                     "description": "The managed database ID you want to attach this replica to.\n",
                     "willReplaceOnChanges": true
+                },
+                "evictionPolicy": {
+                    "type": "string",
+                    "description": "The configuration value for the data eviction policy on the managed database read replica (Redis engine types only).\n"
                 },
                 "ferretdbCredentials": {
                     "type": "object",
@@ -3393,10 +3397,6 @@
                 "publicHost": {
                     "type": "string",
                     "description": "The public hostname assigned to the managed database read replica (VPC-attached only).\n"
-                },
-                "redisEvictionPolicy": {
-                    "type": "string",
-                    "description": "The configuration value for the data eviction policy on the managed database read replica (Redis engine types only).\n"
                 },
                 "region": {
                     "type": "string",
@@ -3446,6 +3446,10 @@
                     "dbname": {
                         "type": "string",
                         "description": "The managed database read replica's default logical database.\n"
+                    },
+                    "evictionPolicy": {
+                        "type": "string",
+                        "description": "The configuration value for the data eviction policy on the managed database read replica (Redis engine types only).\n"
                     },
                     "ferretdbCredentials": {
                         "type": "object",
@@ -3524,10 +3528,6 @@
                     "publicHost": {
                         "type": "string",
                         "description": "The public hostname assigned to the managed database read replica (VPC-attached only).\n"
-                    },
-                    "redisEvictionPolicy": {
-                        "type": "string",
-                        "description": "The configuration value for the data eviction policy on the managed database read replica (Redis engine types only).\n"
                     },
                     "region": {
                         "type": "string",
@@ -5974,7 +5974,7 @@
                 },
                 "description": {
                     "type": "string",
-                    "description": "The description for the given snapshot.\n"
+                    "description": "The description for the given snapshot.\n\nSnapshots often exceed the default timeout built in to all create requests in\nthe provider. In order to customize that, you may specify a custome value in a\n`timeouts` block of the resource definition\n"
                 },
                 "instanceId": {
                     "type": "string",
@@ -6004,7 +6004,7 @@
             "inputProperties": {
                 "description": {
                     "type": "string",
-                    "description": "The description for the given snapshot.\n",
+                    "description": "The description for the given snapshot.\n\nSnapshots often exceed the default timeout built in to all create requests in\nthe provider. In order to customize that, you may specify a custome value in a\n`timeouts` block of the resource definition\n",
                     "willReplaceOnChanges": true
                 },
                 "instanceId": {
@@ -6029,7 +6029,7 @@
                     },
                     "description": {
                         "type": "string",
-                        "description": "The description for the given snapshot.\n",
+                        "description": "The description for the given snapshot.\n\nSnapshots often exceed the default timeout built in to all create requests in\nthe provider. In order to customize that, you may specify a custome value in a\n`timeouts` block of the resource definition\n",
                         "willReplaceOnChanges": true
                     },
                     "instanceId": {
@@ -7119,6 +7119,10 @@
                         "type": "string",
                         "description": "The managed database's default logical database.\n"
                     },
+                    "evictionPolicy": {
+                        "type": "string",
+                        "description": "The configuration value for the data eviction policy on the managed database (Redis engine types only).\n"
+                    },
                     "ferretdbCredentials": {
                         "type": "object",
                         "additionalProperties": {
@@ -7217,10 +7221,6 @@
                         },
                         "description": "A list of read replicas attached to the managed database.\n"
                     },
-                    "redisEvictionPolicy": {
-                        "type": "string",
-                        "description": "The configuration value for the data eviction policy on the managed database (Redis engine types only).\n"
-                    },
                     "region": {
                         "type": "string",
                         "description": "The region ID of the managed database.\n"
@@ -7262,6 +7262,7 @@
                     "databaseEngineVersion",
                     "dateCreated",
                     "dbname",
+                    "evictionPolicy",
                     "ferretdbCredentials",
                     "host",
                     "label",
@@ -7282,7 +7283,6 @@
                     "port",
                     "publicHost",
                     "readReplicas",
-                    "redisEvictionPolicy",
                     "region",
                     "saslPort",
                     "status",

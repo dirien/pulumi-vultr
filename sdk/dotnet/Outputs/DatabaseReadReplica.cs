@@ -35,6 +35,10 @@ namespace ediri.Vultr.Outputs
         /// </summary>
         public readonly string? Dbname;
         /// <summary>
+        /// The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
+        /// </summary>
+        public readonly string? EvictionPolicy;
+        /// <summary>
         /// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
         /// </summary>
         public readonly ImmutableDictionary<string, string>? FerretdbCredentials;
@@ -111,10 +115,6 @@ namespace ediri.Vultr.Outputs
         /// </summary>
         public readonly string? PublicHost;
         /// <summary>
-        /// The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
-        /// </summary>
-        public readonly string? RedisEvictionPolicy;
-        /// <summary>
         /// The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
         /// </summary>
         public readonly string Region;
@@ -150,6 +150,8 @@ namespace ediri.Vultr.Outputs
             string? dateCreated,
 
             string? dbname,
+
+            string? evictionPolicy,
 
             ImmutableDictionary<string, string>? ferretdbCredentials,
 
@@ -189,8 +191,6 @@ namespace ediri.Vultr.Outputs
 
             string? publicHost,
 
-            string? redisEvictionPolicy,
-
             string region,
 
             string? status,
@@ -208,6 +208,7 @@ namespace ediri.Vultr.Outputs
             DatabaseEngineVersion = databaseEngineVersion;
             DateCreated = dateCreated;
             Dbname = dbname;
+            EvictionPolicy = evictionPolicy;
             FerretdbCredentials = ferretdbCredentials;
             Host = host;
             Id = id;
@@ -227,7 +228,6 @@ namespace ediri.Vultr.Outputs
             PlanVcpus = planVcpus;
             Port = port;
             PublicHost = publicHost;
-            RedisEvictionPolicy = redisEvictionPolicy;
             Region = region;
             Status = status;
             Tag = tag;

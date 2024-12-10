@@ -13,52 +13,52 @@ namespace ediri.Vultr.Inputs
 
     public sealed class DatabaseUserAccessControlGetArgs : global::Pulumi.ResourceArgs
     {
-        [Input("redisAclCategories", required: true)]
-        private InputList<string>? _redisAclCategories;
+        [Input("aclCategories", required: true)]
+        private InputList<string>? _aclCategories;
 
         /// <summary>
-        /// The list of command category rules for this managed database user.
+        /// List of command category rules for this managed database user (Redis engine types only).
         /// </summary>
-        public InputList<string> RedisAclCategories
+        public InputList<string> AclCategories
         {
-            get => _redisAclCategories ?? (_redisAclCategories = new InputList<string>());
-            set => _redisAclCategories = value;
+            get => _aclCategories ?? (_aclCategories = new InputList<string>());
+            set => _aclCategories = value;
         }
 
-        [Input("redisAclChannels", required: true)]
-        private InputList<string>? _redisAclChannels;
+        [Input("aclChannels", required: true)]
+        private InputList<string>? _aclChannels;
 
         /// <summary>
-        /// The list of publish/subscribe channel patterns for this managed database user.
+        /// List of publish/subscribe channel patterns for this managed database user (Redis engine types only).
         /// </summary>
-        public InputList<string> RedisAclChannels
+        public InputList<string> AclChannels
         {
-            get => _redisAclChannels ?? (_redisAclChannels = new InputList<string>());
-            set => _redisAclChannels = value;
+            get => _aclChannels ?? (_aclChannels = new InputList<string>());
+            set => _aclChannels = value;
         }
 
-        [Input("redisAclCommands", required: true)]
-        private InputList<string>? _redisAclCommands;
+        [Input("aclCommands", required: true)]
+        private InputList<string>? _aclCommands;
 
         /// <summary>
-        /// The list of individual command rules for this managed database user.
+        /// List of individual command rules for this managed database user (Redis engine types only).
         /// </summary>
-        public InputList<string> RedisAclCommands
+        public InputList<string> AclCommands
         {
-            get => _redisAclCommands ?? (_redisAclCommands = new InputList<string>());
-            set => _redisAclCommands = value;
+            get => _aclCommands ?? (_aclCommands = new InputList<string>());
+            set => _aclCommands = value;
         }
 
-        [Input("redisAclKeys", required: true)]
-        private InputList<string>? _redisAclKeys;
+        [Input("aclKeys", required: true)]
+        private InputList<string>? _aclKeys;
 
         /// <summary>
-        /// The list of access rules for this managed database user.
+        /// List of access rules for this managed database user (Redis engine types only).
         /// </summary>
-        public InputList<string> RedisAclKeys
+        public InputList<string> AclKeys
         {
-            get => _redisAclKeys ?? (_redisAclKeys = new InputList<string>());
-            set => _redisAclKeys = value;
+            get => _aclKeys ?? (_aclKeys = new InputList<string>());
+            set => _aclKeys = value;
         }
 
         public DatabaseUserAccessControlGetArgs()

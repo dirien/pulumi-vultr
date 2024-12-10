@@ -24,6 +24,8 @@ type DatabaseReadReplica struct {
 	DateCreated *string `pulumi:"dateCreated"`
 	// The managed database's default logical database.
 	Dbname *string `pulumi:"dbname"`
+	// The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
+	EvictionPolicy *string `pulumi:"evictionPolicy"`
 	// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
 	FerretdbCredentials map[string]string `pulumi:"ferretdbCredentials"`
 	// The hostname assigned to the managed database.
@@ -62,8 +64,6 @@ type DatabaseReadReplica struct {
 	Port *string `pulumi:"port"`
 	// The public hostname assigned to the managed database (VPC-attached only).
 	PublicHost *string `pulumi:"publicHost"`
-	// The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
-	RedisEvictionPolicy *string `pulumi:"redisEvictionPolicy"`
 	// The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
 	Region string `pulumi:"region"`
 	// The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).
@@ -100,6 +100,8 @@ type DatabaseReadReplicaArgs struct {
 	DateCreated pulumi.StringPtrInput `pulumi:"dateCreated"`
 	// The managed database's default logical database.
 	Dbname pulumi.StringPtrInput `pulumi:"dbname"`
+	// The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
+	EvictionPolicy pulumi.StringPtrInput `pulumi:"evictionPolicy"`
 	// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
 	FerretdbCredentials pulumi.StringMapInput `pulumi:"ferretdbCredentials"`
 	// The hostname assigned to the managed database.
@@ -138,8 +140,6 @@ type DatabaseReadReplicaArgs struct {
 	Port pulumi.StringPtrInput `pulumi:"port"`
 	// The public hostname assigned to the managed database (VPC-attached only).
 	PublicHost pulumi.StringPtrInput `pulumi:"publicHost"`
-	// The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
-	RedisEvictionPolicy pulumi.StringPtrInput `pulumi:"redisEvictionPolicy"`
 	// The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
 	Region pulumi.StringInput `pulumi:"region"`
 	// The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).
@@ -228,6 +228,11 @@ func (o DatabaseReadReplicaOutput) DateCreated() pulumi.StringPtrOutput {
 // The managed database's default logical database.
 func (o DatabaseReadReplicaOutput) Dbname() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v DatabaseReadReplica) *string { return v.Dbname }).(pulumi.StringPtrOutput)
+}
+
+// The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
+func (o DatabaseReadReplicaOutput) EvictionPolicy() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v DatabaseReadReplica) *string { return v.EvictionPolicy }).(pulumi.StringPtrOutput)
 }
 
 // An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
@@ -325,11 +330,6 @@ func (o DatabaseReadReplicaOutput) PublicHost() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v DatabaseReadReplica) *string { return v.PublicHost }).(pulumi.StringPtrOutput)
 }
 
-// The configuration value for the data eviction policy on the managed database (Redis engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
-func (o DatabaseReadReplicaOutput) RedisEvictionPolicy() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v DatabaseReadReplica) *string { return v.RedisEvictionPolicy }).(pulumi.StringPtrOutput)
-}
-
 // The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
 func (o DatabaseReadReplicaOutput) Region() pulumi.StringOutput {
 	return o.ApplyT(func(v DatabaseReadReplica) string { return v.Region }).(pulumi.StringOutput)
@@ -381,14 +381,14 @@ func (o DatabaseReadReplicaArrayOutput) Index(i pulumi.IntInput) DatabaseReadRep
 }
 
 type DatabaseUserAccessControl struct {
-	// The list of command category rules for this managed database user.
-	RedisAclCategories []string `pulumi:"redisAclCategories"`
-	// The list of publish/subscribe channel patterns for this managed database user.
-	RedisAclChannels []string `pulumi:"redisAclChannels"`
-	// The list of individual command rules for this managed database user.
-	RedisAclCommands []string `pulumi:"redisAclCommands"`
-	// The list of access rules for this managed database user.
-	RedisAclKeys []string `pulumi:"redisAclKeys"`
+	// List of command category rules for this managed database user (Redis engine types only).
+	AclCategories []string `pulumi:"aclCategories"`
+	// List of publish/subscribe channel patterns for this managed database user (Redis engine types only).
+	AclChannels []string `pulumi:"aclChannels"`
+	// List of individual command rules for this managed database user (Redis engine types only).
+	AclCommands []string `pulumi:"aclCommands"`
+	// List of access rules for this managed database user (Redis engine types only).
+	AclKeys []string `pulumi:"aclKeys"`
 }
 
 // DatabaseUserAccessControlInput is an input type that accepts DatabaseUserAccessControlArgs and DatabaseUserAccessControlOutput values.
@@ -403,14 +403,14 @@ type DatabaseUserAccessControlInput interface {
 }
 
 type DatabaseUserAccessControlArgs struct {
-	// The list of command category rules for this managed database user.
-	RedisAclCategories pulumi.StringArrayInput `pulumi:"redisAclCategories"`
-	// The list of publish/subscribe channel patterns for this managed database user.
-	RedisAclChannels pulumi.StringArrayInput `pulumi:"redisAclChannels"`
-	// The list of individual command rules for this managed database user.
-	RedisAclCommands pulumi.StringArrayInput `pulumi:"redisAclCommands"`
-	// The list of access rules for this managed database user.
-	RedisAclKeys pulumi.StringArrayInput `pulumi:"redisAclKeys"`
+	// List of command category rules for this managed database user (Redis engine types only).
+	AclCategories pulumi.StringArrayInput `pulumi:"aclCategories"`
+	// List of publish/subscribe channel patterns for this managed database user (Redis engine types only).
+	AclChannels pulumi.StringArrayInput `pulumi:"aclChannels"`
+	// List of individual command rules for this managed database user (Redis engine types only).
+	AclCommands pulumi.StringArrayInput `pulumi:"aclCommands"`
+	// List of access rules for this managed database user (Redis engine types only).
+	AclKeys pulumi.StringArrayInput `pulumi:"aclKeys"`
 }
 
 func (DatabaseUserAccessControlArgs) ElementType() reflect.Type {
@@ -490,24 +490,24 @@ func (o DatabaseUserAccessControlOutput) ToDatabaseUserAccessControlPtrOutputWit
 	}).(DatabaseUserAccessControlPtrOutput)
 }
 
-// The list of command category rules for this managed database user.
-func (o DatabaseUserAccessControlOutput) RedisAclCategories() pulumi.StringArrayOutput {
-	return o.ApplyT(func(v DatabaseUserAccessControl) []string { return v.RedisAclCategories }).(pulumi.StringArrayOutput)
+// List of command category rules for this managed database user (Redis engine types only).
+func (o DatabaseUserAccessControlOutput) AclCategories() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v DatabaseUserAccessControl) []string { return v.AclCategories }).(pulumi.StringArrayOutput)
 }
 
-// The list of publish/subscribe channel patterns for this managed database user.
-func (o DatabaseUserAccessControlOutput) RedisAclChannels() pulumi.StringArrayOutput {
-	return o.ApplyT(func(v DatabaseUserAccessControl) []string { return v.RedisAclChannels }).(pulumi.StringArrayOutput)
+// List of publish/subscribe channel patterns for this managed database user (Redis engine types only).
+func (o DatabaseUserAccessControlOutput) AclChannels() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v DatabaseUserAccessControl) []string { return v.AclChannels }).(pulumi.StringArrayOutput)
 }
 
-// The list of individual command rules for this managed database user.
-func (o DatabaseUserAccessControlOutput) RedisAclCommands() pulumi.StringArrayOutput {
-	return o.ApplyT(func(v DatabaseUserAccessControl) []string { return v.RedisAclCommands }).(pulumi.StringArrayOutput)
+// List of individual command rules for this managed database user (Redis engine types only).
+func (o DatabaseUserAccessControlOutput) AclCommands() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v DatabaseUserAccessControl) []string { return v.AclCommands }).(pulumi.StringArrayOutput)
 }
 
-// The list of access rules for this managed database user.
-func (o DatabaseUserAccessControlOutput) RedisAclKeys() pulumi.StringArrayOutput {
-	return o.ApplyT(func(v DatabaseUserAccessControl) []string { return v.RedisAclKeys }).(pulumi.StringArrayOutput)
+// List of access rules for this managed database user (Redis engine types only).
+func (o DatabaseUserAccessControlOutput) AclKeys() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v DatabaseUserAccessControl) []string { return v.AclKeys }).(pulumi.StringArrayOutput)
 }
 
 type DatabaseUserAccessControlPtrOutput struct{ *pulumi.OutputState }
@@ -534,43 +534,43 @@ func (o DatabaseUserAccessControlPtrOutput) Elem() DatabaseUserAccessControlOutp
 	}).(DatabaseUserAccessControlOutput)
 }
 
-// The list of command category rules for this managed database user.
-func (o DatabaseUserAccessControlPtrOutput) RedisAclCategories() pulumi.StringArrayOutput {
+// List of command category rules for this managed database user (Redis engine types only).
+func (o DatabaseUserAccessControlPtrOutput) AclCategories() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v *DatabaseUserAccessControl) []string {
 		if v == nil {
 			return nil
 		}
-		return v.RedisAclCategories
+		return v.AclCategories
 	}).(pulumi.StringArrayOutput)
 }
 
-// The list of publish/subscribe channel patterns for this managed database user.
-func (o DatabaseUserAccessControlPtrOutput) RedisAclChannels() pulumi.StringArrayOutput {
+// List of publish/subscribe channel patterns for this managed database user (Redis engine types only).
+func (o DatabaseUserAccessControlPtrOutput) AclChannels() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v *DatabaseUserAccessControl) []string {
 		if v == nil {
 			return nil
 		}
-		return v.RedisAclChannels
+		return v.AclChannels
 	}).(pulumi.StringArrayOutput)
 }
 
-// The list of individual command rules for this managed database user.
-func (o DatabaseUserAccessControlPtrOutput) RedisAclCommands() pulumi.StringArrayOutput {
+// List of individual command rules for this managed database user (Redis engine types only).
+func (o DatabaseUserAccessControlPtrOutput) AclCommands() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v *DatabaseUserAccessControl) []string {
 		if v == nil {
 			return nil
 		}
-		return v.RedisAclCommands
+		return v.AclCommands
 	}).(pulumi.StringArrayOutput)
 }
 
-// The list of access rules for this managed database user.
-func (o DatabaseUserAccessControlPtrOutput) RedisAclKeys() pulumi.StringArrayOutput {
+// List of access rules for this managed database user (Redis engine types only).
+func (o DatabaseUserAccessControlPtrOutput) AclKeys() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v *DatabaseUserAccessControl) []string {
 		if v == nil {
 			return nil
 		}
-		return v.RedisAclKeys
+		return v.AclKeys
 	}).(pulumi.StringArrayOutput)
 }
 
@@ -2822,6 +2822,8 @@ type GetDatabaseReadReplica struct {
 	DateCreated string `pulumi:"dateCreated"`
 	// The managed database's default logical database.
 	Dbname string `pulumi:"dbname"`
+	// The configuration value for the data eviction policy on the managed database (Redis engine types only).
+	EvictionPolicy string `pulumi:"evictionPolicy"`
 	// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
 	FerretdbCredentials map[string]string `pulumi:"ferretdbCredentials"`
 	// The hostname assigned to the managed database.
@@ -2859,8 +2861,6 @@ type GetDatabaseReadReplica struct {
 	Port string `pulumi:"port"`
 	// The public hostname assigned to the managed database (VPC-attached only).
 	PublicHost string `pulumi:"publicHost"`
-	// The configuration value for the data eviction policy on the managed database (Redis engine types only).
-	RedisEvictionPolicy string `pulumi:"redisEvictionPolicy"`
 	// The region ID of the managed database.
 	Region string `pulumi:"region"`
 	// The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).
@@ -2897,6 +2897,8 @@ type GetDatabaseReadReplicaArgs struct {
 	DateCreated pulumi.StringInput `pulumi:"dateCreated"`
 	// The managed database's default logical database.
 	Dbname pulumi.StringInput `pulumi:"dbname"`
+	// The configuration value for the data eviction policy on the managed database (Redis engine types only).
+	EvictionPolicy pulumi.StringInput `pulumi:"evictionPolicy"`
 	// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
 	FerretdbCredentials pulumi.StringMapInput `pulumi:"ferretdbCredentials"`
 	// The hostname assigned to the managed database.
@@ -2934,8 +2936,6 @@ type GetDatabaseReadReplicaArgs struct {
 	Port pulumi.StringInput `pulumi:"port"`
 	// The public hostname assigned to the managed database (VPC-attached only).
 	PublicHost pulumi.StringInput `pulumi:"publicHost"`
-	// The configuration value for the data eviction policy on the managed database (Redis engine types only).
-	RedisEvictionPolicy pulumi.StringInput `pulumi:"redisEvictionPolicy"`
 	// The region ID of the managed database.
 	Region pulumi.StringInput `pulumi:"region"`
 	// The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).
@@ -3024,6 +3024,11 @@ func (o GetDatabaseReadReplicaOutput) DateCreated() pulumi.StringOutput {
 // The managed database's default logical database.
 func (o GetDatabaseReadReplicaOutput) Dbname() pulumi.StringOutput {
 	return o.ApplyT(func(v GetDatabaseReadReplica) string { return v.Dbname }).(pulumi.StringOutput)
+}
+
+// The configuration value for the data eviction policy on the managed database (Redis engine types only).
+func (o GetDatabaseReadReplicaOutput) EvictionPolicy() pulumi.StringOutput {
+	return o.ApplyT(func(v GetDatabaseReadReplica) string { return v.EvictionPolicy }).(pulumi.StringOutput)
 }
 
 // An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
@@ -3118,11 +3123,6 @@ func (o GetDatabaseReadReplicaOutput) Port() pulumi.StringOutput {
 // The public hostname assigned to the managed database (VPC-attached only).
 func (o GetDatabaseReadReplicaOutput) PublicHost() pulumi.StringOutput {
 	return o.ApplyT(func(v GetDatabaseReadReplica) string { return v.PublicHost }).(pulumi.StringOutput)
-}
-
-// The configuration value for the data eviction policy on the managed database (Redis engine types only).
-func (o GetDatabaseReadReplicaOutput) RedisEvictionPolicy() pulumi.StringOutput {
-	return o.ApplyT(func(v GetDatabaseReadReplica) string { return v.RedisEvictionPolicy }).(pulumi.StringOutput)
 }
 
 // The region ID of the managed database.
