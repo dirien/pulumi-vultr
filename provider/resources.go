@@ -117,8 +117,14 @@ func Provider() tfbridge.ProviderInfo {
 			// 		"tags": {Type: tfbridge.MakeType(mainPkg, "Tags")},
 			// 	},
 			// },
-			"vultr_bare_metal_server":        {Tok: tfbridge.MakeResource(mainPkg, mainMod, "BareMetalServer")},
-			"vultr_block_storage":            {Tok: tfbridge.MakeResource(mainPkg, mainMod, "BlockStorage")},
+			"vultr_bare_metal_server": {Tok: tfbridge.MakeResource(mainPkg, mainMod, "BareMetalServer")},
+			"vultr_block_storage":     {Tok: tfbridge.MakeResource(mainPkg, mainMod, "BlockStorage")},
+			"vultr_container_registry": {
+				Tok: tfbridge.MakeResource(mainPkg, mainMod, "ContainerRegistry"),
+				Fields: map[string]*tfbridge.SchemaInfo{
+					"urn": {Name: "containerRegistryURN"},
+				},
+			},
 			"vultr_dns_domain":               {Tok: tfbridge.MakeResource(mainPkg, mainMod, "DnsDomain")},
 			"vultr_dns_record":               {Tok: tfbridge.MakeResource(mainPkg, mainMod, "DnsRecord")},
 			"vultr_firewall_group":           {Tok: tfbridge.MakeResource(mainPkg, mainMod, "FirewallGroup")},
