@@ -1,2 +1,2 @@
 pulumi>=3.0.0,<4.0.0
-ediri-vultr==2.12.0
+ediri-vultr==2.23.1

@@ -49,6 +49,7 @@
         "getLoadBalancer.ts",
         "getObjectStorage.ts",
         "getObjectStorageCluster.ts",
+        "getObjectStorageTier.ts",
         "getOs.ts",
         "getPlan.ts",
         "getRegion.ts",
@@ -59,6 +60,7 @@
         "getSshKey.ts",
         "getStartupScript.ts",
         "getUser.ts",
+        "getVirtualFileSystemStorage.ts",
         "getVpc.ts",
         "getVpc2.ts",
         "index.ts",
@@ -83,6 +85,7 @@
         "types/output.ts",
         "user.ts",
         "utilities.ts",
+        "virtualFileSystemStorage.ts",
         "vpc.ts",
         "vpc2.ts"
     ]

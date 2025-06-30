@@ -3,6 +3,6 @@
   "main": "index.js",
   "dependencies": {
     "@pulumi/pulumi": "3.50.2",
-    "@ediri/vultr": "2.12.0"
+    "@ediri/vultr": "2.23.1"
   }
 }
