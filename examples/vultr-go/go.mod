@@ -6,7 +6,7 @@ toolchain go1.24.4
 
 require (
 	github.com/dirien/pulumi-vultr/sdk/v2 v2.21.0
-	github.com/pulumi/pulumi/sdk/v3 v3.175.0
+	github.com/pulumi/pulumi/sdk/v3 v3.181.0
 )
 
 replace github.com/dirien/pulumi-vultr/sdk/v2 => ../../sdk

@@ -20,33 +20,22 @@ __all__ = ['ContainerRegistryArgs', 'ContainerRegistry']
 @pulumi.input_type
 class ContainerRegistryArgs:
     def __init__(__self__, *,
-                 name: pulumi.Input[builtins.str],
                  plan: pulumi.Input[builtins.str],
                  public: pulumi.Input[builtins.bool],
-                 region: pulumi.Input[builtins.str]):
+                 region: pulumi.Input[builtins.str],
+                 name: Optional[pulumi.Input[builtins.str]] = None):
         """
         The set of arguments for constructing a ContainerRegistry resource.
-        :param pulumi.Input[builtins.str] name: The name for your container registry.  Must be lowercase and only alphanumeric characters.
         :param pulumi.Input[builtins.str] plan: The billing plan for the container registry. [See available plans](https://www.vultr.com/api/#tag/Container-Registry/operation/list-registry-plans)
         :param pulumi.Input[builtins.bool] public: Boolean indicating if the container registry should be created with public visibility or if it should require credentials.
         :param pulumi.Input[builtins.str] region: The region where your container registry will be deployed. [See available regions](https://www.vultr.com/api/#tag/Container-Registry/operation/list-registry-regions)
+        :param pulumi.Input[builtins.str] name: The name for your container registry.  Must be lowercase and only alphanumeric characters.
         """
-        pulumi.set(__self__, "name", name)
         pulumi.set(__self__, "plan", plan)
         pulumi.set(__self__, "public", public)
         pulumi.set(__self__, "region", region)
-
-    @property
-    @pulumi.getter
-    def name(self) -> pulumi.Input[builtins.str]:
-        """
-        The name for your container registry.  Must be lowercase and only alphanumeric characters.
-        """
-        return pulumi.get(self, "name")
-
-    @name.setter
-    def name(self, value: pulumi.Input[builtins.str]):
-        pulumi.set(self, "name", value)
+        if name is not None:
+            pulumi.set(__self__, "name", name)
 
     @property
     @pulumi.getter
@@ -84,20 +73,33 @@ class ContainerRegistryArgs:
     def region(self, value: pulumi.Input[builtins.str]):
         pulumi.set(self, "region", value)
 
+    @property
+    @pulumi.getter
+    def name(self) -> Optional[pulumi.Input[builtins.str]]:
+        """
+        The name for your container registry.  Must be lowercase and only alphanumeric characters.
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: Optional[pulumi.Input[builtins.str]]):
+        pulumi.set(self, "name", value)
+
 
 @pulumi.input_type
 class _ContainerRegistryState:
     def __init__(__self__, *,
+                 container_registry_urn: Optional[pulumi.Input[builtins.str]] = None,
                  date_created: Optional[pulumi.Input[builtins.str]] = None,
                  name: Optional[pulumi.Input[builtins.str]] = None,
                  plan: Optional[pulumi.Input[builtins.str]] = None,
                  public: Optional[pulumi.Input[builtins.bool]] = None,
                  region: Optional[pulumi.Input[builtins.str]] = None,
                  root_user: Optional[pulumi.Input[Mapping[str, pulumi.Input[builtins.str]]]] = None,
-                 storage: Optional[pulumi.Input[Mapping[str, pulumi.Input[builtins.str]]]] = None,
-                 urn: Optional[pulumi.Input[builtins.str]] = None):
+                 storage: Optional[pulumi.Input[Mapping[str, pulumi.Input[builtins.str]]]] = None):
         """
         Input properties used for looking up and filtering ContainerRegistry resources.
+        :param pulumi.Input[builtins.str] container_registry_urn: The URN of the container registry.
         :param pulumi.Input[builtins.str] date_created: A date-time of when the root user was created.
         :param pulumi.Input[builtins.str] name: The name for your container registry.  Must be lowercase and only alphanumeric characters.
         :param pulumi.Input[builtins.str] plan: The billing plan for the container registry. [See available plans](https://www.vultr.com/api/#tag/Container-Registry/operation/list-registry-plans)
@@ -105,8 +107,9 @@ class _ContainerRegistryState:
         :param pulumi.Input[builtins.str] region: The region where your container registry will be deployed. [See available regions](https://www.vultr.com/api/#tag/Container-Registry/operation/list-registry-regions)
         :param pulumi.Input[Mapping[str, pulumi.Input[builtins.str]]] root_user: The user associated with the container registry.
         :param pulumi.Input[Mapping[str, pulumi.Input[builtins.str]]] storage: A listing of current storage usage relevant to the container registry.
-        :param pulumi.Input[builtins.str] urn: The URN of the container registry.
         """
+        if container_registry_urn is not None:
+            pulumi.set(__self__, "container_registry_urn", container_registry_urn)
         if date_created is not None:
             pulumi.set(__self__, "date_created", date_created)
         if name is not None:
@@ -121,8 +124,18 @@ class _ContainerRegistryState:
             pulumi.set(__self__, "root_user", root_user)
         if storage is not None:
             pulumi.set(__self__, "storage", storage)
-        if urn is not None:
-            pulumi.set(__self__, "urn", urn)
+
+    @property
+    @pulumi.getter(name="containerRegistryURN")
+    def container_registry_urn(self) -> Optional[pulumi.Input[builtins.str]]:
+        """
+        The URN of the container registry.
+        """
+        return pulumi.get(self, "container_registry_urn")
+
+    @container_registry_urn.setter
+    def container_registry_urn(self, value: Optional[pulumi.Input[builtins.str]]):
+        pulumi.set(self, "container_registry_urn", value)
 
     @property
     @pulumi.getter(name="dateCreated")
@@ -208,18 +221,6 @@ class _ContainerRegistryState:
     def storage(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[builtins.str]]]]):
         pulumi.set(self, "storage", value)
 
-    @property
-    @pulumi.getter
-    def urn(self) -> Optional[pulumi.Input[builtins.str]]:
-        """
-        The URN of the container registry.
-        """
-        return pulumi.get(self, "urn")
-
-    @urn.setter
-    def urn(self, value: Optional[pulumi.Input[builtins.str]]):
-        pulumi.set(self, "urn", value)
-
 
 @pulumi.type_token("vultr:index/containerRegistry:ContainerRegistry")
 class ContainerRegistry(pulumi.CustomResource):
@@ -244,7 +245,6 @@ class ContainerRegistry(pulumi.CustomResource):
         import ediri_vultr as vultr
 
         vcr1 = vultr.ContainerRegistry("vcr1",
-            name="examplecontainerregistry",
             plan="start_up",
             public=False,
             region="sjc")
@@ -277,7 +277,6 @@ class ContainerRegistry(pulumi.CustomResource):
         import ediri_vultr as vultr
 
         vcr1 = vultr.ContainerRegistry("vcr1",
-            name="examplecontainerregistry",
             plan="start_up",
             public=False,
             region="sjc")
@@ -313,8 +312,6 @@ class ContainerRegistry(pulumi.CustomResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = ContainerRegistryArgs.__new__(ContainerRegistryArgs)
 
-            if name is None and not opts.urn:
-                raise TypeError("Missing required property 'name'")
             __props__.__dict__["name"] = name
             if plan is None and not opts.urn:
                 raise TypeError("Missing required property 'plan'")
@@ -325,10 +322,10 @@ class ContainerRegistry(pulumi.CustomResource):
             if region is None and not opts.urn:
                 raise TypeError("Missing required property 'region'")
             __props__.__dict__["region"] = region
+            __props__.__dict__["container_registry_urn"] = None
             __props__.__dict__["date_created"] = None
             __props__.__dict__["root_user"] = None
             __props__.__dict__["storage"] = None
-            __props__.__dict__["urn"] = None
         super(ContainerRegistry, __self__).__init__(
             'vultr:index/containerRegistry:ContainerRegistry',
             resource_name,
@@ -339,14 +336,14 @@ class ContainerRegistry(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
+            container_registry_urn: Optional[pulumi.Input[builtins.str]] = None,
             date_created: Optional[pulumi.Input[builtins.str]] = None,
             name: Optional[pulumi.Input[builtins.str]] = None,
             plan: Optional[pulumi.Input[builtins.str]] = None,
             public: Optional[pulumi.Input[builtins.bool]] = None,
             region: Optional[pulumi.Input[builtins.str]] = None,
             root_user: Optional[pulumi.Input[Mapping[str, pulumi.Input[builtins.str]]]] = None,
-            storage: Optional[pulumi.Input[Mapping[str, pulumi.Input[builtins.str]]]] = None,
-            urn: Optional[pulumi.Input[builtins.str]] = None) -> 'ContainerRegistry':
+            storage: Optional[pulumi.Input[Mapping[str, pulumi.Input[builtins.str]]]] = None) -> 'ContainerRegistry':
         """
         Get an existing ContainerRegistry resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -354,6 +351,7 @@ class ContainerRegistry(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[builtins.str] container_registry_urn: The URN of the container registry.
         :param pulumi.Input[builtins.str] date_created: A date-time of when the root user was created.
         :param pulumi.Input[builtins.str] name: The name for your container registry.  Must be lowercase and only alphanumeric characters.
         :param pulumi.Input[builtins.str] plan: The billing plan for the container registry. [See available plans](https://www.vultr.com/api/#tag/Container-Registry/operation/list-registry-plans)
@@ -361,12 +359,12 @@ class ContainerRegistry(pulumi.CustomResource):
         :param pulumi.Input[builtins.str] region: The region where your container registry will be deployed. [See available regions](https://www.vultr.com/api/#tag/Container-Registry/operation/list-registry-regions)
         :param pulumi.Input[Mapping[str, pulumi.Input[builtins.str]]] root_user: The user associated with the container registry.
         :param pulumi.Input[Mapping[str, pulumi.Input[builtins.str]]] storage: A listing of current storage usage relevant to the container registry.
-        :param pulumi.Input[builtins.str] urn: The URN of the container registry.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
         __props__ = _ContainerRegistryState.__new__(_ContainerRegistryState)
 
+        __props__.__dict__["container_registry_urn"] = container_registry_urn
         __props__.__dict__["date_created"] = date_created
         __props__.__dict__["name"] = name
         __props__.__dict__["plan"] = plan
@@ -374,8 +372,15 @@ class ContainerRegistry(pulumi.CustomResource):
         __props__.__dict__["region"] = region
         __props__.__dict__["root_user"] = root_user
         __props__.__dict__["storage"] = storage
-        __props__.__dict__["urn"] = urn
         return ContainerRegistry(resource_name, opts=opts, __props__=__props__)
+
+    @property
+    @pulumi.getter(name="containerRegistryURN")
+    def container_registry_urn(self) -> pulumi.Output[builtins.str]:
+        """
+        The URN of the container registry.
+        """
+        return pulumi.get(self, "container_registry_urn")
 
     @property
     @pulumi.getter(name="dateCreated")
@@ -432,12 +437,4 @@ class ContainerRegistry(pulumi.CustomResource):
         A listing of current storage usage relevant to the container registry.
         """
         return pulumi.get(self, "storage")
-
-    @property
-    @pulumi.getter
-    def urn(self) -> pulumi.Output[builtins.str]:
-        """
-        The URN of the container registry.
-        """
-        return pulumi.get(self, "urn")
 

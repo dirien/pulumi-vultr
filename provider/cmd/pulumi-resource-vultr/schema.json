@@ -2527,8 +2527,12 @@
             }
         },
         "vultr:index/containerRegistry:ContainerRegistry": {
-            "description": "Create and update a Vultr container registry.\n\n## Example Usage\n\nCreate a new container registry:\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@ediri/vultr\";\n\nconst vcr1 = new vultr.ContainerRegistry(\"vcr1\", {\n    name: \"examplecontainerregistry\",\n    plan: \"start_up\",\n    \"public\": false,\n    region: \"sjc\",\n});\n```\n```python\nimport pulumi\nimport ediri_vultr as vultr\n\nvcr1 = vultr.ContainerRegistry(\"vcr1\",\n    name=\"examplecontainerregistry\",\n    plan=\"start_up\",\n    public=False,\n    region=\"sjc\")\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vultr = ediri.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var vcr1 = new Vultr.ContainerRegistry(\"vcr1\", new()\n    {\n        Name = \"examplecontainerregistry\",\n        Plan = \"start_up\",\n        Public = false,\n        Region = \"sjc\",\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.NewContainerRegistry(ctx, \"vcr1\", \u0026vultr.ContainerRegistryArgs{\n\t\t\tName:   pulumi.String(\"examplecontainerregistry\"),\n\t\t\tPlan:   pulumi.String(\"start_up\"),\n\t\t\tPublic: pulumi.Bool(false),\n\t\t\tRegion: pulumi.String(\"sjc\"),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.ContainerRegistry;\nimport com.pulumi.vultr.ContainerRegistryArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var vcr1 = new ContainerRegistry(\"vcr1\", ContainerRegistryArgs.builder()\n            .name(\"examplecontainerregistry\")\n            .plan(\"start_up\")\n            .public_(false)\n            .region(\"sjc\")\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  vcr1:\n    type: vultr:ContainerRegistry\n    properties:\n      name: examplecontainerregistry\n      plan: start_up\n      public: false\n      region: sjc\n```\n\u003c!--End PulumiCodeChooser --\u003e\n\nThe `name` for container registries must be all lowercase and only contain alphanumeric characters.\n",
+            "description": "Create and update a Vultr container registry.\n\n## Example Usage\n\nCreate a new container registry:\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@ediri/vultr\";\n\nconst vcr1 = new vultr.ContainerRegistry(\"vcr1\", {\n    plan: \"start_up\",\n    \"public\": false,\n    region: \"sjc\",\n});\n```\n```python\nimport pulumi\nimport ediri_vultr as vultr\n\nvcr1 = vultr.ContainerRegistry(\"vcr1\",\n    plan=\"start_up\",\n    public=False,\n    region=\"sjc\")\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vultr = ediri.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var vcr1 = new Vultr.ContainerRegistry(\"vcr1\", new()\n    {\n        Plan = \"start_up\",\n        Public = false,\n        Region = \"sjc\",\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.NewContainerRegistry(ctx, \"vcr1\", \u0026vultr.ContainerRegistryArgs{\n\t\t\tPlan:   pulumi.String(\"start_up\"),\n\t\t\tPublic: pulumi.Bool(false),\n\t\t\tRegion: pulumi.String(\"sjc\"),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.ContainerRegistry;\nimport com.pulumi.vultr.ContainerRegistryArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var vcr1 = new ContainerRegistry(\"vcr1\", ContainerRegistryArgs.builder()\n            .plan(\"start_up\")\n            .public_(false)\n            .region(\"sjc\")\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  vcr1:\n    type: vultr:ContainerRegistry\n    properties:\n      plan: start_up\n      public: false\n      region: sjc\n```\n\u003c!--End PulumiCodeChooser --\u003e\n\nThe `name` for container registries must be all lowercase and only contain alphanumeric characters.\n",
             "properties": {
+                "containerRegistryURN": {
+                    "type": "string",
+                    "description": "The URN of the container registry.\n"
+                },
                 "dateCreated": {
                     "type": "string",
                     "description": "A date-time of when the root user was created.\n"
@@ -2562,10 +2566,6 @@
                         "type": "string"
                     },
                     "description": "A listing of current storage usage relevant to the container registry.\n"
-                },
-                "urn": {
-                    "type": "string",
-                    "description": "The URN of the container registry.\n"
                 }
             },
             "required": [
@@ -2576,7 +2576,7 @@
                 "region",
                 "rootUser",
                 "storage",
-                "urn"
+                "containerRegistryURN"
             ],
             "inputProperties": {
                 "name": {
@@ -2597,7 +2597,6 @@
                 }
             },
             "requiredInputs": [
-                "name",
                 "plan",
                 "public",
                 "region"
@@ -2605,6 +2604,10 @@
             "stateInputs": {
                 "description": "Input properties used for looking up and filtering ContainerRegistry resources.\n",
                 "properties": {
+                    "containerRegistryURN": {
+                        "type": "string",
+                        "description": "The URN of the container registry.\n"
+                    },
                     "dateCreated": {
                         "type": "string",
                         "description": "A date-time of when the root user was created.\n"
@@ -2638,10 +2641,6 @@
                             "type": "string"
                         },
                         "description": "A listing of current storage usage relevant to the container registry.\n"
-                    },
-                    "urn": {
-                        "type": "string",
-                        "description": "The URN of the container registry.\n"
                     }
                 },
                 "type": "object"

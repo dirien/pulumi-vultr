@@ -27,7 +27,6 @@ namespace ediri.Vultr
     /// {
     ///     var vcr1 = new Vultr.ContainerRegistry("vcr1", new()
     ///     {
-    ///         Name = "examplecontainerregistry",
     ///         Plan = "start_up",
     ///         Public = false,
     ///         Region = "sjc",
@@ -41,6 +40,12 @@ namespace ediri.Vultr
     [VultrResourceType("vultr:index/containerRegistry:ContainerRegistry")]
     public partial class ContainerRegistry : global::Pulumi.CustomResource
     {
+        /// <summary>
+        /// The URN of the container registry.
+        /// </summary>
+        [Output("containerRegistryURN")]
+        public Output<string> ContainerRegistryURN { get; private set; } = null!;
+
         /// <summary>
         /// A date-time of when the root user was created.
         /// </summary>
@@ -82,12 +87,6 @@ namespace ediri.Vultr
         /// </summary>
         [Output("storage")]
         public Output<ImmutableDictionary<string, string>> Storage { get; private set; } = null!;
-
-        /// <summary>
-        /// The URN of the container registry.
-        /// </summary>
-        [Output("urn")]
-        public Output<string> Urn { get; private set; } = null!;
 
 
         /// <summary>
@@ -139,8 +138,8 @@ namespace ediri.Vultr
         /// <summary>
         /// The name for your container registry.  Must be lowercase and only alphanumeric characters.
         /// </summary>
-        [Input("name", required: true)]
-        public Input<string> Name { get; set; } = null!;
+        [Input("name")]
+        public Input<string>? Name { get; set; }
 
         /// <summary>
         /// The billing plan for the container registry. [See available plans](https://www.vultr.com/api/#tag/Container-Registry/operation/list-registry-plans)
@@ -168,6 +167,12 @@ namespace ediri.Vultr
 
     public sealed class ContainerRegistryState : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// The URN of the container registry.
+        /// </summary>
+        [Input("containerRegistryURN")]
+        public Input<string>? ContainerRegistryURN { get; set; }
+
         /// <summary>
         /// A date-time of when the root user was created.
         /// </summary>
@@ -221,12 +226,6 @@ namespace ediri.Vultr
             get => _storage ?? (_storage = new InputMap<string>());
             set => _storage = value;
         }
-
-        /// <summary>
-        /// The URN of the container registry.
-        /// </summary>
-        [Input("urn")]
-        public Input<string>? Urn { get; set; }
 
         public ContainerRegistryState()
         {
