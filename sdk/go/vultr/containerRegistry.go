@@ -31,7 +31,6 @@ import (
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
 //			_, err := vultr.NewContainerRegistry(ctx, "vcr1", &vultr.ContainerRegistryArgs{
-//				Name:   pulumi.String("examplecontainerregistry"),
 //				Plan:   pulumi.String("start_up"),
 //				Public: pulumi.Bool(false),
 //				Region: pulumi.String("sjc"),
@@ -49,6 +48,8 @@ import (
 type ContainerRegistry struct {
 	pulumi.CustomResourceState
 
+	// The URN of the container registry.
+	ContainerRegistryURN pulumi.StringOutput `pulumi:"containerRegistryURN"`
 	// A date-time of when the root user was created.
 	DateCreated pulumi.StringOutput `pulumi:"dateCreated"`
 	// The name for your container registry.  Must be lowercase and only alphanumeric characters.
@@ -63,8 +64,6 @@ type ContainerRegistry struct {
 	RootUser pulumi.StringMapOutput `pulumi:"rootUser"`
 	// A listing of current storage usage relevant to the container registry.
 	Storage pulumi.StringMapOutput `pulumi:"storage"`
-	// The URN of the container registry.
-	Urn pulumi.StringOutput `pulumi:"urn"`
 }
 
 // NewContainerRegistry registers a new resource with the given unique name, arguments, and options.
@@ -74,9 +73,6 @@ func NewContainerRegistry(ctx *pulumi.Context,
 		return nil, errors.New("missing one or more required arguments")
 	}
 
-	if args.Name == nil {
-		return nil, errors.New("invalid value for required argument 'Name'")
-	}
 	if args.Plan == nil {
 		return nil, errors.New("invalid value for required argument 'Plan'")
 	}
@@ -109,6 +105,8 @@ func GetContainerRegistry(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering ContainerRegistry resources.
 type containerRegistryState struct {
+	// The URN of the container registry.
+	ContainerRegistryURN *string `pulumi:"containerRegistryURN"`
 	// A date-time of when the root user was created.
 	DateCreated *string `pulumi:"dateCreated"`
 	// The name for your container registry.  Must be lowercase and only alphanumeric characters.
@@ -123,11 +121,11 @@ type containerRegistryState struct {
 	RootUser map[string]string `pulumi:"rootUser"`
 	// A listing of current storage usage relevant to the container registry.
 	Storage map[string]string `pulumi:"storage"`
-	// The URN of the container registry.
-	Urn *string `pulumi:"urn"`
 }
 
 type ContainerRegistryState struct {
+	// The URN of the container registry.
+	ContainerRegistryURN pulumi.StringPtrInput
 	// A date-time of when the root user was created.
 	DateCreated pulumi.StringPtrInput
 	// The name for your container registry.  Must be lowercase and only alphanumeric characters.
@@ -142,8 +140,6 @@ type ContainerRegistryState struct {
 	RootUser pulumi.StringMapInput
 	// A listing of current storage usage relevant to the container registry.
 	Storage pulumi.StringMapInput
-	// The URN of the container registry.
-	Urn pulumi.StringPtrInput
 }
 
 func (ContainerRegistryState) ElementType() reflect.Type {
@@ -152,7 +148,7 @@ func (ContainerRegistryState) ElementType() reflect.Type {
 
 type containerRegistryArgs struct {
 	// The name for your container registry.  Must be lowercase and only alphanumeric characters.
-	Name string `pulumi:"name"`
+	Name *string `pulumi:"name"`
 	// The billing plan for the container registry. [See available plans](https://www.vultr.com/api/#tag/Container-Registry/operation/list-registry-plans)
 	Plan string `pulumi:"plan"`
 	// Boolean indicating if the container registry should be created with public visibility or if it should require credentials.
@@ -164,7 +160,7 @@ type containerRegistryArgs struct {
 // The set of arguments for constructing a ContainerRegistry resource.
 type ContainerRegistryArgs struct {
 	// The name for your container registry.  Must be lowercase and only alphanumeric characters.
-	Name pulumi.StringInput
+	Name pulumi.StringPtrInput
 	// The billing plan for the container registry. [See available plans](https://www.vultr.com/api/#tag/Container-Registry/operation/list-registry-plans)
 	Plan pulumi.StringInput
 	// Boolean indicating if the container registry should be created with public visibility or if it should require credentials.
@@ -260,6 +256,11 @@ func (o ContainerRegistryOutput) ToContainerRegistryOutputWithContext(ctx contex
 	return o
 }
 
+// The URN of the container registry.
+func (o ContainerRegistryOutput) ContainerRegistryURN() pulumi.StringOutput {
+	return o.ApplyT(func(v *ContainerRegistry) pulumi.StringOutput { return v.ContainerRegistryURN }).(pulumi.StringOutput)
+}
+
 // A date-time of when the root user was created.
 func (o ContainerRegistryOutput) DateCreated() pulumi.StringOutput {
 	return o.ApplyT(func(v *ContainerRegistry) pulumi.StringOutput { return v.DateCreated }).(pulumi.StringOutput)
@@ -293,11 +294,6 @@ func (o ContainerRegistryOutput) RootUser() pulumi.StringMapOutput {
 // A listing of current storage usage relevant to the container registry.
 func (o ContainerRegistryOutput) Storage() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *ContainerRegistry) pulumi.StringMapOutput { return v.Storage }).(pulumi.StringMapOutput)
-}
-
-// The URN of the container registry.
-func (o ContainerRegistryOutput) Urn() pulumi.StringOutput {
-	return o.ApplyT(func(v *ContainerRegistry) pulumi.StringOutput { return v.Urn }).(pulumi.StringOutput)
 }
 
 type ContainerRegistryArrayOutput struct{ *pulumi.OutputState }

@@ -16,7 +16,6 @@ import * as utilities from "./utilities";
  * import * as vultr from "@ediri/vultr";
  *
  * const vcr1 = new vultr.ContainerRegistry("vcr1", {
- *     name: "examplecontainerregistry",
  *     plan: "start_up",
  *     "public": false,
  *     region: "sjc",
@@ -54,6 +53,10 @@ export class ContainerRegistry extends pulumi.CustomResource {
     }
 
     /**
+     * The URN of the container registry.
+     */
+    public /*out*/ readonly containerRegistryURN!: pulumi.Output<string>;
+    /**
      * A date-time of when the root user was created.
      */
     public /*out*/ readonly dateCreated!: pulumi.Output<string>;
@@ -81,10 +84,6 @@ export class ContainerRegistry extends pulumi.CustomResource {
      * A listing of current storage usage relevant to the container registry.
      */
     public /*out*/ readonly storage!: pulumi.Output<{[key: string]: string}>;
-    /**
-     * The URN of the container registry.
-     */
-    public /*out*/ readonly urn!: pulumi.Output<string>;
 
     /**
      * Create a ContainerRegistry resource with the given unique name, arguments, and options.
@@ -99,6 +98,7 @@ export class ContainerRegistry extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as ContainerRegistryState | undefined;
+            resourceInputs["containerRegistryURN"] = state ? state.containerRegistryURN : undefined;
             resourceInputs["dateCreated"] = state ? state.dateCreated : undefined;
             resourceInputs["name"] = state ? state.name : undefined;
             resourceInputs["plan"] = state ? state.plan : undefined;
@@ -106,12 +106,8 @@ export class ContainerRegistry extends pulumi.CustomResource {
             resourceInputs["region"] = state ? state.region : undefined;
             resourceInputs["rootUser"] = state ? state.rootUser : undefined;
             resourceInputs["storage"] = state ? state.storage : undefined;
-            resourceInputs["urn"] = state ? state.urn : undefined;
         } else {
             const args = argsOrState as ContainerRegistryArgs | undefined;
-            if ((!args || args.name === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'name'");
-            }
             if ((!args || args.plan === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'plan'");
             }
@@ -125,10 +121,10 @@ export class ContainerRegistry extends pulumi.CustomResource {
             resourceInputs["plan"] = args ? args.plan : undefined;
             resourceInputs["public"] = args ? args.public : undefined;
             resourceInputs["region"] = args ? args.region : undefined;
+            resourceInputs["containerRegistryURN"] = undefined /*out*/;
             resourceInputs["dateCreated"] = undefined /*out*/;
             resourceInputs["rootUser"] = undefined /*out*/;
             resourceInputs["storage"] = undefined /*out*/;
-            resourceInputs["urn"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(ContainerRegistry.__pulumiType, name, resourceInputs, opts);
@@ -139,6 +135,10 @@ export class ContainerRegistry extends pulumi.CustomResource {
  * Input properties used for looking up and filtering ContainerRegistry resources.
  */
 export interface ContainerRegistryState {
+    /**
+     * The URN of the container registry.
+     */
+    containerRegistryURN?: pulumi.Input<string>;
     /**
      * A date-time of when the root user was created.
      */
@@ -167,10 +167,6 @@ export interface ContainerRegistryState {
      * A listing of current storage usage relevant to the container registry.
      */
     storage?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
-    /**
-     * The URN of the container registry.
-     */
-    urn?: pulumi.Input<string>;
 }
 
 /**
@@ -180,7 +176,7 @@ export interface ContainerRegistryArgs {
     /**
      * The name for your container registry.  Must be lowercase and only alphanumeric characters.
      */
-    name: pulumi.Input<string>;
+    name?: pulumi.Input<string>;
     /**
      * The billing plan for the container registry. [See available plans](https://www.vultr.com/api/#tag/Container-Registry/operation/list-registry-plans)
      */
