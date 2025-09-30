@@ -61,24 +61,24 @@ export class ReverseIpv4 extends pulumi.CustomResource {
     /**
      * The gateway IP address.
      */
-    public /*out*/ readonly gateway!: pulumi.Output<string>;
+    declare public /*out*/ readonly gateway: pulumi.Output<string>;
     /**
      * The ID of the instance you want to set an IPv4
      * reverse DNS record for.
      */
-    public readonly instanceId!: pulumi.Output<string>;
+    declare public readonly instanceId: pulumi.Output<string>;
     /**
      * The IPv4 address used in the reverse DNS record.
      */
-    public readonly ip!: pulumi.Output<string>;
+    declare public readonly ip: pulumi.Output<string>;
     /**
      * The IPv4 netmask in dot-decimal notation.
      */
-    public /*out*/ readonly netmask!: pulumi.Output<string>;
+    declare public /*out*/ readonly netmask: pulumi.Output<string>;
     /**
      * The hostname used in the IPv4 reverse DNS record.
      */
-    public readonly reverse!: pulumi.Output<string>;
+    declare public readonly reverse: pulumi.Output<string>;
 
     /**
      * Create a ReverseIpv4 resource with the given unique name, arguments, and options.
@@ -93,25 +93,25 @@ export class ReverseIpv4 extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as ReverseIpv4State | undefined;
-            resourceInputs["gateway"] = state ? state.gateway : undefined;
-            resourceInputs["instanceId"] = state ? state.instanceId : undefined;
-            resourceInputs["ip"] = state ? state.ip : undefined;
-            resourceInputs["netmask"] = state ? state.netmask : undefined;
-            resourceInputs["reverse"] = state ? state.reverse : undefined;
+            resourceInputs["gateway"] = state?.gateway;
+            resourceInputs["instanceId"] = state?.instanceId;
+            resourceInputs["ip"] = state?.ip;
+            resourceInputs["netmask"] = state?.netmask;
+            resourceInputs["reverse"] = state?.reverse;
         } else {
             const args = argsOrState as ReverseIpv4Args | undefined;
-            if ((!args || args.instanceId === undefined) && !opts.urn) {
+            if (args?.instanceId === undefined && !opts.urn) {
                 throw new Error("Missing required property 'instanceId'");
             }
-            if ((!args || args.ip === undefined) && !opts.urn) {
+            if (args?.ip === undefined && !opts.urn) {
                 throw new Error("Missing required property 'ip'");
             }
-            if ((!args || args.reverse === undefined) && !opts.urn) {
+            if (args?.reverse === undefined && !opts.urn) {
                 throw new Error("Missing required property 'reverse'");
             }
-            resourceInputs["instanceId"] = args ? args.instanceId : undefined;
-            resourceInputs["ip"] = args ? args.ip : undefined;
-            resourceInputs["reverse"] = args ? args.reverse : undefined;
+            resourceInputs["instanceId"] = args?.instanceId;
+            resourceInputs["ip"] = args?.ip;
+            resourceInputs["reverse"] = args?.reverse;
             resourceInputs["gateway"] = undefined /*out*/;
             resourceInputs["netmask"] = undefined /*out*/;
         }

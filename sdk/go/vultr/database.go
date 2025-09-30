@@ -94,6 +94,10 @@ type Database struct {
 	AccessCert pulumi.StringOutput `pulumi:"accessCert"`
 	// The private key to authenticate the default user (Kafka engine types only).
 	AccessKey pulumi.StringOutput `pulumi:"accessKey"`
+	// The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+	BackupHour pulumi.StringPtrOutput `pulumi:"backupHour"`
+	// The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
+	BackupMinute pulumi.StringPtrOutput `pulumi:"backupMinute"`
 	// The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
 	ClusterTimeZone pulumi.StringOutput `pulumi:"clusterTimeZone"`
 	// The database engine of the new managed database.
@@ -104,19 +108,26 @@ type Database struct {
 	DateCreated pulumi.StringOutput `pulumi:"dateCreated"`
 	// The managed database's default logical database.
 	Dbname pulumi.StringOutput `pulumi:"dbname"`
+	// The configuration value for Kafka Connect support (Kafka engine types only).
+	EnableKafkaConnect pulumi.BoolPtrOutput `pulumi:"enableKafkaConnect"`
+	// The configuration value for Kafka REST support (Kafka engine types only).
+	EnableKafkaRest pulumi.BoolPtrOutput `pulumi:"enableKafkaRest"`
+	// The configuration value for Schema Registry support (Kafka engine types only).
+	EnableSchemaRegistry pulumi.BoolPtrOutput `pulumi:"enableSchemaRegistry"`
 	// The configuration value for the data eviction policy on the managed database (Valkey engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
-	EvictionPolicy pulumi.StringOutput `pulumi:"evictionPolicy"`
-	// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
+	EvictionPolicy      pulumi.StringOutput    `pulumi:"evictionPolicy"`
 	FerretdbCredentials pulumi.StringMapOutput `pulumi:"ferretdbCredentials"`
 	// The hostname assigned to the managed database.
 	Host pulumi.StringOutput `pulumi:"host"`
+	// The URI to access the RESTful interface of your Kafka cluster if Kafka REST is enabled (Kafka engine types only).
+	KafkaRestUri pulumi.StringOutput `pulumi:"kafkaRestUri"`
 	// A label for the managed database.
 	Label pulumi.StringOutput `pulumi:"label"`
 	// The date of the latest backup available on the managed database.
 	LatestBackup pulumi.StringOutput `pulumi:"latestBackup"`
 	// The preferred maintenance day of week for the managed database.
 	MaintenanceDow pulumi.StringOutput `pulumi:"maintenanceDow"`
-	// The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).
+	// The preferred maintenance time for the managed database.
 	MaintenanceTime pulumi.StringOutput `pulumi:"maintenanceTime"`
 	// The configuration value for the long query time (in seconds) on the managed database (MySQL engine types only).
 	MysqlLongQueryTime pulumi.IntOutput `pulumi:"mysqlLongQueryTime"`
@@ -150,6 +161,8 @@ type Database struct {
 	Region pulumi.StringOutput `pulumi:"region"`
 	// The SASL connection port for the managed database (Kafka engine types only).
 	SaslPort pulumi.StringOutput `pulumi:"saslPort"`
+	// The URI to access the Schema Registry service of your Kafka cluster if Schema Registry is enabled (Kafka engine types only).
+	SchemaRegistryUri pulumi.StringOutput `pulumi:"schemaRegistryUri"`
 	// The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).
 	Status pulumi.StringOutput `pulumi:"status"`
 	// The tag to assign to the managed database.
@@ -211,6 +224,10 @@ type databaseState struct {
 	AccessCert *string `pulumi:"accessCert"`
 	// The private key to authenticate the default user (Kafka engine types only).
 	AccessKey *string `pulumi:"accessKey"`
+	// The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+	BackupHour *string `pulumi:"backupHour"`
+	// The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
+	BackupMinute *string `pulumi:"backupMinute"`
 	// The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
 	ClusterTimeZone *string `pulumi:"clusterTimeZone"`
 	// The database engine of the new managed database.
@@ -221,19 +238,26 @@ type databaseState struct {
 	DateCreated *string `pulumi:"dateCreated"`
 	// The managed database's default logical database.
 	Dbname *string `pulumi:"dbname"`
+	// The configuration value for Kafka Connect support (Kafka engine types only).
+	EnableKafkaConnect *bool `pulumi:"enableKafkaConnect"`
+	// The configuration value for Kafka REST support (Kafka engine types only).
+	EnableKafkaRest *bool `pulumi:"enableKafkaRest"`
+	// The configuration value for Schema Registry support (Kafka engine types only).
+	EnableSchemaRegistry *bool `pulumi:"enableSchemaRegistry"`
 	// The configuration value for the data eviction policy on the managed database (Valkey engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
-	EvictionPolicy *string `pulumi:"evictionPolicy"`
-	// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
+	EvictionPolicy      *string           `pulumi:"evictionPolicy"`
 	FerretdbCredentials map[string]string `pulumi:"ferretdbCredentials"`
 	// The hostname assigned to the managed database.
 	Host *string `pulumi:"host"`
+	// The URI to access the RESTful interface of your Kafka cluster if Kafka REST is enabled (Kafka engine types only).
+	KafkaRestUri *string `pulumi:"kafkaRestUri"`
 	// A label for the managed database.
 	Label *string `pulumi:"label"`
 	// The date of the latest backup available on the managed database.
 	LatestBackup *string `pulumi:"latestBackup"`
 	// The preferred maintenance day of week for the managed database.
 	MaintenanceDow *string `pulumi:"maintenanceDow"`
-	// The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).
+	// The preferred maintenance time for the managed database.
 	MaintenanceTime *string `pulumi:"maintenanceTime"`
 	// The configuration value for the long query time (in seconds) on the managed database (MySQL engine types only).
 	MysqlLongQueryTime *int `pulumi:"mysqlLongQueryTime"`
@@ -267,6 +291,8 @@ type databaseState struct {
 	Region *string `pulumi:"region"`
 	// The SASL connection port for the managed database (Kafka engine types only).
 	SaslPort *string `pulumi:"saslPort"`
+	// The URI to access the Schema Registry service of your Kafka cluster if Schema Registry is enabled (Kafka engine types only).
+	SchemaRegistryUri *string `pulumi:"schemaRegistryUri"`
 	// The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).
 	Status *string `pulumi:"status"`
 	// The tag to assign to the managed database.
@@ -284,6 +310,10 @@ type DatabaseState struct {
 	AccessCert pulumi.StringPtrInput
 	// The private key to authenticate the default user (Kafka engine types only).
 	AccessKey pulumi.StringPtrInput
+	// The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+	BackupHour pulumi.StringPtrInput
+	// The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
+	BackupMinute pulumi.StringPtrInput
 	// The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
 	ClusterTimeZone pulumi.StringPtrInput
 	// The database engine of the new managed database.
@@ -294,19 +324,26 @@ type DatabaseState struct {
 	DateCreated pulumi.StringPtrInput
 	// The managed database's default logical database.
 	Dbname pulumi.StringPtrInput
+	// The configuration value for Kafka Connect support (Kafka engine types only).
+	EnableKafkaConnect pulumi.BoolPtrInput
+	// The configuration value for Kafka REST support (Kafka engine types only).
+	EnableKafkaRest pulumi.BoolPtrInput
+	// The configuration value for Schema Registry support (Kafka engine types only).
+	EnableSchemaRegistry pulumi.BoolPtrInput
 	// The configuration value for the data eviction policy on the managed database (Valkey engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
-	EvictionPolicy pulumi.StringPtrInput
-	// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
+	EvictionPolicy      pulumi.StringPtrInput
 	FerretdbCredentials pulumi.StringMapInput
 	// The hostname assigned to the managed database.
 	Host pulumi.StringPtrInput
+	// The URI to access the RESTful interface of your Kafka cluster if Kafka REST is enabled (Kafka engine types only).
+	KafkaRestUri pulumi.StringPtrInput
 	// A label for the managed database.
 	Label pulumi.StringPtrInput
 	// The date of the latest backup available on the managed database.
 	LatestBackup pulumi.StringPtrInput
 	// The preferred maintenance day of week for the managed database.
 	MaintenanceDow pulumi.StringPtrInput
-	// The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).
+	// The preferred maintenance time for the managed database.
 	MaintenanceTime pulumi.StringPtrInput
 	// The configuration value for the long query time (in seconds) on the managed database (MySQL engine types only).
 	MysqlLongQueryTime pulumi.IntPtrInput
@@ -340,6 +377,8 @@ type DatabaseState struct {
 	Region pulumi.StringPtrInput
 	// The SASL connection port for the managed database (Kafka engine types only).
 	SaslPort pulumi.StringPtrInput
+	// The URI to access the Schema Registry service of your Kafka cluster if Schema Registry is enabled (Kafka engine types only).
+	SchemaRegistryUri pulumi.StringPtrInput
 	// The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).
 	Status pulumi.StringPtrInput
 	// The tag to assign to the managed database.
@@ -361,21 +400,32 @@ type databaseArgs struct {
 	AccessCert *string `pulumi:"accessCert"`
 	// The private key to authenticate the default user (Kafka engine types only).
 	AccessKey *string `pulumi:"accessKey"`
+	// The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+	BackupHour *string `pulumi:"backupHour"`
+	// The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
+	BackupMinute *string `pulumi:"backupMinute"`
 	// The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
 	ClusterTimeZone *string `pulumi:"clusterTimeZone"`
 	// The database engine of the new managed database.
 	DatabaseEngine string `pulumi:"databaseEngine"`
 	// The database engine version of the new managed database.
 	DatabaseEngineVersion string `pulumi:"databaseEngineVersion"`
+	// The configuration value for Kafka Connect support (Kafka engine types only).
+	EnableKafkaConnect *bool `pulumi:"enableKafkaConnect"`
+	// The configuration value for Kafka REST support (Kafka engine types only).
+	EnableKafkaRest *bool `pulumi:"enableKafkaRest"`
+	// The configuration value for Schema Registry support (Kafka engine types only).
+	EnableSchemaRegistry *bool `pulumi:"enableSchemaRegistry"`
 	// The configuration value for the data eviction policy on the managed database (Valkey engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
-	EvictionPolicy *string `pulumi:"evictionPolicy"`
-	// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
+	EvictionPolicy      *string           `pulumi:"evictionPolicy"`
 	FerretdbCredentials map[string]string `pulumi:"ferretdbCredentials"`
+	// The URI to access the RESTful interface of your Kafka cluster if Kafka REST is enabled (Kafka engine types only).
+	KafkaRestUri *string `pulumi:"kafkaRestUri"`
 	// A label for the managed database.
 	Label string `pulumi:"label"`
 	// The preferred maintenance day of week for the managed database.
 	MaintenanceDow *string `pulumi:"maintenanceDow"`
-	// The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).
+	// The preferred maintenance time for the managed database.
 	MaintenanceTime *string `pulumi:"maintenanceTime"`
 	// The configuration value for the long query time (in seconds) on the managed database (MySQL engine types only).
 	MysqlLongQueryTime *int `pulumi:"mysqlLongQueryTime"`
@@ -403,6 +453,8 @@ type databaseArgs struct {
 	Region string `pulumi:"region"`
 	// The SASL connection port for the managed database (Kafka engine types only).
 	SaslPort *string `pulumi:"saslPort"`
+	// The URI to access the Schema Registry service of your Kafka cluster if Schema Registry is enabled (Kafka engine types only).
+	SchemaRegistryUri *string `pulumi:"schemaRegistryUri"`
 	// The tag to assign to the managed database.
 	Tag *string `pulumi:"tag"`
 	// A list of allowed IP addresses for the managed database.
@@ -417,21 +469,32 @@ type DatabaseArgs struct {
 	AccessCert pulumi.StringPtrInput
 	// The private key to authenticate the default user (Kafka engine types only).
 	AccessKey pulumi.StringPtrInput
+	// The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+	BackupHour pulumi.StringPtrInput
+	// The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
+	BackupMinute pulumi.StringPtrInput
 	// The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
 	ClusterTimeZone pulumi.StringPtrInput
 	// The database engine of the new managed database.
 	DatabaseEngine pulumi.StringInput
 	// The database engine version of the new managed database.
 	DatabaseEngineVersion pulumi.StringInput
+	// The configuration value for Kafka Connect support (Kafka engine types only).
+	EnableKafkaConnect pulumi.BoolPtrInput
+	// The configuration value for Kafka REST support (Kafka engine types only).
+	EnableKafkaRest pulumi.BoolPtrInput
+	// The configuration value for Schema Registry support (Kafka engine types only).
+	EnableSchemaRegistry pulumi.BoolPtrInput
 	// The configuration value for the data eviction policy on the managed database (Valkey engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
-	EvictionPolicy pulumi.StringPtrInput
-	// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
+	EvictionPolicy      pulumi.StringPtrInput
 	FerretdbCredentials pulumi.StringMapInput
+	// The URI to access the RESTful interface of your Kafka cluster if Kafka REST is enabled (Kafka engine types only).
+	KafkaRestUri pulumi.StringPtrInput
 	// A label for the managed database.
 	Label pulumi.StringInput
 	// The preferred maintenance day of week for the managed database.
 	MaintenanceDow pulumi.StringPtrInput
-	// The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).
+	// The preferred maintenance time for the managed database.
 	MaintenanceTime pulumi.StringPtrInput
 	// The configuration value for the long query time (in seconds) on the managed database (MySQL engine types only).
 	MysqlLongQueryTime pulumi.IntPtrInput
@@ -459,6 +522,8 @@ type DatabaseArgs struct {
 	Region pulumi.StringInput
 	// The SASL connection port for the managed database (Kafka engine types only).
 	SaslPort pulumi.StringPtrInput
+	// The URI to access the Schema Registry service of your Kafka cluster if Schema Registry is enabled (Kafka engine types only).
+	SchemaRegistryUri pulumi.StringPtrInput
 	// The tag to assign to the managed database.
 	Tag pulumi.StringPtrInput
 	// A list of allowed IP addresses for the managed database.
@@ -564,6 +629,16 @@ func (o DatabaseOutput) AccessKey() pulumi.StringOutput {
 	return o.ApplyT(func(v *Database) pulumi.StringOutput { return v.AccessKey }).(pulumi.StringOutput)
 }
 
+// The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+func (o DatabaseOutput) BackupHour() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Database) pulumi.StringPtrOutput { return v.BackupHour }).(pulumi.StringPtrOutput)
+}
+
+// The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
+func (o DatabaseOutput) BackupMinute() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Database) pulumi.StringPtrOutput { return v.BackupMinute }).(pulumi.StringPtrOutput)
+}
+
 // The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
 func (o DatabaseOutput) ClusterTimeZone() pulumi.StringOutput {
 	return o.ApplyT(func(v *Database) pulumi.StringOutput { return v.ClusterTimeZone }).(pulumi.StringOutput)
@@ -589,12 +664,26 @@ func (o DatabaseOutput) Dbname() pulumi.StringOutput {
 	return o.ApplyT(func(v *Database) pulumi.StringOutput { return v.Dbname }).(pulumi.StringOutput)
 }
 
+// The configuration value for Kafka Connect support (Kafka engine types only).
+func (o DatabaseOutput) EnableKafkaConnect() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *Database) pulumi.BoolPtrOutput { return v.EnableKafkaConnect }).(pulumi.BoolPtrOutput)
+}
+
+// The configuration value for Kafka REST support (Kafka engine types only).
+func (o DatabaseOutput) EnableKafkaRest() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *Database) pulumi.BoolPtrOutput { return v.EnableKafkaRest }).(pulumi.BoolPtrOutput)
+}
+
+// The configuration value for Schema Registry support (Kafka engine types only).
+func (o DatabaseOutput) EnableSchemaRegistry() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *Database) pulumi.BoolPtrOutput { return v.EnableSchemaRegistry }).(pulumi.BoolPtrOutput)
+}
+
 // The configuration value for the data eviction policy on the managed database (Valkey engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
 func (o DatabaseOutput) EvictionPolicy() pulumi.StringOutput {
 	return o.ApplyT(func(v *Database) pulumi.StringOutput { return v.EvictionPolicy }).(pulumi.StringOutput)
 }
 
-// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
 func (o DatabaseOutput) FerretdbCredentials() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *Database) pulumi.StringMapOutput { return v.FerretdbCredentials }).(pulumi.StringMapOutput)
 }
@@ -602,6 +691,11 @@ func (o DatabaseOutput) FerretdbCredentials() pulumi.StringMapOutput {
 // The hostname assigned to the managed database.
 func (o DatabaseOutput) Host() pulumi.StringOutput {
 	return o.ApplyT(func(v *Database) pulumi.StringOutput { return v.Host }).(pulumi.StringOutput)
+}
+
+// The URI to access the RESTful interface of your Kafka cluster if Kafka REST is enabled (Kafka engine types only).
+func (o DatabaseOutput) KafkaRestUri() pulumi.StringOutput {
+	return o.ApplyT(func(v *Database) pulumi.StringOutput { return v.KafkaRestUri }).(pulumi.StringOutput)
 }
 
 // A label for the managed database.
@@ -619,7 +713,7 @@ func (o DatabaseOutput) MaintenanceDow() pulumi.StringOutput {
 	return o.ApplyT(func(v *Database) pulumi.StringOutput { return v.MaintenanceDow }).(pulumi.StringOutput)
 }
 
-// The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).
+// The preferred maintenance time for the managed database.
 func (o DatabaseOutput) MaintenanceTime() pulumi.StringOutput {
 	return o.ApplyT(func(v *Database) pulumi.StringOutput { return v.MaintenanceTime }).(pulumi.StringOutput)
 }
@@ -702,6 +796,11 @@ func (o DatabaseOutput) Region() pulumi.StringOutput {
 // The SASL connection port for the managed database (Kafka engine types only).
 func (o DatabaseOutput) SaslPort() pulumi.StringOutput {
 	return o.ApplyT(func(v *Database) pulumi.StringOutput { return v.SaslPort }).(pulumi.StringOutput)
+}
+
+// The URI to access the Schema Registry service of your Kafka cluster if Schema Registry is enabled (Kafka engine types only).
+func (o DatabaseOutput) SchemaRegistryUri() pulumi.StringOutput {
+	return o.ApplyT(func(v *Database) pulumi.StringOutput { return v.SchemaRegistryUri }).(pulumi.StringOutput)
 }
 
 // The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).

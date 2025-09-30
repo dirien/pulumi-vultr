@@ -15,6 +15,14 @@ namespace ediri.Vultr.Outputs
     public sealed class DatabaseReadReplica
     {
         /// <summary>
+        /// The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+        /// </summary>
+        public readonly string? BackupHour;
+        /// <summary>
+        /// The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
+        /// </summary>
+        public readonly string? BackupMinute;
+        /// <summary>
         /// The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
         /// </summary>
         public readonly string? ClusterTimeZone;
@@ -38,9 +46,6 @@ namespace ediri.Vultr.Outputs
         /// The configuration value for the data eviction policy on the managed database (Valkey engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
         /// </summary>
         public readonly string? EvictionPolicy;
-        /// <summary>
-        /// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
-        /// </summary>
         public readonly ImmutableDictionary<string, string>? FerretdbCredentials;
         /// <summary>
         /// The hostname assigned to the managed database.
@@ -63,7 +68,7 @@ namespace ediri.Vultr.Outputs
         /// </summary>
         public readonly string? MaintenanceDow;
         /// <summary>
-        /// The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).
+        /// The preferred maintenance time for the managed database.
         /// </summary>
         public readonly string? MaintenanceTime;
         /// <summary>
@@ -141,6 +146,10 @@ namespace ediri.Vultr.Outputs
 
         [OutputConstructor]
         private DatabaseReadReplica(
+            string? backupHour,
+
+            string? backupMinute,
+
             string? clusterTimeZone,
 
             string? databaseEngine,
@@ -203,6 +212,8 @@ namespace ediri.Vultr.Outputs
 
             string? vpcId)
         {
+            BackupHour = backupHour;
+            BackupMinute = backupMinute;
             ClusterTimeZone = clusterTimeZone;
             DatabaseEngine = databaseEngine;
             DatabaseEngineVersion = databaseEngineVersion;

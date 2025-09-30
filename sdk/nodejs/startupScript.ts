@@ -57,23 +57,23 @@ export class StartupScript extends pulumi.CustomResource {
     /**
      * Date the script was created.
      */
-    public /*out*/ readonly dateCreated!: pulumi.Output<string>;
+    declare public /*out*/ readonly dateCreated: pulumi.Output<string>;
     /**
      * Date the script was last modified.
      */
-    public /*out*/ readonly dateModified!: pulumi.Output<string>;
+    declare public /*out*/ readonly dateModified: pulumi.Output<string>;
     /**
      * Name of the given script.
      */
-    public readonly name!: pulumi.Output<string>;
+    declare public readonly name: pulumi.Output<string>;
     /**
      * Contents of the startup script base64 encoded.
      */
-    public readonly script!: pulumi.Output<string>;
+    declare public readonly script: pulumi.Output<string>;
     /**
      * Type of startup script. Possible values are boot or pxe - default is boot.
      */
-    public readonly type!: pulumi.Output<string | undefined>;
+    declare public readonly type: pulumi.Output<string | undefined>;
 
     /**
      * Create a StartupScript resource with the given unique name, arguments, and options.
@@ -88,19 +88,19 @@ export class StartupScript extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as StartupScriptState | undefined;
-            resourceInputs["dateCreated"] = state ? state.dateCreated : undefined;
-            resourceInputs["dateModified"] = state ? state.dateModified : undefined;
-            resourceInputs["name"] = state ? state.name : undefined;
-            resourceInputs["script"] = state ? state.script : undefined;
-            resourceInputs["type"] = state ? state.type : undefined;
+            resourceInputs["dateCreated"] = state?.dateCreated;
+            resourceInputs["dateModified"] = state?.dateModified;
+            resourceInputs["name"] = state?.name;
+            resourceInputs["script"] = state?.script;
+            resourceInputs["type"] = state?.type;
         } else {
             const args = argsOrState as StartupScriptArgs | undefined;
-            if ((!args || args.script === undefined) && !opts.urn) {
+            if (args?.script === undefined && !opts.urn) {
                 throw new Error("Missing required property 'script'");
             }
-            resourceInputs["name"] = args ? args.name : undefined;
-            resourceInputs["script"] = args ? args.script : undefined;
-            resourceInputs["type"] = args ? args.type : undefined;
+            resourceInputs["name"] = args?.name;
+            resourceInputs["script"] = args?.script;
+            resourceInputs["type"] = args?.type;
             resourceInputs["dateCreated"] = undefined /*out*/;
             resourceInputs["dateModified"] = undefined /*out*/;
         }

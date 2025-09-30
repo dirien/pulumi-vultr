@@ -55,27 +55,27 @@ export class DatabaseConnectionPool extends pulumi.CustomResource {
     /**
      * The logical database to use for the new managed database connection pool.
      */
-    public readonly database!: pulumi.Output<string>;
+    declare public readonly database: pulumi.Output<string>;
     /**
      * The managed database ID you want to attach this connection pool to.
      */
-    public readonly databaseId!: pulumi.Output<string>;
+    declare public readonly databaseId: pulumi.Output<string>;
     /**
      * The mode to configure for the new managed database connection pool (`session`, `transaction`, `statement`).
      */
-    public readonly mode!: pulumi.Output<string>;
+    declare public readonly mode: pulumi.Output<string>;
     /**
      * The name of the new managed database connection pool.
      */
-    public readonly name!: pulumi.Output<string>;
+    declare public readonly name: pulumi.Output<string>;
     /**
      * The size of the new managed database connection pool.
      */
-    public readonly size!: pulumi.Output<number>;
+    declare public readonly size: pulumi.Output<number>;
     /**
      * The database user to use for the new managed database connection pool.
      */
-    public readonly username!: pulumi.Output<string>;
+    declare public readonly username: pulumi.Output<string>;
 
     /**
      * Create a DatabaseConnectionPool resource with the given unique name, arguments, and options.
@@ -90,35 +90,35 @@ export class DatabaseConnectionPool extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as DatabaseConnectionPoolState | undefined;
-            resourceInputs["database"] = state ? state.database : undefined;
-            resourceInputs["databaseId"] = state ? state.databaseId : undefined;
-            resourceInputs["mode"] = state ? state.mode : undefined;
-            resourceInputs["name"] = state ? state.name : undefined;
-            resourceInputs["size"] = state ? state.size : undefined;
-            resourceInputs["username"] = state ? state.username : undefined;
+            resourceInputs["database"] = state?.database;
+            resourceInputs["databaseId"] = state?.databaseId;
+            resourceInputs["mode"] = state?.mode;
+            resourceInputs["name"] = state?.name;
+            resourceInputs["size"] = state?.size;
+            resourceInputs["username"] = state?.username;
         } else {
             const args = argsOrState as DatabaseConnectionPoolArgs | undefined;
-            if ((!args || args.database === undefined) && !opts.urn) {
+            if (args?.database === undefined && !opts.urn) {
                 throw new Error("Missing required property 'database'");
             }
-            if ((!args || args.databaseId === undefined) && !opts.urn) {
+            if (args?.databaseId === undefined && !opts.urn) {
                 throw new Error("Missing required property 'databaseId'");
             }
-            if ((!args || args.mode === undefined) && !opts.urn) {
+            if (args?.mode === undefined && !opts.urn) {
                 throw new Error("Missing required property 'mode'");
             }
-            if ((!args || args.size === undefined) && !opts.urn) {
+            if (args?.size === undefined && !opts.urn) {
                 throw new Error("Missing required property 'size'");
             }
-            if ((!args || args.username === undefined) && !opts.urn) {
+            if (args?.username === undefined && !opts.urn) {
                 throw new Error("Missing required property 'username'");
             }
-            resourceInputs["database"] = args ? args.database : undefined;
-            resourceInputs["databaseId"] = args ? args.databaseId : undefined;
-            resourceInputs["mode"] = args ? args.mode : undefined;
-            resourceInputs["name"] = args ? args.name : undefined;
-            resourceInputs["size"] = args ? args.size : undefined;
-            resourceInputs["username"] = args ? args.username : undefined;
+            resourceInputs["database"] = args?.database;
+            resourceInputs["databaseId"] = args?.databaseId;
+            resourceInputs["mode"] = args?.mode;
+            resourceInputs["name"] = args?.name;
+            resourceInputs["size"] = args?.size;
+            resourceInputs["username"] = args?.username;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(DatabaseConnectionPool.__pulumiType, name, resourceInputs, opts);

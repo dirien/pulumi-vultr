@@ -32,13 +32,13 @@ export class IsoPrivate extends pulumi.CustomResource {
         return obj['__pulumiType'] === IsoPrivate.__pulumiType;
     }
 
-    public /*out*/ readonly dateCreated!: pulumi.Output<string>;
-    public /*out*/ readonly filename!: pulumi.Output<string>;
-    public /*out*/ readonly md5sum!: pulumi.Output<string>;
-    public /*out*/ readonly sha512sum!: pulumi.Output<string>;
-    public /*out*/ readonly size!: pulumi.Output<number>;
-    public /*out*/ readonly status!: pulumi.Output<string>;
-    public readonly url!: pulumi.Output<string>;
+    declare public /*out*/ readonly dateCreated: pulumi.Output<string>;
+    declare public /*out*/ readonly filename: pulumi.Output<string>;
+    declare public /*out*/ readonly md5sum: pulumi.Output<string>;
+    declare public /*out*/ readonly sha512sum: pulumi.Output<string>;
+    declare public /*out*/ readonly size: pulumi.Output<number>;
+    declare public /*out*/ readonly status: pulumi.Output<string>;
+    declare public readonly url: pulumi.Output<string>;
 
     /**
      * Create a IsoPrivate resource with the given unique name, arguments, and options.
@@ -53,19 +53,19 @@ export class IsoPrivate extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as IsoPrivateState | undefined;
-            resourceInputs["dateCreated"] = state ? state.dateCreated : undefined;
-            resourceInputs["filename"] = state ? state.filename : undefined;
-            resourceInputs["md5sum"] = state ? state.md5sum : undefined;
-            resourceInputs["sha512sum"] = state ? state.sha512sum : undefined;
-            resourceInputs["size"] = state ? state.size : undefined;
-            resourceInputs["status"] = state ? state.status : undefined;
-            resourceInputs["url"] = state ? state.url : undefined;
+            resourceInputs["dateCreated"] = state?.dateCreated;
+            resourceInputs["filename"] = state?.filename;
+            resourceInputs["md5sum"] = state?.md5sum;
+            resourceInputs["sha512sum"] = state?.sha512sum;
+            resourceInputs["size"] = state?.size;
+            resourceInputs["status"] = state?.status;
+            resourceInputs["url"] = state?.url;
         } else {
             const args = argsOrState as IsoPrivateArgs | undefined;
-            if ((!args || args.url === undefined) && !opts.urn) {
+            if (args?.url === undefined && !opts.urn) {
                 throw new Error("Missing required property 'url'");
             }
-            resourceInputs["url"] = args ? args.url : undefined;
+            resourceInputs["url"] = args?.url;
             resourceInputs["dateCreated"] = undefined /*out*/;
             resourceInputs["filename"] = undefined /*out*/;
             resourceInputs["md5sum"] = undefined /*out*/;

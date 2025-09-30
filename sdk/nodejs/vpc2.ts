@@ -76,27 +76,27 @@ export class Vpc2 extends pulumi.CustomResource {
     /**
      * The date that the VPC 2.0 was added to your Vultr account.
      */
-    public /*out*/ readonly dateCreated!: pulumi.Output<string>;
+    declare public /*out*/ readonly dateCreated: pulumi.Output<string>;
     /**
      * The description you want to give your VPC 2.0.
      */
-    public readonly description!: pulumi.Output<string | undefined>;
+    declare public readonly description: pulumi.Output<string | undefined>;
     /**
      * The IPv4 subnet to be used when attaching instances to this VPC 2.0.
      */
-    public readonly ipBlock!: pulumi.Output<string>;
+    declare public readonly ipBlock: pulumi.Output<string>;
     /**
      * Accepted values: `v4`.
      */
-    public readonly ipType!: pulumi.Output<string>;
+    declare public readonly ipType: pulumi.Output<string>;
     /**
      * The number of bits for the netmask in CIDR notation. Example: 32
      */
-    public readonly prefixLength!: pulumi.Output<number>;
+    declare public readonly prefixLength: pulumi.Output<number>;
     /**
      * The region ID that you want the VPC 2.0 to be created in.
      */
-    public readonly region!: pulumi.Output<string>;
+    declare public readonly region: pulumi.Output<string>;
 
     /**
      * Create a Vpc2 resource with the given unique name, arguments, and options.
@@ -111,22 +111,22 @@ export class Vpc2 extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as Vpc2State | undefined;
-            resourceInputs["dateCreated"] = state ? state.dateCreated : undefined;
-            resourceInputs["description"] = state ? state.description : undefined;
-            resourceInputs["ipBlock"] = state ? state.ipBlock : undefined;
-            resourceInputs["ipType"] = state ? state.ipType : undefined;
-            resourceInputs["prefixLength"] = state ? state.prefixLength : undefined;
-            resourceInputs["region"] = state ? state.region : undefined;
+            resourceInputs["dateCreated"] = state?.dateCreated;
+            resourceInputs["description"] = state?.description;
+            resourceInputs["ipBlock"] = state?.ipBlock;
+            resourceInputs["ipType"] = state?.ipType;
+            resourceInputs["prefixLength"] = state?.prefixLength;
+            resourceInputs["region"] = state?.region;
         } else {
             const args = argsOrState as Vpc2Args | undefined;
-            if ((!args || args.region === undefined) && !opts.urn) {
+            if (args?.region === undefined && !opts.urn) {
                 throw new Error("Missing required property 'region'");
             }
-            resourceInputs["description"] = args ? args.description : undefined;
-            resourceInputs["ipBlock"] = args ? args.ipBlock : undefined;
-            resourceInputs["ipType"] = args ? args.ipType : undefined;
-            resourceInputs["prefixLength"] = args ? args.prefixLength : undefined;
-            resourceInputs["region"] = args ? args.region : undefined;
+            resourceInputs["description"] = args?.description;
+            resourceInputs["ipBlock"] = args?.ipBlock;
+            resourceInputs["ipType"] = args?.ipType;
+            resourceInputs["prefixLength"] = args?.prefixLength;
+            resourceInputs["region"] = args?.region;
             resourceInputs["dateCreated"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);

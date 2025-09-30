@@ -78,67 +78,67 @@ export class LoadBalancer extends pulumi.CustomResource {
     /**
      * Array of instances that are currently attached to the load balancer.
      */
-    public readonly attachedInstances!: pulumi.Output<string[]>;
+    declare public readonly attachedInstances: pulumi.Output<string[]>;
     /**
      * The balancing algorithm for your load balancer. Options are `roundrobin` or `leastconn`. Default value is `roundrobin`
      */
-    public readonly balancingAlgorithm!: pulumi.Output<string>;
+    declare public readonly balancingAlgorithm: pulumi.Output<string>;
     /**
      * Name for your given sticky session.
      */
-    public readonly cookieName!: pulumi.Output<string | undefined>;
+    declare public readonly cookieName: pulumi.Output<string | undefined>;
     /**
      * Defines the firewall rules for a load balancer.
      */
-    public readonly firewallRules!: pulumi.Output<outputs.LoadBalancerFirewallRule[] | undefined>;
+    declare public readonly firewallRules: pulumi.Output<outputs.LoadBalancerFirewallRule[] | undefined>;
     /**
      * List of forwarding rules for a load balancer. The configuration of a `forwardingRules` is listened below.
      */
-    public readonly forwardingRules!: pulumi.Output<outputs.LoadBalancerForwardingRule[]>;
+    declare public readonly forwardingRules: pulumi.Output<outputs.LoadBalancerForwardingRule[]>;
     /**
      * Boolean value that indicates if SSL is enabled.
      */
-    public /*out*/ readonly hasSsl!: pulumi.Output<boolean>;
+    declare public /*out*/ readonly hasSsl: pulumi.Output<boolean>;
     /**
      * A block that defines the way load balancers should check for health. The configuration of a `healthCheck` is listed below.
      */
-    public readonly healthCheck!: pulumi.Output<outputs.LoadBalancerHealthCheck>;
+    declare public readonly healthCheck: pulumi.Output<outputs.LoadBalancerHealthCheck>;
     /**
      * IPv4 address for your load balancer.
      */
-    public /*out*/ readonly ipv4!: pulumi.Output<string>;
+    declare public /*out*/ readonly ipv4: pulumi.Output<string>;
     /**
      * IPv6 address for your load balancer.
      */
-    public /*out*/ readonly ipv6!: pulumi.Output<string>;
+    declare public /*out*/ readonly ipv6: pulumi.Output<string>;
     /**
      * The load balancer's label.
      */
-    public readonly label!: pulumi.Output<string | undefined>;
+    declare public readonly label: pulumi.Output<string | undefined>;
     /**
      * Boolean value that indicates if Proxy Protocol is enabled.
      */
-    public readonly proxyProtocol!: pulumi.Output<boolean | undefined>;
+    declare public readonly proxyProtocol: pulumi.Output<boolean | undefined>;
     /**
      * The region your load balancer is deployed in.
      */
-    public readonly region!: pulumi.Output<string>;
+    declare public readonly region: pulumi.Output<string>;
     /**
      * A block that supplies your ssl configuration to be used with HTTPS. The configuration of a `ssl` is listed below.
      */
-    public readonly ssl!: pulumi.Output<outputs.LoadBalancerSsl | undefined>;
+    declare public readonly ssl: pulumi.Output<outputs.LoadBalancerSsl | undefined>;
     /**
      * Boolean value that indicates if HTTP calls will be redirected to HTTPS.
      */
-    public readonly sslRedirect!: pulumi.Output<boolean | undefined>;
+    declare public readonly sslRedirect: pulumi.Output<boolean | undefined>;
     /**
      * Current status for the load balancer
      */
-    public /*out*/ readonly status!: pulumi.Output<string>;
+    declare public /*out*/ readonly status: pulumi.Output<string>;
     /**
      * A VPC ID that the load balancer should be attached to.
      */
-    public readonly vpc!: pulumi.Output<string | undefined>;
+    declare public readonly vpc: pulumi.Output<string | undefined>;
 
     /**
      * Create a LoadBalancer resource with the given unique name, arguments, and options.
@@ -153,42 +153,42 @@ export class LoadBalancer extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as LoadBalancerState | undefined;
-            resourceInputs["attachedInstances"] = state ? state.attachedInstances : undefined;
-            resourceInputs["balancingAlgorithm"] = state ? state.balancingAlgorithm : undefined;
-            resourceInputs["cookieName"] = state ? state.cookieName : undefined;
-            resourceInputs["firewallRules"] = state ? state.firewallRules : undefined;
-            resourceInputs["forwardingRules"] = state ? state.forwardingRules : undefined;
-            resourceInputs["hasSsl"] = state ? state.hasSsl : undefined;
-            resourceInputs["healthCheck"] = state ? state.healthCheck : undefined;
-            resourceInputs["ipv4"] = state ? state.ipv4 : undefined;
-            resourceInputs["ipv6"] = state ? state.ipv6 : undefined;
-            resourceInputs["label"] = state ? state.label : undefined;
-            resourceInputs["proxyProtocol"] = state ? state.proxyProtocol : undefined;
-            resourceInputs["region"] = state ? state.region : undefined;
-            resourceInputs["ssl"] = state ? state.ssl : undefined;
-            resourceInputs["sslRedirect"] = state ? state.sslRedirect : undefined;
-            resourceInputs["status"] = state ? state.status : undefined;
-            resourceInputs["vpc"] = state ? state.vpc : undefined;
+            resourceInputs["attachedInstances"] = state?.attachedInstances;
+            resourceInputs["balancingAlgorithm"] = state?.balancingAlgorithm;
+            resourceInputs["cookieName"] = state?.cookieName;
+            resourceInputs["firewallRules"] = state?.firewallRules;
+            resourceInputs["forwardingRules"] = state?.forwardingRules;
+            resourceInputs["hasSsl"] = state?.hasSsl;
+            resourceInputs["healthCheck"] = state?.healthCheck;
+            resourceInputs["ipv4"] = state?.ipv4;
+            resourceInputs["ipv6"] = state?.ipv6;
+            resourceInputs["label"] = state?.label;
+            resourceInputs["proxyProtocol"] = state?.proxyProtocol;
+            resourceInputs["region"] = state?.region;
+            resourceInputs["ssl"] = state?.ssl;
+            resourceInputs["sslRedirect"] = state?.sslRedirect;
+            resourceInputs["status"] = state?.status;
+            resourceInputs["vpc"] = state?.vpc;
         } else {
             const args = argsOrState as LoadBalancerArgs | undefined;
-            if ((!args || args.forwardingRules === undefined) && !opts.urn) {
+            if (args?.forwardingRules === undefined && !opts.urn) {
                 throw new Error("Missing required property 'forwardingRules'");
             }
-            if ((!args || args.region === undefined) && !opts.urn) {
+            if (args?.region === undefined && !opts.urn) {
                 throw new Error("Missing required property 'region'");
             }
-            resourceInputs["attachedInstances"] = args ? args.attachedInstances : undefined;
-            resourceInputs["balancingAlgorithm"] = args ? args.balancingAlgorithm : undefined;
-            resourceInputs["cookieName"] = args ? args.cookieName : undefined;
-            resourceInputs["firewallRules"] = args ? args.firewallRules : undefined;
-            resourceInputs["forwardingRules"] = args ? args.forwardingRules : undefined;
-            resourceInputs["healthCheck"] = args ? args.healthCheck : undefined;
-            resourceInputs["label"] = args ? args.label : undefined;
-            resourceInputs["proxyProtocol"] = args ? args.proxyProtocol : undefined;
-            resourceInputs["region"] = args ? args.region : undefined;
-            resourceInputs["ssl"] = args ? args.ssl : undefined;
-            resourceInputs["sslRedirect"] = args ? args.sslRedirect : undefined;
-            resourceInputs["vpc"] = args ? args.vpc : undefined;
+            resourceInputs["attachedInstances"] = args?.attachedInstances;
+            resourceInputs["balancingAlgorithm"] = args?.balancingAlgorithm;
+            resourceInputs["cookieName"] = args?.cookieName;
+            resourceInputs["firewallRules"] = args?.firewallRules;
+            resourceInputs["forwardingRules"] = args?.forwardingRules;
+            resourceInputs["healthCheck"] = args?.healthCheck;
+            resourceInputs["label"] = args?.label;
+            resourceInputs["proxyProtocol"] = args?.proxyProtocol;
+            resourceInputs["region"] = args?.region;
+            resourceInputs["ssl"] = args?.ssl;
+            resourceInputs["sslRedirect"] = args?.sslRedirect;
+            resourceInputs["vpc"] = args?.vpc;
             resourceInputs["hasSsl"] = undefined /*out*/;
             resourceInputs["ipv4"] = undefined /*out*/;
             resourceInputs["ipv6"] = undefined /*out*/;

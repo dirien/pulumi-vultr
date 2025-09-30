@@ -47,6 +47,10 @@ import (
 type DatabaseReplica struct {
 	pulumi.CustomResourceState
 
+	// The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+	BackupHour pulumi.StringOutput `pulumi:"backupHour"`
+	// The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
+	BackupMinute pulumi.StringOutput `pulumi:"backupMinute"`
 	// The configured time zone for the managed database read replica in TZ database format.
 	ClusterTimeZone pulumi.StringOutput `pulumi:"clusterTimeZone"`
 	// The database engine of the managed database read replica.
@@ -60,8 +64,7 @@ type DatabaseReplica struct {
 	// The managed database read replica's default logical database.
 	Dbname pulumi.StringOutput `pulumi:"dbname"`
 	// The configuration value for the data eviction policy on the managed database read replica (Valkey engine types only).
-	EvictionPolicy pulumi.StringOutput `pulumi:"evictionPolicy"`
-	// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
+	EvictionPolicy      pulumi.StringOutput    `pulumi:"evictionPolicy"`
 	FerretdbCredentials pulumi.StringMapOutput `pulumi:"ferretdbCredentials"`
 	// The hostname assigned to the managed database read replica.
 	Host pulumi.StringOutput `pulumi:"host"`
@@ -150,6 +153,10 @@ func GetDatabaseReplica(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering DatabaseReplica resources.
 type databaseReplicaState struct {
+	// The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+	BackupHour *string `pulumi:"backupHour"`
+	// The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
+	BackupMinute *string `pulumi:"backupMinute"`
 	// The configured time zone for the managed database read replica in TZ database format.
 	ClusterTimeZone *string `pulumi:"clusterTimeZone"`
 	// The database engine of the managed database read replica.
@@ -163,8 +170,7 @@ type databaseReplicaState struct {
 	// The managed database read replica's default logical database.
 	Dbname *string `pulumi:"dbname"`
 	// The configuration value for the data eviction policy on the managed database read replica (Valkey engine types only).
-	EvictionPolicy *string `pulumi:"evictionPolicy"`
-	// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
+	EvictionPolicy      *string           `pulumi:"evictionPolicy"`
 	FerretdbCredentials map[string]string `pulumi:"ferretdbCredentials"`
 	// The hostname assigned to the managed database read replica.
 	Host *string `pulumi:"host"`
@@ -215,6 +221,10 @@ type databaseReplicaState struct {
 }
 
 type DatabaseReplicaState struct {
+	// The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+	BackupHour pulumi.StringPtrInput
+	// The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
+	BackupMinute pulumi.StringPtrInput
 	// The configured time zone for the managed database read replica in TZ database format.
 	ClusterTimeZone pulumi.StringPtrInput
 	// The database engine of the managed database read replica.
@@ -228,8 +238,7 @@ type DatabaseReplicaState struct {
 	// The managed database read replica's default logical database.
 	Dbname pulumi.StringPtrInput
 	// The configuration value for the data eviction policy on the managed database read replica (Valkey engine types only).
-	EvictionPolicy pulumi.StringPtrInput
-	// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
+	EvictionPolicy      pulumi.StringPtrInput
 	FerretdbCredentials pulumi.StringMapInput
 	// The hostname assigned to the managed database read replica.
 	Host pulumi.StringPtrInput
@@ -284,11 +293,14 @@ func (DatabaseReplicaState) ElementType() reflect.Type {
 }
 
 type databaseReplicaArgs struct {
+	// The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+	BackupHour *string `pulumi:"backupHour"`
+	// The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
+	BackupMinute *string `pulumi:"backupMinute"`
 	// The managed database ID you want to attach this replica to.
 	DatabaseId string `pulumi:"databaseId"`
 	// The configuration value for the data eviction policy on the managed database read replica (Valkey engine types only).
-	EvictionPolicy *string `pulumi:"evictionPolicy"`
-	// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
+	EvictionPolicy      *string           `pulumi:"evictionPolicy"`
 	FerretdbCredentials map[string]string `pulumi:"ferretdbCredentials"`
 	// A label for the managed database read replica.
 	Label string `pulumi:"label"`
@@ -314,11 +326,14 @@ type databaseReplicaArgs struct {
 
 // The set of arguments for constructing a DatabaseReplica resource.
 type DatabaseReplicaArgs struct {
+	// The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+	BackupHour pulumi.StringPtrInput
+	// The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
+	BackupMinute pulumi.StringPtrInput
 	// The managed database ID you want to attach this replica to.
 	DatabaseId pulumi.StringInput
 	// The configuration value for the data eviction policy on the managed database read replica (Valkey engine types only).
-	EvictionPolicy pulumi.StringPtrInput
-	// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
+	EvictionPolicy      pulumi.StringPtrInput
 	FerretdbCredentials pulumi.StringMapInput
 	// A label for the managed database read replica.
 	Label pulumi.StringInput
@@ -429,6 +444,16 @@ func (o DatabaseReplicaOutput) ToDatabaseReplicaOutputWithContext(ctx context.Co
 	return o
 }
 
+// The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+func (o DatabaseReplicaOutput) BackupHour() pulumi.StringOutput {
+	return o.ApplyT(func(v *DatabaseReplica) pulumi.StringOutput { return v.BackupHour }).(pulumi.StringOutput)
+}
+
+// The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
+func (o DatabaseReplicaOutput) BackupMinute() pulumi.StringOutput {
+	return o.ApplyT(func(v *DatabaseReplica) pulumi.StringOutput { return v.BackupMinute }).(pulumi.StringOutput)
+}
+
 // The configured time zone for the managed database read replica in TZ database format.
 func (o DatabaseReplicaOutput) ClusterTimeZone() pulumi.StringOutput {
 	return o.ApplyT(func(v *DatabaseReplica) pulumi.StringOutput { return v.ClusterTimeZone }).(pulumi.StringOutput)
@@ -464,7 +489,6 @@ func (o DatabaseReplicaOutput) EvictionPolicy() pulumi.StringOutput {
 	return o.ApplyT(func(v *DatabaseReplica) pulumi.StringOutput { return v.EvictionPolicy }).(pulumi.StringOutput)
 }
 
-// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
 func (o DatabaseReplicaOutput) FerretdbCredentials() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *DatabaseReplica) pulumi.StringMapOutput { return v.FerretdbCredentials }).(pulumi.StringMapOutput)
 }

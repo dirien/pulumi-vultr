@@ -5,7 +5,7 @@ import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "./utilities";
 
 /**
- * Provides a Vultr database quota resource. This can be used to create, read, and delete quotas for a managed database on your Vultr account.
+ * Provides a Vultr database quota resource. This can be used to create, read, modify, and delete quotas for a managed database on your Vultr account.
  *
  * ## Example Usage
  *
@@ -56,27 +56,27 @@ export class DatabaseQuota extends pulumi.CustomResource {
     /**
      * The client ID for the new database quota.
      */
-    public readonly clientId!: pulumi.Output<string>;
+    declare public readonly clientId: pulumi.Output<string>;
     /**
      * The consumer byte rate for the new managed database quota.
      */
-    public readonly consumerByteRate!: pulumi.Output<number>;
+    declare public readonly consumerByteRate: pulumi.Output<number>;
     /**
      * The managed database ID you want to attach this quota to.
      */
-    public readonly databaseId!: pulumi.Output<string>;
+    declare public readonly databaseId: pulumi.Output<string>;
     /**
      * The producer byte rate for the new managed database quota.
      */
-    public readonly producerByteRate!: pulumi.Output<number>;
+    declare public readonly producerByteRate: pulumi.Output<number>;
     /**
      * The CPU request percentage for the new managed database quota.
      */
-    public readonly requestPercentage!: pulumi.Output<number>;
+    declare public readonly requestPercentage: pulumi.Output<number>;
     /**
      * The user for the new managed database quota.
      */
-    public readonly user!: pulumi.Output<string>;
+    declare public readonly user: pulumi.Output<string>;
 
     /**
      * Create a DatabaseQuota resource with the given unique name, arguments, and options.
@@ -91,38 +91,38 @@ export class DatabaseQuota extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as DatabaseQuotaState | undefined;
-            resourceInputs["clientId"] = state ? state.clientId : undefined;
-            resourceInputs["consumerByteRate"] = state ? state.consumerByteRate : undefined;
-            resourceInputs["databaseId"] = state ? state.databaseId : undefined;
-            resourceInputs["producerByteRate"] = state ? state.producerByteRate : undefined;
-            resourceInputs["requestPercentage"] = state ? state.requestPercentage : undefined;
-            resourceInputs["user"] = state ? state.user : undefined;
+            resourceInputs["clientId"] = state?.clientId;
+            resourceInputs["consumerByteRate"] = state?.consumerByteRate;
+            resourceInputs["databaseId"] = state?.databaseId;
+            resourceInputs["producerByteRate"] = state?.producerByteRate;
+            resourceInputs["requestPercentage"] = state?.requestPercentage;
+            resourceInputs["user"] = state?.user;
         } else {
             const args = argsOrState as DatabaseQuotaArgs | undefined;
-            if ((!args || args.clientId === undefined) && !opts.urn) {
+            if (args?.clientId === undefined && !opts.urn) {
                 throw new Error("Missing required property 'clientId'");
             }
-            if ((!args || args.consumerByteRate === undefined) && !opts.urn) {
+            if (args?.consumerByteRate === undefined && !opts.urn) {
                 throw new Error("Missing required property 'consumerByteRate'");
             }
-            if ((!args || args.databaseId === undefined) && !opts.urn) {
+            if (args?.databaseId === undefined && !opts.urn) {
                 throw new Error("Missing required property 'databaseId'");
             }
-            if ((!args || args.producerByteRate === undefined) && !opts.urn) {
+            if (args?.producerByteRate === undefined && !opts.urn) {
                 throw new Error("Missing required property 'producerByteRate'");
             }
-            if ((!args || args.requestPercentage === undefined) && !opts.urn) {
+            if (args?.requestPercentage === undefined && !opts.urn) {
                 throw new Error("Missing required property 'requestPercentage'");
             }
-            if ((!args || args.user === undefined) && !opts.urn) {
+            if (args?.user === undefined && !opts.urn) {
                 throw new Error("Missing required property 'user'");
             }
-            resourceInputs["clientId"] = args ? args.clientId : undefined;
-            resourceInputs["consumerByteRate"] = args ? args.consumerByteRate : undefined;
-            resourceInputs["databaseId"] = args ? args.databaseId : undefined;
-            resourceInputs["producerByteRate"] = args ? args.producerByteRate : undefined;
-            resourceInputs["requestPercentage"] = args ? args.requestPercentage : undefined;
-            resourceInputs["user"] = args ? args.user : undefined;
+            resourceInputs["clientId"] = args?.clientId;
+            resourceInputs["consumerByteRate"] = args?.consumerByteRate;
+            resourceInputs["databaseId"] = args?.databaseId;
+            resourceInputs["producerByteRate"] = args?.producerByteRate;
+            resourceInputs["requestPercentage"] = args?.requestPercentage;
+            resourceInputs["user"] = args?.user;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(DatabaseQuota.__pulumiType, name, resourceInputs, opts);

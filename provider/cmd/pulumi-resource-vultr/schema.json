@@ -57,7 +57,7 @@
         "variables": {
             "apiKey": {
                 "type": "string",
-                "description": "The API Key that allows interaction with the API\n",
+                "description": "The API Key that allows interaction with the API",
                 "defaultInfo": {
                     "environment": [
                         "VULTR_API_KEY"
@@ -67,12 +67,12 @@
             },
             "rateLimit": {
                 "type": "integer",
-                "description": "Allows users to set the speed of API calls to work with the Vultr Rate Limit\n",
+                "description": "Allows users to set the speed of API calls to work with the Vultr Rate Limit",
                 "default": 500
             },
             "retryLimit": {
                 "type": "integer",
-                "description": "Allows users to set the maximum number of retries allowed for a failed API call.\n",
+                "description": "Allows users to set the maximum number of retries allowed for a failed API call.",
                 "default": 3
             }
         },
@@ -83,6 +83,14 @@
     "types": {
         "vultr:index/DatabaseReadReplica:DatabaseReadReplica": {
             "properties": {
+                "backupHour": {
+                    "type": "string",
+                    "description": "The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).\n"
+                },
+                "backupMinute": {
+                    "type": "string",
+                    "description": "The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).\n"
+                },
                 "clusterTimeZone": {
                     "type": "string",
                     "description": "The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).\n"
@@ -111,8 +119,7 @@
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
-                    },
-                    "description": "An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).\n"
+                    }
                 },
                 "host": {
                     "type": "string",
@@ -136,7 +143,7 @@
                 },
                 "maintenanceTime": {
                     "type": "string",
-                    "description": "The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).\n"
+                    "description": "The preferred maintenance time for the managed database.\n"
                 },
                 "mysqlLongQueryTime": {
                     "type": "integer",
@@ -225,6 +232,8 @@
             "language": {
                 "nodejs": {
                     "requiredOutputs": [
+                        "backupHour",
+                        "backupMinute",
                         "clusterTimeZone",
                         "databaseEngine",
                         "databaseEngineVersion",
@@ -399,6 +408,9 @@
                         "$ref": "#/types/vultr:index/KubernetesNodePoolsTaint:KubernetesNodePoolsTaint"
                     },
                     "description": "Taints to apply to the nodes in the node pool. Should contain `key`, `value` and `effect`.  The `effect` should be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.\n"
+                },
+                "userData": {
+                    "type": "string"
                 }
             },
             "type": "object",
@@ -821,6 +833,14 @@
         },
         "vultr:index/getDatabaseReadReplica:getDatabaseReadReplica": {
             "properties": {
+                "backupHour": {
+                    "type": "string",
+                    "description": "The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).\n"
+                },
+                "backupMinute": {
+                    "type": "string",
+                    "description": "The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).\n"
+                },
                 "clusterTimeZone": {
                     "type": "string",
                     "description": "The configured time zone for the Managed Database in TZ database format.\n"
@@ -849,8 +869,7 @@
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
-                    },
-                    "description": "An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).\n"
+                    }
                 },
                 "host": {
                     "type": "string",
@@ -956,6 +975,8 @@
             },
             "type": "object",
             "required": [
+                "backupHour",
+                "backupMinute",
                 "clusterTimeZone",
                 "databaseEngine",
                 "databaseEngineVersion",
@@ -1412,6 +1433,10 @@
                         "$ref": "#/types/vultr:index/getKubernetesNodePoolTaint:getKubernetesNodePoolTaint"
                     },
                     "description": "Kubernetes node taints applied to the node pool.\n"
+                },
+                "userData": {
+                    "type": "string",
+                    "description": "The base64 encoded string containing the user data applied to nodes in the node pool.\n"
                 }
             },
             "type": "object",
@@ -1888,22 +1913,22 @@
         "properties": {
             "apiKey": {
                 "type": "string",
-                "description": "The API Key that allows interaction with the API\n",
+                "description": "The API Key that allows interaction with the API",
                 "secret": true
             },
             "rateLimit": {
                 "type": "integer",
-                "description": "Allows users to set the speed of API calls to work with the Vultr Rate Limit\n"
+                "description": "Allows users to set the speed of API calls to work with the Vultr Rate Limit"
             },
             "retryLimit": {
                 "type": "integer",
-                "description": "Allows users to set the maximum number of retries allowed for a failed API call.\n"
+                "description": "Allows users to set the maximum number of retries allowed for a failed API call."
             }
         },
         "inputProperties": {
             "apiKey": {
                 "type": "string",
-                "description": "The API Key that allows interaction with the API\n",
+                "description": "The API Key that allows interaction with the API",
                 "defaultInfo": {
                     "environment": [
                         "VULTR_API_KEY"
@@ -1913,12 +1938,12 @@
             },
             "rateLimit": {
                 "type": "integer",
-                "description": "Allows users to set the speed of API calls to work with the Vultr Rate Limit\n",
+                "description": "Allows users to set the speed of API calls to work with the Vultr Rate Limit",
                 "default": 500
             },
             "retryLimit": {
                 "type": "integer",
-                "description": "Allows users to set the maximum number of retries allowed for a failed API call.\n",
+                "description": "Allows users to set the maximum number of retries allowed for a failed API call.",
                 "default": 3
             }
         },
@@ -2657,6 +2682,14 @@
                     "type": "string",
                     "description": "The private key to authenticate the default user (Kafka engine types only).\n"
                 },
+                "backupHour": {
+                    "type": "string",
+                    "description": "The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).\n"
+                },
+                "backupMinute": {
+                    "type": "string",
+                    "description": "The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).\n"
+                },
                 "clusterTimeZone": {
                     "type": "string",
                     "description": "The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).\n"
@@ -2677,6 +2710,18 @@
                     "type": "string",
                     "description": "The managed database's default logical database.\n"
                 },
+                "enableKafkaConnect": {
+                    "type": "boolean",
+                    "description": "The configuration value for Kafka Connect support (Kafka engine types only).\n"
+                },
+                "enableKafkaRest": {
+                    "type": "boolean",
+                    "description": "The configuration value for Kafka REST support (Kafka engine types only).\n"
+                },
+                "enableSchemaRegistry": {
+                    "type": "boolean",
+                    "description": "The configuration value for Schema Registry support (Kafka engine types only).\n"
+                },
                 "evictionPolicy": {
                     "type": "string",
                     "description": "The configuration value for the data eviction policy on the managed database (Valkey engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).\n"
@@ -2685,12 +2730,15 @@
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
-                    },
-                    "description": "An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).\n"
+                    }
                 },
                 "host": {
                     "type": "string",
                     "description": "The hostname assigned to the managed database.\n"
+                },
+                "kafkaRestUri": {
+                    "type": "string",
+                    "description": "The URI to access the RESTful interface of your Kafka cluster if Kafka REST is enabled (Kafka engine types only).\n"
                 },
                 "label": {
                     "type": "string",
@@ -2706,7 +2754,7 @@
                 },
                 "maintenanceTime": {
                     "type": "string",
-                    "description": "The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).\n"
+                    "description": "The preferred maintenance time for the managed database.\n"
                 },
                 "mysqlLongQueryTime": {
                     "type": "integer",
@@ -2778,6 +2826,10 @@
                     "type": "string",
                     "description": "The SASL connection port for the managed database (Kafka engine types only).\n"
                 },
+                "schemaRegistryUri": {
+                    "type": "string",
+                    "description": "The URI to access the Schema Registry service of your Kafka cluster if Schema Registry is enabled (Kafka engine types only).\n"
+                },
                 "status": {
                     "type": "string",
                     "description": "The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).\n"
@@ -2813,6 +2865,7 @@
                 "evictionPolicy",
                 "ferretdbCredentials",
                 "host",
+                "kafkaRestUri",
                 "label",
                 "latestBackup",
                 "maintenanceDow",
@@ -2831,6 +2884,7 @@
                 "readReplicas",
                 "region",
                 "saslPort",
+                "schemaRegistryUri",
                 "status",
                 "user"
             ],
@@ -2842,6 +2896,14 @@
                 "accessKey": {
                     "type": "string",
                     "description": "The private key to authenticate the default user (Kafka engine types only).\n"
+                },
+                "backupHour": {
+                    "type": "string",
+                    "description": "The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).\n"
+                },
+                "backupMinute": {
+                    "type": "string",
+                    "description": "The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).\n"
                 },
                 "clusterTimeZone": {
                     "type": "string",
@@ -2856,6 +2918,18 @@
                     "type": "string",
                     "description": "The database engine version of the new managed database.\n"
                 },
+                "enableKafkaConnect": {
+                    "type": "boolean",
+                    "description": "The configuration value for Kafka Connect support (Kafka engine types only).\n"
+                },
+                "enableKafkaRest": {
+                    "type": "boolean",
+                    "description": "The configuration value for Kafka REST support (Kafka engine types only).\n"
+                },
+                "enableSchemaRegistry": {
+                    "type": "boolean",
+                    "description": "The configuration value for Schema Registry support (Kafka engine types only).\n"
+                },
                 "evictionPolicy": {
                     "type": "string",
                     "description": "The configuration value for the data eviction policy on the managed database (Valkey engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).\n"
@@ -2864,8 +2938,11 @@
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
-                    },
-                    "description": "An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).\n"
+                    }
+                },
+                "kafkaRestUri": {
+                    "type": "string",
+                    "description": "The URI to access the RESTful interface of your Kafka cluster if Kafka REST is enabled (Kafka engine types only).\n"
                 },
                 "label": {
                     "type": "string",
@@ -2877,7 +2954,7 @@
                 },
                 "maintenanceTime": {
                     "type": "string",
-                    "description": "The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).\n"
+                    "description": "The preferred maintenance time for the managed database.\n"
                 },
                 "mysqlLongQueryTime": {
                     "type": "integer",
@@ -2937,6 +3014,10 @@
                     "type": "string",
                     "description": "The SASL connection port for the managed database (Kafka engine types only).\n"
                 },
+                "schemaRegistryUri": {
+                    "type": "string",
+                    "description": "The URI to access the Schema Registry service of your Kafka cluster if Schema Registry is enabled (Kafka engine types only).\n"
+                },
                 "tag": {
                     "type": "string",
                     "description": "The tag to assign to the managed database.\n"
@@ -2971,6 +3052,14 @@
                         "type": "string",
                         "description": "The private key to authenticate the default user (Kafka engine types only).\n"
                     },
+                    "backupHour": {
+                        "type": "string",
+                        "description": "The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).\n"
+                    },
+                    "backupMinute": {
+                        "type": "string",
+                        "description": "The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).\n"
+                    },
                     "clusterTimeZone": {
                         "type": "string",
                         "description": "The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).\n"
@@ -2992,6 +3081,18 @@
                         "type": "string",
                         "description": "The managed database's default logical database.\n"
                     },
+                    "enableKafkaConnect": {
+                        "type": "boolean",
+                        "description": "The configuration value for Kafka Connect support (Kafka engine types only).\n"
+                    },
+                    "enableKafkaRest": {
+                        "type": "boolean",
+                        "description": "The configuration value for Kafka REST support (Kafka engine types only).\n"
+                    },
+                    "enableSchemaRegistry": {
+                        "type": "boolean",
+                        "description": "The configuration value for Schema Registry support (Kafka engine types only).\n"
+                    },
                     "evictionPolicy": {
                         "type": "string",
                         "description": "The configuration value for the data eviction policy on the managed database (Valkey engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).\n"
@@ -3000,12 +3101,15 @@
                         "type": "object",
                         "additionalProperties": {
                             "type": "string"
-                        },
-                        "description": "An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).\n"
+                        }
                     },
                     "host": {
                         "type": "string",
                         "description": "The hostname assigned to the managed database.\n"
+                    },
+                    "kafkaRestUri": {
+                        "type": "string",
+                        "description": "The URI to access the RESTful interface of your Kafka cluster if Kafka REST is enabled (Kafka engine types only).\n"
                     },
                     "label": {
                         "type": "string",
@@ -3021,7 +3125,7 @@
                     },
                     "maintenanceTime": {
                         "type": "string",
-                        "description": "The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).\n"
+                        "description": "The preferred maintenance time for the managed database.\n"
                     },
                     "mysqlLongQueryTime": {
                         "type": "integer",
@@ -3093,6 +3197,10 @@
                         "type": "string",
                         "description": "The SASL connection port for the managed database (Kafka engine types only).\n"
                     },
+                    "schemaRegistryUri": {
+                        "type": "string",
+                        "description": "The URI to access the Schema Registry service of your Kafka cluster if Schema Registry is enabled (Kafka engine types only).\n"
+                    },
                     "status": {
                         "type": "string",
                         "description": "The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).\n"
@@ -3121,7 +3229,7 @@
             }
         },
         "vultr:index/databaseConnectionPool:DatabaseConnectionPool": {
-            "description": "Provides a Vultr database connection pool resource. This can be used to create, read, modify, and delete connection pools for a PostgreSQL managed database on your Vultr account.\n\n## Example Usage\n\nCreate a new database connection pool:\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@ediri/vultr\";\n\nconst myDatabaseConnectionPool = new vultr.DatabaseConnectionPool(\"myDatabaseConnectionPool\", {\n    databaseId: vultr_database.my_database.id,\n    database: \"defaultdb\",\n    username: \"vultradmin\",\n    mode: \"transaction\",\n    size: 3,\n});\n```\n```python\nimport pulumi\nimport ediri_vultr as vultr\n\nmy_database_connection_pool = vultr.DatabaseConnectionPool(\"myDatabaseConnectionPool\",\n    database_id=vultr_database[\"my_database\"][\"id\"],\n    database=\"defaultdb\",\n    username=\"vultradmin\",\n    mode=\"transaction\",\n    size=3)\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vultr = ediri.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var myDatabaseConnectionPool = new Vultr.DatabaseConnectionPool(\"myDatabaseConnectionPool\", new()\n    {\n        DatabaseId = vultr_database.My_database.Id,\n        Database = \"defaultdb\",\n        Username = \"vultradmin\",\n        Mode = \"transaction\",\n        Size = 3,\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.NewDatabaseConnectionPool(ctx, \"myDatabaseConnectionPool\", \u0026vultr.DatabaseConnectionPoolArgs{\n\t\t\tDatabaseId: pulumi.Any(vultr_database.My_database.Id),\n\t\t\tDatabase:   pulumi.String(\"defaultdb\"),\n\t\t\tUsername:   pulumi.String(\"vultradmin\"),\n\t\t\tMode:       pulumi.String(\"transaction\"),\n\t\t\tSize:       pulumi.Int(3),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.DatabaseConnectionPool;\nimport com.pulumi.vultr.DatabaseConnectionPoolArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var myDatabaseConnectionPool = new DatabaseConnectionPool(\"myDatabaseConnectionPool\", DatabaseConnectionPoolArgs.builder()\n            .databaseId(vultr_database.my_database().id())\n            .database(\"defaultdb\")\n            .username(\"vultradmin\")\n            .mode(\"transaction\")\n            .size(3)\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  myDatabaseConnectionPool:\n    type: vultr:DatabaseConnectionPool\n    properties:\n      databaseId: ${vultr_database.my_database.id}\n      database: defaultdb\n      username: vultradmin\n      mode: transaction\n      size: '3'\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
+            "description": "Provides a Vultr database connection pool resource. This can be used to create, read, modify, and delete connection pools for a PostgreSQL managed database on your Vultr account.\n\n## Example Usage\n\nCreate a new database connection pool:\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@ediri/vultr\";\n\nconst myDatabaseConnectionPool = new vultr.DatabaseConnectionPool(\"myDatabaseConnectionPool\", {\n    databaseId: vultr_database.my_database.id,\n    database: \"defaultdb\",\n    username: \"vultradmin\",\n    mode: \"transaction\",\n    size: 3,\n});\n```\n```python\nimport pulumi\nimport ediri_vultr as vultr\n\nmy_database_connection_pool = vultr.DatabaseConnectionPool(\"myDatabaseConnectionPool\",\n    database_id=vultr_database[\"my_database\"][\"id\"],\n    database=\"defaultdb\",\n    username=\"vultradmin\",\n    mode=\"transaction\",\n    size=3)\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vultr = ediri.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var myDatabaseConnectionPool = new Vultr.DatabaseConnectionPool(\"myDatabaseConnectionPool\", new()\n    {\n        DatabaseId = vultr_database.My_database.Id,\n        Database = \"defaultdb\",\n        Username = \"vultradmin\",\n        Mode = \"transaction\",\n        Size = 3,\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.NewDatabaseConnectionPool(ctx, \"myDatabaseConnectionPool\", \u0026vultr.DatabaseConnectionPoolArgs{\n\t\t\tDatabaseId: pulumi.Any(vultr_database.My_database.Id),\n\t\t\tDatabase:   pulumi.String(\"defaultdb\"),\n\t\t\tUsername:   pulumi.String(\"vultradmin\"),\n\t\t\tMode:       pulumi.String(\"transaction\"),\n\t\t\tSize:       pulumi.Int(3),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.DatabaseConnectionPool;\nimport com.pulumi.vultr.DatabaseConnectionPoolArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var myDatabaseConnectionPool = new DatabaseConnectionPool(\"myDatabaseConnectionPool\", DatabaseConnectionPoolArgs.builder()\n            .databaseId(vultr_database.my_database().id())\n            .database(\"defaultdb\")\n            .username(\"vultradmin\")\n            .mode(\"transaction\")\n            .size(3)\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  myDatabaseConnectionPool:\n    type: vultr:DatabaseConnectionPool\n    properties:\n      databaseId: ${vultr_database.my_database.id}\n      database: defaultdb\n      username: vultradmin\n      mode: transaction\n      size: 3\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
             "properties": {
                 "database": {
                     "type": "string",
@@ -3224,6 +3332,97 @@
                 "type": "object"
             }
         },
+        "vultr:index/databaseConnector:DatabaseConnector": {
+            "description": "Provides a Vultr database connector resource. This can be used to create, read, modify, and delete connectors for a managed database on your Vultr account. Note: The managed database must be configured with `enable_kafka_connect = true`.\n\n## Example Usage\n\nCreate a new database connector:\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@ediri/vultr\";\n\nconst myDatabaseConnector = new vultr.DatabaseConnector(\"myDatabaseConnector\", {\n    databaseId: vultr_database.my_database.id,\n    name: \"my_database_connector\",\n    \"class\": \"com.couchbase.connect.kafka.CouchbaseSinkConnector\",\n    topics: \"my_database_topic\",\n    config: JSON.stringify({\n        \"couchbase.seed.nodes\": \"3\",\n        \"couchbase.username\": \"some_username\",\n        \"couchbase.password\": \"some_password\",\n    }),\n});\n```\n```python\nimport pulumi\nimport ediri_vultr as vultr\nimport json\n\nmy_database_connector = vultr.DatabaseConnector(\"myDatabaseConnector\",\n    database_id=vultr_database[\"my_database\"][\"id\"],\n    name=\"my_database_connector\",\n    class_=\"com.couchbase.connect.kafka.CouchbaseSinkConnector\",\n    topics=\"my_database_topic\",\n    config=json.dumps({\n        \"couchbase.seed.nodes\": \"3\",\n        \"couchbase.username\": \"some_username\",\n        \"couchbase.password\": \"some_password\",\n    }))\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing System.Text.Json;\nusing Pulumi;\nusing Vultr = ediri.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var myDatabaseConnector = new Vultr.DatabaseConnector(\"myDatabaseConnector\", new()\n    {\n        DatabaseId = vultr_database.My_database.Id,\n        Name = \"my_database_connector\",\n        Class = \"com.couchbase.connect.kafka.CouchbaseSinkConnector\",\n        Topics = \"my_database_topic\",\n        Config = JsonSerializer.Serialize(new Dictionary\u003cstring, object?\u003e\n        {\n            [\"couchbase.seed.nodes\"] = \"3\",\n            [\"couchbase.username\"] = \"some_username\",\n            [\"couchbase.password\"] = \"some_password\",\n        }),\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"encoding/json\"\n\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\ttmpJSON0, err := json.Marshal(map[string]interface{}{\n\t\t\t\"couchbase.seed.nodes\": \"3\",\n\t\t\t\"couchbase.username\":   \"some_username\",\n\t\t\t\"couchbase.password\":   \"some_password\",\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tjson0 := string(tmpJSON0)\n\t\t_, err = vultr.NewDatabaseConnector(ctx, \"myDatabaseConnector\", \u0026vultr.DatabaseConnectorArgs{\n\t\t\tDatabaseId: pulumi.Any(vultr_database.My_database.Id),\n\t\t\tName:       pulumi.String(\"my_database_connector\"),\n\t\t\tClass:      pulumi.String(\"com.couchbase.connect.kafka.CouchbaseSinkConnector\"),\n\t\t\tTopics:     pulumi.String(\"my_database_topic\"),\n\t\t\tConfig:     pulumi.String(json0),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.DatabaseConnector;\nimport com.pulumi.vultr.DatabaseConnectorArgs;\nimport static com.pulumi.codegen.internal.Serialization.*;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var myDatabaseConnector = new DatabaseConnector(\"myDatabaseConnector\", DatabaseConnectorArgs.builder()\n            .databaseId(vultr_database.my_database().id())\n            .name(\"my_database_connector\")\n            .class_(\"com.couchbase.connect.kafka.CouchbaseSinkConnector\")\n            .topics(\"my_database_topic\")\n            .config(serializeJson(\n                jsonObject(\n                    jsonProperty(\"couchbase.seed.nodes\", \"3\"),\n                    jsonProperty(\"couchbase.username\", \"some_username\"),\n                    jsonProperty(\"couchbase.password\", \"some_password\")\n                )))\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  myDatabaseConnector:\n    type: vultr:DatabaseConnector\n    properties:\n      databaseId: ${vultr_database.my_database.id}\n      name: my_database_connector\n      class: com.couchbase.connect.kafka.CouchbaseSinkConnector\n      topics: my_database_topic\n      config:\n        fn::toJSON:\n          couchbase.seed.nodes: '3'\n          couchbase.username: some_username\n          couchbase.password: some_password\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
+            "properties": {
+                "class": {
+                    "type": "string",
+                    "description": "The class for the new managed database connector.\n"
+                },
+                "config": {
+                    "type": "string",
+                    "description": "A JSON string containing the configuration properties you wish to use with the new managed database connector.\n"
+                },
+                "databaseId": {
+                    "type": "string",
+                    "description": "The managed database ID you want to attach this connector to.\n"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "The name for the new managed database connector.\n"
+                },
+                "topics": {
+                    "type": "string",
+                    "description": "A comma-separated list of topics to use with the new managed database connector.\n"
+                }
+            },
+            "required": [
+                "class",
+                "databaseId",
+                "name",
+                "topics"
+            ],
+            "inputProperties": {
+                "class": {
+                    "type": "string",
+                    "description": "The class for the new managed database connector.\n",
+                    "willReplaceOnChanges": true
+                },
+                "config": {
+                    "type": "string",
+                    "description": "A JSON string containing the configuration properties you wish to use with the new managed database connector.\n"
+                },
+                "databaseId": {
+                    "type": "string",
+                    "description": "The managed database ID you want to attach this connector to.\n",
+                    "willReplaceOnChanges": true
+                },
+                "name": {
+                    "type": "string",
+                    "description": "The name for the new managed database connector.\n",
+                    "willReplaceOnChanges": true
+                },
+                "topics": {
+                    "type": "string",
+                    "description": "A comma-separated list of topics to use with the new managed database connector.\n"
+                }
+            },
+            "requiredInputs": [
+                "class",
+                "databaseId",
+                "name",
+                "topics"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering DatabaseConnector resources.\n",
+                "properties": {
+                    "class": {
+                        "type": "string",
+                        "description": "The class for the new managed database connector.\n",
+                        "willReplaceOnChanges": true
+                    },
+                    "config": {
+                        "type": "string",
+                        "description": "A JSON string containing the configuration properties you wish to use with the new managed database connector.\n"
+                    },
+                    "databaseId": {
+                        "type": "string",
+                        "description": "The managed database ID you want to attach this connector to.\n",
+                        "willReplaceOnChanges": true
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "The name for the new managed database connector.\n",
+                        "willReplaceOnChanges": true
+                    },
+                    "topics": {
+                        "type": "string",
+                        "description": "A comma-separated list of topics to use with the new managed database connector.\n"
+                    }
+                },
+                "type": "object"
+            }
+        },
         "vultr:index/databaseDb:DatabaseDb": {
             "description": "Provides a Vultr database DB resource. This can be used to create, read, and delete logical DBs for a managed database on your Vultr account.\n\n## Example Usage\n\nCreate a new database DB:\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@ediri/vultr\";\n\nconst myDatabaseDb = new vultr.DatabaseDb(\"myDatabaseDb\", {databaseId: vultr_database.my_database.id});\n```\n```python\nimport pulumi\nimport ediri_vultr as vultr\n\nmy_database_db = vultr.DatabaseDb(\"myDatabaseDb\", database_id=vultr_database[\"my_database\"][\"id\"])\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vultr = ediri.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var myDatabaseDb = new Vultr.DatabaseDb(\"myDatabaseDb\", new()\n    {\n        DatabaseId = vultr_database.My_database.Id,\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.NewDatabaseDb(ctx, \"myDatabaseDb\", \u0026vultr.DatabaseDbArgs{\n\t\t\tDatabaseId: pulumi.Any(vultr_database.My_database.Id),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.DatabaseDb;\nimport com.pulumi.vultr.DatabaseDbArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var myDatabaseDb = new DatabaseDb(\"myDatabaseDb\", DatabaseDbArgs.builder()\n            .databaseId(vultr_database.my_database().id())\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  myDatabaseDb:\n    type: vultr:DatabaseDb\n    properties:\n      databaseId: ${vultr_database.my_database.id}\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
             "properties": {
@@ -3273,7 +3472,7 @@
             }
         },
         "vultr:index/databaseQuota:DatabaseQuota": {
-            "description": "Provides a Vultr database quota resource. This can be used to create, read, and delete quotas for a managed database on your Vultr account.\n\n## Example Usage\n\nCreate a new database quota:\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@ediri/vultr\";\n\nconst myDatabaseQuota = new vultr.DatabaseQuota(\"myDatabaseQuota\", {\n    databaseId: vultr_database.my_database.id,\n    clientId: \"my_database_quota\",\n    consumerByteRate: 3,\n    producerByteRate: 2,\n    requestPercentage: 120,\n    user: \"my_database_user\",\n});\n```\n```python\nimport pulumi\nimport ediri_vultr as vultr\n\nmy_database_quota = vultr.DatabaseQuota(\"myDatabaseQuota\",\n    database_id=vultr_database[\"my_database\"][\"id\"],\n    client_id=\"my_database_quota\",\n    consumer_byte_rate=3,\n    producer_byte_rate=2,\n    request_percentage=120,\n    user=\"my_database_user\")\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vultr = ediri.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var myDatabaseQuota = new Vultr.DatabaseQuota(\"myDatabaseQuota\", new()\n    {\n        DatabaseId = vultr_database.My_database.Id,\n        ClientId = \"my_database_quota\",\n        ConsumerByteRate = 3,\n        ProducerByteRate = 2,\n        RequestPercentage = 120,\n        User = \"my_database_user\",\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.NewDatabaseQuota(ctx, \"myDatabaseQuota\", \u0026vultr.DatabaseQuotaArgs{\n\t\t\tDatabaseId:        pulumi.Any(vultr_database.My_database.Id),\n\t\t\tClientId:          pulumi.String(\"my_database_quota\"),\n\t\t\tConsumerByteRate:  pulumi.Int(3),\n\t\t\tProducerByteRate:  pulumi.Int(2),\n\t\t\tRequestPercentage: pulumi.Int(120),\n\t\t\tUser:              pulumi.String(\"my_database_user\"),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.DatabaseQuota;\nimport com.pulumi.vultr.DatabaseQuotaArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var myDatabaseQuota = new DatabaseQuota(\"myDatabaseQuota\", DatabaseQuotaArgs.builder()\n            .databaseId(vultr_database.my_database().id())\n            .clientId(\"my_database_quota\")\n            .consumerByteRate(3)\n            .producerByteRate(2)\n            .requestPercentage(120)\n            .user(\"my_database_user\")\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  myDatabaseQuota:\n    type: vultr:DatabaseQuota\n    properties:\n      databaseId: ${vultr_database.my_database.id}\n      clientId: my_database_quota\n      consumerByteRate: '3'\n      producerByteRate: '2'\n      requestPercentage: '120'\n      user: my_database_user\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
+            "description": "Provides a Vultr database quota resource. This can be used to create, read, modify, and delete quotas for a managed database on your Vultr account.\n\n## Example Usage\n\nCreate a new database quota:\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@ediri/vultr\";\n\nconst myDatabaseQuota = new vultr.DatabaseQuota(\"myDatabaseQuota\", {\n    databaseId: vultr_database.my_database.id,\n    clientId: \"my_database_quota\",\n    consumerByteRate: 3,\n    producerByteRate: 2,\n    requestPercentage: 120,\n    user: \"my_database_user\",\n});\n```\n```python\nimport pulumi\nimport ediri_vultr as vultr\n\nmy_database_quota = vultr.DatabaseQuota(\"myDatabaseQuota\",\n    database_id=vultr_database[\"my_database\"][\"id\"],\n    client_id=\"my_database_quota\",\n    consumer_byte_rate=3,\n    producer_byte_rate=2,\n    request_percentage=120,\n    user=\"my_database_user\")\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vultr = ediri.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var myDatabaseQuota = new Vultr.DatabaseQuota(\"myDatabaseQuota\", new()\n    {\n        DatabaseId = vultr_database.My_database.Id,\n        ClientId = \"my_database_quota\",\n        ConsumerByteRate = 3,\n        ProducerByteRate = 2,\n        RequestPercentage = 120,\n        User = \"my_database_user\",\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.NewDatabaseQuota(ctx, \"myDatabaseQuota\", \u0026vultr.DatabaseQuotaArgs{\n\t\t\tDatabaseId:        pulumi.Any(vultr_database.My_database.Id),\n\t\t\tClientId:          pulumi.String(\"my_database_quota\"),\n\t\t\tConsumerByteRate:  pulumi.Int(3),\n\t\t\tProducerByteRate:  pulumi.Int(2),\n\t\t\tRequestPercentage: pulumi.Int(120),\n\t\t\tUser:              pulumi.String(\"my_database_user\"),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.DatabaseQuota;\nimport com.pulumi.vultr.DatabaseQuotaArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var myDatabaseQuota = new DatabaseQuota(\"myDatabaseQuota\", DatabaseQuotaArgs.builder()\n            .databaseId(vultr_database.my_database().id())\n            .clientId(\"my_database_quota\")\n            .consumerByteRate(3)\n            .producerByteRate(2)\n            .requestPercentage(120)\n            .user(\"my_database_user\")\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  myDatabaseQuota:\n    type: vultr:DatabaseQuota\n    properties:\n      databaseId: ${vultr_database.my_database.id}\n      clientId: my_database_quota\n      consumerByteRate: '3'\n      producerByteRate: '2'\n      requestPercentage: '120'\n      user: my_database_user\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
             "properties": {
                 "clientId": {
                     "type": "string",
@@ -3316,8 +3515,7 @@
                 },
                 "consumerByteRate": {
                     "type": "integer",
-                    "description": "The consumer byte rate for the new managed database quota.\n",
-                    "willReplaceOnChanges": true
+                    "description": "The consumer byte rate for the new managed database quota.\n"
                 },
                 "databaseId": {
                     "type": "string",
@@ -3326,13 +3524,11 @@
                 },
                 "producerByteRate": {
                     "type": "integer",
-                    "description": "The producer byte rate for the new managed database quota.\n",
-                    "willReplaceOnChanges": true
+                    "description": "The producer byte rate for the new managed database quota.\n"
                 },
                 "requestPercentage": {
                     "type": "integer",
-                    "description": "The CPU request percentage for the new managed database quota.\n",
-                    "willReplaceOnChanges": true
+                    "description": "The CPU request percentage for the new managed database quota.\n"
                 },
                 "user": {
                     "type": "string",
@@ -3358,8 +3554,7 @@
                     },
                     "consumerByteRate": {
                         "type": "integer",
-                        "description": "The consumer byte rate for the new managed database quota.\n",
-                        "willReplaceOnChanges": true
+                        "description": "The consumer byte rate for the new managed database quota.\n"
                     },
                     "databaseId": {
                         "type": "string",
@@ -3368,13 +3563,11 @@
                     },
                     "producerByteRate": {
                         "type": "integer",
-                        "description": "The producer byte rate for the new managed database quota.\n",
-                        "willReplaceOnChanges": true
+                        "description": "The producer byte rate for the new managed database quota.\n"
                     },
                     "requestPercentage": {
                         "type": "integer",
-                        "description": "The CPU request percentage for the new managed database quota.\n",
-                        "willReplaceOnChanges": true
+                        "description": "The CPU request percentage for the new managed database quota.\n"
                     },
                     "user": {
                         "type": "string",
@@ -3388,6 +3581,14 @@
         "vultr:index/databaseReplica:DatabaseReplica": {
             "description": "Provides a Vultr database replica resource. This can be used to create, read, modify, and delete managed database read replicas on your Vultr account.\n\n## Example Usage\n\nCreate a new database replica:\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@ediri/vultr\";\n\nconst myDatabaseReplica = new vultr.DatabaseReplica(\"myDatabaseReplica\", {\n    databaseId: vultr_database.my_database.id,\n    region: \"sea\",\n    label: \"my_database_replica_label\",\n    tag: \"test tag\",\n});\n```\n```python\nimport pulumi\nimport ediri_vultr as vultr\n\nmy_database_replica = vultr.DatabaseReplica(\"myDatabaseReplica\",\n    database_id=vultr_database[\"my_database\"][\"id\"],\n    region=\"sea\",\n    label=\"my_database_replica_label\",\n    tag=\"test tag\")\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vultr = ediri.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var myDatabaseReplica = new Vultr.DatabaseReplica(\"myDatabaseReplica\", new()\n    {\n        DatabaseId = vultr_database.My_database.Id,\n        Region = \"sea\",\n        Label = \"my_database_replica_label\",\n        Tag = \"test tag\",\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.NewDatabaseReplica(ctx, \"myDatabaseReplica\", \u0026vultr.DatabaseReplicaArgs{\n\t\t\tDatabaseId: pulumi.Any(vultr_database.My_database.Id),\n\t\t\tRegion:     pulumi.String(\"sea\"),\n\t\t\tLabel:      pulumi.String(\"my_database_replica_label\"),\n\t\t\tTag:        pulumi.String(\"test tag\"),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.DatabaseReplica;\nimport com.pulumi.vultr.DatabaseReplicaArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var myDatabaseReplica = new DatabaseReplica(\"myDatabaseReplica\", DatabaseReplicaArgs.builder()\n            .databaseId(vultr_database.my_database().id())\n            .region(\"sea\")\n            .label(\"my_database_replica_label\")\n            .tag(\"test tag\")\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  myDatabaseReplica:\n    type: vultr:DatabaseReplica\n    properties:\n      databaseId: ${vultr_database.my_database.id}\n      region: sea\n      label: my_database_replica_label\n      tag: test tag\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
             "properties": {
+                "backupHour": {
+                    "type": "string",
+                    "description": "The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).\n"
+                },
+                "backupMinute": {
+                    "type": "string",
+                    "description": "The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).\n"
+                },
                 "clusterTimeZone": {
                     "type": "string",
                     "description": "The configured time zone for the managed database read replica in TZ database format.\n"
@@ -3420,8 +3621,7 @@
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
-                    },
-                    "description": "An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).\n"
+                    }
                 },
                 "host": {
                     "type": "string",
@@ -3523,6 +3723,8 @@
                 }
             },
             "required": [
+                "backupHour",
+                "backupMinute",
                 "clusterTimeZone",
                 "databaseEngine",
                 "databaseEngineVersion",
@@ -3556,6 +3758,14 @@
                 "vpcId"
             ],
             "inputProperties": {
+                "backupHour": {
+                    "type": "string",
+                    "description": "The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).\n"
+                },
+                "backupMinute": {
+                    "type": "string",
+                    "description": "The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).\n"
+                },
                 "databaseId": {
                     "type": "string",
                     "description": "The managed database ID you want to attach this replica to.\n",
@@ -3569,8 +3779,7 @@
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
-                    },
-                    "description": "An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).\n"
+                    }
                 },
                 "label": {
                     "type": "string",
@@ -3627,6 +3836,14 @@
             "stateInputs": {
                 "description": "Input properties used for looking up and filtering DatabaseReplica resources.\n",
                 "properties": {
+                    "backupHour": {
+                        "type": "string",
+                        "description": "The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).\n"
+                    },
+                    "backupMinute": {
+                        "type": "string",
+                        "description": "The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).\n"
+                    },
                     "clusterTimeZone": {
                         "type": "string",
                         "description": "The configured time zone for the managed database read replica in TZ database format.\n"
@@ -3660,8 +3877,7 @@
                         "type": "object",
                         "additionalProperties": {
                             "type": "string"
-                        },
-                        "description": "An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).\n"
+                        }
                     },
                     "host": {
                         "type": "string",
@@ -5395,7 +5611,7 @@
             }
         },
         "vultr:index/kubernetesNodePools:KubernetesNodePools": {
-            "description": "Deploy additional node pools to an existing Vultr Kubernetes Engine (VKE) cluster.\n\n## Example Usage\n\nCreate a new VKE cluster:\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@ediri/vultr\";\n\nconst np_1 = new vultr.KubernetesNodePools(\"np-1\", {\n    clusterId: vultr_kubernetes.k8.id,\n    nodeQuantity: 1,\n    plan: \"vc2-4c-8gb\",\n    label: \"my-label\",\n    tag: \"my-tag\",\n    autoScaler: true,\n    minNodes: 1,\n    maxNodes: 2,\n    labels: {\n        \"my-label\": \"a-label-on-all-nodes\",\n        \"my-second-label\": \"another-label-on-all-nodes\",\n    },\n    taints: [\n        {\n            key: \"a-taint\",\n            value: \"is-tainted\",\n            effect: \"NoExecute\",\n        },\n        {\n            key: \"another-taint\",\n            value: \"is-tainted\",\n            effect: \"NoSchedule\",\n        },\n    ],\n});\n```\n```python\nimport pulumi\nimport ediri_vultr as vultr\n\nnp_1 = vultr.KubernetesNodePools(\"np-1\",\n    cluster_id=vultr_kubernetes[\"k8\"][\"id\"],\n    node_quantity=1,\n    plan=\"vc2-4c-8gb\",\n    label=\"my-label\",\n    tag=\"my-tag\",\n    auto_scaler=True,\n    min_nodes=1,\n    max_nodes=2,\n    labels={\n        \"my-label\": \"a-label-on-all-nodes\",\n        \"my-second-label\": \"another-label-on-all-nodes\",\n    },\n    taints=[\n        {\n            \"key\": \"a-taint\",\n            \"value\": \"is-tainted\",\n            \"effect\": \"NoExecute\",\n        },\n        {\n            \"key\": \"another-taint\",\n            \"value\": \"is-tainted\",\n            \"effect\": \"NoSchedule\",\n        },\n    ])\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vultr = ediri.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var np_1 = new Vultr.KubernetesNodePools(\"np-1\", new()\n    {\n        ClusterId = vultr_kubernetes.K8.Id,\n        NodeQuantity = 1,\n        Plan = \"vc2-4c-8gb\",\n        Label = \"my-label\",\n        Tag = \"my-tag\",\n        AutoScaler = true,\n        MinNodes = 1,\n        MaxNodes = 2,\n        Labels = \n        {\n            { \"my-label\", \"a-label-on-all-nodes\" },\n            { \"my-second-label\", \"another-label-on-all-nodes\" },\n        },\n        Taints = new[]\n        {\n            new Vultr.Inputs.KubernetesNodePoolsTaintArgs\n            {\n                Key = \"a-taint\",\n                Value = \"is-tainted\",\n                Effect = \"NoExecute\",\n            },\n            new Vultr.Inputs.KubernetesNodePoolsTaintArgs\n            {\n                Key = \"another-taint\",\n                Value = \"is-tainted\",\n                Effect = \"NoSchedule\",\n            },\n        },\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.NewKubernetesNodePools(ctx, \"np-1\", \u0026vultr.KubernetesNodePoolsArgs{\n\t\t\tClusterId:    pulumi.Any(vultr_kubernetes.K8.Id),\n\t\t\tNodeQuantity: pulumi.Int(1),\n\t\t\tPlan:         pulumi.String(\"vc2-4c-8gb\"),\n\t\t\tLabel:        pulumi.String(\"my-label\"),\n\t\t\tTag:          pulumi.String(\"my-tag\"),\n\t\t\tAutoScaler:   pulumi.Bool(true),\n\t\t\tMinNodes:     pulumi.Int(1),\n\t\t\tMaxNodes:     pulumi.Int(2),\n\t\t\tLabels: pulumi.StringMap{\n\t\t\t\t\"my-label\":        pulumi.String(\"a-label-on-all-nodes\"),\n\t\t\t\t\"my-second-label\": pulumi.String(\"another-label-on-all-nodes\"),\n\t\t\t},\n\t\t\tTaints: vultr.KubernetesNodePoolsTaintArray{\n\t\t\t\t\u0026vultr.KubernetesNodePoolsTaintArgs{\n\t\t\t\t\tKey:    pulumi.String(\"a-taint\"),\n\t\t\t\t\tValue:  pulumi.String(\"is-tainted\"),\n\t\t\t\t\tEffect: pulumi.String(\"NoExecute\"),\n\t\t\t\t},\n\t\t\t\t\u0026vultr.KubernetesNodePoolsTaintArgs{\n\t\t\t\t\tKey:    pulumi.String(\"another-taint\"),\n\t\t\t\t\tValue:  pulumi.String(\"is-tainted\"),\n\t\t\t\t\tEffect: pulumi.String(\"NoSchedule\"),\n\t\t\t\t},\n\t\t\t},\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.KubernetesNodePools;\nimport com.pulumi.vultr.KubernetesNodePoolsArgs;\nimport com.pulumi.vultr.inputs.KubernetesNodePoolsTaintArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var np_1 = new KubernetesNodePools(\"np-1\", KubernetesNodePoolsArgs.builder()\n            .clusterId(vultr_kubernetes.k8().id())\n            .nodeQuantity(1)\n            .plan(\"vc2-4c-8gb\")\n            .label(\"my-label\")\n            .tag(\"my-tag\")\n            .autoScaler(true)\n            .minNodes(1)\n            .maxNodes(2)\n            .labels(Map.ofEntries(\n                Map.entry(\"my-label\", \"a-label-on-all-nodes\"),\n                Map.entry(\"my-second-label\", \"another-label-on-all-nodes\")\n            ))\n            .taints(            \n                KubernetesNodePoolsTaintArgs.builder()\n                    .key(\"a-taint\")\n                    .value(\"is-tainted\")\n                    .effect(\"NoExecute\")\n                    .build(),\n                KubernetesNodePoolsTaintArgs.builder()\n                    .key(\"another-taint\")\n                    .value(\"is-tainted\")\n                    .effect(\"NoSchedule\")\n                    .build())\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  np-1:\n    type: vultr:KubernetesNodePools\n    properties:\n      clusterId: ${vultr_kubernetes.k8.id}\n      nodeQuantity: 1\n      plan: vc2-4c-8gb\n      label: my-label\n      tag: my-tag\n      autoScaler: true\n      minNodes: 1\n      maxNodes: 2\n      labels:\n        my-label: a-label-on-all-nodes\n        my-second-label: another-label-on-all-nodes\n      taints:\n        - key: a-taint\n          value: is-tainted\n          effect: NoExecute\n        - key: another-taint\n          value: is-tainted\n          effect: NoSchedule\n```\n\u003c!--End PulumiCodeChooser --\u003e\n\n## Import\n\nNode pool resources are able to be imported into terraform state like other\n\nresources, however, since they rely on a kubernetes cluster, the import state\n\nrequires the UUID of the cluster as well. With that in mind, format the second\n\nargument to the `pulumi import` command as a space delimited string of\n\nUUIDs, the first is the cluster ID, the second is the node pool ID. It will\n\nlook like this:\n\n\"clusterID nodePoolID\"\n\n```sh\n$ pulumi import vultr:index/kubernetesNodePools:KubernetesNodePools my-k8s-np \"7365a98b-5a43-450f-bd27-d768827100e5 ec330340-4f50-4526-858f-a39199f568ac\"\n```\n\n",
+            "description": "Deploy additional node pools to an existing Vultr Kubernetes Engine (VKE) cluster.\n\n## Import\n\nNode pool resources are able to be imported into terraform state like other\n\nresources, however, since they rely on a kubernetes cluster, the import state\n\nrequires the UUID of the cluster as well. With that in mind, format the second\n\nargument to the `pulumi import` command as a space delimited string of\n\nUUIDs, the first is the cluster ID, the second is the node pool ID. It will\n\nlook like this:\n\n\"clusterID nodePoolID\"\n\n```sh\n$ pulumi import vultr:index/kubernetesNodePools:KubernetesNodePools my-k8s-np \"7365a98b-5a43-450f-bd27-d768827100e5 ec330340-4f50-4526-858f-a39199f568ac\"\n```\n\n",
             "properties": {
                 "autoScaler": {
                     "type": "boolean",
@@ -5461,6 +5677,10 @@
                         "$ref": "#/types/vultr:index/KubernetesNodePoolsTaint:KubernetesNodePoolsTaint"
                     },
                     "description": "Taints to apply to the nodes in the node pool. Should contain `key`, `value` and `effect`.  The `effect` should be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.\n"
+                },
+                "userData": {
+                    "type": "string",
+                    "description": "A base64 encoded string containing the user data to apply to nodes in the node pool.\n"
                 }
             },
             "required": [
@@ -5520,6 +5740,10 @@
                         "$ref": "#/types/vultr:index/KubernetesNodePoolsTaint:KubernetesNodePoolsTaint"
                     },
                     "description": "Taints to apply to the nodes in the node pool. Should contain `key`, `value` and `effect`.  The `effect` should be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.\n"
+                },
+                "userData": {
+                    "type": "string",
+                    "description": "A base64 encoded string containing the user data to apply to nodes in the node pool.\n"
                 }
             },
             "requiredInputs": [
@@ -5596,6 +5820,10 @@
                             "$ref": "#/types/vultr:index/KubernetesNodePoolsTaint:KubernetesNodePoolsTaint"
                         },
                         "description": "Taints to apply to the nodes in the node pool. Should contain `key`, `value` and `effect`.  The `effect` should be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.\n"
+                    },
+                    "userData": {
+                        "type": "string",
+                        "description": "A base64 encoded string containing the user data to apply to nodes in the node pool.\n"
                     }
                 },
                 "type": "object"
@@ -6348,7 +6576,7 @@
             }
         },
         "vultr:index/snapshotFromUrl:SnapshotFromUrl": {
-            "description": "Provides a Vultr Snapshots from URL resource. This can be used to create, read, modify, and delete Snapshots from URL.\n\n## Example Usage\n\nCreate a new Snapshots from URL\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@ediri/vultr\";\n\nconst mySnapshot = new vultr.SnapshotFromUrl(\"mySnapshot\", {url: \"http://dl-cdn.alpinelinux.org/alpine/v3.9/releases/x86_64/alpine-virt-3.9.1-x86_64.iso\"});\n```\n```python\nimport pulumi\nimport ediri_vultr as vultr\n\nmy_snapshot = vultr.SnapshotFromUrl(\"mySnapshot\", url=\"http://dl-cdn.alpinelinux.org/alpine/v3.9/releases/x86_64/alpine-virt-3.9.1-x86_64.iso\")\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vultr = ediri.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var mySnapshot = new Vultr.SnapshotFromUrl(\"mySnapshot\", new()\n    {\n        Url = \"http://dl-cdn.alpinelinux.org/alpine/v3.9/releases/x86_64/alpine-virt-3.9.1-x86_64.iso\",\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.NewSnapshotFromUrl(ctx, \"mySnapshot\", \u0026vultr.SnapshotFromUrlArgs{\n\t\t\tUrl: pulumi.String(\"http://dl-cdn.alpinelinux.org/alpine/v3.9/releases/x86_64/alpine-virt-3.9.1-x86_64.iso\"),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.SnapshotFromUrl;\nimport com.pulumi.vultr.SnapshotFromUrlArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var mySnapshot = new SnapshotFromUrl(\"mySnapshot\", SnapshotFromUrlArgs.builder()\n            .url(\"http://dl-cdn.alpinelinux.org/alpine/v3.9/releases/x86_64/alpine-virt-3.9.1-x86_64.iso\")\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  mySnapshot:\n    type: vultr:SnapshotFromUrl\n    properties:\n      url: http://dl-cdn.alpinelinux.org/alpine/v3.9/releases/x86_64/alpine-virt-3.9.1-x86_64.iso\n```\n\u003c!--End PulumiCodeChooser --\u003e\n\n## Import\n\nSnapshots from Url can be imported using the Snapshot `ID`, e.g.\n\n```sh\n$ pulumi import vultr:index/snapshotFromUrl:SnapshotFromUrl my_snapshot e60dc0a2-9313-4bab-bffc-57ffe33d99f6\n```\n\n",
+            "description": "Provides a Vultr Snapshots from URL resource. This can be used to create, read, modify, and delete Snapshots from URL.\n\n## Example Usage\n\nCreate a new Snapshots from URL\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@ediri/vultr\";\n\nconst mySnapshot = new vultr.SnapshotFromUrl(\"mySnapshot\", {\n    url: \"http://dl-cdn.alpinelinux.org/alpine/v3.9/releases/x86_64/alpine-virt-3.9.1-x86_64.iso\",\n    useUefi: true,\n});\n```\n```python\nimport pulumi\nimport ediri_vultr as vultr\n\nmy_snapshot = vultr.SnapshotFromUrl(\"mySnapshot\",\n    url=\"http://dl-cdn.alpinelinux.org/alpine/v3.9/releases/x86_64/alpine-virt-3.9.1-x86_64.iso\",\n    use_uefi=True)\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vultr = ediri.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var mySnapshot = new Vultr.SnapshotFromUrl(\"mySnapshot\", new()\n    {\n        Url = \"http://dl-cdn.alpinelinux.org/alpine/v3.9/releases/x86_64/alpine-virt-3.9.1-x86_64.iso\",\n        UseUefi = true,\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.NewSnapshotFromUrl(ctx, \"mySnapshot\", \u0026vultr.SnapshotFromUrlArgs{\n\t\t\tUrl:     pulumi.String(\"http://dl-cdn.alpinelinux.org/alpine/v3.9/releases/x86_64/alpine-virt-3.9.1-x86_64.iso\"),\n\t\t\tUseUefi: pulumi.Bool(true),\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.SnapshotFromUrl;\nimport com.pulumi.vultr.SnapshotFromUrlArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        var mySnapshot = new SnapshotFromUrl(\"mySnapshot\", SnapshotFromUrlArgs.builder()\n            .url(\"http://dl-cdn.alpinelinux.org/alpine/v3.9/releases/x86_64/alpine-virt-3.9.1-x86_64.iso\")\n            .useUefi(true)\n            .build());\n\n    }\n}\n```\n```yaml\nresources:\n  mySnapshot:\n    type: vultr:SnapshotFromUrl\n    properties:\n      url: http://dl-cdn.alpinelinux.org/alpine/v3.9/releases/x86_64/alpine-virt-3.9.1-x86_64.iso\n      useUefi: true\n```\n\u003c!--End PulumiCodeChooser --\u003e\n\n## Import\n\nSnapshots from Url can be imported using the Snapshot `ID`, e.g.\n\n```sh\n$ pulumi import vultr:index/snapshotFromUrl:SnapshotFromUrl my_snapshot e60dc0a2-9313-4bab-bffc-57ffe33d99f6\n```\n\n",
             "properties": {
                 "appId": {
                     "type": "integer",
@@ -6377,6 +6605,10 @@
                 "url": {
                     "type": "string",
                     "description": "URL of the given resource you want to create a snapshot from.\n"
+                },
+                "useUefi": {
+                    "type": "boolean",
+                    "description": "Whether or not to use UEFI when creating the snapshot.\n"
                 }
             },
             "required": [
@@ -6392,6 +6624,11 @@
                 "url": {
                     "type": "string",
                     "description": "URL of the given resource you want to create a snapshot from.\n",
+                    "willReplaceOnChanges": true
+                },
+                "useUefi": {
+                    "type": "boolean",
+                    "description": "Whether or not to use UEFI when creating the snapshot.\n",
                     "willReplaceOnChanges": true
                 }
             },
@@ -6428,6 +6665,11 @@
                     "url": {
                         "type": "string",
                         "description": "URL of the given resource you want to create a snapshot from.\n",
+                        "willReplaceOnChanges": true
+                    },
+                    "useUefi": {
+                        "type": "boolean",
+                        "description": "Whether or not to use UEFI when creating the snapshot.\n",
                         "willReplaceOnChanges": true
                     }
                 },
@@ -6970,7 +7212,7 @@
                 "properties": {
                     "__self__": {
                         "type": "ref",
-                        "$ref": "#/resources/pulumi:providers:vultr"
+                        "$ref": "#/provider"
                     }
                 },
                 "type": "pulumi:providers:vultr/terraformConfig",
@@ -7015,7 +7257,7 @@
                     },
                     "id": {
                         "type": "string",
-                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                        "description": "The provider-assigned unique ID for this managed resource."
                     },
                     "lastPaymentAmount": {
                         "type": "number",
@@ -7078,7 +7320,7 @@
                     },
                     "id": {
                         "type": "string",
-                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                        "description": "The provider-assigned unique ID for this managed resource."
                     },
                     "imageId": {
                         "type": "string",
@@ -7149,7 +7391,7 @@
                     },
                     "id": {
                         "type": "string",
-                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                        "description": "The provider-assigned unique ID for this managed resource."
                     }
                 },
                 "type": "object",
@@ -7210,7 +7452,7 @@
                     },
                     "id": {
                         "type": "string",
-                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                        "description": "The provider-assigned unique ID for this managed resource."
                     },
                     "locations": {
                         "type": "array",
@@ -7300,7 +7542,7 @@
                     },
                     "id": {
                         "type": "string",
-                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                        "description": "The provider-assigned unique ID for this managed resource."
                     },
                     "imageId": {
                         "type": "string",
@@ -7450,7 +7692,7 @@
                     },
                     "id": {
                         "type": "string",
-                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                        "description": "The provider-assigned unique ID for this managed resource."
                     },
                     "label": {
                         "type": "string",
@@ -7519,7 +7761,7 @@
                     },
                     "id": {
                         "type": "string",
-                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                        "description": "The provider-assigned unique ID for this managed resource."
                     },
                     "name": {
                         "type": "string",
@@ -7595,6 +7837,14 @@
                         "type": "string",
                         "description": "The private key to authenticate the default user (Kafka engine types only).\n"
                     },
+                    "backupHour": {
+                        "type": "string",
+                        "description": "The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).\n"
+                    },
+                    "backupMinute": {
+                        "type": "string",
+                        "description": "The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).\n"
+                    },
                     "clusterTimeZone": {
                         "type": "string",
                         "description": "The configured time zone for the Managed Database in TZ database format.\n"
@@ -7615,6 +7865,18 @@
                         "type": "string",
                         "description": "The managed database's default logical database.\n"
                     },
+                    "enableKafkaConnect": {
+                        "type": "boolean",
+                        "description": "The configuration value for Kafka Connect support (Kafka engine types only).\n"
+                    },
+                    "enableKafkaRest": {
+                        "type": "boolean",
+                        "description": "The configuration value for Kafka REST support (Kafka engine types only).\n"
+                    },
+                    "enableSchemaRegistry": {
+                        "type": "boolean",
+                        "description": "The configuration value for Schema Registry support (Kafka engine types only).\n"
+                    },
                     "evictionPolicy": {
                         "type": "string",
                         "description": "The configuration value for the data eviction policy on the managed database (Valkey engine types only).\n"
@@ -7623,8 +7885,7 @@
                         "type": "object",
                         "additionalProperties": {
                             "type": "string"
-                        },
-                        "description": "An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).\n"
+                        }
                     },
                     "filters": {
                         "type": "array",
@@ -7638,7 +7899,11 @@
                     },
                     "id": {
                         "type": "string",
-                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                        "description": "The provider-assigned unique ID for this managed resource."
+                    },
+                    "kafkaRestUri": {
+                        "type": "string",
+                        "description": "The URI to access the RESTful interface of your Kafka cluster if Kafka REST is enabled (Kafka engine types only).\n"
                     },
                     "label": {
                         "type": "string",
@@ -7725,6 +7990,10 @@
                         "type": "string",
                         "description": "The SASL connection port for the managed database (Kafka engine types only).\n"
                     },
+                    "schemaRegistryUri": {
+                        "type": "string",
+                        "description": "The URI to access the Schema Registry service of your Kafka cluster if Schema Registry is enabled (Kafka engine types only).\n"
+                    },
                     "status": {
                         "type": "string",
                         "description": "The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).\n"
@@ -7753,14 +8022,20 @@
                 "required": [
                     "accessCert",
                     "accessKey",
+                    "backupHour",
+                    "backupMinute",
                     "clusterTimeZone",
                     "databaseEngine",
                     "databaseEngineVersion",
                     "dateCreated",
                     "dbname",
+                    "enableKafkaConnect",
+                    "enableKafkaRest",
+                    "enableSchemaRegistry",
                     "evictionPolicy",
                     "ferretdbCredentials",
                     "host",
+                    "kafkaRestUri",
                     "label",
                     "latestBackup",
                     "maintenanceDow",
@@ -7781,6 +8056,7 @@
                     "readReplicas",
                     "region",
                     "saslPort",
+                    "schemaRegistryUri",
                     "status",
                     "tag",
                     "trustedIps",
@@ -7822,7 +8098,7 @@
                     },
                     "id": {
                         "type": "string",
-                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                        "description": "The provider-assigned unique ID for this managed resource."
                     }
                 },
                 "type": "object",
@@ -7873,7 +8149,7 @@
                     },
                     "id": {
                         "type": "string",
-                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                        "description": "The provider-assigned unique ID for this managed resource."
                     },
                     "instanceCount": {
                         "type": "integer",
@@ -7935,7 +8211,7 @@
                     },
                     "id": {
                         "type": "string",
-                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                        "description": "The provider-assigned unique ID for this managed resource."
                     },
                     "label": {
                         "type": "string",
@@ -8030,7 +8306,7 @@
                     },
                     "id": {
                         "type": "string",
-                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                        "description": "The provider-assigned unique ID for this managed resource."
                     },
                     "imageId": {
                         "type": "string",
@@ -8202,7 +8478,7 @@
                     },
                     "id": {
                         "type": "string",
-                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                        "description": "The provider-assigned unique ID for this managed resource."
                     },
                     "instanceId": {
                         "type": "string",
@@ -8259,7 +8535,7 @@
                     },
                     "id": {
                         "type": "string",
-                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                        "description": "The provider-assigned unique ID for this managed resource."
                     },
                     "instances": {
                         "type": "array",
@@ -8311,7 +8587,7 @@
                     },
                     "id": {
                         "type": "string",
-                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                        "description": "The provider-assigned unique ID for this managed resource."
                     },
                     "md5sum": {
                         "type": "string",
@@ -8373,7 +8649,7 @@
                     },
                     "id": {
                         "type": "string",
-                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                        "description": "The provider-assigned unique ID for this managed resource."
                     },
                     "md5sum": {
                         "type": "string",
@@ -8591,7 +8867,7 @@
                     },
                     "id": {
                         "type": "string",
-                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                        "description": "The provider-assigned unique ID for this managed resource."
                     },
                     "ipv4": {
                         "type": "string",
@@ -8684,7 +8960,7 @@
                     },
                     "id": {
                         "type": "string",
-                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                        "description": "The provider-assigned unique ID for this managed resource."
                     },
                     "label": {
                         "type": "string",
@@ -8784,7 +9060,7 @@
             }
         },
         "vultr:index/getObjectStorageTier:getObjectStorageTier": {
-            "description": "Get information about Object Storage tiers on Vultr.\n\n## Example Usage\n\nGet the information for an object storage tier by `slug`:\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@ediri/vultr\";\n\nconst obs_tier = vultr.getObjectStorageTier({\n    filters: [{\n        name: \"slug\",\n        values: [\"tier_010k_5000m\"],\n    }],\n});\n```\n```python\nimport pulumi\nimport pulumi_vultr as vultr\n\nobs_tier = vultr.get_object_storage_tier(filters=[{\n    \"name\": \"slug\",\n    \"values\": [\"tier_010k_5000m\"],\n}])\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vultr = Pulumi.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var obs_tier = Vultr.GetObjectStorageTier.Invoke(new()\n    {\n        Filters = new[]\n        {\n            new Vultr.Inputs.GetObjectStorageTierFilterInputArgs\n            {\n                Name = \"slug\",\n                Values = new[]\n                {\n                    \"tier_010k_5000m\",\n                },\n            },\n        },\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.GetObjectStorageTier(ctx, \u0026vultr.GetObjectStorageTierArgs{\n\t\t\tFilters: []vultr.GetObjectStorageTierFilter{\n\t\t\t\t{\n\t\t\t\t\tName: \"slug\",\n\t\t\t\t\tValues: []string{\n\t\t\t\t\t\t\"tier_010k_5000m\",\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t},\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.VultrFunctions;\nimport com.pulumi.vultr.inputs.GetObjectStorageTierArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var obs-tier = VultrFunctions.getObjectStorageTier(GetObjectStorageTierArgs.builder()\n            .filters(GetObjectStorageTierFilterArgs.builder()\n                .name(\"slug\")\n                .values(\"tier_010k_5000m\")\n                .build())\n            .build());\n\n    }\n}\n```\n```yaml\nvariables:\n  obs-tier:\n    fn::invoke:\n      function: vultr:getObjectStorageTier\n      arguments:\n        filters:\n          - name: slug\n            values:\n              - tier_010k_5000m\n```\n\u003c!--End PulumiCodeChooser --\u003e\n",
+            "description": "Get information about Object Storage tiers on Vultr.\n\n## Example Usage\n\nGet the information for an object storage tier by `slug`:\n\n\u003c!--Start PulumiCodeChooser --\u003e\n```typescript\nimport * as pulumi from \"@pulumi/pulumi\";\nimport * as vultr from \"@ediri/vultr\";\n\nconst obs_tier = vultr.getObjectStorageTier({\n    filters: [{\n        name: \"slug\",\n        values: [\"tier_010k_5000m\"],\n    }],\n});\n```\n```python\nimport pulumi\nimport pulumi_vultr as vultr\n\nobs_tier = vultr.get_object_storage_tier(filters=[{\n    \"name\": \"slug\",\n    \"values\": [\"tier_010k_5000m\"],\n}])\n```\n```csharp\nusing System.Collections.Generic;\nusing System.Linq;\nusing Pulumi;\nusing Vultr = Pulumi.Vultr;\n\nreturn await Deployment.RunAsync(() =\u003e \n{\n    var obs_tier = Vultr.GetObjectStorageTier.Invoke(new()\n    {\n        Filters = new[]\n        {\n            new Vultr.Inputs.GetObjectStorageTierFilterInputArgs\n            {\n                Name = \"slug\",\n                Values = new[]\n                {\n                    \"tier_010k_5000m\",\n                },\n            },\n        },\n    });\n\n});\n```\n```go\npackage main\n\nimport (\n\t\"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr\"\n\t\"github.com/pulumi/pulumi/sdk/v3/go/pulumi\"\n)\n\nfunc main() {\n\tpulumi.Run(func(ctx *pulumi.Context) error {\n\t\t_, err := vultr.GetObjectStorageTier(ctx, \u0026vultr.GetObjectStorageTierArgs{\n\t\t\tFilters: []vultr.GetObjectStorageTierFilter{\n\t\t\t\t{\n\t\t\t\t\tName: \"slug\",\n\t\t\t\t\tValues: []string{\n\t\t\t\t\t\t\"tier_010k_5000m\",\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t},\n\t\t}, nil)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn nil\n\t})\n}\n```\n```java\npackage generated_program;\n\nimport com.pulumi.Context;\nimport com.pulumi.Pulumi;\nimport com.pulumi.core.Output;\nimport com.pulumi.vultr.VultrFunctions;\nimport com.pulumi.vultr.inputs.GetObjectStorageTierArgs;\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Map;\nimport java.io.File;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class App {\n    public static void main(String[] args) {\n        Pulumi.run(App::stack);\n    }\n\n    public static void stack(Context ctx) {\n        final var obs-tier = VultrFunctions.getObjectStorageTier(GetObjectStorageTierArgs.builder()\n            .filters(GetObjectStorageTierFilterArgs.builder()\n                .name(\"slug\")\n                .values(\"tier_010k_5000m\")\n                .build())\n            .build());\n\n    }\n}\n```\n```yaml\nvariables:\n  obs-tier:\n    fn::invoke:\n      function: vultr:getObjectStorageTier\n      arguments:\n        filters:\n          - name: slug\n            values:\n              - tier_010k_5000m\n```\n\u003c!--End PulumiCodeChooser --\u003e\n\n`slug` values and associated details can be retrieved through [this API call](https://www.vultr.com/api/#tag/s3/operation/list-object-storage-tiers).\n",
             "inputs": {
                 "description": "A collection of arguments for invoking getObjectStorageTier.\n",
                 "properties": {
@@ -8882,7 +9158,7 @@
                     },
                     "id": {
                         "type": "string",
-                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                        "description": "The provider-assigned unique ID for this managed resource."
                     },
                     "name": {
                         "type": "string",
@@ -8945,7 +9221,7 @@
                     },
                     "id": {
                         "type": "string",
-                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                        "description": "The provider-assigned unique ID for this managed resource."
                     },
                     "locations": {
                         "type": "array",
@@ -9025,7 +9301,7 @@
                     },
                     "id": {
                         "type": "string",
-                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                        "description": "The provider-assigned unique ID for this managed resource."
                     },
                     "options": {
                         "type": "array",
@@ -9072,7 +9348,7 @@
                     },
                     "id": {
                         "type": "string",
-                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                        "description": "The provider-assigned unique ID for this managed resource."
                     },
                     "instanceId": {
                         "type": "string",
@@ -9142,7 +9418,7 @@
                     },
                     "id": {
                         "type": "string",
-                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                        "description": "The provider-assigned unique ID for this managed resource."
                     },
                     "instanceId": {
                         "type": "string",
@@ -9199,7 +9475,7 @@
                     },
                     "id": {
                         "type": "string",
-                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                        "description": "The provider-assigned unique ID for this managed resource."
                     },
                     "instanceId": {
                         "type": "string",
@@ -9262,7 +9538,7 @@
                     },
                     "id": {
                         "type": "string",
-                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                        "description": "The provider-assigned unique ID for this managed resource."
                     },
                     "osId": {
                         "type": "integer",
@@ -9375,7 +9651,7 @@
                     },
                     "id": {
                         "type": "string",
-                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                        "description": "The provider-assigned unique ID for this managed resource."
                     },
                     "name": {
                         "type": "string",
@@ -9443,7 +9719,7 @@
                     },
                     "id": {
                         "type": "string",
-                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                        "description": "The provider-assigned unique ID for this managed resource."
                     },
                     "name": {
                         "type": "string",
@@ -9517,7 +9793,7 @@
                     },
                     "id": {
                         "type": "string",
-                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                        "description": "The provider-assigned unique ID for this managed resource."
                     },
                     "label": {
                         "type": "string",
@@ -9595,7 +9871,7 @@
                     },
                     "id": {
                         "type": "string",
-                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                        "description": "The provider-assigned unique ID for this managed resource."
                     },
                     "ipBlock": {
                         "type": "string",
@@ -9656,7 +9932,7 @@
                     },
                     "id": {
                         "type": "string",
-                        "description": "The provider-assigned unique ID for this managed resource.\n"
+                        "description": "The provider-assigned unique ID for this managed resource."
                     },
                     "region": {
                         "type": "string",

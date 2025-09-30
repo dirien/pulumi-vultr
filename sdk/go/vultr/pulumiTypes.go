@@ -14,6 +14,10 @@ import (
 var _ = internal.GetEnvOrDefault
 
 type DatabaseReadReplica struct {
+	// The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+	BackupHour *string `pulumi:"backupHour"`
+	// The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
+	BackupMinute *string `pulumi:"backupMinute"`
 	// The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
 	ClusterTimeZone *string `pulumi:"clusterTimeZone"`
 	// The database engine of the new managed database.
@@ -25,8 +29,7 @@ type DatabaseReadReplica struct {
 	// The managed database's default logical database.
 	Dbname *string `pulumi:"dbname"`
 	// The configuration value for the data eviction policy on the managed database (Valkey engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
-	EvictionPolicy *string `pulumi:"evictionPolicy"`
-	// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
+	EvictionPolicy      *string           `pulumi:"evictionPolicy"`
 	FerretdbCredentials map[string]string `pulumi:"ferretdbCredentials"`
 	// The hostname assigned to the managed database.
 	Host *string `pulumi:"host"`
@@ -38,7 +41,7 @@ type DatabaseReadReplica struct {
 	LatestBackup *string `pulumi:"latestBackup"`
 	// The preferred maintenance day of week for the managed database.
 	MaintenanceDow *string `pulumi:"maintenanceDow"`
-	// The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).
+	// The preferred maintenance time for the managed database.
 	MaintenanceTime *string `pulumi:"maintenanceTime"`
 	// The configuration value for the long query time (in seconds) on the managed database (MySQL engine types only).
 	MysqlLongQueryTime *int `pulumi:"mysqlLongQueryTime"`
@@ -90,6 +93,10 @@ type DatabaseReadReplicaInput interface {
 }
 
 type DatabaseReadReplicaArgs struct {
+	// The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+	BackupHour pulumi.StringPtrInput `pulumi:"backupHour"`
+	// The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
+	BackupMinute pulumi.StringPtrInput `pulumi:"backupMinute"`
 	// The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
 	ClusterTimeZone pulumi.StringPtrInput `pulumi:"clusterTimeZone"`
 	// The database engine of the new managed database.
@@ -101,8 +108,7 @@ type DatabaseReadReplicaArgs struct {
 	// The managed database's default logical database.
 	Dbname pulumi.StringPtrInput `pulumi:"dbname"`
 	// The configuration value for the data eviction policy on the managed database (Valkey engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
-	EvictionPolicy pulumi.StringPtrInput `pulumi:"evictionPolicy"`
-	// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
+	EvictionPolicy      pulumi.StringPtrInput `pulumi:"evictionPolicy"`
 	FerretdbCredentials pulumi.StringMapInput `pulumi:"ferretdbCredentials"`
 	// The hostname assigned to the managed database.
 	Host pulumi.StringPtrInput `pulumi:"host"`
@@ -114,7 +120,7 @@ type DatabaseReadReplicaArgs struct {
 	LatestBackup pulumi.StringPtrInput `pulumi:"latestBackup"`
 	// The preferred maintenance day of week for the managed database.
 	MaintenanceDow pulumi.StringPtrInput `pulumi:"maintenanceDow"`
-	// The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).
+	// The preferred maintenance time for the managed database.
 	MaintenanceTime pulumi.StringPtrInput `pulumi:"maintenanceTime"`
 	// The configuration value for the long query time (in seconds) on the managed database (MySQL engine types only).
 	MysqlLongQueryTime pulumi.IntPtrInput `pulumi:"mysqlLongQueryTime"`
@@ -205,6 +211,16 @@ func (o DatabaseReadReplicaOutput) ToDatabaseReadReplicaOutputWithContext(ctx co
 	return o
 }
 
+// The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+func (o DatabaseReadReplicaOutput) BackupHour() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v DatabaseReadReplica) *string { return v.BackupHour }).(pulumi.StringPtrOutput)
+}
+
+// The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
+func (o DatabaseReadReplicaOutput) BackupMinute() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v DatabaseReadReplica) *string { return v.BackupMinute }).(pulumi.StringPtrOutput)
+}
+
 // The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
 func (o DatabaseReadReplicaOutput) ClusterTimeZone() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v DatabaseReadReplica) *string { return v.ClusterTimeZone }).(pulumi.StringPtrOutput)
@@ -235,7 +251,6 @@ func (o DatabaseReadReplicaOutput) EvictionPolicy() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v DatabaseReadReplica) *string { return v.EvictionPolicy }).(pulumi.StringPtrOutput)
 }
 
-// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
 func (o DatabaseReadReplicaOutput) FerretdbCredentials() pulumi.StringMapOutput {
 	return o.ApplyT(func(v DatabaseReadReplica) map[string]string { return v.FerretdbCredentials }).(pulumi.StringMapOutput)
 }
@@ -265,7 +280,7 @@ func (o DatabaseReadReplicaOutput) MaintenanceDow() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v DatabaseReadReplica) *string { return v.MaintenanceDow }).(pulumi.StringPtrOutput)
 }
 
-// The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).
+// The preferred maintenance time for the managed database.
 func (o DatabaseReadReplicaOutput) MaintenanceTime() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v DatabaseReadReplica) *string { return v.MaintenanceTime }).(pulumi.StringPtrOutput)
 }
@@ -796,7 +811,8 @@ type KubernetesNodePoolsType struct {
 	// Tag for node pool.
 	Tag *string `pulumi:"tag"`
 	// Taints to apply to the nodes in the node pool. Should contain `key`, `value` and `effect`.  The `effect` should be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
-	Taints []KubernetesNodePoolsTaint `pulumi:"taints"`
+	Taints   []KubernetesNodePoolsTaint `pulumi:"taints"`
+	UserData *string                    `pulumi:"userData"`
 }
 
 // KubernetesNodePoolsTypeInput is an input type that accepts KubernetesNodePoolsTypeArgs and KubernetesNodePoolsTypeOutput values.
@@ -838,7 +854,8 @@ type KubernetesNodePoolsTypeArgs struct {
 	// Tag for node pool.
 	Tag pulumi.StringPtrInput `pulumi:"tag"`
 	// Taints to apply to the nodes in the node pool. Should contain `key`, `value` and `effect`.  The `effect` should be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
-	Taints KubernetesNodePoolsTaintArrayInput `pulumi:"taints"`
+	Taints   KubernetesNodePoolsTaintArrayInput `pulumi:"taints"`
+	UserData pulumi.StringPtrInput              `pulumi:"userData"`
 }
 
 func (KubernetesNodePoolsTypeArgs) ElementType() reflect.Type {
@@ -986,6 +1003,10 @@ func (o KubernetesNodePoolsTypeOutput) Tag() pulumi.StringPtrOutput {
 // Taints to apply to the nodes in the node pool. Should contain `key`, `value` and `effect`.  The `effect` should be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
 func (o KubernetesNodePoolsTypeOutput) Taints() KubernetesNodePoolsTaintArrayOutput {
 	return o.ApplyT(func(v KubernetesNodePoolsType) []KubernetesNodePoolsTaint { return v.Taints }).(KubernetesNodePoolsTaintArrayOutput)
+}
+
+func (o KubernetesNodePoolsTypeOutput) UserData() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v KubernetesNodePoolsType) *string { return v.UserData }).(pulumi.StringPtrOutput)
 }
 
 type KubernetesNodePoolsTypePtrOutput struct{ *pulumi.OutputState }
@@ -1150,6 +1171,15 @@ func (o KubernetesNodePoolsTypePtrOutput) Taints() KubernetesNodePoolsTaintArray
 		}
 		return v.Taints
 	}).(KubernetesNodePoolsTaintArrayOutput)
+}
+
+func (o KubernetesNodePoolsTypePtrOutput) UserData() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *KubernetesNodePoolsType) *string {
+		if v == nil {
+			return nil
+		}
+		return v.UserData
+	}).(pulumi.StringPtrOutput)
 }
 
 type KubernetesNodePoolsNode struct {
@@ -3062,6 +3092,10 @@ func (o GetDatabaseFilterArrayOutput) Index(i pulumi.IntInput) GetDatabaseFilter
 }
 
 type GetDatabaseReadReplica struct {
+	// The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+	BackupHour string `pulumi:"backupHour"`
+	// The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
+	BackupMinute string `pulumi:"backupMinute"`
 	// The configured time zone for the Managed Database in TZ database format.
 	ClusterTimeZone string `pulumi:"clusterTimeZone"`
 	// The database engine of the managed database.
@@ -3073,8 +3107,7 @@ type GetDatabaseReadReplica struct {
 	// The managed database's default logical database.
 	Dbname string `pulumi:"dbname"`
 	// The configuration value for the data eviction policy on the managed database (Valkey engine types only).
-	EvictionPolicy string `pulumi:"evictionPolicy"`
-	// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
+	EvictionPolicy      string            `pulumi:"evictionPolicy"`
 	FerretdbCredentials map[string]string `pulumi:"ferretdbCredentials"`
 	// The hostname assigned to the managed database.
 	Host string `pulumi:"host"`
@@ -3137,6 +3170,10 @@ type GetDatabaseReadReplicaInput interface {
 }
 
 type GetDatabaseReadReplicaArgs struct {
+	// The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+	BackupHour pulumi.StringInput `pulumi:"backupHour"`
+	// The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
+	BackupMinute pulumi.StringInput `pulumi:"backupMinute"`
 	// The configured time zone for the Managed Database in TZ database format.
 	ClusterTimeZone pulumi.StringInput `pulumi:"clusterTimeZone"`
 	// The database engine of the managed database.
@@ -3148,8 +3185,7 @@ type GetDatabaseReadReplicaArgs struct {
 	// The managed database's default logical database.
 	Dbname pulumi.StringInput `pulumi:"dbname"`
 	// The configuration value for the data eviction policy on the managed database (Valkey engine types only).
-	EvictionPolicy pulumi.StringInput `pulumi:"evictionPolicy"`
-	// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
+	EvictionPolicy      pulumi.StringInput    `pulumi:"evictionPolicy"`
 	FerretdbCredentials pulumi.StringMapInput `pulumi:"ferretdbCredentials"`
 	// The hostname assigned to the managed database.
 	Host pulumi.StringInput `pulumi:"host"`
@@ -3251,6 +3287,16 @@ func (o GetDatabaseReadReplicaOutput) ToGetDatabaseReadReplicaOutputWithContext(
 	return o
 }
 
+// The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+func (o GetDatabaseReadReplicaOutput) BackupHour() pulumi.StringOutput {
+	return o.ApplyT(func(v GetDatabaseReadReplica) string { return v.BackupHour }).(pulumi.StringOutput)
+}
+
+// The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
+func (o GetDatabaseReadReplicaOutput) BackupMinute() pulumi.StringOutput {
+	return o.ApplyT(func(v GetDatabaseReadReplica) string { return v.BackupMinute }).(pulumi.StringOutput)
+}
+
 // The configured time zone for the Managed Database in TZ database format.
 func (o GetDatabaseReadReplicaOutput) ClusterTimeZone() pulumi.StringOutput {
 	return o.ApplyT(func(v GetDatabaseReadReplica) string { return v.ClusterTimeZone }).(pulumi.StringOutput)
@@ -3281,7 +3327,6 @@ func (o GetDatabaseReadReplicaOutput) EvictionPolicy() pulumi.StringOutput {
 	return o.ApplyT(func(v GetDatabaseReadReplica) string { return v.EvictionPolicy }).(pulumi.StringOutput)
 }
 
-// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
 func (o GetDatabaseReadReplicaOutput) FerretdbCredentials() pulumi.StringMapOutput {
 	return o.ApplyT(func(v GetDatabaseReadReplica) map[string]string { return v.FerretdbCredentials }).(pulumi.StringMapOutput)
 }
@@ -4681,6 +4726,8 @@ type GetKubernetesNodePool struct {
 	Tag string `pulumi:"tag"`
 	// Kubernetes node taints applied to the node pool.
 	Taints []GetKubernetesNodePoolTaint `pulumi:"taints"`
+	// The base64 encoded string containing the user data applied to nodes in the node pool.
+	UserData *string `pulumi:"userData"`
 }
 
 // GetKubernetesNodePoolInput is an input type that accepts GetKubernetesNodePoolArgs and GetKubernetesNodePoolOutput values.
@@ -4723,6 +4770,8 @@ type GetKubernetesNodePoolArgs struct {
 	Tag pulumi.StringInput `pulumi:"tag"`
 	// Kubernetes node taints applied to the node pool.
 	Taints GetKubernetesNodePoolTaintArrayInput `pulumi:"taints"`
+	// The base64 encoded string containing the user data applied to nodes in the node pool.
+	UserData pulumi.StringPtrInput `pulumi:"userData"`
 }
 
 func (GetKubernetesNodePoolArgs) ElementType() reflect.Type {
@@ -4844,6 +4893,11 @@ func (o GetKubernetesNodePoolOutput) Tag() pulumi.StringOutput {
 // Kubernetes node taints applied to the node pool.
 func (o GetKubernetesNodePoolOutput) Taints() GetKubernetesNodePoolTaintArrayOutput {
 	return o.ApplyT(func(v GetKubernetesNodePool) []GetKubernetesNodePoolTaint { return v.Taints }).(GetKubernetesNodePoolTaintArrayOutput)
+}
+
+// The base64 encoded string containing the user data applied to nodes in the node pool.
+func (o GetKubernetesNodePoolOutput) UserData() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetKubernetesNodePool) *string { return v.UserData }).(pulumi.StringPtrOutput)
 }
 
 type GetKubernetesNodePoolArrayOutput struct{ *pulumi.OutputState }

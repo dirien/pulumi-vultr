@@ -69,6 +69,10 @@ type LookupDatabaseResult struct {
 	AccessCert string `pulumi:"accessCert"`
 	// The private key to authenticate the default user (Kafka engine types only).
 	AccessKey string `pulumi:"accessKey"`
+	// The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+	BackupHour string `pulumi:"backupHour"`
+	// The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
+	BackupMinute string `pulumi:"backupMinute"`
 	// The configured time zone for the Managed Database in TZ database format.
 	ClusterTimeZone string `pulumi:"clusterTimeZone"`
 	// The database engine of the managed database.
@@ -79,15 +83,22 @@ type LookupDatabaseResult struct {
 	DateCreated string `pulumi:"dateCreated"`
 	// The managed database's default logical database.
 	Dbname string `pulumi:"dbname"`
+	// The configuration value for Kafka Connect support (Kafka engine types only).
+	EnableKafkaConnect bool `pulumi:"enableKafkaConnect"`
+	// The configuration value for Kafka REST support (Kafka engine types only).
+	EnableKafkaRest bool `pulumi:"enableKafkaRest"`
+	// The configuration value for Schema Registry support (Kafka engine types only).
+	EnableSchemaRegistry bool `pulumi:"enableSchemaRegistry"`
 	// The configuration value for the data eviction policy on the managed database (Valkey engine types only).
-	EvictionPolicy string `pulumi:"evictionPolicy"`
-	// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
+	EvictionPolicy      string              `pulumi:"evictionPolicy"`
 	FerretdbCredentials map[string]string   `pulumi:"ferretdbCredentials"`
 	Filters             []GetDatabaseFilter `pulumi:"filters"`
 	// The hostname assigned to the managed database.
 	Host string `pulumi:"host"`
 	// The provider-assigned unique ID for this managed resource.
 	Id string `pulumi:"id"`
+	// The URI to access the RESTful interface of your Kafka cluster if Kafka REST is enabled (Kafka engine types only).
+	KafkaRestUri string `pulumi:"kafkaRestUri"`
 	// The managed database's label.
 	Label string `pulumi:"label"`
 	// The date of the latest backup available on the managed database.
@@ -127,6 +138,8 @@ type LookupDatabaseResult struct {
 	Region string `pulumi:"region"`
 	// The SASL connection port for the managed database (Kafka engine types only).
 	SaslPort string `pulumi:"saslPort"`
+	// The URI to access the Schema Registry service of your Kafka cluster if Schema Registry is enabled (Kafka engine types only).
+	SchemaRegistryUri string `pulumi:"schemaRegistryUri"`
 	// The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).
 	Status string `pulumi:"status"`
 	// The managed database's tag.
@@ -183,6 +196,16 @@ func (o LookupDatabaseResultOutput) AccessKey() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupDatabaseResult) string { return v.AccessKey }).(pulumi.StringOutput)
 }
 
+// The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+func (o LookupDatabaseResultOutput) BackupHour() pulumi.StringOutput {
+	return o.ApplyT(func(v LookupDatabaseResult) string { return v.BackupHour }).(pulumi.StringOutput)
+}
+
+// The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
+func (o LookupDatabaseResultOutput) BackupMinute() pulumi.StringOutput {
+	return o.ApplyT(func(v LookupDatabaseResult) string { return v.BackupMinute }).(pulumi.StringOutput)
+}
+
 // The configured time zone for the Managed Database in TZ database format.
 func (o LookupDatabaseResultOutput) ClusterTimeZone() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupDatabaseResult) string { return v.ClusterTimeZone }).(pulumi.StringOutput)
@@ -208,12 +231,26 @@ func (o LookupDatabaseResultOutput) Dbname() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupDatabaseResult) string { return v.Dbname }).(pulumi.StringOutput)
 }
 
+// The configuration value for Kafka Connect support (Kafka engine types only).
+func (o LookupDatabaseResultOutput) EnableKafkaConnect() pulumi.BoolOutput {
+	return o.ApplyT(func(v LookupDatabaseResult) bool { return v.EnableKafkaConnect }).(pulumi.BoolOutput)
+}
+
+// The configuration value for Kafka REST support (Kafka engine types only).
+func (o LookupDatabaseResultOutput) EnableKafkaRest() pulumi.BoolOutput {
+	return o.ApplyT(func(v LookupDatabaseResult) bool { return v.EnableKafkaRest }).(pulumi.BoolOutput)
+}
+
+// The configuration value for Schema Registry support (Kafka engine types only).
+func (o LookupDatabaseResultOutput) EnableSchemaRegistry() pulumi.BoolOutput {
+	return o.ApplyT(func(v LookupDatabaseResult) bool { return v.EnableSchemaRegistry }).(pulumi.BoolOutput)
+}
+
 // The configuration value for the data eviction policy on the managed database (Valkey engine types only).
 func (o LookupDatabaseResultOutput) EvictionPolicy() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupDatabaseResult) string { return v.EvictionPolicy }).(pulumi.StringOutput)
 }
 
-// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
 func (o LookupDatabaseResultOutput) FerretdbCredentials() pulumi.StringMapOutput {
 	return o.ApplyT(func(v LookupDatabaseResult) map[string]string { return v.FerretdbCredentials }).(pulumi.StringMapOutput)
 }
@@ -230,6 +267,11 @@ func (o LookupDatabaseResultOutput) Host() pulumi.StringOutput {
 // The provider-assigned unique ID for this managed resource.
 func (o LookupDatabaseResultOutput) Id() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupDatabaseResult) string { return v.Id }).(pulumi.StringOutput)
+}
+
+// The URI to access the RESTful interface of your Kafka cluster if Kafka REST is enabled (Kafka engine types only).
+func (o LookupDatabaseResultOutput) KafkaRestUri() pulumi.StringOutput {
+	return o.ApplyT(func(v LookupDatabaseResult) string { return v.KafkaRestUri }).(pulumi.StringOutput)
 }
 
 // The managed database's label.
@@ -329,6 +371,11 @@ func (o LookupDatabaseResultOutput) Region() pulumi.StringOutput {
 // The SASL connection port for the managed database (Kafka engine types only).
 func (o LookupDatabaseResultOutput) SaslPort() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupDatabaseResult) string { return v.SaslPort }).(pulumi.StringOutput)
+}
+
+// The URI to access the Schema Registry service of your Kafka cluster if Schema Registry is enabled (Kafka engine types only).
+func (o LookupDatabaseResultOutput) SchemaRegistryUri() pulumi.StringOutput {
+	return o.ApplyT(func(v LookupDatabaseResult) string { return v.SchemaRegistryUri }).(pulumi.StringOutput)
 }
 
 // The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).

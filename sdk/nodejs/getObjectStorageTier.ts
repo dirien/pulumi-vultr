@@ -24,6 +24,8 @@ import * as utilities from "./utilities";
  *     }],
  * });
  * ```
+ *
+ * `slug` values and associated details can be retrieved through [this API call](https://www.vultr.com/api/#tag/s3/operation/list-object-storage-tiers).
  */
 export function getObjectStorageTier(args?: GetObjectStorageTierArgs, opts?: pulumi.InvokeOptions): Promise<GetObjectStorageTierResult> {
     args = args || {};
@@ -91,6 +93,8 @@ export interface GetObjectStorageTierResult {
  *     }],
  * });
  * ```
+ *
+ * `slug` values and associated details can be retrieved through [this API call](https://www.vultr.com/api/#tag/s3/operation/list-object-storage-tiers).
  */
 export function getObjectStorageTierOutput(args?: GetObjectStorageTierOutputArgs, opts?: pulumi.InvokeOutputOptions): pulumi.Output<GetObjectStorageTierResult> {
     args = args || {};

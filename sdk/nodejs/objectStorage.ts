@@ -61,43 +61,43 @@ export class ObjectStorage extends pulumi.CustomResource {
     /**
      * The ID of the region that you want the object storage to be deployed in.
      */
-    public readonly clusterId!: pulumi.Output<number>;
+    declare public readonly clusterId: pulumi.Output<number>;
     /**
      * Date of creation for the object storage subscription.
      */
-    public /*out*/ readonly dateCreated!: pulumi.Output<string>;
+    declare public /*out*/ readonly dateCreated: pulumi.Output<string>;
     /**
      * The description you want to give your object storage.
      */
-    public readonly label!: pulumi.Output<string | undefined>;
+    declare public readonly label: pulumi.Output<string | undefined>;
     /**
      * The location which this subscription resides in.
      */
-    public /*out*/ readonly location!: pulumi.Output<string>;
+    declare public /*out*/ readonly location: pulumi.Output<string>;
     /**
      * The region ID of the object storage subscription.
      */
-    public /*out*/ readonly region!: pulumi.Output<string>;
+    declare public /*out*/ readonly region: pulumi.Output<string>;
     /**
      * Your access key.
      */
-    public /*out*/ readonly s3AccessKey!: pulumi.Output<string>;
+    declare public /*out*/ readonly s3AccessKey: pulumi.Output<string>;
     /**
      * The hostname for this subscription.
      */
-    public /*out*/ readonly s3Hostname!: pulumi.Output<string>;
+    declare public /*out*/ readonly s3Hostname: pulumi.Output<string>;
     /**
      * Your secret key.
      */
-    public /*out*/ readonly s3SecretKey!: pulumi.Output<string>;
+    declare public /*out*/ readonly s3SecretKey: pulumi.Output<string>;
     /**
      * Current status of this object storage subscription.
      */
-    public /*out*/ readonly status!: pulumi.Output<string>;
+    declare public /*out*/ readonly status: pulumi.Output<string>;
     /**
      * The ID of the tier to deploy the storage under.
      */
-    public readonly tierId!: pulumi.Output<number>;
+    declare public readonly tierId: pulumi.Output<number>;
 
     /**
      * Create a ObjectStorage resource with the given unique name, arguments, and options.
@@ -112,27 +112,27 @@ export class ObjectStorage extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as ObjectStorageState | undefined;
-            resourceInputs["clusterId"] = state ? state.clusterId : undefined;
-            resourceInputs["dateCreated"] = state ? state.dateCreated : undefined;
-            resourceInputs["label"] = state ? state.label : undefined;
-            resourceInputs["location"] = state ? state.location : undefined;
-            resourceInputs["region"] = state ? state.region : undefined;
-            resourceInputs["s3AccessKey"] = state ? state.s3AccessKey : undefined;
-            resourceInputs["s3Hostname"] = state ? state.s3Hostname : undefined;
-            resourceInputs["s3SecretKey"] = state ? state.s3SecretKey : undefined;
-            resourceInputs["status"] = state ? state.status : undefined;
-            resourceInputs["tierId"] = state ? state.tierId : undefined;
+            resourceInputs["clusterId"] = state?.clusterId;
+            resourceInputs["dateCreated"] = state?.dateCreated;
+            resourceInputs["label"] = state?.label;
+            resourceInputs["location"] = state?.location;
+            resourceInputs["region"] = state?.region;
+            resourceInputs["s3AccessKey"] = state?.s3AccessKey;
+            resourceInputs["s3Hostname"] = state?.s3Hostname;
+            resourceInputs["s3SecretKey"] = state?.s3SecretKey;
+            resourceInputs["status"] = state?.status;
+            resourceInputs["tierId"] = state?.tierId;
         } else {
             const args = argsOrState as ObjectStorageArgs | undefined;
-            if ((!args || args.clusterId === undefined) && !opts.urn) {
+            if (args?.clusterId === undefined && !opts.urn) {
                 throw new Error("Missing required property 'clusterId'");
             }
-            if ((!args || args.tierId === undefined) && !opts.urn) {
+            if (args?.tierId === undefined && !opts.urn) {
                 throw new Error("Missing required property 'tierId'");
             }
-            resourceInputs["clusterId"] = args ? args.clusterId : undefined;
-            resourceInputs["label"] = args ? args.label : undefined;
-            resourceInputs["tierId"] = args ? args.tierId : undefined;
+            resourceInputs["clusterId"] = args?.clusterId;
+            resourceInputs["label"] = args?.label;
+            resourceInputs["tierId"] = args?.tierId;
             resourceInputs["dateCreated"] = undefined /*out*/;
             resourceInputs["location"] = undefined /*out*/;
             resourceInputs["region"] = undefined /*out*/;

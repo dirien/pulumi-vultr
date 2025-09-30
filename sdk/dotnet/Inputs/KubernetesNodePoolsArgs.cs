@@ -115,6 +115,9 @@ namespace ediri.Vultr.Inputs
             set => _taints = value;
         }
 
+        [Input("userData")]
+        public Input<string>? UserData { get; set; }
+
         public KubernetesNodePoolsArgs()
         {
         }

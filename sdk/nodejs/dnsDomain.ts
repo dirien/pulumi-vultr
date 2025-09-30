@@ -60,19 +60,19 @@ export class DnsDomain extends pulumi.CustomResource {
     /**
      * The date the domain was added to your account.
      */
-    public /*out*/ readonly dateCreated!: pulumi.Output<string>;
+    declare public /*out*/ readonly dateCreated: pulumi.Output<string>;
     /**
      * The Domain's DNSSEC status. Valid options are `enabled` or `disabled`. Note `disabled` is default
      */
-    public readonly dnsSec!: pulumi.Output<string | undefined>;
+    declare public readonly dnsSec: pulumi.Output<string | undefined>;
     /**
      * Name of domain.
      */
-    public readonly domain!: pulumi.Output<string>;
+    declare public readonly domain: pulumi.Output<string>;
     /**
      * Instance IP you want associated to domain. If omitted this will create a domain with no records.
      */
-    public readonly ip!: pulumi.Output<string | undefined>;
+    declare public readonly ip: pulumi.Output<string | undefined>;
 
     /**
      * Create a DnsDomain resource with the given unique name, arguments, and options.
@@ -87,18 +87,18 @@ export class DnsDomain extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as DnsDomainState | undefined;
-            resourceInputs["dateCreated"] = state ? state.dateCreated : undefined;
-            resourceInputs["dnsSec"] = state ? state.dnsSec : undefined;
-            resourceInputs["domain"] = state ? state.domain : undefined;
-            resourceInputs["ip"] = state ? state.ip : undefined;
+            resourceInputs["dateCreated"] = state?.dateCreated;
+            resourceInputs["dnsSec"] = state?.dnsSec;
+            resourceInputs["domain"] = state?.domain;
+            resourceInputs["ip"] = state?.ip;
         } else {
             const args = argsOrState as DnsDomainArgs | undefined;
-            if ((!args || args.domain === undefined) && !opts.urn) {
+            if (args?.domain === undefined && !opts.urn) {
                 throw new Error("Missing required property 'domain'");
             }
-            resourceInputs["dnsSec"] = args ? args.dnsSec : undefined;
-            resourceInputs["domain"] = args ? args.domain : undefined;
-            resourceInputs["ip"] = args ? args.ip : undefined;
+            resourceInputs["dnsSec"] = args?.dnsSec;
+            resourceInputs["domain"] = args?.domain;
+            resourceInputs["ip"] = args?.ip;
             resourceInputs["dateCreated"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);

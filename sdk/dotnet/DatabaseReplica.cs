@@ -40,6 +40,18 @@ namespace ediri.Vultr
     public partial class DatabaseReplica : global::Pulumi.CustomResource
     {
         /// <summary>
+        /// The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+        /// </summary>
+        [Output("backupHour")]
+        public Output<string> BackupHour { get; private set; } = null!;
+
+        /// <summary>
+        /// The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
+        /// </summary>
+        [Output("backupMinute")]
+        public Output<string> BackupMinute { get; private set; } = null!;
+
+        /// <summary>
         /// The configured time zone for the managed database read replica in TZ database format.
         /// </summary>
         [Output("clusterTimeZone")]
@@ -81,9 +93,6 @@ namespace ediri.Vultr
         [Output("evictionPolicy")]
         public Output<string> EvictionPolicy { get; private set; } = null!;
 
-        /// <summary>
-        /// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
-        /// </summary>
         [Output("ferretdbCredentials")]
         public Output<ImmutableDictionary<string, string>> FerretdbCredentials { get; private set; } = null!;
 
@@ -273,6 +282,18 @@ namespace ediri.Vultr
     public sealed class DatabaseReplicaArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
+        /// The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+        /// </summary>
+        [Input("backupHour")]
+        public Input<string>? BackupHour { get; set; }
+
+        /// <summary>
+        /// The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
+        /// </summary>
+        [Input("backupMinute")]
+        public Input<string>? BackupMinute { get; set; }
+
+        /// <summary>
         /// The managed database ID you want to attach this replica to.
         /// </summary>
         [Input("databaseId", required: true)]
@@ -286,10 +307,6 @@ namespace ediri.Vultr
 
         [Input("ferretdbCredentials")]
         private InputMap<string>? _ferretdbCredentials;
-
-        /// <summary>
-        /// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
-        /// </summary>
         public InputMap<string> FerretdbCredentials
         {
             get => _ferretdbCredentials ?? (_ferretdbCredentials = new InputMap<string>());
@@ -377,6 +394,18 @@ namespace ediri.Vultr
     public sealed class DatabaseReplicaState : global::Pulumi.ResourceArgs
     {
         /// <summary>
+        /// The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+        /// </summary>
+        [Input("backupHour")]
+        public Input<string>? BackupHour { get; set; }
+
+        /// <summary>
+        /// The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
+        /// </summary>
+        [Input("backupMinute")]
+        public Input<string>? BackupMinute { get; set; }
+
+        /// <summary>
         /// The configured time zone for the managed database read replica in TZ database format.
         /// </summary>
         [Input("clusterTimeZone")]
@@ -420,10 +449,6 @@ namespace ediri.Vultr
 
         [Input("ferretdbCredentials")]
         private InputMap<string>? _ferretdbCredentials;
-
-        /// <summary>
-        /// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
-        /// </summary>
         public InputMap<string> FerretdbCredentials
         {
             get => _ferretdbCredentials ?? (_ferretdbCredentials = new InputMap<string>());

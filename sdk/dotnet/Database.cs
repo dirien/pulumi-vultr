@@ -87,6 +87,18 @@ namespace ediri.Vultr
         public Output<string> AccessKey { get; private set; } = null!;
 
         /// <summary>
+        /// The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+        /// </summary>
+        [Output("backupHour")]
+        public Output<string?> BackupHour { get; private set; } = null!;
+
+        /// <summary>
+        /// The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
+        /// </summary>
+        [Output("backupMinute")]
+        public Output<string?> BackupMinute { get; private set; } = null!;
+
+        /// <summary>
         /// The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
         /// </summary>
         [Output("clusterTimeZone")]
@@ -117,14 +129,29 @@ namespace ediri.Vultr
         public Output<string> Dbname { get; private set; } = null!;
 
         /// <summary>
+        /// The configuration value for Kafka Connect support (Kafka engine types only).
+        /// </summary>
+        [Output("enableKafkaConnect")]
+        public Output<bool?> EnableKafkaConnect { get; private set; } = null!;
+
+        /// <summary>
+        /// The configuration value for Kafka REST support (Kafka engine types only).
+        /// </summary>
+        [Output("enableKafkaRest")]
+        public Output<bool?> EnableKafkaRest { get; private set; } = null!;
+
+        /// <summary>
+        /// The configuration value for Schema Registry support (Kafka engine types only).
+        /// </summary>
+        [Output("enableSchemaRegistry")]
+        public Output<bool?> EnableSchemaRegistry { get; private set; } = null!;
+
+        /// <summary>
         /// The configuration value for the data eviction policy on the managed database (Valkey engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
         /// </summary>
         [Output("evictionPolicy")]
         public Output<string> EvictionPolicy { get; private set; } = null!;
 
-        /// <summary>
-        /// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
-        /// </summary>
         [Output("ferretdbCredentials")]
         public Output<ImmutableDictionary<string, string>> FerretdbCredentials { get; private set; } = null!;
 
@@ -133,6 +160,12 @@ namespace ediri.Vultr
         /// </summary>
         [Output("host")]
         public Output<string> Host { get; private set; } = null!;
+
+        /// <summary>
+        /// The URI to access the RESTful interface of your Kafka cluster if Kafka REST is enabled (Kafka engine types only).
+        /// </summary>
+        [Output("kafkaRestUri")]
+        public Output<string> KafkaRestUri { get; private set; } = null!;
 
         /// <summary>
         /// A label for the managed database.
@@ -153,7 +186,7 @@ namespace ediri.Vultr
         public Output<string> MaintenanceDow { get; private set; } = null!;
 
         /// <summary>
-        /// The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).
+        /// The preferred maintenance time for the managed database.
         /// </summary>
         [Output("maintenanceTime")]
         public Output<string> MaintenanceTime { get; private set; } = null!;
@@ -255,6 +288,12 @@ namespace ediri.Vultr
         public Output<string> SaslPort { get; private set; } = null!;
 
         /// <summary>
+        /// The URI to access the Schema Registry service of your Kafka cluster if Schema Registry is enabled (Kafka engine types only).
+        /// </summary>
+        [Output("schemaRegistryUri")]
+        public Output<string> SchemaRegistryUri { get; private set; } = null!;
+
+        /// <summary>
         /// The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).
         /// </summary>
         [Output("status")]
@@ -344,6 +383,18 @@ namespace ediri.Vultr
         public Input<string>? AccessKey { get; set; }
 
         /// <summary>
+        /// The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+        /// </summary>
+        [Input("backupHour")]
+        public Input<string>? BackupHour { get; set; }
+
+        /// <summary>
+        /// The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
+        /// </summary>
+        [Input("backupMinute")]
+        public Input<string>? BackupMinute { get; set; }
+
+        /// <summary>
         /// The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
         /// </summary>
         [Input("clusterTimeZone")]
@@ -362,6 +413,24 @@ namespace ediri.Vultr
         public Input<string> DatabaseEngineVersion { get; set; } = null!;
 
         /// <summary>
+        /// The configuration value for Kafka Connect support (Kafka engine types only).
+        /// </summary>
+        [Input("enableKafkaConnect")]
+        public Input<bool>? EnableKafkaConnect { get; set; }
+
+        /// <summary>
+        /// The configuration value for Kafka REST support (Kafka engine types only).
+        /// </summary>
+        [Input("enableKafkaRest")]
+        public Input<bool>? EnableKafkaRest { get; set; }
+
+        /// <summary>
+        /// The configuration value for Schema Registry support (Kafka engine types only).
+        /// </summary>
+        [Input("enableSchemaRegistry")]
+        public Input<bool>? EnableSchemaRegistry { get; set; }
+
+        /// <summary>
         /// The configuration value for the data eviction policy on the managed database (Valkey engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
         /// </summary>
         [Input("evictionPolicy")]
@@ -369,15 +438,17 @@ namespace ediri.Vultr
 
         [Input("ferretdbCredentials")]
         private InputMap<string>? _ferretdbCredentials;
-
-        /// <summary>
-        /// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
-        /// </summary>
         public InputMap<string> FerretdbCredentials
         {
             get => _ferretdbCredentials ?? (_ferretdbCredentials = new InputMap<string>());
             set => _ferretdbCredentials = value;
         }
+
+        /// <summary>
+        /// The URI to access the RESTful interface of your Kafka cluster if Kafka REST is enabled (Kafka engine types only).
+        /// </summary>
+        [Input("kafkaRestUri")]
+        public Input<string>? KafkaRestUri { get; set; }
 
         /// <summary>
         /// A label for the managed database.
@@ -392,7 +463,7 @@ namespace ediri.Vultr
         public Input<string>? MaintenanceDow { get; set; }
 
         /// <summary>
-        /// The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).
+        /// The preferred maintenance time for the managed database.
         /// </summary>
         [Input("maintenanceTime")]
         public Input<string>? MaintenanceTime { get; set; }
@@ -488,6 +559,12 @@ namespace ediri.Vultr
         public Input<string>? SaslPort { get; set; }
 
         /// <summary>
+        /// The URI to access the Schema Registry service of your Kafka cluster if Schema Registry is enabled (Kafka engine types only).
+        /// </summary>
+        [Input("schemaRegistryUri")]
+        public Input<string>? SchemaRegistryUri { get; set; }
+
+        /// <summary>
         /// The tag to assign to the managed database.
         /// </summary>
         [Input("tag")]
@@ -532,6 +609,18 @@ namespace ediri.Vultr
         public Input<string>? AccessKey { get; set; }
 
         /// <summary>
+        /// The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+        /// </summary>
+        [Input("backupHour")]
+        public Input<string>? BackupHour { get; set; }
+
+        /// <summary>
+        /// The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
+        /// </summary>
+        [Input("backupMinute")]
+        public Input<string>? BackupMinute { get; set; }
+
+        /// <summary>
         /// The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
         /// </summary>
         [Input("clusterTimeZone")]
@@ -562,6 +651,24 @@ namespace ediri.Vultr
         public Input<string>? Dbname { get; set; }
 
         /// <summary>
+        /// The configuration value for Kafka Connect support (Kafka engine types only).
+        /// </summary>
+        [Input("enableKafkaConnect")]
+        public Input<bool>? EnableKafkaConnect { get; set; }
+
+        /// <summary>
+        /// The configuration value for Kafka REST support (Kafka engine types only).
+        /// </summary>
+        [Input("enableKafkaRest")]
+        public Input<bool>? EnableKafkaRest { get; set; }
+
+        /// <summary>
+        /// The configuration value for Schema Registry support (Kafka engine types only).
+        /// </summary>
+        [Input("enableSchemaRegistry")]
+        public Input<bool>? EnableSchemaRegistry { get; set; }
+
+        /// <summary>
         /// The configuration value for the data eviction policy on the managed database (Valkey engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
         /// </summary>
         [Input("evictionPolicy")]
@@ -569,10 +676,6 @@ namespace ediri.Vultr
 
         [Input("ferretdbCredentials")]
         private InputMap<string>? _ferretdbCredentials;
-
-        /// <summary>
-        /// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
-        /// </summary>
         public InputMap<string> FerretdbCredentials
         {
             get => _ferretdbCredentials ?? (_ferretdbCredentials = new InputMap<string>());
@@ -584,6 +687,12 @@ namespace ediri.Vultr
         /// </summary>
         [Input("host")]
         public Input<string>? Host { get; set; }
+
+        /// <summary>
+        /// The URI to access the RESTful interface of your Kafka cluster if Kafka REST is enabled (Kafka engine types only).
+        /// </summary>
+        [Input("kafkaRestUri")]
+        public Input<string>? KafkaRestUri { get; set; }
 
         /// <summary>
         /// A label for the managed database.
@@ -604,7 +713,7 @@ namespace ediri.Vultr
         public Input<string>? MaintenanceDow { get; set; }
 
         /// <summary>
-        /// The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).
+        /// The preferred maintenance time for the managed database.
         /// </summary>
         [Input("maintenanceTime")]
         public Input<string>? MaintenanceTime { get; set; }
@@ -716,6 +825,12 @@ namespace ediri.Vultr
         /// </summary>
         [Input("saslPort")]
         public Input<string>? SaslPort { get; set; }
+
+        /// <summary>
+        /// The URI to access the Schema Registry service of your Kafka cluster if Schema Registry is enabled (Kafka engine types only).
+        /// </summary>
+        [Input("schemaRegistryUri")]
+        public Input<string>? SchemaRegistryUri { get; set; }
 
         /// <summary>
         /// The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).

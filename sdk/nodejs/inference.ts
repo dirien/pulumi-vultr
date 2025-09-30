@@ -57,16 +57,16 @@ export class Inference extends pulumi.CustomResource {
     /**
      * The inference subscription's API key for accessing the Vultr Inference API.
      */
-    public /*out*/ readonly apiKey!: pulumi.Output<string>;
+    declare public /*out*/ readonly apiKey: pulumi.Output<string>;
     /**
      * The date the inference subscription was added to your Vultr account.
      */
-    public /*out*/ readonly dateCreated!: pulumi.Output<string>;
+    declare public /*out*/ readonly dateCreated: pulumi.Output<string>;
     /**
      * A label for the inference subscription.
      */
-    public readonly label!: pulumi.Output<string>;
-    public /*out*/ readonly usage!: pulumi.Output<{[key: string]: string}>;
+    declare public readonly label: pulumi.Output<string>;
+    declare public /*out*/ readonly usage: pulumi.Output<{[key: string]: string}>;
 
     /**
      * Create a Inference resource with the given unique name, arguments, and options.
@@ -81,16 +81,16 @@ export class Inference extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as InferenceState | undefined;
-            resourceInputs["apiKey"] = state ? state.apiKey : undefined;
-            resourceInputs["dateCreated"] = state ? state.dateCreated : undefined;
-            resourceInputs["label"] = state ? state.label : undefined;
-            resourceInputs["usage"] = state ? state.usage : undefined;
+            resourceInputs["apiKey"] = state?.apiKey;
+            resourceInputs["dateCreated"] = state?.dateCreated;
+            resourceInputs["label"] = state?.label;
+            resourceInputs["usage"] = state?.usage;
         } else {
             const args = argsOrState as InferenceArgs | undefined;
-            if ((!args || args.label === undefined) && !opts.urn) {
+            if (args?.label === undefined && !opts.urn) {
                 throw new Error("Missing required property 'label'");
             }
-            resourceInputs["label"] = args ? args.label : undefined;
+            resourceInputs["label"] = args?.label;
             resourceInputs["apiKey"] = undefined /*out*/;
             resourceInputs["dateCreated"] = undefined /*out*/;
             resourceInputs["usage"] = undefined /*out*/;

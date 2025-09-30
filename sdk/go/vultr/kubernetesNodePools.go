@@ -14,57 +14,6 @@ import (
 
 // Deploy additional node pools to an existing Vultr Kubernetes Engine (VKE) cluster.
 //
-// ## Example Usage
-//
-// Create a new VKE cluster:
-//
-// ```go
-// package main
-//
-// import (
-//
-//	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr"
-//	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-//
-// )
-//
-//	func main() {
-//		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := vultr.NewKubernetesNodePools(ctx, "np-1", &vultr.KubernetesNodePoolsArgs{
-//				ClusterId:    pulumi.Any(vultr_kubernetes.K8.Id),
-//				NodeQuantity: pulumi.Int(1),
-//				Plan:         pulumi.String("vc2-4c-8gb"),
-//				Label:        pulumi.String("my-label"),
-//				Tag:          pulumi.String("my-tag"),
-//				AutoScaler:   pulumi.Bool(true),
-//				MinNodes:     pulumi.Int(1),
-//				MaxNodes:     pulumi.Int(2),
-//				Labels: pulumi.StringMap{
-//					"my-label":        pulumi.String("a-label-on-all-nodes"),
-//					"my-second-label": pulumi.String("another-label-on-all-nodes"),
-//				},
-//				Taints: vultr.KubernetesNodePoolsTaintArray{
-//					&vultr.KubernetesNodePoolsTaintArgs{
-//						Key:    pulumi.String("a-taint"),
-//						Value:  pulumi.String("is-tainted"),
-//						Effect: pulumi.String("NoExecute"),
-//					},
-//					&vultr.KubernetesNodePoolsTaintArgs{
-//						Key:    pulumi.String("another-taint"),
-//						Value:  pulumi.String("is-tainted"),
-//						Effect: pulumi.String("NoSchedule"),
-//					},
-//				},
-//			})
-//			if err != nil {
-//				return err
-//			}
-//			return nil
-//		})
-//	}
-//
-// ```
-//
 // ## Import
 //
 // # Node pool resources are able to be imported into terraform state like other
@@ -115,6 +64,8 @@ type KubernetesNodePools struct {
 	Tag pulumi.StringPtrOutput `pulumi:"tag"`
 	// Taints to apply to the nodes in the node pool. Should contain `key`, `value` and `effect`.  The `effect` should be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
 	Taints KubernetesNodePoolsTaintArrayOutput `pulumi:"taints"`
+	// A base64 encoded string containing the user data to apply to nodes in the node pool.
+	UserData pulumi.StringPtrOutput `pulumi:"userData"`
 }
 
 // NewKubernetesNodePools registers a new resource with the given unique name, arguments, and options.
@@ -187,6 +138,8 @@ type kubernetesNodePoolsState struct {
 	Tag *string `pulumi:"tag"`
 	// Taints to apply to the nodes in the node pool. Should contain `key`, `value` and `effect`.  The `effect` should be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
 	Taints []KubernetesNodePoolsTaint `pulumi:"taints"`
+	// A base64 encoded string containing the user data to apply to nodes in the node pool.
+	UserData *string `pulumi:"userData"`
 }
 
 type KubernetesNodePoolsState struct {
@@ -218,6 +171,8 @@ type KubernetesNodePoolsState struct {
 	Tag pulumi.StringPtrInput
 	// Taints to apply to the nodes in the node pool. Should contain `key`, `value` and `effect`.  The `effect` should be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
 	Taints KubernetesNodePoolsTaintArrayInput
+	// A base64 encoded string containing the user data to apply to nodes in the node pool.
+	UserData pulumi.StringPtrInput
 }
 
 func (KubernetesNodePoolsState) ElementType() reflect.Type {
@@ -245,6 +200,8 @@ type kubernetesNodePoolsArgs struct {
 	Tag *string `pulumi:"tag"`
 	// Taints to apply to the nodes in the node pool. Should contain `key`, `value` and `effect`.  The `effect` should be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
 	Taints []KubernetesNodePoolsTaint `pulumi:"taints"`
+	// A base64 encoded string containing the user data to apply to nodes in the node pool.
+	UserData *string `pulumi:"userData"`
 }
 
 // The set of arguments for constructing a KubernetesNodePools resource.
@@ -269,6 +226,8 @@ type KubernetesNodePoolsArgs struct {
 	Tag pulumi.StringPtrInput
 	// Taints to apply to the nodes in the node pool. Should contain `key`, `value` and `effect`.  The `effect` should be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
 	Taints KubernetesNodePoolsTaintArrayInput
+	// A base64 encoded string containing the user data to apply to nodes in the node pool.
+	UserData pulumi.StringPtrInput
 }
 
 func (KubernetesNodePoolsArgs) ElementType() reflect.Type {
@@ -426,6 +385,11 @@ func (o KubernetesNodePoolsOutput) Tag() pulumi.StringPtrOutput {
 // Taints to apply to the nodes in the node pool. Should contain `key`, `value` and `effect`.  The `effect` should be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
 func (o KubernetesNodePoolsOutput) Taints() KubernetesNodePoolsTaintArrayOutput {
 	return o.ApplyT(func(v *KubernetesNodePools) KubernetesNodePoolsTaintArrayOutput { return v.Taints }).(KubernetesNodePoolsTaintArrayOutput)
+}
+
+// A base64 encoded string containing the user data to apply to nodes in the node pool.
+func (o KubernetesNodePoolsOutput) UserData() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *KubernetesNodePools) pulumi.StringPtrOutput { return v.UserData }).(pulumi.StringPtrOutput)
 }
 
 type KubernetesNodePoolsArrayOutput struct{ *pulumi.OutputState }

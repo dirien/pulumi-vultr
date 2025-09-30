@@ -15,7 +15,10 @@ import * as utilities from "./utilities";
  * import * as pulumi from "@pulumi/pulumi";
  * import * as vultr from "@ediri/vultr";
  *
- * const mySnapshot = new vultr.SnapshotFromUrl("mySnapshot", {url: "http://dl-cdn.alpinelinux.org/alpine/v3.9/releases/x86_64/alpine-virt-3.9.1-x86_64.iso"});
+ * const mySnapshot = new vultr.SnapshotFromUrl("mySnapshot", {
+ *     url: "http://dl-cdn.alpinelinux.org/alpine/v3.9/releases/x86_64/alpine-virt-3.9.1-x86_64.iso",
+ *     useUefi: true,
+ * });
  * ```
  *
  * ## Import
@@ -57,31 +60,35 @@ export class SnapshotFromUrl extends pulumi.CustomResource {
     /**
      * The app id which the snapshot is associated with.
      */
-    public /*out*/ readonly appId!: pulumi.Output<number>;
+    declare public /*out*/ readonly appId: pulumi.Output<number>;
     /**
      * The date the snapshot was created.
      */
-    public /*out*/ readonly dateCreated!: pulumi.Output<string>;
+    declare public /*out*/ readonly dateCreated: pulumi.Output<string>;
     /**
      * The description for the given snapshot.
      */
-    public /*out*/ readonly description!: pulumi.Output<string>;
+    declare public /*out*/ readonly description: pulumi.Output<string>;
     /**
      * The os id which the snapshot is associated with.
      */
-    public /*out*/ readonly osId!: pulumi.Output<number>;
+    declare public /*out*/ readonly osId: pulumi.Output<number>;
     /**
      * The size of the snapshot in Bytes.
      */
-    public /*out*/ readonly size!: pulumi.Output<number>;
+    declare public /*out*/ readonly size: pulumi.Output<number>;
     /**
      * The status for the given snapshot.
      */
-    public /*out*/ readonly status!: pulumi.Output<string>;
+    declare public /*out*/ readonly status: pulumi.Output<string>;
     /**
      * URL of the given resource you want to create a snapshot from.
      */
-    public readonly url!: pulumi.Output<string>;
+    declare public readonly url: pulumi.Output<string>;
+    /**
+     * Whether or not to use UEFI when creating the snapshot.
+     */
+    declare public readonly useUefi: pulumi.Output<boolean | undefined>;
 
     /**
      * Create a SnapshotFromUrl resource with the given unique name, arguments, and options.
@@ -96,19 +103,21 @@ export class SnapshotFromUrl extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as SnapshotFromUrlState | undefined;
-            resourceInputs["appId"] = state ? state.appId : undefined;
-            resourceInputs["dateCreated"] = state ? state.dateCreated : undefined;
-            resourceInputs["description"] = state ? state.description : undefined;
-            resourceInputs["osId"] = state ? state.osId : undefined;
-            resourceInputs["size"] = state ? state.size : undefined;
-            resourceInputs["status"] = state ? state.status : undefined;
-            resourceInputs["url"] = state ? state.url : undefined;
+            resourceInputs["appId"] = state?.appId;
+            resourceInputs["dateCreated"] = state?.dateCreated;
+            resourceInputs["description"] = state?.description;
+            resourceInputs["osId"] = state?.osId;
+            resourceInputs["size"] = state?.size;
+            resourceInputs["status"] = state?.status;
+            resourceInputs["url"] = state?.url;
+            resourceInputs["useUefi"] = state?.useUefi;
         } else {
             const args = argsOrState as SnapshotFromUrlArgs | undefined;
-            if ((!args || args.url === undefined) && !opts.urn) {
+            if (args?.url === undefined && !opts.urn) {
                 throw new Error("Missing required property 'url'");
             }
-            resourceInputs["url"] = args ? args.url : undefined;
+            resourceInputs["url"] = args?.url;
+            resourceInputs["useUefi"] = args?.useUefi;
             resourceInputs["appId"] = undefined /*out*/;
             resourceInputs["dateCreated"] = undefined /*out*/;
             resourceInputs["description"] = undefined /*out*/;
@@ -153,6 +162,10 @@ export interface SnapshotFromUrlState {
      * URL of the given resource you want to create a snapshot from.
      */
     url?: pulumi.Input<string>;
+    /**
+     * Whether or not to use UEFI when creating the snapshot.
+     */
+    useUefi?: pulumi.Input<boolean>;
 }
 
 /**
@@ -163,4 +176,8 @@ export interface SnapshotFromUrlArgs {
      * URL of the given resource you want to create a snapshot from.
      */
     url: pulumi.Input<string>;
+    /**
+     * Whether or not to use UEFI when creating the snapshot.
+     */
+    useUefi?: pulumi.Input<boolean>;
 }

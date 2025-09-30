@@ -67,47 +67,47 @@ export class VirtualFileSystemStorage extends pulumi.CustomResource {
     /**
      * A list of UUIDs to attach to the virtual file system storage subscription.
      */
-    public readonly attachedInstances!: pulumi.Output<string[] | undefined>;
+    declare public readonly attachedInstances: pulumi.Output<string[] | undefined>;
     /**
      * A list of attchment states for instances currently attached to the virtual file system storage.
      */
-    public /*out*/ readonly attachments!: pulumi.Output<outputs.VirtualFileSystemStorageAttachment[]>;
+    declare public /*out*/ readonly attachments: pulumi.Output<outputs.VirtualFileSystemStorageAttachment[]>;
     /**
      * The current pending charges for the virtual file system storage subscription in USD.
      */
-    public /*out*/ readonly charges!: pulumi.Output<number>;
+    declare public /*out*/ readonly charges: pulumi.Output<number>;
     /**
      * The cost per month of the virtual file system storage subscription in USD.
      */
-    public /*out*/ readonly cost!: pulumi.Output<number>;
+    declare public /*out*/ readonly cost: pulumi.Output<number>;
     /**
      * The date the virtual file system storage subscription was added to your Vultr account.
      */
-    public /*out*/ readonly dateCreated!: pulumi.Output<string>;
+    declare public /*out*/ readonly dateCreated: pulumi.Output<string>;
     /**
      * The underlying disk type to use for the virtual file system storage.  Default is `nvme`.
      */
-    public readonly diskType!: pulumi.Output<string | undefined>;
+    declare public readonly diskType: pulumi.Output<string | undefined>;
     /**
      * The label to give to the virtual file system storage subscription.
      */
-    public readonly label!: pulumi.Output<string>;
+    declare public readonly label: pulumi.Output<string>;
     /**
      * The region in which this virtual file system storage will reside.
      */
-    public readonly region!: pulumi.Output<string>;
+    declare public readonly region: pulumi.Output<string>;
     /**
      * The size of the given virtual file system storage subscription.
      */
-    public readonly sizeGb!: pulumi.Output<number>;
+    declare public readonly sizeGb: pulumi.Output<number>;
     /**
      * The status of the virtual file system storage subscription.
      */
-    public /*out*/ readonly status!: pulumi.Output<string>;
+    declare public /*out*/ readonly status: pulumi.Output<string>;
     /**
      * A list of tags to be used on the virtual file system storage subscription.
      */
-    public readonly tags!: pulumi.Output<string[] | undefined>;
+    declare public readonly tags: pulumi.Output<string[] | undefined>;
 
     /**
      * Create a VirtualFileSystemStorage resource with the given unique name, arguments, and options.
@@ -122,34 +122,34 @@ export class VirtualFileSystemStorage extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as VirtualFileSystemStorageState | undefined;
-            resourceInputs["attachedInstances"] = state ? state.attachedInstances : undefined;
-            resourceInputs["attachments"] = state ? state.attachments : undefined;
-            resourceInputs["charges"] = state ? state.charges : undefined;
-            resourceInputs["cost"] = state ? state.cost : undefined;
-            resourceInputs["dateCreated"] = state ? state.dateCreated : undefined;
-            resourceInputs["diskType"] = state ? state.diskType : undefined;
-            resourceInputs["label"] = state ? state.label : undefined;
-            resourceInputs["region"] = state ? state.region : undefined;
-            resourceInputs["sizeGb"] = state ? state.sizeGb : undefined;
-            resourceInputs["status"] = state ? state.status : undefined;
-            resourceInputs["tags"] = state ? state.tags : undefined;
+            resourceInputs["attachedInstances"] = state?.attachedInstances;
+            resourceInputs["attachments"] = state?.attachments;
+            resourceInputs["charges"] = state?.charges;
+            resourceInputs["cost"] = state?.cost;
+            resourceInputs["dateCreated"] = state?.dateCreated;
+            resourceInputs["diskType"] = state?.diskType;
+            resourceInputs["label"] = state?.label;
+            resourceInputs["region"] = state?.region;
+            resourceInputs["sizeGb"] = state?.sizeGb;
+            resourceInputs["status"] = state?.status;
+            resourceInputs["tags"] = state?.tags;
         } else {
             const args = argsOrState as VirtualFileSystemStorageArgs | undefined;
-            if ((!args || args.label === undefined) && !opts.urn) {
+            if (args?.label === undefined && !opts.urn) {
                 throw new Error("Missing required property 'label'");
             }
-            if ((!args || args.region === undefined) && !opts.urn) {
+            if (args?.region === undefined && !opts.urn) {
                 throw new Error("Missing required property 'region'");
             }
-            if ((!args || args.sizeGb === undefined) && !opts.urn) {
+            if (args?.sizeGb === undefined && !opts.urn) {
                 throw new Error("Missing required property 'sizeGb'");
             }
-            resourceInputs["attachedInstances"] = args ? args.attachedInstances : undefined;
-            resourceInputs["diskType"] = args ? args.diskType : undefined;
-            resourceInputs["label"] = args ? args.label : undefined;
-            resourceInputs["region"] = args ? args.region : undefined;
-            resourceInputs["sizeGb"] = args ? args.sizeGb : undefined;
-            resourceInputs["tags"] = args ? args.tags : undefined;
+            resourceInputs["attachedInstances"] = args?.attachedInstances;
+            resourceInputs["diskType"] = args?.diskType;
+            resourceInputs["label"] = args?.label;
+            resourceInputs["region"] = args?.region;
+            resourceInputs["sizeGb"] = args?.sizeGb;
+            resourceInputs["tags"] = args?.tags;
             resourceInputs["attachments"] = undefined /*out*/;
             resourceInputs["charges"] = undefined /*out*/;
             resourceInputs["cost"] = undefined /*out*/;

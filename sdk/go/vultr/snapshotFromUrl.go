@@ -31,7 +31,8 @@ import (
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
 //			_, err := vultr.NewSnapshotFromUrl(ctx, "mySnapshot", &vultr.SnapshotFromUrlArgs{
-//				Url: pulumi.String("http://dl-cdn.alpinelinux.org/alpine/v3.9/releases/x86_64/alpine-virt-3.9.1-x86_64.iso"),
+//				Url:     pulumi.String("http://dl-cdn.alpinelinux.org/alpine/v3.9/releases/x86_64/alpine-virt-3.9.1-x86_64.iso"),
+//				UseUefi: pulumi.Bool(true),
 //			})
 //			if err != nil {
 //				return err
@@ -66,6 +67,8 @@ type SnapshotFromUrl struct {
 	Status pulumi.StringOutput `pulumi:"status"`
 	// URL of the given resource you want to create a snapshot from.
 	Url pulumi.StringOutput `pulumi:"url"`
+	// Whether or not to use UEFI when creating the snapshot.
+	UseUefi pulumi.BoolPtrOutput `pulumi:"useUefi"`
 }
 
 // NewSnapshotFromUrl registers a new resource with the given unique name, arguments, and options.
@@ -115,6 +118,8 @@ type snapshotFromUrlState struct {
 	Status *string `pulumi:"status"`
 	// URL of the given resource you want to create a snapshot from.
 	Url *string `pulumi:"url"`
+	// Whether or not to use UEFI when creating the snapshot.
+	UseUefi *bool `pulumi:"useUefi"`
 }
 
 type SnapshotFromUrlState struct {
@@ -132,6 +137,8 @@ type SnapshotFromUrlState struct {
 	Status pulumi.StringPtrInput
 	// URL of the given resource you want to create a snapshot from.
 	Url pulumi.StringPtrInput
+	// Whether or not to use UEFI when creating the snapshot.
+	UseUefi pulumi.BoolPtrInput
 }
 
 func (SnapshotFromUrlState) ElementType() reflect.Type {
@@ -141,12 +148,16 @@ func (SnapshotFromUrlState) ElementType() reflect.Type {
 type snapshotFromUrlArgs struct {
 	// URL of the given resource you want to create a snapshot from.
 	Url string `pulumi:"url"`
+	// Whether or not to use UEFI when creating the snapshot.
+	UseUefi *bool `pulumi:"useUefi"`
 }
 
 // The set of arguments for constructing a SnapshotFromUrl resource.
 type SnapshotFromUrlArgs struct {
 	// URL of the given resource you want to create a snapshot from.
 	Url pulumi.StringInput
+	// Whether or not to use UEFI when creating the snapshot.
+	UseUefi pulumi.BoolPtrInput
 }
 
 func (SnapshotFromUrlArgs) ElementType() reflect.Type {
@@ -269,6 +280,11 @@ func (o SnapshotFromUrlOutput) Status() pulumi.StringOutput {
 // URL of the given resource you want to create a snapshot from.
 func (o SnapshotFromUrlOutput) Url() pulumi.StringOutput {
 	return o.ApplyT(func(v *SnapshotFromUrl) pulumi.StringOutput { return v.Url }).(pulumi.StringOutput)
+}
+
+// Whether or not to use UEFI when creating the snapshot.
+func (o SnapshotFromUrlOutput) UseUefi() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *SnapshotFromUrl) pulumi.BoolPtrOutput { return v.UseUefi }).(pulumi.BoolPtrOutput)
 }
 
 type SnapshotFromUrlArrayOutput struct{ *pulumi.OutputState }

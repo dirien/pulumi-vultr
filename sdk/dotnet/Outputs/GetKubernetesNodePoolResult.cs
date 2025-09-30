@@ -70,6 +70,10 @@ namespace ediri.Vultr.Outputs
         /// Kubernetes node taints applied to the node pool.
         /// </summary>
         public readonly ImmutableArray<Outputs.GetKubernetesNodePoolTaintResult> Taints;
+        /// <summary>
+        /// The base64 encoded string containing the user data applied to nodes in the node pool.
+        /// </summary>
+        public readonly string? UserData;
 
         [OutputConstructor]
         private GetKubernetesNodePoolResult(
@@ -99,7 +103,9 @@ namespace ediri.Vultr.Outputs
 
             string tag,
 
-            ImmutableArray<Outputs.GetKubernetesNodePoolTaintResult> taints)
+            ImmutableArray<Outputs.GetKubernetesNodePoolTaintResult> taints,
+
+            string? userData)
         {
             AutoScaler = autoScaler;
             DateCreated = dateCreated;
@@ -115,6 +121,7 @@ namespace ediri.Vultr.Outputs
             Status = status;
             Tag = tag;
             Taints = taints;
+            UserData = userData;
         }
     }
 }

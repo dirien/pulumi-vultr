@@ -9,42 +9,6 @@ import * as utilities from "./utilities";
 /**
  * Deploy additional node pools to an existing Vultr Kubernetes Engine (VKE) cluster.
  *
- * ## Example Usage
- *
- * Create a new VKE cluster:
- *
- * ```typescript
- * import * as pulumi from "@pulumi/pulumi";
- * import * as vultr from "@ediri/vultr";
- *
- * const np_1 = new vultr.KubernetesNodePools("np-1", {
- *     clusterId: vultr_kubernetes.k8.id,
- *     nodeQuantity: 1,
- *     plan: "vc2-4c-8gb",
- *     label: "my-label",
- *     tag: "my-tag",
- *     autoScaler: true,
- *     minNodes: 1,
- *     maxNodes: 2,
- *     labels: {
- *         "my-label": "a-label-on-all-nodes",
- *         "my-second-label": "another-label-on-all-nodes",
- *     },
- *     taints: [
- *         {
- *             key: "a-taint",
- *             value: "is-tainted",
- *             effect: "NoExecute",
- *         },
- *         {
- *             key: "another-taint",
- *             value: "is-tainted",
- *             effect: "NoSchedule",
- *         },
- *     ],
- * });
- * ```
- *
  * ## Import
  *
  * Node pool resources are able to be imported into terraform state like other
@@ -96,59 +60,63 @@ export class KubernetesNodePools extends pulumi.CustomResource {
     /**
      * Enable the auto scaler for the default node pool.
      */
-    public readonly autoScaler!: pulumi.Output<boolean | undefined>;
+    declare public readonly autoScaler: pulumi.Output<boolean | undefined>;
     /**
      * The VKE cluster ID you want to attach this nodepool to.
      */
-    public readonly clusterId!: pulumi.Output<string>;
+    declare public readonly clusterId: pulumi.Output<string>;
     /**
      * Date node was created.
      */
-    public /*out*/ readonly dateCreated!: pulumi.Output<string>;
+    declare public /*out*/ readonly dateCreated: pulumi.Output<string>;
     /**
      * Date of node pool updates.
      */
-    public /*out*/ readonly dateUpdated!: pulumi.Output<string>;
+    declare public /*out*/ readonly dateUpdated: pulumi.Output<string>;
     /**
      * The label to be used as a prefix for nodes in this node pool.
      */
-    public readonly label!: pulumi.Output<string>;
+    declare public readonly label: pulumi.Output<string>;
     /**
      * A map of key/value pairs for Kubernetes node labels.
      */
-    public readonly labels!: pulumi.Output<{[key: string]: string} | undefined>;
+    declare public readonly labels: pulumi.Output<{[key: string]: string} | undefined>;
     /**
      * The maximum number of nodes to use with the auto scaler.
      */
-    public readonly maxNodes!: pulumi.Output<number | undefined>;
+    declare public readonly maxNodes: pulumi.Output<number | undefined>;
     /**
      * The minimum number of nodes to use with the auto scaler.
      */
-    public readonly minNodes!: pulumi.Output<number | undefined>;
+    declare public readonly minNodes: pulumi.Output<number | undefined>;
     /**
      * The number of nodes in this node pool.
      */
-    public readonly nodeQuantity!: pulumi.Output<number>;
+    declare public readonly nodeQuantity: pulumi.Output<number>;
     /**
      * Array that contains information about nodes within this node pool.
      */
-    public /*out*/ readonly nodes!: pulumi.Output<outputs.KubernetesNodePoolsNode[]>;
+    declare public /*out*/ readonly nodes: pulumi.Output<outputs.KubernetesNodePoolsNode[]>;
     /**
      * The plan to be used in this node pool. [See Plans List](https://www.vultr.com/api/#operation/list-plans) Note the minimum plan requirements must have at least 1 core and 2 gbs of memory.
      */
-    public readonly plan!: pulumi.Output<string>;
+    declare public readonly plan: pulumi.Output<string>;
     /**
      * Status of node.
      */
-    public /*out*/ readonly status!: pulumi.Output<string>;
+    declare public /*out*/ readonly status: pulumi.Output<string>;
     /**
      * A tag that is assigned to this node pool.
      */
-    public readonly tag!: pulumi.Output<string | undefined>;
+    declare public readonly tag: pulumi.Output<string | undefined>;
     /**
      * Taints to apply to the nodes in the node pool. Should contain `key`, `value` and `effect`.  The `effect` should be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
      */
-    public readonly taints!: pulumi.Output<outputs.KubernetesNodePoolsTaint[] | undefined>;
+    declare public readonly taints: pulumi.Output<outputs.KubernetesNodePoolsTaint[] | undefined>;
+    /**
+     * A base64 encoded string containing the user data to apply to nodes in the node pool.
+     */
+    declare public readonly userData: pulumi.Output<string | undefined>;
 
     /**
      * Create a KubernetesNodePools resource with the given unique name, arguments, and options.
@@ -163,44 +131,46 @@ export class KubernetesNodePools extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as KubernetesNodePoolsState | undefined;
-            resourceInputs["autoScaler"] = state ? state.autoScaler : undefined;
-            resourceInputs["clusterId"] = state ? state.clusterId : undefined;
-            resourceInputs["dateCreated"] = state ? state.dateCreated : undefined;
-            resourceInputs["dateUpdated"] = state ? state.dateUpdated : undefined;
-            resourceInputs["label"] = state ? state.label : undefined;
-            resourceInputs["labels"] = state ? state.labels : undefined;
-            resourceInputs["maxNodes"] = state ? state.maxNodes : undefined;
-            resourceInputs["minNodes"] = state ? state.minNodes : undefined;
-            resourceInputs["nodeQuantity"] = state ? state.nodeQuantity : undefined;
-            resourceInputs["nodes"] = state ? state.nodes : undefined;
-            resourceInputs["plan"] = state ? state.plan : undefined;
-            resourceInputs["status"] = state ? state.status : undefined;
-            resourceInputs["tag"] = state ? state.tag : undefined;
-            resourceInputs["taints"] = state ? state.taints : undefined;
+            resourceInputs["autoScaler"] = state?.autoScaler;
+            resourceInputs["clusterId"] = state?.clusterId;
+            resourceInputs["dateCreated"] = state?.dateCreated;
+            resourceInputs["dateUpdated"] = state?.dateUpdated;
+            resourceInputs["label"] = state?.label;
+            resourceInputs["labels"] = state?.labels;
+            resourceInputs["maxNodes"] = state?.maxNodes;
+            resourceInputs["minNodes"] = state?.minNodes;
+            resourceInputs["nodeQuantity"] = state?.nodeQuantity;
+            resourceInputs["nodes"] = state?.nodes;
+            resourceInputs["plan"] = state?.plan;
+            resourceInputs["status"] = state?.status;
+            resourceInputs["tag"] = state?.tag;
+            resourceInputs["taints"] = state?.taints;
+            resourceInputs["userData"] = state?.userData;
         } else {
             const args = argsOrState as KubernetesNodePoolsArgs | undefined;
-            if ((!args || args.clusterId === undefined) && !opts.urn) {
+            if (args?.clusterId === undefined && !opts.urn) {
                 throw new Error("Missing required property 'clusterId'");
             }
-            if ((!args || args.label === undefined) && !opts.urn) {
+            if (args?.label === undefined && !opts.urn) {
                 throw new Error("Missing required property 'label'");
             }
-            if ((!args || args.nodeQuantity === undefined) && !opts.urn) {
+            if (args?.nodeQuantity === undefined && !opts.urn) {
                 throw new Error("Missing required property 'nodeQuantity'");
             }
-            if ((!args || args.plan === undefined) && !opts.urn) {
+            if (args?.plan === undefined && !opts.urn) {
                 throw new Error("Missing required property 'plan'");
             }
-            resourceInputs["autoScaler"] = args ? args.autoScaler : undefined;
-            resourceInputs["clusterId"] = args ? args.clusterId : undefined;
-            resourceInputs["label"] = args ? args.label : undefined;
-            resourceInputs["labels"] = args ? args.labels : undefined;
-            resourceInputs["maxNodes"] = args ? args.maxNodes : undefined;
-            resourceInputs["minNodes"] = args ? args.minNodes : undefined;
-            resourceInputs["nodeQuantity"] = args ? args.nodeQuantity : undefined;
-            resourceInputs["plan"] = args ? args.plan : undefined;
-            resourceInputs["tag"] = args ? args.tag : undefined;
-            resourceInputs["taints"] = args ? args.taints : undefined;
+            resourceInputs["autoScaler"] = args?.autoScaler;
+            resourceInputs["clusterId"] = args?.clusterId;
+            resourceInputs["label"] = args?.label;
+            resourceInputs["labels"] = args?.labels;
+            resourceInputs["maxNodes"] = args?.maxNodes;
+            resourceInputs["minNodes"] = args?.minNodes;
+            resourceInputs["nodeQuantity"] = args?.nodeQuantity;
+            resourceInputs["plan"] = args?.plan;
+            resourceInputs["tag"] = args?.tag;
+            resourceInputs["taints"] = args?.taints;
+            resourceInputs["userData"] = args?.userData;
             resourceInputs["dateCreated"] = undefined /*out*/;
             resourceInputs["dateUpdated"] = undefined /*out*/;
             resourceInputs["nodes"] = undefined /*out*/;
@@ -271,6 +241,10 @@ export interface KubernetesNodePoolsState {
      * Taints to apply to the nodes in the node pool. Should contain `key`, `value` and `effect`.  The `effect` should be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
      */
     taints?: pulumi.Input<pulumi.Input<inputs.KubernetesNodePoolsTaint>[]>;
+    /**
+     * A base64 encoded string containing the user data to apply to nodes in the node pool.
+     */
+    userData?: pulumi.Input<string>;
 }
 
 /**
@@ -317,4 +291,8 @@ export interface KubernetesNodePoolsArgs {
      * Taints to apply to the nodes in the node pool. Should contain `key`, `value` and `effect`.  The `effect` should be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
      */
     taints?: pulumi.Input<pulumi.Input<inputs.KubernetesNodePoolsTaint>[]>;
+    /**
+     * A base64 encoded string containing the user data to apply to nodes in the node pool.
+     */
+    userData?: pulumi.Input<string>;
 }

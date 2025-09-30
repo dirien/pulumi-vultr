@@ -75,27 +75,27 @@ export class ReservedIp extends pulumi.CustomResource {
     /**
      * The VPS ID you want this reserved IP to be attached to.
      */
-    public readonly instanceId!: pulumi.Output<string>;
+    declare public readonly instanceId: pulumi.Output<string>;
     /**
      * The type of reserved IP that you want. Either "v4" or "v6".
      */
-    public readonly ipType!: pulumi.Output<string>;
+    declare public readonly ipType: pulumi.Output<string>;
     /**
      * The label you want to give your reserved IP.
      */
-    public readonly label!: pulumi.Output<string | undefined>;
+    declare public readonly label: pulumi.Output<string | undefined>;
     /**
      * The region ID that you want the reserved IP to be created in.
      */
-    public readonly region!: pulumi.Output<string>;
+    declare public readonly region: pulumi.Output<string>;
     /**
      * The reserved IP's subnet.
      */
-    public /*out*/ readonly subnet!: pulumi.Output<string>;
+    declare public /*out*/ readonly subnet: pulumi.Output<string>;
     /**
      * The reserved IP's subnet size.
      */
-    public /*out*/ readonly subnetSize!: pulumi.Output<number>;
+    declare public /*out*/ readonly subnetSize: pulumi.Output<number>;
 
     /**
      * Create a ReservedIp resource with the given unique name, arguments, and options.
@@ -110,24 +110,24 @@ export class ReservedIp extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as ReservedIpState | undefined;
-            resourceInputs["instanceId"] = state ? state.instanceId : undefined;
-            resourceInputs["ipType"] = state ? state.ipType : undefined;
-            resourceInputs["label"] = state ? state.label : undefined;
-            resourceInputs["region"] = state ? state.region : undefined;
-            resourceInputs["subnet"] = state ? state.subnet : undefined;
-            resourceInputs["subnetSize"] = state ? state.subnetSize : undefined;
+            resourceInputs["instanceId"] = state?.instanceId;
+            resourceInputs["ipType"] = state?.ipType;
+            resourceInputs["label"] = state?.label;
+            resourceInputs["region"] = state?.region;
+            resourceInputs["subnet"] = state?.subnet;
+            resourceInputs["subnetSize"] = state?.subnetSize;
         } else {
             const args = argsOrState as ReservedIpArgs | undefined;
-            if ((!args || args.ipType === undefined) && !opts.urn) {
+            if (args?.ipType === undefined && !opts.urn) {
                 throw new Error("Missing required property 'ipType'");
             }
-            if ((!args || args.region === undefined) && !opts.urn) {
+            if (args?.region === undefined && !opts.urn) {
                 throw new Error("Missing required property 'region'");
             }
-            resourceInputs["instanceId"] = args ? args.instanceId : undefined;
-            resourceInputs["ipType"] = args ? args.ipType : undefined;
-            resourceInputs["label"] = args ? args.label : undefined;
-            resourceInputs["region"] = args ? args.region : undefined;
+            resourceInputs["instanceId"] = args?.instanceId;
+            resourceInputs["ipType"] = args?.ipType;
+            resourceInputs["label"] = args?.label;
+            resourceInputs["region"] = args?.region;
             resourceInputs["subnet"] = undefined /*out*/;
             resourceInputs["subnetSize"] = undefined /*out*/;
         }

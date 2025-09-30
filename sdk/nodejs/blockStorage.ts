@@ -61,43 +61,43 @@ export class BlockStorage extends pulumi.CustomResource {
     /**
      * VPS ID that you want to have this block storage attached to.
      */
-    public readonly attachedToInstance!: pulumi.Output<string | undefined>;
+    declare public readonly attachedToInstance: pulumi.Output<string | undefined>;
     /**
      * Determines on the type of block storage volume that will be created. Soon to become a required parameter. Options are `highPerf` or `storageOpt`.
      */
-    public readonly blockType!: pulumi.Output<string>;
+    declare public readonly blockType: pulumi.Output<string>;
     /**
      * The monthly cost of this block storage.
      */
-    public /*out*/ readonly cost!: pulumi.Output<number>;
+    declare public /*out*/ readonly cost: pulumi.Output<number>;
     /**
      * The date this block storage was created.
      */
-    public /*out*/ readonly dateCreated!: pulumi.Output<string>;
+    declare public /*out*/ readonly dateCreated: pulumi.Output<string>;
     /**
      * Label that is given to your block storage.
      */
-    public readonly label!: pulumi.Output<string | undefined>;
+    declare public readonly label: pulumi.Output<string | undefined>;
     /**
      * Boolean value that will allow attachment of the volume to an instance without a restart. Default is false.
      */
-    public readonly live!: pulumi.Output<boolean | undefined>;
+    declare public readonly live: pulumi.Output<boolean | undefined>;
     /**
      * An ID associated with the instance, when mounted the ID can be found in /dev/disk/by-id prefixed with virtio.
      */
-    public /*out*/ readonly mountId!: pulumi.Output<string>;
+    declare public /*out*/ readonly mountId: pulumi.Output<string>;
     /**
      * Region in which this block storage will reside in. (Currently only NJ/NY supported region "ewr")
      */
-    public readonly region!: pulumi.Output<string>;
+    declare public readonly region: pulumi.Output<string>;
     /**
      * The size of the given block storage.
      */
-    public readonly sizeGb!: pulumi.Output<number>;
+    declare public readonly sizeGb: pulumi.Output<number>;
     /**
      * Current status of your block storage.
      */
-    public /*out*/ readonly status!: pulumi.Output<string>;
+    declare public /*out*/ readonly status: pulumi.Output<string>;
 
     /**
      * Create a BlockStorage resource with the given unique name, arguments, and options.
@@ -112,30 +112,30 @@ export class BlockStorage extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as BlockStorageState | undefined;
-            resourceInputs["attachedToInstance"] = state ? state.attachedToInstance : undefined;
-            resourceInputs["blockType"] = state ? state.blockType : undefined;
-            resourceInputs["cost"] = state ? state.cost : undefined;
-            resourceInputs["dateCreated"] = state ? state.dateCreated : undefined;
-            resourceInputs["label"] = state ? state.label : undefined;
-            resourceInputs["live"] = state ? state.live : undefined;
-            resourceInputs["mountId"] = state ? state.mountId : undefined;
-            resourceInputs["region"] = state ? state.region : undefined;
-            resourceInputs["sizeGb"] = state ? state.sizeGb : undefined;
-            resourceInputs["status"] = state ? state.status : undefined;
+            resourceInputs["attachedToInstance"] = state?.attachedToInstance;
+            resourceInputs["blockType"] = state?.blockType;
+            resourceInputs["cost"] = state?.cost;
+            resourceInputs["dateCreated"] = state?.dateCreated;
+            resourceInputs["label"] = state?.label;
+            resourceInputs["live"] = state?.live;
+            resourceInputs["mountId"] = state?.mountId;
+            resourceInputs["region"] = state?.region;
+            resourceInputs["sizeGb"] = state?.sizeGb;
+            resourceInputs["status"] = state?.status;
         } else {
             const args = argsOrState as BlockStorageArgs | undefined;
-            if ((!args || args.region === undefined) && !opts.urn) {
+            if (args?.region === undefined && !opts.urn) {
                 throw new Error("Missing required property 'region'");
             }
-            if ((!args || args.sizeGb === undefined) && !opts.urn) {
+            if (args?.sizeGb === undefined && !opts.urn) {
                 throw new Error("Missing required property 'sizeGb'");
             }
-            resourceInputs["attachedToInstance"] = args ? args.attachedToInstance : undefined;
-            resourceInputs["blockType"] = args ? args.blockType : undefined;
-            resourceInputs["label"] = args ? args.label : undefined;
-            resourceInputs["live"] = args ? args.live : undefined;
-            resourceInputs["region"] = args ? args.region : undefined;
-            resourceInputs["sizeGb"] = args ? args.sizeGb : undefined;
+            resourceInputs["attachedToInstance"] = args?.attachedToInstance;
+            resourceInputs["blockType"] = args?.blockType;
+            resourceInputs["label"] = args?.label;
+            resourceInputs["live"] = args?.live;
+            resourceInputs["region"] = args?.region;
+            resourceInputs["sizeGb"] = args?.sizeGb;
             resourceInputs["cost"] = undefined /*out*/;
             resourceInputs["dateCreated"] = undefined /*out*/;
             resourceInputs["mountId"] = undefined /*out*/;

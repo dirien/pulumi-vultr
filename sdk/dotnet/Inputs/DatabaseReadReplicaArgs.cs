@@ -14,6 +14,18 @@ namespace ediri.Vultr.Inputs
     public sealed class DatabaseReadReplicaArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
+        /// The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+        /// </summary>
+        [Input("backupHour")]
+        public Input<string>? BackupHour { get; set; }
+
+        /// <summary>
+        /// The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
+        /// </summary>
+        [Input("backupMinute")]
+        public Input<string>? BackupMinute { get; set; }
+
+        /// <summary>
         /// The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
         /// </summary>
         [Input("clusterTimeZone")]
@@ -51,10 +63,6 @@ namespace ediri.Vultr.Inputs
 
         [Input("ferretdbCredentials")]
         private InputMap<string>? _ferretdbCredentials;
-
-        /// <summary>
-        /// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
-        /// </summary>
         public InputMap<string> FerretdbCredentials
         {
             get => _ferretdbCredentials ?? (_ferretdbCredentials = new InputMap<string>());
@@ -92,7 +100,7 @@ namespace ediri.Vultr.Inputs
         public Input<string>? MaintenanceDow { get; set; }
 
         /// <summary>
-        /// The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).
+        /// The preferred maintenance time for the managed database.
         /// </summary>
         [Input("maintenanceTime")]
         public Input<string>? MaintenanceTime { get; set; }
