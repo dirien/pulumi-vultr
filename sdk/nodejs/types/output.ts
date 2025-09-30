@@ -7,6 +7,14 @@ import * as outputs from "../types/output";
 
 export interface DatabaseReadReplica {
     /**
+     * The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+     */
+    backupHour: string;
+    /**
+     * The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
+     */
+    backupMinute: string;
+    /**
      * The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
      */
     clusterTimeZone: string;
@@ -30,9 +38,6 @@ export interface DatabaseReadReplica {
      * The configuration value for the data eviction policy on the managed database (Valkey engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
      */
     evictionPolicy: string;
-    /**
-     * An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
-     */
     ferretdbCredentials: {[key: string]: string};
     /**
      * The hostname assigned to the managed database.
@@ -55,7 +60,7 @@ export interface DatabaseReadReplica {
      */
     maintenanceDow: string;
     /**
-     * The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).
+     * The preferred maintenance time for the managed database.
      */
     maintenanceTime: string;
     /**
@@ -261,6 +266,14 @@ export interface GetDatabaseFilter {
 
 export interface GetDatabaseReadReplica {
     /**
+     * The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+     */
+    backupHour: string;
+    /**
+     * The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
+     */
+    backupMinute: string;
+    /**
      * The configured time zone for the Managed Database in TZ database format.
      */
     clusterTimeZone: string;
@@ -284,9 +297,6 @@ export interface GetDatabaseReadReplica {
      * The configuration value for the data eviction policy on the managed database (Valkey engine types only).
      */
     evictionPolicy: string;
-    /**
-     * An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
-     */
     ferretdbCredentials: {[key: string]: string};
     /**
      * The hostname assigned to the managed database.
@@ -652,6 +662,10 @@ export interface GetKubernetesNodePool {
      * Kubernetes node taints applied to the node pool.
      */
     taints?: outputs.GetKubernetesNodePoolTaint[];
+    /**
+     * The base64 encoded string containing the user data applied to nodes in the node pool.
+     */
+    userData?: string;
 }
 
 export interface GetKubernetesNodePoolNode {
@@ -961,6 +975,7 @@ export interface KubernetesNodePools {
      * Taints to apply to the nodes in the node pool. Should contain `key`, `value` and `effect`.  The `effect` should be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
      */
     taints?: outputs.KubernetesNodePoolsTaint[];
+    userData?: string;
 }
 
 export interface KubernetesNodePoolsNode {

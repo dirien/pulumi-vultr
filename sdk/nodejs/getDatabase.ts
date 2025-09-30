@@ -56,6 +56,14 @@ export interface GetDatabaseResult {
      */
     readonly accessKey: string;
     /**
+     * The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+     */
+    readonly backupHour: string;
+    /**
+     * The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
+     */
+    readonly backupMinute: string;
+    /**
      * The configured time zone for the Managed Database in TZ database format.
      */
     readonly clusterTimeZone: string;
@@ -76,12 +84,21 @@ export interface GetDatabaseResult {
      */
     readonly dbname: string;
     /**
+     * The configuration value for Kafka Connect support (Kafka engine types only).
+     */
+    readonly enableKafkaConnect: boolean;
+    /**
+     * The configuration value for Kafka REST support (Kafka engine types only).
+     */
+    readonly enableKafkaRest: boolean;
+    /**
+     * The configuration value for Schema Registry support (Kafka engine types only).
+     */
+    readonly enableSchemaRegistry: boolean;
+    /**
      * The configuration value for the data eviction policy on the managed database (Valkey engine types only).
      */
     readonly evictionPolicy: string;
-    /**
-     * An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
-     */
     readonly ferretdbCredentials: {[key: string]: string};
     readonly filters?: outputs.GetDatabaseFilter[];
     /**
@@ -92,6 +109,10 @@ export interface GetDatabaseResult {
      * The provider-assigned unique ID for this managed resource.
      */
     readonly id: string;
+    /**
+     * The URI to access the RESTful interface of your Kafka cluster if Kafka REST is enabled (Kafka engine types only).
+     */
+    readonly kafkaRestUri: string;
     /**
      * The managed database's label.
      */
@@ -169,6 +190,10 @@ export interface GetDatabaseResult {
      * The SASL connection port for the managed database (Kafka engine types only).
      */
     readonly saslPort: string;
+    /**
+     * The URI to access the Schema Registry service of your Kafka cluster if Schema Registry is enabled (Kafka engine types only).
+     */
+    readonly schemaRegistryUri: string;
     /**
      * The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).
      */

@@ -23,6 +23,8 @@ class DatabaseReplicaArgs:
                  database_id: pulumi.Input[builtins.str],
                  label: pulumi.Input[builtins.str],
                  region: pulumi.Input[builtins.str],
+                 backup_hour: Optional[pulumi.Input[builtins.str]] = None,
+                 backup_minute: Optional[pulumi.Input[builtins.str]] = None,
                  eviction_policy: Optional[pulumi.Input[builtins.str]] = None,
                  ferretdb_credentials: Optional[pulumi.Input[Mapping[str, pulumi.Input[builtins.str]]]] = None,
                  mysql_long_query_time: Optional[pulumi.Input[builtins.int]] = None,
@@ -38,8 +40,9 @@ class DatabaseReplicaArgs:
         :param pulumi.Input[builtins.str] database_id: The managed database ID you want to attach this replica to.
         :param pulumi.Input[builtins.str] label: A label for the managed database read replica.
         :param pulumi.Input[builtins.str] region: The ID of the region that the managed database read replica is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
+        :param pulumi.Input[builtins.str] backup_hour: The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+        :param pulumi.Input[builtins.str] backup_minute: The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
         :param pulumi.Input[builtins.str] eviction_policy: The configuration value for the data eviction policy on the managed database read replica (Valkey engine types only).
-        :param pulumi.Input[Mapping[str, pulumi.Input[builtins.str]]] ferretdb_credentials: An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
         :param pulumi.Input[builtins.int] mysql_long_query_time: The configuration value for the long query time (in seconds) on the managed database read replica (MySQL engine types only).
         :param pulumi.Input[builtins.bool] mysql_require_primary_key: The configuration value for whether primary keys are required on the managed database read replica (MySQL engine types only).
         :param pulumi.Input[builtins.bool] mysql_slow_query_log: The configuration value for slow query logging on the managed database read replica (MySQL engine types only).
@@ -52,6 +55,10 @@ class DatabaseReplicaArgs:
         pulumi.set(__self__, "database_id", database_id)
         pulumi.set(__self__, "label", label)
         pulumi.set(__self__, "region", region)
+        if backup_hour is not None:
+            pulumi.set(__self__, "backup_hour", backup_hour)
+        if backup_minute is not None:
+            pulumi.set(__self__, "backup_minute", backup_minute)
         if eviction_policy is not None:
             pulumi.set(__self__, "eviction_policy", eviction_policy)
         if ferretdb_credentials is not None:
@@ -110,6 +117,30 @@ class DatabaseReplicaArgs:
         pulumi.set(self, "region", value)
 
     @property
+    @pulumi.getter(name="backupHour")
+    def backup_hour(self) -> Optional[pulumi.Input[builtins.str]]:
+        """
+        The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+        """
+        return pulumi.get(self, "backup_hour")
+
+    @backup_hour.setter
+    def backup_hour(self, value: Optional[pulumi.Input[builtins.str]]):
+        pulumi.set(self, "backup_hour", value)
+
+    @property
+    @pulumi.getter(name="backupMinute")
+    def backup_minute(self) -> Optional[pulumi.Input[builtins.str]]:
+        """
+        The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
+        """
+        return pulumi.get(self, "backup_minute")
+
+    @backup_minute.setter
+    def backup_minute(self, value: Optional[pulumi.Input[builtins.str]]):
+        pulumi.set(self, "backup_minute", value)
+
+    @property
     @pulumi.getter(name="evictionPolicy")
     def eviction_policy(self) -> Optional[pulumi.Input[builtins.str]]:
         """
@@ -124,9 +155,6 @@ class DatabaseReplicaArgs:
     @property
     @pulumi.getter(name="ferretdbCredentials")
     def ferretdb_credentials(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[builtins.str]]]]:
-        """
-        An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
-        """
         return pulumi.get(self, "ferretdb_credentials")
 
     @ferretdb_credentials.setter
@@ -233,6 +261,8 @@ class DatabaseReplicaArgs:
 @pulumi.input_type
 class _DatabaseReplicaState:
     def __init__(__self__, *,
+                 backup_hour: Optional[pulumi.Input[builtins.str]] = None,
+                 backup_minute: Optional[pulumi.Input[builtins.str]] = None,
                  cluster_time_zone: Optional[pulumi.Input[builtins.str]] = None,
                  database_engine: Optional[pulumi.Input[builtins.str]] = None,
                  database_engine_version: Optional[pulumi.Input[builtins.str]] = None,
@@ -266,6 +296,8 @@ class _DatabaseReplicaState:
                  vpc_id: Optional[pulumi.Input[builtins.str]] = None):
         """
         Input properties used for looking up and filtering DatabaseReplica resources.
+        :param pulumi.Input[builtins.str] backup_hour: The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+        :param pulumi.Input[builtins.str] backup_minute: The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
         :param pulumi.Input[builtins.str] cluster_time_zone: The configured time zone for the managed database read replica in TZ database format.
         :param pulumi.Input[builtins.str] database_engine: The database engine of the managed database read replica.
         :param pulumi.Input[builtins.str] database_engine_version: The database engine version of the managed database read replica.
@@ -273,7 +305,6 @@ class _DatabaseReplicaState:
         :param pulumi.Input[builtins.str] date_created: The date the managed database read replica was added to your Vultr account.
         :param pulumi.Input[builtins.str] dbname: The managed database read replica's default logical database.
         :param pulumi.Input[builtins.str] eviction_policy: The configuration value for the data eviction policy on the managed database read replica (Valkey engine types only).
-        :param pulumi.Input[Mapping[str, pulumi.Input[builtins.str]]] ferretdb_credentials: An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
         :param pulumi.Input[builtins.str] host: The hostname assigned to the managed database read replica.
         :param pulumi.Input[builtins.str] label: A label for the managed database read replica.
         :param pulumi.Input[builtins.str] latest_backup: The date of the latest backup available on the managed database read replica.
@@ -298,6 +329,10 @@ class _DatabaseReplicaState:
         :param pulumi.Input[builtins.str] user: The primary admin user for the managed database read replica.
         :param pulumi.Input[builtins.str] vpc_id: The ID of the VPC Network attached to the managed database read replica.
         """
+        if backup_hour is not None:
+            pulumi.set(__self__, "backup_hour", backup_hour)
+        if backup_minute is not None:
+            pulumi.set(__self__, "backup_minute", backup_minute)
         if cluster_time_zone is not None:
             pulumi.set(__self__, "cluster_time_zone", cluster_time_zone)
         if database_engine is not None:
@@ -360,6 +395,30 @@ class _DatabaseReplicaState:
             pulumi.set(__self__, "user", user)
         if vpc_id is not None:
             pulumi.set(__self__, "vpc_id", vpc_id)
+
+    @property
+    @pulumi.getter(name="backupHour")
+    def backup_hour(self) -> Optional[pulumi.Input[builtins.str]]:
+        """
+        The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+        """
+        return pulumi.get(self, "backup_hour")
+
+    @backup_hour.setter
+    def backup_hour(self, value: Optional[pulumi.Input[builtins.str]]):
+        pulumi.set(self, "backup_hour", value)
+
+    @property
+    @pulumi.getter(name="backupMinute")
+    def backup_minute(self) -> Optional[pulumi.Input[builtins.str]]:
+        """
+        The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
+        """
+        return pulumi.get(self, "backup_minute")
+
+    @backup_minute.setter
+    def backup_minute(self, value: Optional[pulumi.Input[builtins.str]]):
+        pulumi.set(self, "backup_minute", value)
 
     @property
     @pulumi.getter(name="clusterTimeZone")
@@ -448,9 +507,6 @@ class _DatabaseReplicaState:
     @property
     @pulumi.getter(name="ferretdbCredentials")
     def ferretdb_credentials(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[builtins.str]]]]:
-        """
-        An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
-        """
         return pulumi.get(self, "ferretdb_credentials")
 
     @ferretdb_credentials.setter
@@ -740,6 +796,8 @@ class DatabaseReplica(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
+                 backup_hour: Optional[pulumi.Input[builtins.str]] = None,
+                 backup_minute: Optional[pulumi.Input[builtins.str]] = None,
                  database_id: Optional[pulumi.Input[builtins.str]] = None,
                  eviction_policy: Optional[pulumi.Input[builtins.str]] = None,
                  ferretdb_credentials: Optional[pulumi.Input[Mapping[str, pulumi.Input[builtins.str]]]] = None,
@@ -774,9 +832,10 @@ class DatabaseReplica(pulumi.CustomResource):
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[builtins.str] backup_hour: The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+        :param pulumi.Input[builtins.str] backup_minute: The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
         :param pulumi.Input[builtins.str] database_id: The managed database ID you want to attach this replica to.
         :param pulumi.Input[builtins.str] eviction_policy: The configuration value for the data eviction policy on the managed database read replica (Valkey engine types only).
-        :param pulumi.Input[Mapping[str, pulumi.Input[builtins.str]]] ferretdb_credentials: An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
         :param pulumi.Input[builtins.str] label: A label for the managed database read replica.
         :param pulumi.Input[builtins.int] mysql_long_query_time: The configuration value for the long query time (in seconds) on the managed database read replica (MySQL engine types only).
         :param pulumi.Input[builtins.bool] mysql_require_primary_key: The configuration value for whether primary keys are required on the managed database read replica (MySQL engine types only).
@@ -827,6 +886,8 @@ class DatabaseReplica(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
+                 backup_hour: Optional[pulumi.Input[builtins.str]] = None,
+                 backup_minute: Optional[pulumi.Input[builtins.str]] = None,
                  database_id: Optional[pulumi.Input[builtins.str]] = None,
                  eviction_policy: Optional[pulumi.Input[builtins.str]] = None,
                  ferretdb_credentials: Optional[pulumi.Input[Mapping[str, pulumi.Input[builtins.str]]]] = None,
@@ -849,6 +910,8 @@ class DatabaseReplica(pulumi.CustomResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = DatabaseReplicaArgs.__new__(DatabaseReplicaArgs)
 
+            __props__.__dict__["backup_hour"] = backup_hour
+            __props__.__dict__["backup_minute"] = backup_minute
             if database_id is None and not opts.urn:
                 raise TypeError("Missing required property 'database_id'")
             __props__.__dict__["database_id"] = database_id
@@ -896,6 +959,8 @@ class DatabaseReplica(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
+            backup_hour: Optional[pulumi.Input[builtins.str]] = None,
+            backup_minute: Optional[pulumi.Input[builtins.str]] = None,
             cluster_time_zone: Optional[pulumi.Input[builtins.str]] = None,
             database_engine: Optional[pulumi.Input[builtins.str]] = None,
             database_engine_version: Optional[pulumi.Input[builtins.str]] = None,
@@ -934,6 +999,8 @@ class DatabaseReplica(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[builtins.str] backup_hour: The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+        :param pulumi.Input[builtins.str] backup_minute: The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
         :param pulumi.Input[builtins.str] cluster_time_zone: The configured time zone for the managed database read replica in TZ database format.
         :param pulumi.Input[builtins.str] database_engine: The database engine of the managed database read replica.
         :param pulumi.Input[builtins.str] database_engine_version: The database engine version of the managed database read replica.
@@ -941,7 +1008,6 @@ class DatabaseReplica(pulumi.CustomResource):
         :param pulumi.Input[builtins.str] date_created: The date the managed database read replica was added to your Vultr account.
         :param pulumi.Input[builtins.str] dbname: The managed database read replica's default logical database.
         :param pulumi.Input[builtins.str] eviction_policy: The configuration value for the data eviction policy on the managed database read replica (Valkey engine types only).
-        :param pulumi.Input[Mapping[str, pulumi.Input[builtins.str]]] ferretdb_credentials: An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
         :param pulumi.Input[builtins.str] host: The hostname assigned to the managed database read replica.
         :param pulumi.Input[builtins.str] label: A label for the managed database read replica.
         :param pulumi.Input[builtins.str] latest_backup: The date of the latest backup available on the managed database read replica.
@@ -970,6 +1036,8 @@ class DatabaseReplica(pulumi.CustomResource):
 
         __props__ = _DatabaseReplicaState.__new__(_DatabaseReplicaState)
 
+        __props__.__dict__["backup_hour"] = backup_hour
+        __props__.__dict__["backup_minute"] = backup_minute
         __props__.__dict__["cluster_time_zone"] = cluster_time_zone
         __props__.__dict__["database_engine"] = database_engine
         __props__.__dict__["database_engine_version"] = database_engine_version
@@ -1002,6 +1070,22 @@ class DatabaseReplica(pulumi.CustomResource):
         __props__.__dict__["user"] = user
         __props__.__dict__["vpc_id"] = vpc_id
         return DatabaseReplica(resource_name, opts=opts, __props__=__props__)
+
+    @property
+    @pulumi.getter(name="backupHour")
+    def backup_hour(self) -> pulumi.Output[builtins.str]:
+        """
+        The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+        """
+        return pulumi.get(self, "backup_hour")
+
+    @property
+    @pulumi.getter(name="backupMinute")
+    def backup_minute(self) -> pulumi.Output[builtins.str]:
+        """
+        The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
+        """
+        return pulumi.get(self, "backup_minute")
 
     @property
     @pulumi.getter(name="clusterTimeZone")
@@ -1062,9 +1146,6 @@ class DatabaseReplica(pulumi.CustomResource):
     @property
     @pulumi.getter(name="ferretdbCredentials")
     def ferretdb_credentials(self) -> pulumi.Output[Mapping[str, builtins.str]]:
-        """
-        An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
-        """
         return pulumi.get(self, "ferretdb_credentials")
 
     @property

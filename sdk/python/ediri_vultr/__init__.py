@@ -11,6 +11,7 @@ from .block_storage import *
 from .container_registry import *
 from .database import *
 from .database_connection_pool import *
+from .database_connector import *
 from .database_db import *
 from .database_quota import *
 from .database_replica import *
@@ -125,6 +126,14 @@ _utilities.register(
   "fqn": "ediri_vultr",
   "classes": {
    "vultr:index/databaseConnectionPool:DatabaseConnectionPool": "DatabaseConnectionPool"
+  }
+ },
+ {
+  "pkg": "vultr",
+  "mod": "index/databaseConnector",
+  "fqn": "ediri_vultr",
+  "classes": {
+   "vultr:index/databaseConnector:DatabaseConnector": "DatabaseConnector"
   }
  },
  {

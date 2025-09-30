@@ -116,6 +116,14 @@ if not MYPY:
         """
         The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
         """
+        backup_hour: NotRequired[pulumi.Input[builtins.str]]
+        """
+        The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+        """
+        backup_minute: NotRequired[pulumi.Input[builtins.str]]
+        """
+        The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
+        """
         cluster_time_zone: NotRequired[pulumi.Input[builtins.str]]
         """
         The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
@@ -141,9 +149,6 @@ if not MYPY:
         The configuration value for the data eviction policy on the managed database (Valkey engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
         """
         ferretdb_credentials: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[builtins.str]]]]
-        """
-        An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
-        """
         host: NotRequired[pulumi.Input[builtins.str]]
         """
         The hostname assigned to the managed database.
@@ -162,7 +167,7 @@ if not MYPY:
         """
         maintenance_time: NotRequired[pulumi.Input[builtins.str]]
         """
-        The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).
+        The preferred maintenance time for the managed database.
         """
         mysql_long_query_time: NotRequired[pulumi.Input[builtins.int]]
         """
@@ -240,6 +245,8 @@ class DatabaseReadReplicaArgs:
     def __init__(__self__, *,
                  label: pulumi.Input[builtins.str],
                  region: pulumi.Input[builtins.str],
+                 backup_hour: Optional[pulumi.Input[builtins.str]] = None,
+                 backup_minute: Optional[pulumi.Input[builtins.str]] = None,
                  cluster_time_zone: Optional[pulumi.Input[builtins.str]] = None,
                  database_engine: Optional[pulumi.Input[builtins.str]] = None,
                  database_engine_version: Optional[pulumi.Input[builtins.str]] = None,
@@ -272,18 +279,19 @@ class DatabaseReadReplicaArgs:
         """
         :param pulumi.Input[builtins.str] label: A label for the managed database.
         :param pulumi.Input[builtins.str] region: The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
+        :param pulumi.Input[builtins.str] backup_hour: The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+        :param pulumi.Input[builtins.str] backup_minute: The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
         :param pulumi.Input[builtins.str] cluster_time_zone: The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
         :param pulumi.Input[builtins.str] database_engine: The database engine of the new managed database.
         :param pulumi.Input[builtins.str] database_engine_version: The database engine version of the new managed database.
         :param pulumi.Input[builtins.str] date_created: The date the managed database was added to your Vultr account.
         :param pulumi.Input[builtins.str] dbname: The managed database's default logical database.
         :param pulumi.Input[builtins.str] eviction_policy: The configuration value for the data eviction policy on the managed database (Valkey engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
-        :param pulumi.Input[Mapping[str, pulumi.Input[builtins.str]]] ferretdb_credentials: An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
         :param pulumi.Input[builtins.str] host: The hostname assigned to the managed database.
         :param pulumi.Input[builtins.str] id: The ID of the managed database.
         :param pulumi.Input[builtins.str] latest_backup: The date of the latest backup available on the managed database.
         :param pulumi.Input[builtins.str] maintenance_dow: The preferred maintenance day of week for the managed database.
-        :param pulumi.Input[builtins.str] maintenance_time: The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).
+        :param pulumi.Input[builtins.str] maintenance_time: The preferred maintenance time for the managed database.
         :param pulumi.Input[builtins.int] mysql_long_query_time: The configuration value for the long query time (in seconds) on the managed database (MySQL engine types only).
         :param pulumi.Input[builtins.bool] mysql_require_primary_key: The configuration value for whether primary keys are required on the managed database (MySQL engine types only).
         :param pulumi.Input[builtins.bool] mysql_slow_query_log: The configuration value for slow query logging on the managed database (MySQL engine types only).
@@ -304,6 +312,10 @@ class DatabaseReadReplicaArgs:
         """
         pulumi.set(__self__, "label", label)
         pulumi.set(__self__, "region", region)
+        if backup_hour is not None:
+            pulumi.set(__self__, "backup_hour", backup_hour)
+        if backup_minute is not None:
+            pulumi.set(__self__, "backup_minute", backup_minute)
         if cluster_time_zone is not None:
             pulumi.set(__self__, "cluster_time_zone", cluster_time_zone)
         if database_engine is not None:
@@ -388,6 +400,30 @@ class DatabaseReadReplicaArgs:
         pulumi.set(self, "region", value)
 
     @property
+    @pulumi.getter(name="backupHour")
+    def backup_hour(self) -> Optional[pulumi.Input[builtins.str]]:
+        """
+        The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+        """
+        return pulumi.get(self, "backup_hour")
+
+    @backup_hour.setter
+    def backup_hour(self, value: Optional[pulumi.Input[builtins.str]]):
+        pulumi.set(self, "backup_hour", value)
+
+    @property
+    @pulumi.getter(name="backupMinute")
+    def backup_minute(self) -> Optional[pulumi.Input[builtins.str]]:
+        """
+        The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
+        """
+        return pulumi.get(self, "backup_minute")
+
+    @backup_minute.setter
+    def backup_minute(self, value: Optional[pulumi.Input[builtins.str]]):
+        pulumi.set(self, "backup_minute", value)
+
+    @property
     @pulumi.getter(name="clusterTimeZone")
     def cluster_time_zone(self) -> Optional[pulumi.Input[builtins.str]]:
         """
@@ -462,9 +498,6 @@ class DatabaseReadReplicaArgs:
     @property
     @pulumi.getter(name="ferretdbCredentials")
     def ferretdb_credentials(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[builtins.str]]]]:
-        """
-        An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
-        """
         return pulumi.get(self, "ferretdb_credentials")
 
     @ferretdb_credentials.setter
@@ -523,7 +556,7 @@ class DatabaseReadReplicaArgs:
     @pulumi.getter(name="maintenanceTime")
     def maintenance_time(self) -> Optional[pulumi.Input[builtins.str]]:
         """
-        The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).
+        The preferred maintenance time for the managed database.
         """
         return pulumi.get(self, "maintenance_time")
 
@@ -973,6 +1006,7 @@ if not MYPY:
         """
         Taints to apply to the nodes in the node pool. Should contain `key`, `value` and `effect`.  The `effect` should be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
         """
+        user_data: NotRequired[pulumi.Input[builtins.str]]
 elif False:
     KubernetesNodePoolsArgsDict: TypeAlias = Mapping[str, Any]
 
@@ -992,7 +1026,8 @@ class KubernetesNodePoolsArgs:
                  nodes: Optional[pulumi.Input[Sequence[pulumi.Input['KubernetesNodePoolsNodeArgs']]]] = None,
                  status: Optional[pulumi.Input[builtins.str]] = None,
                  tag: Optional[pulumi.Input[builtins.str]] = None,
-                 taints: Optional[pulumi.Input[Sequence[pulumi.Input['KubernetesNodePoolsTaintArgs']]]] = None):
+                 taints: Optional[pulumi.Input[Sequence[pulumi.Input['KubernetesNodePoolsTaintArgs']]]] = None,
+                 user_data: Optional[pulumi.Input[builtins.str]] = None):
         """
         :param pulumi.Input[builtins.str] label: The label to be used as a prefix for nodes in this node pool.
         :param pulumi.Input[builtins.int] node_quantity: The number of nodes in this node pool.
@@ -1034,6 +1069,8 @@ class KubernetesNodePoolsArgs:
             pulumi.set(__self__, "tag", tag)
         if taints is not None:
             pulumi.set(__self__, "taints", taints)
+        if user_data is not None:
+            pulumi.set(__self__, "user_data", user_data)
 
     @property
     @pulumi.getter
@@ -1202,6 +1239,15 @@ class KubernetesNodePoolsArgs:
     @taints.setter
     def taints(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['KubernetesNodePoolsTaintArgs']]]]):
         pulumi.set(self, "taints", value)
+
+    @property
+    @pulumi.getter(name="userData")
+    def user_data(self) -> Optional[pulumi.Input[builtins.str]]:
+        return pulumi.get(self, "user_data")
+
+    @user_data.setter
+    def user_data(self, value: Optional[pulumi.Input[builtins.str]]):
+        pulumi.set(self, "user_data", value)
 
 
 if not MYPY:

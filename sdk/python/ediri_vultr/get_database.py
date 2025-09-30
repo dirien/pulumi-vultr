@@ -29,13 +29,19 @@ class GetDatabaseResult:
     """
     A collection of values returned by getDatabase.
     """
-    def __init__(__self__, access_cert=None, access_key=None, cluster_time_zone=None, database_engine=None, database_engine_version=None, date_created=None, dbname=None, eviction_policy=None, ferretdb_credentials=None, filters=None, host=None, id=None, label=None, latest_backup=None, maintenance_dow=None, maintenance_time=None, mysql_long_query_time=None, mysql_require_primary_key=None, mysql_slow_query_log=None, mysql_sql_modes=None, password=None, plan=None, plan_brokers=None, plan_disk=None, plan_ram=None, plan_replicas=None, plan_vcpus=None, port=None, public_host=None, read_replicas=None, region=None, sasl_port=None, status=None, tag=None, trusted_ips=None, user=None, vpc_id=None):
+    def __init__(__self__, access_cert=None, access_key=None, backup_hour=None, backup_minute=None, cluster_time_zone=None, database_engine=None, database_engine_version=None, date_created=None, dbname=None, enable_kafka_connect=None, enable_kafka_rest=None, enable_schema_registry=None, eviction_policy=None, ferretdb_credentials=None, filters=None, host=None, id=None, kafka_rest_uri=None, label=None, latest_backup=None, maintenance_dow=None, maintenance_time=None, mysql_long_query_time=None, mysql_require_primary_key=None, mysql_slow_query_log=None, mysql_sql_modes=None, password=None, plan=None, plan_brokers=None, plan_disk=None, plan_ram=None, plan_replicas=None, plan_vcpus=None, port=None, public_host=None, read_replicas=None, region=None, sasl_port=None, schema_registry_uri=None, status=None, tag=None, trusted_ips=None, user=None, vpc_id=None):
         if access_cert and not isinstance(access_cert, str):
             raise TypeError("Expected argument 'access_cert' to be a str")
         pulumi.set(__self__, "access_cert", access_cert)
         if access_key and not isinstance(access_key, str):
             raise TypeError("Expected argument 'access_key' to be a str")
         pulumi.set(__self__, "access_key", access_key)
+        if backup_hour and not isinstance(backup_hour, str):
+            raise TypeError("Expected argument 'backup_hour' to be a str")
+        pulumi.set(__self__, "backup_hour", backup_hour)
+        if backup_minute and not isinstance(backup_minute, str):
+            raise TypeError("Expected argument 'backup_minute' to be a str")
+        pulumi.set(__self__, "backup_minute", backup_minute)
         if cluster_time_zone and not isinstance(cluster_time_zone, str):
             raise TypeError("Expected argument 'cluster_time_zone' to be a str")
         pulumi.set(__self__, "cluster_time_zone", cluster_time_zone)
@@ -51,6 +57,15 @@ class GetDatabaseResult:
         if dbname and not isinstance(dbname, str):
             raise TypeError("Expected argument 'dbname' to be a str")
         pulumi.set(__self__, "dbname", dbname)
+        if enable_kafka_connect and not isinstance(enable_kafka_connect, bool):
+            raise TypeError("Expected argument 'enable_kafka_connect' to be a bool")
+        pulumi.set(__self__, "enable_kafka_connect", enable_kafka_connect)
+        if enable_kafka_rest and not isinstance(enable_kafka_rest, bool):
+            raise TypeError("Expected argument 'enable_kafka_rest' to be a bool")
+        pulumi.set(__self__, "enable_kafka_rest", enable_kafka_rest)
+        if enable_schema_registry and not isinstance(enable_schema_registry, bool):
+            raise TypeError("Expected argument 'enable_schema_registry' to be a bool")
+        pulumi.set(__self__, "enable_schema_registry", enable_schema_registry)
         if eviction_policy and not isinstance(eviction_policy, str):
             raise TypeError("Expected argument 'eviction_policy' to be a str")
         pulumi.set(__self__, "eviction_policy", eviction_policy)
@@ -66,6 +81,9 @@ class GetDatabaseResult:
         if id and not isinstance(id, str):
             raise TypeError("Expected argument 'id' to be a str")
         pulumi.set(__self__, "id", id)
+        if kafka_rest_uri and not isinstance(kafka_rest_uri, str):
+            raise TypeError("Expected argument 'kafka_rest_uri' to be a str")
+        pulumi.set(__self__, "kafka_rest_uri", kafka_rest_uri)
         if label and not isinstance(label, str):
             raise TypeError("Expected argument 'label' to be a str")
         pulumi.set(__self__, "label", label)
@@ -126,6 +144,9 @@ class GetDatabaseResult:
         if sasl_port and not isinstance(sasl_port, str):
             raise TypeError("Expected argument 'sasl_port' to be a str")
         pulumi.set(__self__, "sasl_port", sasl_port)
+        if schema_registry_uri and not isinstance(schema_registry_uri, str):
+            raise TypeError("Expected argument 'schema_registry_uri' to be a str")
+        pulumi.set(__self__, "schema_registry_uri", schema_registry_uri)
         if status and not isinstance(status, str):
             raise TypeError("Expected argument 'status' to be a str")
         pulumi.set(__self__, "status", status)
@@ -157,6 +178,22 @@ class GetDatabaseResult:
         The private key to authenticate the default user (Kafka engine types only).
         """
         return pulumi.get(self, "access_key")
+
+    @property
+    @pulumi.getter(name="backupHour")
+    def backup_hour(self) -> builtins.str:
+        """
+        The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+        """
+        return pulumi.get(self, "backup_hour")
+
+    @property
+    @pulumi.getter(name="backupMinute")
+    def backup_minute(self) -> builtins.str:
+        """
+        The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
+        """
+        return pulumi.get(self, "backup_minute")
 
     @property
     @pulumi.getter(name="clusterTimeZone")
@@ -199,6 +236,30 @@ class GetDatabaseResult:
         return pulumi.get(self, "dbname")
 
     @property
+    @pulumi.getter(name="enableKafkaConnect")
+    def enable_kafka_connect(self) -> builtins.bool:
+        """
+        The configuration value for Kafka Connect support (Kafka engine types only).
+        """
+        return pulumi.get(self, "enable_kafka_connect")
+
+    @property
+    @pulumi.getter(name="enableKafkaRest")
+    def enable_kafka_rest(self) -> builtins.bool:
+        """
+        The configuration value for Kafka REST support (Kafka engine types only).
+        """
+        return pulumi.get(self, "enable_kafka_rest")
+
+    @property
+    @pulumi.getter(name="enableSchemaRegistry")
+    def enable_schema_registry(self) -> builtins.bool:
+        """
+        The configuration value for Schema Registry support (Kafka engine types only).
+        """
+        return pulumi.get(self, "enable_schema_registry")
+
+    @property
     @pulumi.getter(name="evictionPolicy")
     def eviction_policy(self) -> builtins.str:
         """
@@ -209,9 +270,6 @@ class GetDatabaseResult:
     @property
     @pulumi.getter(name="ferretdbCredentials")
     def ferretdb_credentials(self) -> Mapping[str, builtins.str]:
-        """
-        An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
-        """
         return pulumi.get(self, "ferretdb_credentials")
 
     @property
@@ -234,6 +292,14 @@ class GetDatabaseResult:
         The provider-assigned unique ID for this managed resource.
         """
         return pulumi.get(self, "id")
+
+    @property
+    @pulumi.getter(name="kafkaRestUri")
+    def kafka_rest_uri(self) -> builtins.str:
+        """
+        The URI to access the RESTful interface of your Kafka cluster if Kafka REST is enabled (Kafka engine types only).
+        """
+        return pulumi.get(self, "kafka_rest_uri")
 
     @property
     @pulumi.getter
@@ -393,6 +459,14 @@ class GetDatabaseResult:
         return pulumi.get(self, "sasl_port")
 
     @property
+    @pulumi.getter(name="schemaRegistryUri")
+    def schema_registry_uri(self) -> builtins.str:
+        """
+        The URI to access the Schema Registry service of your Kafka cluster if Schema Registry is enabled (Kafka engine types only).
+        """
+        return pulumi.get(self, "schema_registry_uri")
+
+    @property
     @pulumi.getter
     def status(self) -> builtins.str:
         """
@@ -441,16 +515,22 @@ class AwaitableGetDatabaseResult(GetDatabaseResult):
         return GetDatabaseResult(
             access_cert=self.access_cert,
             access_key=self.access_key,
+            backup_hour=self.backup_hour,
+            backup_minute=self.backup_minute,
             cluster_time_zone=self.cluster_time_zone,
             database_engine=self.database_engine,
             database_engine_version=self.database_engine_version,
             date_created=self.date_created,
             dbname=self.dbname,
+            enable_kafka_connect=self.enable_kafka_connect,
+            enable_kafka_rest=self.enable_kafka_rest,
+            enable_schema_registry=self.enable_schema_registry,
             eviction_policy=self.eviction_policy,
             ferretdb_credentials=self.ferretdb_credentials,
             filters=self.filters,
             host=self.host,
             id=self.id,
+            kafka_rest_uri=self.kafka_rest_uri,
             label=self.label,
             latest_backup=self.latest_backup,
             maintenance_dow=self.maintenance_dow,
@@ -471,6 +551,7 @@ class AwaitableGetDatabaseResult(GetDatabaseResult):
             read_replicas=self.read_replicas,
             region=self.region,
             sasl_port=self.sasl_port,
+            schema_registry_uri=self.schema_registry_uri,
             status=self.status,
             tag=self.tag,
             trusted_ips=self.trusted_ips,
@@ -508,16 +589,22 @@ def get_database(filters: Optional[Sequence[Union['GetDatabaseFilterArgs', 'GetD
     return AwaitableGetDatabaseResult(
         access_cert=pulumi.get(__ret__, 'access_cert'),
         access_key=pulumi.get(__ret__, 'access_key'),
+        backup_hour=pulumi.get(__ret__, 'backup_hour'),
+        backup_minute=pulumi.get(__ret__, 'backup_minute'),
         cluster_time_zone=pulumi.get(__ret__, 'cluster_time_zone'),
         database_engine=pulumi.get(__ret__, 'database_engine'),
         database_engine_version=pulumi.get(__ret__, 'database_engine_version'),
         date_created=pulumi.get(__ret__, 'date_created'),
         dbname=pulumi.get(__ret__, 'dbname'),
+        enable_kafka_connect=pulumi.get(__ret__, 'enable_kafka_connect'),
+        enable_kafka_rest=pulumi.get(__ret__, 'enable_kafka_rest'),
+        enable_schema_registry=pulumi.get(__ret__, 'enable_schema_registry'),
         eviction_policy=pulumi.get(__ret__, 'eviction_policy'),
         ferretdb_credentials=pulumi.get(__ret__, 'ferretdb_credentials'),
         filters=pulumi.get(__ret__, 'filters'),
         host=pulumi.get(__ret__, 'host'),
         id=pulumi.get(__ret__, 'id'),
+        kafka_rest_uri=pulumi.get(__ret__, 'kafka_rest_uri'),
         label=pulumi.get(__ret__, 'label'),
         latest_backup=pulumi.get(__ret__, 'latest_backup'),
         maintenance_dow=pulumi.get(__ret__, 'maintenance_dow'),
@@ -538,6 +625,7 @@ def get_database(filters: Optional[Sequence[Union['GetDatabaseFilterArgs', 'GetD
         read_replicas=pulumi.get(__ret__, 'read_replicas'),
         region=pulumi.get(__ret__, 'region'),
         sasl_port=pulumi.get(__ret__, 'sasl_port'),
+        schema_registry_uri=pulumi.get(__ret__, 'schema_registry_uri'),
         status=pulumi.get(__ret__, 'status'),
         tag=pulumi.get(__ret__, 'tag'),
         trusted_ips=pulumi.get(__ret__, 'trusted_ips'),
@@ -572,16 +660,22 @@ def get_database_output(filters: Optional[pulumi.Input[Optional[Sequence[Union['
     return __ret__.apply(lambda __response__: GetDatabaseResult(
         access_cert=pulumi.get(__response__, 'access_cert'),
         access_key=pulumi.get(__response__, 'access_key'),
+        backup_hour=pulumi.get(__response__, 'backup_hour'),
+        backup_minute=pulumi.get(__response__, 'backup_minute'),
         cluster_time_zone=pulumi.get(__response__, 'cluster_time_zone'),
         database_engine=pulumi.get(__response__, 'database_engine'),
         database_engine_version=pulumi.get(__response__, 'database_engine_version'),
         date_created=pulumi.get(__response__, 'date_created'),
         dbname=pulumi.get(__response__, 'dbname'),
+        enable_kafka_connect=pulumi.get(__response__, 'enable_kafka_connect'),
+        enable_kafka_rest=pulumi.get(__response__, 'enable_kafka_rest'),
+        enable_schema_registry=pulumi.get(__response__, 'enable_schema_registry'),
         eviction_policy=pulumi.get(__response__, 'eviction_policy'),
         ferretdb_credentials=pulumi.get(__response__, 'ferretdb_credentials'),
         filters=pulumi.get(__response__, 'filters'),
         host=pulumi.get(__response__, 'host'),
         id=pulumi.get(__response__, 'id'),
+        kafka_rest_uri=pulumi.get(__response__, 'kafka_rest_uri'),
         label=pulumi.get(__response__, 'label'),
         latest_backup=pulumi.get(__response__, 'latest_backup'),
         maintenance_dow=pulumi.get(__response__, 'maintenance_dow'),
@@ -602,6 +696,7 @@ def get_database_output(filters: Optional[pulumi.Input[Optional[Sequence[Union['
         read_replicas=pulumi.get(__response__, 'read_replicas'),
         region=pulumi.get(__response__, 'region'),
         sasl_port=pulumi.get(__response__, 'sasl_port'),
+        schema_registry_uri=pulumi.get(__response__, 'schema_registry_uri'),
         status=pulumi.get(__response__, 'status'),
         tag=pulumi.get(__response__, 'tag'),
         trusted_ips=pulumi.get(__response__, 'trusted_ips'),

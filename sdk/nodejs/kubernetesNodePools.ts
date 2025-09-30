@@ -9,42 +9,6 @@ import * as utilities from "./utilities";
 /**
  * Deploy additional node pools to an existing Vultr Kubernetes Engine (VKE) cluster.
  *
- * ## Example Usage
- *
- * Create a new VKE cluster:
- *
- * ```typescript
- * import * as pulumi from "@pulumi/pulumi";
- * import * as vultr from "@ediri/vultr";
- *
- * const np_1 = new vultr.KubernetesNodePools("np-1", {
- *     clusterId: vultr_kubernetes.k8.id,
- *     nodeQuantity: 1,
- *     plan: "vc2-4c-8gb",
- *     label: "my-label",
- *     tag: "my-tag",
- *     autoScaler: true,
- *     minNodes: 1,
- *     maxNodes: 2,
- *     labels: {
- *         "my-label": "a-label-on-all-nodes",
- *         "my-second-label": "another-label-on-all-nodes",
- *     },
- *     taints: [
- *         {
- *             key: "a-taint",
- *             value: "is-tainted",
- *             effect: "NoExecute",
- *         },
- *         {
- *             key: "another-taint",
- *             value: "is-tainted",
- *             effect: "NoSchedule",
- *         },
- *     ],
- * });
- * ```
- *
  * ## Import
  *
  * Node pool resources are able to be imported into terraform state like other
@@ -149,6 +113,10 @@ export class KubernetesNodePools extends pulumi.CustomResource {
      * Taints to apply to the nodes in the node pool. Should contain `key`, `value` and `effect`.  The `effect` should be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
      */
     public readonly taints!: pulumi.Output<outputs.KubernetesNodePoolsTaint[] | undefined>;
+    /**
+     * A base64 encoded string containing the user data to apply to nodes in the node pool.
+     */
+    public readonly userData!: pulumi.Output<string | undefined>;
 
     /**
      * Create a KubernetesNodePools resource with the given unique name, arguments, and options.
@@ -177,6 +145,7 @@ export class KubernetesNodePools extends pulumi.CustomResource {
             resourceInputs["status"] = state ? state.status : undefined;
             resourceInputs["tag"] = state ? state.tag : undefined;
             resourceInputs["taints"] = state ? state.taints : undefined;
+            resourceInputs["userData"] = state ? state.userData : undefined;
         } else {
             const args = argsOrState as KubernetesNodePoolsArgs | undefined;
             if ((!args || args.clusterId === undefined) && !opts.urn) {
@@ -201,6 +170,7 @@ export class KubernetesNodePools extends pulumi.CustomResource {
             resourceInputs["plan"] = args ? args.plan : undefined;
             resourceInputs["tag"] = args ? args.tag : undefined;
             resourceInputs["taints"] = args ? args.taints : undefined;
+            resourceInputs["userData"] = args ? args.userData : undefined;
             resourceInputs["dateCreated"] = undefined /*out*/;
             resourceInputs["dateUpdated"] = undefined /*out*/;
             resourceInputs["nodes"] = undefined /*out*/;
@@ -271,6 +241,10 @@ export interface KubernetesNodePoolsState {
      * Taints to apply to the nodes in the node pool. Should contain `key`, `value` and `effect`.  The `effect` should be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
      */
     taints?: pulumi.Input<pulumi.Input<inputs.KubernetesNodePoolsTaint>[]>;
+    /**
+     * A base64 encoded string containing the user data to apply to nodes in the node pool.
+     */
+    userData?: pulumi.Input<string>;
 }
 
 /**
@@ -317,4 +291,8 @@ export interface KubernetesNodePoolsArgs {
      * Taints to apply to the nodes in the node pool. Should contain `key`, `value` and `effect`.  The `effect` should be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
      */
     taints?: pulumi.Input<pulumi.Input<inputs.KubernetesNodePoolsTaint>[]>;
+    /**
+     * A base64 encoded string containing the user data to apply to nodes in the node pool.
+     */
+    userData?: pulumi.Input<string>;
 }

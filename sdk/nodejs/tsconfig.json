@@ -20,6 +20,7 @@
         "containerRegistry.ts",
         "database.ts",
         "databaseConnectionPool.ts",
+        "databaseConnector.ts",
         "databaseDb.ts",
         "databaseQuota.ts",
         "databaseReplica.ts",

@@ -31,7 +31,8 @@ class KubernetesNodePoolsInitArgs:
                  max_nodes: Optional[pulumi.Input[builtins.int]] = None,
                  min_nodes: Optional[pulumi.Input[builtins.int]] = None,
                  tag: Optional[pulumi.Input[builtins.str]] = None,
-                 taints: Optional[pulumi.Input[Sequence[pulumi.Input['KubernetesNodePoolsTaintArgs']]]] = None):
+                 taints: Optional[pulumi.Input[Sequence[pulumi.Input['KubernetesNodePoolsTaintArgs']]]] = None,
+                 user_data: Optional[pulumi.Input[builtins.str]] = None):
         """
         The set of arguments for constructing a KubernetesNodePools resource.
         :param pulumi.Input[builtins.str] cluster_id: The VKE cluster ID you want to attach this nodepool to.
@@ -44,6 +45,7 @@ class KubernetesNodePoolsInitArgs:
         :param pulumi.Input[builtins.int] min_nodes: The minimum number of nodes to use with the auto scaler.
         :param pulumi.Input[builtins.str] tag: A tag that is assigned to this node pool.
         :param pulumi.Input[Sequence[pulumi.Input['KubernetesNodePoolsTaintArgs']]] taints: Taints to apply to the nodes in the node pool. Should contain `key`, `value` and `effect`.  The `effect` should be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
+        :param pulumi.Input[builtins.str] user_data: A base64 encoded string containing the user data to apply to nodes in the node pool.
         """
         pulumi.set(__self__, "cluster_id", cluster_id)
         pulumi.set(__self__, "label", label)
@@ -61,6 +63,8 @@ class KubernetesNodePoolsInitArgs:
             pulumi.set(__self__, "tag", tag)
         if taints is not None:
             pulumi.set(__self__, "taints", taints)
+        if user_data is not None:
+            pulumi.set(__self__, "user_data", user_data)
 
     @property
     @pulumi.getter(name="clusterId")
@@ -182,6 +186,18 @@ class KubernetesNodePoolsInitArgs:
     def taints(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['KubernetesNodePoolsTaintArgs']]]]):
         pulumi.set(self, "taints", value)
 
+    @property
+    @pulumi.getter(name="userData")
+    def user_data(self) -> Optional[pulumi.Input[builtins.str]]:
+        """
+        A base64 encoded string containing the user data to apply to nodes in the node pool.
+        """
+        return pulumi.get(self, "user_data")
+
+    @user_data.setter
+    def user_data(self, value: Optional[pulumi.Input[builtins.str]]):
+        pulumi.set(self, "user_data", value)
+
 
 @pulumi.input_type
 class _KubernetesNodePoolsState:
@@ -199,7 +215,8 @@ class _KubernetesNodePoolsState:
                  plan: Optional[pulumi.Input[builtins.str]] = None,
                  status: Optional[pulumi.Input[builtins.str]] = None,
                  tag: Optional[pulumi.Input[builtins.str]] = None,
-                 taints: Optional[pulumi.Input[Sequence[pulumi.Input['KubernetesNodePoolsTaintArgs']]]] = None):
+                 taints: Optional[pulumi.Input[Sequence[pulumi.Input['KubernetesNodePoolsTaintArgs']]]] = None,
+                 user_data: Optional[pulumi.Input[builtins.str]] = None):
         """
         Input properties used for looking up and filtering KubernetesNodePools resources.
         :param pulumi.Input[builtins.bool] auto_scaler: Enable the auto scaler for the default node pool.
@@ -216,6 +233,7 @@ class _KubernetesNodePoolsState:
         :param pulumi.Input[builtins.str] status: Status of node.
         :param pulumi.Input[builtins.str] tag: A tag that is assigned to this node pool.
         :param pulumi.Input[Sequence[pulumi.Input['KubernetesNodePoolsTaintArgs']]] taints: Taints to apply to the nodes in the node pool. Should contain `key`, `value` and `effect`.  The `effect` should be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
+        :param pulumi.Input[builtins.str] user_data: A base64 encoded string containing the user data to apply to nodes in the node pool.
         """
         if auto_scaler is not None:
             pulumi.set(__self__, "auto_scaler", auto_scaler)
@@ -245,6 +263,8 @@ class _KubernetesNodePoolsState:
             pulumi.set(__self__, "tag", tag)
         if taints is not None:
             pulumi.set(__self__, "taints", taints)
+        if user_data is not None:
+            pulumi.set(__self__, "user_data", user_data)
 
     @property
     @pulumi.getter(name="autoScaler")
@@ -414,6 +434,18 @@ class _KubernetesNodePoolsState:
     def taints(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['KubernetesNodePoolsTaintArgs']]]]):
         pulumi.set(self, "taints", value)
 
+    @property
+    @pulumi.getter(name="userData")
+    def user_data(self) -> Optional[pulumi.Input[builtins.str]]:
+        """
+        A base64 encoded string containing the user data to apply to nodes in the node pool.
+        """
+        return pulumi.get(self, "user_data")
+
+    @user_data.setter
+    def user_data(self, value: Optional[pulumi.Input[builtins.str]]):
+        pulumi.set(self, "user_data", value)
+
 
 @pulumi.type_token("vultr:index/kubernetesNodePools:KubernetesNodePools")
 class KubernetesNodePools(pulumi.CustomResource):
@@ -431,44 +463,10 @@ class KubernetesNodePools(pulumi.CustomResource):
                  plan: Optional[pulumi.Input[builtins.str]] = None,
                  tag: Optional[pulumi.Input[builtins.str]] = None,
                  taints: Optional[pulumi.Input[Sequence[pulumi.Input[Union['KubernetesNodePoolsTaintArgs', 'KubernetesNodePoolsTaintArgsDict']]]]] = None,
+                 user_data: Optional[pulumi.Input[builtins.str]] = None,
                  __props__=None):
         """
         Deploy additional node pools to an existing Vultr Kubernetes Engine (VKE) cluster.
-
-        ## Example Usage
-
-        Create a new VKE cluster:
-
-        ```python
-        import pulumi
-        import ediri_vultr as vultr
-
-        np_1 = vultr.KubernetesNodePools("np-1",
-            cluster_id=vultr_kubernetes["k8"]["id"],
-            node_quantity=1,
-            plan="vc2-4c-8gb",
-            label="my-label",
-            tag="my-tag",
-            auto_scaler=True,
-            min_nodes=1,
-            max_nodes=2,
-            labels={
-                "my-label": "a-label-on-all-nodes",
-                "my-second-label": "another-label-on-all-nodes",
-            },
-            taints=[
-                {
-                    "key": "a-taint",
-                    "value": "is-tainted",
-                    "effect": "NoExecute",
-                },
-                {
-                    "key": "another-taint",
-                    "value": "is-tainted",
-                    "effect": "NoSchedule",
-                },
-            ])
-        ```
 
         ## Import
 
@@ -502,6 +500,7 @@ class KubernetesNodePools(pulumi.CustomResource):
         :param pulumi.Input[builtins.str] plan: The plan to be used in this node pool. [See Plans List](https://www.vultr.com/api/#operation/list-plans) Note the minimum plan requirements must have at least 1 core and 2 gbs of memory.
         :param pulumi.Input[builtins.str] tag: A tag that is assigned to this node pool.
         :param pulumi.Input[Sequence[pulumi.Input[Union['KubernetesNodePoolsTaintArgs', 'KubernetesNodePoolsTaintArgsDict']]]] taints: Taints to apply to the nodes in the node pool. Should contain `key`, `value` and `effect`.  The `effect` should be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
+        :param pulumi.Input[builtins.str] user_data: A base64 encoded string containing the user data to apply to nodes in the node pool.
         """
         ...
     @overload
@@ -511,41 +510,6 @@ class KubernetesNodePools(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         Deploy additional node pools to an existing Vultr Kubernetes Engine (VKE) cluster.
-
-        ## Example Usage
-
-        Create a new VKE cluster:
-
-        ```python
-        import pulumi
-        import ediri_vultr as vultr
-
-        np_1 = vultr.KubernetesNodePools("np-1",
-            cluster_id=vultr_kubernetes["k8"]["id"],
-            node_quantity=1,
-            plan="vc2-4c-8gb",
-            label="my-label",
-            tag="my-tag",
-            auto_scaler=True,
-            min_nodes=1,
-            max_nodes=2,
-            labels={
-                "my-label": "a-label-on-all-nodes",
-                "my-second-label": "another-label-on-all-nodes",
-            },
-            taints=[
-                {
-                    "key": "a-taint",
-                    "value": "is-tainted",
-                    "effect": "NoExecute",
-                },
-                {
-                    "key": "another-taint",
-                    "value": "is-tainted",
-                    "effect": "NoSchedule",
-                },
-            ])
-        ```
 
         ## Import
 
@@ -592,6 +556,7 @@ class KubernetesNodePools(pulumi.CustomResource):
                  plan: Optional[pulumi.Input[builtins.str]] = None,
                  tag: Optional[pulumi.Input[builtins.str]] = None,
                  taints: Optional[pulumi.Input[Sequence[pulumi.Input[Union['KubernetesNodePoolsTaintArgs', 'KubernetesNodePoolsTaintArgsDict']]]]] = None,
+                 user_data: Optional[pulumi.Input[builtins.str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -619,6 +584,7 @@ class KubernetesNodePools(pulumi.CustomResource):
             __props__.__dict__["plan"] = plan
             __props__.__dict__["tag"] = tag
             __props__.__dict__["taints"] = taints
+            __props__.__dict__["user_data"] = user_data
             __props__.__dict__["date_created"] = None
             __props__.__dict__["date_updated"] = None
             __props__.__dict__["nodes"] = None
@@ -646,7 +612,8 @@ class KubernetesNodePools(pulumi.CustomResource):
             plan: Optional[pulumi.Input[builtins.str]] = None,
             status: Optional[pulumi.Input[builtins.str]] = None,
             tag: Optional[pulumi.Input[builtins.str]] = None,
-            taints: Optional[pulumi.Input[Sequence[pulumi.Input[Union['KubernetesNodePoolsTaintArgs', 'KubernetesNodePoolsTaintArgsDict']]]]] = None) -> 'KubernetesNodePools':
+            taints: Optional[pulumi.Input[Sequence[pulumi.Input[Union['KubernetesNodePoolsTaintArgs', 'KubernetesNodePoolsTaintArgsDict']]]]] = None,
+            user_data: Optional[pulumi.Input[builtins.str]] = None) -> 'KubernetesNodePools':
         """
         Get an existing KubernetesNodePools resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -668,6 +635,7 @@ class KubernetesNodePools(pulumi.CustomResource):
         :param pulumi.Input[builtins.str] status: Status of node.
         :param pulumi.Input[builtins.str] tag: A tag that is assigned to this node pool.
         :param pulumi.Input[Sequence[pulumi.Input[Union['KubernetesNodePoolsTaintArgs', 'KubernetesNodePoolsTaintArgsDict']]]] taints: Taints to apply to the nodes in the node pool. Should contain `key`, `value` and `effect`.  The `effect` should be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
+        :param pulumi.Input[builtins.str] user_data: A base64 encoded string containing the user data to apply to nodes in the node pool.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -687,6 +655,7 @@ class KubernetesNodePools(pulumi.CustomResource):
         __props__.__dict__["status"] = status
         __props__.__dict__["tag"] = tag
         __props__.__dict__["taints"] = taints
+        __props__.__dict__["user_data"] = user_data
         return KubernetesNodePools(resource_name, opts=opts, __props__=__props__)
 
     @property
@@ -800,4 +769,12 @@ class KubernetesNodePools(pulumi.CustomResource):
         Taints to apply to the nodes in the node pool. Should contain `key`, `value` and `effect`.  The `effect` should be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
         """
         return pulumi.get(self, "taints")
+
+    @property
+    @pulumi.getter(name="userData")
+    def user_data(self) -> pulumi.Output[Optional[builtins.str]]:
+        """
+        A base64 encoded string containing the user data to apply to nodes in the node pool.
+        """
+        return pulumi.get(self, "user_data")
 

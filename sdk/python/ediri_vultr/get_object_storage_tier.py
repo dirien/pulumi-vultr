@@ -140,6 +140,8 @@ def get_object_storage_tier(filters: Optional[Sequence[Union['GetObjectStorageTi
     }])
     ```
 
+    `slug` values and associated details can be retrieved through [this API call](https://www.vultr.com/api/#tag/s3/operation/list-object-storage-tiers).
+
 
     :param Sequence[Union['GetObjectStorageTierFilterArgs', 'GetObjectStorageTierFilterArgsDict']] filters: Query parameters for finding operating systems.
     """
@@ -174,6 +176,8 @@ def get_object_storage_tier_output(filters: Optional[pulumi.Input[Optional[Seque
         "values": ["tier_010k_5000m"],
     }])
     ```
+
+    `slug` values and associated details can be retrieved through [this API call](https://www.vultr.com/api/#tag/s3/operation/list-object-storage-tiers).
 
 
     :param Sequence[Union['GetObjectStorageTierFilterArgs', 'GetObjectStorageTierFilterArgsDict']] filters: Query parameters for finding operating systems.

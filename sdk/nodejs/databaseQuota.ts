@@ -5,7 +5,7 @@ import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "./utilities";
 
 /**
- * Provides a Vultr database quota resource. This can be used to create, read, and delete quotas for a managed database on your Vultr account.
+ * Provides a Vultr database quota resource. This can be used to create, read, modify, and delete quotas for a managed database on your Vultr account.
  *
  * ## Example Usage
  *

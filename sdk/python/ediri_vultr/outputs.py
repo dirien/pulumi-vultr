@@ -75,7 +75,11 @@ class DatabaseReadReplica(dict):
     @staticmethod
     def __key_warning(key: str):
         suggest = None
-        if key == "clusterTimeZone":
+        if key == "backupHour":
+            suggest = "backup_hour"
+        elif key == "backupMinute":
+            suggest = "backup_minute"
+        elif key == "clusterTimeZone":
             suggest = "cluster_time_zone"
         elif key == "databaseEngine":
             suggest = "database_engine"
@@ -130,6 +134,8 @@ class DatabaseReadReplica(dict):
     def __init__(__self__, *,
                  label: builtins.str,
                  region: builtins.str,
+                 backup_hour: Optional[builtins.str] = None,
+                 backup_minute: Optional[builtins.str] = None,
                  cluster_time_zone: Optional[builtins.str] = None,
                  database_engine: Optional[builtins.str] = None,
                  database_engine_version: Optional[builtins.str] = None,
@@ -162,18 +168,19 @@ class DatabaseReadReplica(dict):
         """
         :param builtins.str label: A label for the managed database.
         :param builtins.str region: The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
+        :param builtins.str backup_hour: The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+        :param builtins.str backup_minute: The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
         :param builtins.str cluster_time_zone: The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
         :param builtins.str database_engine: The database engine of the new managed database.
         :param builtins.str database_engine_version: The database engine version of the new managed database.
         :param builtins.str date_created: The date the managed database was added to your Vultr account.
         :param builtins.str dbname: The managed database's default logical database.
         :param builtins.str eviction_policy: The configuration value for the data eviction policy on the managed database (Valkey engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
-        :param Mapping[str, builtins.str] ferretdb_credentials: An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
         :param builtins.str host: The hostname assigned to the managed database.
         :param builtins.str id: The ID of the managed database.
         :param builtins.str latest_backup: The date of the latest backup available on the managed database.
         :param builtins.str maintenance_dow: The preferred maintenance day of week for the managed database.
-        :param builtins.str maintenance_time: The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).
+        :param builtins.str maintenance_time: The preferred maintenance time for the managed database.
         :param builtins.int mysql_long_query_time: The configuration value for the long query time (in seconds) on the managed database (MySQL engine types only).
         :param builtins.bool mysql_require_primary_key: The configuration value for whether primary keys are required on the managed database (MySQL engine types only).
         :param builtins.bool mysql_slow_query_log: The configuration value for slow query logging on the managed database (MySQL engine types only).
@@ -194,6 +201,10 @@ class DatabaseReadReplica(dict):
         """
         pulumi.set(__self__, "label", label)
         pulumi.set(__self__, "region", region)
+        if backup_hour is not None:
+            pulumi.set(__self__, "backup_hour", backup_hour)
+        if backup_minute is not None:
+            pulumi.set(__self__, "backup_minute", backup_minute)
         if cluster_time_zone is not None:
             pulumi.set(__self__, "cluster_time_zone", cluster_time_zone)
         if database_engine is not None:
@@ -270,6 +281,22 @@ class DatabaseReadReplica(dict):
         return pulumi.get(self, "region")
 
     @property
+    @pulumi.getter(name="backupHour")
+    def backup_hour(self) -> Optional[builtins.str]:
+        """
+        The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+        """
+        return pulumi.get(self, "backup_hour")
+
+    @property
+    @pulumi.getter(name="backupMinute")
+    def backup_minute(self) -> Optional[builtins.str]:
+        """
+        The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
+        """
+        return pulumi.get(self, "backup_minute")
+
+    @property
     @pulumi.getter(name="clusterTimeZone")
     def cluster_time_zone(self) -> Optional[builtins.str]:
         """
@@ -320,9 +347,6 @@ class DatabaseReadReplica(dict):
     @property
     @pulumi.getter(name="ferretdbCredentials")
     def ferretdb_credentials(self) -> Optional[Mapping[str, builtins.str]]:
-        """
-        An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
-        """
         return pulumi.get(self, "ferretdb_credentials")
 
     @property
@@ -361,7 +385,7 @@ class DatabaseReadReplica(dict):
     @pulumi.getter(name="maintenanceTime")
     def maintenance_time(self) -> Optional[builtins.str]:
         """
-        The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).
+        The preferred maintenance time for the managed database.
         """
         return pulumi.get(self, "maintenance_time")
 
@@ -647,6 +671,8 @@ class KubernetesNodePools(dict):
             suggest = "max_nodes"
         elif key == "minNodes":
             suggest = "min_nodes"
+        elif key == "userData":
+            suggest = "user_data"
 
         if suggest:
             pulumi.log.warn(f"Key '{key}' not found in KubernetesNodePools. Access the value via the '{suggest}' property getter instead.")
@@ -673,7 +699,8 @@ class KubernetesNodePools(dict):
                  nodes: Optional[Sequence['outputs.KubernetesNodePoolsNode']] = None,
                  status: Optional[builtins.str] = None,
                  tag: Optional[builtins.str] = None,
-                 taints: Optional[Sequence['outputs.KubernetesNodePoolsTaint']] = None):
+                 taints: Optional[Sequence['outputs.KubernetesNodePoolsTaint']] = None,
+                 user_data: Optional[builtins.str] = None):
         """
         :param builtins.str label: The label to be used as a prefix for nodes in this node pool.
         :param builtins.int node_quantity: The number of nodes in this node pool.
@@ -715,6 +742,8 @@ class KubernetesNodePools(dict):
             pulumi.set(__self__, "tag", tag)
         if taints is not None:
             pulumi.set(__self__, "taints", taints)
+        if user_data is not None:
+            pulumi.set(__self__, "user_data", user_data)
 
     @property
     @pulumi.getter
@@ -827,6 +856,11 @@ class KubernetesNodePools(dict):
         Taints to apply to the nodes in the node pool. Should contain `key`, `value` and `effect`.  The `effect` should be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
         """
         return pulumi.get(self, "taints")
+
+    @property
+    @pulumi.getter(name="userData")
+    def user_data(self) -> Optional[builtins.str]:
+        return pulumi.get(self, "user_data")
 
 
 @pulumi.output_type
@@ -1586,6 +1620,8 @@ class GetDatabaseFilterResult(dict):
 @pulumi.output_type
 class GetDatabaseReadReplicaResult(dict):
     def __init__(__self__, *,
+                 backup_hour: builtins.str,
+                 backup_minute: builtins.str,
                  cluster_time_zone: builtins.str,
                  database_engine: builtins.str,
                  database_engine_version: builtins.str,
@@ -1618,13 +1654,14 @@ class GetDatabaseReadReplicaResult(dict):
                  user: builtins.str,
                  vpc_id: builtins.str):
         """
+        :param builtins.str backup_hour: The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+        :param builtins.str backup_minute: The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
         :param builtins.str cluster_time_zone: The configured time zone for the Managed Database in TZ database format.
         :param builtins.str database_engine: The database engine of the managed database.
         :param builtins.str database_engine_version: The database engine version of the managed database.
         :param builtins.str date_created: The date the managed database was added to your Vultr account.
         :param builtins.str dbname: The managed database's default logical database.
         :param builtins.str eviction_policy: The configuration value for the data eviction policy on the managed database (Valkey engine types only).
-        :param Mapping[str, builtins.str] ferretdb_credentials: An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
         :param builtins.str host: The hostname assigned to the managed database.
         :param builtins.str label: The managed database's label.
         :param builtins.str latest_backup: The date of the latest backup available on the managed database.
@@ -1649,6 +1686,8 @@ class GetDatabaseReadReplicaResult(dict):
         :param builtins.str user: The primary admin user for the managed database.
         :param builtins.str vpc_id: The ID of the VPC Network attached to the Managed Database.
         """
+        pulumi.set(__self__, "backup_hour", backup_hour)
+        pulumi.set(__self__, "backup_minute", backup_minute)
         pulumi.set(__self__, "cluster_time_zone", cluster_time_zone)
         pulumi.set(__self__, "database_engine", database_engine)
         pulumi.set(__self__, "database_engine_version", database_engine_version)
@@ -1680,6 +1719,22 @@ class GetDatabaseReadReplicaResult(dict):
         pulumi.set(__self__, "trusted_ips", trusted_ips)
         pulumi.set(__self__, "user", user)
         pulumi.set(__self__, "vpc_id", vpc_id)
+
+    @property
+    @pulumi.getter(name="backupHour")
+    def backup_hour(self) -> builtins.str:
+        """
+        The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+        """
+        return pulumi.get(self, "backup_hour")
+
+    @property
+    @pulumi.getter(name="backupMinute")
+    def backup_minute(self) -> builtins.str:
+        """
+        The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
+        """
+        return pulumi.get(self, "backup_minute")
 
     @property
     @pulumi.getter(name="clusterTimeZone")
@@ -1732,9 +1787,6 @@ class GetDatabaseReadReplicaResult(dict):
     @property
     @pulumi.getter(name="ferretdbCredentials")
     def ferretdb_credentials(self) -> Mapping[str, builtins.str]:
-        """
-        An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
-        """
         return pulumi.get(self, "ferretdb_credentials")
 
     @property
@@ -2536,7 +2588,8 @@ class GetKubernetesNodePoolResult(dict):
                  labels: Optional[Mapping[str, builtins.str]] = None,
                  max_nodes: Optional[builtins.int] = None,
                  min_nodes: Optional[builtins.int] = None,
-                 taints: Optional[Sequence['outputs.GetKubernetesNodePoolTaintResult']] = None):
+                 taints: Optional[Sequence['outputs.GetKubernetesNodePoolTaintResult']] = None,
+                 user_data: Optional[builtins.str] = None):
         """
         :param builtins.str date_created: Date node was created.
         :param builtins.str date_updated: Date of node pool updates.
@@ -2552,6 +2605,7 @@ class GetKubernetesNodePoolResult(dict):
         :param builtins.int max_nodes: The maximum number of nodes used by the auto scaler.
         :param builtins.int min_nodes: The minimum number of nodes used by the auto scaler.
         :param Sequence['GetKubernetesNodePoolTaintArgs'] taints: Kubernetes node taints applied to the node pool.
+        :param builtins.str user_data: The base64 encoded string containing the user data applied to nodes in the node pool.
         """
         pulumi.set(__self__, "date_created", date_created)
         pulumi.set(__self__, "date_updated", date_updated)
@@ -2572,6 +2626,8 @@ class GetKubernetesNodePoolResult(dict):
             pulumi.set(__self__, "min_nodes", min_nodes)
         if taints is not None:
             pulumi.set(__self__, "taints", taints)
+        if user_data is not None:
+            pulumi.set(__self__, "user_data", user_data)
 
     @property
     @pulumi.getter(name="dateCreated")
@@ -2684,6 +2740,14 @@ class GetKubernetesNodePoolResult(dict):
         Kubernetes node taints applied to the node pool.
         """
         return pulumi.get(self, "taints")
+
+    @property
+    @pulumi.getter(name="userData")
+    def user_data(self) -> Optional[builtins.str]:
+        """
+        The base64 encoded string containing the user data applied to nodes in the node pool.
+        """
+        return pulumi.get(self, "user_data")
 
 
 @pulumi.output_type

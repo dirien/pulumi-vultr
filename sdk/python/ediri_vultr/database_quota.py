@@ -233,7 +233,7 @@ class DatabaseQuota(pulumi.CustomResource):
                  user: Optional[pulumi.Input[builtins.str]] = None,
                  __props__=None):
         """
-        Provides a Vultr database quota resource. This can be used to create, read, and delete quotas for a managed database on your Vultr account.
+        Provides a Vultr database quota resource. This can be used to create, read, modify, and delete quotas for a managed database on your Vultr account.
 
         ## Example Usage
 
@@ -268,7 +268,7 @@ class DatabaseQuota(pulumi.CustomResource):
                  args: DatabaseQuotaArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
-        Provides a Vultr database quota resource. This can be used to create, read, and delete quotas for a managed database on your Vultr account.
+        Provides a Vultr database quota resource. This can be used to create, read, modify, and delete quotas for a managed database on your Vultr account.
 
         ## Example Usage
 

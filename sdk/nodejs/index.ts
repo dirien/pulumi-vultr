@@ -30,6 +30,11 @@ export type DatabaseConnectionPool = import("./databaseConnectionPool").Database
 export const DatabaseConnectionPool: typeof import("./databaseConnectionPool").DatabaseConnectionPool = null as any;
 utilities.lazyLoad(exports, ["DatabaseConnectionPool"], () => require("./databaseConnectionPool"));
 
+export { DatabaseConnectorArgs, DatabaseConnectorState } from "./databaseConnector";
+export type DatabaseConnector = import("./databaseConnector").DatabaseConnector;
+export const DatabaseConnector: typeof import("./databaseConnector").DatabaseConnector = null as any;
+utilities.lazyLoad(exports, ["DatabaseConnector"], () => require("./databaseConnector"));
+
 export { DatabaseDbArgs, DatabaseDbState } from "./databaseDb";
 export type DatabaseDb = import("./databaseDb").DatabaseDb;
 export const DatabaseDb: typeof import("./databaseDb").DatabaseDb = null as any;
@@ -367,6 +372,8 @@ const _module = {
                 return new Database(name, <any>undefined, { urn })
             case "vultr:index/databaseConnectionPool:DatabaseConnectionPool":
                 return new DatabaseConnectionPool(name, <any>undefined, { urn })
+            case "vultr:index/databaseConnector:DatabaseConnector":
+                return new DatabaseConnector(name, <any>undefined, { urn })
             case "vultr:index/databaseDb:DatabaseDb":
                 return new DatabaseDb(name, <any>undefined, { urn })
             case "vultr:index/databaseQuota:DatabaseQuota":
@@ -433,6 +440,7 @@ pulumi.runtime.registerResourceModule("vultr", "index/blockStorage", _module)
 pulumi.runtime.registerResourceModule("vultr", "index/containerRegistry", _module)
 pulumi.runtime.registerResourceModule("vultr", "index/database", _module)
 pulumi.runtime.registerResourceModule("vultr", "index/databaseConnectionPool", _module)
+pulumi.runtime.registerResourceModule("vultr", "index/databaseConnector", _module)
 pulumi.runtime.registerResourceModule("vultr", "index/databaseDb", _module)
 pulumi.runtime.registerResourceModule("vultr", "index/databaseQuota", _module)
 pulumi.runtime.registerResourceModule("vultr", "index/databaseReplica", _module)

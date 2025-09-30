@@ -29,9 +29,15 @@ class DatabaseArgs:
                  region: pulumi.Input[builtins.str],
                  access_cert: Optional[pulumi.Input[builtins.str]] = None,
                  access_key: Optional[pulumi.Input[builtins.str]] = None,
+                 backup_hour: Optional[pulumi.Input[builtins.str]] = None,
+                 backup_minute: Optional[pulumi.Input[builtins.str]] = None,
                  cluster_time_zone: Optional[pulumi.Input[builtins.str]] = None,
+                 enable_kafka_connect: Optional[pulumi.Input[builtins.bool]] = None,
+                 enable_kafka_rest: Optional[pulumi.Input[builtins.bool]] = None,
+                 enable_schema_registry: Optional[pulumi.Input[builtins.bool]] = None,
                  eviction_policy: Optional[pulumi.Input[builtins.str]] = None,
                  ferretdb_credentials: Optional[pulumi.Input[Mapping[str, pulumi.Input[builtins.str]]]] = None,
+                 kafka_rest_uri: Optional[pulumi.Input[builtins.str]] = None,
                  maintenance_dow: Optional[pulumi.Input[builtins.str]] = None,
                  maintenance_time: Optional[pulumi.Input[builtins.str]] = None,
                  mysql_long_query_time: Optional[pulumi.Input[builtins.int]] = None,
@@ -45,6 +51,7 @@ class DatabaseArgs:
                  public_host: Optional[pulumi.Input[builtins.str]] = None,
                  read_replicas: Optional[pulumi.Input[Sequence[pulumi.Input['DatabaseReadReplicaArgs']]]] = None,
                  sasl_port: Optional[pulumi.Input[builtins.str]] = None,
+                 schema_registry_uri: Optional[pulumi.Input[builtins.str]] = None,
                  tag: Optional[pulumi.Input[builtins.str]] = None,
                  trusted_ips: Optional[pulumi.Input[Sequence[pulumi.Input[builtins.str]]]] = None,
                  vpc_id: Optional[pulumi.Input[builtins.str]] = None):
@@ -57,11 +64,16 @@ class DatabaseArgs:
         :param pulumi.Input[builtins.str] region: The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
         :param pulumi.Input[builtins.str] access_cert: The certificate to authenticate the default user (Kafka engine types only).
         :param pulumi.Input[builtins.str] access_key: The private key to authenticate the default user (Kafka engine types only).
+        :param pulumi.Input[builtins.str] backup_hour: The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+        :param pulumi.Input[builtins.str] backup_minute: The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
         :param pulumi.Input[builtins.str] cluster_time_zone: The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
+        :param pulumi.Input[builtins.bool] enable_kafka_connect: The configuration value for Kafka Connect support (Kafka engine types only).
+        :param pulumi.Input[builtins.bool] enable_kafka_rest: The configuration value for Kafka REST support (Kafka engine types only).
+        :param pulumi.Input[builtins.bool] enable_schema_registry: The configuration value for Schema Registry support (Kafka engine types only).
         :param pulumi.Input[builtins.str] eviction_policy: The configuration value for the data eviction policy on the managed database (Valkey engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
-        :param pulumi.Input[Mapping[str, pulumi.Input[builtins.str]]] ferretdb_credentials: An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
+        :param pulumi.Input[builtins.str] kafka_rest_uri: The URI to access the RESTful interface of your Kafka cluster if Kafka REST is enabled (Kafka engine types only).
         :param pulumi.Input[builtins.str] maintenance_dow: The preferred maintenance day of week for the managed database.
-        :param pulumi.Input[builtins.str] maintenance_time: The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).
+        :param pulumi.Input[builtins.str] maintenance_time: The preferred maintenance time for the managed database.
         :param pulumi.Input[builtins.int] mysql_long_query_time: The configuration value for the long query time (in seconds) on the managed database (MySQL engine types only).
         :param pulumi.Input[builtins.bool] mysql_require_primary_key: The configuration value for whether primary keys are required on the managed database (MySQL engine types only).
         :param pulumi.Input[builtins.bool] mysql_slow_query_log: The configuration value for slow query logging on the managed database (MySQL engine types only).
@@ -73,6 +85,7 @@ class DatabaseArgs:
         :param pulumi.Input[builtins.str] public_host: The public hostname assigned to the managed database (VPC-attached only).
         :param pulumi.Input[Sequence[pulumi.Input['DatabaseReadReplicaArgs']]] read_replicas: A list of read replicas attached to the managed database.
         :param pulumi.Input[builtins.str] sasl_port: The SASL connection port for the managed database (Kafka engine types only).
+        :param pulumi.Input[builtins.str] schema_registry_uri: The URI to access the Schema Registry service of your Kafka cluster if Schema Registry is enabled (Kafka engine types only).
         :param pulumi.Input[builtins.str] tag: The tag to assign to the managed database.
         :param pulumi.Input[Sequence[pulumi.Input[builtins.str]]] trusted_ips: A list of allowed IP addresses for the managed database.
         :param pulumi.Input[builtins.str] vpc_id: The ID of the VPC Network to attach to the Managed Database.
@@ -86,12 +99,24 @@ class DatabaseArgs:
             pulumi.set(__self__, "access_cert", access_cert)
         if access_key is not None:
             pulumi.set(__self__, "access_key", access_key)
+        if backup_hour is not None:
+            pulumi.set(__self__, "backup_hour", backup_hour)
+        if backup_minute is not None:
+            pulumi.set(__self__, "backup_minute", backup_minute)
         if cluster_time_zone is not None:
             pulumi.set(__self__, "cluster_time_zone", cluster_time_zone)
+        if enable_kafka_connect is not None:
+            pulumi.set(__self__, "enable_kafka_connect", enable_kafka_connect)
+        if enable_kafka_rest is not None:
+            pulumi.set(__self__, "enable_kafka_rest", enable_kafka_rest)
+        if enable_schema_registry is not None:
+            pulumi.set(__self__, "enable_schema_registry", enable_schema_registry)
         if eviction_policy is not None:
             pulumi.set(__self__, "eviction_policy", eviction_policy)
         if ferretdb_credentials is not None:
             pulumi.set(__self__, "ferretdb_credentials", ferretdb_credentials)
+        if kafka_rest_uri is not None:
+            pulumi.set(__self__, "kafka_rest_uri", kafka_rest_uri)
         if maintenance_dow is not None:
             pulumi.set(__self__, "maintenance_dow", maintenance_dow)
         if maintenance_time is not None:
@@ -118,6 +143,8 @@ class DatabaseArgs:
             pulumi.set(__self__, "read_replicas", read_replicas)
         if sasl_port is not None:
             pulumi.set(__self__, "sasl_port", sasl_port)
+        if schema_registry_uri is not None:
+            pulumi.set(__self__, "schema_registry_uri", schema_registry_uri)
         if tag is not None:
             pulumi.set(__self__, "tag", tag)
         if trusted_ips is not None:
@@ -210,6 +237,30 @@ class DatabaseArgs:
         pulumi.set(self, "access_key", value)
 
     @property
+    @pulumi.getter(name="backupHour")
+    def backup_hour(self) -> Optional[pulumi.Input[builtins.str]]:
+        """
+        The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+        """
+        return pulumi.get(self, "backup_hour")
+
+    @backup_hour.setter
+    def backup_hour(self, value: Optional[pulumi.Input[builtins.str]]):
+        pulumi.set(self, "backup_hour", value)
+
+    @property
+    @pulumi.getter(name="backupMinute")
+    def backup_minute(self) -> Optional[pulumi.Input[builtins.str]]:
+        """
+        The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
+        """
+        return pulumi.get(self, "backup_minute")
+
+    @backup_minute.setter
+    def backup_minute(self, value: Optional[pulumi.Input[builtins.str]]):
+        pulumi.set(self, "backup_minute", value)
+
+    @property
     @pulumi.getter(name="clusterTimeZone")
     def cluster_time_zone(self) -> Optional[pulumi.Input[builtins.str]]:
         """
@@ -220,6 +271,42 @@ class DatabaseArgs:
     @cluster_time_zone.setter
     def cluster_time_zone(self, value: Optional[pulumi.Input[builtins.str]]):
         pulumi.set(self, "cluster_time_zone", value)
+
+    @property
+    @pulumi.getter(name="enableKafkaConnect")
+    def enable_kafka_connect(self) -> Optional[pulumi.Input[builtins.bool]]:
+        """
+        The configuration value for Kafka Connect support (Kafka engine types only).
+        """
+        return pulumi.get(self, "enable_kafka_connect")
+
+    @enable_kafka_connect.setter
+    def enable_kafka_connect(self, value: Optional[pulumi.Input[builtins.bool]]):
+        pulumi.set(self, "enable_kafka_connect", value)
+
+    @property
+    @pulumi.getter(name="enableKafkaRest")
+    def enable_kafka_rest(self) -> Optional[pulumi.Input[builtins.bool]]:
+        """
+        The configuration value for Kafka REST support (Kafka engine types only).
+        """
+        return pulumi.get(self, "enable_kafka_rest")
+
+    @enable_kafka_rest.setter
+    def enable_kafka_rest(self, value: Optional[pulumi.Input[builtins.bool]]):
+        pulumi.set(self, "enable_kafka_rest", value)
+
+    @property
+    @pulumi.getter(name="enableSchemaRegistry")
+    def enable_schema_registry(self) -> Optional[pulumi.Input[builtins.bool]]:
+        """
+        The configuration value for Schema Registry support (Kafka engine types only).
+        """
+        return pulumi.get(self, "enable_schema_registry")
+
+    @enable_schema_registry.setter
+    def enable_schema_registry(self, value: Optional[pulumi.Input[builtins.bool]]):
+        pulumi.set(self, "enable_schema_registry", value)
 
     @property
     @pulumi.getter(name="evictionPolicy")
@@ -236,14 +323,23 @@ class DatabaseArgs:
     @property
     @pulumi.getter(name="ferretdbCredentials")
     def ferretdb_credentials(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[builtins.str]]]]:
-        """
-        An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
-        """
         return pulumi.get(self, "ferretdb_credentials")
 
     @ferretdb_credentials.setter
     def ferretdb_credentials(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[builtins.str]]]]):
         pulumi.set(self, "ferretdb_credentials", value)
+
+    @property
+    @pulumi.getter(name="kafkaRestUri")
+    def kafka_rest_uri(self) -> Optional[pulumi.Input[builtins.str]]:
+        """
+        The URI to access the RESTful interface of your Kafka cluster if Kafka REST is enabled (Kafka engine types only).
+        """
+        return pulumi.get(self, "kafka_rest_uri")
+
+    @kafka_rest_uri.setter
+    def kafka_rest_uri(self, value: Optional[pulumi.Input[builtins.str]]):
+        pulumi.set(self, "kafka_rest_uri", value)
 
     @property
     @pulumi.getter(name="maintenanceDow")
@@ -261,7 +357,7 @@ class DatabaseArgs:
     @pulumi.getter(name="maintenanceTime")
     def maintenance_time(self) -> Optional[pulumi.Input[builtins.str]]:
         """
-        The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).
+        The preferred maintenance time for the managed database.
         """
         return pulumi.get(self, "maintenance_time")
 
@@ -402,6 +498,18 @@ class DatabaseArgs:
         pulumi.set(self, "sasl_port", value)
 
     @property
+    @pulumi.getter(name="schemaRegistryUri")
+    def schema_registry_uri(self) -> Optional[pulumi.Input[builtins.str]]:
+        """
+        The URI to access the Schema Registry service of your Kafka cluster if Schema Registry is enabled (Kafka engine types only).
+        """
+        return pulumi.get(self, "schema_registry_uri")
+
+    @schema_registry_uri.setter
+    def schema_registry_uri(self, value: Optional[pulumi.Input[builtins.str]]):
+        pulumi.set(self, "schema_registry_uri", value)
+
+    @property
     @pulumi.getter
     def tag(self) -> Optional[pulumi.Input[builtins.str]]:
         """
@@ -443,14 +551,20 @@ class _DatabaseState:
     def __init__(__self__, *,
                  access_cert: Optional[pulumi.Input[builtins.str]] = None,
                  access_key: Optional[pulumi.Input[builtins.str]] = None,
+                 backup_hour: Optional[pulumi.Input[builtins.str]] = None,
+                 backup_minute: Optional[pulumi.Input[builtins.str]] = None,
                  cluster_time_zone: Optional[pulumi.Input[builtins.str]] = None,
                  database_engine: Optional[pulumi.Input[builtins.str]] = None,
                  database_engine_version: Optional[pulumi.Input[builtins.str]] = None,
                  date_created: Optional[pulumi.Input[builtins.str]] = None,
                  dbname: Optional[pulumi.Input[builtins.str]] = None,
+                 enable_kafka_connect: Optional[pulumi.Input[builtins.bool]] = None,
+                 enable_kafka_rest: Optional[pulumi.Input[builtins.bool]] = None,
+                 enable_schema_registry: Optional[pulumi.Input[builtins.bool]] = None,
                  eviction_policy: Optional[pulumi.Input[builtins.str]] = None,
                  ferretdb_credentials: Optional[pulumi.Input[Mapping[str, pulumi.Input[builtins.str]]]] = None,
                  host: Optional[pulumi.Input[builtins.str]] = None,
+                 kafka_rest_uri: Optional[pulumi.Input[builtins.str]] = None,
                  label: Optional[pulumi.Input[builtins.str]] = None,
                  latest_backup: Optional[pulumi.Input[builtins.str]] = None,
                  maintenance_dow: Optional[pulumi.Input[builtins.str]] = None,
@@ -471,6 +585,7 @@ class _DatabaseState:
                  read_replicas: Optional[pulumi.Input[Sequence[pulumi.Input['DatabaseReadReplicaArgs']]]] = None,
                  region: Optional[pulumi.Input[builtins.str]] = None,
                  sasl_port: Optional[pulumi.Input[builtins.str]] = None,
+                 schema_registry_uri: Optional[pulumi.Input[builtins.str]] = None,
                  status: Optional[pulumi.Input[builtins.str]] = None,
                  tag: Optional[pulumi.Input[builtins.str]] = None,
                  trusted_ips: Optional[pulumi.Input[Sequence[pulumi.Input[builtins.str]]]] = None,
@@ -480,18 +595,23 @@ class _DatabaseState:
         Input properties used for looking up and filtering Database resources.
         :param pulumi.Input[builtins.str] access_cert: The certificate to authenticate the default user (Kafka engine types only).
         :param pulumi.Input[builtins.str] access_key: The private key to authenticate the default user (Kafka engine types only).
+        :param pulumi.Input[builtins.str] backup_hour: The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+        :param pulumi.Input[builtins.str] backup_minute: The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
         :param pulumi.Input[builtins.str] cluster_time_zone: The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
         :param pulumi.Input[builtins.str] database_engine: The database engine of the new managed database.
         :param pulumi.Input[builtins.str] database_engine_version: The database engine version of the new managed database.
         :param pulumi.Input[builtins.str] date_created: The date the managed database was added to your Vultr account.
         :param pulumi.Input[builtins.str] dbname: The managed database's default logical database.
+        :param pulumi.Input[builtins.bool] enable_kafka_connect: The configuration value for Kafka Connect support (Kafka engine types only).
+        :param pulumi.Input[builtins.bool] enable_kafka_rest: The configuration value for Kafka REST support (Kafka engine types only).
+        :param pulumi.Input[builtins.bool] enable_schema_registry: The configuration value for Schema Registry support (Kafka engine types only).
         :param pulumi.Input[builtins.str] eviction_policy: The configuration value for the data eviction policy on the managed database (Valkey engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
-        :param pulumi.Input[Mapping[str, pulumi.Input[builtins.str]]] ferretdb_credentials: An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
         :param pulumi.Input[builtins.str] host: The hostname assigned to the managed database.
+        :param pulumi.Input[builtins.str] kafka_rest_uri: The URI to access the RESTful interface of your Kafka cluster if Kafka REST is enabled (Kafka engine types only).
         :param pulumi.Input[builtins.str] label: A label for the managed database.
         :param pulumi.Input[builtins.str] latest_backup: The date of the latest backup available on the managed database.
         :param pulumi.Input[builtins.str] maintenance_dow: The preferred maintenance day of week for the managed database.
-        :param pulumi.Input[builtins.str] maintenance_time: The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).
+        :param pulumi.Input[builtins.str] maintenance_time: The preferred maintenance time for the managed database.
         :param pulumi.Input[builtins.int] mysql_long_query_time: The configuration value for the long query time (in seconds) on the managed database (MySQL engine types only).
         :param pulumi.Input[builtins.bool] mysql_require_primary_key: The configuration value for whether primary keys are required on the managed database (MySQL engine types only).
         :param pulumi.Input[builtins.bool] mysql_slow_query_log: The configuration value for slow query logging on the managed database (MySQL engine types only).
@@ -508,6 +628,7 @@ class _DatabaseState:
         :param pulumi.Input[Sequence[pulumi.Input['DatabaseReadReplicaArgs']]] read_replicas: A list of read replicas attached to the managed database.
         :param pulumi.Input[builtins.str] region: The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
         :param pulumi.Input[builtins.str] sasl_port: The SASL connection port for the managed database (Kafka engine types only).
+        :param pulumi.Input[builtins.str] schema_registry_uri: The URI to access the Schema Registry service of your Kafka cluster if Schema Registry is enabled (Kafka engine types only).
         :param pulumi.Input[builtins.str] status: The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).
         :param pulumi.Input[builtins.str] tag: The tag to assign to the managed database.
         :param pulumi.Input[Sequence[pulumi.Input[builtins.str]]] trusted_ips: A list of allowed IP addresses for the managed database.
@@ -518,6 +639,10 @@ class _DatabaseState:
             pulumi.set(__self__, "access_cert", access_cert)
         if access_key is not None:
             pulumi.set(__self__, "access_key", access_key)
+        if backup_hour is not None:
+            pulumi.set(__self__, "backup_hour", backup_hour)
+        if backup_minute is not None:
+            pulumi.set(__self__, "backup_minute", backup_minute)
         if cluster_time_zone is not None:
             pulumi.set(__self__, "cluster_time_zone", cluster_time_zone)
         if database_engine is not None:
@@ -528,12 +653,20 @@ class _DatabaseState:
             pulumi.set(__self__, "date_created", date_created)
         if dbname is not None:
             pulumi.set(__self__, "dbname", dbname)
+        if enable_kafka_connect is not None:
+            pulumi.set(__self__, "enable_kafka_connect", enable_kafka_connect)
+        if enable_kafka_rest is not None:
+            pulumi.set(__self__, "enable_kafka_rest", enable_kafka_rest)
+        if enable_schema_registry is not None:
+            pulumi.set(__self__, "enable_schema_registry", enable_schema_registry)
         if eviction_policy is not None:
             pulumi.set(__self__, "eviction_policy", eviction_policy)
         if ferretdb_credentials is not None:
             pulumi.set(__self__, "ferretdb_credentials", ferretdb_credentials)
         if host is not None:
             pulumi.set(__self__, "host", host)
+        if kafka_rest_uri is not None:
+            pulumi.set(__self__, "kafka_rest_uri", kafka_rest_uri)
         if label is not None:
             pulumi.set(__self__, "label", label)
         if latest_backup is not None:
@@ -574,6 +707,8 @@ class _DatabaseState:
             pulumi.set(__self__, "region", region)
         if sasl_port is not None:
             pulumi.set(__self__, "sasl_port", sasl_port)
+        if schema_registry_uri is not None:
+            pulumi.set(__self__, "schema_registry_uri", schema_registry_uri)
         if status is not None:
             pulumi.set(__self__, "status", status)
         if tag is not None:
@@ -608,6 +743,30 @@ class _DatabaseState:
     @access_key.setter
     def access_key(self, value: Optional[pulumi.Input[builtins.str]]):
         pulumi.set(self, "access_key", value)
+
+    @property
+    @pulumi.getter(name="backupHour")
+    def backup_hour(self) -> Optional[pulumi.Input[builtins.str]]:
+        """
+        The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+        """
+        return pulumi.get(self, "backup_hour")
+
+    @backup_hour.setter
+    def backup_hour(self, value: Optional[pulumi.Input[builtins.str]]):
+        pulumi.set(self, "backup_hour", value)
+
+    @property
+    @pulumi.getter(name="backupMinute")
+    def backup_minute(self) -> Optional[pulumi.Input[builtins.str]]:
+        """
+        The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
+        """
+        return pulumi.get(self, "backup_minute")
+
+    @backup_minute.setter
+    def backup_minute(self, value: Optional[pulumi.Input[builtins.str]]):
+        pulumi.set(self, "backup_minute", value)
 
     @property
     @pulumi.getter(name="clusterTimeZone")
@@ -670,6 +829,42 @@ class _DatabaseState:
         pulumi.set(self, "dbname", value)
 
     @property
+    @pulumi.getter(name="enableKafkaConnect")
+    def enable_kafka_connect(self) -> Optional[pulumi.Input[builtins.bool]]:
+        """
+        The configuration value for Kafka Connect support (Kafka engine types only).
+        """
+        return pulumi.get(self, "enable_kafka_connect")
+
+    @enable_kafka_connect.setter
+    def enable_kafka_connect(self, value: Optional[pulumi.Input[builtins.bool]]):
+        pulumi.set(self, "enable_kafka_connect", value)
+
+    @property
+    @pulumi.getter(name="enableKafkaRest")
+    def enable_kafka_rest(self) -> Optional[pulumi.Input[builtins.bool]]:
+        """
+        The configuration value for Kafka REST support (Kafka engine types only).
+        """
+        return pulumi.get(self, "enable_kafka_rest")
+
+    @enable_kafka_rest.setter
+    def enable_kafka_rest(self, value: Optional[pulumi.Input[builtins.bool]]):
+        pulumi.set(self, "enable_kafka_rest", value)
+
+    @property
+    @pulumi.getter(name="enableSchemaRegistry")
+    def enable_schema_registry(self) -> Optional[pulumi.Input[builtins.bool]]:
+        """
+        The configuration value for Schema Registry support (Kafka engine types only).
+        """
+        return pulumi.get(self, "enable_schema_registry")
+
+    @enable_schema_registry.setter
+    def enable_schema_registry(self, value: Optional[pulumi.Input[builtins.bool]]):
+        pulumi.set(self, "enable_schema_registry", value)
+
+    @property
     @pulumi.getter(name="evictionPolicy")
     def eviction_policy(self) -> Optional[pulumi.Input[builtins.str]]:
         """
@@ -684,9 +879,6 @@ class _DatabaseState:
     @property
     @pulumi.getter(name="ferretdbCredentials")
     def ferretdb_credentials(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[builtins.str]]]]:
-        """
-        An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
-        """
         return pulumi.get(self, "ferretdb_credentials")
 
     @ferretdb_credentials.setter
@@ -704,6 +896,18 @@ class _DatabaseState:
     @host.setter
     def host(self, value: Optional[pulumi.Input[builtins.str]]):
         pulumi.set(self, "host", value)
+
+    @property
+    @pulumi.getter(name="kafkaRestUri")
+    def kafka_rest_uri(self) -> Optional[pulumi.Input[builtins.str]]:
+        """
+        The URI to access the RESTful interface of your Kafka cluster if Kafka REST is enabled (Kafka engine types only).
+        """
+        return pulumi.get(self, "kafka_rest_uri")
+
+    @kafka_rest_uri.setter
+    def kafka_rest_uri(self, value: Optional[pulumi.Input[builtins.str]]):
+        pulumi.set(self, "kafka_rest_uri", value)
 
     @property
     @pulumi.getter
@@ -745,7 +949,7 @@ class _DatabaseState:
     @pulumi.getter(name="maintenanceTime")
     def maintenance_time(self) -> Optional[pulumi.Input[builtins.str]]:
         """
-        The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).
+        The preferred maintenance time for the managed database.
         """
         return pulumi.get(self, "maintenance_time")
 
@@ -946,6 +1150,18 @@ class _DatabaseState:
         pulumi.set(self, "sasl_port", value)
 
     @property
+    @pulumi.getter(name="schemaRegistryUri")
+    def schema_registry_uri(self) -> Optional[pulumi.Input[builtins.str]]:
+        """
+        The URI to access the Schema Registry service of your Kafka cluster if Schema Registry is enabled (Kafka engine types only).
+        """
+        return pulumi.get(self, "schema_registry_uri")
+
+    @schema_registry_uri.setter
+    def schema_registry_uri(self, value: Optional[pulumi.Input[builtins.str]]):
+        pulumi.set(self, "schema_registry_uri", value)
+
+    @property
     @pulumi.getter
     def status(self) -> Optional[pulumi.Input[builtins.str]]:
         """
@@ -1014,11 +1230,17 @@ class Database(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  access_cert: Optional[pulumi.Input[builtins.str]] = None,
                  access_key: Optional[pulumi.Input[builtins.str]] = None,
+                 backup_hour: Optional[pulumi.Input[builtins.str]] = None,
+                 backup_minute: Optional[pulumi.Input[builtins.str]] = None,
                  cluster_time_zone: Optional[pulumi.Input[builtins.str]] = None,
                  database_engine: Optional[pulumi.Input[builtins.str]] = None,
                  database_engine_version: Optional[pulumi.Input[builtins.str]] = None,
+                 enable_kafka_connect: Optional[pulumi.Input[builtins.bool]] = None,
+                 enable_kafka_rest: Optional[pulumi.Input[builtins.bool]] = None,
+                 enable_schema_registry: Optional[pulumi.Input[builtins.bool]] = None,
                  eviction_policy: Optional[pulumi.Input[builtins.str]] = None,
                  ferretdb_credentials: Optional[pulumi.Input[Mapping[str, pulumi.Input[builtins.str]]]] = None,
+                 kafka_rest_uri: Optional[pulumi.Input[builtins.str]] = None,
                  label: Optional[pulumi.Input[builtins.str]] = None,
                  maintenance_dow: Optional[pulumi.Input[builtins.str]] = None,
                  maintenance_time: Optional[pulumi.Input[builtins.str]] = None,
@@ -1035,6 +1257,7 @@ class Database(pulumi.CustomResource):
                  read_replicas: Optional[pulumi.Input[Sequence[pulumi.Input[Union['DatabaseReadReplicaArgs', 'DatabaseReadReplicaArgsDict']]]]] = None,
                  region: Optional[pulumi.Input[builtins.str]] = None,
                  sasl_port: Optional[pulumi.Input[builtins.str]] = None,
+                 schema_registry_uri: Optional[pulumi.Input[builtins.str]] = None,
                  tag: Optional[pulumi.Input[builtins.str]] = None,
                  trusted_ips: Optional[pulumi.Input[Sequence[pulumi.Input[builtins.str]]]] = None,
                  vpc_id: Optional[pulumi.Input[builtins.str]] = None,
@@ -1088,14 +1311,19 @@ class Database(pulumi.CustomResource):
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[builtins.str] access_cert: The certificate to authenticate the default user (Kafka engine types only).
         :param pulumi.Input[builtins.str] access_key: The private key to authenticate the default user (Kafka engine types only).
+        :param pulumi.Input[builtins.str] backup_hour: The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+        :param pulumi.Input[builtins.str] backup_minute: The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
         :param pulumi.Input[builtins.str] cluster_time_zone: The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
         :param pulumi.Input[builtins.str] database_engine: The database engine of the new managed database.
         :param pulumi.Input[builtins.str] database_engine_version: The database engine version of the new managed database.
+        :param pulumi.Input[builtins.bool] enable_kafka_connect: The configuration value for Kafka Connect support (Kafka engine types only).
+        :param pulumi.Input[builtins.bool] enable_kafka_rest: The configuration value for Kafka REST support (Kafka engine types only).
+        :param pulumi.Input[builtins.bool] enable_schema_registry: The configuration value for Schema Registry support (Kafka engine types only).
         :param pulumi.Input[builtins.str] eviction_policy: The configuration value for the data eviction policy on the managed database (Valkey engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
-        :param pulumi.Input[Mapping[str, pulumi.Input[builtins.str]]] ferretdb_credentials: An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
+        :param pulumi.Input[builtins.str] kafka_rest_uri: The URI to access the RESTful interface of your Kafka cluster if Kafka REST is enabled (Kafka engine types only).
         :param pulumi.Input[builtins.str] label: A label for the managed database.
         :param pulumi.Input[builtins.str] maintenance_dow: The preferred maintenance day of week for the managed database.
-        :param pulumi.Input[builtins.str] maintenance_time: The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).
+        :param pulumi.Input[builtins.str] maintenance_time: The preferred maintenance time for the managed database.
         :param pulumi.Input[builtins.int] mysql_long_query_time: The configuration value for the long query time (in seconds) on the managed database (MySQL engine types only).
         :param pulumi.Input[builtins.bool] mysql_require_primary_key: The configuration value for whether primary keys are required on the managed database (MySQL engine types only).
         :param pulumi.Input[builtins.bool] mysql_slow_query_log: The configuration value for slow query logging on the managed database (MySQL engine types only).
@@ -1109,6 +1337,7 @@ class Database(pulumi.CustomResource):
         :param pulumi.Input[Sequence[pulumi.Input[Union['DatabaseReadReplicaArgs', 'DatabaseReadReplicaArgsDict']]]] read_replicas: A list of read replicas attached to the managed database.
         :param pulumi.Input[builtins.str] region: The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
         :param pulumi.Input[builtins.str] sasl_port: The SASL connection port for the managed database (Kafka engine types only).
+        :param pulumi.Input[builtins.str] schema_registry_uri: The URI to access the Schema Registry service of your Kafka cluster if Schema Registry is enabled (Kafka engine types only).
         :param pulumi.Input[builtins.str] tag: The tag to assign to the managed database.
         :param pulumi.Input[Sequence[pulumi.Input[builtins.str]]] trusted_ips: A list of allowed IP addresses for the managed database.
         :param pulumi.Input[builtins.str] vpc_id: The ID of the VPC Network to attach to the Managed Database.
@@ -1181,11 +1410,17 @@ class Database(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  access_cert: Optional[pulumi.Input[builtins.str]] = None,
                  access_key: Optional[pulumi.Input[builtins.str]] = None,
+                 backup_hour: Optional[pulumi.Input[builtins.str]] = None,
+                 backup_minute: Optional[pulumi.Input[builtins.str]] = None,
                  cluster_time_zone: Optional[pulumi.Input[builtins.str]] = None,
                  database_engine: Optional[pulumi.Input[builtins.str]] = None,
                  database_engine_version: Optional[pulumi.Input[builtins.str]] = None,
+                 enable_kafka_connect: Optional[pulumi.Input[builtins.bool]] = None,
+                 enable_kafka_rest: Optional[pulumi.Input[builtins.bool]] = None,
+                 enable_schema_registry: Optional[pulumi.Input[builtins.bool]] = None,
                  eviction_policy: Optional[pulumi.Input[builtins.str]] = None,
                  ferretdb_credentials: Optional[pulumi.Input[Mapping[str, pulumi.Input[builtins.str]]]] = None,
+                 kafka_rest_uri: Optional[pulumi.Input[builtins.str]] = None,
                  label: Optional[pulumi.Input[builtins.str]] = None,
                  maintenance_dow: Optional[pulumi.Input[builtins.str]] = None,
                  maintenance_time: Optional[pulumi.Input[builtins.str]] = None,
@@ -1202,6 +1437,7 @@ class Database(pulumi.CustomResource):
                  read_replicas: Optional[pulumi.Input[Sequence[pulumi.Input[Union['DatabaseReadReplicaArgs', 'DatabaseReadReplicaArgsDict']]]]] = None,
                  region: Optional[pulumi.Input[builtins.str]] = None,
                  sasl_port: Optional[pulumi.Input[builtins.str]] = None,
+                 schema_registry_uri: Optional[pulumi.Input[builtins.str]] = None,
                  tag: Optional[pulumi.Input[builtins.str]] = None,
                  trusted_ips: Optional[pulumi.Input[Sequence[pulumi.Input[builtins.str]]]] = None,
                  vpc_id: Optional[pulumi.Input[builtins.str]] = None,
@@ -1216,6 +1452,8 @@ class Database(pulumi.CustomResource):
 
             __props__.__dict__["access_cert"] = access_cert
             __props__.__dict__["access_key"] = access_key
+            __props__.__dict__["backup_hour"] = backup_hour
+            __props__.__dict__["backup_minute"] = backup_minute
             __props__.__dict__["cluster_time_zone"] = cluster_time_zone
             if database_engine is None and not opts.urn:
                 raise TypeError("Missing required property 'database_engine'")
@@ -1223,8 +1461,12 @@ class Database(pulumi.CustomResource):
             if database_engine_version is None and not opts.urn:
                 raise TypeError("Missing required property 'database_engine_version'")
             __props__.__dict__["database_engine_version"] = database_engine_version
+            __props__.__dict__["enable_kafka_connect"] = enable_kafka_connect
+            __props__.__dict__["enable_kafka_rest"] = enable_kafka_rest
+            __props__.__dict__["enable_schema_registry"] = enable_schema_registry
             __props__.__dict__["eviction_policy"] = eviction_policy
             __props__.__dict__["ferretdb_credentials"] = ferretdb_credentials
+            __props__.__dict__["kafka_rest_uri"] = kafka_rest_uri
             if label is None and not opts.urn:
                 raise TypeError("Missing required property 'label'")
             __props__.__dict__["label"] = label
@@ -1247,6 +1489,7 @@ class Database(pulumi.CustomResource):
                 raise TypeError("Missing required property 'region'")
             __props__.__dict__["region"] = region
             __props__.__dict__["sasl_port"] = sasl_port
+            __props__.__dict__["schema_registry_uri"] = schema_registry_uri
             __props__.__dict__["tag"] = tag
             __props__.__dict__["trusted_ips"] = trusted_ips
             __props__.__dict__["vpc_id"] = vpc_id
@@ -1271,14 +1514,20 @@ class Database(pulumi.CustomResource):
             opts: Optional[pulumi.ResourceOptions] = None,
             access_cert: Optional[pulumi.Input[builtins.str]] = None,
             access_key: Optional[pulumi.Input[builtins.str]] = None,
+            backup_hour: Optional[pulumi.Input[builtins.str]] = None,
+            backup_minute: Optional[pulumi.Input[builtins.str]] = None,
             cluster_time_zone: Optional[pulumi.Input[builtins.str]] = None,
             database_engine: Optional[pulumi.Input[builtins.str]] = None,
             database_engine_version: Optional[pulumi.Input[builtins.str]] = None,
             date_created: Optional[pulumi.Input[builtins.str]] = None,
             dbname: Optional[pulumi.Input[builtins.str]] = None,
+            enable_kafka_connect: Optional[pulumi.Input[builtins.bool]] = None,
+            enable_kafka_rest: Optional[pulumi.Input[builtins.bool]] = None,
+            enable_schema_registry: Optional[pulumi.Input[builtins.bool]] = None,
             eviction_policy: Optional[pulumi.Input[builtins.str]] = None,
             ferretdb_credentials: Optional[pulumi.Input[Mapping[str, pulumi.Input[builtins.str]]]] = None,
             host: Optional[pulumi.Input[builtins.str]] = None,
+            kafka_rest_uri: Optional[pulumi.Input[builtins.str]] = None,
             label: Optional[pulumi.Input[builtins.str]] = None,
             latest_backup: Optional[pulumi.Input[builtins.str]] = None,
             maintenance_dow: Optional[pulumi.Input[builtins.str]] = None,
@@ -1299,6 +1548,7 @@ class Database(pulumi.CustomResource):
             read_replicas: Optional[pulumi.Input[Sequence[pulumi.Input[Union['DatabaseReadReplicaArgs', 'DatabaseReadReplicaArgsDict']]]]] = None,
             region: Optional[pulumi.Input[builtins.str]] = None,
             sasl_port: Optional[pulumi.Input[builtins.str]] = None,
+            schema_registry_uri: Optional[pulumi.Input[builtins.str]] = None,
             status: Optional[pulumi.Input[builtins.str]] = None,
             tag: Optional[pulumi.Input[builtins.str]] = None,
             trusted_ips: Optional[pulumi.Input[Sequence[pulumi.Input[builtins.str]]]] = None,
@@ -1313,18 +1563,23 @@ class Database(pulumi.CustomResource):
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[builtins.str] access_cert: The certificate to authenticate the default user (Kafka engine types only).
         :param pulumi.Input[builtins.str] access_key: The private key to authenticate the default user (Kafka engine types only).
+        :param pulumi.Input[builtins.str] backup_hour: The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+        :param pulumi.Input[builtins.str] backup_minute: The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
         :param pulumi.Input[builtins.str] cluster_time_zone: The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
         :param pulumi.Input[builtins.str] database_engine: The database engine of the new managed database.
         :param pulumi.Input[builtins.str] database_engine_version: The database engine version of the new managed database.
         :param pulumi.Input[builtins.str] date_created: The date the managed database was added to your Vultr account.
         :param pulumi.Input[builtins.str] dbname: The managed database's default logical database.
+        :param pulumi.Input[builtins.bool] enable_kafka_connect: The configuration value for Kafka Connect support (Kafka engine types only).
+        :param pulumi.Input[builtins.bool] enable_kafka_rest: The configuration value for Kafka REST support (Kafka engine types only).
+        :param pulumi.Input[builtins.bool] enable_schema_registry: The configuration value for Schema Registry support (Kafka engine types only).
         :param pulumi.Input[builtins.str] eviction_policy: The configuration value for the data eviction policy on the managed database (Valkey engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
-        :param pulumi.Input[Mapping[str, pulumi.Input[builtins.str]]] ferretdb_credentials: An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
         :param pulumi.Input[builtins.str] host: The hostname assigned to the managed database.
+        :param pulumi.Input[builtins.str] kafka_rest_uri: The URI to access the RESTful interface of your Kafka cluster if Kafka REST is enabled (Kafka engine types only).
         :param pulumi.Input[builtins.str] label: A label for the managed database.
         :param pulumi.Input[builtins.str] latest_backup: The date of the latest backup available on the managed database.
         :param pulumi.Input[builtins.str] maintenance_dow: The preferred maintenance day of week for the managed database.
-        :param pulumi.Input[builtins.str] maintenance_time: The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).
+        :param pulumi.Input[builtins.str] maintenance_time: The preferred maintenance time for the managed database.
         :param pulumi.Input[builtins.int] mysql_long_query_time: The configuration value for the long query time (in seconds) on the managed database (MySQL engine types only).
         :param pulumi.Input[builtins.bool] mysql_require_primary_key: The configuration value for whether primary keys are required on the managed database (MySQL engine types only).
         :param pulumi.Input[builtins.bool] mysql_slow_query_log: The configuration value for slow query logging on the managed database (MySQL engine types only).
@@ -1341,6 +1596,7 @@ class Database(pulumi.CustomResource):
         :param pulumi.Input[Sequence[pulumi.Input[Union['DatabaseReadReplicaArgs', 'DatabaseReadReplicaArgsDict']]]] read_replicas: A list of read replicas attached to the managed database.
         :param pulumi.Input[builtins.str] region: The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
         :param pulumi.Input[builtins.str] sasl_port: The SASL connection port for the managed database (Kafka engine types only).
+        :param pulumi.Input[builtins.str] schema_registry_uri: The URI to access the Schema Registry service of your Kafka cluster if Schema Registry is enabled (Kafka engine types only).
         :param pulumi.Input[builtins.str] status: The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).
         :param pulumi.Input[builtins.str] tag: The tag to assign to the managed database.
         :param pulumi.Input[Sequence[pulumi.Input[builtins.str]]] trusted_ips: A list of allowed IP addresses for the managed database.
@@ -1353,14 +1609,20 @@ class Database(pulumi.CustomResource):
 
         __props__.__dict__["access_cert"] = access_cert
         __props__.__dict__["access_key"] = access_key
+        __props__.__dict__["backup_hour"] = backup_hour
+        __props__.__dict__["backup_minute"] = backup_minute
         __props__.__dict__["cluster_time_zone"] = cluster_time_zone
         __props__.__dict__["database_engine"] = database_engine
         __props__.__dict__["database_engine_version"] = database_engine_version
         __props__.__dict__["date_created"] = date_created
         __props__.__dict__["dbname"] = dbname
+        __props__.__dict__["enable_kafka_connect"] = enable_kafka_connect
+        __props__.__dict__["enable_kafka_rest"] = enable_kafka_rest
+        __props__.__dict__["enable_schema_registry"] = enable_schema_registry
         __props__.__dict__["eviction_policy"] = eviction_policy
         __props__.__dict__["ferretdb_credentials"] = ferretdb_credentials
         __props__.__dict__["host"] = host
+        __props__.__dict__["kafka_rest_uri"] = kafka_rest_uri
         __props__.__dict__["label"] = label
         __props__.__dict__["latest_backup"] = latest_backup
         __props__.__dict__["maintenance_dow"] = maintenance_dow
@@ -1381,6 +1643,7 @@ class Database(pulumi.CustomResource):
         __props__.__dict__["read_replicas"] = read_replicas
         __props__.__dict__["region"] = region
         __props__.__dict__["sasl_port"] = sasl_port
+        __props__.__dict__["schema_registry_uri"] = schema_registry_uri
         __props__.__dict__["status"] = status
         __props__.__dict__["tag"] = tag
         __props__.__dict__["trusted_ips"] = trusted_ips
@@ -1403,6 +1666,22 @@ class Database(pulumi.CustomResource):
         The private key to authenticate the default user (Kafka engine types only).
         """
         return pulumi.get(self, "access_key")
+
+    @property
+    @pulumi.getter(name="backupHour")
+    def backup_hour(self) -> pulumi.Output[Optional[builtins.str]]:
+        """
+        The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+        """
+        return pulumi.get(self, "backup_hour")
+
+    @property
+    @pulumi.getter(name="backupMinute")
+    def backup_minute(self) -> pulumi.Output[Optional[builtins.str]]:
+        """
+        The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
+        """
+        return pulumi.get(self, "backup_minute")
 
     @property
     @pulumi.getter(name="clusterTimeZone")
@@ -1445,6 +1724,30 @@ class Database(pulumi.CustomResource):
         return pulumi.get(self, "dbname")
 
     @property
+    @pulumi.getter(name="enableKafkaConnect")
+    def enable_kafka_connect(self) -> pulumi.Output[Optional[builtins.bool]]:
+        """
+        The configuration value for Kafka Connect support (Kafka engine types only).
+        """
+        return pulumi.get(self, "enable_kafka_connect")
+
+    @property
+    @pulumi.getter(name="enableKafkaRest")
+    def enable_kafka_rest(self) -> pulumi.Output[Optional[builtins.bool]]:
+        """
+        The configuration value for Kafka REST support (Kafka engine types only).
+        """
+        return pulumi.get(self, "enable_kafka_rest")
+
+    @property
+    @pulumi.getter(name="enableSchemaRegistry")
+    def enable_schema_registry(self) -> pulumi.Output[Optional[builtins.bool]]:
+        """
+        The configuration value for Schema Registry support (Kafka engine types only).
+        """
+        return pulumi.get(self, "enable_schema_registry")
+
+    @property
     @pulumi.getter(name="evictionPolicy")
     def eviction_policy(self) -> pulumi.Output[builtins.str]:
         """
@@ -1455,9 +1758,6 @@ class Database(pulumi.CustomResource):
     @property
     @pulumi.getter(name="ferretdbCredentials")
     def ferretdb_credentials(self) -> pulumi.Output[Mapping[str, builtins.str]]:
-        """
-        An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
-        """
         return pulumi.get(self, "ferretdb_credentials")
 
     @property
@@ -1467,6 +1767,14 @@ class Database(pulumi.CustomResource):
         The hostname assigned to the managed database.
         """
         return pulumi.get(self, "host")
+
+    @property
+    @pulumi.getter(name="kafkaRestUri")
+    def kafka_rest_uri(self) -> pulumi.Output[builtins.str]:
+        """
+        The URI to access the RESTful interface of your Kafka cluster if Kafka REST is enabled (Kafka engine types only).
+        """
+        return pulumi.get(self, "kafka_rest_uri")
 
     @property
     @pulumi.getter
@@ -1496,7 +1804,7 @@ class Database(pulumi.CustomResource):
     @pulumi.getter(name="maintenanceTime")
     def maintenance_time(self) -> pulumi.Output[builtins.str]:
         """
-        The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).
+        The preferred maintenance time for the managed database.
         """
         return pulumi.get(self, "maintenance_time")
 
@@ -1627,6 +1935,14 @@ class Database(pulumi.CustomResource):
         The SASL connection port for the managed database (Kafka engine types only).
         """
         return pulumi.get(self, "sasl_port")
+
+    @property
+    @pulumi.getter(name="schemaRegistryUri")
+    def schema_registry_uri(self) -> pulumi.Output[builtins.str]:
+        """
+        The URI to access the Schema Registry service of your Kafka cluster if Schema Registry is enabled (Kafka engine types only).
+        """
+        return pulumi.get(self, "schema_registry_uri")
 
     @property
     @pulumi.getter

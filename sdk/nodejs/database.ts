@@ -90,6 +90,14 @@ export class Database extends pulumi.CustomResource {
      */
     public readonly accessKey!: pulumi.Output<string>;
     /**
+     * The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+     */
+    public readonly backupHour!: pulumi.Output<string | undefined>;
+    /**
+     * The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
+     */
+    public readonly backupMinute!: pulumi.Output<string | undefined>;
+    /**
      * The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
      */
     public readonly clusterTimeZone!: pulumi.Output<string>;
@@ -110,17 +118,30 @@ export class Database extends pulumi.CustomResource {
      */
     public /*out*/ readonly dbname!: pulumi.Output<string>;
     /**
+     * The configuration value for Kafka Connect support (Kafka engine types only).
+     */
+    public readonly enableKafkaConnect!: pulumi.Output<boolean | undefined>;
+    /**
+     * The configuration value for Kafka REST support (Kafka engine types only).
+     */
+    public readonly enableKafkaRest!: pulumi.Output<boolean | undefined>;
+    /**
+     * The configuration value for Schema Registry support (Kafka engine types only).
+     */
+    public readonly enableSchemaRegistry!: pulumi.Output<boolean | undefined>;
+    /**
      * The configuration value for the data eviction policy on the managed database (Valkey engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
      */
     public readonly evictionPolicy!: pulumi.Output<string>;
-    /**
-     * An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
-     */
     public readonly ferretdbCredentials!: pulumi.Output<{[key: string]: string}>;
     /**
      * The hostname assigned to the managed database.
      */
     public /*out*/ readonly host!: pulumi.Output<string>;
+    /**
+     * The URI to access the RESTful interface of your Kafka cluster if Kafka REST is enabled (Kafka engine types only).
+     */
+    public readonly kafkaRestUri!: pulumi.Output<string>;
     /**
      * A label for the managed database.
      */
@@ -134,7 +155,7 @@ export class Database extends pulumi.CustomResource {
      */
     public readonly maintenanceDow!: pulumi.Output<string>;
     /**
-     * The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).
+     * The preferred maintenance time for the managed database.
      */
     public readonly maintenanceTime!: pulumi.Output<string>;
     /**
@@ -202,6 +223,10 @@ export class Database extends pulumi.CustomResource {
      */
     public readonly saslPort!: pulumi.Output<string>;
     /**
+     * The URI to access the Schema Registry service of your Kafka cluster if Schema Registry is enabled (Kafka engine types only).
+     */
+    public readonly schemaRegistryUri!: pulumi.Output<string>;
+    /**
      * The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).
      */
     public /*out*/ readonly status!: pulumi.Output<string>;
@@ -237,14 +262,20 @@ export class Database extends pulumi.CustomResource {
             const state = argsOrState as DatabaseState | undefined;
             resourceInputs["accessCert"] = state ? state.accessCert : undefined;
             resourceInputs["accessKey"] = state ? state.accessKey : undefined;
+            resourceInputs["backupHour"] = state ? state.backupHour : undefined;
+            resourceInputs["backupMinute"] = state ? state.backupMinute : undefined;
             resourceInputs["clusterTimeZone"] = state ? state.clusterTimeZone : undefined;
             resourceInputs["databaseEngine"] = state ? state.databaseEngine : undefined;
             resourceInputs["databaseEngineVersion"] = state ? state.databaseEngineVersion : undefined;
             resourceInputs["dateCreated"] = state ? state.dateCreated : undefined;
             resourceInputs["dbname"] = state ? state.dbname : undefined;
+            resourceInputs["enableKafkaConnect"] = state ? state.enableKafkaConnect : undefined;
+            resourceInputs["enableKafkaRest"] = state ? state.enableKafkaRest : undefined;
+            resourceInputs["enableSchemaRegistry"] = state ? state.enableSchemaRegistry : undefined;
             resourceInputs["evictionPolicy"] = state ? state.evictionPolicy : undefined;
             resourceInputs["ferretdbCredentials"] = state ? state.ferretdbCredentials : undefined;
             resourceInputs["host"] = state ? state.host : undefined;
+            resourceInputs["kafkaRestUri"] = state ? state.kafkaRestUri : undefined;
             resourceInputs["label"] = state ? state.label : undefined;
             resourceInputs["latestBackup"] = state ? state.latestBackup : undefined;
             resourceInputs["maintenanceDow"] = state ? state.maintenanceDow : undefined;
@@ -265,6 +296,7 @@ export class Database extends pulumi.CustomResource {
             resourceInputs["readReplicas"] = state ? state.readReplicas : undefined;
             resourceInputs["region"] = state ? state.region : undefined;
             resourceInputs["saslPort"] = state ? state.saslPort : undefined;
+            resourceInputs["schemaRegistryUri"] = state ? state.schemaRegistryUri : undefined;
             resourceInputs["status"] = state ? state.status : undefined;
             resourceInputs["tag"] = state ? state.tag : undefined;
             resourceInputs["trustedIps"] = state ? state.trustedIps : undefined;
@@ -289,11 +321,17 @@ export class Database extends pulumi.CustomResource {
             }
             resourceInputs["accessCert"] = args ? args.accessCert : undefined;
             resourceInputs["accessKey"] = args ? args.accessKey : undefined;
+            resourceInputs["backupHour"] = args ? args.backupHour : undefined;
+            resourceInputs["backupMinute"] = args ? args.backupMinute : undefined;
             resourceInputs["clusterTimeZone"] = args ? args.clusterTimeZone : undefined;
             resourceInputs["databaseEngine"] = args ? args.databaseEngine : undefined;
             resourceInputs["databaseEngineVersion"] = args ? args.databaseEngineVersion : undefined;
+            resourceInputs["enableKafkaConnect"] = args ? args.enableKafkaConnect : undefined;
+            resourceInputs["enableKafkaRest"] = args ? args.enableKafkaRest : undefined;
+            resourceInputs["enableSchemaRegistry"] = args ? args.enableSchemaRegistry : undefined;
             resourceInputs["evictionPolicy"] = args ? args.evictionPolicy : undefined;
             resourceInputs["ferretdbCredentials"] = args ? args.ferretdbCredentials : undefined;
+            resourceInputs["kafkaRestUri"] = args ? args.kafkaRestUri : undefined;
             resourceInputs["label"] = args ? args.label : undefined;
             resourceInputs["maintenanceDow"] = args ? args.maintenanceDow : undefined;
             resourceInputs["maintenanceTime"] = args ? args.maintenanceTime : undefined;
@@ -310,6 +348,7 @@ export class Database extends pulumi.CustomResource {
             resourceInputs["readReplicas"] = args ? args.readReplicas : undefined;
             resourceInputs["region"] = args ? args.region : undefined;
             resourceInputs["saslPort"] = args ? args.saslPort : undefined;
+            resourceInputs["schemaRegistryUri"] = args ? args.schemaRegistryUri : undefined;
             resourceInputs["tag"] = args ? args.tag : undefined;
             resourceInputs["trustedIps"] = args ? args.trustedIps : undefined;
             resourceInputs["vpcId"] = args ? args.vpcId : undefined;
@@ -341,6 +380,14 @@ export interface DatabaseState {
      */
     accessKey?: pulumi.Input<string>;
     /**
+     * The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+     */
+    backupHour?: pulumi.Input<string>;
+    /**
+     * The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
+     */
+    backupMinute?: pulumi.Input<string>;
+    /**
      * The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
      */
     clusterTimeZone?: pulumi.Input<string>;
@@ -361,17 +408,30 @@ export interface DatabaseState {
      */
     dbname?: pulumi.Input<string>;
     /**
+     * The configuration value for Kafka Connect support (Kafka engine types only).
+     */
+    enableKafkaConnect?: pulumi.Input<boolean>;
+    /**
+     * The configuration value for Kafka REST support (Kafka engine types only).
+     */
+    enableKafkaRest?: pulumi.Input<boolean>;
+    /**
+     * The configuration value for Schema Registry support (Kafka engine types only).
+     */
+    enableSchemaRegistry?: pulumi.Input<boolean>;
+    /**
      * The configuration value for the data eviction policy on the managed database (Valkey engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
      */
     evictionPolicy?: pulumi.Input<string>;
-    /**
-     * An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
-     */
     ferretdbCredentials?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
      * The hostname assigned to the managed database.
      */
     host?: pulumi.Input<string>;
+    /**
+     * The URI to access the RESTful interface of your Kafka cluster if Kafka REST is enabled (Kafka engine types only).
+     */
+    kafkaRestUri?: pulumi.Input<string>;
     /**
      * A label for the managed database.
      */
@@ -385,7 +445,7 @@ export interface DatabaseState {
      */
     maintenanceDow?: pulumi.Input<string>;
     /**
-     * The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).
+     * The preferred maintenance time for the managed database.
      */
     maintenanceTime?: pulumi.Input<string>;
     /**
@@ -453,6 +513,10 @@ export interface DatabaseState {
      */
     saslPort?: pulumi.Input<string>;
     /**
+     * The URI to access the Schema Registry service of your Kafka cluster if Schema Registry is enabled (Kafka engine types only).
+     */
+    schemaRegistryUri?: pulumi.Input<string>;
+    /**
      * The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).
      */
     status?: pulumi.Input<string>;
@@ -487,6 +551,14 @@ export interface DatabaseArgs {
      */
     accessKey?: pulumi.Input<string>;
     /**
+     * The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+     */
+    backupHour?: pulumi.Input<string>;
+    /**
+     * The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
+     */
+    backupMinute?: pulumi.Input<string>;
+    /**
      * The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
      */
     clusterTimeZone?: pulumi.Input<string>;
@@ -499,13 +571,26 @@ export interface DatabaseArgs {
      */
     databaseEngineVersion: pulumi.Input<string>;
     /**
+     * The configuration value for Kafka Connect support (Kafka engine types only).
+     */
+    enableKafkaConnect?: pulumi.Input<boolean>;
+    /**
+     * The configuration value for Kafka REST support (Kafka engine types only).
+     */
+    enableKafkaRest?: pulumi.Input<boolean>;
+    /**
+     * The configuration value for Schema Registry support (Kafka engine types only).
+     */
+    enableSchemaRegistry?: pulumi.Input<boolean>;
+    /**
      * The configuration value for the data eviction policy on the managed database (Valkey engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
      */
     evictionPolicy?: pulumi.Input<string>;
-    /**
-     * An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
-     */
     ferretdbCredentials?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * The URI to access the RESTful interface of your Kafka cluster if Kafka REST is enabled (Kafka engine types only).
+     */
+    kafkaRestUri?: pulumi.Input<string>;
     /**
      * A label for the managed database.
      */
@@ -515,7 +600,7 @@ export interface DatabaseArgs {
      */
     maintenanceDow?: pulumi.Input<string>;
     /**
-     * The preferred maintenance time for the managed database in 24-hour HH:00 format (e.g. `01:00`, `13:00`, `23:00`).
+     * The preferred maintenance time for the managed database.
      */
     maintenanceTime?: pulumi.Input<string>;
     /**
@@ -570,6 +655,10 @@ export interface DatabaseArgs {
      * The SASL connection port for the managed database (Kafka engine types only).
      */
     saslPort?: pulumi.Input<string>;
+    /**
+     * The URI to access the Schema Registry service of your Kafka cluster if Schema Registry is enabled (Kafka engine types only).
+     */
+    schemaRegistryUri?: pulumi.Input<string>;
     /**
      * The tag to assign to the managed database.
      */

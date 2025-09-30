@@ -52,6 +52,14 @@ export class DatabaseReplica extends pulumi.CustomResource {
     }
 
     /**
+     * The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+     */
+    public readonly backupHour!: pulumi.Output<string>;
+    /**
+     * The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
+     */
+    public readonly backupMinute!: pulumi.Output<string>;
+    /**
      * The configured time zone for the managed database read replica in TZ database format.
      */
     public /*out*/ readonly clusterTimeZone!: pulumi.Output<string>;
@@ -79,9 +87,6 @@ export class DatabaseReplica extends pulumi.CustomResource {
      * The configuration value for the data eviction policy on the managed database read replica (Valkey engine types only).
      */
     public readonly evictionPolicy!: pulumi.Output<string>;
-    /**
-     * An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
-     */
     public readonly ferretdbCredentials!: pulumi.Output<{[key: string]: string}>;
     /**
      * The hostname assigned to the managed database read replica.
@@ -189,6 +194,8 @@ export class DatabaseReplica extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as DatabaseReplicaState | undefined;
+            resourceInputs["backupHour"] = state ? state.backupHour : undefined;
+            resourceInputs["backupMinute"] = state ? state.backupMinute : undefined;
             resourceInputs["clusterTimeZone"] = state ? state.clusterTimeZone : undefined;
             resourceInputs["databaseEngine"] = state ? state.databaseEngine : undefined;
             resourceInputs["databaseEngineVersion"] = state ? state.databaseEngineVersion : undefined;
@@ -231,6 +238,8 @@ export class DatabaseReplica extends pulumi.CustomResource {
             if ((!args || args.region === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'region'");
             }
+            resourceInputs["backupHour"] = args ? args.backupHour : undefined;
+            resourceInputs["backupMinute"] = args ? args.backupMinute : undefined;
             resourceInputs["databaseId"] = args ? args.databaseId : undefined;
             resourceInputs["evictionPolicy"] = args ? args.evictionPolicy : undefined;
             resourceInputs["ferretdbCredentials"] = args ? args.ferretdbCredentials : undefined;
@@ -273,6 +282,14 @@ export class DatabaseReplica extends pulumi.CustomResource {
  */
 export interface DatabaseReplicaState {
     /**
+     * The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+     */
+    backupHour?: pulumi.Input<string>;
+    /**
+     * The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
+     */
+    backupMinute?: pulumi.Input<string>;
+    /**
      * The configured time zone for the managed database read replica in TZ database format.
      */
     clusterTimeZone?: pulumi.Input<string>;
@@ -300,9 +317,6 @@ export interface DatabaseReplicaState {
      * The configuration value for the data eviction policy on the managed database read replica (Valkey engine types only).
      */
     evictionPolicy?: pulumi.Input<string>;
-    /**
-     * An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
-     */
     ferretdbCredentials?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
      * The hostname assigned to the managed database read replica.
@@ -403,6 +417,14 @@ export interface DatabaseReplicaState {
  */
 export interface DatabaseReplicaArgs {
     /**
+     * The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+     */
+    backupHour?: pulumi.Input<string>;
+    /**
+     * The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
+     */
+    backupMinute?: pulumi.Input<string>;
+    /**
      * The managed database ID you want to attach this replica to.
      */
     databaseId: pulumi.Input<string>;
@@ -410,9 +432,6 @@ export interface DatabaseReplicaArgs {
      * The configuration value for the data eviction policy on the managed database read replica (Valkey engine types only).
      */
     evictionPolicy?: pulumi.Input<string>;
-    /**
-     * An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
-     */
     ferretdbCredentials?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
      * A label for the managed database read replica.

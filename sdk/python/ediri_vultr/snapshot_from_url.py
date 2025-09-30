@@ -20,12 +20,16 @@ __all__ = ['SnapshotFromUrlArgs', 'SnapshotFromUrl']
 @pulumi.input_type
 class SnapshotFromUrlArgs:
     def __init__(__self__, *,
-                 url: pulumi.Input[builtins.str]):
+                 url: pulumi.Input[builtins.str],
+                 use_uefi: Optional[pulumi.Input[builtins.bool]] = None):
         """
         The set of arguments for constructing a SnapshotFromUrl resource.
         :param pulumi.Input[builtins.str] url: URL of the given resource you want to create a snapshot from.
+        :param pulumi.Input[builtins.bool] use_uefi: Whether or not to use UEFI when creating the snapshot.
         """
         pulumi.set(__self__, "url", url)
+        if use_uefi is not None:
+            pulumi.set(__self__, "use_uefi", use_uefi)
 
     @property
     @pulumi.getter
@@ -39,6 +43,18 @@ class SnapshotFromUrlArgs:
     def url(self, value: pulumi.Input[builtins.str]):
         pulumi.set(self, "url", value)
 
+    @property
+    @pulumi.getter(name="useUefi")
+    def use_uefi(self) -> Optional[pulumi.Input[builtins.bool]]:
+        """
+        Whether or not to use UEFI when creating the snapshot.
+        """
+        return pulumi.get(self, "use_uefi")
+
+    @use_uefi.setter
+    def use_uefi(self, value: Optional[pulumi.Input[builtins.bool]]):
+        pulumi.set(self, "use_uefi", value)
+
 
 @pulumi.input_type
 class _SnapshotFromUrlState:
@@ -49,7 +65,8 @@ class _SnapshotFromUrlState:
                  os_id: Optional[pulumi.Input[builtins.int]] = None,
                  size: Optional[pulumi.Input[builtins.int]] = None,
                  status: Optional[pulumi.Input[builtins.str]] = None,
-                 url: Optional[pulumi.Input[builtins.str]] = None):
+                 url: Optional[pulumi.Input[builtins.str]] = None,
+                 use_uefi: Optional[pulumi.Input[builtins.bool]] = None):
         """
         Input properties used for looking up and filtering SnapshotFromUrl resources.
         :param pulumi.Input[builtins.int] app_id: The app id which the snapshot is associated with.
@@ -59,6 +76,7 @@ class _SnapshotFromUrlState:
         :param pulumi.Input[builtins.int] size: The size of the snapshot in Bytes.
         :param pulumi.Input[builtins.str] status: The status for the given snapshot.
         :param pulumi.Input[builtins.str] url: URL of the given resource you want to create a snapshot from.
+        :param pulumi.Input[builtins.bool] use_uefi: Whether or not to use UEFI when creating the snapshot.
         """
         if app_id is not None:
             pulumi.set(__self__, "app_id", app_id)
@@ -74,6 +92,8 @@ class _SnapshotFromUrlState:
             pulumi.set(__self__, "status", status)
         if url is not None:
             pulumi.set(__self__, "url", url)
+        if use_uefi is not None:
+            pulumi.set(__self__, "use_uefi", use_uefi)
 
     @property
     @pulumi.getter(name="appId")
@@ -159,6 +179,18 @@ class _SnapshotFromUrlState:
     def url(self, value: Optional[pulumi.Input[builtins.str]]):
         pulumi.set(self, "url", value)
 
+    @property
+    @pulumi.getter(name="useUefi")
+    def use_uefi(self) -> Optional[pulumi.Input[builtins.bool]]:
+        """
+        Whether or not to use UEFI when creating the snapshot.
+        """
+        return pulumi.get(self, "use_uefi")
+
+    @use_uefi.setter
+    def use_uefi(self, value: Optional[pulumi.Input[builtins.bool]]):
+        pulumi.set(self, "use_uefi", value)
+
 
 @pulumi.type_token("vultr:index/snapshotFromUrl:SnapshotFromUrl")
 class SnapshotFromUrl(pulumi.CustomResource):
@@ -167,6 +199,7 @@ class SnapshotFromUrl(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  url: Optional[pulumi.Input[builtins.str]] = None,
+                 use_uefi: Optional[pulumi.Input[builtins.bool]] = None,
                  __props__=None):
         """
         Provides a Vultr Snapshots from URL resource. This can be used to create, read, modify, and delete Snapshots from URL.
@@ -179,7 +212,9 @@ class SnapshotFromUrl(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_snapshot = vultr.SnapshotFromUrl("mySnapshot", url="http://dl-cdn.alpinelinux.org/alpine/v3.9/releases/x86_64/alpine-virt-3.9.1-x86_64.iso")
+        my_snapshot = vultr.SnapshotFromUrl("mySnapshot",
+            url="http://dl-cdn.alpinelinux.org/alpine/v3.9/releases/x86_64/alpine-virt-3.9.1-x86_64.iso",
+            use_uefi=True)
         ```
 
         ## Import
@@ -193,6 +228,7 @@ class SnapshotFromUrl(pulumi.CustomResource):
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[builtins.str] url: URL of the given resource you want to create a snapshot from.
+        :param pulumi.Input[builtins.bool] use_uefi: Whether or not to use UEFI when creating the snapshot.
         """
         ...
     @overload
@@ -211,7 +247,9 @@ class SnapshotFromUrl(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_snapshot = vultr.SnapshotFromUrl("mySnapshot", url="http://dl-cdn.alpinelinux.org/alpine/v3.9/releases/x86_64/alpine-virt-3.9.1-x86_64.iso")
+        my_snapshot = vultr.SnapshotFromUrl("mySnapshot",
+            url="http://dl-cdn.alpinelinux.org/alpine/v3.9/releases/x86_64/alpine-virt-3.9.1-x86_64.iso",
+            use_uefi=True)
         ```
 
         ## Import
@@ -238,6 +276,7 @@ class SnapshotFromUrl(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  url: Optional[pulumi.Input[builtins.str]] = None,
+                 use_uefi: Optional[pulumi.Input[builtins.bool]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -250,6 +289,7 @@ class SnapshotFromUrl(pulumi.CustomResource):
             if url is None and not opts.urn:
                 raise TypeError("Missing required property 'url'")
             __props__.__dict__["url"] = url
+            __props__.__dict__["use_uefi"] = use_uefi
             __props__.__dict__["app_id"] = None
             __props__.__dict__["date_created"] = None
             __props__.__dict__["description"] = None
@@ -272,7 +312,8 @@ class SnapshotFromUrl(pulumi.CustomResource):
             os_id: Optional[pulumi.Input[builtins.int]] = None,
             size: Optional[pulumi.Input[builtins.int]] = None,
             status: Optional[pulumi.Input[builtins.str]] = None,
-            url: Optional[pulumi.Input[builtins.str]] = None) -> 'SnapshotFromUrl':
+            url: Optional[pulumi.Input[builtins.str]] = None,
+            use_uefi: Optional[pulumi.Input[builtins.bool]] = None) -> 'SnapshotFromUrl':
         """
         Get an existing SnapshotFromUrl resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -287,6 +328,7 @@ class SnapshotFromUrl(pulumi.CustomResource):
         :param pulumi.Input[builtins.int] size: The size of the snapshot in Bytes.
         :param pulumi.Input[builtins.str] status: The status for the given snapshot.
         :param pulumi.Input[builtins.str] url: URL of the given resource you want to create a snapshot from.
+        :param pulumi.Input[builtins.bool] use_uefi: Whether or not to use UEFI when creating the snapshot.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -299,6 +341,7 @@ class SnapshotFromUrl(pulumi.CustomResource):
         __props__.__dict__["size"] = size
         __props__.__dict__["status"] = status
         __props__.__dict__["url"] = url
+        __props__.__dict__["use_uefi"] = use_uefi
         return SnapshotFromUrl(resource_name, opts=opts, __props__=__props__)
 
     @property
@@ -356,4 +399,12 @@ class SnapshotFromUrl(pulumi.CustomResource):
         URL of the given resource you want to create a snapshot from.
         """
         return pulumi.get(self, "url")
+
+    @property
+    @pulumi.getter(name="useUefi")
+    def use_uefi(self) -> pulumi.Output[Optional[builtins.bool]]:
+        """
+        Whether or not to use UEFI when creating the snapshot.
+        """
+        return pulumi.get(self, "use_uefi")
 
