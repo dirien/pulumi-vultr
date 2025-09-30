@@ -59,23 +59,23 @@ export class DatabaseConnector extends pulumi.CustomResource {
     /**
      * The class for the new managed database connector.
      */
-    public readonly class!: pulumi.Output<string>;
+    declare public readonly class: pulumi.Output<string>;
     /**
      * A JSON string containing the configuration properties you wish to use with the new managed database connector.
      */
-    public readonly config!: pulumi.Output<string | undefined>;
+    declare public readonly config: pulumi.Output<string | undefined>;
     /**
      * The managed database ID you want to attach this connector to.
      */
-    public readonly databaseId!: pulumi.Output<string>;
+    declare public readonly databaseId: pulumi.Output<string>;
     /**
      * The name for the new managed database connector.
      */
-    public readonly name!: pulumi.Output<string>;
+    declare public readonly name: pulumi.Output<string>;
     /**
      * A comma-separated list of topics to use with the new managed database connector.
      */
-    public readonly topics!: pulumi.Output<string>;
+    declare public readonly topics: pulumi.Output<string>;
 
     /**
      * Create a DatabaseConnector resource with the given unique name, arguments, and options.
@@ -90,30 +90,30 @@ export class DatabaseConnector extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as DatabaseConnectorState | undefined;
-            resourceInputs["class"] = state ? state.class : undefined;
-            resourceInputs["config"] = state ? state.config : undefined;
-            resourceInputs["databaseId"] = state ? state.databaseId : undefined;
-            resourceInputs["name"] = state ? state.name : undefined;
-            resourceInputs["topics"] = state ? state.topics : undefined;
+            resourceInputs["class"] = state?.class;
+            resourceInputs["config"] = state?.config;
+            resourceInputs["databaseId"] = state?.databaseId;
+            resourceInputs["name"] = state?.name;
+            resourceInputs["topics"] = state?.topics;
         } else {
             const args = argsOrState as DatabaseConnectorArgs | undefined;
-            if ((!args || args.class === undefined) && !opts.urn) {
+            if (args?.class === undefined && !opts.urn) {
                 throw new Error("Missing required property 'class'");
             }
-            if ((!args || args.databaseId === undefined) && !opts.urn) {
+            if (args?.databaseId === undefined && !opts.urn) {
                 throw new Error("Missing required property 'databaseId'");
             }
-            if ((!args || args.name === undefined) && !opts.urn) {
+            if (args?.name === undefined && !opts.urn) {
                 throw new Error("Missing required property 'name'");
             }
-            if ((!args || args.topics === undefined) && !opts.urn) {
+            if (args?.topics === undefined && !opts.urn) {
                 throw new Error("Missing required property 'topics'");
             }
-            resourceInputs["class"] = args ? args.class : undefined;
-            resourceInputs["config"] = args ? args.config : undefined;
-            resourceInputs["databaseId"] = args ? args.databaseId : undefined;
-            resourceInputs["name"] = args ? args.name : undefined;
-            resourceInputs["topics"] = args ? args.topics : undefined;
+            resourceInputs["class"] = args?.class;
+            resourceInputs["config"] = args?.config;
+            resourceInputs["databaseId"] = args?.databaseId;
+            resourceInputs["name"] = args?.name;
+            resourceInputs["topics"] = args?.topics;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(DatabaseConnector.__pulumiType, name, resourceInputs, opts);

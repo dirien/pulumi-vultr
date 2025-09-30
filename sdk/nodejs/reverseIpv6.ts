@@ -41,15 +41,15 @@ export class ReverseIpv6 extends pulumi.CustomResource {
      * The ID of the server you want to set an IPv6
      * reverse DNS record for.
      */
-    public readonly instanceId!: pulumi.Output<string>;
+    declare public readonly instanceId: pulumi.Output<string>;
     /**
      * The IPv6 address used in the reverse DNS record.
      */
-    public readonly ip!: pulumi.Output<string>;
+    declare public readonly ip: pulumi.Output<string>;
     /**
      * The hostname used in the IPv6 reverse DNS record.
      */
-    public readonly reverse!: pulumi.Output<string>;
+    declare public readonly reverse: pulumi.Output<string>;
 
     /**
      * Create a ReverseIpv6 resource with the given unique name, arguments, and options.
@@ -64,23 +64,23 @@ export class ReverseIpv6 extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as ReverseIpv6State | undefined;
-            resourceInputs["instanceId"] = state ? state.instanceId : undefined;
-            resourceInputs["ip"] = state ? state.ip : undefined;
-            resourceInputs["reverse"] = state ? state.reverse : undefined;
+            resourceInputs["instanceId"] = state?.instanceId;
+            resourceInputs["ip"] = state?.ip;
+            resourceInputs["reverse"] = state?.reverse;
         } else {
             const args = argsOrState as ReverseIpv6Args | undefined;
-            if ((!args || args.instanceId === undefined) && !opts.urn) {
+            if (args?.instanceId === undefined && !opts.urn) {
                 throw new Error("Missing required property 'instanceId'");
             }
-            if ((!args || args.ip === undefined) && !opts.urn) {
+            if (args?.ip === undefined && !opts.urn) {
                 throw new Error("Missing required property 'ip'");
             }
-            if ((!args || args.reverse === undefined) && !opts.urn) {
+            if (args?.reverse === undefined && !opts.urn) {
                 throw new Error("Missing required property 'reverse'");
             }
-            resourceInputs["instanceId"] = args ? args.instanceId : undefined;
-            resourceInputs["ip"] = args ? args.ip : undefined;
-            resourceInputs["reverse"] = args ? args.reverse : undefined;
+            resourceInputs["instanceId"] = args?.instanceId;
+            resourceInputs["ip"] = args?.ip;
+            resourceInputs["reverse"] = args?.reverse;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(ReverseIpv6.__pulumiType, name, resourceInputs, opts);

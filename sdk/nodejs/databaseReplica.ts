@@ -54,132 +54,132 @@ export class DatabaseReplica extends pulumi.CustomResource {
     /**
      * The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
      */
-    public readonly backupHour!: pulumi.Output<string>;
+    declare public readonly backupHour: pulumi.Output<string>;
     /**
      * The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
      */
-    public readonly backupMinute!: pulumi.Output<string>;
+    declare public readonly backupMinute: pulumi.Output<string>;
     /**
      * The configured time zone for the managed database read replica in TZ database format.
      */
-    public /*out*/ readonly clusterTimeZone!: pulumi.Output<string>;
+    declare public /*out*/ readonly clusterTimeZone: pulumi.Output<string>;
     /**
      * The database engine of the managed database read replica.
      */
-    public /*out*/ readonly databaseEngine!: pulumi.Output<string>;
+    declare public /*out*/ readonly databaseEngine: pulumi.Output<string>;
     /**
      * The database engine version of the managed database read replica.
      */
-    public /*out*/ readonly databaseEngineVersion!: pulumi.Output<string>;
+    declare public /*out*/ readonly databaseEngineVersion: pulumi.Output<string>;
     /**
      * The managed database ID you want to attach this replica to.
      */
-    public readonly databaseId!: pulumi.Output<string>;
+    declare public readonly databaseId: pulumi.Output<string>;
     /**
      * The date the managed database read replica was added to your Vultr account.
      */
-    public /*out*/ readonly dateCreated!: pulumi.Output<string>;
+    declare public /*out*/ readonly dateCreated: pulumi.Output<string>;
     /**
      * The managed database read replica's default logical database.
      */
-    public /*out*/ readonly dbname!: pulumi.Output<string>;
+    declare public /*out*/ readonly dbname: pulumi.Output<string>;
     /**
      * The configuration value for the data eviction policy on the managed database read replica (Valkey engine types only).
      */
-    public readonly evictionPolicy!: pulumi.Output<string>;
-    public readonly ferretdbCredentials!: pulumi.Output<{[key: string]: string}>;
+    declare public readonly evictionPolicy: pulumi.Output<string>;
+    declare public readonly ferretdbCredentials: pulumi.Output<{[key: string]: string}>;
     /**
      * The hostname assigned to the managed database read replica.
      */
-    public /*out*/ readonly host!: pulumi.Output<string>;
+    declare public /*out*/ readonly host: pulumi.Output<string>;
     /**
      * A label for the managed database read replica.
      */
-    public readonly label!: pulumi.Output<string>;
+    declare public readonly label: pulumi.Output<string>;
     /**
      * The date of the latest backup available on the managed database read replica.
      */
-    public /*out*/ readonly latestBackup!: pulumi.Output<string>;
+    declare public /*out*/ readonly latestBackup: pulumi.Output<string>;
     /**
      * The preferred maintenance day of week for the managed database read replica.
      */
-    public /*out*/ readonly maintenanceDow!: pulumi.Output<string>;
+    declare public /*out*/ readonly maintenanceDow: pulumi.Output<string>;
     /**
      * The preferred maintenance time for the managed database read replica.
      */
-    public /*out*/ readonly maintenanceTime!: pulumi.Output<string>;
+    declare public /*out*/ readonly maintenanceTime: pulumi.Output<string>;
     /**
      * The configuration value for the long query time (in seconds) on the managed database read replica (MySQL engine types only).
      */
-    public readonly mysqlLongQueryTime!: pulumi.Output<number>;
+    declare public readonly mysqlLongQueryTime: pulumi.Output<number>;
     /**
      * The configuration value for whether primary keys are required on the managed database read replica (MySQL engine types only).
      */
-    public readonly mysqlRequirePrimaryKey!: pulumi.Output<boolean>;
+    declare public readonly mysqlRequirePrimaryKey: pulumi.Output<boolean>;
     /**
      * The configuration value for slow query logging on the managed database read replica (MySQL engine types only).
      */
-    public readonly mysqlSlowQueryLog!: pulumi.Output<boolean>;
+    declare public readonly mysqlSlowQueryLog: pulumi.Output<boolean>;
     /**
      * A list of SQL modes currently configured for the managed database read replica (MySQL engine types only).
      */
-    public readonly mysqlSqlModes!: pulumi.Output<string[]>;
+    declare public readonly mysqlSqlModes: pulumi.Output<string[]>;
     /**
      * The password for the managed database read replica's primary admin user.
      */
-    public /*out*/ readonly password!: pulumi.Output<string>;
+    declare public /*out*/ readonly password: pulumi.Output<string>;
     /**
      * The managed database read replica's plan ID.
      */
-    public /*out*/ readonly plan!: pulumi.Output<string>;
+    declare public /*out*/ readonly plan: pulumi.Output<string>;
     /**
      * The description of the disk(s) on the managed database read replica.
      */
-    public readonly planDisk!: pulumi.Output<number>;
+    declare public readonly planDisk: pulumi.Output<number>;
     /**
      * The amount of memory available on the managed database read replica in MB.
      */
-    public /*out*/ readonly planRam!: pulumi.Output<number>;
+    declare public /*out*/ readonly planRam: pulumi.Output<number>;
     /**
      * The number of standby nodes available on the managed database read replica.
      */
-    public /*out*/ readonly planReplicas!: pulumi.Output<number>;
+    declare public /*out*/ readonly planReplicas: pulumi.Output<number>;
     /**
      * The number of virtual CPUs available on the managed database read replica.
      */
-    public /*out*/ readonly planVcpus!: pulumi.Output<number>;
+    declare public /*out*/ readonly planVcpus: pulumi.Output<number>;
     /**
      * The connection port for the managed database read replica.
      */
-    public /*out*/ readonly port!: pulumi.Output<string>;
+    declare public /*out*/ readonly port: pulumi.Output<string>;
     /**
      * The public hostname assigned to the managed database read replica (VPC-attached only).
      */
-    public readonly publicHost!: pulumi.Output<string>;
+    declare public readonly publicHost: pulumi.Output<string>;
     /**
      * The ID of the region that the managed database read replica is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
      */
-    public readonly region!: pulumi.Output<string>;
+    declare public readonly region: pulumi.Output<string>;
     /**
      * The current status of the managed database read replica (poweroff, rebuilding, rebalancing, configuring, running).
      */
-    public /*out*/ readonly status!: pulumi.Output<string>;
+    declare public /*out*/ readonly status: pulumi.Output<string>;
     /**
      * The tag to assign to the managed database read replica.
      */
-    public readonly tag!: pulumi.Output<string>;
+    declare public readonly tag: pulumi.Output<string>;
     /**
      * A list of allowed IP addresses for the managed database read replica.
      */
-    public readonly trustedIps!: pulumi.Output<string[]>;
+    declare public readonly trustedIps: pulumi.Output<string[]>;
     /**
      * The primary admin user for the managed database read replica.
      */
-    public /*out*/ readonly user!: pulumi.Output<string>;
+    declare public /*out*/ readonly user: pulumi.Output<string>;
     /**
      * The ID of the VPC Network attached to the managed database read replica.
      */
-    public /*out*/ readonly vpcId!: pulumi.Output<string>;
+    declare public /*out*/ readonly vpcId: pulumi.Output<string>;
 
     /**
      * Create a DatabaseReplica resource with the given unique name, arguments, and options.
@@ -194,65 +194,65 @@ export class DatabaseReplica extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as DatabaseReplicaState | undefined;
-            resourceInputs["backupHour"] = state ? state.backupHour : undefined;
-            resourceInputs["backupMinute"] = state ? state.backupMinute : undefined;
-            resourceInputs["clusterTimeZone"] = state ? state.clusterTimeZone : undefined;
-            resourceInputs["databaseEngine"] = state ? state.databaseEngine : undefined;
-            resourceInputs["databaseEngineVersion"] = state ? state.databaseEngineVersion : undefined;
-            resourceInputs["databaseId"] = state ? state.databaseId : undefined;
-            resourceInputs["dateCreated"] = state ? state.dateCreated : undefined;
-            resourceInputs["dbname"] = state ? state.dbname : undefined;
-            resourceInputs["evictionPolicy"] = state ? state.evictionPolicy : undefined;
-            resourceInputs["ferretdbCredentials"] = state ? state.ferretdbCredentials : undefined;
-            resourceInputs["host"] = state ? state.host : undefined;
-            resourceInputs["label"] = state ? state.label : undefined;
-            resourceInputs["latestBackup"] = state ? state.latestBackup : undefined;
-            resourceInputs["maintenanceDow"] = state ? state.maintenanceDow : undefined;
-            resourceInputs["maintenanceTime"] = state ? state.maintenanceTime : undefined;
-            resourceInputs["mysqlLongQueryTime"] = state ? state.mysqlLongQueryTime : undefined;
-            resourceInputs["mysqlRequirePrimaryKey"] = state ? state.mysqlRequirePrimaryKey : undefined;
-            resourceInputs["mysqlSlowQueryLog"] = state ? state.mysqlSlowQueryLog : undefined;
-            resourceInputs["mysqlSqlModes"] = state ? state.mysqlSqlModes : undefined;
-            resourceInputs["password"] = state ? state.password : undefined;
-            resourceInputs["plan"] = state ? state.plan : undefined;
-            resourceInputs["planDisk"] = state ? state.planDisk : undefined;
-            resourceInputs["planRam"] = state ? state.planRam : undefined;
-            resourceInputs["planReplicas"] = state ? state.planReplicas : undefined;
-            resourceInputs["planVcpus"] = state ? state.planVcpus : undefined;
-            resourceInputs["port"] = state ? state.port : undefined;
-            resourceInputs["publicHost"] = state ? state.publicHost : undefined;
-            resourceInputs["region"] = state ? state.region : undefined;
-            resourceInputs["status"] = state ? state.status : undefined;
-            resourceInputs["tag"] = state ? state.tag : undefined;
-            resourceInputs["trustedIps"] = state ? state.trustedIps : undefined;
-            resourceInputs["user"] = state ? state.user : undefined;
-            resourceInputs["vpcId"] = state ? state.vpcId : undefined;
+            resourceInputs["backupHour"] = state?.backupHour;
+            resourceInputs["backupMinute"] = state?.backupMinute;
+            resourceInputs["clusterTimeZone"] = state?.clusterTimeZone;
+            resourceInputs["databaseEngine"] = state?.databaseEngine;
+            resourceInputs["databaseEngineVersion"] = state?.databaseEngineVersion;
+            resourceInputs["databaseId"] = state?.databaseId;
+            resourceInputs["dateCreated"] = state?.dateCreated;
+            resourceInputs["dbname"] = state?.dbname;
+            resourceInputs["evictionPolicy"] = state?.evictionPolicy;
+            resourceInputs["ferretdbCredentials"] = state?.ferretdbCredentials;
+            resourceInputs["host"] = state?.host;
+            resourceInputs["label"] = state?.label;
+            resourceInputs["latestBackup"] = state?.latestBackup;
+            resourceInputs["maintenanceDow"] = state?.maintenanceDow;
+            resourceInputs["maintenanceTime"] = state?.maintenanceTime;
+            resourceInputs["mysqlLongQueryTime"] = state?.mysqlLongQueryTime;
+            resourceInputs["mysqlRequirePrimaryKey"] = state?.mysqlRequirePrimaryKey;
+            resourceInputs["mysqlSlowQueryLog"] = state?.mysqlSlowQueryLog;
+            resourceInputs["mysqlSqlModes"] = state?.mysqlSqlModes;
+            resourceInputs["password"] = state?.password;
+            resourceInputs["plan"] = state?.plan;
+            resourceInputs["planDisk"] = state?.planDisk;
+            resourceInputs["planRam"] = state?.planRam;
+            resourceInputs["planReplicas"] = state?.planReplicas;
+            resourceInputs["planVcpus"] = state?.planVcpus;
+            resourceInputs["port"] = state?.port;
+            resourceInputs["publicHost"] = state?.publicHost;
+            resourceInputs["region"] = state?.region;
+            resourceInputs["status"] = state?.status;
+            resourceInputs["tag"] = state?.tag;
+            resourceInputs["trustedIps"] = state?.trustedIps;
+            resourceInputs["user"] = state?.user;
+            resourceInputs["vpcId"] = state?.vpcId;
         } else {
             const args = argsOrState as DatabaseReplicaArgs | undefined;
-            if ((!args || args.databaseId === undefined) && !opts.urn) {
+            if (args?.databaseId === undefined && !opts.urn) {
                 throw new Error("Missing required property 'databaseId'");
             }
-            if ((!args || args.label === undefined) && !opts.urn) {
+            if (args?.label === undefined && !opts.urn) {
                 throw new Error("Missing required property 'label'");
             }
-            if ((!args || args.region === undefined) && !opts.urn) {
+            if (args?.region === undefined && !opts.urn) {
                 throw new Error("Missing required property 'region'");
             }
-            resourceInputs["backupHour"] = args ? args.backupHour : undefined;
-            resourceInputs["backupMinute"] = args ? args.backupMinute : undefined;
-            resourceInputs["databaseId"] = args ? args.databaseId : undefined;
-            resourceInputs["evictionPolicy"] = args ? args.evictionPolicy : undefined;
-            resourceInputs["ferretdbCredentials"] = args ? args.ferretdbCredentials : undefined;
-            resourceInputs["label"] = args ? args.label : undefined;
-            resourceInputs["mysqlLongQueryTime"] = args ? args.mysqlLongQueryTime : undefined;
-            resourceInputs["mysqlRequirePrimaryKey"] = args ? args.mysqlRequirePrimaryKey : undefined;
-            resourceInputs["mysqlSlowQueryLog"] = args ? args.mysqlSlowQueryLog : undefined;
-            resourceInputs["mysqlSqlModes"] = args ? args.mysqlSqlModes : undefined;
-            resourceInputs["planDisk"] = args ? args.planDisk : undefined;
-            resourceInputs["publicHost"] = args ? args.publicHost : undefined;
-            resourceInputs["region"] = args ? args.region : undefined;
-            resourceInputs["tag"] = args ? args.tag : undefined;
-            resourceInputs["trustedIps"] = args ? args.trustedIps : undefined;
+            resourceInputs["backupHour"] = args?.backupHour;
+            resourceInputs["backupMinute"] = args?.backupMinute;
+            resourceInputs["databaseId"] = args?.databaseId;
+            resourceInputs["evictionPolicy"] = args?.evictionPolicy;
+            resourceInputs["ferretdbCredentials"] = args?.ferretdbCredentials;
+            resourceInputs["label"] = args?.label;
+            resourceInputs["mysqlLongQueryTime"] = args?.mysqlLongQueryTime;
+            resourceInputs["mysqlRequirePrimaryKey"] = args?.mysqlRequirePrimaryKey;
+            resourceInputs["mysqlSlowQueryLog"] = args?.mysqlSlowQueryLog;
+            resourceInputs["mysqlSqlModes"] = args?.mysqlSqlModes;
+            resourceInputs["planDisk"] = args?.planDisk;
+            resourceInputs["publicHost"] = args?.publicHost;
+            resourceInputs["region"] = args?.region;
+            resourceInputs["tag"] = args?.tag;
+            resourceInputs["trustedIps"] = args?.trustedIps;
             resourceInputs["clusterTimeZone"] = undefined /*out*/;
             resourceInputs["databaseEngine"] = undefined /*out*/;
             resourceInputs["databaseEngineVersion"] = undefined /*out*/;

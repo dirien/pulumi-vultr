@@ -87,185 +87,185 @@ export class Instance extends pulumi.CustomResource {
     /**
      * Whether an activation email will be sent when the server is ready.
      */
-    public readonly activationEmail!: pulumi.Output<boolean | undefined>;
+    declare public readonly activationEmail: pulumi.Output<boolean | undefined>;
     /**
      * The server's allowed bandwidth usage in GB.
      */
-    public /*out*/ readonly allowedBandwidth!: pulumi.Output<number>;
+    declare public /*out*/ readonly allowedBandwidth: pulumi.Output<number>;
     /**
      * The ID of the Vultr application to be installed on the server. [See List Applications](https://www.vultr.com/api/#operation/list-applications)
      */
-    public readonly appId!: pulumi.Output<number>;
+    declare public readonly appId: pulumi.Output<number>;
     /**
      * A map of user-supplied variable keys and values for Vultr Marketplace apps. [See List Marketplace App Variables](https://www.vultr.com/api/#tag/marketplace/operation/list-marketplace-app-variables)
      */
-    public readonly appVariables!: pulumi.Output<{[key: string]: string} | undefined>;
+    declare public readonly appVariables: pulumi.Output<{[key: string]: string} | undefined>;
     /**
      * Whether automatic backups will be enabled for this server (these have an extra charge associated with them). Values can be enabled or disabled.
      */
-    public readonly backups!: pulumi.Output<string | undefined>;
+    declare public readonly backups: pulumi.Output<string | undefined>;
     /**
      * A block that defines the way backups should be scheduled. While this is an optional field if `backups` are `enabled` this field is mandatory. The configuration of a `backupsSchedule` is listed below.
      */
-    public readonly backupsSchedule!: pulumi.Output<outputs.InstanceBackupsSchedule | undefined>;
+    declare public readonly backupsSchedule: pulumi.Output<outputs.InstanceBackupsSchedule | undefined>;
     /**
      * The date the server was added to your Vultr account.
      */
-    public /*out*/ readonly dateCreated!: pulumi.Output<string>;
+    declare public /*out*/ readonly dateCreated: pulumi.Output<string>;
     /**
      * Whether DDOS protection will be enabled on the server (there is an additional charge for this).
      */
-    public readonly ddosProtection!: pulumi.Output<boolean | undefined>;
+    declare public readonly ddosProtection: pulumi.Output<boolean | undefined>;
     /**
      * The server's default password.
      */
-    public /*out*/ readonly defaultPassword!: pulumi.Output<string>;
+    declare public /*out*/ readonly defaultPassword: pulumi.Output<string>;
     /**
      * Whether the server has a public IPv4 address assigned (only possible with `enableIpv6` set to `true`)
      */
-    public readonly disablePublicIpv4!: pulumi.Output<boolean | undefined>;
+    declare public readonly disablePublicIpv4: pulumi.Output<boolean | undefined>;
     /**
      * The description of the disk(s) on the server.
      */
-    public /*out*/ readonly disk!: pulumi.Output<number>;
+    declare public /*out*/ readonly disk: pulumi.Output<number>;
     /**
      * Whether the server has IPv6 networking activated.
      */
-    public readonly enableIpv6!: pulumi.Output<boolean | undefined>;
+    declare public readonly enableIpv6: pulumi.Output<boolean | undefined>;
     /**
      * Array of which features are enabled.
      */
-    public /*out*/ readonly features!: pulumi.Output<string[]>;
+    declare public /*out*/ readonly features: pulumi.Output<string[]>;
     /**
      * The ID of the firewall group to assign to the server.
      */
-    public readonly firewallGroupId!: pulumi.Output<string>;
+    declare public readonly firewallGroupId: pulumi.Output<string>;
     /**
      * The server's IPv4 gateway.
      */
-    public /*out*/ readonly gatewayV4!: pulumi.Output<string>;
+    declare public /*out*/ readonly gatewayV4: pulumi.Output<string>;
     /**
      * The hostname to assign to the server.
      */
-    public readonly hostname!: pulumi.Output<string>;
+    declare public readonly hostname: pulumi.Output<string>;
     /**
      * The ID of the Vultr marketplace application to be installed on the server. [See List Applications](https://www.vultr.com/api/#operation/list-applications) Note marketplace applications are denoted by type: `marketplace` and you must use the `imageId` not the id.
      */
-    public readonly imageId!: pulumi.Output<string>;
+    declare public readonly imageId: pulumi.Output<string>;
     /**
      * The server's internal IP address.
      */
-    public /*out*/ readonly internalIp!: pulumi.Output<string>;
+    declare public /*out*/ readonly internalIp: pulumi.Output<string>;
     /**
      * The URL location of the iPXE chainloader.
      */
-    public readonly ipxeChainUrl!: pulumi.Output<string | undefined>;
+    declare public readonly ipxeChainUrl: pulumi.Output<string | undefined>;
     /**
      * The ID of the ISO file to be installed on the server. [See List ISO](https://www.vultr.com/api/#operation/list-isos)
      */
-    public readonly isoId!: pulumi.Output<string | undefined>;
+    declare public readonly isoId: pulumi.Output<string | undefined>;
     /**
      * The server's current KVM URL. This URL will change periodically. It is not advised to cache this value.
      */
-    public /*out*/ readonly kvm!: pulumi.Output<string>;
+    declare public /*out*/ readonly kvm: pulumi.Output<string>;
     /**
      * A label for the server.
      */
-    public readonly label!: pulumi.Output<string>;
+    declare public readonly label: pulumi.Output<string>;
     /**
      * The server's main IP address.
      */
-    public /*out*/ readonly mainIp!: pulumi.Output<string>;
+    declare public /*out*/ readonly mainIp: pulumi.Output<string>;
     /**
      * The server's IPv4 netmask.
      */
-    public /*out*/ readonly netmaskV4!: pulumi.Output<string>;
+    declare public /*out*/ readonly netmaskV4: pulumi.Output<string>;
     /**
      * The string description of the operating system installed on the server.
      */
-    public /*out*/ readonly os!: pulumi.Output<string>;
+    declare public /*out*/ readonly os: pulumi.Output<string>;
     /**
      * The ID of the operating system to be installed on the server. [See List OS](https://www.vultr.com/api/#operation/list-os)
      */
-    public readonly osId!: pulumi.Output<number>;
+    declare public readonly osId: pulumi.Output<number>;
     /**
      * The ID of the plan that you want the instance to subscribe to. [See List Plans](https://www.vultr.com/api/#tag/plans)
      */
-    public readonly plan!: pulumi.Output<string>;
+    declare public readonly plan: pulumi.Output<string>;
     /**
      * Whether the server is powered on or not.
      */
-    public /*out*/ readonly powerStatus!: pulumi.Output<string>;
+    declare public /*out*/ readonly powerStatus: pulumi.Output<string>;
     /**
      * The amount of memory available on the server in MB.
      */
-    public /*out*/ readonly ram!: pulumi.Output<number>;
+    declare public /*out*/ readonly ram: pulumi.Output<number>;
     /**
      * The ID of the region that the instance is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
      */
-    public readonly region!: pulumi.Output<string>;
+    declare public readonly region: pulumi.Output<string>;
     /**
      * ID of the floating IP to use as the main IP of this server.
      */
-    public readonly reservedIpId!: pulumi.Output<string>;
+    declare public readonly reservedIpId: pulumi.Output<string>;
     /**
      * The ID of the startup script you want added to the server.
      */
-    public readonly scriptId!: pulumi.Output<string>;
+    declare public readonly scriptId: pulumi.Output<string>;
     /**
      * A more detailed server status (none, locked, installingbooting, isomounting, ok).
      */
-    public /*out*/ readonly serverStatus!: pulumi.Output<string>;
+    declare public /*out*/ readonly serverStatus: pulumi.Output<string>;
     /**
      * The ID of the Vultr snapshot that the server will restore for the initial installation. [See List Snapshots](https://www.vultr.com/api/#operation/list-snapshots)
      */
-    public readonly snapshotId!: pulumi.Output<string>;
+    declare public readonly snapshotId: pulumi.Output<string>;
     /**
      * A list of SSH key IDs to apply to the server on install (only valid for Linux/FreeBSD).
      */
-    public readonly sshKeyIds!: pulumi.Output<string[] | undefined>;
+    declare public readonly sshKeyIds: pulumi.Output<string[] | undefined>;
     /**
      * The status of the server's subscription.
      */
-    public /*out*/ readonly status!: pulumi.Output<string>;
+    declare public /*out*/ readonly status: pulumi.Output<string>;
     /**
      * A list of tags to apply to the instance.
      */
-    public readonly tags!: pulumi.Output<string[] | undefined>;
+    declare public readonly tags: pulumi.Output<string[] | undefined>;
     /**
      * Generic data store, which some provisioning tools and cloud operating systems use as a configuration file. It is generally consumed only once after an instance has been launched, but individual needs may vary.
      */
-    public readonly userData!: pulumi.Output<string>;
+    declare public readonly userData: pulumi.Output<string>;
     /**
      * The scheme used for the default user. Possible values are `root` or `limited` (linux servers only).
      */
-    public readonly userScheme!: pulumi.Output<string | undefined>;
+    declare public readonly userScheme: pulumi.Output<string | undefined>;
     /**
      * The main IPv6 network address.
      */
-    public /*out*/ readonly v6MainIp!: pulumi.Output<string>;
+    declare public /*out*/ readonly v6MainIp: pulumi.Output<string>;
     /**
      * The IPv6 subnet.
      */
-    public /*out*/ readonly v6Network!: pulumi.Output<string>;
+    declare public /*out*/ readonly v6Network: pulumi.Output<string>;
     /**
      * The IPv6 network size in bits.
      */
-    public /*out*/ readonly v6NetworkSize!: pulumi.Output<number>;
+    declare public /*out*/ readonly v6NetworkSize: pulumi.Output<number>;
     /**
      * The number of virtual CPUs available on the server.
      */
-    public /*out*/ readonly vcpuCount!: pulumi.Output<number>;
+    declare public /*out*/ readonly vcpuCount: pulumi.Output<number>;
     /**
      * A list of VPC 2.0 IDs to be attached to the server.
      *
      * @deprecated VPC2 is deprecated and will not be supported in a future release.  Use VPC instead
      */
-    public readonly vpc2Ids!: pulumi.Output<string[] | undefined>;
+    declare public readonly vpc2Ids: pulumi.Output<string[] | undefined>;
     /**
      * A list of VPC IDs to be attached to the server.
      */
-    public readonly vpcIds!: pulumi.Output<string[]>;
+    declare public readonly vpcIds: pulumi.Output<string[]>;
 
     /**
      * Create a Instance resource with the given unique name, arguments, and options.
@@ -280,85 +280,85 @@ export class Instance extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as InstanceState | undefined;
-            resourceInputs["activationEmail"] = state ? state.activationEmail : undefined;
-            resourceInputs["allowedBandwidth"] = state ? state.allowedBandwidth : undefined;
-            resourceInputs["appId"] = state ? state.appId : undefined;
-            resourceInputs["appVariables"] = state ? state.appVariables : undefined;
-            resourceInputs["backups"] = state ? state.backups : undefined;
-            resourceInputs["backupsSchedule"] = state ? state.backupsSchedule : undefined;
-            resourceInputs["dateCreated"] = state ? state.dateCreated : undefined;
-            resourceInputs["ddosProtection"] = state ? state.ddosProtection : undefined;
-            resourceInputs["defaultPassword"] = state ? state.defaultPassword : undefined;
-            resourceInputs["disablePublicIpv4"] = state ? state.disablePublicIpv4 : undefined;
-            resourceInputs["disk"] = state ? state.disk : undefined;
-            resourceInputs["enableIpv6"] = state ? state.enableIpv6 : undefined;
-            resourceInputs["features"] = state ? state.features : undefined;
-            resourceInputs["firewallGroupId"] = state ? state.firewallGroupId : undefined;
-            resourceInputs["gatewayV4"] = state ? state.gatewayV4 : undefined;
-            resourceInputs["hostname"] = state ? state.hostname : undefined;
-            resourceInputs["imageId"] = state ? state.imageId : undefined;
-            resourceInputs["internalIp"] = state ? state.internalIp : undefined;
-            resourceInputs["ipxeChainUrl"] = state ? state.ipxeChainUrl : undefined;
-            resourceInputs["isoId"] = state ? state.isoId : undefined;
-            resourceInputs["kvm"] = state ? state.kvm : undefined;
-            resourceInputs["label"] = state ? state.label : undefined;
-            resourceInputs["mainIp"] = state ? state.mainIp : undefined;
-            resourceInputs["netmaskV4"] = state ? state.netmaskV4 : undefined;
-            resourceInputs["os"] = state ? state.os : undefined;
-            resourceInputs["osId"] = state ? state.osId : undefined;
-            resourceInputs["plan"] = state ? state.plan : undefined;
-            resourceInputs["powerStatus"] = state ? state.powerStatus : undefined;
-            resourceInputs["ram"] = state ? state.ram : undefined;
-            resourceInputs["region"] = state ? state.region : undefined;
-            resourceInputs["reservedIpId"] = state ? state.reservedIpId : undefined;
-            resourceInputs["scriptId"] = state ? state.scriptId : undefined;
-            resourceInputs["serverStatus"] = state ? state.serverStatus : undefined;
-            resourceInputs["snapshotId"] = state ? state.snapshotId : undefined;
-            resourceInputs["sshKeyIds"] = state ? state.sshKeyIds : undefined;
-            resourceInputs["status"] = state ? state.status : undefined;
-            resourceInputs["tags"] = state ? state.tags : undefined;
-            resourceInputs["userData"] = state ? state.userData : undefined;
-            resourceInputs["userScheme"] = state ? state.userScheme : undefined;
-            resourceInputs["v6MainIp"] = state ? state.v6MainIp : undefined;
-            resourceInputs["v6Network"] = state ? state.v6Network : undefined;
-            resourceInputs["v6NetworkSize"] = state ? state.v6NetworkSize : undefined;
-            resourceInputs["vcpuCount"] = state ? state.vcpuCount : undefined;
-            resourceInputs["vpc2Ids"] = state ? state.vpc2Ids : undefined;
-            resourceInputs["vpcIds"] = state ? state.vpcIds : undefined;
+            resourceInputs["activationEmail"] = state?.activationEmail;
+            resourceInputs["allowedBandwidth"] = state?.allowedBandwidth;
+            resourceInputs["appId"] = state?.appId;
+            resourceInputs["appVariables"] = state?.appVariables;
+            resourceInputs["backups"] = state?.backups;
+            resourceInputs["backupsSchedule"] = state?.backupsSchedule;
+            resourceInputs["dateCreated"] = state?.dateCreated;
+            resourceInputs["ddosProtection"] = state?.ddosProtection;
+            resourceInputs["defaultPassword"] = state?.defaultPassword;
+            resourceInputs["disablePublicIpv4"] = state?.disablePublicIpv4;
+            resourceInputs["disk"] = state?.disk;
+            resourceInputs["enableIpv6"] = state?.enableIpv6;
+            resourceInputs["features"] = state?.features;
+            resourceInputs["firewallGroupId"] = state?.firewallGroupId;
+            resourceInputs["gatewayV4"] = state?.gatewayV4;
+            resourceInputs["hostname"] = state?.hostname;
+            resourceInputs["imageId"] = state?.imageId;
+            resourceInputs["internalIp"] = state?.internalIp;
+            resourceInputs["ipxeChainUrl"] = state?.ipxeChainUrl;
+            resourceInputs["isoId"] = state?.isoId;
+            resourceInputs["kvm"] = state?.kvm;
+            resourceInputs["label"] = state?.label;
+            resourceInputs["mainIp"] = state?.mainIp;
+            resourceInputs["netmaskV4"] = state?.netmaskV4;
+            resourceInputs["os"] = state?.os;
+            resourceInputs["osId"] = state?.osId;
+            resourceInputs["plan"] = state?.plan;
+            resourceInputs["powerStatus"] = state?.powerStatus;
+            resourceInputs["ram"] = state?.ram;
+            resourceInputs["region"] = state?.region;
+            resourceInputs["reservedIpId"] = state?.reservedIpId;
+            resourceInputs["scriptId"] = state?.scriptId;
+            resourceInputs["serverStatus"] = state?.serverStatus;
+            resourceInputs["snapshotId"] = state?.snapshotId;
+            resourceInputs["sshKeyIds"] = state?.sshKeyIds;
+            resourceInputs["status"] = state?.status;
+            resourceInputs["tags"] = state?.tags;
+            resourceInputs["userData"] = state?.userData;
+            resourceInputs["userScheme"] = state?.userScheme;
+            resourceInputs["v6MainIp"] = state?.v6MainIp;
+            resourceInputs["v6Network"] = state?.v6Network;
+            resourceInputs["v6NetworkSize"] = state?.v6NetworkSize;
+            resourceInputs["vcpuCount"] = state?.vcpuCount;
+            resourceInputs["vpc2Ids"] = state?.vpc2Ids;
+            resourceInputs["vpcIds"] = state?.vpcIds;
         } else {
             const args = argsOrState as InstanceArgs | undefined;
-            if ((!args || args.plan === undefined) && !opts.urn) {
+            if (args?.plan === undefined && !opts.urn) {
                 throw new Error("Missing required property 'plan'");
             }
-            if ((!args || args.region === undefined) && !opts.urn) {
+            if (args?.region === undefined && !opts.urn) {
                 throw new Error("Missing required property 'region'");
             }
-            resourceInputs["activationEmail"] = args ? args.activationEmail : undefined;
-            resourceInputs["appId"] = args ? args.appId : undefined;
-            resourceInputs["appVariables"] = args ? args.appVariables : undefined;
-            resourceInputs["backups"] = args ? args.backups : undefined;
-            resourceInputs["backupsSchedule"] = args ? args.backupsSchedule : undefined;
-            resourceInputs["ddosProtection"] = args ? args.ddosProtection : undefined;
-            resourceInputs["disablePublicIpv4"] = args ? args.disablePublicIpv4 : undefined;
-            resourceInputs["enableIpv6"] = args ? args.enableIpv6 : undefined;
-            resourceInputs["firewallGroupId"] = args ? args.firewallGroupId : undefined;
-            resourceInputs["hostname"] = args ? args.hostname : undefined;
-            resourceInputs["imageId"] = args ? args.imageId : undefined;
-            resourceInputs["ipxeChainUrl"] = args ? args.ipxeChainUrl : undefined;
-            resourceInputs["isoId"] = args ? args.isoId : undefined;
-            resourceInputs["label"] = args ? args.label : undefined;
-            resourceInputs["osId"] = args ? args.osId : undefined;
-            resourceInputs["plan"] = args ? args.plan : undefined;
-            resourceInputs["region"] = args ? args.region : undefined;
-            resourceInputs["reservedIpId"] = args ? args.reservedIpId : undefined;
-            resourceInputs["scriptId"] = args ? args.scriptId : undefined;
-            resourceInputs["snapshotId"] = args ? args.snapshotId : undefined;
-            resourceInputs["sshKeyIds"] = args ? args.sshKeyIds : undefined;
-            resourceInputs["tags"] = args ? args.tags : undefined;
-            resourceInputs["userData"] = args ? args.userData : undefined;
-            resourceInputs["userScheme"] = args ? args.userScheme : undefined;
-            resourceInputs["vpc2Ids"] = args ? args.vpc2Ids : undefined;
-            resourceInputs["vpcIds"] = args ? args.vpcIds : undefined;
+            resourceInputs["activationEmail"] = args?.activationEmail;
+            resourceInputs["appId"] = args?.appId;
+            resourceInputs["appVariables"] = args?.appVariables;
+            resourceInputs["backups"] = args?.backups;
+            resourceInputs["backupsSchedule"] = args?.backupsSchedule;
+            resourceInputs["ddosProtection"] = args?.ddosProtection;
+            resourceInputs["disablePublicIpv4"] = args?.disablePublicIpv4;
+            resourceInputs["enableIpv6"] = args?.enableIpv6;
+            resourceInputs["firewallGroupId"] = args?.firewallGroupId;
+            resourceInputs["hostname"] = args?.hostname;
+            resourceInputs["imageId"] = args?.imageId;
+            resourceInputs["ipxeChainUrl"] = args?.ipxeChainUrl;
+            resourceInputs["isoId"] = args?.isoId;
+            resourceInputs["label"] = args?.label;
+            resourceInputs["osId"] = args?.osId;
+            resourceInputs["plan"] = args?.plan;
+            resourceInputs["region"] = args?.region;
+            resourceInputs["reservedIpId"] = args?.reservedIpId;
+            resourceInputs["scriptId"] = args?.scriptId;
+            resourceInputs["snapshotId"] = args?.snapshotId;
+            resourceInputs["sshKeyIds"] = args?.sshKeyIds;
+            resourceInputs["tags"] = args?.tags;
+            resourceInputs["userData"] = args?.userData;
+            resourceInputs["userScheme"] = args?.userScheme;
+            resourceInputs["vpc2Ids"] = args?.vpc2Ids;
+            resourceInputs["vpcIds"] = args?.vpcIds;
             resourceInputs["allowedBandwidth"] = undefined /*out*/;
             resourceInputs["dateCreated"] = undefined /*out*/;
             resourceInputs["defaultPassword"] = undefined /*out*/;

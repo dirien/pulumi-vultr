@@ -110,75 +110,75 @@ export class Kubernetes extends pulumi.CustomResource {
     /**
      * The base64 encoded public certificate used by clients to access the cluster.
      */
-    public /*out*/ readonly clientCertificate!: pulumi.Output<string>;
+    declare public /*out*/ readonly clientCertificate: pulumi.Output<string>;
     /**
      * The base64 encoded private key used by clients to access the cluster.
      */
-    public /*out*/ readonly clientKey!: pulumi.Output<string>;
+    declare public /*out*/ readonly clientKey: pulumi.Output<string>;
     /**
      * The base64 encoded public certificate for the cluster's certificate authority.
      */
-    public /*out*/ readonly clusterCaCertificate!: pulumi.Output<string>;
+    declare public /*out*/ readonly clusterCaCertificate: pulumi.Output<string>;
     /**
      * IP range that your pods will run on in this cluster.
      */
-    public /*out*/ readonly clusterSubnet!: pulumi.Output<string>;
+    declare public /*out*/ readonly clusterSubnet: pulumi.Output<string>;
     /**
      * Date node was created.
      */
-    public /*out*/ readonly dateCreated!: pulumi.Output<string>;
+    declare public /*out*/ readonly dateCreated: pulumi.Output<string>;
     /**
      * Boolean indicating if the cluster should be created with a managed firewall.
      */
-    public readonly enableFirewall!: pulumi.Output<boolean | undefined>;
+    declare public readonly enableFirewall: pulumi.Output<boolean | undefined>;
     /**
      * Domain for your Kubernetes clusters control plane.
      */
-    public /*out*/ readonly endpoint!: pulumi.Output<string>;
+    declare public /*out*/ readonly endpoint: pulumi.Output<string>;
     /**
      * The ID of the firewall group managed by this cluster.
      */
-    public /*out*/ readonly firewallGroupId!: pulumi.Output<string>;
+    declare public /*out*/ readonly firewallGroupId: pulumi.Output<string>;
     /**
      * Boolean indicating if the cluster should be created with multiple, highly available controlplanes.
      */
-    public readonly haControlplanes!: pulumi.Output<boolean | undefined>;
+    declare public readonly haControlplanes: pulumi.Output<boolean | undefined>;
     /**
      * IP address of VKE cluster control plane.
      */
-    public /*out*/ readonly ip!: pulumi.Output<string>;
+    declare public /*out*/ readonly ip: pulumi.Output<string>;
     /**
      * Base64 encoded Kubeconfig for this VKE cluster.
      */
-    public /*out*/ readonly kubeConfig!: pulumi.Output<string>;
+    declare public /*out*/ readonly kubeConfig: pulumi.Output<string>;
     /**
      * The VKE clusters label.
      */
-    public readonly label!: pulumi.Output<string>;
+    declare public readonly label: pulumi.Output<string>;
     /**
      * Contains the default node pool that was deployed.
      */
-    public readonly nodePools!: pulumi.Output<outputs.KubernetesNodePools | undefined>;
+    declare public readonly nodePools: pulumi.Output<outputs.KubernetesNodePools | undefined>;
     /**
      * The region your VKE cluster will be deployed in.
      */
-    public readonly region!: pulumi.Output<string>;
+    declare public readonly region: pulumi.Output<string>;
     /**
      * IP range that services will run on this cluster.
      */
-    public /*out*/ readonly serviceSubnet!: pulumi.Output<string>;
+    declare public /*out*/ readonly serviceSubnet: pulumi.Output<string>;
     /**
      * Status of node.
      */
-    public /*out*/ readonly status!: pulumi.Output<string>;
+    declare public /*out*/ readonly status: pulumi.Output<string>;
     /**
      * The version your VKE cluster you want deployed. [See Available Version](https://www.vultr.com/api/#operation/get-kubernetes-versions)
      */
-    public readonly version!: pulumi.Output<string>;
+    declare public readonly version: pulumi.Output<string>;
     /**
      * The ID of the VPC to use when creating the cluster. If not provided a new VPC will be created instead.
      */
-    public readonly vpcId!: pulumi.Output<string | undefined>;
+    declare public readonly vpcId: pulumi.Output<string | undefined>;
 
     /**
      * Create a Kubernetes resource with the given unique name, arguments, and options.
@@ -193,42 +193,42 @@ export class Kubernetes extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as KubernetesState | undefined;
-            resourceInputs["clientCertificate"] = state ? state.clientCertificate : undefined;
-            resourceInputs["clientKey"] = state ? state.clientKey : undefined;
-            resourceInputs["clusterCaCertificate"] = state ? state.clusterCaCertificate : undefined;
-            resourceInputs["clusterSubnet"] = state ? state.clusterSubnet : undefined;
-            resourceInputs["dateCreated"] = state ? state.dateCreated : undefined;
-            resourceInputs["enableFirewall"] = state ? state.enableFirewall : undefined;
-            resourceInputs["endpoint"] = state ? state.endpoint : undefined;
-            resourceInputs["firewallGroupId"] = state ? state.firewallGroupId : undefined;
-            resourceInputs["haControlplanes"] = state ? state.haControlplanes : undefined;
-            resourceInputs["ip"] = state ? state.ip : undefined;
-            resourceInputs["kubeConfig"] = state ? state.kubeConfig : undefined;
-            resourceInputs["label"] = state ? state.label : undefined;
-            resourceInputs["nodePools"] = state ? state.nodePools : undefined;
-            resourceInputs["region"] = state ? state.region : undefined;
-            resourceInputs["serviceSubnet"] = state ? state.serviceSubnet : undefined;
-            resourceInputs["status"] = state ? state.status : undefined;
-            resourceInputs["version"] = state ? state.version : undefined;
-            resourceInputs["vpcId"] = state ? state.vpcId : undefined;
+            resourceInputs["clientCertificate"] = state?.clientCertificate;
+            resourceInputs["clientKey"] = state?.clientKey;
+            resourceInputs["clusterCaCertificate"] = state?.clusterCaCertificate;
+            resourceInputs["clusterSubnet"] = state?.clusterSubnet;
+            resourceInputs["dateCreated"] = state?.dateCreated;
+            resourceInputs["enableFirewall"] = state?.enableFirewall;
+            resourceInputs["endpoint"] = state?.endpoint;
+            resourceInputs["firewallGroupId"] = state?.firewallGroupId;
+            resourceInputs["haControlplanes"] = state?.haControlplanes;
+            resourceInputs["ip"] = state?.ip;
+            resourceInputs["kubeConfig"] = state?.kubeConfig;
+            resourceInputs["label"] = state?.label;
+            resourceInputs["nodePools"] = state?.nodePools;
+            resourceInputs["region"] = state?.region;
+            resourceInputs["serviceSubnet"] = state?.serviceSubnet;
+            resourceInputs["status"] = state?.status;
+            resourceInputs["version"] = state?.version;
+            resourceInputs["vpcId"] = state?.vpcId;
         } else {
             const args = argsOrState as KubernetesArgs | undefined;
-            if ((!args || args.label === undefined) && !opts.urn) {
+            if (args?.label === undefined && !opts.urn) {
                 throw new Error("Missing required property 'label'");
             }
-            if ((!args || args.region === undefined) && !opts.urn) {
+            if (args?.region === undefined && !opts.urn) {
                 throw new Error("Missing required property 'region'");
             }
-            if ((!args || args.version === undefined) && !opts.urn) {
+            if (args?.version === undefined && !opts.urn) {
                 throw new Error("Missing required property 'version'");
             }
-            resourceInputs["enableFirewall"] = args ? args.enableFirewall : undefined;
-            resourceInputs["haControlplanes"] = args ? args.haControlplanes : undefined;
-            resourceInputs["label"] = args ? args.label : undefined;
-            resourceInputs["nodePools"] = args ? args.nodePools : undefined;
-            resourceInputs["region"] = args ? args.region : undefined;
-            resourceInputs["version"] = args ? args.version : undefined;
-            resourceInputs["vpcId"] = args ? args.vpcId : undefined;
+            resourceInputs["enableFirewall"] = args?.enableFirewall;
+            resourceInputs["haControlplanes"] = args?.haControlplanes;
+            resourceInputs["label"] = args?.label;
+            resourceInputs["nodePools"] = args?.nodePools;
+            resourceInputs["region"] = args?.region;
+            resourceInputs["version"] = args?.version;
+            resourceInputs["vpcId"] = args?.vpcId;
             resourceInputs["clientCertificate"] = undefined /*out*/;
             resourceInputs["clientKey"] = undefined /*out*/;
             resourceInputs["clusterCaCertificate"] = undefined /*out*/;

@@ -66,35 +66,35 @@ export class FirewallRule extends pulumi.CustomResource {
     /**
      * The firewall group that the firewall rule will belong to.
      */
-    public readonly firewallGroupId!: pulumi.Output<string>;
+    declare public readonly firewallGroupId: pulumi.Output<string>;
     /**
      * The type of ip for this firewall rule. Possible values (v4, v6) **Note** they must be lowercase
      */
-    public readonly ipType!: pulumi.Output<string>;
+    declare public readonly ipType: pulumi.Output<string>;
     /**
      * A simple note for a given firewall rule
      */
-    public readonly notes!: pulumi.Output<string | undefined>;
+    declare public readonly notes: pulumi.Output<string | undefined>;
     /**
      * TCP/UDP only. This field can be a specific port or a colon separated port range.
      */
-    public readonly port!: pulumi.Output<string | undefined>;
+    declare public readonly port: pulumi.Output<string | undefined>;
     /**
      * The type of protocol for this firewall rule. Possible values (icmp, tcp, udp, gre, esp, ah) **Note** they must be lowercase
      */
-    public readonly protocol!: pulumi.Output<string>;
+    declare public readonly protocol: pulumi.Output<string>;
     /**
      * Possible values ("", cloudflare)
      */
-    public readonly source!: pulumi.Output<string | undefined>;
+    declare public readonly source: pulumi.Output<string | undefined>;
     /**
      * IP address that you want to define for this firewall rule.
      */
-    public readonly subnet!: pulumi.Output<string>;
+    declare public readonly subnet: pulumi.Output<string>;
     /**
      * The number of bits for the subnet in CIDR notation. Example: 32.
      */
-    public readonly subnetSize!: pulumi.Output<number>;
+    declare public readonly subnetSize: pulumi.Output<number>;
 
     /**
      * Create a FirewallRule resource with the given unique name, arguments, and options.
@@ -109,39 +109,39 @@ export class FirewallRule extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as FirewallRuleState | undefined;
-            resourceInputs["firewallGroupId"] = state ? state.firewallGroupId : undefined;
-            resourceInputs["ipType"] = state ? state.ipType : undefined;
-            resourceInputs["notes"] = state ? state.notes : undefined;
-            resourceInputs["port"] = state ? state.port : undefined;
-            resourceInputs["protocol"] = state ? state.protocol : undefined;
-            resourceInputs["source"] = state ? state.source : undefined;
-            resourceInputs["subnet"] = state ? state.subnet : undefined;
-            resourceInputs["subnetSize"] = state ? state.subnetSize : undefined;
+            resourceInputs["firewallGroupId"] = state?.firewallGroupId;
+            resourceInputs["ipType"] = state?.ipType;
+            resourceInputs["notes"] = state?.notes;
+            resourceInputs["port"] = state?.port;
+            resourceInputs["protocol"] = state?.protocol;
+            resourceInputs["source"] = state?.source;
+            resourceInputs["subnet"] = state?.subnet;
+            resourceInputs["subnetSize"] = state?.subnetSize;
         } else {
             const args = argsOrState as FirewallRuleArgs | undefined;
-            if ((!args || args.firewallGroupId === undefined) && !opts.urn) {
+            if (args?.firewallGroupId === undefined && !opts.urn) {
                 throw new Error("Missing required property 'firewallGroupId'");
             }
-            if ((!args || args.ipType === undefined) && !opts.urn) {
+            if (args?.ipType === undefined && !opts.urn) {
                 throw new Error("Missing required property 'ipType'");
             }
-            if ((!args || args.protocol === undefined) && !opts.urn) {
+            if (args?.protocol === undefined && !opts.urn) {
                 throw new Error("Missing required property 'protocol'");
             }
-            if ((!args || args.subnet === undefined) && !opts.urn) {
+            if (args?.subnet === undefined && !opts.urn) {
                 throw new Error("Missing required property 'subnet'");
             }
-            if ((!args || args.subnetSize === undefined) && !opts.urn) {
+            if (args?.subnetSize === undefined && !opts.urn) {
                 throw new Error("Missing required property 'subnetSize'");
             }
-            resourceInputs["firewallGroupId"] = args ? args.firewallGroupId : undefined;
-            resourceInputs["ipType"] = args ? args.ipType : undefined;
-            resourceInputs["notes"] = args ? args.notes : undefined;
-            resourceInputs["port"] = args ? args.port : undefined;
-            resourceInputs["protocol"] = args ? args.protocol : undefined;
-            resourceInputs["source"] = args ? args.source : undefined;
-            resourceInputs["subnet"] = args ? args.subnet : undefined;
-            resourceInputs["subnetSize"] = args ? args.subnetSize : undefined;
+            resourceInputs["firewallGroupId"] = args?.firewallGroupId;
+            resourceInputs["ipType"] = args?.ipType;
+            resourceInputs["notes"] = args?.notes;
+            resourceInputs["port"] = args?.port;
+            resourceInputs["protocol"] = args?.protocol;
+            resourceInputs["source"] = args?.source;
+            resourceInputs["subnet"] = args?.subnet;
+            resourceInputs["subnetSize"] = args?.subnetSize;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(FirewallRule.__pulumiType, name, resourceInputs, opts);

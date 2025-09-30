@@ -47,6 +47,8 @@ import (
 //	}
 //
 // ```
+//
+// `slug` values and associated details can be retrieved through [this API call](https://www.vultr.com/api/#tag/s3/operation/list-object-storage-tiers).
 func GetObjectStorageTier(ctx *pulumi.Context, args *GetObjectStorageTierArgs, opts ...pulumi.InvokeOption) (*GetObjectStorageTierResult, error) {
 	opts = internal.PkgInvokeDefaultOpts(opts)
 	var rv GetObjectStorageTierResult

@@ -28,7 +28,7 @@ export class Provider extends pulumi.ProviderResource {
     /**
      * The API Key that allows interaction with the API
      */
-    public readonly apiKey!: pulumi.Output<string | undefined>;
+    declare public readonly apiKey: pulumi.Output<string | undefined>;
 
     /**
      * Create a Provider resource with the given unique name, arguments, and options.
@@ -42,8 +42,8 @@ export class Provider extends pulumi.ProviderResource {
         opts = opts || {};
         {
             resourceInputs["apiKey"] = (args?.apiKey ? pulumi.secret(args.apiKey) : undefined) ?? utilities.getEnv("VULTR_API_KEY");
-            resourceInputs["rateLimit"] = pulumi.output((args ? args.rateLimit : undefined) ?? 500).apply(JSON.stringify);
-            resourceInputs["retryLimit"] = pulumi.output((args ? args.retryLimit : undefined) ?? 3).apply(JSON.stringify);
+            resourceInputs["rateLimit"] = pulumi.output((args?.rateLimit) ?? 500).apply(JSON.stringify);
+            resourceInputs["retryLimit"] = pulumi.output((args?.retryLimit) ?? 3).apply(JSON.stringify);
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         const secretOpts = { additionalSecretOutputs: ["apiKey"] };

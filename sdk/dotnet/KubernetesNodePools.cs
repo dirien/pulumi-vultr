@@ -13,53 +13,6 @@ namespace ediri.Vultr
     /// <summary>
     /// Deploy additional node pools to an existing Vultr Kubernetes Engine (VKE) cluster.
     /// 
-    /// ## Example Usage
-    /// 
-    /// Create a new VKE cluster:
-    /// 
-    /// ```csharp
-    /// using System.Collections.Generic;
-    /// using System.Linq;
-    /// using Pulumi;
-    /// using Vultr = ediri.Vultr;
-    /// 
-    /// return await Deployment.RunAsync(() =&gt; 
-    /// {
-    ///     var np_1 = new Vultr.KubernetesNodePools("np-1", new()
-    ///     {
-    ///         ClusterId = vultr_kubernetes.K8.Id,
-    ///         NodeQuantity = 1,
-    ///         Plan = "vc2-4c-8gb",
-    ///         Label = "my-label",
-    ///         Tag = "my-tag",
-    ///         AutoScaler = true,
-    ///         MinNodes = 1,
-    ///         MaxNodes = 2,
-    ///         Labels = 
-    ///         {
-    ///             { "my-label", "a-label-on-all-nodes" },
-    ///             { "my-second-label", "another-label-on-all-nodes" },
-    ///         },
-    ///         Taints = new[]
-    ///         {
-    ///             new Vultr.Inputs.KubernetesNodePoolsTaintArgs
-    ///             {
-    ///                 Key = "a-taint",
-    ///                 Value = "is-tainted",
-    ///                 Effect = "NoExecute",
-    ///             },
-    ///             new Vultr.Inputs.KubernetesNodePoolsTaintArgs
-    ///             {
-    ///                 Key = "another-taint",
-    ///                 Value = "is-tainted",
-    ///                 Effect = "NoSchedule",
-    ///             },
-    ///         },
-    ///     });
-    /// 
-    /// });
-    /// ```
-    /// 
     /// ## Import
     /// 
     /// Node pool resources are able to be imported into terraform state like other
@@ -166,6 +119,12 @@ namespace ediri.Vultr
         /// </summary>
         [Output("taints")]
         public Output<ImmutableArray<Outputs.KubernetesNodePoolsTaint>> Taints { get; private set; } = null!;
+
+        /// <summary>
+        /// A base64 encoded string containing the user data to apply to nodes in the node pool.
+        /// </summary>
+        [Output("userData")]
+        public Output<string?> UserData { get; private set; } = null!;
 
 
         /// <summary>
@@ -286,6 +245,12 @@ namespace ediri.Vultr
             set => _taints = value;
         }
 
+        /// <summary>
+        /// A base64 encoded string containing the user data to apply to nodes in the node pool.
+        /// </summary>
+        [Input("userData")]
+        public Input<string>? UserData { get; set; }
+
         public KubernetesNodePoolsArgs()
         {
         }
@@ -395,6 +360,12 @@ namespace ediri.Vultr
             get => _taints ?? (_taints = new InputList<Inputs.KubernetesNodePoolsTaintGetArgs>());
             set => _taints = value;
         }
+
+        /// <summary>
+        /// A base64 encoded string containing the user data to apply to nodes in the node pool.
+        /// </summary>
+        [Input("userData")]
+        public Input<string>? UserData { get; set; }
 
         public KubernetesNodePoolsState()
         {

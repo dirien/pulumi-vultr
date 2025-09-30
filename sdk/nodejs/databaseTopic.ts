@@ -56,27 +56,27 @@ export class DatabaseTopic extends pulumi.CustomResource {
     /**
      * The managed database ID you want to attach this topic to.
      */
-    public readonly databaseId!: pulumi.Output<string>;
+    declare public readonly databaseId: pulumi.Output<string>;
     /**
      * The name for the new managed database topic.
      */
-    public readonly name!: pulumi.Output<string>;
+    declare public readonly name: pulumi.Output<string>;
     /**
      * The number of partitions for the new managed database topic.
      */
-    public readonly partitions!: pulumi.Output<number>;
+    declare public readonly partitions: pulumi.Output<number>;
     /**
      * The replication factor for the new managed database topic.
      */
-    public readonly replication!: pulumi.Output<number>;
+    declare public readonly replication: pulumi.Output<number>;
     /**
      * The retention bytes for the new managed database topic.
      */
-    public readonly retentionBytes!: pulumi.Output<number>;
+    declare public readonly retentionBytes: pulumi.Output<number>;
     /**
      * The retention hours for the new managed database topic.
      */
-    public readonly retentionHours!: pulumi.Output<number>;
+    declare public readonly retentionHours: pulumi.Output<number>;
 
     /**
      * Create a DatabaseTopic resource with the given unique name, arguments, and options.
@@ -91,38 +91,38 @@ export class DatabaseTopic extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as DatabaseTopicState | undefined;
-            resourceInputs["databaseId"] = state ? state.databaseId : undefined;
-            resourceInputs["name"] = state ? state.name : undefined;
-            resourceInputs["partitions"] = state ? state.partitions : undefined;
-            resourceInputs["replication"] = state ? state.replication : undefined;
-            resourceInputs["retentionBytes"] = state ? state.retentionBytes : undefined;
-            resourceInputs["retentionHours"] = state ? state.retentionHours : undefined;
+            resourceInputs["databaseId"] = state?.databaseId;
+            resourceInputs["name"] = state?.name;
+            resourceInputs["partitions"] = state?.partitions;
+            resourceInputs["replication"] = state?.replication;
+            resourceInputs["retentionBytes"] = state?.retentionBytes;
+            resourceInputs["retentionHours"] = state?.retentionHours;
         } else {
             const args = argsOrState as DatabaseTopicArgs | undefined;
-            if ((!args || args.databaseId === undefined) && !opts.urn) {
+            if (args?.databaseId === undefined && !opts.urn) {
                 throw new Error("Missing required property 'databaseId'");
             }
-            if ((!args || args.name === undefined) && !opts.urn) {
+            if (args?.name === undefined && !opts.urn) {
                 throw new Error("Missing required property 'name'");
             }
-            if ((!args || args.partitions === undefined) && !opts.urn) {
+            if (args?.partitions === undefined && !opts.urn) {
                 throw new Error("Missing required property 'partitions'");
             }
-            if ((!args || args.replication === undefined) && !opts.urn) {
+            if (args?.replication === undefined && !opts.urn) {
                 throw new Error("Missing required property 'replication'");
             }
-            if ((!args || args.retentionBytes === undefined) && !opts.urn) {
+            if (args?.retentionBytes === undefined && !opts.urn) {
                 throw new Error("Missing required property 'retentionBytes'");
             }
-            if ((!args || args.retentionHours === undefined) && !opts.urn) {
+            if (args?.retentionHours === undefined && !opts.urn) {
                 throw new Error("Missing required property 'retentionHours'");
             }
-            resourceInputs["databaseId"] = args ? args.databaseId : undefined;
-            resourceInputs["name"] = args ? args.name : undefined;
-            resourceInputs["partitions"] = args ? args.partitions : undefined;
-            resourceInputs["replication"] = args ? args.replication : undefined;
-            resourceInputs["retentionBytes"] = args ? args.retentionBytes : undefined;
-            resourceInputs["retentionHours"] = args ? args.retentionHours : undefined;
+            resourceInputs["databaseId"] = args?.databaseId;
+            resourceInputs["name"] = args?.name;
+            resourceInputs["partitions"] = args?.partitions;
+            resourceInputs["replication"] = args?.replication;
+            resourceInputs["retentionBytes"] = args?.retentionBytes;
+            resourceInputs["retentionHours"] = args?.retentionHours;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(DatabaseTopic.__pulumiType, name, resourceInputs, opts);

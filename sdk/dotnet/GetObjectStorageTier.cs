@@ -44,6 +44,8 @@ namespace ediri.Vultr
         /// 
         /// });
         /// ```
+        /// 
+        /// `slug` values and associated details can be retrieved through [this API call](https://www.vultr.com/api/#tag/s3/operation/list-object-storage-tiers).
         /// </summary>
         public static Task<GetObjectStorageTierResult> InvokeAsync(GetObjectStorageTierArgs? args = null, InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetObjectStorageTierResult>("vultr:index/getObjectStorageTier:getObjectStorageTier", args ?? new GetObjectStorageTierArgs(), options.WithDefaults());
@@ -80,6 +82,8 @@ namespace ediri.Vultr
         /// 
         /// });
         /// ```
+        /// 
+        /// `slug` values and associated details can be retrieved through [this API call](https://www.vultr.com/api/#tag/s3/operation/list-object-storage-tiers).
         /// </summary>
         public static Output<GetObjectStorageTierResult> Invoke(GetObjectStorageTierInvokeArgs? args = null, InvokeOptions? options = null)
             => global::Pulumi.Deployment.Instance.Invoke<GetObjectStorageTierResult>("vultr:index/getObjectStorageTier:getObjectStorageTier", args ?? new GetObjectStorageTierInvokeArgs(), options.WithDefaults());
@@ -116,6 +120,8 @@ namespace ediri.Vultr
         /// 
         /// });
         /// ```
+        /// 
+        /// `slug` values and associated details can be retrieved through [this API call](https://www.vultr.com/api/#tag/s3/operation/list-object-storage-tiers).
         /// </summary>
         public static Output<GetObjectStorageTierResult> Invoke(GetObjectStorageTierInvokeArgs args, InvokeOutputOptions options)
             => global::Pulumi.Deployment.Instance.Invoke<GetObjectStorageTierResult>("vultr:index/getObjectStorageTier:getObjectStorageTier", args ?? new GetObjectStorageTierInvokeArgs(), options.WithDefaults());

@@ -49,11 +49,11 @@ export class DatabaseDb extends pulumi.CustomResource {
     /**
      * The managed database ID you want to attach this logical DB to.
      */
-    public readonly databaseId!: pulumi.Output<string>;
+    declare public readonly databaseId: pulumi.Output<string>;
     /**
      * The name of the new managed database logical DB.
      */
-    public readonly name!: pulumi.Output<string>;
+    declare public readonly name: pulumi.Output<string>;
 
     /**
      * Create a DatabaseDb resource with the given unique name, arguments, and options.
@@ -68,15 +68,15 @@ export class DatabaseDb extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as DatabaseDbState | undefined;
-            resourceInputs["databaseId"] = state ? state.databaseId : undefined;
-            resourceInputs["name"] = state ? state.name : undefined;
+            resourceInputs["databaseId"] = state?.databaseId;
+            resourceInputs["name"] = state?.name;
         } else {
             const args = argsOrState as DatabaseDbArgs | undefined;
-            if ((!args || args.databaseId === undefined) && !opts.urn) {
+            if (args?.databaseId === undefined && !opts.urn) {
                 throw new Error("Missing required property 'databaseId'");
             }
-            resourceInputs["databaseId"] = args ? args.databaseId : undefined;
-            resourceInputs["name"] = args ? args.name : undefined;
+            resourceInputs["databaseId"] = args?.databaseId;
+            resourceInputs["name"] = args?.name;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(DatabaseDb.__pulumiType, name, resourceInputs, opts);

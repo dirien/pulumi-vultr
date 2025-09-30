@@ -52,29 +52,29 @@ export class DatabaseUser extends pulumi.CustomResource {
         return obj['__pulumiType'] === DatabaseUser.__pulumiType;
     }
 
-    public /*out*/ readonly accessCert!: pulumi.Output<string>;
-    public readonly accessControl!: pulumi.Output<outputs.DatabaseUserAccessControl>;
-    public /*out*/ readonly accessKey!: pulumi.Output<string>;
+    declare public /*out*/ readonly accessCert: pulumi.Output<string>;
+    declare public readonly accessControl: pulumi.Output<outputs.DatabaseUserAccessControl>;
+    declare public /*out*/ readonly accessKey: pulumi.Output<string>;
     /**
      * The managed database ID you want to attach this user to.
      */
-    public readonly databaseId!: pulumi.Output<string>;
+    declare public readonly databaseId: pulumi.Output<string>;
     /**
      * The encryption type of the new managed database user's password (MySQL engine types only - `cachingSha2Password`, `mysqlNativePassword`).
      */
-    public readonly encryption!: pulumi.Output<string>;
+    declare public readonly encryption: pulumi.Output<string>;
     /**
      * The password of the new managed database user.
      */
-    public readonly password!: pulumi.Output<string>;
+    declare public readonly password: pulumi.Output<string>;
     /**
      * The permission level for the database user (Kafka engine types only - `admin`, `read`, `write`, `readwrite`).
      */
-    public readonly permission!: pulumi.Output<string>;
+    declare public readonly permission: pulumi.Output<string>;
     /**
      * The username of the new managed database user.
      */
-    public readonly username!: pulumi.Output<string>;
+    declare public readonly username: pulumi.Output<string>;
 
     /**
      * Create a DatabaseUser resource with the given unique name, arguments, and options.
@@ -89,28 +89,28 @@ export class DatabaseUser extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as DatabaseUserState | undefined;
-            resourceInputs["accessCert"] = state ? state.accessCert : undefined;
-            resourceInputs["accessControl"] = state ? state.accessControl : undefined;
-            resourceInputs["accessKey"] = state ? state.accessKey : undefined;
-            resourceInputs["databaseId"] = state ? state.databaseId : undefined;
-            resourceInputs["encryption"] = state ? state.encryption : undefined;
-            resourceInputs["password"] = state ? state.password : undefined;
-            resourceInputs["permission"] = state ? state.permission : undefined;
-            resourceInputs["username"] = state ? state.username : undefined;
+            resourceInputs["accessCert"] = state?.accessCert;
+            resourceInputs["accessControl"] = state?.accessControl;
+            resourceInputs["accessKey"] = state?.accessKey;
+            resourceInputs["databaseId"] = state?.databaseId;
+            resourceInputs["encryption"] = state?.encryption;
+            resourceInputs["password"] = state?.password;
+            resourceInputs["permission"] = state?.permission;
+            resourceInputs["username"] = state?.username;
         } else {
             const args = argsOrState as DatabaseUserArgs | undefined;
-            if ((!args || args.databaseId === undefined) && !opts.urn) {
+            if (args?.databaseId === undefined && !opts.urn) {
                 throw new Error("Missing required property 'databaseId'");
             }
-            if ((!args || args.username === undefined) && !opts.urn) {
+            if (args?.username === undefined && !opts.urn) {
                 throw new Error("Missing required property 'username'");
             }
-            resourceInputs["accessControl"] = args ? args.accessControl : undefined;
-            resourceInputs["databaseId"] = args ? args.databaseId : undefined;
-            resourceInputs["encryption"] = args ? args.encryption : undefined;
-            resourceInputs["password"] = args ? args.password : undefined;
-            resourceInputs["permission"] = args ? args.permission : undefined;
-            resourceInputs["username"] = args ? args.username : undefined;
+            resourceInputs["accessControl"] = args?.accessControl;
+            resourceInputs["databaseId"] = args?.databaseId;
+            resourceInputs["encryption"] = args?.encryption;
+            resourceInputs["password"] = args?.password;
+            resourceInputs["permission"] = args?.permission;
+            resourceInputs["username"] = args?.username;
             resourceInputs["accessCert"] = undefined /*out*/;
             resourceInputs["accessKey"] = undefined /*out*/;
         }

@@ -57,27 +57,27 @@ export class FirewallGroup extends pulumi.CustomResource {
     /**
      * The date the firewall group was created.
      */
-    public /*out*/ readonly dateCreated!: pulumi.Output<string>;
+    declare public /*out*/ readonly dateCreated: pulumi.Output<string>;
     /**
      * The date the firewall group was modified.
      */
-    public /*out*/ readonly dateModified!: pulumi.Output<string>;
+    declare public /*out*/ readonly dateModified: pulumi.Output<string>;
     /**
      * Description of the firewall group.
      */
-    public readonly description!: pulumi.Output<string | undefined>;
+    declare public readonly description: pulumi.Output<string | undefined>;
     /**
      * The number of instances that are currently using this firewall group.
      */
-    public /*out*/ readonly instanceCount!: pulumi.Output<number>;
+    declare public /*out*/ readonly instanceCount: pulumi.Output<number>;
     /**
      * The number of max firewall rules this group can have.
      */
-    public /*out*/ readonly maxRuleCount!: pulumi.Output<number>;
+    declare public /*out*/ readonly maxRuleCount: pulumi.Output<number>;
     /**
      * The number of firewall rules this group currently has.
      */
-    public /*out*/ readonly ruleCount!: pulumi.Output<number>;
+    declare public /*out*/ readonly ruleCount: pulumi.Output<number>;
 
     /**
      * Create a FirewallGroup resource with the given unique name, arguments, and options.
@@ -92,15 +92,15 @@ export class FirewallGroup extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as FirewallGroupState | undefined;
-            resourceInputs["dateCreated"] = state ? state.dateCreated : undefined;
-            resourceInputs["dateModified"] = state ? state.dateModified : undefined;
-            resourceInputs["description"] = state ? state.description : undefined;
-            resourceInputs["instanceCount"] = state ? state.instanceCount : undefined;
-            resourceInputs["maxRuleCount"] = state ? state.maxRuleCount : undefined;
-            resourceInputs["ruleCount"] = state ? state.ruleCount : undefined;
+            resourceInputs["dateCreated"] = state?.dateCreated;
+            resourceInputs["dateModified"] = state?.dateModified;
+            resourceInputs["description"] = state?.description;
+            resourceInputs["instanceCount"] = state?.instanceCount;
+            resourceInputs["maxRuleCount"] = state?.maxRuleCount;
+            resourceInputs["ruleCount"] = state?.ruleCount;
         } else {
             const args = argsOrState as FirewallGroupArgs | undefined;
-            resourceInputs["description"] = args ? args.description : undefined;
+            resourceInputs["description"] = args?.description;
             resourceInputs["dateCreated"] = undefined /*out*/;
             resourceInputs["dateModified"] = undefined /*out*/;
             resourceInputs["instanceCount"] = undefined /*out*/;

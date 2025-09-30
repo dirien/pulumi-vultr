@@ -175,6 +175,14 @@ namespace ediri.Vultr
         /// </summary>
         public readonly string AccessKey;
         /// <summary>
+        /// The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+        /// </summary>
+        public readonly string BackupHour;
+        /// <summary>
+        /// The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
+        /// </summary>
+        public readonly string BackupMinute;
+        /// <summary>
         /// The configured time zone for the Managed Database in TZ database format.
         /// </summary>
         public readonly string ClusterTimeZone;
@@ -195,12 +203,21 @@ namespace ediri.Vultr
         /// </summary>
         public readonly string Dbname;
         /// <summary>
+        /// The configuration value for Kafka Connect support (Kafka engine types only).
+        /// </summary>
+        public readonly bool EnableKafkaConnect;
+        /// <summary>
+        /// The configuration value for Kafka REST support (Kafka engine types only).
+        /// </summary>
+        public readonly bool EnableKafkaRest;
+        /// <summary>
+        /// The configuration value for Schema Registry support (Kafka engine types only).
+        /// </summary>
+        public readonly bool EnableSchemaRegistry;
+        /// <summary>
         /// The configuration value for the data eviction policy on the managed database (Valkey engine types only).
         /// </summary>
         public readonly string EvictionPolicy;
-        /// <summary>
-        /// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
-        /// </summary>
         public readonly ImmutableDictionary<string, string> FerretdbCredentials;
         public readonly ImmutableArray<Outputs.GetDatabaseFilterResult> Filters;
         /// <summary>
@@ -211,6 +228,10 @@ namespace ediri.Vultr
         /// The provider-assigned unique ID for this managed resource.
         /// </summary>
         public readonly string Id;
+        /// <summary>
+        /// The URI to access the RESTful interface of your Kafka cluster if Kafka REST is enabled (Kafka engine types only).
+        /// </summary>
+        public readonly string KafkaRestUri;
         /// <summary>
         /// The managed database's label.
         /// </summary>
@@ -289,6 +310,10 @@ namespace ediri.Vultr
         /// </summary>
         public readonly string SaslPort;
         /// <summary>
+        /// The URI to access the Schema Registry service of your Kafka cluster if Schema Registry is enabled (Kafka engine types only).
+        /// </summary>
+        public readonly string SchemaRegistryUri;
+        /// <summary>
         /// The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).
         /// </summary>
         public readonly string Status;
@@ -315,6 +340,10 @@ namespace ediri.Vultr
 
             string accessKey,
 
+            string backupHour,
+
+            string backupMinute,
+
             string clusterTimeZone,
 
             string databaseEngine,
@@ -325,6 +354,12 @@ namespace ediri.Vultr
 
             string dbname,
 
+            bool enableKafkaConnect,
+
+            bool enableKafkaRest,
+
+            bool enableSchemaRegistry,
+
             string evictionPolicy,
 
             ImmutableDictionary<string, string> ferretdbCredentials,
@@ -334,6 +369,8 @@ namespace ediri.Vultr
             string host,
 
             string id,
+
+            string kafkaRestUri,
 
             string label,
 
@@ -375,6 +412,8 @@ namespace ediri.Vultr
 
             string saslPort,
 
+            string schemaRegistryUri,
+
             string status,
 
             string tag,
@@ -387,16 +426,22 @@ namespace ediri.Vultr
         {
             AccessCert = accessCert;
             AccessKey = accessKey;
+            BackupHour = backupHour;
+            BackupMinute = backupMinute;
             ClusterTimeZone = clusterTimeZone;
             DatabaseEngine = databaseEngine;
             DatabaseEngineVersion = databaseEngineVersion;
             DateCreated = dateCreated;
             Dbname = dbname;
+            EnableKafkaConnect = enableKafkaConnect;
+            EnableKafkaRest = enableKafkaRest;
+            EnableSchemaRegistry = enableSchemaRegistry;
             EvictionPolicy = evictionPolicy;
             FerretdbCredentials = ferretdbCredentials;
             Filters = filters;
             Host = host;
             Id = id;
+            KafkaRestUri = kafkaRestUri;
             Label = label;
             LatestBackup = latestBackup;
             MaintenanceDow = maintenanceDow;
@@ -417,6 +462,7 @@ namespace ediri.Vultr
             ReadReplicas = readReplicas;
             Region = region;
             SaslPort = saslPort;
+            SchemaRegistryUri = schemaRegistryUri;
             Status = status;
             Tag = tag;
             TrustedIps = trustedIps;

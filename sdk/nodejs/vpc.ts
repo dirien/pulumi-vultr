@@ -74,23 +74,23 @@ export class Vpc extends pulumi.CustomResource {
     /**
      * The date that the VPC was added to your Vultr account.
      */
-    public /*out*/ readonly dateCreated!: pulumi.Output<string>;
+    declare public /*out*/ readonly dateCreated: pulumi.Output<string>;
     /**
      * The description you want to give your VPC.
      */
-    public readonly description!: pulumi.Output<string | undefined>;
+    declare public readonly description: pulumi.Output<string | undefined>;
     /**
      * The region ID that you want the VPC to be created in.
      */
-    public readonly region!: pulumi.Output<string>;
+    declare public readonly region: pulumi.Output<string>;
     /**
      * The IPv4 subnet to be used when attaching instances to this VPC.
      */
-    public readonly v4Subnet!: pulumi.Output<string>;
+    declare public readonly v4Subnet: pulumi.Output<string>;
     /**
      * The number of bits for the netmask in CIDR notation. Example: 32
      */
-    public readonly v4SubnetMask!: pulumi.Output<number>;
+    declare public readonly v4SubnetMask: pulumi.Output<number>;
 
     /**
      * Create a Vpc resource with the given unique name, arguments, and options.
@@ -105,20 +105,20 @@ export class Vpc extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as VpcState | undefined;
-            resourceInputs["dateCreated"] = state ? state.dateCreated : undefined;
-            resourceInputs["description"] = state ? state.description : undefined;
-            resourceInputs["region"] = state ? state.region : undefined;
-            resourceInputs["v4Subnet"] = state ? state.v4Subnet : undefined;
-            resourceInputs["v4SubnetMask"] = state ? state.v4SubnetMask : undefined;
+            resourceInputs["dateCreated"] = state?.dateCreated;
+            resourceInputs["description"] = state?.description;
+            resourceInputs["region"] = state?.region;
+            resourceInputs["v4Subnet"] = state?.v4Subnet;
+            resourceInputs["v4SubnetMask"] = state?.v4SubnetMask;
         } else {
             const args = argsOrState as VpcArgs | undefined;
-            if ((!args || args.region === undefined) && !opts.urn) {
+            if (args?.region === undefined && !opts.urn) {
                 throw new Error("Missing required property 'region'");
             }
-            resourceInputs["description"] = args ? args.description : undefined;
-            resourceInputs["region"] = args ? args.region : undefined;
-            resourceInputs["v4Subnet"] = args ? args.v4Subnet : undefined;
-            resourceInputs["v4SubnetMask"] = args ? args.v4SubnetMask : undefined;
+            resourceInputs["description"] = args?.description;
+            resourceInputs["region"] = args?.region;
+            resourceInputs["v4Subnet"] = args?.v4Subnet;
+            resourceInputs["v4SubnetMask"] = args?.v4SubnetMask;
             resourceInputs["dateCreated"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);

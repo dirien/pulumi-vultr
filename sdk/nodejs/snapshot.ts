@@ -66,11 +66,11 @@ export class Snapshot extends pulumi.CustomResource {
     /**
      * The app id which the snapshot is associated with.
      */
-    public /*out*/ readonly appId!: pulumi.Output<number>;
+    declare public /*out*/ readonly appId: pulumi.Output<number>;
     /**
      * The date the snapshot was created.
      */
-    public /*out*/ readonly dateCreated!: pulumi.Output<string>;
+    declare public /*out*/ readonly dateCreated: pulumi.Output<string>;
     /**
      * The description for the given snapshot.
      *
@@ -78,23 +78,23 @@ export class Snapshot extends pulumi.CustomResource {
      * the provider. In order to customize that, you may specify a custome value in a
      * `timeouts` block of the resource definition
      */
-    public readonly description!: pulumi.Output<string | undefined>;
+    declare public readonly description: pulumi.Output<string | undefined>;
     /**
      * ID of a given instance that you want to create a snapshot from.
      */
-    public readonly instanceId!: pulumi.Output<string>;
+    declare public readonly instanceId: pulumi.Output<string>;
     /**
      * The os id which the snapshot is associated with.
      */
-    public /*out*/ readonly osId!: pulumi.Output<number>;
+    declare public /*out*/ readonly osId: pulumi.Output<number>;
     /**
      * The size of the snapshot in Bytes.
      */
-    public /*out*/ readonly size!: pulumi.Output<number>;
+    declare public /*out*/ readonly size: pulumi.Output<number>;
     /**
      * The status for the given snapshot.
      */
-    public /*out*/ readonly status!: pulumi.Output<string>;
+    declare public /*out*/ readonly status: pulumi.Output<string>;
 
     /**
      * Create a Snapshot resource with the given unique name, arguments, and options.
@@ -109,20 +109,20 @@ export class Snapshot extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as SnapshotState | undefined;
-            resourceInputs["appId"] = state ? state.appId : undefined;
-            resourceInputs["dateCreated"] = state ? state.dateCreated : undefined;
-            resourceInputs["description"] = state ? state.description : undefined;
-            resourceInputs["instanceId"] = state ? state.instanceId : undefined;
-            resourceInputs["osId"] = state ? state.osId : undefined;
-            resourceInputs["size"] = state ? state.size : undefined;
-            resourceInputs["status"] = state ? state.status : undefined;
+            resourceInputs["appId"] = state?.appId;
+            resourceInputs["dateCreated"] = state?.dateCreated;
+            resourceInputs["description"] = state?.description;
+            resourceInputs["instanceId"] = state?.instanceId;
+            resourceInputs["osId"] = state?.osId;
+            resourceInputs["size"] = state?.size;
+            resourceInputs["status"] = state?.status;
         } else {
             const args = argsOrState as SnapshotArgs | undefined;
-            if ((!args || args.instanceId === undefined) && !opts.urn) {
+            if (args?.instanceId === undefined && !opts.urn) {
                 throw new Error("Missing required property 'instanceId'");
             }
-            resourceInputs["description"] = args ? args.description : undefined;
-            resourceInputs["instanceId"] = args ? args.instanceId : undefined;
+            resourceInputs["description"] = args?.description;
+            resourceInputs["instanceId"] = args?.instanceId;
             resourceInputs["appId"] = undefined /*out*/;
             resourceInputs["dateCreated"] = undefined /*out*/;
             resourceInputs["osId"] = undefined /*out*/;

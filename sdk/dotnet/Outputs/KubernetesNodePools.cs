@@ -70,6 +70,7 @@ namespace ediri.Vultr.Outputs
         /// Taints to apply to the nodes in the node pool. Should contain `key`, `value` and `effect`.  The `effect` should be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
         /// </summary>
         public readonly ImmutableArray<Outputs.KubernetesNodePoolsTaint> Taints;
+        public readonly string? UserData;
 
         [OutputConstructor]
         private KubernetesNodePools(
@@ -99,7 +100,9 @@ namespace ediri.Vultr.Outputs
 
             string? tag,
 
-            ImmutableArray<Outputs.KubernetesNodePoolsTaint> taints)
+            ImmutableArray<Outputs.KubernetesNodePoolsTaint> taints,
+
+            string? userData)
         {
             AutoScaler = autoScaler;
             DateCreated = dateCreated;
@@ -115,6 +118,7 @@ namespace ediri.Vultr.Outputs
             Status = status;
             Tag = tag;
             Taints = taints;
+            UserData = userData;
         }
     }
 }

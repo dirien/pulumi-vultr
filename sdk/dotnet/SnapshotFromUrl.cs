@@ -28,6 +28,7 @@ namespace ediri.Vultr
     ///     var mySnapshot = new Vultr.SnapshotFromUrl("mySnapshot", new()
     ///     {
     ///         Url = "http://dl-cdn.alpinelinux.org/alpine/v3.9/releases/x86_64/alpine-virt-3.9.1-x86_64.iso",
+    ///         UseUefi = true,
     ///     });
     /// 
     /// });
@@ -86,6 +87,12 @@ namespace ediri.Vultr
         [Output("url")]
         public Output<string> Url { get; private set; } = null!;
 
+        /// <summary>
+        /// Whether or not to use UEFI when creating the snapshot.
+        /// </summary>
+        [Output("useUefi")]
+        public Output<bool?> UseUefi { get; private set; } = null!;
+
 
         /// <summary>
         /// Create a SnapshotFromUrl resource with the given unique name, arguments, and options.
@@ -139,6 +146,12 @@ namespace ediri.Vultr
         [Input("url", required: true)]
         public Input<string> Url { get; set; } = null!;
 
+        /// <summary>
+        /// Whether or not to use UEFI when creating the snapshot.
+        /// </summary>
+        [Input("useUefi")]
+        public Input<bool>? UseUefi { get; set; }
+
         public SnapshotFromUrlArgs()
         {
         }
@@ -188,6 +201,12 @@ namespace ediri.Vultr
         /// </summary>
         [Input("url")]
         public Input<string>? Url { get; set; }
+
+        /// <summary>
+        /// Whether or not to use UEFI when creating the snapshot.
+        /// </summary>
+        [Input("useUefi")]
+        public Input<bool>? UseUefi { get; set; }
 
         public SnapshotFromUrlState()
         {

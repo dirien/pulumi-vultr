@@ -84,24 +84,24 @@ export class User extends pulumi.CustomResource {
     /**
      * The access control list for the user.
      */
-    public readonly acls!: pulumi.Output<string[] | undefined>;
+    declare public readonly acls: pulumi.Output<string[] | undefined>;
     /**
      * Whether API is enabled for the user. Default behavior is set to enabled.
      */
-    public readonly apiEnabled!: pulumi.Output<boolean | undefined>;
-    public /*out*/ readonly apiKey!: pulumi.Output<string>;
+    declare public readonly apiEnabled: pulumi.Output<boolean | undefined>;
+    declare public /*out*/ readonly apiKey: pulumi.Output<string>;
     /**
      * Email for this user.
      */
-    public readonly email!: pulumi.Output<string>;
+    declare public readonly email: pulumi.Output<string>;
     /**
      * Name for this user.
      */
-    public readonly name!: pulumi.Output<string>;
+    declare public readonly name: pulumi.Output<string>;
     /**
      * Password for this user.
      */
-    public readonly password!: pulumi.Output<string>;
+    declare public readonly password: pulumi.Output<string>;
 
     /**
      * Create a User resource with the given unique name, arguments, and options.
@@ -116,24 +116,24 @@ export class User extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as UserState | undefined;
-            resourceInputs["acls"] = state ? state.acls : undefined;
-            resourceInputs["apiEnabled"] = state ? state.apiEnabled : undefined;
-            resourceInputs["apiKey"] = state ? state.apiKey : undefined;
-            resourceInputs["email"] = state ? state.email : undefined;
-            resourceInputs["name"] = state ? state.name : undefined;
-            resourceInputs["password"] = state ? state.password : undefined;
+            resourceInputs["acls"] = state?.acls;
+            resourceInputs["apiEnabled"] = state?.apiEnabled;
+            resourceInputs["apiKey"] = state?.apiKey;
+            resourceInputs["email"] = state?.email;
+            resourceInputs["name"] = state?.name;
+            resourceInputs["password"] = state?.password;
         } else {
             const args = argsOrState as UserArgs | undefined;
-            if ((!args || args.email === undefined) && !opts.urn) {
+            if (args?.email === undefined && !opts.urn) {
                 throw new Error("Missing required property 'email'");
             }
-            if ((!args || args.password === undefined) && !opts.urn) {
+            if (args?.password === undefined && !opts.urn) {
                 throw new Error("Missing required property 'password'");
             }
-            resourceInputs["acls"] = args ? args.acls : undefined;
-            resourceInputs["apiEnabled"] = args ? args.apiEnabled : undefined;
-            resourceInputs["email"] = args ? args.email : undefined;
-            resourceInputs["name"] = args ? args.name : undefined;
+            resourceInputs["acls"] = args?.acls;
+            resourceInputs["apiEnabled"] = args?.apiEnabled;
+            resourceInputs["email"] = args?.email;
+            resourceInputs["name"] = args?.name;
             resourceInputs["password"] = args?.password ? pulumi.secret(args.password) : undefined;
             resourceInputs["apiKey"] = undefined /*out*/;
         }

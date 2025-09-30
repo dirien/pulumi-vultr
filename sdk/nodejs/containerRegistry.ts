@@ -55,35 +55,35 @@ export class ContainerRegistry extends pulumi.CustomResource {
     /**
      * The URN of the container registry.
      */
-    public /*out*/ readonly containerRegistryURN!: pulumi.Output<string>;
+    declare public /*out*/ readonly containerRegistryURN: pulumi.Output<string>;
     /**
      * A date-time of when the root user was created.
      */
-    public /*out*/ readonly dateCreated!: pulumi.Output<string>;
+    declare public /*out*/ readonly dateCreated: pulumi.Output<string>;
     /**
      * The name for your container registry.  Must be lowercase and only alphanumeric characters.
      */
-    public readonly name!: pulumi.Output<string>;
+    declare public readonly name: pulumi.Output<string>;
     /**
      * The billing plan for the container registry. [See available plans](https://www.vultr.com/api/#tag/Container-Registry/operation/list-registry-plans)
      */
-    public readonly plan!: pulumi.Output<string>;
+    declare public readonly plan: pulumi.Output<string>;
     /**
      * Boolean indicating if the container registry should be created with public visibility or if it should require credentials.
      */
-    public readonly public!: pulumi.Output<boolean>;
+    declare public readonly public: pulumi.Output<boolean>;
     /**
      * The region where your container registry will be deployed. [See available regions](https://www.vultr.com/api/#tag/Container-Registry/operation/list-registry-regions)
      */
-    public readonly region!: pulumi.Output<string>;
+    declare public readonly region: pulumi.Output<string>;
     /**
      * The user associated with the container registry.
      */
-    public /*out*/ readonly rootUser!: pulumi.Output<{[key: string]: string}>;
+    declare public /*out*/ readonly rootUser: pulumi.Output<{[key: string]: string}>;
     /**
      * A listing of current storage usage relevant to the container registry.
      */
-    public /*out*/ readonly storage!: pulumi.Output<{[key: string]: string}>;
+    declare public /*out*/ readonly storage: pulumi.Output<{[key: string]: string}>;
 
     /**
      * Create a ContainerRegistry resource with the given unique name, arguments, and options.
@@ -98,29 +98,29 @@ export class ContainerRegistry extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as ContainerRegistryState | undefined;
-            resourceInputs["containerRegistryURN"] = state ? state.containerRegistryURN : undefined;
-            resourceInputs["dateCreated"] = state ? state.dateCreated : undefined;
-            resourceInputs["name"] = state ? state.name : undefined;
-            resourceInputs["plan"] = state ? state.plan : undefined;
-            resourceInputs["public"] = state ? state.public : undefined;
-            resourceInputs["region"] = state ? state.region : undefined;
-            resourceInputs["rootUser"] = state ? state.rootUser : undefined;
-            resourceInputs["storage"] = state ? state.storage : undefined;
+            resourceInputs["containerRegistryURN"] = state?.containerRegistryURN;
+            resourceInputs["dateCreated"] = state?.dateCreated;
+            resourceInputs["name"] = state?.name;
+            resourceInputs["plan"] = state?.plan;
+            resourceInputs["public"] = state?.public;
+            resourceInputs["region"] = state?.region;
+            resourceInputs["rootUser"] = state?.rootUser;
+            resourceInputs["storage"] = state?.storage;
         } else {
             const args = argsOrState as ContainerRegistryArgs | undefined;
-            if ((!args || args.plan === undefined) && !opts.urn) {
+            if (args?.plan === undefined && !opts.urn) {
                 throw new Error("Missing required property 'plan'");
             }
-            if ((!args || args.public === undefined) && !opts.urn) {
+            if (args?.public === undefined && !opts.urn) {
                 throw new Error("Missing required property 'public'");
             }
-            if ((!args || args.region === undefined) && !opts.urn) {
+            if (args?.region === undefined && !opts.urn) {
                 throw new Error("Missing required property 'region'");
             }
-            resourceInputs["name"] = args ? args.name : undefined;
-            resourceInputs["plan"] = args ? args.plan : undefined;
-            resourceInputs["public"] = args ? args.public : undefined;
-            resourceInputs["region"] = args ? args.region : undefined;
+            resourceInputs["name"] = args?.name;
+            resourceInputs["plan"] = args?.plan;
+            resourceInputs["public"] = args?.public;
+            resourceInputs["region"] = args?.region;
             resourceInputs["containerRegistryURN"] = undefined /*out*/;
             resourceInputs["dateCreated"] = undefined /*out*/;
             resourceInputs["rootUser"] = undefined /*out*/;

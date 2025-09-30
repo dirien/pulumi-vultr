@@ -15,6 +15,14 @@ namespace ediri.Vultr.Outputs
     public sealed class GetDatabaseReadReplicaResult
     {
         /// <summary>
+        /// The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+        /// </summary>
+        public readonly string BackupHour;
+        /// <summary>
+        /// The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
+        /// </summary>
+        public readonly string BackupMinute;
+        /// <summary>
         /// The configured time zone for the Managed Database in TZ database format.
         /// </summary>
         public readonly string ClusterTimeZone;
@@ -38,9 +46,6 @@ namespace ediri.Vultr.Outputs
         /// The configuration value for the data eviction policy on the managed database (Valkey engine types only).
         /// </summary>
         public readonly string EvictionPolicy;
-        /// <summary>
-        /// An associated list of FerretDB connection credentials (FerretDB + PostgreSQL engine types only).
-        /// </summary>
         public readonly ImmutableDictionary<string, string> FerretdbCredentials;
         /// <summary>
         /// The hostname assigned to the managed database.
@@ -138,6 +143,10 @@ namespace ediri.Vultr.Outputs
 
         [OutputConstructor]
         private GetDatabaseReadReplicaResult(
+            string backupHour,
+
+            string backupMinute,
+
             string clusterTimeZone,
 
             string databaseEngine,
@@ -200,6 +209,8 @@ namespace ediri.Vultr.Outputs
 
             string vpcId)
         {
+            BackupHour = backupHour;
+            BackupMinute = backupMinute;
             ClusterTimeZone = clusterTimeZone;
             DatabaseEngine = databaseEngine;
             DatabaseEngineVersion = databaseEngineVersion;
