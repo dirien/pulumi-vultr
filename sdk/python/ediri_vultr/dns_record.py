@@ -27,6 +27,7 @@ class DnsRecordArgs:
                  ttl: Optional[pulumi.Input[_builtins.int]] = None):
         """
         The set of arguments for constructing a DnsRecord resource.
+
         :param pulumi.Input[_builtins.str] data: IP Address of the instance the domain is associated with.
         :param pulumi.Input[_builtins.str] domain: Name of the DNS Domain this record will belong to.
         :param pulumi.Input[_builtins.str] type: Type of record.
@@ -128,6 +129,7 @@ class _DnsRecordState:
                  type: Optional[pulumi.Input[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering DnsRecord resources.
+
         :param pulumi.Input[_builtins.str] data: IP Address of the instance the domain is associated with.
         :param pulumi.Input[_builtins.str] domain: Name of the DNS Domain this record will belong to.
         :param pulumi.Input[_builtins.str] name: Name (subdomain) for this record.
@@ -245,12 +247,13 @@ class DnsRecord(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_domain = vultr.DnsDomain("myDomain",
+        my_domain = vultr.DnsDomain("my_domain",
             domain="domain.com",
             ip="66.42.94.227")
-        my_record = vultr.DnsRecord("myRecord",
-            data="66.42.94.227",
+        my_record = vultr.DnsRecord("my_record",
             domain=my_domain.id,
+            name="www",
+            data="66.42.94.227",
             type="A")
         ```
 
@@ -261,6 +264,7 @@ class DnsRecord(pulumi.CustomResource):
         ```sh
         $ pulumi import vultr:index/dnsRecord:DnsRecord rec domain.com,1a0019bd-7645-4310-81bd-03bc5906940f
         ```
+
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -288,12 +292,13 @@ class DnsRecord(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_domain = vultr.DnsDomain("myDomain",
+        my_domain = vultr.DnsDomain("my_domain",
             domain="domain.com",
             ip="66.42.94.227")
-        my_record = vultr.DnsRecord("myRecord",
-            data="66.42.94.227",
+        my_record = vultr.DnsRecord("my_record",
             domain=my_domain.id,
+            name="www",
+            data="66.42.94.227",
             type="A")
         ```
 
@@ -304,6 +309,7 @@ class DnsRecord(pulumi.CustomResource):
         ```sh
         $ pulumi import vultr:index/dnsRecord:DnsRecord rec domain.com,1a0019bd-7645-4310-81bd-03bc5906940f
         ```
+
 
         :param str resource_name: The name of the resource.
         :param DnsRecordArgs args: The arguments to use to populate this resource's properties.

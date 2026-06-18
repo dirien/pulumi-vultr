@@ -31,16 +31,16 @@ import (
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			myInstance, err := vultr.NewInstance(ctx, "myInstance", &vultr.InstanceArgs{
-//				EnableIpv6: pulumi.Bool(true),
-//				OsId:       pulumi.Int(167),
+//			myInstance, err := vultr.NewInstance(ctx, "my_instance", &vultr.InstanceArgs{
 //				Plan:       pulumi.String("vc2-1c-1gb"),
 //				Region:     pulumi.String("ewr"),
+//				OsId:       pulumi.Int(167),
+//				EnableIpv6: pulumi.Bool(true),
 //			})
 //			if err != nil {
 //				return err
 //			}
-//			_, err = vultr.NewInstanceIpv4(ctx, "myInstanceIpv4", &vultr.InstanceIpv4Args{
+//			_, err = vultr.NewInstanceIpv4(ctx, "my_instance_ipv4", &vultr.InstanceIpv4Args{
 //				InstanceId: myInstance.ID(),
 //				Reboot:     pulumi.Bool(false),
 //			})

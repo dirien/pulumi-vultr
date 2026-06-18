@@ -28,7 +28,7 @@ class GetBareMetalServerResult:
     """
     A collection of values returned by getBareMetalServer.
     """
-    def __init__(__self__, app_id=None, cpu_count=None, date_created=None, disk=None, features=None, filters=None, gateway_v4=None, id=None, image_id=None, label=None, mac_address=None, main_ip=None, netmask_v4=None, os=None, os_id=None, plan=None, ram=None, region=None, status=None, tags=None, user_scheme=None, v6_main_ip=None, v6_network=None, v6_network_size=None, vpc2_ids=None, vpc_id=None):
+    def __init__(__self__, app_id=None, cpu_count=None, date_created=None, disk=None, features=None, filters=None, gateway_v4=None, id=None, image_id=None, label=None, mac_address=None, main_ip=None, netmask_v4=None, os=None, os_id=None, plan=None, ram=None, region=None, snapshot_id=None, status=None, tags=None, user_scheme=None, v6_main_ip=None, v6_network=None, v6_network_size=None, vpc2_ids=None, vpc_id=None):
         if app_id and not isinstance(app_id, int):
             raise TypeError("Expected argument 'app_id' to be a int")
         pulumi.set(__self__, "app_id", app_id)
@@ -83,6 +83,9 @@ class GetBareMetalServerResult:
         if region and not isinstance(region, str):
             raise TypeError("Expected argument 'region' to be a str")
         pulumi.set(__self__, "region", region)
+        if snapshot_id and not isinstance(snapshot_id, str):
+            raise TypeError("Expected argument 'snapshot_id' to be a str")
+        pulumi.set(__self__, "snapshot_id", snapshot_id)
         if status and not isinstance(status, str):
             raise TypeError("Expected argument 'status' to be a str")
         pulumi.set(__self__, "status", status)
@@ -244,6 +247,14 @@ class GetBareMetalServerResult:
         return pulumi.get(self, "region")
 
     @_builtins.property
+    @pulumi.getter(name="snapshotId")
+    def snapshot_id(self) -> _builtins.str:
+        """
+        The ID of the Vultr snapshot that the server was restored from.
+        """
+        return pulumi.get(self, "snapshot_id")
+
+    @_builtins.property
     @pulumi.getter
     def status(self) -> _builtins.str:
         """
@@ -323,6 +334,7 @@ class AwaitableGetBareMetalServerResult(GetBareMetalServerResult):
             plan=self.plan,
             ram=self.ram,
             region=self.region,
+            snapshot_id=self.snapshot_id,
             status=self.status,
             tags=self.tags,
             user_scheme=self.user_scheme,
@@ -379,6 +391,7 @@ def get_bare_metal_server(filters: Optional[Sequence[Union['GetBareMetalServerFi
         plan=pulumi.get(__ret__, 'plan'),
         ram=pulumi.get(__ret__, 'ram'),
         region=pulumi.get(__ret__, 'region'),
+        snapshot_id=pulumi.get(__ret__, 'snapshot_id'),
         status=pulumi.get(__ret__, 'status'),
         tags=pulumi.get(__ret__, 'tags'),
         user_scheme=pulumi.get(__ret__, 'user_scheme'),
@@ -432,6 +445,7 @@ def get_bare_metal_server_output(filters: Optional[pulumi.Input[Optional[Sequenc
         plan=pulumi.get(__response__, 'plan'),
         ram=pulumi.get(__response__, 'ram'),
         region=pulumi.get(__response__, 'region'),
+        snapshot_id=pulumi.get(__response__, 'snapshot_id'),
         status=pulumi.get(__response__, 'status'),
         tags=pulumi.get(__response__, 'tags'),
         user_scheme=pulumi.get(__response__, 'user_scheme'),

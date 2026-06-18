@@ -64,6 +64,10 @@ export interface GetDatabaseResult {
      */
     readonly backupMinute: string;
     /**
+     * The CA certificate for Managed Databases on this account.
+     */
+    readonly caCertificate: string;
+    /**
      * The configured time zone for the Managed Database in TZ database format.
      */
     readonly clusterTimeZone: string;
@@ -149,6 +153,10 @@ export interface GetDatabaseResult {
      * The password for the managed database's primary admin user.
      */
     readonly password: string;
+    /**
+     * Charges due for this managed database subscription at the end of the billing period.
+     */
+    readonly pendingCharges: number;
     /**
      * The managed database's plan ID.
      */

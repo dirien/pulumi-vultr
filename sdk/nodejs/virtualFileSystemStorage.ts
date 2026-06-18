@@ -17,10 +17,10 @@ import * as utilities from "./utilities";
  * import * as pulumi from "@pulumi/pulumi";
  * import * as vultr from "@ediri/vultr";
  *
- * const myVfsStorage = new vultr.VirtualFileSystemStorage("myVfsStorage", {
+ * const myVfsStorage = new vultr.VirtualFileSystemStorage("my_vfs_storage", {
  *     label: "vultr-vfs-storage",
- *     region: "ewr",
  *     sizeGb: 10,
+ *     region: "ewr",
  *     tags: [
  *         "terraform",
  *         "important",

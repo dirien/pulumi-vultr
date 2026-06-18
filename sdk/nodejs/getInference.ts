@@ -64,7 +64,6 @@ export interface GetInferenceResult {
      * The inference subscription's label.
      */
     readonly label: string;
-    readonly usage: {[key: string]: string};
 }
 /**
  * Get information about a Vultr Serverless Inference subscription.

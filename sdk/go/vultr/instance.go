@@ -30,10 +30,10 @@ import (
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := vultr.NewInstance(ctx, "myInstance", &vultr.InstanceArgs{
-//				OsId:   pulumi.Int(1743),
+//			_, err := vultr.NewInstance(ctx, "my_instance", &vultr.InstanceArgs{
 //				Plan:   pulumi.String("vc2-1c-2gb"),
 //				Region: pulumi.String("sea"),
+//				OsId:   pulumi.Int(1743),
 //			})
 //			if err != nil {
 //				return err
@@ -58,23 +58,23 @@ import (
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := vultr.NewInstance(ctx, "myInstance", &vultr.InstanceArgs{
-//				ActivationEmail: pulumi.Bool(false),
-//				Backups:         pulumi.String("enabled"),
-//				BackupsSchedule: &vultr.InstanceBackupsScheduleArgs{
-//					Type: pulumi.String("daily"),
-//				},
-//				DdosProtection:    pulumi.Bool(true),
-//				DisablePublicIpv4: pulumi.Bool(true),
-//				EnableIpv6:        pulumi.Bool(true),
-//				Hostname:          pulumi.String("my-instance-hostname"),
-//				Label:             pulumi.String("my-instance-label"),
-//				OsId:              pulumi.Int(1743),
-//				Plan:              pulumi.String("vc2-1c-2gb"),
-//				Region:            pulumi.String("sea"),
+//			_, err := vultr.NewInstance(ctx, "my_instance", &vultr.InstanceArgs{
+//				Plan:   pulumi.String("vc2-1c-2gb"),
+//				Region: pulumi.String("sea"),
+//				OsId:   pulumi.Int(1743),
+//				Label:  pulumi.String("my-instance-label"),
 //				Tags: pulumi.StringArray{
 //					pulumi.String("my-instance-tag"),
 //				},
+//				Hostname:          pulumi.String("my-instance-hostname"),
+//				EnableIpv6:        pulumi.Bool(true),
+//				DisablePublicIpv4: pulumi.Bool(true),
+//				Backups:           pulumi.String("enabled"),
+//				BackupsSchedule: &vultr.InstanceBackupsScheduleArgs{
+//					Type: pulumi.String("daily"),
+//				},
+//				DdosProtection:  pulumi.Bool(true),
+//				ActivationEmail: pulumi.Bool(false),
 //			})
 //			if err != nil {
 //				return err
@@ -107,6 +107,7 @@ type Instance struct {
 	Backups pulumi.StringPtrOutput `pulumi:"backups"`
 	// A block that defines the way backups should be scheduled. While this is an optional field if `backups` are `enabled` this field is mandatory. The configuration of a `backupsSchedule` is listed below.
 	BackupsSchedule InstanceBackupsSchedulePtrOutput `pulumi:"backupsSchedule"`
+	BlockDevices    InstanceBlockDeviceArrayOutput   `pulumi:"blockDevices"`
 	// The date the server was added to your Vultr account.
 	DateCreated pulumi.StringOutput `pulumi:"dateCreated"`
 	// Whether DDOS protection will be enabled on the server (there is an additional charge for this).
@@ -204,6 +205,7 @@ func NewInstance(ctx *pulumi.Context,
 	}
 	secrets := pulumi.AdditionalSecretOutputs([]string{
 		"defaultPassword",
+		"kvm",
 	})
 	opts = append(opts, secrets)
 	opts = internal.PkgResourceDefaultOpts(opts)
@@ -241,6 +243,7 @@ type instanceState struct {
 	Backups *string `pulumi:"backups"`
 	// A block that defines the way backups should be scheduled. While this is an optional field if `backups` are `enabled` this field is mandatory. The configuration of a `backupsSchedule` is listed below.
 	BackupsSchedule *InstanceBackupsSchedule `pulumi:"backupsSchedule"`
+	BlockDevices    []InstanceBlockDevice    `pulumi:"blockDevices"`
 	// The date the server was added to your Vultr account.
 	DateCreated *string `pulumi:"dateCreated"`
 	// Whether DDOS protection will be enabled on the server (there is an additional charge for this).
@@ -336,6 +339,7 @@ type InstanceState struct {
 	Backups pulumi.StringPtrInput
 	// A block that defines the way backups should be scheduled. While this is an optional field if `backups` are `enabled` this field is mandatory. The configuration of a `backupsSchedule` is listed below.
 	BackupsSchedule InstanceBackupsSchedulePtrInput
+	BlockDevices    InstanceBlockDeviceArrayInput
 	// The date the server was added to your Vultr account.
 	DateCreated pulumi.StringPtrInput
 	// Whether DDOS protection will be enabled on the server (there is an additional charge for this).
@@ -433,6 +437,7 @@ type instanceArgs struct {
 	Backups *string `pulumi:"backups"`
 	// A block that defines the way backups should be scheduled. While this is an optional field if `backups` are `enabled` this field is mandatory. The configuration of a `backupsSchedule` is listed below.
 	BackupsSchedule *InstanceBackupsSchedule `pulumi:"backupsSchedule"`
+	BlockDevices    []InstanceBlockDevice    `pulumi:"blockDevices"`
 	// Whether DDOS protection will be enabled on the server (there is an additional charge for this).
 	DdosProtection *bool `pulumi:"ddosProtection"`
 	// Whether the server has a public IPv4 address assigned (only possible with `enableIpv6` set to `true`)
@@ -491,6 +496,7 @@ type InstanceArgs struct {
 	Backups pulumi.StringPtrInput
 	// A block that defines the way backups should be scheduled. While this is an optional field if `backups` are `enabled` this field is mandatory. The configuration of a `backupsSchedule` is listed below.
 	BackupsSchedule InstanceBackupsSchedulePtrInput
+	BlockDevices    InstanceBlockDeviceArrayInput
 	// Whether DDOS protection will be enabled on the server (there is an additional charge for this).
 	DdosProtection pulumi.BoolPtrInput
 	// Whether the server has a public IPv4 address assigned (only possible with `enableIpv6` set to `true`)
@@ -652,6 +658,10 @@ func (o InstanceOutput) Backups() pulumi.StringPtrOutput {
 // A block that defines the way backups should be scheduled. While this is an optional field if `backups` are `enabled` this field is mandatory. The configuration of a `backupsSchedule` is listed below.
 func (o InstanceOutput) BackupsSchedule() InstanceBackupsSchedulePtrOutput {
 	return o.ApplyT(func(v *Instance) InstanceBackupsSchedulePtrOutput { return v.BackupsSchedule }).(InstanceBackupsSchedulePtrOutput)
+}
+
+func (o InstanceOutput) BlockDevices() InstanceBlockDeviceArrayOutput {
+	return o.ApplyT(func(v *Instance) InstanceBlockDeviceArrayOutput { return v.BlockDevices }).(InstanceBlockDeviceArrayOutput)
 }
 
 // The date the server was added to your Vultr account.

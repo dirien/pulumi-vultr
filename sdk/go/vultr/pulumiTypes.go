@@ -18,6 +18,8 @@ type DatabaseReadReplica struct {
 	BackupHour *string `pulumi:"backupHour"`
 	// The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
 	BackupMinute *string `pulumi:"backupMinute"`
+	// The CA certificate for Managed Databases on this account.
+	CaCertificate *string `pulumi:"caCertificate"`
 	// The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
 	ClusterTimeZone *string `pulumi:"clusterTimeZone"`
 	// The database engine of the new managed database.
@@ -97,6 +99,8 @@ type DatabaseReadReplicaArgs struct {
 	BackupHour pulumi.StringPtrInput `pulumi:"backupHour"`
 	// The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
 	BackupMinute pulumi.StringPtrInput `pulumi:"backupMinute"`
+	// The CA certificate for Managed Databases on this account.
+	CaCertificate pulumi.StringPtrInput `pulumi:"caCertificate"`
 	// The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
 	ClusterTimeZone pulumi.StringPtrInput `pulumi:"clusterTimeZone"`
 	// The database engine of the new managed database.
@@ -219,6 +223,11 @@ func (o DatabaseReadReplicaOutput) BackupHour() pulumi.StringPtrOutput {
 // The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
 func (o DatabaseReadReplicaOutput) BackupMinute() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v DatabaseReadReplica) *string { return v.BackupMinute }).(pulumi.StringPtrOutput)
+}
+
+// The CA certificate for Managed Databases on this account.
+func (o DatabaseReadReplicaOutput) CaCertificate() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v DatabaseReadReplica) *string { return v.CaCertificate }).(pulumi.StringPtrOutput)
 }
 
 // The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
@@ -591,6 +600,8 @@ func (o DatabaseUserAccessControlPtrOutput) AclKeys() pulumi.StringArrayOutput {
 
 type InstanceBackupsSchedule struct {
 	// Day of month to run. Use values between 1 and 28.
+	//
+	// `blockDevices` - (Optional) Available for VX1 instances: A list of block devices to attach to your instance. Define your block devices, create bootable block devices, or use local storage (if plan has local storage) as scratch disk with these fields:
 	Dom *int `pulumi:"dom"`
 	// Day of week to run. `1 = Sunday`, `2 = Monday`, `3 = Tuesday`, `4 = Wednesday`, `5 = Thursday`, `6 = Friday`, `7 = Saturday`
 	Dow *int `pulumi:"dow"`
@@ -613,6 +624,8 @@ type InstanceBackupsScheduleInput interface {
 
 type InstanceBackupsScheduleArgs struct {
 	// Day of month to run. Use values between 1 and 28.
+	//
+	// `blockDevices` - (Optional) Available for VX1 instances: A list of block devices to attach to your instance. Define your block devices, create bootable block devices, or use local storage (if plan has local storage) as scratch disk with these fields:
 	Dom pulumi.IntPtrInput `pulumi:"dom"`
 	// Day of week to run. `1 = Sunday`, `2 = Monday`, `3 = Tuesday`, `4 = Wednesday`, `5 = Thursday`, `6 = Friday`, `7 = Saturday`
 	Dow pulumi.IntPtrInput `pulumi:"dow"`
@@ -700,6 +713,8 @@ func (o InstanceBackupsScheduleOutput) ToInstanceBackupsSchedulePtrOutputWithCon
 }
 
 // Day of month to run. Use values between 1 and 28.
+//
+// `blockDevices` - (Optional) Available for VX1 instances: A list of block devices to attach to your instance. Define your block devices, create bootable block devices, or use local storage (if plan has local storage) as scratch disk with these fields:
 func (o InstanceBackupsScheduleOutput) Dom() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v InstanceBackupsSchedule) *int { return v.Dom }).(pulumi.IntPtrOutput)
 }
@@ -744,6 +759,8 @@ func (o InstanceBackupsSchedulePtrOutput) Elem() InstanceBackupsScheduleOutput {
 }
 
 // Day of month to run. Use values between 1 and 28.
+//
+// `blockDevices` - (Optional) Available for VX1 instances: A list of block devices to attach to your instance. Define your block devices, create bootable block devices, or use local storage (if plan has local storage) as scratch disk with these fields:
 func (o InstanceBackupsSchedulePtrOutput) Dom() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *InstanceBackupsSchedule) *int {
 		if v == nil {
@@ -783,6 +800,130 @@ func (o InstanceBackupsSchedulePtrOutput) Type() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
+type InstanceBlockDevice struct {
+	// The ID of an existing block device or `local` if the VX1 plan has local storage and you wish to utilize it for this instance.
+	BlockId *string `pulumi:"blockId"`
+	// Whether the associated block device is bootable.
+	Bootable *bool `pulumi:"bootable"`
+	// The disk size for the block device if it is being created.
+	DiskSize *int `pulumi:"diskSize"`
+	// A label for the server.
+	Label *string `pulumi:"label"`
+}
+
+// InstanceBlockDeviceInput is an input type that accepts InstanceBlockDeviceArgs and InstanceBlockDeviceOutput values.
+// You can construct a concrete instance of `InstanceBlockDeviceInput` via:
+//
+//	InstanceBlockDeviceArgs{...}
+type InstanceBlockDeviceInput interface {
+	pulumi.Input
+
+	ToInstanceBlockDeviceOutput() InstanceBlockDeviceOutput
+	ToInstanceBlockDeviceOutputWithContext(context.Context) InstanceBlockDeviceOutput
+}
+
+type InstanceBlockDeviceArgs struct {
+	// The ID of an existing block device or `local` if the VX1 plan has local storage and you wish to utilize it for this instance.
+	BlockId pulumi.StringPtrInput `pulumi:"blockId"`
+	// Whether the associated block device is bootable.
+	Bootable pulumi.BoolPtrInput `pulumi:"bootable"`
+	// The disk size for the block device if it is being created.
+	DiskSize pulumi.IntPtrInput `pulumi:"diskSize"`
+	// A label for the server.
+	Label pulumi.StringPtrInput `pulumi:"label"`
+}
+
+func (InstanceBlockDeviceArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*InstanceBlockDevice)(nil)).Elem()
+}
+
+func (i InstanceBlockDeviceArgs) ToInstanceBlockDeviceOutput() InstanceBlockDeviceOutput {
+	return i.ToInstanceBlockDeviceOutputWithContext(context.Background())
+}
+
+func (i InstanceBlockDeviceArgs) ToInstanceBlockDeviceOutputWithContext(ctx context.Context) InstanceBlockDeviceOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InstanceBlockDeviceOutput)
+}
+
+// InstanceBlockDeviceArrayInput is an input type that accepts InstanceBlockDeviceArray and InstanceBlockDeviceArrayOutput values.
+// You can construct a concrete instance of `InstanceBlockDeviceArrayInput` via:
+//
+//	InstanceBlockDeviceArray{ InstanceBlockDeviceArgs{...} }
+type InstanceBlockDeviceArrayInput interface {
+	pulumi.Input
+
+	ToInstanceBlockDeviceArrayOutput() InstanceBlockDeviceArrayOutput
+	ToInstanceBlockDeviceArrayOutputWithContext(context.Context) InstanceBlockDeviceArrayOutput
+}
+
+type InstanceBlockDeviceArray []InstanceBlockDeviceInput
+
+func (InstanceBlockDeviceArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]InstanceBlockDevice)(nil)).Elem()
+}
+
+func (i InstanceBlockDeviceArray) ToInstanceBlockDeviceArrayOutput() InstanceBlockDeviceArrayOutput {
+	return i.ToInstanceBlockDeviceArrayOutputWithContext(context.Background())
+}
+
+func (i InstanceBlockDeviceArray) ToInstanceBlockDeviceArrayOutputWithContext(ctx context.Context) InstanceBlockDeviceArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InstanceBlockDeviceArrayOutput)
+}
+
+type InstanceBlockDeviceOutput struct{ *pulumi.OutputState }
+
+func (InstanceBlockDeviceOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*InstanceBlockDevice)(nil)).Elem()
+}
+
+func (o InstanceBlockDeviceOutput) ToInstanceBlockDeviceOutput() InstanceBlockDeviceOutput {
+	return o
+}
+
+func (o InstanceBlockDeviceOutput) ToInstanceBlockDeviceOutputWithContext(ctx context.Context) InstanceBlockDeviceOutput {
+	return o
+}
+
+// The ID of an existing block device or `local` if the VX1 plan has local storage and you wish to utilize it for this instance.
+func (o InstanceBlockDeviceOutput) BlockId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v InstanceBlockDevice) *string { return v.BlockId }).(pulumi.StringPtrOutput)
+}
+
+// Whether the associated block device is bootable.
+func (o InstanceBlockDeviceOutput) Bootable() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v InstanceBlockDevice) *bool { return v.Bootable }).(pulumi.BoolPtrOutput)
+}
+
+// The disk size for the block device if it is being created.
+func (o InstanceBlockDeviceOutput) DiskSize() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v InstanceBlockDevice) *int { return v.DiskSize }).(pulumi.IntPtrOutput)
+}
+
+// A label for the server.
+func (o InstanceBlockDeviceOutput) Label() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v InstanceBlockDevice) *string { return v.Label }).(pulumi.StringPtrOutput)
+}
+
+type InstanceBlockDeviceArrayOutput struct{ *pulumi.OutputState }
+
+func (InstanceBlockDeviceArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]InstanceBlockDevice)(nil)).Elem()
+}
+
+func (o InstanceBlockDeviceArrayOutput) ToInstanceBlockDeviceArrayOutput() InstanceBlockDeviceArrayOutput {
+	return o
+}
+
+func (o InstanceBlockDeviceArrayOutput) ToInstanceBlockDeviceArrayOutputWithContext(ctx context.Context) InstanceBlockDeviceArrayOutput {
+	return o
+}
+
+func (o InstanceBlockDeviceArrayOutput) Index(i pulumi.IntInput) InstanceBlockDeviceOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) InstanceBlockDevice {
+		return vs[0].([]InstanceBlockDevice)[vs[1].(int)]
+	}).(InstanceBlockDeviceOutput)
+}
+
 type KubernetesNodePoolsType struct {
 	// Enable the auto scaler for the default node pool.
 	AutoScaler *bool `pulumi:"autoScaler"`
@@ -793,26 +934,26 @@ type KubernetesNodePoolsType struct {
 	// ID of node.
 	Id *string `pulumi:"id"`
 	// The label to be used as a prefix for nodes in this node pool.
-	Label string `pulumi:"label"`
-	// A map of key/value pairs for Kubernetes node labels.
-	Labels map[string]string `pulumi:"labels"`
+	Label  string                     `pulumi:"label"`
+	Labels []KubernetesNodePoolsLabel `pulumi:"labels"`
 	// The maximum number of nodes to use with the auto scaler.
 	MaxNodes *int `pulumi:"maxNodes"`
 	// The minimum number of nodes to use with the auto scaler.
 	MinNodes *int `pulumi:"minNodes"`
 	// The number of nodes in this node pool.
-	NodeQuantity int `pulumi:"nodeQuantity"`
-	// Array that contains information about nodes within this node pool.
-	Nodes []KubernetesNodePoolsNode `pulumi:"nodes"`
-	// The plan to be used in this node pool. [See Plans List](https://www.vultr.com/api/#operation/list-plans) Note the minimum plan requirements must have at least 1 core and 2 gbs of memory.
+	NodeQuantity int                       `pulumi:"nodeQuantity"`
+	Nodes        []KubernetesNodePoolsNode `pulumi:"nodes"`
+	// The plan to be used in this node pool. [See plans list](https://www.vultr.com/api/#operation/list-plans) Note the minimum plan requirements must have at least 1 core and 2 gbs of memory.
 	Plan string `pulumi:"plan"`
 	// Status of node.
 	Status *string `pulumi:"status"`
 	// Tag for node pool.
-	Tag *string `pulumi:"tag"`
-	// Taints to apply to the nodes in the node pool. Should contain `key`, `value` and `effect`.  The `effect` should be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
-	Taints   []KubernetesNodePoolsTaint `pulumi:"taints"`
-	UserData *string                    `pulumi:"userData"`
+	Tag    *string                    `pulumi:"tag"`
+	Taints []KubernetesNodePoolsTaint `pulumi:"taints"`
+	// A base64 encoded string containing the user data to apply to nodes in the node pool.
+	//
+	// `labels` - (Optional) A list of labels to apply to the nodes in the node pool with these fields:
+	UserData *string `pulumi:"userData"`
 }
 
 // KubernetesNodePoolsTypeInput is an input type that accepts KubernetesNodePoolsTypeArgs and KubernetesNodePoolsTypeOutput values.
@@ -836,26 +977,26 @@ type KubernetesNodePoolsTypeArgs struct {
 	// ID of node.
 	Id pulumi.StringPtrInput `pulumi:"id"`
 	// The label to be used as a prefix for nodes in this node pool.
-	Label pulumi.StringInput `pulumi:"label"`
-	// A map of key/value pairs for Kubernetes node labels.
-	Labels pulumi.StringMapInput `pulumi:"labels"`
+	Label  pulumi.StringInput                 `pulumi:"label"`
+	Labels KubernetesNodePoolsLabelArrayInput `pulumi:"labels"`
 	// The maximum number of nodes to use with the auto scaler.
 	MaxNodes pulumi.IntPtrInput `pulumi:"maxNodes"`
 	// The minimum number of nodes to use with the auto scaler.
 	MinNodes pulumi.IntPtrInput `pulumi:"minNodes"`
 	// The number of nodes in this node pool.
-	NodeQuantity pulumi.IntInput `pulumi:"nodeQuantity"`
-	// Array that contains information about nodes within this node pool.
-	Nodes KubernetesNodePoolsNodeArrayInput `pulumi:"nodes"`
-	// The plan to be used in this node pool. [See Plans List](https://www.vultr.com/api/#operation/list-plans) Note the minimum plan requirements must have at least 1 core and 2 gbs of memory.
+	NodeQuantity pulumi.IntInput                   `pulumi:"nodeQuantity"`
+	Nodes        KubernetesNodePoolsNodeArrayInput `pulumi:"nodes"`
+	// The plan to be used in this node pool. [See plans list](https://www.vultr.com/api/#operation/list-plans) Note the minimum plan requirements must have at least 1 core and 2 gbs of memory.
 	Plan pulumi.StringInput `pulumi:"plan"`
 	// Status of node.
 	Status pulumi.StringPtrInput `pulumi:"status"`
 	// Tag for node pool.
-	Tag pulumi.StringPtrInput `pulumi:"tag"`
-	// Taints to apply to the nodes in the node pool. Should contain `key`, `value` and `effect`.  The `effect` should be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
-	Taints   KubernetesNodePoolsTaintArrayInput `pulumi:"taints"`
-	UserData pulumi.StringPtrInput              `pulumi:"userData"`
+	Tag    pulumi.StringPtrInput              `pulumi:"tag"`
+	Taints KubernetesNodePoolsTaintArrayInput `pulumi:"taints"`
+	// A base64 encoded string containing the user data to apply to nodes in the node pool.
+	//
+	// `labels` - (Optional) A list of labels to apply to the nodes in the node pool with these fields:
+	UserData pulumi.StringPtrInput `pulumi:"userData"`
 }
 
 func (KubernetesNodePoolsTypeArgs) ElementType() reflect.Type {
@@ -960,9 +1101,8 @@ func (o KubernetesNodePoolsTypeOutput) Label() pulumi.StringOutput {
 	return o.ApplyT(func(v KubernetesNodePoolsType) string { return v.Label }).(pulumi.StringOutput)
 }
 
-// A map of key/value pairs for Kubernetes node labels.
-func (o KubernetesNodePoolsTypeOutput) Labels() pulumi.StringMapOutput {
-	return o.ApplyT(func(v KubernetesNodePoolsType) map[string]string { return v.Labels }).(pulumi.StringMapOutput)
+func (o KubernetesNodePoolsTypeOutput) Labels() KubernetesNodePoolsLabelArrayOutput {
+	return o.ApplyT(func(v KubernetesNodePoolsType) []KubernetesNodePoolsLabel { return v.Labels }).(KubernetesNodePoolsLabelArrayOutput)
 }
 
 // The maximum number of nodes to use with the auto scaler.
@@ -980,12 +1120,11 @@ func (o KubernetesNodePoolsTypeOutput) NodeQuantity() pulumi.IntOutput {
 	return o.ApplyT(func(v KubernetesNodePoolsType) int { return v.NodeQuantity }).(pulumi.IntOutput)
 }
 
-// Array that contains information about nodes within this node pool.
 func (o KubernetesNodePoolsTypeOutput) Nodes() KubernetesNodePoolsNodeArrayOutput {
 	return o.ApplyT(func(v KubernetesNodePoolsType) []KubernetesNodePoolsNode { return v.Nodes }).(KubernetesNodePoolsNodeArrayOutput)
 }
 
-// The plan to be used in this node pool. [See Plans List](https://www.vultr.com/api/#operation/list-plans) Note the minimum plan requirements must have at least 1 core and 2 gbs of memory.
+// The plan to be used in this node pool. [See plans list](https://www.vultr.com/api/#operation/list-plans) Note the minimum plan requirements must have at least 1 core and 2 gbs of memory.
 func (o KubernetesNodePoolsTypeOutput) Plan() pulumi.StringOutput {
 	return o.ApplyT(func(v KubernetesNodePoolsType) string { return v.Plan }).(pulumi.StringOutput)
 }
@@ -1000,11 +1139,13 @@ func (o KubernetesNodePoolsTypeOutput) Tag() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v KubernetesNodePoolsType) *string { return v.Tag }).(pulumi.StringPtrOutput)
 }
 
-// Taints to apply to the nodes in the node pool. Should contain `key`, `value` and `effect`.  The `effect` should be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
 func (o KubernetesNodePoolsTypeOutput) Taints() KubernetesNodePoolsTaintArrayOutput {
 	return o.ApplyT(func(v KubernetesNodePoolsType) []KubernetesNodePoolsTaint { return v.Taints }).(KubernetesNodePoolsTaintArrayOutput)
 }
 
+// A base64 encoded string containing the user data to apply to nodes in the node pool.
+//
+// `labels` - (Optional) A list of labels to apply to the nodes in the node pool with these fields:
 func (o KubernetesNodePoolsTypeOutput) UserData() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v KubernetesNodePoolsType) *string { return v.UserData }).(pulumi.StringPtrOutput)
 }
@@ -1083,14 +1224,13 @@ func (o KubernetesNodePoolsTypePtrOutput) Label() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
-// A map of key/value pairs for Kubernetes node labels.
-func (o KubernetesNodePoolsTypePtrOutput) Labels() pulumi.StringMapOutput {
-	return o.ApplyT(func(v *KubernetesNodePoolsType) map[string]string {
+func (o KubernetesNodePoolsTypePtrOutput) Labels() KubernetesNodePoolsLabelArrayOutput {
+	return o.ApplyT(func(v *KubernetesNodePoolsType) []KubernetesNodePoolsLabel {
 		if v == nil {
 			return nil
 		}
 		return v.Labels
-	}).(pulumi.StringMapOutput)
+	}).(KubernetesNodePoolsLabelArrayOutput)
 }
 
 // The maximum number of nodes to use with the auto scaler.
@@ -1123,7 +1263,6 @@ func (o KubernetesNodePoolsTypePtrOutput) NodeQuantity() pulumi.IntPtrOutput {
 	}).(pulumi.IntPtrOutput)
 }
 
-// Array that contains information about nodes within this node pool.
 func (o KubernetesNodePoolsTypePtrOutput) Nodes() KubernetesNodePoolsNodeArrayOutput {
 	return o.ApplyT(func(v *KubernetesNodePoolsType) []KubernetesNodePoolsNode {
 		if v == nil {
@@ -1133,7 +1272,7 @@ func (o KubernetesNodePoolsTypePtrOutput) Nodes() KubernetesNodePoolsNodeArrayOu
 	}).(KubernetesNodePoolsNodeArrayOutput)
 }
 
-// The plan to be used in this node pool. [See Plans List](https://www.vultr.com/api/#operation/list-plans) Note the minimum plan requirements must have at least 1 core and 2 gbs of memory.
+// The plan to be used in this node pool. [See plans list](https://www.vultr.com/api/#operation/list-plans) Note the minimum plan requirements must have at least 1 core and 2 gbs of memory.
 func (o KubernetesNodePoolsTypePtrOutput) Plan() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *KubernetesNodePoolsType) *string {
 		if v == nil {
@@ -1163,7 +1302,6 @@ func (o KubernetesNodePoolsTypePtrOutput) Tag() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
-// Taints to apply to the nodes in the node pool. Should contain `key`, `value` and `effect`.  The `effect` should be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
 func (o KubernetesNodePoolsTypePtrOutput) Taints() KubernetesNodePoolsTaintArrayOutput {
 	return o.ApplyT(func(v *KubernetesNodePoolsType) []KubernetesNodePoolsTaint {
 		if v == nil {
@@ -1173,6 +1311,9 @@ func (o KubernetesNodePoolsTypePtrOutput) Taints() KubernetesNodePoolsTaintArray
 	}).(KubernetesNodePoolsTaintArrayOutput)
 }
 
+// A base64 encoded string containing the user data to apply to nodes in the node pool.
+//
+// `labels` - (Optional) A list of labels to apply to the nodes in the node pool with these fields:
 func (o KubernetesNodePoolsTypePtrOutput) UserData() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *KubernetesNodePoolsType) *string {
 		if v == nil {
@@ -1180,6 +1321,121 @@ func (o KubernetesNodePoolsTypePtrOutput) UserData() pulumi.StringPtrOutput {
 		}
 		return v.UserData
 	}).(pulumi.StringPtrOutput)
+}
+
+type KubernetesNodePoolsLabel struct {
+	// ID of node.
+	Id *string `pulumi:"id"`
+	// The key definining the taint for kubernetes.
+	Key string `pulumi:"key"`
+	// The value of the taint for kubernetes.
+	Value string `pulumi:"value"`
+}
+
+// KubernetesNodePoolsLabelInput is an input type that accepts KubernetesNodePoolsLabelArgs and KubernetesNodePoolsLabelOutput values.
+// You can construct a concrete instance of `KubernetesNodePoolsLabelInput` via:
+//
+//	KubernetesNodePoolsLabelArgs{...}
+type KubernetesNodePoolsLabelInput interface {
+	pulumi.Input
+
+	ToKubernetesNodePoolsLabelOutput() KubernetesNodePoolsLabelOutput
+	ToKubernetesNodePoolsLabelOutputWithContext(context.Context) KubernetesNodePoolsLabelOutput
+}
+
+type KubernetesNodePoolsLabelArgs struct {
+	// ID of node.
+	Id pulumi.StringPtrInput `pulumi:"id"`
+	// The key definining the taint for kubernetes.
+	Key pulumi.StringInput `pulumi:"key"`
+	// The value of the taint for kubernetes.
+	Value pulumi.StringInput `pulumi:"value"`
+}
+
+func (KubernetesNodePoolsLabelArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*KubernetesNodePoolsLabel)(nil)).Elem()
+}
+
+func (i KubernetesNodePoolsLabelArgs) ToKubernetesNodePoolsLabelOutput() KubernetesNodePoolsLabelOutput {
+	return i.ToKubernetesNodePoolsLabelOutputWithContext(context.Background())
+}
+
+func (i KubernetesNodePoolsLabelArgs) ToKubernetesNodePoolsLabelOutputWithContext(ctx context.Context) KubernetesNodePoolsLabelOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KubernetesNodePoolsLabelOutput)
+}
+
+// KubernetesNodePoolsLabelArrayInput is an input type that accepts KubernetesNodePoolsLabelArray and KubernetesNodePoolsLabelArrayOutput values.
+// You can construct a concrete instance of `KubernetesNodePoolsLabelArrayInput` via:
+//
+//	KubernetesNodePoolsLabelArray{ KubernetesNodePoolsLabelArgs{...} }
+type KubernetesNodePoolsLabelArrayInput interface {
+	pulumi.Input
+
+	ToKubernetesNodePoolsLabelArrayOutput() KubernetesNodePoolsLabelArrayOutput
+	ToKubernetesNodePoolsLabelArrayOutputWithContext(context.Context) KubernetesNodePoolsLabelArrayOutput
+}
+
+type KubernetesNodePoolsLabelArray []KubernetesNodePoolsLabelInput
+
+func (KubernetesNodePoolsLabelArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]KubernetesNodePoolsLabel)(nil)).Elem()
+}
+
+func (i KubernetesNodePoolsLabelArray) ToKubernetesNodePoolsLabelArrayOutput() KubernetesNodePoolsLabelArrayOutput {
+	return i.ToKubernetesNodePoolsLabelArrayOutputWithContext(context.Background())
+}
+
+func (i KubernetesNodePoolsLabelArray) ToKubernetesNodePoolsLabelArrayOutputWithContext(ctx context.Context) KubernetesNodePoolsLabelArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(KubernetesNodePoolsLabelArrayOutput)
+}
+
+type KubernetesNodePoolsLabelOutput struct{ *pulumi.OutputState }
+
+func (KubernetesNodePoolsLabelOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*KubernetesNodePoolsLabel)(nil)).Elem()
+}
+
+func (o KubernetesNodePoolsLabelOutput) ToKubernetesNodePoolsLabelOutput() KubernetesNodePoolsLabelOutput {
+	return o
+}
+
+func (o KubernetesNodePoolsLabelOutput) ToKubernetesNodePoolsLabelOutputWithContext(ctx context.Context) KubernetesNodePoolsLabelOutput {
+	return o
+}
+
+// ID of node.
+func (o KubernetesNodePoolsLabelOutput) Id() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v KubernetesNodePoolsLabel) *string { return v.Id }).(pulumi.StringPtrOutput)
+}
+
+// The key definining the taint for kubernetes.
+func (o KubernetesNodePoolsLabelOutput) Key() pulumi.StringOutput {
+	return o.ApplyT(func(v KubernetesNodePoolsLabel) string { return v.Key }).(pulumi.StringOutput)
+}
+
+// The value of the taint for kubernetes.
+func (o KubernetesNodePoolsLabelOutput) Value() pulumi.StringOutput {
+	return o.ApplyT(func(v KubernetesNodePoolsLabel) string { return v.Value }).(pulumi.StringOutput)
+}
+
+type KubernetesNodePoolsLabelArrayOutput struct{ *pulumi.OutputState }
+
+func (KubernetesNodePoolsLabelArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]KubernetesNodePoolsLabel)(nil)).Elem()
+}
+
+func (o KubernetesNodePoolsLabelArrayOutput) ToKubernetesNodePoolsLabelArrayOutput() KubernetesNodePoolsLabelArrayOutput {
+	return o
+}
+
+func (o KubernetesNodePoolsLabelArrayOutput) ToKubernetesNodePoolsLabelArrayOutputWithContext(ctx context.Context) KubernetesNodePoolsLabelArrayOutput {
+	return o
+}
+
+func (o KubernetesNodePoolsLabelArrayOutput) Index(i pulumi.IntInput) KubernetesNodePoolsLabelOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) KubernetesNodePoolsLabel {
+		return vs[0].([]KubernetesNodePoolsLabel)[vs[1].(int)]
+	}).(KubernetesNodePoolsLabelOutput)
 }
 
 type KubernetesNodePoolsNode struct {
@@ -1307,9 +1563,14 @@ func (o KubernetesNodePoolsNodeArrayOutput) Index(i pulumi.IntInput) KubernetesN
 }
 
 type KubernetesNodePoolsTaint struct {
+	// The effect of the taint for kubernetes.  Must be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
 	Effect string `pulumi:"effect"`
-	Key    string `pulumi:"key"`
-	Value  string `pulumi:"value"`
+	// ID of node.
+	Id *string `pulumi:"id"`
+	// The key definining the taint for kubernetes.
+	Key string `pulumi:"key"`
+	// The value of the taint for kubernetes.
+	Value string `pulumi:"value"`
 }
 
 // KubernetesNodePoolsTaintInput is an input type that accepts KubernetesNodePoolsTaintArgs and KubernetesNodePoolsTaintOutput values.
@@ -1324,9 +1585,14 @@ type KubernetesNodePoolsTaintInput interface {
 }
 
 type KubernetesNodePoolsTaintArgs struct {
+	// The effect of the taint for kubernetes.  Must be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
 	Effect pulumi.StringInput `pulumi:"effect"`
-	Key    pulumi.StringInput `pulumi:"key"`
-	Value  pulumi.StringInput `pulumi:"value"`
+	// ID of node.
+	Id pulumi.StringPtrInput `pulumi:"id"`
+	// The key definining the taint for kubernetes.
+	Key pulumi.StringInput `pulumi:"key"`
+	// The value of the taint for kubernetes.
+	Value pulumi.StringInput `pulumi:"value"`
 }
 
 func (KubernetesNodePoolsTaintArgs) ElementType() reflect.Type {
@@ -1380,14 +1646,22 @@ func (o KubernetesNodePoolsTaintOutput) ToKubernetesNodePoolsTaintOutputWithCont
 	return o
 }
 
+// The effect of the taint for kubernetes.  Must be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
 func (o KubernetesNodePoolsTaintOutput) Effect() pulumi.StringOutput {
 	return o.ApplyT(func(v KubernetesNodePoolsTaint) string { return v.Effect }).(pulumi.StringOutput)
 }
 
+// ID of node.
+func (o KubernetesNodePoolsTaintOutput) Id() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v KubernetesNodePoolsTaint) *string { return v.Id }).(pulumi.StringPtrOutput)
+}
+
+// The key definining the taint for kubernetes.
 func (o KubernetesNodePoolsTaintOutput) Key() pulumi.StringOutput {
 	return o.ApplyT(func(v KubernetesNodePoolsTaint) string { return v.Key }).(pulumi.StringOutput)
 }
 
+// The value of the taint for kubernetes.
 func (o KubernetesNodePoolsTaintOutput) Value() pulumi.StringOutput {
 	return o.ApplyT(func(v KubernetesNodePoolsTaint) string { return v.Value }).(pulumi.StringOutput)
 }
@@ -2090,6 +2364,277 @@ func (o LoadBalancerSslPtrOutput) PrivateKey() pulumi.StringPtrOutput {
 		}
 		return &v.PrivateKey
 	}).(pulumi.StringPtrOutput)
+}
+
+type OrganizationPolicyDocument struct {
+	// A list of blocks for the organization policy statements.
+	Statements []OrganizationPolicyDocumentStatement `pulumi:"statements"`
+	// A version for organization policy document.
+	Version string `pulumi:"version"`
+}
+
+// OrganizationPolicyDocumentInput is an input type that accepts OrganizationPolicyDocumentArgs and OrganizationPolicyDocumentOutput values.
+// You can construct a concrete instance of `OrganizationPolicyDocumentInput` via:
+//
+//	OrganizationPolicyDocumentArgs{...}
+type OrganizationPolicyDocumentInput interface {
+	pulumi.Input
+
+	ToOrganizationPolicyDocumentOutput() OrganizationPolicyDocumentOutput
+	ToOrganizationPolicyDocumentOutputWithContext(context.Context) OrganizationPolicyDocumentOutput
+}
+
+type OrganizationPolicyDocumentArgs struct {
+	// A list of blocks for the organization policy statements.
+	Statements OrganizationPolicyDocumentStatementArrayInput `pulumi:"statements"`
+	// A version for organization policy document.
+	Version pulumi.StringInput `pulumi:"version"`
+}
+
+func (OrganizationPolicyDocumentArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*OrganizationPolicyDocument)(nil)).Elem()
+}
+
+func (i OrganizationPolicyDocumentArgs) ToOrganizationPolicyDocumentOutput() OrganizationPolicyDocumentOutput {
+	return i.ToOrganizationPolicyDocumentOutputWithContext(context.Background())
+}
+
+func (i OrganizationPolicyDocumentArgs) ToOrganizationPolicyDocumentOutputWithContext(ctx context.Context) OrganizationPolicyDocumentOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(OrganizationPolicyDocumentOutput)
+}
+
+func (i OrganizationPolicyDocumentArgs) ToOrganizationPolicyDocumentPtrOutput() OrganizationPolicyDocumentPtrOutput {
+	return i.ToOrganizationPolicyDocumentPtrOutputWithContext(context.Background())
+}
+
+func (i OrganizationPolicyDocumentArgs) ToOrganizationPolicyDocumentPtrOutputWithContext(ctx context.Context) OrganizationPolicyDocumentPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(OrganizationPolicyDocumentOutput).ToOrganizationPolicyDocumentPtrOutputWithContext(ctx)
+}
+
+// OrganizationPolicyDocumentPtrInput is an input type that accepts OrganizationPolicyDocumentArgs, OrganizationPolicyDocumentPtr and OrganizationPolicyDocumentPtrOutput values.
+// You can construct a concrete instance of `OrganizationPolicyDocumentPtrInput` via:
+//
+//	        OrganizationPolicyDocumentArgs{...}
+//
+//	or:
+//
+//	        nil
+type OrganizationPolicyDocumentPtrInput interface {
+	pulumi.Input
+
+	ToOrganizationPolicyDocumentPtrOutput() OrganizationPolicyDocumentPtrOutput
+	ToOrganizationPolicyDocumentPtrOutputWithContext(context.Context) OrganizationPolicyDocumentPtrOutput
+}
+
+type organizationPolicyDocumentPtrType OrganizationPolicyDocumentArgs
+
+func OrganizationPolicyDocumentPtr(v *OrganizationPolicyDocumentArgs) OrganizationPolicyDocumentPtrInput {
+	return (*organizationPolicyDocumentPtrType)(v)
+}
+
+func (*organizationPolicyDocumentPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**OrganizationPolicyDocument)(nil)).Elem()
+}
+
+func (i *organizationPolicyDocumentPtrType) ToOrganizationPolicyDocumentPtrOutput() OrganizationPolicyDocumentPtrOutput {
+	return i.ToOrganizationPolicyDocumentPtrOutputWithContext(context.Background())
+}
+
+func (i *organizationPolicyDocumentPtrType) ToOrganizationPolicyDocumentPtrOutputWithContext(ctx context.Context) OrganizationPolicyDocumentPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(OrganizationPolicyDocumentPtrOutput)
+}
+
+type OrganizationPolicyDocumentOutput struct{ *pulumi.OutputState }
+
+func (OrganizationPolicyDocumentOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*OrganizationPolicyDocument)(nil)).Elem()
+}
+
+func (o OrganizationPolicyDocumentOutput) ToOrganizationPolicyDocumentOutput() OrganizationPolicyDocumentOutput {
+	return o
+}
+
+func (o OrganizationPolicyDocumentOutput) ToOrganizationPolicyDocumentOutputWithContext(ctx context.Context) OrganizationPolicyDocumentOutput {
+	return o
+}
+
+func (o OrganizationPolicyDocumentOutput) ToOrganizationPolicyDocumentPtrOutput() OrganizationPolicyDocumentPtrOutput {
+	return o.ToOrganizationPolicyDocumentPtrOutputWithContext(context.Background())
+}
+
+func (o OrganizationPolicyDocumentOutput) ToOrganizationPolicyDocumentPtrOutputWithContext(ctx context.Context) OrganizationPolicyDocumentPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v OrganizationPolicyDocument) *OrganizationPolicyDocument {
+		return &v
+	}).(OrganizationPolicyDocumentPtrOutput)
+}
+
+// A list of blocks for the organization policy statements.
+func (o OrganizationPolicyDocumentOutput) Statements() OrganizationPolicyDocumentStatementArrayOutput {
+	return o.ApplyT(func(v OrganizationPolicyDocument) []OrganizationPolicyDocumentStatement { return v.Statements }).(OrganizationPolicyDocumentStatementArrayOutput)
+}
+
+// A version for organization policy document.
+func (o OrganizationPolicyDocumentOutput) Version() pulumi.StringOutput {
+	return o.ApplyT(func(v OrganizationPolicyDocument) string { return v.Version }).(pulumi.StringOutput)
+}
+
+type OrganizationPolicyDocumentPtrOutput struct{ *pulumi.OutputState }
+
+func (OrganizationPolicyDocumentPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**OrganizationPolicyDocument)(nil)).Elem()
+}
+
+func (o OrganizationPolicyDocumentPtrOutput) ToOrganizationPolicyDocumentPtrOutput() OrganizationPolicyDocumentPtrOutput {
+	return o
+}
+
+func (o OrganizationPolicyDocumentPtrOutput) ToOrganizationPolicyDocumentPtrOutputWithContext(ctx context.Context) OrganizationPolicyDocumentPtrOutput {
+	return o
+}
+
+func (o OrganizationPolicyDocumentPtrOutput) Elem() OrganizationPolicyDocumentOutput {
+	return o.ApplyT(func(v *OrganizationPolicyDocument) OrganizationPolicyDocument {
+		if v != nil {
+			return *v
+		}
+		var ret OrganizationPolicyDocument
+		return ret
+	}).(OrganizationPolicyDocumentOutput)
+}
+
+// A list of blocks for the organization policy statements.
+func (o OrganizationPolicyDocumentPtrOutput) Statements() OrganizationPolicyDocumentStatementArrayOutput {
+	return o.ApplyT(func(v *OrganizationPolicyDocument) []OrganizationPolicyDocumentStatement {
+		if v == nil {
+			return nil
+		}
+		return v.Statements
+	}).(OrganizationPolicyDocumentStatementArrayOutput)
+}
+
+// A version for organization policy document.
+func (o OrganizationPolicyDocumentPtrOutput) Version() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *OrganizationPolicyDocument) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Version
+	}).(pulumi.StringPtrOutput)
+}
+
+type OrganizationPolicyDocumentStatement struct {
+	// A list of actions for the policy document statement.
+	Actions []string `pulumi:"actions"`
+	// The effect of the the policy document statement.
+	Effect string `pulumi:"effect"`
+	// A list of applicable resources for the policy document statement.
+	Resources []string `pulumi:"resources"`
+}
+
+// OrganizationPolicyDocumentStatementInput is an input type that accepts OrganizationPolicyDocumentStatementArgs and OrganizationPolicyDocumentStatementOutput values.
+// You can construct a concrete instance of `OrganizationPolicyDocumentStatementInput` via:
+//
+//	OrganizationPolicyDocumentStatementArgs{...}
+type OrganizationPolicyDocumentStatementInput interface {
+	pulumi.Input
+
+	ToOrganizationPolicyDocumentStatementOutput() OrganizationPolicyDocumentStatementOutput
+	ToOrganizationPolicyDocumentStatementOutputWithContext(context.Context) OrganizationPolicyDocumentStatementOutput
+}
+
+type OrganizationPolicyDocumentStatementArgs struct {
+	// A list of actions for the policy document statement.
+	Actions pulumi.StringArrayInput `pulumi:"actions"`
+	// The effect of the the policy document statement.
+	Effect pulumi.StringInput `pulumi:"effect"`
+	// A list of applicable resources for the policy document statement.
+	Resources pulumi.StringArrayInput `pulumi:"resources"`
+}
+
+func (OrganizationPolicyDocumentStatementArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*OrganizationPolicyDocumentStatement)(nil)).Elem()
+}
+
+func (i OrganizationPolicyDocumentStatementArgs) ToOrganizationPolicyDocumentStatementOutput() OrganizationPolicyDocumentStatementOutput {
+	return i.ToOrganizationPolicyDocumentStatementOutputWithContext(context.Background())
+}
+
+func (i OrganizationPolicyDocumentStatementArgs) ToOrganizationPolicyDocumentStatementOutputWithContext(ctx context.Context) OrganizationPolicyDocumentStatementOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(OrganizationPolicyDocumentStatementOutput)
+}
+
+// OrganizationPolicyDocumentStatementArrayInput is an input type that accepts OrganizationPolicyDocumentStatementArray and OrganizationPolicyDocumentStatementArrayOutput values.
+// You can construct a concrete instance of `OrganizationPolicyDocumentStatementArrayInput` via:
+//
+//	OrganizationPolicyDocumentStatementArray{ OrganizationPolicyDocumentStatementArgs{...} }
+type OrganizationPolicyDocumentStatementArrayInput interface {
+	pulumi.Input
+
+	ToOrganizationPolicyDocumentStatementArrayOutput() OrganizationPolicyDocumentStatementArrayOutput
+	ToOrganizationPolicyDocumentStatementArrayOutputWithContext(context.Context) OrganizationPolicyDocumentStatementArrayOutput
+}
+
+type OrganizationPolicyDocumentStatementArray []OrganizationPolicyDocumentStatementInput
+
+func (OrganizationPolicyDocumentStatementArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]OrganizationPolicyDocumentStatement)(nil)).Elem()
+}
+
+func (i OrganizationPolicyDocumentStatementArray) ToOrganizationPolicyDocumentStatementArrayOutput() OrganizationPolicyDocumentStatementArrayOutput {
+	return i.ToOrganizationPolicyDocumentStatementArrayOutputWithContext(context.Background())
+}
+
+func (i OrganizationPolicyDocumentStatementArray) ToOrganizationPolicyDocumentStatementArrayOutputWithContext(ctx context.Context) OrganizationPolicyDocumentStatementArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(OrganizationPolicyDocumentStatementArrayOutput)
+}
+
+type OrganizationPolicyDocumentStatementOutput struct{ *pulumi.OutputState }
+
+func (OrganizationPolicyDocumentStatementOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*OrganizationPolicyDocumentStatement)(nil)).Elem()
+}
+
+func (o OrganizationPolicyDocumentStatementOutput) ToOrganizationPolicyDocumentStatementOutput() OrganizationPolicyDocumentStatementOutput {
+	return o
+}
+
+func (o OrganizationPolicyDocumentStatementOutput) ToOrganizationPolicyDocumentStatementOutputWithContext(ctx context.Context) OrganizationPolicyDocumentStatementOutput {
+	return o
+}
+
+// A list of actions for the policy document statement.
+func (o OrganizationPolicyDocumentStatementOutput) Actions() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v OrganizationPolicyDocumentStatement) []string { return v.Actions }).(pulumi.StringArrayOutput)
+}
+
+// The effect of the the policy document statement.
+func (o OrganizationPolicyDocumentStatementOutput) Effect() pulumi.StringOutput {
+	return o.ApplyT(func(v OrganizationPolicyDocumentStatement) string { return v.Effect }).(pulumi.StringOutput)
+}
+
+// A list of applicable resources for the policy document statement.
+func (o OrganizationPolicyDocumentStatementOutput) Resources() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v OrganizationPolicyDocumentStatement) []string { return v.Resources }).(pulumi.StringArrayOutput)
+}
+
+type OrganizationPolicyDocumentStatementArrayOutput struct{ *pulumi.OutputState }
+
+func (OrganizationPolicyDocumentStatementArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]OrganizationPolicyDocumentStatement)(nil)).Elem()
+}
+
+func (o OrganizationPolicyDocumentStatementArrayOutput) ToOrganizationPolicyDocumentStatementArrayOutput() OrganizationPolicyDocumentStatementArrayOutput {
+	return o
+}
+
+func (o OrganizationPolicyDocumentStatementArrayOutput) ToOrganizationPolicyDocumentStatementArrayOutputWithContext(ctx context.Context) OrganizationPolicyDocumentStatementArrayOutput {
+	return o
+}
+
+func (o OrganizationPolicyDocumentStatementArrayOutput) Index(i pulumi.IntInput) OrganizationPolicyDocumentStatementOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) OrganizationPolicyDocumentStatement {
+		return vs[0].([]OrganizationPolicyDocumentStatement)[vs[1].(int)]
+	}).(OrganizationPolicyDocumentStatementOutput)
 }
 
 type VirtualFileSystemStorageAttachment struct {
@@ -3096,6 +3641,8 @@ type GetDatabaseReadReplica struct {
 	BackupHour string `pulumi:"backupHour"`
 	// The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
 	BackupMinute string `pulumi:"backupMinute"`
+	// The CA certificate for Managed Databases on this account.
+	CaCertificate string `pulumi:"caCertificate"`
 	// The configured time zone for the Managed Database in TZ database format.
 	ClusterTimeZone string `pulumi:"clusterTimeZone"`
 	// The database engine of the managed database.
@@ -3174,6 +3721,8 @@ type GetDatabaseReadReplicaArgs struct {
 	BackupHour pulumi.StringInput `pulumi:"backupHour"`
 	// The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
 	BackupMinute pulumi.StringInput `pulumi:"backupMinute"`
+	// The CA certificate for Managed Databases on this account.
+	CaCertificate pulumi.StringInput `pulumi:"caCertificate"`
 	// The configured time zone for the Managed Database in TZ database format.
 	ClusterTimeZone pulumi.StringInput `pulumi:"clusterTimeZone"`
 	// The database engine of the managed database.
@@ -3295,6 +3844,11 @@ func (o GetDatabaseReadReplicaOutput) BackupHour() pulumi.StringOutput {
 // The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
 func (o GetDatabaseReadReplicaOutput) BackupMinute() pulumi.StringOutput {
 	return o.ApplyT(func(v GetDatabaseReadReplica) string { return v.BackupMinute }).(pulumi.StringOutput)
+}
+
+// The CA certificate for Managed Databases on this account.
+func (o GetDatabaseReadReplicaOutput) CaCertificate() pulumi.StringOutput {
+	return o.ApplyT(func(v GetDatabaseReadReplica) string { return v.CaCertificate }).(pulumi.StringOutput)
 }
 
 // The configured time zone for the Managed Database in TZ database format.
@@ -4049,6 +4603,8 @@ type GetInstancesInstance struct {
 	Region string `pulumi:"region"`
 	// A more detailed server status (none, locked, installingbooting, isomounting, ok).
 	ServerStatus string `pulumi:"serverStatus"`
+	// The ID of the Vultr snapshot that the server was restored from.
+	SnapshotId string `pulumi:"snapshotId"`
 	// The status of the server's subscription.
 	Status string `pulumi:"status"`
 	// A list of tags applied to the instance.
@@ -4126,6 +4682,8 @@ type GetInstancesInstanceArgs struct {
 	Region pulumi.StringInput `pulumi:"region"`
 	// A more detailed server status (none, locked, installingbooting, isomounting, ok).
 	ServerStatus pulumi.StringInput `pulumi:"serverStatus"`
+	// The ID of the Vultr snapshot that the server was restored from.
+	SnapshotId pulumi.StringInput `pulumi:"snapshotId"`
 	// The status of the server's subscription.
 	Status pulumi.StringInput `pulumi:"status"`
 	// A list of tags applied to the instance.
@@ -4318,6 +4876,11 @@ func (o GetInstancesInstanceOutput) Region() pulumi.StringOutput {
 // A more detailed server status (none, locked, installingbooting, isomounting, ok).
 func (o GetInstancesInstanceOutput) ServerStatus() pulumi.StringOutput {
 	return o.ApplyT(func(v GetInstancesInstance) string { return v.ServerStatus }).(pulumi.StringOutput)
+}
+
+// The ID of the Vultr snapshot that the server was restored from.
+func (o GetInstancesInstanceOutput) SnapshotId() pulumi.StringOutput {
+	return o.ApplyT(func(v GetInstancesInstance) string { return v.SnapshotId }).(pulumi.StringOutput)
 }
 
 // The status of the server's subscription.
@@ -4699,7 +5262,7 @@ func (o GetKubernetesFilterArrayOutput) Index(i pulumi.IntInput) GetKubernetesFi
 
 type GetKubernetesNodePool struct {
 	// Boolean indicating if the auto scaler for the default node pool is active.
-	AutoScaler *bool `pulumi:"autoScaler"`
+	AutoScaler bool `pulumi:"autoScaler"`
 	// Date node was created.
 	DateCreated string `pulumi:"dateCreated"`
 	// Date of node pool updates.
@@ -4707,13 +5270,12 @@ type GetKubernetesNodePool struct {
 	// ID of node.
 	Id string `pulumi:"id"`
 	// Label of node.
-	Label string `pulumi:"label"`
-	// Kubernetes node labels applied to the node pool.
-	Labels map[string]string `pulumi:"labels"`
+	Label  string                       `pulumi:"label"`
+	Labels []GetKubernetesNodePoolLabel `pulumi:"labels"`
 	// The maximum number of nodes used by the auto scaler.
-	MaxNodes *int `pulumi:"maxNodes"`
+	MaxNodes int `pulumi:"maxNodes"`
 	// The minimum number of nodes used by the auto scaler.
-	MinNodes *int `pulumi:"minNodes"`
+	MinNodes int `pulumi:"minNodes"`
 	// Number of nodes within node pool.
 	NodeQuantity int `pulumi:"nodeQuantity"`
 	// Array that contains information about nodes within this node pool.
@@ -4723,11 +5285,10 @@ type GetKubernetesNodePool struct {
 	// Status of node.
 	Status string `pulumi:"status"`
 	// Tag for node pool.
-	Tag string `pulumi:"tag"`
-	// Kubernetes node taints applied to the node pool.
+	Tag    string                       `pulumi:"tag"`
 	Taints []GetKubernetesNodePoolTaint `pulumi:"taints"`
 	// The base64 encoded string containing the user data applied to nodes in the node pool.
-	UserData *string `pulumi:"userData"`
+	UserData string `pulumi:"userData"`
 }
 
 // GetKubernetesNodePoolInput is an input type that accepts GetKubernetesNodePoolArgs and GetKubernetesNodePoolOutput values.
@@ -4743,7 +5304,7 @@ type GetKubernetesNodePoolInput interface {
 
 type GetKubernetesNodePoolArgs struct {
 	// Boolean indicating if the auto scaler for the default node pool is active.
-	AutoScaler pulumi.BoolPtrInput `pulumi:"autoScaler"`
+	AutoScaler pulumi.BoolInput `pulumi:"autoScaler"`
 	// Date node was created.
 	DateCreated pulumi.StringInput `pulumi:"dateCreated"`
 	// Date of node pool updates.
@@ -4751,13 +5312,12 @@ type GetKubernetesNodePoolArgs struct {
 	// ID of node.
 	Id pulumi.StringInput `pulumi:"id"`
 	// Label of node.
-	Label pulumi.StringInput `pulumi:"label"`
-	// Kubernetes node labels applied to the node pool.
-	Labels pulumi.StringMapInput `pulumi:"labels"`
+	Label  pulumi.StringInput                   `pulumi:"label"`
+	Labels GetKubernetesNodePoolLabelArrayInput `pulumi:"labels"`
 	// The maximum number of nodes used by the auto scaler.
-	MaxNodes pulumi.IntPtrInput `pulumi:"maxNodes"`
+	MaxNodes pulumi.IntInput `pulumi:"maxNodes"`
 	// The minimum number of nodes used by the auto scaler.
-	MinNodes pulumi.IntPtrInput `pulumi:"minNodes"`
+	MinNodes pulumi.IntInput `pulumi:"minNodes"`
 	// Number of nodes within node pool.
 	NodeQuantity pulumi.IntInput `pulumi:"nodeQuantity"`
 	// Array that contains information about nodes within this node pool.
@@ -4767,11 +5327,10 @@ type GetKubernetesNodePoolArgs struct {
 	// Status of node.
 	Status pulumi.StringInput `pulumi:"status"`
 	// Tag for node pool.
-	Tag pulumi.StringInput `pulumi:"tag"`
-	// Kubernetes node taints applied to the node pool.
+	Tag    pulumi.StringInput                   `pulumi:"tag"`
 	Taints GetKubernetesNodePoolTaintArrayInput `pulumi:"taints"`
 	// The base64 encoded string containing the user data applied to nodes in the node pool.
-	UserData pulumi.StringPtrInput `pulumi:"userData"`
+	UserData pulumi.StringInput `pulumi:"userData"`
 }
 
 func (GetKubernetesNodePoolArgs) ElementType() reflect.Type {
@@ -4826,8 +5385,8 @@ func (o GetKubernetesNodePoolOutput) ToGetKubernetesNodePoolOutputWithContext(ct
 }
 
 // Boolean indicating if the auto scaler for the default node pool is active.
-func (o GetKubernetesNodePoolOutput) AutoScaler() pulumi.BoolPtrOutput {
-	return o.ApplyT(func(v GetKubernetesNodePool) *bool { return v.AutoScaler }).(pulumi.BoolPtrOutput)
+func (o GetKubernetesNodePoolOutput) AutoScaler() pulumi.BoolOutput {
+	return o.ApplyT(func(v GetKubernetesNodePool) bool { return v.AutoScaler }).(pulumi.BoolOutput)
 }
 
 // Date node was created.
@@ -4850,19 +5409,18 @@ func (o GetKubernetesNodePoolOutput) Label() pulumi.StringOutput {
 	return o.ApplyT(func(v GetKubernetesNodePool) string { return v.Label }).(pulumi.StringOutput)
 }
 
-// Kubernetes node labels applied to the node pool.
-func (o GetKubernetesNodePoolOutput) Labels() pulumi.StringMapOutput {
-	return o.ApplyT(func(v GetKubernetesNodePool) map[string]string { return v.Labels }).(pulumi.StringMapOutput)
+func (o GetKubernetesNodePoolOutput) Labels() GetKubernetesNodePoolLabelArrayOutput {
+	return o.ApplyT(func(v GetKubernetesNodePool) []GetKubernetesNodePoolLabel { return v.Labels }).(GetKubernetesNodePoolLabelArrayOutput)
 }
 
 // The maximum number of nodes used by the auto scaler.
-func (o GetKubernetesNodePoolOutput) MaxNodes() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v GetKubernetesNodePool) *int { return v.MaxNodes }).(pulumi.IntPtrOutput)
+func (o GetKubernetesNodePoolOutput) MaxNodes() pulumi.IntOutput {
+	return o.ApplyT(func(v GetKubernetesNodePool) int { return v.MaxNodes }).(pulumi.IntOutput)
 }
 
 // The minimum number of nodes used by the auto scaler.
-func (o GetKubernetesNodePoolOutput) MinNodes() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v GetKubernetesNodePool) *int { return v.MinNodes }).(pulumi.IntPtrOutput)
+func (o GetKubernetesNodePoolOutput) MinNodes() pulumi.IntOutput {
+	return o.ApplyT(func(v GetKubernetesNodePool) int { return v.MinNodes }).(pulumi.IntOutput)
 }
 
 // Number of nodes within node pool.
@@ -4890,14 +5448,13 @@ func (o GetKubernetesNodePoolOutput) Tag() pulumi.StringOutput {
 	return o.ApplyT(func(v GetKubernetesNodePool) string { return v.Tag }).(pulumi.StringOutput)
 }
 
-// Kubernetes node taints applied to the node pool.
 func (o GetKubernetesNodePoolOutput) Taints() GetKubernetesNodePoolTaintArrayOutput {
 	return o.ApplyT(func(v GetKubernetesNodePool) []GetKubernetesNodePoolTaint { return v.Taints }).(GetKubernetesNodePoolTaintArrayOutput)
 }
 
 // The base64 encoded string containing the user data applied to nodes in the node pool.
-func (o GetKubernetesNodePoolOutput) UserData() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v GetKubernetesNodePool) *string { return v.UserData }).(pulumi.StringPtrOutput)
+func (o GetKubernetesNodePoolOutput) UserData() pulumi.StringOutput {
+	return o.ApplyT(func(v GetKubernetesNodePool) string { return v.UserData }).(pulumi.StringOutput)
 }
 
 type GetKubernetesNodePoolArrayOutput struct{ *pulumi.OutputState }
@@ -4918,6 +5475,121 @@ func (o GetKubernetesNodePoolArrayOutput) Index(i pulumi.IntInput) GetKubernetes
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetKubernetesNodePool {
 		return vs[0].([]GetKubernetesNodePool)[vs[1].(int)]
 	}).(GetKubernetesNodePoolOutput)
+}
+
+type GetKubernetesNodePoolLabel struct {
+	// ID of node.
+	Id string `pulumi:"id"`
+	// The key definining the taint for kubernetes.
+	Key string `pulumi:"key"`
+	// The value of the taint for kubernetes.
+	Value string `pulumi:"value"`
+}
+
+// GetKubernetesNodePoolLabelInput is an input type that accepts GetKubernetesNodePoolLabelArgs and GetKubernetesNodePoolLabelOutput values.
+// You can construct a concrete instance of `GetKubernetesNodePoolLabelInput` via:
+//
+//	GetKubernetesNodePoolLabelArgs{...}
+type GetKubernetesNodePoolLabelInput interface {
+	pulumi.Input
+
+	ToGetKubernetesNodePoolLabelOutput() GetKubernetesNodePoolLabelOutput
+	ToGetKubernetesNodePoolLabelOutputWithContext(context.Context) GetKubernetesNodePoolLabelOutput
+}
+
+type GetKubernetesNodePoolLabelArgs struct {
+	// ID of node.
+	Id pulumi.StringInput `pulumi:"id"`
+	// The key definining the taint for kubernetes.
+	Key pulumi.StringInput `pulumi:"key"`
+	// The value of the taint for kubernetes.
+	Value pulumi.StringInput `pulumi:"value"`
+}
+
+func (GetKubernetesNodePoolLabelArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetKubernetesNodePoolLabel)(nil)).Elem()
+}
+
+func (i GetKubernetesNodePoolLabelArgs) ToGetKubernetesNodePoolLabelOutput() GetKubernetesNodePoolLabelOutput {
+	return i.ToGetKubernetesNodePoolLabelOutputWithContext(context.Background())
+}
+
+func (i GetKubernetesNodePoolLabelArgs) ToGetKubernetesNodePoolLabelOutputWithContext(ctx context.Context) GetKubernetesNodePoolLabelOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetKubernetesNodePoolLabelOutput)
+}
+
+// GetKubernetesNodePoolLabelArrayInput is an input type that accepts GetKubernetesNodePoolLabelArray and GetKubernetesNodePoolLabelArrayOutput values.
+// You can construct a concrete instance of `GetKubernetesNodePoolLabelArrayInput` via:
+//
+//	GetKubernetesNodePoolLabelArray{ GetKubernetesNodePoolLabelArgs{...} }
+type GetKubernetesNodePoolLabelArrayInput interface {
+	pulumi.Input
+
+	ToGetKubernetesNodePoolLabelArrayOutput() GetKubernetesNodePoolLabelArrayOutput
+	ToGetKubernetesNodePoolLabelArrayOutputWithContext(context.Context) GetKubernetesNodePoolLabelArrayOutput
+}
+
+type GetKubernetesNodePoolLabelArray []GetKubernetesNodePoolLabelInput
+
+func (GetKubernetesNodePoolLabelArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetKubernetesNodePoolLabel)(nil)).Elem()
+}
+
+func (i GetKubernetesNodePoolLabelArray) ToGetKubernetesNodePoolLabelArrayOutput() GetKubernetesNodePoolLabelArrayOutput {
+	return i.ToGetKubernetesNodePoolLabelArrayOutputWithContext(context.Background())
+}
+
+func (i GetKubernetesNodePoolLabelArray) ToGetKubernetesNodePoolLabelArrayOutputWithContext(ctx context.Context) GetKubernetesNodePoolLabelArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetKubernetesNodePoolLabelArrayOutput)
+}
+
+type GetKubernetesNodePoolLabelOutput struct{ *pulumi.OutputState }
+
+func (GetKubernetesNodePoolLabelOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetKubernetesNodePoolLabel)(nil)).Elem()
+}
+
+func (o GetKubernetesNodePoolLabelOutput) ToGetKubernetesNodePoolLabelOutput() GetKubernetesNodePoolLabelOutput {
+	return o
+}
+
+func (o GetKubernetesNodePoolLabelOutput) ToGetKubernetesNodePoolLabelOutputWithContext(ctx context.Context) GetKubernetesNodePoolLabelOutput {
+	return o
+}
+
+// ID of node.
+func (o GetKubernetesNodePoolLabelOutput) Id() pulumi.StringOutput {
+	return o.ApplyT(func(v GetKubernetesNodePoolLabel) string { return v.Id }).(pulumi.StringOutput)
+}
+
+// The key definining the taint for kubernetes.
+func (o GetKubernetesNodePoolLabelOutput) Key() pulumi.StringOutput {
+	return o.ApplyT(func(v GetKubernetesNodePoolLabel) string { return v.Key }).(pulumi.StringOutput)
+}
+
+// The value of the taint for kubernetes.
+func (o GetKubernetesNodePoolLabelOutput) Value() pulumi.StringOutput {
+	return o.ApplyT(func(v GetKubernetesNodePoolLabel) string { return v.Value }).(pulumi.StringOutput)
+}
+
+type GetKubernetesNodePoolLabelArrayOutput struct{ *pulumi.OutputState }
+
+func (GetKubernetesNodePoolLabelArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetKubernetesNodePoolLabel)(nil)).Elem()
+}
+
+func (o GetKubernetesNodePoolLabelArrayOutput) ToGetKubernetesNodePoolLabelArrayOutput() GetKubernetesNodePoolLabelArrayOutput {
+	return o
+}
+
+func (o GetKubernetesNodePoolLabelArrayOutput) ToGetKubernetesNodePoolLabelArrayOutputWithContext(ctx context.Context) GetKubernetesNodePoolLabelArrayOutput {
+	return o
+}
+
+func (o GetKubernetesNodePoolLabelArrayOutput) Index(i pulumi.IntInput) GetKubernetesNodePoolLabelOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetKubernetesNodePoolLabel {
+		return vs[0].([]GetKubernetesNodePoolLabel)[vs[1].(int)]
+	}).(GetKubernetesNodePoolLabelOutput)
 }
 
 type GetKubernetesNodePoolNode struct {
@@ -5045,9 +5717,14 @@ func (o GetKubernetesNodePoolNodeArrayOutput) Index(i pulumi.IntInput) GetKubern
 }
 
 type GetKubernetesNodePoolTaint struct {
+	// The effect of the taint for kubernetes.
 	Effect string `pulumi:"effect"`
-	Key    string `pulumi:"key"`
-	Value  string `pulumi:"value"`
+	// ID of node.
+	Id string `pulumi:"id"`
+	// The key definining the taint for kubernetes.
+	Key string `pulumi:"key"`
+	// The value of the taint for kubernetes.
+	Value string `pulumi:"value"`
 }
 
 // GetKubernetesNodePoolTaintInput is an input type that accepts GetKubernetesNodePoolTaintArgs and GetKubernetesNodePoolTaintOutput values.
@@ -5062,9 +5739,14 @@ type GetKubernetesNodePoolTaintInput interface {
 }
 
 type GetKubernetesNodePoolTaintArgs struct {
+	// The effect of the taint for kubernetes.
 	Effect pulumi.StringInput `pulumi:"effect"`
-	Key    pulumi.StringInput `pulumi:"key"`
-	Value  pulumi.StringInput `pulumi:"value"`
+	// ID of node.
+	Id pulumi.StringInput `pulumi:"id"`
+	// The key definining the taint for kubernetes.
+	Key pulumi.StringInput `pulumi:"key"`
+	// The value of the taint for kubernetes.
+	Value pulumi.StringInput `pulumi:"value"`
 }
 
 func (GetKubernetesNodePoolTaintArgs) ElementType() reflect.Type {
@@ -5118,14 +5800,22 @@ func (o GetKubernetesNodePoolTaintOutput) ToGetKubernetesNodePoolTaintOutputWith
 	return o
 }
 
+// The effect of the taint for kubernetes.
 func (o GetKubernetesNodePoolTaintOutput) Effect() pulumi.StringOutput {
 	return o.ApplyT(func(v GetKubernetesNodePoolTaint) string { return v.Effect }).(pulumi.StringOutput)
 }
 
+// ID of node.
+func (o GetKubernetesNodePoolTaintOutput) Id() pulumi.StringOutput {
+	return o.ApplyT(func(v GetKubernetesNodePoolTaint) string { return v.Id }).(pulumi.StringOutput)
+}
+
+// The key definining the taint for kubernetes.
 func (o GetKubernetesNodePoolTaintOutput) Key() pulumi.StringOutput {
 	return o.ApplyT(func(v GetKubernetesNodePoolTaint) string { return v.Key }).(pulumi.StringOutput)
 }
 
+// The value of the taint for kubernetes.
 func (o GetKubernetesNodePoolTaintOutput) Value() pulumi.StringOutput {
 	return o.ApplyT(func(v GetKubernetesNodePoolTaint) string { return v.Value }).(pulumi.StringOutput)
 }
@@ -5254,6 +5944,178 @@ func (o GetLoadBalancerFilterArrayOutput) Index(i pulumi.IntInput) GetLoadBalanc
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetLoadBalancerFilter {
 		return vs[0].([]GetLoadBalancerFilter)[vs[1].(int)]
 	}).(GetLoadBalancerFilterOutput)
+}
+
+type GetLogsResult struct {
+	HttpStatusCode  int    `pulumi:"httpStatusCode"`
+	IpAddress       string `pulumi:"ipAddress"`
+	Level           string `pulumi:"level"`
+	Message         string `pulumi:"message"`
+	Method          string `pulumi:"method"`
+	QueryParameters string `pulumi:"queryParameters"`
+	RequestBody     string `pulumi:"requestBody"`
+	RequestPath     string `pulumi:"requestPath"`
+	// Filter the logs by the UUID of a specific resource.
+	ResourceId string `pulumi:"resourceId"`
+	// Filter the logs by the type of a resource (i.e. `instances`, `kubernetes`, `bare-metals`).
+	ResourceType string `pulumi:"resourceType"`
+	Timestamp    string `pulumi:"timestamp"`
+	UserId       string `pulumi:"userId"`
+	UserName     string `pulumi:"userName"`
+}
+
+// GetLogsResultInput is an input type that accepts GetLogsResultArgs and GetLogsResultOutput values.
+// You can construct a concrete instance of `GetLogsResultInput` via:
+//
+//	GetLogsResultArgs{...}
+type GetLogsResultInput interface {
+	pulumi.Input
+
+	ToGetLogsResultOutput() GetLogsResultOutput
+	ToGetLogsResultOutputWithContext(context.Context) GetLogsResultOutput
+}
+
+type GetLogsResultArgs struct {
+	HttpStatusCode  pulumi.IntInput    `pulumi:"httpStatusCode"`
+	IpAddress       pulumi.StringInput `pulumi:"ipAddress"`
+	Level           pulumi.StringInput `pulumi:"level"`
+	Message         pulumi.StringInput `pulumi:"message"`
+	Method          pulumi.StringInput `pulumi:"method"`
+	QueryParameters pulumi.StringInput `pulumi:"queryParameters"`
+	RequestBody     pulumi.StringInput `pulumi:"requestBody"`
+	RequestPath     pulumi.StringInput `pulumi:"requestPath"`
+	// Filter the logs by the UUID of a specific resource.
+	ResourceId pulumi.StringInput `pulumi:"resourceId"`
+	// Filter the logs by the type of a resource (i.e. `instances`, `kubernetes`, `bare-metals`).
+	ResourceType pulumi.StringInput `pulumi:"resourceType"`
+	Timestamp    pulumi.StringInput `pulumi:"timestamp"`
+	UserId       pulumi.StringInput `pulumi:"userId"`
+	UserName     pulumi.StringInput `pulumi:"userName"`
+}
+
+func (GetLogsResultArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetLogsResult)(nil)).Elem()
+}
+
+func (i GetLogsResultArgs) ToGetLogsResultOutput() GetLogsResultOutput {
+	return i.ToGetLogsResultOutputWithContext(context.Background())
+}
+
+func (i GetLogsResultArgs) ToGetLogsResultOutputWithContext(ctx context.Context) GetLogsResultOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetLogsResultOutput)
+}
+
+// GetLogsResultArrayInput is an input type that accepts GetLogsResultArray and GetLogsResultArrayOutput values.
+// You can construct a concrete instance of `GetLogsResultArrayInput` via:
+//
+//	GetLogsResultArray{ GetLogsResultArgs{...} }
+type GetLogsResultArrayInput interface {
+	pulumi.Input
+
+	ToGetLogsResultArrayOutput() GetLogsResultArrayOutput
+	ToGetLogsResultArrayOutputWithContext(context.Context) GetLogsResultArrayOutput
+}
+
+type GetLogsResultArray []GetLogsResultInput
+
+func (GetLogsResultArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetLogsResult)(nil)).Elem()
+}
+
+func (i GetLogsResultArray) ToGetLogsResultArrayOutput() GetLogsResultArrayOutput {
+	return i.ToGetLogsResultArrayOutputWithContext(context.Background())
+}
+
+func (i GetLogsResultArray) ToGetLogsResultArrayOutputWithContext(ctx context.Context) GetLogsResultArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetLogsResultArrayOutput)
+}
+
+type GetLogsResultOutput struct{ *pulumi.OutputState }
+
+func (GetLogsResultOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetLogsResult)(nil)).Elem()
+}
+
+func (o GetLogsResultOutput) ToGetLogsResultOutput() GetLogsResultOutput {
+	return o
+}
+
+func (o GetLogsResultOutput) ToGetLogsResultOutputWithContext(ctx context.Context) GetLogsResultOutput {
+	return o
+}
+
+func (o GetLogsResultOutput) HttpStatusCode() pulumi.IntOutput {
+	return o.ApplyT(func(v GetLogsResult) int { return v.HttpStatusCode }).(pulumi.IntOutput)
+}
+
+func (o GetLogsResultOutput) IpAddress() pulumi.StringOutput {
+	return o.ApplyT(func(v GetLogsResult) string { return v.IpAddress }).(pulumi.StringOutput)
+}
+
+func (o GetLogsResultOutput) Level() pulumi.StringOutput {
+	return o.ApplyT(func(v GetLogsResult) string { return v.Level }).(pulumi.StringOutput)
+}
+
+func (o GetLogsResultOutput) Message() pulumi.StringOutput {
+	return o.ApplyT(func(v GetLogsResult) string { return v.Message }).(pulumi.StringOutput)
+}
+
+func (o GetLogsResultOutput) Method() pulumi.StringOutput {
+	return o.ApplyT(func(v GetLogsResult) string { return v.Method }).(pulumi.StringOutput)
+}
+
+func (o GetLogsResultOutput) QueryParameters() pulumi.StringOutput {
+	return o.ApplyT(func(v GetLogsResult) string { return v.QueryParameters }).(pulumi.StringOutput)
+}
+
+func (o GetLogsResultOutput) RequestBody() pulumi.StringOutput {
+	return o.ApplyT(func(v GetLogsResult) string { return v.RequestBody }).(pulumi.StringOutput)
+}
+
+func (o GetLogsResultOutput) RequestPath() pulumi.StringOutput {
+	return o.ApplyT(func(v GetLogsResult) string { return v.RequestPath }).(pulumi.StringOutput)
+}
+
+// Filter the logs by the UUID of a specific resource.
+func (o GetLogsResultOutput) ResourceId() pulumi.StringOutput {
+	return o.ApplyT(func(v GetLogsResult) string { return v.ResourceId }).(pulumi.StringOutput)
+}
+
+// Filter the logs by the type of a resource (i.e. `instances`, `kubernetes`, `bare-metals`).
+func (o GetLogsResultOutput) ResourceType() pulumi.StringOutput {
+	return o.ApplyT(func(v GetLogsResult) string { return v.ResourceType }).(pulumi.StringOutput)
+}
+
+func (o GetLogsResultOutput) Timestamp() pulumi.StringOutput {
+	return o.ApplyT(func(v GetLogsResult) string { return v.Timestamp }).(pulumi.StringOutput)
+}
+
+func (o GetLogsResultOutput) UserId() pulumi.StringOutput {
+	return o.ApplyT(func(v GetLogsResult) string { return v.UserId }).(pulumi.StringOutput)
+}
+
+func (o GetLogsResultOutput) UserName() pulumi.StringOutput {
+	return o.ApplyT(func(v GetLogsResult) string { return v.UserName }).(pulumi.StringOutput)
+}
+
+type GetLogsResultArrayOutput struct{ *pulumi.OutputState }
+
+func (GetLogsResultArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetLogsResult)(nil)).Elem()
+}
+
+func (o GetLogsResultArrayOutput) ToGetLogsResultArrayOutput() GetLogsResultArrayOutput {
+	return o
+}
+
+func (o GetLogsResultArrayOutput) ToGetLogsResultArrayOutputWithContext(ctx context.Context) GetLogsResultArrayOutput {
+	return o
+}
+
+func (o GetLogsResultArrayOutput) Index(i pulumi.IntInput) GetLogsResultOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetLogsResult {
+		return vs[0].([]GetLogsResult)[vs[1].(int)]
+	}).(GetLogsResultOutput)
 }
 
 type GetObjectStorageClusterFilter struct {
@@ -5690,6 +6552,863 @@ func (o GetObjectStorageTierLocationArrayOutput) Index(i pulumi.IntInput) GetObj
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetObjectStorageTierLocation {
 		return vs[0].([]GetObjectStorageTierLocation)[vs[1].(int)]
 	}).(GetObjectStorageTierLocationOutput)
+}
+
+type GetOidcIssuerFilter struct {
+	// Attribute name to filter with.
+	Name string `pulumi:"name"`
+	// One or more values filter with.
+	Values []string `pulumi:"values"`
+}
+
+// GetOidcIssuerFilterInput is an input type that accepts GetOidcIssuerFilterArgs and GetOidcIssuerFilterOutput values.
+// You can construct a concrete instance of `GetOidcIssuerFilterInput` via:
+//
+//	GetOidcIssuerFilterArgs{...}
+type GetOidcIssuerFilterInput interface {
+	pulumi.Input
+
+	ToGetOidcIssuerFilterOutput() GetOidcIssuerFilterOutput
+	ToGetOidcIssuerFilterOutputWithContext(context.Context) GetOidcIssuerFilterOutput
+}
+
+type GetOidcIssuerFilterArgs struct {
+	// Attribute name to filter with.
+	Name pulumi.StringInput `pulumi:"name"`
+	// One or more values filter with.
+	Values pulumi.StringArrayInput `pulumi:"values"`
+}
+
+func (GetOidcIssuerFilterArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetOidcIssuerFilter)(nil)).Elem()
+}
+
+func (i GetOidcIssuerFilterArgs) ToGetOidcIssuerFilterOutput() GetOidcIssuerFilterOutput {
+	return i.ToGetOidcIssuerFilterOutputWithContext(context.Background())
+}
+
+func (i GetOidcIssuerFilterArgs) ToGetOidcIssuerFilterOutputWithContext(ctx context.Context) GetOidcIssuerFilterOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetOidcIssuerFilterOutput)
+}
+
+// GetOidcIssuerFilterArrayInput is an input type that accepts GetOidcIssuerFilterArray and GetOidcIssuerFilterArrayOutput values.
+// You can construct a concrete instance of `GetOidcIssuerFilterArrayInput` via:
+//
+//	GetOidcIssuerFilterArray{ GetOidcIssuerFilterArgs{...} }
+type GetOidcIssuerFilterArrayInput interface {
+	pulumi.Input
+
+	ToGetOidcIssuerFilterArrayOutput() GetOidcIssuerFilterArrayOutput
+	ToGetOidcIssuerFilterArrayOutputWithContext(context.Context) GetOidcIssuerFilterArrayOutput
+}
+
+type GetOidcIssuerFilterArray []GetOidcIssuerFilterInput
+
+func (GetOidcIssuerFilterArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetOidcIssuerFilter)(nil)).Elem()
+}
+
+func (i GetOidcIssuerFilterArray) ToGetOidcIssuerFilterArrayOutput() GetOidcIssuerFilterArrayOutput {
+	return i.ToGetOidcIssuerFilterArrayOutputWithContext(context.Background())
+}
+
+func (i GetOidcIssuerFilterArray) ToGetOidcIssuerFilterArrayOutputWithContext(ctx context.Context) GetOidcIssuerFilterArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetOidcIssuerFilterArrayOutput)
+}
+
+type GetOidcIssuerFilterOutput struct{ *pulumi.OutputState }
+
+func (GetOidcIssuerFilterOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetOidcIssuerFilter)(nil)).Elem()
+}
+
+func (o GetOidcIssuerFilterOutput) ToGetOidcIssuerFilterOutput() GetOidcIssuerFilterOutput {
+	return o
+}
+
+func (o GetOidcIssuerFilterOutput) ToGetOidcIssuerFilterOutputWithContext(ctx context.Context) GetOidcIssuerFilterOutput {
+	return o
+}
+
+// Attribute name to filter with.
+func (o GetOidcIssuerFilterOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v GetOidcIssuerFilter) string { return v.Name }).(pulumi.StringOutput)
+}
+
+// One or more values filter with.
+func (o GetOidcIssuerFilterOutput) Values() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetOidcIssuerFilter) []string { return v.Values }).(pulumi.StringArrayOutput)
+}
+
+type GetOidcIssuerFilterArrayOutput struct{ *pulumi.OutputState }
+
+func (GetOidcIssuerFilterArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetOidcIssuerFilter)(nil)).Elem()
+}
+
+func (o GetOidcIssuerFilterArrayOutput) ToGetOidcIssuerFilterArrayOutput() GetOidcIssuerFilterArrayOutput {
+	return o
+}
+
+func (o GetOidcIssuerFilterArrayOutput) ToGetOidcIssuerFilterArrayOutputWithContext(ctx context.Context) GetOidcIssuerFilterArrayOutput {
+	return o
+}
+
+func (o GetOidcIssuerFilterArrayOutput) Index(i pulumi.IntInput) GetOidcIssuerFilterOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetOidcIssuerFilter {
+		return vs[0].([]GetOidcIssuerFilter)[vs[1].(int)]
+	}).(GetOidcIssuerFilterOutput)
+}
+
+type GetOidcProviderFilter struct {
+	// Attribute name to filter with.
+	Name string `pulumi:"name"`
+	// One or more values filter with.
+	Values []string `pulumi:"values"`
+}
+
+// GetOidcProviderFilterInput is an input type that accepts GetOidcProviderFilterArgs and GetOidcProviderFilterOutput values.
+// You can construct a concrete instance of `GetOidcProviderFilterInput` via:
+//
+//	GetOidcProviderFilterArgs{...}
+type GetOidcProviderFilterInput interface {
+	pulumi.Input
+
+	ToGetOidcProviderFilterOutput() GetOidcProviderFilterOutput
+	ToGetOidcProviderFilterOutputWithContext(context.Context) GetOidcProviderFilterOutput
+}
+
+type GetOidcProviderFilterArgs struct {
+	// Attribute name to filter with.
+	Name pulumi.StringInput `pulumi:"name"`
+	// One or more values filter with.
+	Values pulumi.StringArrayInput `pulumi:"values"`
+}
+
+func (GetOidcProviderFilterArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetOidcProviderFilter)(nil)).Elem()
+}
+
+func (i GetOidcProviderFilterArgs) ToGetOidcProviderFilterOutput() GetOidcProviderFilterOutput {
+	return i.ToGetOidcProviderFilterOutputWithContext(context.Background())
+}
+
+func (i GetOidcProviderFilterArgs) ToGetOidcProviderFilterOutputWithContext(ctx context.Context) GetOidcProviderFilterOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetOidcProviderFilterOutput)
+}
+
+// GetOidcProviderFilterArrayInput is an input type that accepts GetOidcProviderFilterArray and GetOidcProviderFilterArrayOutput values.
+// You can construct a concrete instance of `GetOidcProviderFilterArrayInput` via:
+//
+//	GetOidcProviderFilterArray{ GetOidcProviderFilterArgs{...} }
+type GetOidcProviderFilterArrayInput interface {
+	pulumi.Input
+
+	ToGetOidcProviderFilterArrayOutput() GetOidcProviderFilterArrayOutput
+	ToGetOidcProviderFilterArrayOutputWithContext(context.Context) GetOidcProviderFilterArrayOutput
+}
+
+type GetOidcProviderFilterArray []GetOidcProviderFilterInput
+
+func (GetOidcProviderFilterArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetOidcProviderFilter)(nil)).Elem()
+}
+
+func (i GetOidcProviderFilterArray) ToGetOidcProviderFilterArrayOutput() GetOidcProviderFilterArrayOutput {
+	return i.ToGetOidcProviderFilterArrayOutputWithContext(context.Background())
+}
+
+func (i GetOidcProviderFilterArray) ToGetOidcProviderFilterArrayOutputWithContext(ctx context.Context) GetOidcProviderFilterArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetOidcProviderFilterArrayOutput)
+}
+
+type GetOidcProviderFilterOutput struct{ *pulumi.OutputState }
+
+func (GetOidcProviderFilterOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetOidcProviderFilter)(nil)).Elem()
+}
+
+func (o GetOidcProviderFilterOutput) ToGetOidcProviderFilterOutput() GetOidcProviderFilterOutput {
+	return o
+}
+
+func (o GetOidcProviderFilterOutput) ToGetOidcProviderFilterOutputWithContext(ctx context.Context) GetOidcProviderFilterOutput {
+	return o
+}
+
+// Attribute name to filter with.
+func (o GetOidcProviderFilterOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v GetOidcProviderFilter) string { return v.Name }).(pulumi.StringOutput)
+}
+
+// One or more values filter with.
+func (o GetOidcProviderFilterOutput) Values() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetOidcProviderFilter) []string { return v.Values }).(pulumi.StringArrayOutput)
+}
+
+type GetOidcProviderFilterArrayOutput struct{ *pulumi.OutputState }
+
+func (GetOidcProviderFilterArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetOidcProviderFilter)(nil)).Elem()
+}
+
+func (o GetOidcProviderFilterArrayOutput) ToGetOidcProviderFilterArrayOutput() GetOidcProviderFilterArrayOutput {
+	return o
+}
+
+func (o GetOidcProviderFilterArrayOutput) ToGetOidcProviderFilterArrayOutputWithContext(ctx context.Context) GetOidcProviderFilterArrayOutput {
+	return o
+}
+
+func (o GetOidcProviderFilterArrayOutput) Index(i pulumi.IntInput) GetOidcProviderFilterOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetOidcProviderFilter {
+		return vs[0].([]GetOidcProviderFilter)[vs[1].(int)]
+	}).(GetOidcProviderFilterOutput)
+}
+
+type GetOrganizationFilter struct {
+	// Attribute name to filter with.
+	Name string `pulumi:"name"`
+	// One or more values filter with.
+	Values []string `pulumi:"values"`
+}
+
+// GetOrganizationFilterInput is an input type that accepts GetOrganizationFilterArgs and GetOrganizationFilterOutput values.
+// You can construct a concrete instance of `GetOrganizationFilterInput` via:
+//
+//	GetOrganizationFilterArgs{...}
+type GetOrganizationFilterInput interface {
+	pulumi.Input
+
+	ToGetOrganizationFilterOutput() GetOrganizationFilterOutput
+	ToGetOrganizationFilterOutputWithContext(context.Context) GetOrganizationFilterOutput
+}
+
+type GetOrganizationFilterArgs struct {
+	// Attribute name to filter with.
+	Name pulumi.StringInput `pulumi:"name"`
+	// One or more values filter with.
+	Values pulumi.StringArrayInput `pulumi:"values"`
+}
+
+func (GetOrganizationFilterArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetOrganizationFilter)(nil)).Elem()
+}
+
+func (i GetOrganizationFilterArgs) ToGetOrganizationFilterOutput() GetOrganizationFilterOutput {
+	return i.ToGetOrganizationFilterOutputWithContext(context.Background())
+}
+
+func (i GetOrganizationFilterArgs) ToGetOrganizationFilterOutputWithContext(ctx context.Context) GetOrganizationFilterOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetOrganizationFilterOutput)
+}
+
+// GetOrganizationFilterArrayInput is an input type that accepts GetOrganizationFilterArray and GetOrganizationFilterArrayOutput values.
+// You can construct a concrete instance of `GetOrganizationFilterArrayInput` via:
+//
+//	GetOrganizationFilterArray{ GetOrganizationFilterArgs{...} }
+type GetOrganizationFilterArrayInput interface {
+	pulumi.Input
+
+	ToGetOrganizationFilterArrayOutput() GetOrganizationFilterArrayOutput
+	ToGetOrganizationFilterArrayOutputWithContext(context.Context) GetOrganizationFilterArrayOutput
+}
+
+type GetOrganizationFilterArray []GetOrganizationFilterInput
+
+func (GetOrganizationFilterArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetOrganizationFilter)(nil)).Elem()
+}
+
+func (i GetOrganizationFilterArray) ToGetOrganizationFilterArrayOutput() GetOrganizationFilterArrayOutput {
+	return i.ToGetOrganizationFilterArrayOutputWithContext(context.Background())
+}
+
+func (i GetOrganizationFilterArray) ToGetOrganizationFilterArrayOutputWithContext(ctx context.Context) GetOrganizationFilterArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetOrganizationFilterArrayOutput)
+}
+
+type GetOrganizationFilterOutput struct{ *pulumi.OutputState }
+
+func (GetOrganizationFilterOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetOrganizationFilter)(nil)).Elem()
+}
+
+func (o GetOrganizationFilterOutput) ToGetOrganizationFilterOutput() GetOrganizationFilterOutput {
+	return o
+}
+
+func (o GetOrganizationFilterOutput) ToGetOrganizationFilterOutputWithContext(ctx context.Context) GetOrganizationFilterOutput {
+	return o
+}
+
+// Attribute name to filter with.
+func (o GetOrganizationFilterOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v GetOrganizationFilter) string { return v.Name }).(pulumi.StringOutput)
+}
+
+// One or more values filter with.
+func (o GetOrganizationFilterOutput) Values() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetOrganizationFilter) []string { return v.Values }).(pulumi.StringArrayOutput)
+}
+
+type GetOrganizationFilterArrayOutput struct{ *pulumi.OutputState }
+
+func (GetOrganizationFilterArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetOrganizationFilter)(nil)).Elem()
+}
+
+func (o GetOrganizationFilterArrayOutput) ToGetOrganizationFilterArrayOutput() GetOrganizationFilterArrayOutput {
+	return o
+}
+
+func (o GetOrganizationFilterArrayOutput) ToGetOrganizationFilterArrayOutputWithContext(ctx context.Context) GetOrganizationFilterArrayOutput {
+	return o
+}
+
+func (o GetOrganizationFilterArrayOutput) Index(i pulumi.IntInput) GetOrganizationFilterOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetOrganizationFilter {
+		return vs[0].([]GetOrganizationFilter)[vs[1].(int)]
+	}).(GetOrganizationFilterOutput)
+}
+
+type GetOrganizationGroupFilter struct {
+	// Attribute name to filter with.
+	Name string `pulumi:"name"`
+	// One or more values filter with.
+	Values []string `pulumi:"values"`
+}
+
+// GetOrganizationGroupFilterInput is an input type that accepts GetOrganizationGroupFilterArgs and GetOrganizationGroupFilterOutput values.
+// You can construct a concrete instance of `GetOrganizationGroupFilterInput` via:
+//
+//	GetOrganizationGroupFilterArgs{...}
+type GetOrganizationGroupFilterInput interface {
+	pulumi.Input
+
+	ToGetOrganizationGroupFilterOutput() GetOrganizationGroupFilterOutput
+	ToGetOrganizationGroupFilterOutputWithContext(context.Context) GetOrganizationGroupFilterOutput
+}
+
+type GetOrganizationGroupFilterArgs struct {
+	// Attribute name to filter with.
+	Name pulumi.StringInput `pulumi:"name"`
+	// One or more values filter with.
+	Values pulumi.StringArrayInput `pulumi:"values"`
+}
+
+func (GetOrganizationGroupFilterArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetOrganizationGroupFilter)(nil)).Elem()
+}
+
+func (i GetOrganizationGroupFilterArgs) ToGetOrganizationGroupFilterOutput() GetOrganizationGroupFilterOutput {
+	return i.ToGetOrganizationGroupFilterOutputWithContext(context.Background())
+}
+
+func (i GetOrganizationGroupFilterArgs) ToGetOrganizationGroupFilterOutputWithContext(ctx context.Context) GetOrganizationGroupFilterOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetOrganizationGroupFilterOutput)
+}
+
+// GetOrganizationGroupFilterArrayInput is an input type that accepts GetOrganizationGroupFilterArray and GetOrganizationGroupFilterArrayOutput values.
+// You can construct a concrete instance of `GetOrganizationGroupFilterArrayInput` via:
+//
+//	GetOrganizationGroupFilterArray{ GetOrganizationGroupFilterArgs{...} }
+type GetOrganizationGroupFilterArrayInput interface {
+	pulumi.Input
+
+	ToGetOrganizationGroupFilterArrayOutput() GetOrganizationGroupFilterArrayOutput
+	ToGetOrganizationGroupFilterArrayOutputWithContext(context.Context) GetOrganizationGroupFilterArrayOutput
+}
+
+type GetOrganizationGroupFilterArray []GetOrganizationGroupFilterInput
+
+func (GetOrganizationGroupFilterArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetOrganizationGroupFilter)(nil)).Elem()
+}
+
+func (i GetOrganizationGroupFilterArray) ToGetOrganizationGroupFilterArrayOutput() GetOrganizationGroupFilterArrayOutput {
+	return i.ToGetOrganizationGroupFilterArrayOutputWithContext(context.Background())
+}
+
+func (i GetOrganizationGroupFilterArray) ToGetOrganizationGroupFilterArrayOutputWithContext(ctx context.Context) GetOrganizationGroupFilterArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetOrganizationGroupFilterArrayOutput)
+}
+
+type GetOrganizationGroupFilterOutput struct{ *pulumi.OutputState }
+
+func (GetOrganizationGroupFilterOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetOrganizationGroupFilter)(nil)).Elem()
+}
+
+func (o GetOrganizationGroupFilterOutput) ToGetOrganizationGroupFilterOutput() GetOrganizationGroupFilterOutput {
+	return o
+}
+
+func (o GetOrganizationGroupFilterOutput) ToGetOrganizationGroupFilterOutputWithContext(ctx context.Context) GetOrganizationGroupFilterOutput {
+	return o
+}
+
+// Attribute name to filter with.
+func (o GetOrganizationGroupFilterOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v GetOrganizationGroupFilter) string { return v.Name }).(pulumi.StringOutput)
+}
+
+// One or more values filter with.
+func (o GetOrganizationGroupFilterOutput) Values() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetOrganizationGroupFilter) []string { return v.Values }).(pulumi.StringArrayOutput)
+}
+
+type GetOrganizationGroupFilterArrayOutput struct{ *pulumi.OutputState }
+
+func (GetOrganizationGroupFilterArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetOrganizationGroupFilter)(nil)).Elem()
+}
+
+func (o GetOrganizationGroupFilterArrayOutput) ToGetOrganizationGroupFilterArrayOutput() GetOrganizationGroupFilterArrayOutput {
+	return o
+}
+
+func (o GetOrganizationGroupFilterArrayOutput) ToGetOrganizationGroupFilterArrayOutputWithContext(ctx context.Context) GetOrganizationGroupFilterArrayOutput {
+	return o
+}
+
+func (o GetOrganizationGroupFilterArrayOutput) Index(i pulumi.IntInput) GetOrganizationGroupFilterOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetOrganizationGroupFilter {
+		return vs[0].([]GetOrganizationGroupFilter)[vs[1].(int)]
+	}).(GetOrganizationGroupFilterOutput)
+}
+
+type GetOrganizationPolicyDocument struct {
+	// A list of blocks for the organization policy statements.
+	Statements []GetOrganizationPolicyDocumentStatement `pulumi:"statements"`
+	// A version for organization policy document.
+	Version string `pulumi:"version"`
+}
+
+// GetOrganizationPolicyDocumentInput is an input type that accepts GetOrganizationPolicyDocumentArgs and GetOrganizationPolicyDocumentOutput values.
+// You can construct a concrete instance of `GetOrganizationPolicyDocumentInput` via:
+//
+//	GetOrganizationPolicyDocumentArgs{...}
+type GetOrganizationPolicyDocumentInput interface {
+	pulumi.Input
+
+	ToGetOrganizationPolicyDocumentOutput() GetOrganizationPolicyDocumentOutput
+	ToGetOrganizationPolicyDocumentOutputWithContext(context.Context) GetOrganizationPolicyDocumentOutput
+}
+
+type GetOrganizationPolicyDocumentArgs struct {
+	// A list of blocks for the organization policy statements.
+	Statements GetOrganizationPolicyDocumentStatementArrayInput `pulumi:"statements"`
+	// A version for organization policy document.
+	Version pulumi.StringInput `pulumi:"version"`
+}
+
+func (GetOrganizationPolicyDocumentArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetOrganizationPolicyDocument)(nil)).Elem()
+}
+
+func (i GetOrganizationPolicyDocumentArgs) ToGetOrganizationPolicyDocumentOutput() GetOrganizationPolicyDocumentOutput {
+	return i.ToGetOrganizationPolicyDocumentOutputWithContext(context.Background())
+}
+
+func (i GetOrganizationPolicyDocumentArgs) ToGetOrganizationPolicyDocumentOutputWithContext(ctx context.Context) GetOrganizationPolicyDocumentOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetOrganizationPolicyDocumentOutput)
+}
+
+// GetOrganizationPolicyDocumentArrayInput is an input type that accepts GetOrganizationPolicyDocumentArray and GetOrganizationPolicyDocumentArrayOutput values.
+// You can construct a concrete instance of `GetOrganizationPolicyDocumentArrayInput` via:
+//
+//	GetOrganizationPolicyDocumentArray{ GetOrganizationPolicyDocumentArgs{...} }
+type GetOrganizationPolicyDocumentArrayInput interface {
+	pulumi.Input
+
+	ToGetOrganizationPolicyDocumentArrayOutput() GetOrganizationPolicyDocumentArrayOutput
+	ToGetOrganizationPolicyDocumentArrayOutputWithContext(context.Context) GetOrganizationPolicyDocumentArrayOutput
+}
+
+type GetOrganizationPolicyDocumentArray []GetOrganizationPolicyDocumentInput
+
+func (GetOrganizationPolicyDocumentArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetOrganizationPolicyDocument)(nil)).Elem()
+}
+
+func (i GetOrganizationPolicyDocumentArray) ToGetOrganizationPolicyDocumentArrayOutput() GetOrganizationPolicyDocumentArrayOutput {
+	return i.ToGetOrganizationPolicyDocumentArrayOutputWithContext(context.Background())
+}
+
+func (i GetOrganizationPolicyDocumentArray) ToGetOrganizationPolicyDocumentArrayOutputWithContext(ctx context.Context) GetOrganizationPolicyDocumentArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetOrganizationPolicyDocumentArrayOutput)
+}
+
+type GetOrganizationPolicyDocumentOutput struct{ *pulumi.OutputState }
+
+func (GetOrganizationPolicyDocumentOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetOrganizationPolicyDocument)(nil)).Elem()
+}
+
+func (o GetOrganizationPolicyDocumentOutput) ToGetOrganizationPolicyDocumentOutput() GetOrganizationPolicyDocumentOutput {
+	return o
+}
+
+func (o GetOrganizationPolicyDocumentOutput) ToGetOrganizationPolicyDocumentOutputWithContext(ctx context.Context) GetOrganizationPolicyDocumentOutput {
+	return o
+}
+
+// A list of blocks for the organization policy statements.
+func (o GetOrganizationPolicyDocumentOutput) Statements() GetOrganizationPolicyDocumentStatementArrayOutput {
+	return o.ApplyT(func(v GetOrganizationPolicyDocument) []GetOrganizationPolicyDocumentStatement { return v.Statements }).(GetOrganizationPolicyDocumentStatementArrayOutput)
+}
+
+// A version for organization policy document.
+func (o GetOrganizationPolicyDocumentOutput) Version() pulumi.StringOutput {
+	return o.ApplyT(func(v GetOrganizationPolicyDocument) string { return v.Version }).(pulumi.StringOutput)
+}
+
+type GetOrganizationPolicyDocumentArrayOutput struct{ *pulumi.OutputState }
+
+func (GetOrganizationPolicyDocumentArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetOrganizationPolicyDocument)(nil)).Elem()
+}
+
+func (o GetOrganizationPolicyDocumentArrayOutput) ToGetOrganizationPolicyDocumentArrayOutput() GetOrganizationPolicyDocumentArrayOutput {
+	return o
+}
+
+func (o GetOrganizationPolicyDocumentArrayOutput) ToGetOrganizationPolicyDocumentArrayOutputWithContext(ctx context.Context) GetOrganizationPolicyDocumentArrayOutput {
+	return o
+}
+
+func (o GetOrganizationPolicyDocumentArrayOutput) Index(i pulumi.IntInput) GetOrganizationPolicyDocumentOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetOrganizationPolicyDocument {
+		return vs[0].([]GetOrganizationPolicyDocument)[vs[1].(int)]
+	}).(GetOrganizationPolicyDocumentOutput)
+}
+
+type GetOrganizationPolicyDocumentStatement struct {
+	// A list of actions for the policy document statement.
+	Actions []string `pulumi:"actions"`
+	// The effect of the the policy document statement.
+	Effect string `pulumi:"effect"`
+	// A list of applicable resources for the policy document statement.
+	Resources []string `pulumi:"resources"`
+}
+
+// GetOrganizationPolicyDocumentStatementInput is an input type that accepts GetOrganizationPolicyDocumentStatementArgs and GetOrganizationPolicyDocumentStatementOutput values.
+// You can construct a concrete instance of `GetOrganizationPolicyDocumentStatementInput` via:
+//
+//	GetOrganizationPolicyDocumentStatementArgs{...}
+type GetOrganizationPolicyDocumentStatementInput interface {
+	pulumi.Input
+
+	ToGetOrganizationPolicyDocumentStatementOutput() GetOrganizationPolicyDocumentStatementOutput
+	ToGetOrganizationPolicyDocumentStatementOutputWithContext(context.Context) GetOrganizationPolicyDocumentStatementOutput
+}
+
+type GetOrganizationPolicyDocumentStatementArgs struct {
+	// A list of actions for the policy document statement.
+	Actions pulumi.StringArrayInput `pulumi:"actions"`
+	// The effect of the the policy document statement.
+	Effect pulumi.StringInput `pulumi:"effect"`
+	// A list of applicable resources for the policy document statement.
+	Resources pulumi.StringArrayInput `pulumi:"resources"`
+}
+
+func (GetOrganizationPolicyDocumentStatementArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetOrganizationPolicyDocumentStatement)(nil)).Elem()
+}
+
+func (i GetOrganizationPolicyDocumentStatementArgs) ToGetOrganizationPolicyDocumentStatementOutput() GetOrganizationPolicyDocumentStatementOutput {
+	return i.ToGetOrganizationPolicyDocumentStatementOutputWithContext(context.Background())
+}
+
+func (i GetOrganizationPolicyDocumentStatementArgs) ToGetOrganizationPolicyDocumentStatementOutputWithContext(ctx context.Context) GetOrganizationPolicyDocumentStatementOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetOrganizationPolicyDocumentStatementOutput)
+}
+
+// GetOrganizationPolicyDocumentStatementArrayInput is an input type that accepts GetOrganizationPolicyDocumentStatementArray and GetOrganizationPolicyDocumentStatementArrayOutput values.
+// You can construct a concrete instance of `GetOrganizationPolicyDocumentStatementArrayInput` via:
+//
+//	GetOrganizationPolicyDocumentStatementArray{ GetOrganizationPolicyDocumentStatementArgs{...} }
+type GetOrganizationPolicyDocumentStatementArrayInput interface {
+	pulumi.Input
+
+	ToGetOrganizationPolicyDocumentStatementArrayOutput() GetOrganizationPolicyDocumentStatementArrayOutput
+	ToGetOrganizationPolicyDocumentStatementArrayOutputWithContext(context.Context) GetOrganizationPolicyDocumentStatementArrayOutput
+}
+
+type GetOrganizationPolicyDocumentStatementArray []GetOrganizationPolicyDocumentStatementInput
+
+func (GetOrganizationPolicyDocumentStatementArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetOrganizationPolicyDocumentStatement)(nil)).Elem()
+}
+
+func (i GetOrganizationPolicyDocumentStatementArray) ToGetOrganizationPolicyDocumentStatementArrayOutput() GetOrganizationPolicyDocumentStatementArrayOutput {
+	return i.ToGetOrganizationPolicyDocumentStatementArrayOutputWithContext(context.Background())
+}
+
+func (i GetOrganizationPolicyDocumentStatementArray) ToGetOrganizationPolicyDocumentStatementArrayOutputWithContext(ctx context.Context) GetOrganizationPolicyDocumentStatementArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetOrganizationPolicyDocumentStatementArrayOutput)
+}
+
+type GetOrganizationPolicyDocumentStatementOutput struct{ *pulumi.OutputState }
+
+func (GetOrganizationPolicyDocumentStatementOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetOrganizationPolicyDocumentStatement)(nil)).Elem()
+}
+
+func (o GetOrganizationPolicyDocumentStatementOutput) ToGetOrganizationPolicyDocumentStatementOutput() GetOrganizationPolicyDocumentStatementOutput {
+	return o
+}
+
+func (o GetOrganizationPolicyDocumentStatementOutput) ToGetOrganizationPolicyDocumentStatementOutputWithContext(ctx context.Context) GetOrganizationPolicyDocumentStatementOutput {
+	return o
+}
+
+// A list of actions for the policy document statement.
+func (o GetOrganizationPolicyDocumentStatementOutput) Actions() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetOrganizationPolicyDocumentStatement) []string { return v.Actions }).(pulumi.StringArrayOutput)
+}
+
+// The effect of the the policy document statement.
+func (o GetOrganizationPolicyDocumentStatementOutput) Effect() pulumi.StringOutput {
+	return o.ApplyT(func(v GetOrganizationPolicyDocumentStatement) string { return v.Effect }).(pulumi.StringOutput)
+}
+
+// A list of applicable resources for the policy document statement.
+func (o GetOrganizationPolicyDocumentStatementOutput) Resources() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetOrganizationPolicyDocumentStatement) []string { return v.Resources }).(pulumi.StringArrayOutput)
+}
+
+type GetOrganizationPolicyDocumentStatementArrayOutput struct{ *pulumi.OutputState }
+
+func (GetOrganizationPolicyDocumentStatementArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetOrganizationPolicyDocumentStatement)(nil)).Elem()
+}
+
+func (o GetOrganizationPolicyDocumentStatementArrayOutput) ToGetOrganizationPolicyDocumentStatementArrayOutput() GetOrganizationPolicyDocumentStatementArrayOutput {
+	return o
+}
+
+func (o GetOrganizationPolicyDocumentStatementArrayOutput) ToGetOrganizationPolicyDocumentStatementArrayOutputWithContext(ctx context.Context) GetOrganizationPolicyDocumentStatementArrayOutput {
+	return o
+}
+
+func (o GetOrganizationPolicyDocumentStatementArrayOutput) Index(i pulumi.IntInput) GetOrganizationPolicyDocumentStatementOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetOrganizationPolicyDocumentStatement {
+		return vs[0].([]GetOrganizationPolicyDocumentStatement)[vs[1].(int)]
+	}).(GetOrganizationPolicyDocumentStatementOutput)
+}
+
+type GetOrganizationPolicyFilter struct {
+	// Attribute name to filter with.
+	Name string `pulumi:"name"`
+	// One or more values filter with.
+	Values []string `pulumi:"values"`
+}
+
+// GetOrganizationPolicyFilterInput is an input type that accepts GetOrganizationPolicyFilterArgs and GetOrganizationPolicyFilterOutput values.
+// You can construct a concrete instance of `GetOrganizationPolicyFilterInput` via:
+//
+//	GetOrganizationPolicyFilterArgs{...}
+type GetOrganizationPolicyFilterInput interface {
+	pulumi.Input
+
+	ToGetOrganizationPolicyFilterOutput() GetOrganizationPolicyFilterOutput
+	ToGetOrganizationPolicyFilterOutputWithContext(context.Context) GetOrganizationPolicyFilterOutput
+}
+
+type GetOrganizationPolicyFilterArgs struct {
+	// Attribute name to filter with.
+	Name pulumi.StringInput `pulumi:"name"`
+	// One or more values filter with.
+	Values pulumi.StringArrayInput `pulumi:"values"`
+}
+
+func (GetOrganizationPolicyFilterArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetOrganizationPolicyFilter)(nil)).Elem()
+}
+
+func (i GetOrganizationPolicyFilterArgs) ToGetOrganizationPolicyFilterOutput() GetOrganizationPolicyFilterOutput {
+	return i.ToGetOrganizationPolicyFilterOutputWithContext(context.Background())
+}
+
+func (i GetOrganizationPolicyFilterArgs) ToGetOrganizationPolicyFilterOutputWithContext(ctx context.Context) GetOrganizationPolicyFilterOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetOrganizationPolicyFilterOutput)
+}
+
+// GetOrganizationPolicyFilterArrayInput is an input type that accepts GetOrganizationPolicyFilterArray and GetOrganizationPolicyFilterArrayOutput values.
+// You can construct a concrete instance of `GetOrganizationPolicyFilterArrayInput` via:
+//
+//	GetOrganizationPolicyFilterArray{ GetOrganizationPolicyFilterArgs{...} }
+type GetOrganizationPolicyFilterArrayInput interface {
+	pulumi.Input
+
+	ToGetOrganizationPolicyFilterArrayOutput() GetOrganizationPolicyFilterArrayOutput
+	ToGetOrganizationPolicyFilterArrayOutputWithContext(context.Context) GetOrganizationPolicyFilterArrayOutput
+}
+
+type GetOrganizationPolicyFilterArray []GetOrganizationPolicyFilterInput
+
+func (GetOrganizationPolicyFilterArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetOrganizationPolicyFilter)(nil)).Elem()
+}
+
+func (i GetOrganizationPolicyFilterArray) ToGetOrganizationPolicyFilterArrayOutput() GetOrganizationPolicyFilterArrayOutput {
+	return i.ToGetOrganizationPolicyFilterArrayOutputWithContext(context.Background())
+}
+
+func (i GetOrganizationPolicyFilterArray) ToGetOrganizationPolicyFilterArrayOutputWithContext(ctx context.Context) GetOrganizationPolicyFilterArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetOrganizationPolicyFilterArrayOutput)
+}
+
+type GetOrganizationPolicyFilterOutput struct{ *pulumi.OutputState }
+
+func (GetOrganizationPolicyFilterOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetOrganizationPolicyFilter)(nil)).Elem()
+}
+
+func (o GetOrganizationPolicyFilterOutput) ToGetOrganizationPolicyFilterOutput() GetOrganizationPolicyFilterOutput {
+	return o
+}
+
+func (o GetOrganizationPolicyFilterOutput) ToGetOrganizationPolicyFilterOutputWithContext(ctx context.Context) GetOrganizationPolicyFilterOutput {
+	return o
+}
+
+// Attribute name to filter with.
+func (o GetOrganizationPolicyFilterOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v GetOrganizationPolicyFilter) string { return v.Name }).(pulumi.StringOutput)
+}
+
+// One or more values filter with.
+func (o GetOrganizationPolicyFilterOutput) Values() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetOrganizationPolicyFilter) []string { return v.Values }).(pulumi.StringArrayOutput)
+}
+
+type GetOrganizationPolicyFilterArrayOutput struct{ *pulumi.OutputState }
+
+func (GetOrganizationPolicyFilterArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetOrganizationPolicyFilter)(nil)).Elem()
+}
+
+func (o GetOrganizationPolicyFilterArrayOutput) ToGetOrganizationPolicyFilterArrayOutput() GetOrganizationPolicyFilterArrayOutput {
+	return o
+}
+
+func (o GetOrganizationPolicyFilterArrayOutput) ToGetOrganizationPolicyFilterArrayOutputWithContext(ctx context.Context) GetOrganizationPolicyFilterArrayOutput {
+	return o
+}
+
+func (o GetOrganizationPolicyFilterArrayOutput) Index(i pulumi.IntInput) GetOrganizationPolicyFilterOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetOrganizationPolicyFilter {
+		return vs[0].([]GetOrganizationPolicyFilter)[vs[1].(int)]
+	}).(GetOrganizationPolicyFilterOutput)
+}
+
+type GetOrganizationRoleFilter struct {
+	// Attribute name to filter with.
+	Name string `pulumi:"name"`
+	// One or more values filter with.
+	Values []string `pulumi:"values"`
+}
+
+// GetOrganizationRoleFilterInput is an input type that accepts GetOrganizationRoleFilterArgs and GetOrganizationRoleFilterOutput values.
+// You can construct a concrete instance of `GetOrganizationRoleFilterInput` via:
+//
+//	GetOrganizationRoleFilterArgs{...}
+type GetOrganizationRoleFilterInput interface {
+	pulumi.Input
+
+	ToGetOrganizationRoleFilterOutput() GetOrganizationRoleFilterOutput
+	ToGetOrganizationRoleFilterOutputWithContext(context.Context) GetOrganizationRoleFilterOutput
+}
+
+type GetOrganizationRoleFilterArgs struct {
+	// Attribute name to filter with.
+	Name pulumi.StringInput `pulumi:"name"`
+	// One or more values filter with.
+	Values pulumi.StringArrayInput `pulumi:"values"`
+}
+
+func (GetOrganizationRoleFilterArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetOrganizationRoleFilter)(nil)).Elem()
+}
+
+func (i GetOrganizationRoleFilterArgs) ToGetOrganizationRoleFilterOutput() GetOrganizationRoleFilterOutput {
+	return i.ToGetOrganizationRoleFilterOutputWithContext(context.Background())
+}
+
+func (i GetOrganizationRoleFilterArgs) ToGetOrganizationRoleFilterOutputWithContext(ctx context.Context) GetOrganizationRoleFilterOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetOrganizationRoleFilterOutput)
+}
+
+// GetOrganizationRoleFilterArrayInput is an input type that accepts GetOrganizationRoleFilterArray and GetOrganizationRoleFilterArrayOutput values.
+// You can construct a concrete instance of `GetOrganizationRoleFilterArrayInput` via:
+//
+//	GetOrganizationRoleFilterArray{ GetOrganizationRoleFilterArgs{...} }
+type GetOrganizationRoleFilterArrayInput interface {
+	pulumi.Input
+
+	ToGetOrganizationRoleFilterArrayOutput() GetOrganizationRoleFilterArrayOutput
+	ToGetOrganizationRoleFilterArrayOutputWithContext(context.Context) GetOrganizationRoleFilterArrayOutput
+}
+
+type GetOrganizationRoleFilterArray []GetOrganizationRoleFilterInput
+
+func (GetOrganizationRoleFilterArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetOrganizationRoleFilter)(nil)).Elem()
+}
+
+func (i GetOrganizationRoleFilterArray) ToGetOrganizationRoleFilterArrayOutput() GetOrganizationRoleFilterArrayOutput {
+	return i.ToGetOrganizationRoleFilterArrayOutputWithContext(context.Background())
+}
+
+func (i GetOrganizationRoleFilterArray) ToGetOrganizationRoleFilterArrayOutputWithContext(ctx context.Context) GetOrganizationRoleFilterArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetOrganizationRoleFilterArrayOutput)
+}
+
+type GetOrganizationRoleFilterOutput struct{ *pulumi.OutputState }
+
+func (GetOrganizationRoleFilterOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetOrganizationRoleFilter)(nil)).Elem()
+}
+
+func (o GetOrganizationRoleFilterOutput) ToGetOrganizationRoleFilterOutput() GetOrganizationRoleFilterOutput {
+	return o
+}
+
+func (o GetOrganizationRoleFilterOutput) ToGetOrganizationRoleFilterOutputWithContext(ctx context.Context) GetOrganizationRoleFilterOutput {
+	return o
+}
+
+// Attribute name to filter with.
+func (o GetOrganizationRoleFilterOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v GetOrganizationRoleFilter) string { return v.Name }).(pulumi.StringOutput)
+}
+
+// One or more values filter with.
+func (o GetOrganizationRoleFilterOutput) Values() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetOrganizationRoleFilter) []string { return v.Values }).(pulumi.StringArrayOutput)
+}
+
+type GetOrganizationRoleFilterArrayOutput struct{ *pulumi.OutputState }
+
+func (GetOrganizationRoleFilterArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetOrganizationRoleFilter)(nil)).Elem()
+}
+
+func (o GetOrganizationRoleFilterArrayOutput) ToGetOrganizationRoleFilterArrayOutput() GetOrganizationRoleFilterArrayOutput {
+	return o
+}
+
+func (o GetOrganizationRoleFilterArrayOutput) ToGetOrganizationRoleFilterArrayOutputWithContext(ctx context.Context) GetOrganizationRoleFilterArrayOutput {
+	return o
+}
+
+func (o GetOrganizationRoleFilterArrayOutput) Index(i pulumi.IntInput) GetOrganizationRoleFilterOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetOrganizationRoleFilter {
+		return vs[0].([]GetOrganizationRoleFilter)[vs[1].(int)]
+	}).(GetOrganizationRoleFilterOutput)
 }
 
 type GetOsFilter struct {
@@ -7183,8 +8902,12 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*DatabaseUserAccessControlPtrInput)(nil)).Elem(), DatabaseUserAccessControlArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*InstanceBackupsScheduleInput)(nil)).Elem(), InstanceBackupsScheduleArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*InstanceBackupsSchedulePtrInput)(nil)).Elem(), InstanceBackupsScheduleArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*InstanceBlockDeviceInput)(nil)).Elem(), InstanceBlockDeviceArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*InstanceBlockDeviceArrayInput)(nil)).Elem(), InstanceBlockDeviceArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*KubernetesNodePoolsTypeInput)(nil)).Elem(), KubernetesNodePoolsTypeArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*KubernetesNodePoolsTypePtrInput)(nil)).Elem(), KubernetesNodePoolsTypeArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*KubernetesNodePoolsLabelInput)(nil)).Elem(), KubernetesNodePoolsLabelArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*KubernetesNodePoolsLabelArrayInput)(nil)).Elem(), KubernetesNodePoolsLabelArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*KubernetesNodePoolsNodeInput)(nil)).Elem(), KubernetesNodePoolsNodeArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*KubernetesNodePoolsNodeArrayInput)(nil)).Elem(), KubernetesNodePoolsNodeArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*KubernetesNodePoolsTaintInput)(nil)).Elem(), KubernetesNodePoolsTaintArgs{})
@@ -7197,6 +8920,10 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*LoadBalancerHealthCheckPtrInput)(nil)).Elem(), LoadBalancerHealthCheckArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*LoadBalancerSslInput)(nil)).Elem(), LoadBalancerSslArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*LoadBalancerSslPtrInput)(nil)).Elem(), LoadBalancerSslArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*OrganizationPolicyDocumentInput)(nil)).Elem(), OrganizationPolicyDocumentArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*OrganizationPolicyDocumentPtrInput)(nil)).Elem(), OrganizationPolicyDocumentArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*OrganizationPolicyDocumentStatementInput)(nil)).Elem(), OrganizationPolicyDocumentStatementArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*OrganizationPolicyDocumentStatementArrayInput)(nil)).Elem(), OrganizationPolicyDocumentStatementArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*VirtualFileSystemStorageAttachmentInput)(nil)).Elem(), VirtualFileSystemStorageAttachmentArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*VirtualFileSystemStorageAttachmentArrayInput)(nil)).Elem(), VirtualFileSystemStorageAttachmentArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetApplicationFilterInput)(nil)).Elem(), GetApplicationFilterArgs{})
@@ -7237,12 +8964,16 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*GetKubernetesFilterArrayInput)(nil)).Elem(), GetKubernetesFilterArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetKubernetesNodePoolInput)(nil)).Elem(), GetKubernetesNodePoolArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetKubernetesNodePoolArrayInput)(nil)).Elem(), GetKubernetesNodePoolArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetKubernetesNodePoolLabelInput)(nil)).Elem(), GetKubernetesNodePoolLabelArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetKubernetesNodePoolLabelArrayInput)(nil)).Elem(), GetKubernetesNodePoolLabelArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetKubernetesNodePoolNodeInput)(nil)).Elem(), GetKubernetesNodePoolNodeArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetKubernetesNodePoolNodeArrayInput)(nil)).Elem(), GetKubernetesNodePoolNodeArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetKubernetesNodePoolTaintInput)(nil)).Elem(), GetKubernetesNodePoolTaintArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetKubernetesNodePoolTaintArrayInput)(nil)).Elem(), GetKubernetesNodePoolTaintArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetLoadBalancerFilterInput)(nil)).Elem(), GetLoadBalancerFilterArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetLoadBalancerFilterArrayInput)(nil)).Elem(), GetLoadBalancerFilterArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetLogsResultInput)(nil)).Elem(), GetLogsResultArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetLogsResultArrayInput)(nil)).Elem(), GetLogsResultArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetObjectStorageClusterFilterInput)(nil)).Elem(), GetObjectStorageClusterFilterArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetObjectStorageClusterFilterArrayInput)(nil)).Elem(), GetObjectStorageClusterFilterArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetObjectStorageFilterInput)(nil)).Elem(), GetObjectStorageFilterArgs{})
@@ -7251,6 +8982,22 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*GetObjectStorageTierFilterArrayInput)(nil)).Elem(), GetObjectStorageTierFilterArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetObjectStorageTierLocationInput)(nil)).Elem(), GetObjectStorageTierLocationArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetObjectStorageTierLocationArrayInput)(nil)).Elem(), GetObjectStorageTierLocationArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetOidcIssuerFilterInput)(nil)).Elem(), GetOidcIssuerFilterArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetOidcIssuerFilterArrayInput)(nil)).Elem(), GetOidcIssuerFilterArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetOidcProviderFilterInput)(nil)).Elem(), GetOidcProviderFilterArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetOidcProviderFilterArrayInput)(nil)).Elem(), GetOidcProviderFilterArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetOrganizationFilterInput)(nil)).Elem(), GetOrganizationFilterArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetOrganizationFilterArrayInput)(nil)).Elem(), GetOrganizationFilterArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetOrganizationGroupFilterInput)(nil)).Elem(), GetOrganizationGroupFilterArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetOrganizationGroupFilterArrayInput)(nil)).Elem(), GetOrganizationGroupFilterArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetOrganizationPolicyDocumentInput)(nil)).Elem(), GetOrganizationPolicyDocumentArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetOrganizationPolicyDocumentArrayInput)(nil)).Elem(), GetOrganizationPolicyDocumentArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetOrganizationPolicyDocumentStatementInput)(nil)).Elem(), GetOrganizationPolicyDocumentStatementArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetOrganizationPolicyDocumentStatementArrayInput)(nil)).Elem(), GetOrganizationPolicyDocumentStatementArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetOrganizationPolicyFilterInput)(nil)).Elem(), GetOrganizationPolicyFilterArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetOrganizationPolicyFilterArrayInput)(nil)).Elem(), GetOrganizationPolicyFilterArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetOrganizationRoleFilterInput)(nil)).Elem(), GetOrganizationRoleFilterArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetOrganizationRoleFilterArrayInput)(nil)).Elem(), GetOrganizationRoleFilterArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetOsFilterInput)(nil)).Elem(), GetOsFilterArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetOsFilterArrayInput)(nil)).Elem(), GetOsFilterArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetPlanFilterInput)(nil)).Elem(), GetPlanFilterArgs{})
@@ -7285,8 +9032,12 @@ func init() {
 	pulumi.RegisterOutputType(DatabaseUserAccessControlPtrOutput{})
 	pulumi.RegisterOutputType(InstanceBackupsScheduleOutput{})
 	pulumi.RegisterOutputType(InstanceBackupsSchedulePtrOutput{})
+	pulumi.RegisterOutputType(InstanceBlockDeviceOutput{})
+	pulumi.RegisterOutputType(InstanceBlockDeviceArrayOutput{})
 	pulumi.RegisterOutputType(KubernetesNodePoolsTypeOutput{})
 	pulumi.RegisterOutputType(KubernetesNodePoolsTypePtrOutput{})
+	pulumi.RegisterOutputType(KubernetesNodePoolsLabelOutput{})
+	pulumi.RegisterOutputType(KubernetesNodePoolsLabelArrayOutput{})
 	pulumi.RegisterOutputType(KubernetesNodePoolsNodeOutput{})
 	pulumi.RegisterOutputType(KubernetesNodePoolsNodeArrayOutput{})
 	pulumi.RegisterOutputType(KubernetesNodePoolsTaintOutput{})
@@ -7299,6 +9050,10 @@ func init() {
 	pulumi.RegisterOutputType(LoadBalancerHealthCheckPtrOutput{})
 	pulumi.RegisterOutputType(LoadBalancerSslOutput{})
 	pulumi.RegisterOutputType(LoadBalancerSslPtrOutput{})
+	pulumi.RegisterOutputType(OrganizationPolicyDocumentOutput{})
+	pulumi.RegisterOutputType(OrganizationPolicyDocumentPtrOutput{})
+	pulumi.RegisterOutputType(OrganizationPolicyDocumentStatementOutput{})
+	pulumi.RegisterOutputType(OrganizationPolicyDocumentStatementArrayOutput{})
 	pulumi.RegisterOutputType(VirtualFileSystemStorageAttachmentOutput{})
 	pulumi.RegisterOutputType(VirtualFileSystemStorageAttachmentArrayOutput{})
 	pulumi.RegisterOutputType(GetApplicationFilterOutput{})
@@ -7339,12 +9094,16 @@ func init() {
 	pulumi.RegisterOutputType(GetKubernetesFilterArrayOutput{})
 	pulumi.RegisterOutputType(GetKubernetesNodePoolOutput{})
 	pulumi.RegisterOutputType(GetKubernetesNodePoolArrayOutput{})
+	pulumi.RegisterOutputType(GetKubernetesNodePoolLabelOutput{})
+	pulumi.RegisterOutputType(GetKubernetesNodePoolLabelArrayOutput{})
 	pulumi.RegisterOutputType(GetKubernetesNodePoolNodeOutput{})
 	pulumi.RegisterOutputType(GetKubernetesNodePoolNodeArrayOutput{})
 	pulumi.RegisterOutputType(GetKubernetesNodePoolTaintOutput{})
 	pulumi.RegisterOutputType(GetKubernetesNodePoolTaintArrayOutput{})
 	pulumi.RegisterOutputType(GetLoadBalancerFilterOutput{})
 	pulumi.RegisterOutputType(GetLoadBalancerFilterArrayOutput{})
+	pulumi.RegisterOutputType(GetLogsResultOutput{})
+	pulumi.RegisterOutputType(GetLogsResultArrayOutput{})
 	pulumi.RegisterOutputType(GetObjectStorageClusterFilterOutput{})
 	pulumi.RegisterOutputType(GetObjectStorageClusterFilterArrayOutput{})
 	pulumi.RegisterOutputType(GetObjectStorageFilterOutput{})
@@ -7353,6 +9112,22 @@ func init() {
 	pulumi.RegisterOutputType(GetObjectStorageTierFilterArrayOutput{})
 	pulumi.RegisterOutputType(GetObjectStorageTierLocationOutput{})
 	pulumi.RegisterOutputType(GetObjectStorageTierLocationArrayOutput{})
+	pulumi.RegisterOutputType(GetOidcIssuerFilterOutput{})
+	pulumi.RegisterOutputType(GetOidcIssuerFilterArrayOutput{})
+	pulumi.RegisterOutputType(GetOidcProviderFilterOutput{})
+	pulumi.RegisterOutputType(GetOidcProviderFilterArrayOutput{})
+	pulumi.RegisterOutputType(GetOrganizationFilterOutput{})
+	pulumi.RegisterOutputType(GetOrganizationFilterArrayOutput{})
+	pulumi.RegisterOutputType(GetOrganizationGroupFilterOutput{})
+	pulumi.RegisterOutputType(GetOrganizationGroupFilterArrayOutput{})
+	pulumi.RegisterOutputType(GetOrganizationPolicyDocumentOutput{})
+	pulumi.RegisterOutputType(GetOrganizationPolicyDocumentArrayOutput{})
+	pulumi.RegisterOutputType(GetOrganizationPolicyDocumentStatementOutput{})
+	pulumi.RegisterOutputType(GetOrganizationPolicyDocumentStatementArrayOutput{})
+	pulumi.RegisterOutputType(GetOrganizationPolicyFilterOutput{})
+	pulumi.RegisterOutputType(GetOrganizationPolicyFilterArrayOutput{})
+	pulumi.RegisterOutputType(GetOrganizationRoleFilterOutput{})
+	pulumi.RegisterOutputType(GetOrganizationRoleFilterArrayOutput{})
 	pulumi.RegisterOutputType(GetOsFilterOutput{})
 	pulumi.RegisterOutputType(GetOsFilterArrayOutput{})
 	pulumi.RegisterOutputType(GetPlanFilterOutput{})

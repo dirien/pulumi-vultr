@@ -29,7 +29,7 @@ import (
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := vultr.LookupReservedIp(ctx, &vultr.LookupReservedIpArgs{
+//			_, err := vultr.GetReservedIp(ctx, &vultr.LookupReservedIpArgs{
 //				Filters: []vultr.GetReservedIpFilter{
 //					{
 //						Name: "label",

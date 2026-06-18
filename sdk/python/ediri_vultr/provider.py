@@ -24,6 +24,7 @@ class ProviderArgs:
                  retry_limit: Optional[pulumi.Input[_builtins.int]] = None):
         """
         The set of arguments for constructing a Provider resource.
+
         :param pulumi.Input[_builtins.str] api_key: The API Key that allows interaction with the API
         :param pulumi.Input[_builtins.int] rate_limit: Allows users to set the speed of API calls to work with the Vultr Rate Limit
         :param pulumi.Input[_builtins.int] retry_limit: Allows users to set the maximum number of retries allowed for a failed API call.
@@ -94,6 +95,7 @@ class Provider(pulumi.ProviderResource):
         construction to achieve fine-grained programmatic control over provider settings. See the
         [documentation](https://www.pulumi.com/docs/reference/programming-model/#providers) for more information.
 
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[_builtins.str] api_key: The API Key that allows interaction with the API
@@ -111,6 +113,7 @@ class Provider(pulumi.ProviderResource):
         settings, however an explicit `Provider` instance may be created and passed during resource
         construction to achieve fine-grained programmatic control over provider settings. See the
         [documentation](https://www.pulumi.com/docs/reference/programming-model/#providers) for more information.
+
 
         :param str resource_name: The name of the resource.
         :param ProviderArgs args: The arguments to use to populate this resource's properties.

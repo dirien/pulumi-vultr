@@ -15,8 +15,8 @@ import * as utilities from "./utilities";
  * import * as pulumi from "@pulumi/pulumi";
  * import * as vultr from "@ediri/vultr";
  *
- * const myDatabaseConnector = new vultr.DatabaseConnector("myDatabaseConnector", {
- *     databaseId: vultr_database.my_database.id,
+ * const myDatabaseConnector = new vultr.DatabaseConnector("my_database_connector", {
+ *     databaseId: myDatabase.id,
  *     name: "my_database_connector",
  *     "class": "com.couchbase.connect.kafka.CouchbaseSinkConnector",
  *     topics: "my_database_topic",

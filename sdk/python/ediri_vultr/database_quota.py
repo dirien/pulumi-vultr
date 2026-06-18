@@ -27,6 +27,7 @@ class DatabaseQuotaArgs:
                  user: pulumi.Input[_builtins.str]):
         """
         The set of arguments for constructing a DatabaseQuota resource.
+
         :param pulumi.Input[_builtins.str] client_id: The client ID for the new database quota.
         :param pulumi.Input[_builtins.int] consumer_byte_rate: The consumer byte rate for the new managed database quota.
         :param pulumi.Input[_builtins.str] database_id: The managed database ID you want to attach this quota to.
@@ -125,6 +126,7 @@ class _DatabaseQuotaState:
                  user: Optional[pulumi.Input[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering DatabaseQuota resources.
+
         :param pulumi.Input[_builtins.str] client_id: The client ID for the new database quota.
         :param pulumi.Input[_builtins.int] consumer_byte_rate: The consumer byte rate for the new managed database quota.
         :param pulumi.Input[_builtins.str] database_id: The managed database ID you want to attach this quota to.
@@ -242,14 +244,15 @@ class DatabaseQuota(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_database_quota = vultr.DatabaseQuota("myDatabaseQuota",
-            database_id=vultr_database["my_database"]["id"],
+        my_database_quota = vultr.DatabaseQuota("my_database_quota",
+            database_id=my_database["id"],
             client_id="my_database_quota",
             consumer_byte_rate=3,
             producer_byte_rate=2,
             request_percentage=120,
             user="my_database_user")
         ```
+
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -277,14 +280,15 @@ class DatabaseQuota(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_database_quota = vultr.DatabaseQuota("myDatabaseQuota",
-            database_id=vultr_database["my_database"]["id"],
+        my_database_quota = vultr.DatabaseQuota("my_database_quota",
+            database_id=my_database["id"],
             client_id="my_database_quota",
             consumer_byte_rate=3,
             producer_byte_rate=2,
             request_percentage=120,
             user="my_database_user")
         ```
+
 
         :param str resource_name: The name of the resource.
         :param DatabaseQuotaArgs args: The arguments to use to populate this resource's properties.

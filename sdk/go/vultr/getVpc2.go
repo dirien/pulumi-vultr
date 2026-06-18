@@ -31,7 +31,7 @@ import (
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := vultr.LookupVpc2(ctx, &vultr.LookupVpc2Args{
+//			_, err := vultr.GetVpc2(ctx, &vultr.LookupVpc2Args{
 //				Filters: []vultr.GetVpc2Filter{
 //					{
 //						Name: "description",

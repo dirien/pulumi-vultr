@@ -29,7 +29,7 @@ import (
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := vultr.LookupIsoPrivate(ctx, &vultr.LookupIsoPrivateArgs{
+//			_, err := vultr.GetIsoPrivate(ctx, &vultr.LookupIsoPrivateArgs{
 //				Filters: []vultr.GetIsoPrivateFilter{
 //					{
 //						Name: "filename",

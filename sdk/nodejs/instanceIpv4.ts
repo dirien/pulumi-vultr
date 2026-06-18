@@ -16,13 +16,13 @@ import * as utilities from "./utilities";
  * import * as pulumi from "@pulumi/pulumi";
  * import * as vultr from "@ediri/vultr";
  *
- * const myInstance = new vultr.Instance("myInstance", {
- *     enableIpv6: true,
- *     osId: 167,
+ * const myInstance = new vultr.Instance("my_instance", {
  *     plan: "vc2-1c-1gb",
  *     region: "ewr",
+ *     osId: 167,
+ *     enableIpv6: true,
  * });
- * const myInstanceIpv4 = new vultr.InstanceIpv4("myInstanceIpv4", {
+ * const myInstanceIpv4 = new vultr.InstanceIpv4("my_instance_ipv4", {
  *     instanceId: myInstance.id,
  *     reboot: false,
  * });

@@ -29,7 +29,7 @@ import (
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := vultr.LookupDatabase(ctx, &vultr.LookupDatabaseArgs{
+//			_, err := vultr.GetDatabase(ctx, &vultr.LookupDatabaseArgs{
 //				Filters: []vultr.GetDatabaseFilter{
 //					{
 //						Name: "label",
@@ -73,6 +73,8 @@ type LookupDatabaseResult struct {
 	BackupHour string `pulumi:"backupHour"`
 	// The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
 	BackupMinute string `pulumi:"backupMinute"`
+	// The CA certificate for Managed Databases on this account.
+	CaCertificate string `pulumi:"caCertificate"`
 	// The configured time zone for the Managed Database in TZ database format.
 	ClusterTimeZone string `pulumi:"clusterTimeZone"`
 	// The database engine of the managed database.
@@ -117,6 +119,8 @@ type LookupDatabaseResult struct {
 	MysqlSqlModes []string `pulumi:"mysqlSqlModes"`
 	// The password for the managed database's primary admin user.
 	Password string `pulumi:"password"`
+	// Charges due for this managed database subscription at the end of the billing period.
+	PendingCharges float64 `pulumi:"pendingCharges"`
 	// The managed database's plan ID.
 	Plan        string `pulumi:"plan"`
 	PlanBrokers int    `pulumi:"planBrokers"`
@@ -204,6 +208,11 @@ func (o LookupDatabaseResultOutput) BackupHour() pulumi.StringOutput {
 // The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
 func (o LookupDatabaseResultOutput) BackupMinute() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupDatabaseResult) string { return v.BackupMinute }).(pulumi.StringOutput)
+}
+
+// The CA certificate for Managed Databases on this account.
+func (o LookupDatabaseResultOutput) CaCertificate() pulumi.StringOutput {
+	return o.ApplyT(func(v LookupDatabaseResult) string { return v.CaCertificate }).(pulumi.StringOutput)
 }
 
 // The configured time zone for the Managed Database in TZ database format.
@@ -317,6 +326,11 @@ func (o LookupDatabaseResultOutput) MysqlSqlModes() pulumi.StringArrayOutput {
 // The password for the managed database's primary admin user.
 func (o LookupDatabaseResultOutput) Password() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupDatabaseResult) string { return v.Password }).(pulumi.StringOutput)
+}
+
+// Charges due for this managed database subscription at the end of the billing period.
+func (o LookupDatabaseResultOutput) PendingCharges() pulumi.Float64Output {
+	return o.ApplyT(func(v LookupDatabaseResult) float64 { return v.PendingCharges }).(pulumi.Float64Output)
 }
 
 // The managed database's plan ID.

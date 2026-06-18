@@ -9,24 +9,64 @@ import * as utilities from "./utilities";
 /**
  * Deploy additional node pools to an existing Vultr Kubernetes Engine (VKE) cluster.
  *
+ * ## Example Usage
+ *
+ * Create a new VKE cluster:
+ *
+ * ```typescript
+ * import * as pulumi from "@pulumi/pulumi";
+ * import * as std from "@pulumi/std";
+ * import * as vultr from "@ediri/vultr";
+ *
+ * const np_1 = new vultr.KubernetesNodePools("np-1", {
+ *     clusterId: k8.id,
+ *     nodeQuantity: 1,
+ *     plan: "vc2-4c-8gb",
+ *     label: "my-label",
+ *     tag: "my-tag",
+ *     autoScaler: true,
+ *     minNodes: 1,
+ *     maxNodes: 2,
+ *     labels: [
+ *         {
+ *             key: "my-label",
+ *             value: "a-label-on-all-nodes",
+ *         },
+ *         {
+ *             key: "my-second-label",
+ *             value: "another-label-on-all-nodes",
+ *         },
+ *     ],
+ *     taints: [
+ *         {
+ *             key: "a-taint",
+ *             value: "is-tainted",
+ *             effect: "NoExecute",
+ *         },
+ *         {
+ *             key: "another-taint",
+ *             value: "is-tainted",
+ *             effect: "NoSchedule",
+ *         },
+ *     ],
+ *     userData: std.base64encode({
+ *         input: "This will be added to node user data",
+ *     }).then(invoke => invoke.result),
+ * });
+ * ```
+ *
  * ## Import
  *
  * Node pool resources are able to be imported into terraform state like other
- *
  * resources, however, since they rely on a kubernetes cluster, the import state
- *
  * requires the UUID of the cluster as well. With that in mind, format the second
- *
  * argument to the `pulumi import` command as a space delimited string of
- *
  * UUIDs, the first is the cluster ID, the second is the node pool ID. It will
- *
  * look like this:
  *
- * "clusterID nodePoolID"
- *
  * ```sh
- * $ pulumi import vultr:index/kubernetesNodePools:KubernetesNodePools my-k8s-np "7365a98b-5a43-450f-bd27-d768827100e5 ec330340-4f50-4526-858f-a39199f568ac"
+ * # "clusterID nodePoolID"
+ * terraform import vultr_kubernetes_node_pools.my-k8s-np "7365a98b-5a43-450f-bd27-d768827100e5 ec330340-4f50-4526-858f-a39199f568ac"
  * ```
  */
 export class KubernetesNodePools extends pulumi.CustomResource {
@@ -77,10 +117,7 @@ export class KubernetesNodePools extends pulumi.CustomResource {
      * The label to be used as a prefix for nodes in this node pool.
      */
     declare public readonly label: pulumi.Output<string>;
-    /**
-     * A map of key/value pairs for Kubernetes node labels.
-     */
-    declare public readonly labels: pulumi.Output<{[key: string]: string} | undefined>;
+    declare public readonly labels: pulumi.Output<outputs.KubernetesNodePoolsLabel[] | undefined>;
     /**
      * The maximum number of nodes to use with the auto scaler.
      */
@@ -93,12 +130,9 @@ export class KubernetesNodePools extends pulumi.CustomResource {
      * The number of nodes in this node pool.
      */
     declare public readonly nodeQuantity: pulumi.Output<number>;
-    /**
-     * Array that contains information about nodes within this node pool.
-     */
     declare public /*out*/ readonly nodes: pulumi.Output<outputs.KubernetesNodePoolsNode[]>;
     /**
-     * The plan to be used in this node pool. [See Plans List](https://www.vultr.com/api/#operation/list-plans) Note the minimum plan requirements must have at least 1 core and 2 gbs of memory.
+     * The plan to be used in this node pool. [See plans list](https://www.vultr.com/api/#operation/list-plans) Note the minimum plan requirements must have at least 1 core and 2 gbs of memory.
      */
     declare public readonly plan: pulumi.Output<string>;
     /**
@@ -109,12 +143,11 @@ export class KubernetesNodePools extends pulumi.CustomResource {
      * A tag that is assigned to this node pool.
      */
     declare public readonly tag: pulumi.Output<string | undefined>;
-    /**
-     * Taints to apply to the nodes in the node pool. Should contain `key`, `value` and `effect`.  The `effect` should be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
-     */
     declare public readonly taints: pulumi.Output<outputs.KubernetesNodePoolsTaint[] | undefined>;
     /**
      * A base64 encoded string containing the user data to apply to nodes in the node pool.
+     *
+     * `labels` - (Optional) A list of labels to apply to the nodes in the node pool with these fields:
      */
     declare public readonly userData: pulumi.Output<string | undefined>;
 
@@ -205,10 +238,7 @@ export interface KubernetesNodePoolsState {
      * The label to be used as a prefix for nodes in this node pool.
      */
     label?: pulumi.Input<string>;
-    /**
-     * A map of key/value pairs for Kubernetes node labels.
-     */
-    labels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    labels?: pulumi.Input<pulumi.Input<inputs.KubernetesNodePoolsLabel>[]>;
     /**
      * The maximum number of nodes to use with the auto scaler.
      */
@@ -221,12 +251,9 @@ export interface KubernetesNodePoolsState {
      * The number of nodes in this node pool.
      */
     nodeQuantity?: pulumi.Input<number>;
-    /**
-     * Array that contains information about nodes within this node pool.
-     */
     nodes?: pulumi.Input<pulumi.Input<inputs.KubernetesNodePoolsNode>[]>;
     /**
-     * The plan to be used in this node pool. [See Plans List](https://www.vultr.com/api/#operation/list-plans) Note the minimum plan requirements must have at least 1 core and 2 gbs of memory.
+     * The plan to be used in this node pool. [See plans list](https://www.vultr.com/api/#operation/list-plans) Note the minimum plan requirements must have at least 1 core and 2 gbs of memory.
      */
     plan?: pulumi.Input<string>;
     /**
@@ -237,12 +264,11 @@ export interface KubernetesNodePoolsState {
      * A tag that is assigned to this node pool.
      */
     tag?: pulumi.Input<string>;
-    /**
-     * Taints to apply to the nodes in the node pool. Should contain `key`, `value` and `effect`.  The `effect` should be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
-     */
     taints?: pulumi.Input<pulumi.Input<inputs.KubernetesNodePoolsTaint>[]>;
     /**
      * A base64 encoded string containing the user data to apply to nodes in the node pool.
+     *
+     * `labels` - (Optional) A list of labels to apply to the nodes in the node pool with these fields:
      */
     userData?: pulumi.Input<string>;
 }
@@ -263,10 +289,7 @@ export interface KubernetesNodePoolsArgs {
      * The label to be used as a prefix for nodes in this node pool.
      */
     label: pulumi.Input<string>;
-    /**
-     * A map of key/value pairs for Kubernetes node labels.
-     */
-    labels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    labels?: pulumi.Input<pulumi.Input<inputs.KubernetesNodePoolsLabel>[]>;
     /**
      * The maximum number of nodes to use with the auto scaler.
      */
@@ -280,19 +303,18 @@ export interface KubernetesNodePoolsArgs {
      */
     nodeQuantity: pulumi.Input<number>;
     /**
-     * The plan to be used in this node pool. [See Plans List](https://www.vultr.com/api/#operation/list-plans) Note the minimum plan requirements must have at least 1 core and 2 gbs of memory.
+     * The plan to be used in this node pool. [See plans list](https://www.vultr.com/api/#operation/list-plans) Note the minimum plan requirements must have at least 1 core and 2 gbs of memory.
      */
     plan: pulumi.Input<string>;
     /**
      * A tag that is assigned to this node pool.
      */
     tag?: pulumi.Input<string>;
-    /**
-     * Taints to apply to the nodes in the node pool. Should contain `key`, `value` and `effect`.  The `effect` should be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
-     */
     taints?: pulumi.Input<pulumi.Input<inputs.KubernetesNodePoolsTaint>[]>;
     /**
      * A base64 encoded string containing the user data to apply to nodes in the node pool.
+     *
+     * `labels` - (Optional) A list of labels to apply to the nodes in the node pool with these fields:
      */
     userData?: pulumi.Input<string>;
 }

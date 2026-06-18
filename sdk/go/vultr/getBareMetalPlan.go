@@ -79,7 +79,8 @@ type GetBareMetalPlanResult struct {
 	DiskCount int                      `pulumi:"diskCount"`
 	Filters   []GetBareMetalPlanFilter `pulumi:"filters"`
 	// The provider-assigned unique ID for this managed resource.
-	Id        string   `pulumi:"id"`
+	Id string `pulumi:"id"`
+	// A list of DCIDs (used as `region` in Terraform) where the plan can be deployed.
 	Locations []string `pulumi:"locations"`
 	// The price per month of the plan in USD.
 	MonthlyCost int `pulumi:"monthlyCost"`
@@ -162,6 +163,7 @@ func (o GetBareMetalPlanResultOutput) Id() pulumi.StringOutput {
 	return o.ApplyT(func(v GetBareMetalPlanResult) string { return v.Id }).(pulumi.StringOutput)
 }
 
+// A list of DCIDs (used as `region` in Terraform) where the plan can be deployed.
 func (o GetBareMetalPlanResultOutput) Locations() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v GetBareMetalPlanResult) []string { return v.Locations }).(pulumi.StringArrayOutput)
 }

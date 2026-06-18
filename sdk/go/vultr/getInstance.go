@@ -29,7 +29,7 @@ import (
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := vultr.LookupInstance(ctx, &vultr.LookupInstanceArgs{
+//			_, err := vultr.GetInstance(ctx, &vultr.LookupInstanceArgs{
 //				Filters: []vultr.GetInstanceFilter{
 //					{
 //						Name: "label",
@@ -114,6 +114,8 @@ type LookupInstanceResult struct {
 	Region string `pulumi:"region"`
 	// A more detailed server status (none, locked, installingbooting, isomounting, ok).
 	ServerStatus string `pulumi:"serverStatus"`
+	// The ID of the Vultr snapshot that the server was restored from.
+	SnapshotId string `pulumi:"snapshotId"`
 	// The status of the server's subscription.
 	Status string `pulumi:"status"`
 	// A list of tags applied to the instance.
@@ -292,6 +294,11 @@ func (o LookupInstanceResultOutput) Region() pulumi.StringOutput {
 // A more detailed server status (none, locked, installingbooting, isomounting, ok).
 func (o LookupInstanceResultOutput) ServerStatus() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupInstanceResult) string { return v.ServerStatus }).(pulumi.StringOutput)
+}
+
+// The ID of the Vultr snapshot that the server was restored from.
+func (o LookupInstanceResultOutput) SnapshotId() pulumi.StringOutput {
+	return o.ApplyT(func(v LookupInstanceResult) string { return v.SnapshotId }).(pulumi.StringOutput)
 }
 
 // The status of the server's subscription.

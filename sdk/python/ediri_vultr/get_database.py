@@ -28,7 +28,7 @@ class GetDatabaseResult:
     """
     A collection of values returned by getDatabase.
     """
-    def __init__(__self__, access_cert=None, access_key=None, backup_hour=None, backup_minute=None, cluster_time_zone=None, database_engine=None, database_engine_version=None, date_created=None, dbname=None, enable_kafka_connect=None, enable_kafka_rest=None, enable_schema_registry=None, eviction_policy=None, ferretdb_credentials=None, filters=None, host=None, id=None, kafka_rest_uri=None, label=None, latest_backup=None, maintenance_dow=None, maintenance_time=None, mysql_long_query_time=None, mysql_require_primary_key=None, mysql_slow_query_log=None, mysql_sql_modes=None, password=None, plan=None, plan_brokers=None, plan_disk=None, plan_ram=None, plan_replicas=None, plan_vcpus=None, port=None, public_host=None, read_replicas=None, region=None, sasl_port=None, schema_registry_uri=None, status=None, tag=None, trusted_ips=None, user=None, vpc_id=None):
+    def __init__(__self__, access_cert=None, access_key=None, backup_hour=None, backup_minute=None, ca_certificate=None, cluster_time_zone=None, database_engine=None, database_engine_version=None, date_created=None, dbname=None, enable_kafka_connect=None, enable_kafka_rest=None, enable_schema_registry=None, eviction_policy=None, ferretdb_credentials=None, filters=None, host=None, id=None, kafka_rest_uri=None, label=None, latest_backup=None, maintenance_dow=None, maintenance_time=None, mysql_long_query_time=None, mysql_require_primary_key=None, mysql_slow_query_log=None, mysql_sql_modes=None, password=None, pending_charges=None, plan=None, plan_brokers=None, plan_disk=None, plan_ram=None, plan_replicas=None, plan_vcpus=None, port=None, public_host=None, read_replicas=None, region=None, sasl_port=None, schema_registry_uri=None, status=None, tag=None, trusted_ips=None, user=None, vpc_id=None):
         if access_cert and not isinstance(access_cert, str):
             raise TypeError("Expected argument 'access_cert' to be a str")
         pulumi.set(__self__, "access_cert", access_cert)
@@ -41,6 +41,9 @@ class GetDatabaseResult:
         if backup_minute and not isinstance(backup_minute, str):
             raise TypeError("Expected argument 'backup_minute' to be a str")
         pulumi.set(__self__, "backup_minute", backup_minute)
+        if ca_certificate and not isinstance(ca_certificate, str):
+            raise TypeError("Expected argument 'ca_certificate' to be a str")
+        pulumi.set(__self__, "ca_certificate", ca_certificate)
         if cluster_time_zone and not isinstance(cluster_time_zone, str):
             raise TypeError("Expected argument 'cluster_time_zone' to be a str")
         pulumi.set(__self__, "cluster_time_zone", cluster_time_zone)
@@ -110,6 +113,9 @@ class GetDatabaseResult:
         if password and not isinstance(password, str):
             raise TypeError("Expected argument 'password' to be a str")
         pulumi.set(__self__, "password", password)
+        if pending_charges and not isinstance(pending_charges, float):
+            raise TypeError("Expected argument 'pending_charges' to be a float")
+        pulumi.set(__self__, "pending_charges", pending_charges)
         if plan and not isinstance(plan, str):
             raise TypeError("Expected argument 'plan' to be a str")
         pulumi.set(__self__, "plan", plan)
@@ -193,6 +199,14 @@ class GetDatabaseResult:
         The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
         """
         return pulumi.get(self, "backup_minute")
+
+    @_builtins.property
+    @pulumi.getter(name="caCertificate")
+    def ca_certificate(self) -> _builtins.str:
+        """
+        The CA certificate for Managed Databases on this account.
+        """
+        return pulumi.get(self, "ca_certificate")
 
     @_builtins.property
     @pulumi.getter(name="clusterTimeZone")
@@ -373,6 +387,14 @@ class GetDatabaseResult:
         return pulumi.get(self, "password")
 
     @_builtins.property
+    @pulumi.getter(name="pendingCharges")
+    def pending_charges(self) -> _builtins.float:
+        """
+        Charges due for this managed database subscription at the end of the billing period.
+        """
+        return pulumi.get(self, "pending_charges")
+
+    @_builtins.property
     @pulumi.getter
     def plan(self) -> _builtins.str:
         """
@@ -516,6 +538,7 @@ class AwaitableGetDatabaseResult(GetDatabaseResult):
             access_key=self.access_key,
             backup_hour=self.backup_hour,
             backup_minute=self.backup_minute,
+            ca_certificate=self.ca_certificate,
             cluster_time_zone=self.cluster_time_zone,
             database_engine=self.database_engine,
             database_engine_version=self.database_engine_version,
@@ -539,6 +562,7 @@ class AwaitableGetDatabaseResult(GetDatabaseResult):
             mysql_slow_query_log=self.mysql_slow_query_log,
             mysql_sql_modes=self.mysql_sql_modes,
             password=self.password,
+            pending_charges=self.pending_charges,
             plan=self.plan,
             plan_brokers=self.plan_brokers,
             plan_disk=self.plan_disk,
@@ -590,6 +614,7 @@ def get_database(filters: Optional[Sequence[Union['GetDatabaseFilterArgs', 'GetD
         access_key=pulumi.get(__ret__, 'access_key'),
         backup_hour=pulumi.get(__ret__, 'backup_hour'),
         backup_minute=pulumi.get(__ret__, 'backup_minute'),
+        ca_certificate=pulumi.get(__ret__, 'ca_certificate'),
         cluster_time_zone=pulumi.get(__ret__, 'cluster_time_zone'),
         database_engine=pulumi.get(__ret__, 'database_engine'),
         database_engine_version=pulumi.get(__ret__, 'database_engine_version'),
@@ -613,6 +638,7 @@ def get_database(filters: Optional[Sequence[Union['GetDatabaseFilterArgs', 'GetD
         mysql_slow_query_log=pulumi.get(__ret__, 'mysql_slow_query_log'),
         mysql_sql_modes=pulumi.get(__ret__, 'mysql_sql_modes'),
         password=pulumi.get(__ret__, 'password'),
+        pending_charges=pulumi.get(__ret__, 'pending_charges'),
         plan=pulumi.get(__ret__, 'plan'),
         plan_brokers=pulumi.get(__ret__, 'plan_brokers'),
         plan_disk=pulumi.get(__ret__, 'plan_disk'),
@@ -661,6 +687,7 @@ def get_database_output(filters: Optional[pulumi.Input[Optional[Sequence[Union['
         access_key=pulumi.get(__response__, 'access_key'),
         backup_hour=pulumi.get(__response__, 'backup_hour'),
         backup_minute=pulumi.get(__response__, 'backup_minute'),
+        ca_certificate=pulumi.get(__response__, 'ca_certificate'),
         cluster_time_zone=pulumi.get(__response__, 'cluster_time_zone'),
         database_engine=pulumi.get(__response__, 'database_engine'),
         database_engine_version=pulumi.get(__response__, 'database_engine_version'),
@@ -684,6 +711,7 @@ def get_database_output(filters: Optional[pulumi.Input[Optional[Sequence[Union['
         mysql_slow_query_log=pulumi.get(__response__, 'mysql_slow_query_log'),
         mysql_sql_modes=pulumi.get(__response__, 'mysql_sql_modes'),
         password=pulumi.get(__response__, 'password'),
+        pending_charges=pulumi.get(__response__, 'pending_charges'),
         plan=pulumi.get(__response__, 'plan'),
         plan_brokers=pulumi.get(__response__, 'plan_brokers'),
         plan_disk=pulumi.get(__response__, 'plan_disk'),

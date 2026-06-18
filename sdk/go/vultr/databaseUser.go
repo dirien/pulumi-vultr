@@ -30,8 +30,8 @@ import (
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := vultr.NewDatabaseUser(ctx, "myDatabaseUser", &vultr.DatabaseUserArgs{
-//				DatabaseId: pulumi.Any(vultr_database.My_database.Id),
+//			_, err := vultr.NewDatabaseUser(ctx, "my_database_user", &vultr.DatabaseUserArgs{
+//				DatabaseId: pulumi.Any(myDatabase.Id),
 //				Username:   pulumi.String("my_database_user"),
 //				Password:   pulumi.String("randomTestPW40298"),
 //			})

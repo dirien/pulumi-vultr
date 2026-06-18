@@ -36,6 +36,7 @@ class DatabaseReplicaArgs:
                  trusted_ips: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None):
         """
         The set of arguments for constructing a DatabaseReplica resource.
+
         :param pulumi.Input[_builtins.str] database_id: The managed database ID you want to attach this replica to.
         :param pulumi.Input[_builtins.str] label: A label for the managed database read replica.
         :param pulumi.Input[_builtins.str] region: The ID of the region that the managed database read replica is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
@@ -262,6 +263,7 @@ class _DatabaseReplicaState:
     def __init__(__self__, *,
                  backup_hour: Optional[pulumi.Input[_builtins.str]] = None,
                  backup_minute: Optional[pulumi.Input[_builtins.str]] = None,
+                 ca_certificate: Optional[pulumi.Input[_builtins.str]] = None,
                  cluster_time_zone: Optional[pulumi.Input[_builtins.str]] = None,
                  database_engine: Optional[pulumi.Input[_builtins.str]] = None,
                  database_engine_version: Optional[pulumi.Input[_builtins.str]] = None,
@@ -295,8 +297,10 @@ class _DatabaseReplicaState:
                  vpc_id: Optional[pulumi.Input[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering DatabaseReplica resources.
+
         :param pulumi.Input[_builtins.str] backup_hour: The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
         :param pulumi.Input[_builtins.str] backup_minute: The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
+        :param pulumi.Input[_builtins.str] ca_certificate: The CA certificate for Managed Databases on this account.
         :param pulumi.Input[_builtins.str] cluster_time_zone: The configured time zone for the managed database read replica in TZ database format.
         :param pulumi.Input[_builtins.str] database_engine: The database engine of the managed database read replica.
         :param pulumi.Input[_builtins.str] database_engine_version: The database engine version of the managed database read replica.
@@ -332,6 +336,8 @@ class _DatabaseReplicaState:
             pulumi.set(__self__, "backup_hour", backup_hour)
         if backup_minute is not None:
             pulumi.set(__self__, "backup_minute", backup_minute)
+        if ca_certificate is not None:
+            pulumi.set(__self__, "ca_certificate", ca_certificate)
         if cluster_time_zone is not None:
             pulumi.set(__self__, "cluster_time_zone", cluster_time_zone)
         if database_engine is not None:
@@ -418,6 +424,18 @@ class _DatabaseReplicaState:
     @backup_minute.setter
     def backup_minute(self, value: Optional[pulumi.Input[_builtins.str]]):
         pulumi.set(self, "backup_minute", value)
+
+    @_builtins.property
+    @pulumi.getter(name="caCertificate")
+    def ca_certificate(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        The CA certificate for Managed Databases on this account.
+        """
+        return pulumi.get(self, "ca_certificate")
+
+    @ca_certificate.setter
+    def ca_certificate(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "ca_certificate", value)
 
     @_builtins.property
     @pulumi.getter(name="clusterTimeZone")
@@ -822,12 +840,13 @@ class DatabaseReplica(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_database_replica = vultr.DatabaseReplica("myDatabaseReplica",
-            database_id=vultr_database["my_database"]["id"],
+        my_database_replica = vultr.DatabaseReplica("my_database_replica",
+            database_id=my_database["id"],
             region="sea",
             label="my_database_replica_label",
             tag="test tag")
         ```
+
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -863,12 +882,13 @@ class DatabaseReplica(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_database_replica = vultr.DatabaseReplica("myDatabaseReplica",
-            database_id=vultr_database["my_database"]["id"],
+        my_database_replica = vultr.DatabaseReplica("my_database_replica",
+            database_id=my_database["id"],
             region="sea",
             label="my_database_replica_label",
             tag="test tag")
         ```
+
 
         :param str resource_name: The name of the resource.
         :param DatabaseReplicaArgs args: The arguments to use to populate this resource's properties.
@@ -930,6 +950,7 @@ class DatabaseReplica(pulumi.CustomResource):
             __props__.__dict__["region"] = region
             __props__.__dict__["tag"] = tag
             __props__.__dict__["trusted_ips"] = trusted_ips
+            __props__.__dict__["ca_certificate"] = None
             __props__.__dict__["cluster_time_zone"] = None
             __props__.__dict__["database_engine"] = None
             __props__.__dict__["database_engine_version"] = None
@@ -960,6 +981,7 @@ class DatabaseReplica(pulumi.CustomResource):
             opts: Optional[pulumi.ResourceOptions] = None,
             backup_hour: Optional[pulumi.Input[_builtins.str]] = None,
             backup_minute: Optional[pulumi.Input[_builtins.str]] = None,
+            ca_certificate: Optional[pulumi.Input[_builtins.str]] = None,
             cluster_time_zone: Optional[pulumi.Input[_builtins.str]] = None,
             database_engine: Optional[pulumi.Input[_builtins.str]] = None,
             database_engine_version: Optional[pulumi.Input[_builtins.str]] = None,
@@ -1000,6 +1022,7 @@ class DatabaseReplica(pulumi.CustomResource):
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[_builtins.str] backup_hour: The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
         :param pulumi.Input[_builtins.str] backup_minute: The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
+        :param pulumi.Input[_builtins.str] ca_certificate: The CA certificate for Managed Databases on this account.
         :param pulumi.Input[_builtins.str] cluster_time_zone: The configured time zone for the managed database read replica in TZ database format.
         :param pulumi.Input[_builtins.str] database_engine: The database engine of the managed database read replica.
         :param pulumi.Input[_builtins.str] database_engine_version: The database engine version of the managed database read replica.
@@ -1037,6 +1060,7 @@ class DatabaseReplica(pulumi.CustomResource):
 
         __props__.__dict__["backup_hour"] = backup_hour
         __props__.__dict__["backup_minute"] = backup_minute
+        __props__.__dict__["ca_certificate"] = ca_certificate
         __props__.__dict__["cluster_time_zone"] = cluster_time_zone
         __props__.__dict__["database_engine"] = database_engine
         __props__.__dict__["database_engine_version"] = database_engine_version
@@ -1085,6 +1109,14 @@ class DatabaseReplica(pulumi.CustomResource):
         The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
         """
         return pulumi.get(self, "backup_minute")
+
+    @_builtins.property
+    @pulumi.getter(name="caCertificate")
+    def ca_certificate(self) -> pulumi.Output[_builtins.str]:
+        """
+        The CA certificate for Managed Databases on this account.
+        """
+        return pulumi.get(self, "ca_certificate")
 
     @_builtins.property
     @pulumi.getter(name="clusterTimeZone")

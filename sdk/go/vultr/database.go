@@ -30,12 +30,12 @@ import (
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := vultr.NewDatabase(ctx, "myDatabase", &vultr.DatabaseArgs{
+//			_, err := vultr.NewDatabase(ctx, "my_database", &vultr.DatabaseArgs{
 //				DatabaseEngine:        pulumi.String("pg"),
 //				DatabaseEngineVersion: pulumi.String("15"),
-//				Label:                 pulumi.String("my_database_label"),
-//				Plan:                  pulumi.String("vultr-dbaas-startup-cc-1-55-2"),
 //				Region:                pulumi.String("ewr"),
+//				Plan:                  pulumi.String("vultr-dbaas-startup-cc-1-55-2"),
+//				Label:                 pulumi.String("my_database_label"),
 //			})
 //			if err != nil {
 //				return err
@@ -60,16 +60,16 @@ import (
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := vultr.NewDatabase(ctx, "myDatabase", &vultr.DatabaseArgs{
-//				ClusterTimeZone:       pulumi.String("America/New_York"),
+//			_, err := vultr.NewDatabase(ctx, "my_database", &vultr.DatabaseArgs{
 //				DatabaseEngine:        pulumi.String("pg"),
 //				DatabaseEngineVersion: pulumi.String("15"),
+//				Region:                pulumi.String("ewr"),
+//				Plan:                  pulumi.String("vultr-dbaas-startup-cc-1-55-2"),
 //				Label:                 pulumi.String("my_database_label"),
+//				Tag:                   pulumi.String("some tag"),
+//				ClusterTimeZone:       pulumi.String("America/New_York"),
 //				MaintenanceDow:        pulumi.String("sunday"),
 //				MaintenanceTime:       pulumi.String("01:00"),
-//				Plan:                  pulumi.String("vultr-dbaas-startup-cc-1-55-2"),
-//				Region:                pulumi.String("ewr"),
-//				Tag:                   pulumi.String("some tag"),
 //			})
 //			if err != nil {
 //				return err
@@ -98,6 +98,8 @@ type Database struct {
 	BackupHour pulumi.StringPtrOutput `pulumi:"backupHour"`
 	// The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
 	BackupMinute pulumi.StringPtrOutput `pulumi:"backupMinute"`
+	// The CA certificate for Managed Databases on this account.
+	CaCertificate pulumi.StringOutput `pulumi:"caCertificate"`
 	// The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
 	ClusterTimeZone pulumi.StringOutput `pulumi:"clusterTimeZone"`
 	// The database engine of the new managed database.
@@ -139,6 +141,8 @@ type Database struct {
 	MysqlSqlModes pulumi.StringArrayOutput `pulumi:"mysqlSqlModes"`
 	// The password for the managed database's primary admin user.
 	Password pulumi.StringOutput `pulumi:"password"`
+	// Charges due for this managed database subscription at the end of the billing period.
+	PendingCharges pulumi.Float64Output `pulumi:"pendingCharges"`
 	// The ID of the plan that you want the managed database to subscribe to. [See List Managed Database Plans](https://www.vultr.com/api/#tag/managed-databases/operation/list-database-plans)
 	Plan pulumi.StringOutput `pulumi:"plan"`
 	// The number of brokers available on the managed database (Kafka engine types only).
@@ -228,6 +232,8 @@ type databaseState struct {
 	BackupHour *string `pulumi:"backupHour"`
 	// The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
 	BackupMinute *string `pulumi:"backupMinute"`
+	// The CA certificate for Managed Databases on this account.
+	CaCertificate *string `pulumi:"caCertificate"`
 	// The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
 	ClusterTimeZone *string `pulumi:"clusterTimeZone"`
 	// The database engine of the new managed database.
@@ -269,6 +275,8 @@ type databaseState struct {
 	MysqlSqlModes []string `pulumi:"mysqlSqlModes"`
 	// The password for the managed database's primary admin user.
 	Password *string `pulumi:"password"`
+	// Charges due for this managed database subscription at the end of the billing period.
+	PendingCharges *float64 `pulumi:"pendingCharges"`
 	// The ID of the plan that you want the managed database to subscribe to. [See List Managed Database Plans](https://www.vultr.com/api/#tag/managed-databases/operation/list-database-plans)
 	Plan *string `pulumi:"plan"`
 	// The number of brokers available on the managed database (Kafka engine types only).
@@ -314,6 +322,8 @@ type DatabaseState struct {
 	BackupHour pulumi.StringPtrInput
 	// The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
 	BackupMinute pulumi.StringPtrInput
+	// The CA certificate for Managed Databases on this account.
+	CaCertificate pulumi.StringPtrInput
 	// The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
 	ClusterTimeZone pulumi.StringPtrInput
 	// The database engine of the new managed database.
@@ -355,6 +365,8 @@ type DatabaseState struct {
 	MysqlSqlModes pulumi.StringArrayInput
 	// The password for the managed database's primary admin user.
 	Password pulumi.StringPtrInput
+	// Charges due for this managed database subscription at the end of the billing period.
+	PendingCharges pulumi.Float64PtrInput
 	// The ID of the plan that you want the managed database to subscribe to. [See List Managed Database Plans](https://www.vultr.com/api/#tag/managed-databases/operation/list-database-plans)
 	Plan pulumi.StringPtrInput
 	// The number of brokers available on the managed database (Kafka engine types only).
@@ -639,6 +651,11 @@ func (o DatabaseOutput) BackupMinute() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Database) pulumi.StringPtrOutput { return v.BackupMinute }).(pulumi.StringPtrOutput)
 }
 
+// The CA certificate for Managed Databases on this account.
+func (o DatabaseOutput) CaCertificate() pulumi.StringOutput {
+	return o.ApplyT(func(v *Database) pulumi.StringOutput { return v.CaCertificate }).(pulumi.StringOutput)
+}
+
 // The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
 func (o DatabaseOutput) ClusterTimeZone() pulumi.StringOutput {
 	return o.ApplyT(func(v *Database) pulumi.StringOutput { return v.ClusterTimeZone }).(pulumi.StringOutput)
@@ -741,6 +758,11 @@ func (o DatabaseOutput) MysqlSqlModes() pulumi.StringArrayOutput {
 // The password for the managed database's primary admin user.
 func (o DatabaseOutput) Password() pulumi.StringOutput {
 	return o.ApplyT(func(v *Database) pulumi.StringOutput { return v.Password }).(pulumi.StringOutput)
+}
+
+// Charges due for this managed database subscription at the end of the billing period.
+func (o DatabaseOutput) PendingCharges() pulumi.Float64Output {
+	return o.ApplyT(func(v *Database) pulumi.Float64Output { return v.PendingCharges }).(pulumi.Float64Output)
 }
 
 // The ID of the plan that you want the managed database to subscribe to. [See List Managed Database Plans](https://www.vultr.com/api/#tag/managed-databases/operation/list-database-plans)

@@ -26,6 +26,7 @@ class Vpc2Args:
                  prefix_length: Optional[pulumi.Input[_builtins.int]] = None):
         """
         The set of arguments for constructing a Vpc2 resource.
+
         :param pulumi.Input[_builtins.str] region: The region ID that you want the VPC 2.0 to be created in.
         :param pulumi.Input[_builtins.str] description: The description you want to give your VPC 2.0.
         :param pulumi.Input[_builtins.str] ip_block: The IPv4 subnet to be used when attaching instances to this VPC 2.0.
@@ -114,6 +115,7 @@ class _Vpc2State:
                  region: Optional[pulumi.Input[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering Vpc2 resources.
+
         :param pulumi.Input[_builtins.str] date_created: The date that the VPC 2.0 was added to your Vultr account.
         :param pulumi.Input[_builtins.str] description: The description you want to give your VPC 2.0.
         :param pulumi.Input[_builtins.str] ip_block: The IPv4 subnet to be used when attaching instances to this VPC 2.0.
@@ -232,7 +234,7 @@ class Vpc2(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_vpc2 = vultr.Vpc2("myVpc2",
+        my_vpc2 = vultr.Vpc2("my_vpc2",
             description="my vpc2",
             region="ewr")
         ```
@@ -243,11 +245,11 @@ class Vpc2(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_vpc2 = vultr.Vpc2("myVpc2",
+        my_vpc2 = vultr.Vpc2("my_vpc2",
             description="my private vpc2",
+            region="ewr",
             ip_block="10.0.0.0",
-            prefix_length=24,
-            region="ewr")
+            prefix_length=24)
         ```
 
         ## Import
@@ -257,6 +259,7 @@ class Vpc2(pulumi.CustomResource):
         ```sh
         $ pulumi import vultr:index/vpc2:Vpc2 my_vpc2 0e04f918-575e-41cb-86f6-d729b354a5a1
         ```
+
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -285,7 +288,7 @@ class Vpc2(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_vpc2 = vultr.Vpc2("myVpc2",
+        my_vpc2 = vultr.Vpc2("my_vpc2",
             description="my vpc2",
             region="ewr")
         ```
@@ -296,11 +299,11 @@ class Vpc2(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_vpc2 = vultr.Vpc2("myVpc2",
+        my_vpc2 = vultr.Vpc2("my_vpc2",
             description="my private vpc2",
+            region="ewr",
             ip_block="10.0.0.0",
-            prefix_length=24,
-            region="ewr")
+            prefix_length=24)
         ```
 
         ## Import
@@ -310,6 +313,7 @@ class Vpc2(pulumi.CustomResource):
         ```sh
         $ pulumi import vultr:index/vpc2:Vpc2 my_vpc2 0e04f918-575e-41cb-86f6-d729b354a5a1
         ```
+
 
         :param str resource_name: The name of the resource.
         :param Vpc2Args args: The arguments to use to populate this resource's properties.

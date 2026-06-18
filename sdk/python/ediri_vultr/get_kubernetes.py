@@ -28,7 +28,7 @@ class GetKubernetesResult:
     """
     A collection of values returned by getKubernetes.
     """
-    def __init__(__self__, client_certificate=None, client_key=None, cluster_ca_certificate=None, cluster_subnet=None, date_created=None, endpoint=None, filters=None, firewall_group_id=None, ha_controlplanes=None, id=None, ip=None, kube_config=None, label=None, node_pools=None, region=None, service_subnet=None, status=None, version=None):
+    def __init__(__self__, client_certificate=None, client_key=None, cluster_ca_certificate=None, cluster_subnet=None, date_created=None, endpoint=None, filters=None, firewall_group_id=None, ha_controlplanes=None, id=None, ip=None, kube_config=None, label=None, node_pools=None, oidc_client_id=None, oidc_groups_claim=None, oidc_issuer_url=None, oidc_username_claim=None, region=None, service_subnet=None, status=None, version=None):
         if client_certificate and not isinstance(client_certificate, str):
             raise TypeError("Expected argument 'client_certificate' to be a str")
         pulumi.set(__self__, "client_certificate", client_certificate)
@@ -71,6 +71,18 @@ class GetKubernetesResult:
         if node_pools and not isinstance(node_pools, list):
             raise TypeError("Expected argument 'node_pools' to be a list")
         pulumi.set(__self__, "node_pools", node_pools)
+        if oidc_client_id and not isinstance(oidc_client_id, str):
+            raise TypeError("Expected argument 'oidc_client_id' to be a str")
+        pulumi.set(__self__, "oidc_client_id", oidc_client_id)
+        if oidc_groups_claim and not isinstance(oidc_groups_claim, str):
+            raise TypeError("Expected argument 'oidc_groups_claim' to be a str")
+        pulumi.set(__self__, "oidc_groups_claim", oidc_groups_claim)
+        if oidc_issuer_url and not isinstance(oidc_issuer_url, str):
+            raise TypeError("Expected argument 'oidc_issuer_url' to be a str")
+        pulumi.set(__self__, "oidc_issuer_url", oidc_issuer_url)
+        if oidc_username_claim and not isinstance(oidc_username_claim, str):
+            raise TypeError("Expected argument 'oidc_username_claim' to be a str")
+        pulumi.set(__self__, "oidc_username_claim", oidc_username_claim)
         if region and not isinstance(region, str):
             raise TypeError("Expected argument 'region' to be a str")
         pulumi.set(__self__, "region", region)
@@ -194,6 +206,38 @@ class GetKubernetesResult:
         return pulumi.get(self, "node_pools")
 
     @_builtins.property
+    @pulumi.getter(name="oidcClientId")
+    def oidc_client_id(self) -> _builtins.str:
+        """
+        The unique identifier assigned to your application by the OIDC provider.
+        """
+        return pulumi.get(self, "oidc_client_id")
+
+    @_builtins.property
+    @pulumi.getter(name="oidcGroupsClaim")
+    def oidc_groups_claim(self) -> _builtins.str:
+        """
+        The claim in the OIDC token that contains the user's group memberships.
+        """
+        return pulumi.get(self, "oidc_groups_claim")
+
+    @_builtins.property
+    @pulumi.getter(name="oidcIssuerUrl")
+    def oidc_issuer_url(self) -> _builtins.str:
+        """
+        The URL of the OIDC provider that issues authentication tokens.
+        """
+        return pulumi.get(self, "oidc_issuer_url")
+
+    @_builtins.property
+    @pulumi.getter(name="oidcUsernameClaim")
+    def oidc_username_claim(self) -> _builtins.str:
+        """
+        The claim in the OIDC token that identifies the end user's username.
+        """
+        return pulumi.get(self, "oidc_username_claim")
+
+    @_builtins.property
     @pulumi.getter
     def region(self) -> _builtins.str:
         """
@@ -246,6 +290,10 @@ class AwaitableGetKubernetesResult(GetKubernetesResult):
             kube_config=self.kube_config,
             label=self.label,
             node_pools=self.node_pools,
+            oidc_client_id=self.oidc_client_id,
+            oidc_groups_claim=self.oidc_groups_claim,
+            oidc_issuer_url=self.oidc_issuer_url,
+            oidc_username_claim=self.oidc_username_claim,
             region=self.region,
             service_subnet=self.service_subnet,
             status=self.status,
@@ -294,6 +342,10 @@ def get_kubernetes(filters: Optional[Sequence[Union['GetKubernetesFilterArgs', '
         kube_config=pulumi.get(__ret__, 'kube_config'),
         label=pulumi.get(__ret__, 'label'),
         node_pools=pulumi.get(__ret__, 'node_pools'),
+        oidc_client_id=pulumi.get(__ret__, 'oidc_client_id'),
+        oidc_groups_claim=pulumi.get(__ret__, 'oidc_groups_claim'),
+        oidc_issuer_url=pulumi.get(__ret__, 'oidc_issuer_url'),
+        oidc_username_claim=pulumi.get(__ret__, 'oidc_username_claim'),
         region=pulumi.get(__ret__, 'region'),
         service_subnet=pulumi.get(__ret__, 'service_subnet'),
         status=pulumi.get(__ret__, 'status'),
@@ -339,6 +391,10 @@ def get_kubernetes_output(filters: Optional[pulumi.Input[Optional[Sequence[Union
         kube_config=pulumi.get(__response__, 'kube_config'),
         label=pulumi.get(__response__, 'label'),
         node_pools=pulumi.get(__response__, 'node_pools'),
+        oidc_client_id=pulumi.get(__response__, 'oidc_client_id'),
+        oidc_groups_claim=pulumi.get(__response__, 'oidc_groups_claim'),
+        oidc_issuer_url=pulumi.get(__response__, 'oidc_issuer_url'),
+        oidc_username_claim=pulumi.get(__response__, 'oidc_username_claim'),
         region=pulumi.get(__response__, 'region'),
         service_subnet=pulumi.get(__response__, 'service_subnet'),
         status=pulumi.get(__response__, 'status'),

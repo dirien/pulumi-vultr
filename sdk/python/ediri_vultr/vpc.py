@@ -25,6 +25,7 @@ class VpcArgs:
                  v4_subnet_mask: Optional[pulumi.Input[_builtins.int]] = None):
         """
         The set of arguments for constructing a Vpc resource.
+
         :param pulumi.Input[_builtins.str] region: The region ID that you want the VPC to be created in.
         :param pulumi.Input[_builtins.str] description: The description you want to give your VPC.
         :param pulumi.Input[_builtins.str] v4_subnet: The IPv4 subnet to be used when attaching instances to this VPC.
@@ -97,6 +98,7 @@ class _VpcState:
                  v4_subnet_mask: Optional[pulumi.Input[_builtins.int]] = None):
         """
         Input properties used for looking up and filtering Vpc resources.
+
         :param pulumi.Input[_builtins.str] date_created: The date that the VPC was added to your Vultr account.
         :param pulumi.Input[_builtins.str] description: The description you want to give your VPC.
         :param pulumi.Input[_builtins.str] region: The region ID that you want the VPC to be created in.
@@ -197,7 +199,7 @@ class Vpc(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_vpc = vultr.Vpc("myVpc",
+        my_vpc = vultr.Vpc("my_vpc",
             description="my vpc",
             region="ewr")
         ```
@@ -208,7 +210,7 @@ class Vpc(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_vpc = vultr.Vpc("myVpc",
+        my_vpc = vultr.Vpc("my_vpc",
             description="my private vpc",
             region="ewr",
             v4_subnet="10.0.0.0",
@@ -222,6 +224,7 @@ class Vpc(pulumi.CustomResource):
         ```sh
         $ pulumi import vultr:index/vpc:Vpc my_vpc 0e04f918-575e-41cb-86f6-d729b354a5a1
         ```
+
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -247,7 +250,7 @@ class Vpc(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_vpc = vultr.Vpc("myVpc",
+        my_vpc = vultr.Vpc("my_vpc",
             description="my vpc",
             region="ewr")
         ```
@@ -258,7 +261,7 @@ class Vpc(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_vpc = vultr.Vpc("myVpc",
+        my_vpc = vultr.Vpc("my_vpc",
             description="my private vpc",
             region="ewr",
             v4_subnet="10.0.0.0",
@@ -272,6 +275,7 @@ class Vpc(pulumi.CustomResource):
         ```sh
         $ pulumi import vultr:index/vpc:Vpc my_vpc 0e04f918-575e-41cb-86f6-d729b354a5a1
         ```
+
 
         :param str resource_name: The name of the resource.
         :param VpcArgs args: The arguments to use to populate this resource's properties.

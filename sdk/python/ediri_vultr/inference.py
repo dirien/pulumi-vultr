@@ -22,6 +22,7 @@ class InferenceArgs:
                  label: pulumi.Input[_builtins.str]):
         """
         The set of arguments for constructing a Inference resource.
+
         :param pulumi.Input[_builtins.str] label: A label for the inference subscription.
         """
         pulumi.set(__self__, "label", label)
@@ -44,10 +45,10 @@ class _InferenceState:
     def __init__(__self__, *,
                  api_key: Optional[pulumi.Input[_builtins.str]] = None,
                  date_created: Optional[pulumi.Input[_builtins.str]] = None,
-                 label: Optional[pulumi.Input[_builtins.str]] = None,
-                 usage: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None):
+                 label: Optional[pulumi.Input[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering Inference resources.
+
         :param pulumi.Input[_builtins.str] api_key: The inference subscription's API key for accessing the Vultr Inference API.
         :param pulumi.Input[_builtins.str] date_created: The date the inference subscription was added to your Vultr account.
         :param pulumi.Input[_builtins.str] label: A label for the inference subscription.
@@ -58,8 +59,6 @@ class _InferenceState:
             pulumi.set(__self__, "date_created", date_created)
         if label is not None:
             pulumi.set(__self__, "label", label)
-        if usage is not None:
-            pulumi.set(__self__, "usage", usage)
 
     @_builtins.property
     @pulumi.getter(name="apiKey")
@@ -97,15 +96,6 @@ class _InferenceState:
     def label(self, value: Optional[pulumi.Input[_builtins.str]]):
         pulumi.set(self, "label", value)
 
-    @_builtins.property
-    @pulumi.getter
-    def usage(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
-        return pulumi.get(self, "usage")
-
-    @usage.setter
-    def usage(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
-        pulumi.set(self, "usage", value)
-
 
 @pulumi.type_token("vultr:index/inference:Inference")
 class Inference(pulumi.CustomResource):
@@ -126,7 +116,7 @@ class Inference(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_inference_subscription = vultr.Inference("myInferenceSubscription", label="my_inference_label")
+        my_inference_subscription = vultr.Inference("my_inference_subscription", label="my_inference_label")
         ```
 
         ## Import
@@ -136,6 +126,7 @@ class Inference(pulumi.CustomResource):
         ```sh
         $ pulumi import vultr:index/inference:Inference my_inference_subscription b6a859c5-b299-49dd-8888-b1abbc517d08
         ```
+
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -158,7 +149,7 @@ class Inference(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_inference_subscription = vultr.Inference("myInferenceSubscription", label="my_inference_label")
+        my_inference_subscription = vultr.Inference("my_inference_subscription", label="my_inference_label")
         ```
 
         ## Import
@@ -168,6 +159,7 @@ class Inference(pulumi.CustomResource):
         ```sh
         $ pulumi import vultr:index/inference:Inference my_inference_subscription b6a859c5-b299-49dd-8888-b1abbc517d08
         ```
+
 
         :param str resource_name: The name of the resource.
         :param InferenceArgs args: The arguments to use to populate this resource's properties.
@@ -199,7 +191,6 @@ class Inference(pulumi.CustomResource):
             __props__.__dict__["label"] = label
             __props__.__dict__["api_key"] = None
             __props__.__dict__["date_created"] = None
-            __props__.__dict__["usage"] = None
         super(Inference, __self__).__init__(
             'vultr:index/inference:Inference',
             resource_name,
@@ -212,8 +203,7 @@ class Inference(pulumi.CustomResource):
             opts: Optional[pulumi.ResourceOptions] = None,
             api_key: Optional[pulumi.Input[_builtins.str]] = None,
             date_created: Optional[pulumi.Input[_builtins.str]] = None,
-            label: Optional[pulumi.Input[_builtins.str]] = None,
-            usage: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None) -> 'Inference':
+            label: Optional[pulumi.Input[_builtins.str]] = None) -> 'Inference':
         """
         Get an existing Inference resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -232,7 +222,6 @@ class Inference(pulumi.CustomResource):
         __props__.__dict__["api_key"] = api_key
         __props__.__dict__["date_created"] = date_created
         __props__.__dict__["label"] = label
-        __props__.__dict__["usage"] = usage
         return Inference(resource_name, opts=opts, __props__=__props__)
 
     @_builtins.property
@@ -258,9 +247,4 @@ class Inference(pulumi.CustomResource):
         A label for the inference subscription.
         """
         return pulumi.get(self, "label")
-
-    @_builtins.property
-    @pulumi.getter
-    def usage(self) -> pulumi.Output[Mapping[str, _builtins.str]]:
-        return pulumi.get(self, "usage")
 

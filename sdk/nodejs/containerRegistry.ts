@@ -16,9 +16,10 @@ import * as utilities from "./utilities";
  * import * as vultr from "@ediri/vultr";
  *
  * const vcr1 = new vultr.ContainerRegistry("vcr1", {
+ *     name: "examplecontainerregistry",
+ *     region: "sjc",
  *     plan: "start_up",
  *     "public": false,
- *     region: "sjc",
  * });
  * ```
  *

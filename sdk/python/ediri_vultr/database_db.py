@@ -23,6 +23,7 @@ class DatabaseDbArgs:
                  name: Optional[pulumi.Input[_builtins.str]] = None):
         """
         The set of arguments for constructing a DatabaseDb resource.
+
         :param pulumi.Input[_builtins.str] database_id: The managed database ID you want to attach this logical DB to.
         :param pulumi.Input[_builtins.str] name: The name of the new managed database logical DB.
         """
@@ -62,6 +63,7 @@ class _DatabaseDbState:
                  name: Optional[pulumi.Input[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering DatabaseDb resources.
+
         :param pulumi.Input[_builtins.str] database_id: The managed database ID you want to attach this logical DB to.
         :param pulumi.Input[_builtins.str] name: The name of the new managed database logical DB.
         """
@@ -115,8 +117,11 @@ class DatabaseDb(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_database_db = vultr.DatabaseDb("myDatabaseDb", database_id=vultr_database["my_database"]["id"])
+        my_database_db = vultr.DatabaseDb("my_database_db",
+            database_id=my_database["id"],
+            name="my_database_db")
         ```
+
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -140,8 +145,11 @@ class DatabaseDb(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_database_db = vultr.DatabaseDb("myDatabaseDb", database_id=vultr_database["my_database"]["id"])
+        my_database_db = vultr.DatabaseDb("my_database_db",
+            database_id=my_database["id"],
+            name="my_database_db")
         ```
+
 
         :param str resource_name: The name of the resource.
         :param DatabaseDbArgs args: The arguments to use to populate this resource's properties.

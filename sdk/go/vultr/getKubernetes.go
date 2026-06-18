@@ -29,7 +29,7 @@ import (
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := vultr.LookupKubernetes(ctx, &vultr.LookupKubernetesArgs{
+//			_, err := vultr.GetKubernetes(ctx, &vultr.LookupKubernetesArgs{
 //				Filters: []vultr.GetKubernetesFilter{
 //					{
 //						Name: "label",
@@ -92,6 +92,14 @@ type LookupKubernetesResult struct {
 	Label string `pulumi:"label"`
 	// Contains the default node pool that was deployed.
 	NodePools []GetKubernetesNodePool `pulumi:"nodePools"`
+	// The unique identifier assigned to your application by the OIDC provider.
+	OidcClientId string `pulumi:"oidcClientId"`
+	// The claim in the OIDC token that contains the user's group memberships.
+	OidcGroupsClaim string `pulumi:"oidcGroupsClaim"`
+	// The URL of the OIDC provider that issues authentication tokens.
+	OidcIssuerUrl string `pulumi:"oidcIssuerUrl"`
+	// The claim in the OIDC token that identifies the end user's username.
+	OidcUsernameClaim string `pulumi:"oidcUsernameClaim"`
 	// The region your VKE cluster is deployed in.
 	Region string `pulumi:"region"`
 	// IP range that services will run on this cluster.
@@ -203,6 +211,26 @@ func (o LookupKubernetesResultOutput) Label() pulumi.StringOutput {
 // Contains the default node pool that was deployed.
 func (o LookupKubernetesResultOutput) NodePools() GetKubernetesNodePoolArrayOutput {
 	return o.ApplyT(func(v LookupKubernetesResult) []GetKubernetesNodePool { return v.NodePools }).(GetKubernetesNodePoolArrayOutput)
+}
+
+// The unique identifier assigned to your application by the OIDC provider.
+func (o LookupKubernetesResultOutput) OidcClientId() pulumi.StringOutput {
+	return o.ApplyT(func(v LookupKubernetesResult) string { return v.OidcClientId }).(pulumi.StringOutput)
+}
+
+// The claim in the OIDC token that contains the user's group memberships.
+func (o LookupKubernetesResultOutput) OidcGroupsClaim() pulumi.StringOutput {
+	return o.ApplyT(func(v LookupKubernetesResult) string { return v.OidcGroupsClaim }).(pulumi.StringOutput)
+}
+
+// The URL of the OIDC provider that issues authentication tokens.
+func (o LookupKubernetesResultOutput) OidcIssuerUrl() pulumi.StringOutput {
+	return o.ApplyT(func(v LookupKubernetesResult) string { return v.OidcIssuerUrl }).(pulumi.StringOutput)
+}
+
+// The claim in the OIDC token that identifies the end user's username.
+func (o LookupKubernetesResultOutput) OidcUsernameClaim() pulumi.StringOutput {
+	return o.ApplyT(func(v LookupKubernetesResult) string { return v.OidcUsernameClaim }).(pulumi.StringOutput)
 }
 
 // The region your VKE cluster is deployed in.

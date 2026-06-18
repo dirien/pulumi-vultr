@@ -29,7 +29,7 @@ import (
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := vultr.LookupInstanceIpv4(ctx, &vultr.LookupInstanceIpv4Args{
+//			_, err := vultr.GetInstanceIpv4(ctx, &vultr.LookupInstanceIpv4Args{
 //				Filters: []vultr.GetInstanceIpv4Filter{
 //					{
 //						Name: "ip",

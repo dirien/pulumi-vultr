@@ -24,6 +24,7 @@ class DnsDomainArgs:
                  ip: Optional[pulumi.Input[_builtins.str]] = None):
         """
         The set of arguments for constructing a DnsDomain resource.
+
         :param pulumi.Input[_builtins.str] domain: Name of domain.
         :param pulumi.Input[_builtins.str] dns_sec: The Domain's DNSSEC status. Valid options are `enabled` or `disabled`. Note `disabled` is default
         :param pulumi.Input[_builtins.str] ip: Instance IP you want associated to domain. If omitted this will create a domain with no records.
@@ -80,6 +81,7 @@ class _DnsDomainState:
                  ip: Optional[pulumi.Input[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering DnsDomain resources.
+
         :param pulumi.Input[_builtins.str] date_created: The date the domain was added to your account.
         :param pulumi.Input[_builtins.str] dns_sec: The Domain's DNSSEC status. Valid options are `enabled` or `disabled`. Note `disabled` is default
         :param pulumi.Input[_builtins.str] domain: Name of domain.
@@ -164,7 +166,7 @@ class DnsDomain(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_domain = vultr.DnsDomain("myDomain",
+        my_domain = vultr.DnsDomain("my_domain",
             domain="domain.com",
             ip="66.42.94.227")
         ```
@@ -176,6 +178,7 @@ class DnsDomain(pulumi.CustomResource):
         ```sh
         $ pulumi import vultr:index/dnsDomain:DnsDomain name domain.com
         ```
+
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -200,7 +203,7 @@ class DnsDomain(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_domain = vultr.DnsDomain("myDomain",
+        my_domain = vultr.DnsDomain("my_domain",
             domain="domain.com",
             ip="66.42.94.227")
         ```
@@ -212,6 +215,7 @@ class DnsDomain(pulumi.CustomResource):
         ```sh
         $ pulumi import vultr:index/dnsDomain:DnsDomain name domain.com
         ```
+
 
         :param str resource_name: The name of the resource.
         :param DnsDomainArgs args: The arguments to use to populate this resource's properties.

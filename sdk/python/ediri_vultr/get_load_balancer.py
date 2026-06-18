@@ -28,10 +28,13 @@ class GetLoadBalancerResult:
     """
     A collection of values returned by getLoadBalancer.
     """
-    def __init__(__self__, attached_instances=None, balancing_algorithm=None, cookie_name=None, date_created=None, filters=None, firewall_rules=None, forwarding_rules=None, has_ssl=None, health_check=None, id=None, ipv4=None, ipv6=None, label=None, proxy_protocol=None, region=None, ssl=None, ssl_redirect=None, status=None):
+    def __init__(__self__, attached_instances=None, auto_ssl_domain=None, balancing_algorithm=None, cookie_name=None, date_created=None, filters=None, firewall_rules=None, forwarding_rules=None, global_regions=None, has_ssl=None, health_check=None, http_version=None, id=None, ipv4=None, ipv6=None, label=None, proxy_protocol=None, region=None, ssl=None, ssl_redirect=None, status=None):
         if attached_instances and not isinstance(attached_instances, list):
             raise TypeError("Expected argument 'attached_instances' to be a list")
         pulumi.set(__self__, "attached_instances", attached_instances)
+        if auto_ssl_domain and not isinstance(auto_ssl_domain, str):
+            raise TypeError("Expected argument 'auto_ssl_domain' to be a str")
+        pulumi.set(__self__, "auto_ssl_domain", auto_ssl_domain)
         if balancing_algorithm and not isinstance(balancing_algorithm, str):
             raise TypeError("Expected argument 'balancing_algorithm' to be a str")
         pulumi.set(__self__, "balancing_algorithm", balancing_algorithm)
@@ -50,12 +53,18 @@ class GetLoadBalancerResult:
         if forwarding_rules and not isinstance(forwarding_rules, list):
             raise TypeError("Expected argument 'forwarding_rules' to be a list")
         pulumi.set(__self__, "forwarding_rules", forwarding_rules)
+        if global_regions and not isinstance(global_regions, list):
+            raise TypeError("Expected argument 'global_regions' to be a list")
+        pulumi.set(__self__, "global_regions", global_regions)
         if has_ssl and not isinstance(has_ssl, bool):
             raise TypeError("Expected argument 'has_ssl' to be a bool")
         pulumi.set(__self__, "has_ssl", has_ssl)
         if health_check and not isinstance(health_check, dict):
             raise TypeError("Expected argument 'health_check' to be a dict")
         pulumi.set(__self__, "health_check", health_check)
+        if http_version and not isinstance(http_version, int):
+            raise TypeError("Expected argument 'http_version' to be a int")
+        pulumi.set(__self__, "http_version", http_version)
         if id and not isinstance(id, str):
             raise TypeError("Expected argument 'id' to be a str")
         pulumi.set(__self__, "id", id)
@@ -91,6 +100,14 @@ class GetLoadBalancerResult:
         Array of instances that are currently attached to the load balancer.
         """
         return pulumi.get(self, "attached_instances")
+
+    @_builtins.property
+    @pulumi.getter(name="autoSslDomain")
+    def auto_ssl_domain(self) -> _builtins.str:
+        """
+        The auto SSL domain configuration for a load balancer. This can be a root domain (example.com) or include a subdomain (sub.example.com).
+        """
+        return pulumi.get(self, "auto_ssl_domain")
 
     @_builtins.property
     @pulumi.getter(name="balancingAlgorithm")
@@ -132,6 +149,14 @@ class GetLoadBalancerResult:
         return pulumi.get(self, "forwarding_rules")
 
     @_builtins.property
+    @pulumi.getter(name="globalRegions")
+    def global_regions(self) -> Sequence[_builtins.str]:
+        """
+        A set of region IDs to deploy child load balancers to.
+        """
+        return pulumi.get(self, "global_regions")
+
+    @_builtins.property
     @pulumi.getter(name="hasSsl")
     def has_ssl(self) -> _builtins.bool:
         """
@@ -146,6 +171,14 @@ class GetLoadBalancerResult:
         Defines the way load balancers should check for health. The configuration of a `health_check` is listed below.
         """
         return pulumi.get(self, "health_check")
+
+    @_builtins.property
+    @pulumi.getter(name="httpVersion")
+    def http_version(self) -> _builtins.int:
+        """
+        Integer value that indicates if HTTP/2 or HTTP/3 is enabled. Allowed values 2 or 3.
+        """
+        return pulumi.get(self, "http_version")
 
     @_builtins.property
     @pulumi.getter
@@ -224,14 +257,17 @@ class AwaitableGetLoadBalancerResult(GetLoadBalancerResult):
             yield self
         return GetLoadBalancerResult(
             attached_instances=self.attached_instances,
+            auto_ssl_domain=self.auto_ssl_domain,
             balancing_algorithm=self.balancing_algorithm,
             cookie_name=self.cookie_name,
             date_created=self.date_created,
             filters=self.filters,
             firewall_rules=self.firewall_rules,
             forwarding_rules=self.forwarding_rules,
+            global_regions=self.global_regions,
             has_ssl=self.has_ssl,
             health_check=self.health_check,
+            http_version=self.http_version,
             id=self.id,
             ipv4=self.ipv4,
             ipv6=self.ipv6,
@@ -275,14 +311,17 @@ def get_load_balancer(filters: Optional[Sequence[Union['GetLoadBalancerFilterArg
 
     return AwaitableGetLoadBalancerResult(
         attached_instances=pulumi.get(__ret__, 'attached_instances'),
+        auto_ssl_domain=pulumi.get(__ret__, 'auto_ssl_domain'),
         balancing_algorithm=pulumi.get(__ret__, 'balancing_algorithm'),
         cookie_name=pulumi.get(__ret__, 'cookie_name'),
         date_created=pulumi.get(__ret__, 'date_created'),
         filters=pulumi.get(__ret__, 'filters'),
         firewall_rules=pulumi.get(__ret__, 'firewall_rules'),
         forwarding_rules=pulumi.get(__ret__, 'forwarding_rules'),
+        global_regions=pulumi.get(__ret__, 'global_regions'),
         has_ssl=pulumi.get(__ret__, 'has_ssl'),
         health_check=pulumi.get(__ret__, 'health_check'),
+        http_version=pulumi.get(__ret__, 'http_version'),
         id=pulumi.get(__ret__, 'id'),
         ipv4=pulumi.get(__ret__, 'ipv4'),
         ipv6=pulumi.get(__ret__, 'ipv6'),
@@ -323,14 +362,17 @@ def get_load_balancer_output(filters: Optional[pulumi.Input[Optional[Sequence[Un
     __ret__ = pulumi.runtime.invoke_output('vultr:index/getLoadBalancer:getLoadBalancer', __args__, opts=opts, typ=GetLoadBalancerResult)
     return __ret__.apply(lambda __response__: GetLoadBalancerResult(
         attached_instances=pulumi.get(__response__, 'attached_instances'),
+        auto_ssl_domain=pulumi.get(__response__, 'auto_ssl_domain'),
         balancing_algorithm=pulumi.get(__response__, 'balancing_algorithm'),
         cookie_name=pulumi.get(__response__, 'cookie_name'),
         date_created=pulumi.get(__response__, 'date_created'),
         filters=pulumi.get(__response__, 'filters'),
         firewall_rules=pulumi.get(__response__, 'firewall_rules'),
         forwarding_rules=pulumi.get(__response__, 'forwarding_rules'),
+        global_regions=pulumi.get(__response__, 'global_regions'),
         has_ssl=pulumi.get(__response__, 'has_ssl'),
         health_check=pulumi.get(__response__, 'health_check'),
+        http_version=pulumi.get(__response__, 'http_version'),
         id=pulumi.get(__response__, 'id'),
         ipv4=pulumi.get(__response__, 'ipv4'),
         ipv6=pulumi.get(__response__, 'ipv6'),

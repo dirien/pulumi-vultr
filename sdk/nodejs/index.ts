@@ -170,6 +170,11 @@ export const getLoadBalancer: typeof import("./getLoadBalancer").getLoadBalancer
 export const getLoadBalancerOutput: typeof import("./getLoadBalancer").getLoadBalancerOutput = null as any;
 utilities.lazyLoad(exports, ["getLoadBalancer","getLoadBalancerOutput"], () => require("./getLoadBalancer"));
 
+export { GetLogsArgs, GetLogsResult, GetLogsOutputArgs } from "./getLogs";
+export const getLogs: typeof import("./getLogs").getLogs = null as any;
+export const getLogsOutput: typeof import("./getLogs").getLogsOutput = null as any;
+utilities.lazyLoad(exports, ["getLogs","getLogsOutput"], () => require("./getLogs"));
+
 export { GetObjectStorageArgs, GetObjectStorageResult, GetObjectStorageOutputArgs } from "./getObjectStorage";
 export const getObjectStorage: typeof import("./getObjectStorage").getObjectStorage = null as any;
 export const getObjectStorageOutput: typeof import("./getObjectStorage").getObjectStorageOutput = null as any;
@@ -184,6 +189,41 @@ export { GetObjectStorageTierArgs, GetObjectStorageTierResult, GetObjectStorageT
 export const getObjectStorageTier: typeof import("./getObjectStorageTier").getObjectStorageTier = null as any;
 export const getObjectStorageTierOutput: typeof import("./getObjectStorageTier").getObjectStorageTierOutput = null as any;
 utilities.lazyLoad(exports, ["getObjectStorageTier","getObjectStorageTierOutput"], () => require("./getObjectStorageTier"));
+
+export { GetOidcDiscoveryArgs, GetOidcDiscoveryResult, GetOidcDiscoveryOutputArgs } from "./getOidcDiscovery";
+export const getOidcDiscovery: typeof import("./getOidcDiscovery").getOidcDiscovery = null as any;
+export const getOidcDiscoveryOutput: typeof import("./getOidcDiscovery").getOidcDiscoveryOutput = null as any;
+utilities.lazyLoad(exports, ["getOidcDiscovery","getOidcDiscoveryOutput"], () => require("./getOidcDiscovery"));
+
+export { GetOidcIssuerArgs, GetOidcIssuerResult, GetOidcIssuerOutputArgs } from "./getOidcIssuer";
+export const getOidcIssuer: typeof import("./getOidcIssuer").getOidcIssuer = null as any;
+export const getOidcIssuerOutput: typeof import("./getOidcIssuer").getOidcIssuerOutput = null as any;
+utilities.lazyLoad(exports, ["getOidcIssuer","getOidcIssuerOutput"], () => require("./getOidcIssuer"));
+
+export { GetOidcProviderArgs, GetOidcProviderResult, GetOidcProviderOutputArgs } from "./getOidcProvider";
+export const getOidcProvider: typeof import("./getOidcProvider").getOidcProvider = null as any;
+export const getOidcProviderOutput: typeof import("./getOidcProvider").getOidcProviderOutput = null as any;
+utilities.lazyLoad(exports, ["getOidcProvider","getOidcProviderOutput"], () => require("./getOidcProvider"));
+
+export { GetOrganizationArgs, GetOrganizationResult, GetOrganizationOutputArgs } from "./getOrganization";
+export const getOrganization: typeof import("./getOrganization").getOrganization = null as any;
+export const getOrganizationOutput: typeof import("./getOrganization").getOrganizationOutput = null as any;
+utilities.lazyLoad(exports, ["getOrganization","getOrganizationOutput"], () => require("./getOrganization"));
+
+export { GetOrganizationGroupArgs, GetOrganizationGroupResult, GetOrganizationGroupOutputArgs } from "./getOrganizationGroup";
+export const getOrganizationGroup: typeof import("./getOrganizationGroup").getOrganizationGroup = null as any;
+export const getOrganizationGroupOutput: typeof import("./getOrganizationGroup").getOrganizationGroupOutput = null as any;
+utilities.lazyLoad(exports, ["getOrganizationGroup","getOrganizationGroupOutput"], () => require("./getOrganizationGroup"));
+
+export { GetOrganizationPolicyArgs, GetOrganizationPolicyResult, GetOrganizationPolicyOutputArgs } from "./getOrganizationPolicy";
+export const getOrganizationPolicy: typeof import("./getOrganizationPolicy").getOrganizationPolicy = null as any;
+export const getOrganizationPolicyOutput: typeof import("./getOrganizationPolicy").getOrganizationPolicyOutput = null as any;
+utilities.lazyLoad(exports, ["getOrganizationPolicy","getOrganizationPolicyOutput"], () => require("./getOrganizationPolicy"));
+
+export { GetOrganizationRoleArgs, GetOrganizationRoleResult, GetOrganizationRoleOutputArgs } from "./getOrganizationRole";
+export const getOrganizationRole: typeof import("./getOrganizationRole").getOrganizationRole = null as any;
+export const getOrganizationRoleOutput: typeof import("./getOrganizationRole").getOrganizationRoleOutput = null as any;
+utilities.lazyLoad(exports, ["getOrganizationRole","getOrganizationRoleOutput"], () => require("./getOrganizationRole"));
 
 export { GetOsArgs, GetOsResult, GetOsOutputArgs } from "./getOs";
 export const getOs: typeof import("./getOs").getOs = null as any;
@@ -285,10 +325,100 @@ export type LoadBalancer = import("./loadBalancer").LoadBalancer;
 export const LoadBalancer: typeof import("./loadBalancer").LoadBalancer = null as any;
 utilities.lazyLoad(exports, ["LoadBalancer"], () => require("./loadBalancer"));
 
+export { NatGatewayArgs, NatGatewayState } from "./natGateway";
+export type NatGateway = import("./natGateway").NatGateway;
+export const NatGateway: typeof import("./natGateway").NatGateway = null as any;
+utilities.lazyLoad(exports, ["NatGateway"], () => require("./natGateway"));
+
+export { NatGatewayFirewallRuleArgs, NatGatewayFirewallRuleState } from "./natGatewayFirewallRule";
+export type NatGatewayFirewallRule = import("./natGatewayFirewallRule").NatGatewayFirewallRule;
+export const NatGatewayFirewallRule: typeof import("./natGatewayFirewallRule").NatGatewayFirewallRule = null as any;
+utilities.lazyLoad(exports, ["NatGatewayFirewallRule"], () => require("./natGatewayFirewallRule"));
+
+export { NatGatewayPortForwardingRuleArgs, NatGatewayPortForwardingRuleState } from "./natGatewayPortForwardingRule";
+export type NatGatewayPortForwardingRule = import("./natGatewayPortForwardingRule").NatGatewayPortForwardingRule;
+export const NatGatewayPortForwardingRule: typeof import("./natGatewayPortForwardingRule").NatGatewayPortForwardingRule = null as any;
+utilities.lazyLoad(exports, ["NatGatewayPortForwardingRule"], () => require("./natGatewayPortForwardingRule"));
+
 export { ObjectStorageArgs, ObjectStorageState } from "./objectStorage";
 export type ObjectStorage = import("./objectStorage").ObjectStorage;
 export const ObjectStorage: typeof import("./objectStorage").ObjectStorage = null as any;
 utilities.lazyLoad(exports, ["ObjectStorage"], () => require("./objectStorage"));
+
+export { ObjectStorageBucketArgs, ObjectStorageBucketState } from "./objectStorageBucket";
+export type ObjectStorageBucket = import("./objectStorageBucket").ObjectStorageBucket;
+export const ObjectStorageBucket: typeof import("./objectStorageBucket").ObjectStorageBucket = null as any;
+utilities.lazyLoad(exports, ["ObjectStorageBucket"], () => require("./objectStorageBucket"));
+
+export { OidcIssuerArgs, OidcIssuerState } from "./oidcIssuer";
+export type OidcIssuer = import("./oidcIssuer").OidcIssuer;
+export const OidcIssuer: typeof import("./oidcIssuer").OidcIssuer = null as any;
+utilities.lazyLoad(exports, ["OidcIssuer"], () => require("./oidcIssuer"));
+
+export { OidcProviderArgs, OidcProviderState } from "./oidcProvider";
+export type OidcProvider = import("./oidcProvider").OidcProvider;
+export const OidcProvider: typeof import("./oidcProvider").OidcProvider = null as any;
+utilities.lazyLoad(exports, ["OidcProvider"], () => require("./oidcProvider"));
+
+export { OidcTokenArgs, OidcTokenState } from "./oidcToken";
+export type OidcToken = import("./oidcToken").OidcToken;
+export const OidcToken: typeof import("./oidcToken").OidcToken = null as any;
+utilities.lazyLoad(exports, ["OidcToken"], () => require("./oidcToken"));
+
+export { OrganizationArgs, OrganizationState } from "./organization";
+export type Organization = import("./organization").Organization;
+export const Organization: typeof import("./organization").Organization = null as any;
+utilities.lazyLoad(exports, ["Organization"], () => require("./organization"));
+
+export { OrganizationGroupArgs, OrganizationGroupState } from "./organizationGroup";
+export type OrganizationGroup = import("./organizationGroup").OrganizationGroup;
+export const OrganizationGroup: typeof import("./organizationGroup").OrganizationGroup = null as any;
+utilities.lazyLoad(exports, ["OrganizationGroup"], () => require("./organizationGroup"));
+
+export { OrganizationInvitationArgs, OrganizationInvitationState } from "./organizationInvitation";
+export type OrganizationInvitation = import("./organizationInvitation").OrganizationInvitation;
+export const OrganizationInvitation: typeof import("./organizationInvitation").OrganizationInvitation = null as any;
+utilities.lazyLoad(exports, ["OrganizationInvitation"], () => require("./organizationInvitation"));
+
+export { OrganizationPolicyArgs, OrganizationPolicyState } from "./organizationPolicy";
+export type OrganizationPolicy = import("./organizationPolicy").OrganizationPolicy;
+export const OrganizationPolicy: typeof import("./organizationPolicy").OrganizationPolicy = null as any;
+utilities.lazyLoad(exports, ["OrganizationPolicy"], () => require("./organizationPolicy"));
+
+export { OrganizationPolicyGroupAttachmentArgs, OrganizationPolicyGroupAttachmentState } from "./organizationPolicyGroupAttachment";
+export type OrganizationPolicyGroupAttachment = import("./organizationPolicyGroupAttachment").OrganizationPolicyGroupAttachment;
+export const OrganizationPolicyGroupAttachment: typeof import("./organizationPolicyGroupAttachment").OrganizationPolicyGroupAttachment = null as any;
+utilities.lazyLoad(exports, ["OrganizationPolicyGroupAttachment"], () => require("./organizationPolicyGroupAttachment"));
+
+export { OrganizationPolicyUserAttachmentArgs, OrganizationPolicyUserAttachmentState } from "./organizationPolicyUserAttachment";
+export type OrganizationPolicyUserAttachment = import("./organizationPolicyUserAttachment").OrganizationPolicyUserAttachment;
+export const OrganizationPolicyUserAttachment: typeof import("./organizationPolicyUserAttachment").OrganizationPolicyUserAttachment = null as any;
+utilities.lazyLoad(exports, ["OrganizationPolicyUserAttachment"], () => require("./organizationPolicyUserAttachment"));
+
+export { OrganizationRoleArgs, OrganizationRoleState } from "./organizationRole";
+export type OrganizationRole = import("./organizationRole").OrganizationRole;
+export const OrganizationRole: typeof import("./organizationRole").OrganizationRole = null as any;
+utilities.lazyLoad(exports, ["OrganizationRole"], () => require("./organizationRole"));
+
+export { OrganizationRoleGroupAttachmentArgs, OrganizationRoleGroupAttachmentState } from "./organizationRoleGroupAttachment";
+export type OrganizationRoleGroupAttachment = import("./organizationRoleGroupAttachment").OrganizationRoleGroupAttachment;
+export const OrganizationRoleGroupAttachment: typeof import("./organizationRoleGroupAttachment").OrganizationRoleGroupAttachment = null as any;
+utilities.lazyLoad(exports, ["OrganizationRoleGroupAttachment"], () => require("./organizationRoleGroupAttachment"));
+
+export { OrganizationRolePolicyAttachmentArgs, OrganizationRolePolicyAttachmentState } from "./organizationRolePolicyAttachment";
+export type OrganizationRolePolicyAttachment = import("./organizationRolePolicyAttachment").OrganizationRolePolicyAttachment;
+export const OrganizationRolePolicyAttachment: typeof import("./organizationRolePolicyAttachment").OrganizationRolePolicyAttachment = null as any;
+utilities.lazyLoad(exports, ["OrganizationRolePolicyAttachment"], () => require("./organizationRolePolicyAttachment"));
+
+export { OrganizationRoleSessionArgs, OrganizationRoleSessionState } from "./organizationRoleSession";
+export type OrganizationRoleSession = import("./organizationRoleSession").OrganizationRoleSession;
+export const OrganizationRoleSession: typeof import("./organizationRoleSession").OrganizationRoleSession = null as any;
+utilities.lazyLoad(exports, ["OrganizationRoleSession"], () => require("./organizationRoleSession"));
+
+export { OrganizationRoleTrustArgs, OrganizationRoleTrustState } from "./organizationRoleTrust";
+export type OrganizationRoleTrust = import("./organizationRoleTrust").OrganizationRoleTrust;
+export const OrganizationRoleTrust: typeof import("./organizationRoleTrust").OrganizationRoleTrust = null as any;
+utilities.lazyLoad(exports, ["OrganizationRoleTrust"], () => require("./organizationRoleTrust"));
 
 export * from "./provider";
 import { Provider } from "./provider";
@@ -406,8 +536,44 @@ const _module = {
                 return new KubernetesNodePools(name, <any>undefined, { urn })
             case "vultr:index/loadBalancer:LoadBalancer":
                 return new LoadBalancer(name, <any>undefined, { urn })
+            case "vultr:index/natGateway:NatGateway":
+                return new NatGateway(name, <any>undefined, { urn })
+            case "vultr:index/natGatewayFirewallRule:NatGatewayFirewallRule":
+                return new NatGatewayFirewallRule(name, <any>undefined, { urn })
+            case "vultr:index/natGatewayPortForwardingRule:NatGatewayPortForwardingRule":
+                return new NatGatewayPortForwardingRule(name, <any>undefined, { urn })
             case "vultr:index/objectStorage:ObjectStorage":
                 return new ObjectStorage(name, <any>undefined, { urn })
+            case "vultr:index/objectStorageBucket:ObjectStorageBucket":
+                return new ObjectStorageBucket(name, <any>undefined, { urn })
+            case "vultr:index/oidcIssuer:OidcIssuer":
+                return new OidcIssuer(name, <any>undefined, { urn })
+            case "vultr:index/oidcProvider:OidcProvider":
+                return new OidcProvider(name, <any>undefined, { urn })
+            case "vultr:index/oidcToken:OidcToken":
+                return new OidcToken(name, <any>undefined, { urn })
+            case "vultr:index/organization:Organization":
+                return new Organization(name, <any>undefined, { urn })
+            case "vultr:index/organizationGroup:OrganizationGroup":
+                return new OrganizationGroup(name, <any>undefined, { urn })
+            case "vultr:index/organizationInvitation:OrganizationInvitation":
+                return new OrganizationInvitation(name, <any>undefined, { urn })
+            case "vultr:index/organizationPolicy:OrganizationPolicy":
+                return new OrganizationPolicy(name, <any>undefined, { urn })
+            case "vultr:index/organizationPolicyGroupAttachment:OrganizationPolicyGroupAttachment":
+                return new OrganizationPolicyGroupAttachment(name, <any>undefined, { urn })
+            case "vultr:index/organizationPolicyUserAttachment:OrganizationPolicyUserAttachment":
+                return new OrganizationPolicyUserAttachment(name, <any>undefined, { urn })
+            case "vultr:index/organizationRole:OrganizationRole":
+                return new OrganizationRole(name, <any>undefined, { urn })
+            case "vultr:index/organizationRoleGroupAttachment:OrganizationRoleGroupAttachment":
+                return new OrganizationRoleGroupAttachment(name, <any>undefined, { urn })
+            case "vultr:index/organizationRolePolicyAttachment:OrganizationRolePolicyAttachment":
+                return new OrganizationRolePolicyAttachment(name, <any>undefined, { urn })
+            case "vultr:index/organizationRoleSession:OrganizationRoleSession":
+                return new OrganizationRoleSession(name, <any>undefined, { urn })
+            case "vultr:index/organizationRoleTrust:OrganizationRoleTrust":
+                return new OrganizationRoleTrust(name, <any>undefined, { urn })
             case "vultr:index/reservedIp:ReservedIp":
                 return new ReservedIp(name, <any>undefined, { urn })
             case "vultr:index/reverseIpv4:ReverseIpv4":
@@ -457,7 +623,25 @@ pulumi.runtime.registerResourceModule("vultr", "index/isoPrivate", _module)
 pulumi.runtime.registerResourceModule("vultr", "index/kubernetes", _module)
 pulumi.runtime.registerResourceModule("vultr", "index/kubernetesNodePools", _module)
 pulumi.runtime.registerResourceModule("vultr", "index/loadBalancer", _module)
+pulumi.runtime.registerResourceModule("vultr", "index/natGateway", _module)
+pulumi.runtime.registerResourceModule("vultr", "index/natGatewayFirewallRule", _module)
+pulumi.runtime.registerResourceModule("vultr", "index/natGatewayPortForwardingRule", _module)
 pulumi.runtime.registerResourceModule("vultr", "index/objectStorage", _module)
+pulumi.runtime.registerResourceModule("vultr", "index/objectStorageBucket", _module)
+pulumi.runtime.registerResourceModule("vultr", "index/oidcIssuer", _module)
+pulumi.runtime.registerResourceModule("vultr", "index/oidcProvider", _module)
+pulumi.runtime.registerResourceModule("vultr", "index/oidcToken", _module)
+pulumi.runtime.registerResourceModule("vultr", "index/organization", _module)
+pulumi.runtime.registerResourceModule("vultr", "index/organizationGroup", _module)
+pulumi.runtime.registerResourceModule("vultr", "index/organizationInvitation", _module)
+pulumi.runtime.registerResourceModule("vultr", "index/organizationPolicy", _module)
+pulumi.runtime.registerResourceModule("vultr", "index/organizationPolicyGroupAttachment", _module)
+pulumi.runtime.registerResourceModule("vultr", "index/organizationPolicyUserAttachment", _module)
+pulumi.runtime.registerResourceModule("vultr", "index/organizationRole", _module)
+pulumi.runtime.registerResourceModule("vultr", "index/organizationRoleGroupAttachment", _module)
+pulumi.runtime.registerResourceModule("vultr", "index/organizationRolePolicyAttachment", _module)
+pulumi.runtime.registerResourceModule("vultr", "index/organizationRoleSession", _module)
+pulumi.runtime.registerResourceModule("vultr", "index/organizationRoleTrust", _module)
 pulumi.runtime.registerResourceModule("vultr", "index/reservedIp", _module)
 pulumi.runtime.registerResourceModule("vultr", "index/reverseIpv4", _module)
 pulumi.runtime.registerResourceModule("vultr", "index/reverseIpv6", _module)

@@ -75,6 +75,10 @@ export interface GetUserResult {
     readonly email: string;
     readonly filters?: outputs.GetUserFilter[];
     /**
+     * A list of UUIDs of groups attached to this user.
+     */
+    readonly groups: string[];
+    /**
      * The provider-assigned unique ID for this managed resource.
      */
     readonly id: string;
@@ -82,6 +86,14 @@ export interface GetUserResult {
      * The name of the user.
      */
     readonly name: string;
+    /**
+     * A list of UUIDs of roles attached to this user.
+     */
+    readonly roles: string[];
+    /**
+     * Whether the user is a service user.
+     */
+    readonly serviceUser: boolean;
 }
 /**
  * Get information about a Vultr user associated with your account. This data source provides the name, email, access control list, and API status for a Vultr user associated with your account.

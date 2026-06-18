@@ -30,7 +30,7 @@ import (
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := vultr.NewSnapshotFromUrl(ctx, "mySnapshot", &vultr.SnapshotFromUrlArgs{
+//			_, err := vultr.NewSnapshotFromUrl(ctx, "my_snapshot", &vultr.SnapshotFromUrlArgs{
 //				Url:     pulumi.String("http://dl-cdn.alpinelinux.org/alpine/v3.9/releases/x86_64/alpine-virt-3.9.1-x86_64.iso"),
 //				UseUefi: pulumi.Bool(true),
 //			})

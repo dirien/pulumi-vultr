@@ -30,7 +30,8 @@ import (
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := vultr.NewStartupScript(ctx, "myScript", &vultr.StartupScriptArgs{
+//			_, err := vultr.NewStartupScript(ctx, "my_script", &vultr.StartupScriptArgs{
+//				Name:   pulumi.String("echo_path"),
 //				Script: pulumi.String("ZWNobyAkUEFUSAo="),
 //			})
 //			if err != nil {

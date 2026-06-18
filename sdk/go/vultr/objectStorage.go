@@ -32,8 +32,15 @@ import (
 //		pulumi.Run(func(ctx *pulumi.Context) error {
 //			_, err := vultr.NewObjectStorage(ctx, "tf", &vultr.ObjectStorageArgs{
 //				ClusterId: pulumi.Int(9),
-//				Label:     pulumi.String("vultr-object-storage"),
 //				TierId:    pulumi.Int(4),
+//				Label:     pulumi.String("vultr-object-storage"),
+//				Bucket: []map[string]interface{}{
+//					map[string]interface{}{
+//						"name":             "my-bucket",
+//						"enableVersioning": true,
+//						"enableLock":       true,
+//					},
+//				},
 //			})
 //			if err != nil {
 //				return err

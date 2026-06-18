@@ -101,6 +101,22 @@ export interface GetKubernetesResult {
      */
     readonly nodePools: outputs.GetKubernetesNodePool[];
     /**
+     * The unique identifier assigned to your application by the OIDC provider.
+     */
+    readonly oidcClientId: string;
+    /**
+     * The claim in the OIDC token that contains the user's group memberships.
+     */
+    readonly oidcGroupsClaim: string;
+    /**
+     * The URL of the OIDC provider that issues authentication tokens.
+     */
+    readonly oidcIssuerUrl: string;
+    /**
+     * The claim in the OIDC token that identifies the end user's username.
+     */
+    readonly oidcUsernameClaim: string;
+    /**
      * The region your VKE cluster is deployed in.
      */
     readonly region: string;

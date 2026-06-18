@@ -21,8 +21,12 @@ __all__ = [
     'DatabaseUserAccessControlArgsDict',
     'InstanceBackupsScheduleArgs',
     'InstanceBackupsScheduleArgsDict',
+    'InstanceBlockDeviceArgs',
+    'InstanceBlockDeviceArgsDict',
     'KubernetesNodePoolsArgs',
     'KubernetesNodePoolsArgsDict',
+    'KubernetesNodePoolsLabelArgs',
+    'KubernetesNodePoolsLabelArgsDict',
     'KubernetesNodePoolsNodeArgs',
     'KubernetesNodePoolsNodeArgsDict',
     'KubernetesNodePoolsTaintArgs',
@@ -35,6 +39,10 @@ __all__ = [
     'LoadBalancerHealthCheckArgsDict',
     'LoadBalancerSslArgs',
     'LoadBalancerSslArgsDict',
+    'OrganizationPolicyDocumentArgs',
+    'OrganizationPolicyDocumentArgsDict',
+    'OrganizationPolicyDocumentStatementArgs',
+    'OrganizationPolicyDocumentStatementArgsDict',
     'VirtualFileSystemStorageAttachmentArgs',
     'VirtualFileSystemStorageAttachmentArgsDict',
     'GetApplicationFilterArgs',
@@ -75,6 +83,18 @@ __all__ = [
     'GetObjectStorageFilterArgsDict',
     'GetObjectStorageTierFilterArgs',
     'GetObjectStorageTierFilterArgsDict',
+    'GetOidcIssuerFilterArgs',
+    'GetOidcIssuerFilterArgsDict',
+    'GetOidcProviderFilterArgs',
+    'GetOidcProviderFilterArgsDict',
+    'GetOrganizationFilterArgs',
+    'GetOrganizationFilterArgsDict',
+    'GetOrganizationGroupFilterArgs',
+    'GetOrganizationGroupFilterArgsDict',
+    'GetOrganizationPolicyFilterArgs',
+    'GetOrganizationPolicyFilterArgsDict',
+    'GetOrganizationRoleFilterArgs',
+    'GetOrganizationRoleFilterArgsDict',
     'GetOsFilterArgs',
     'GetOsFilterArgsDict',
     'GetPlanFilterArgs',
@@ -103,141 +123,140 @@ __all__ = [
     'GetVpcFilterArgsDict',
 ]
 
-MYPY = False
-
-if not MYPY:
-    class DatabaseReadReplicaArgsDict(TypedDict):
-        label: pulumi.Input[_builtins.str]
-        """
-        A label for the managed database.
-        """
-        region: pulumi.Input[_builtins.str]
-        """
-        The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
-        """
-        backup_hour: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
-        """
-        backup_minute: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
-        """
-        cluster_time_zone: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
-        """
-        database_engine: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        The database engine of the new managed database.
-        """
-        database_engine_version: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        The database engine version of the new managed database.
-        """
-        date_created: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        The date the managed database was added to your Vultr account.
-        """
-        dbname: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        The managed database's default logical database.
-        """
-        eviction_policy: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        The configuration value for the data eviction policy on the managed database (Valkey engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
-        """
-        ferretdb_credentials: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]
-        host: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        The hostname assigned to the managed database.
-        """
-        id: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        The ID of the managed database.
-        """
-        latest_backup: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        The date of the latest backup available on the managed database.
-        """
-        maintenance_dow: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        The preferred maintenance day of week for the managed database.
-        """
-        maintenance_time: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        The preferred maintenance time for the managed database.
-        """
-        mysql_long_query_time: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        The configuration value for the long query time (in seconds) on the managed database (MySQL engine types only).
-        """
-        mysql_require_primary_key: NotRequired[pulumi.Input[_builtins.bool]]
-        """
-        The configuration value for whether primary keys are required on the managed database (MySQL engine types only).
-        """
-        mysql_slow_query_log: NotRequired[pulumi.Input[_builtins.bool]]
-        """
-        The configuration value for slow query logging on the managed database (MySQL engine types only).
-        """
-        mysql_sql_modes: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
-        """
-        A list of SQL modes to configure for the managed database (MySQL engine types only - `ALLOW_INVALID_DATES`, `ANSI`, `ANSI_QUOTES`, `ERROR_FOR_DIVISION_BY_ZERO`, `HIGH_NOT_PRECEDENCE`, `IGNORE_SPACE`, `NO_AUTO_VALUE_ON_ZERO`, `NO_DIR_IN_CREATE`, `NO_ENGINE_SUBSTITUTION`, `NO_UNSIGNED_SUBTRACTION`, `NO_ZERO_DATE`, `NO_ZERO_IN_DATE`, `ONLY_FULL_GROUP_BY`, `PIPES_AS_CONCAT`, `REAL_AS_FLOAT`, `STRICT_ALL_TABLES`, `STRICT_TRANS_TABLES`, `TIME_TRUNCATE_FRACTIONAL`, `TRADITIONAL`).
-        """
-        password: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        The password for the managed database's primary admin user.
-        """
-        plan: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        The ID of the plan that you want the managed database to subscribe to. [See List Managed Database Plans](https://www.vultr.com/api/#tag/managed-databases/operation/list-database-plans)
-        """
-        plan_disk: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        The description of the disk(s) on the managed database.
-        """
-        plan_ram: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        The amount of memory available on the managed database in MB.
-        """
-        plan_replicas: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        The number of standby nodes available on the managed database (excluded for Kafka engine types).
-        """
-        plan_vcpus: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        The number of virtual CPUs available on the managed database.
-        """
-        port: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        The connection port for the managed database.
-        """
-        public_host: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        The public hostname assigned to the managed database (VPC-attached only).
-        """
-        status: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).
-        """
-        tag: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        The tag to assign to the managed database.
-        """
-        trusted_ips: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
-        """
-        A list of allowed IP addresses for the managed database.
-        """
-        user: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        The primary admin user for the managed database.
-        """
-        vpc_id: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        The ID of the VPC Network to attach to the Managed Database.
-        """
-elif False:
-    DatabaseReadReplicaArgsDict: TypeAlias = Mapping[str, Any]
+class DatabaseReadReplicaArgsDict(TypedDict):
+    label: pulumi.Input[_builtins.str]
+    """
+    A label for the managed database.
+    """
+    region: pulumi.Input[_builtins.str]
+    """
+    The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
+    """
+    backup_hour: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
+    """
+    backup_minute: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
+    """
+    ca_certificate: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The CA certificate for Managed Databases on this account.
+    """
+    cluster_time_zone: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
+    """
+    database_engine: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The database engine of the new managed database.
+    """
+    database_engine_version: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The database engine version of the new managed database.
+    """
+    date_created: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The date the managed database was added to your Vultr account.
+    """
+    dbname: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The managed database's default logical database.
+    """
+    eviction_policy: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The configuration value for the data eviction policy on the managed database (Valkey engine types only - `noeviction`, `allkeys-lru`, `volatile-lru`, `allkeys-random`, `volatile-random`, `volatile-ttl`, `volatile-lfu`, `allkeys-lfu`).
+    """
+    ferretdb_credentials: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]
+    host: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The hostname assigned to the managed database.
+    """
+    id: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The ID of the managed database.
+    """
+    latest_backup: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The date of the latest backup available on the managed database.
+    """
+    maintenance_dow: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The preferred maintenance day of week for the managed database.
+    """
+    maintenance_time: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The preferred maintenance time for the managed database.
+    """
+    mysql_long_query_time: NotRequired[pulumi.Input[_builtins.int]]
+    """
+    The configuration value for the long query time (in seconds) on the managed database (MySQL engine types only).
+    """
+    mysql_require_primary_key: NotRequired[pulumi.Input[_builtins.bool]]
+    """
+    The configuration value for whether primary keys are required on the managed database (MySQL engine types only).
+    """
+    mysql_slow_query_log: NotRequired[pulumi.Input[_builtins.bool]]
+    """
+    The configuration value for slow query logging on the managed database (MySQL engine types only).
+    """
+    mysql_sql_modes: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
+    """
+    A list of SQL modes to configure for the managed database (MySQL engine types only - `ALLOW_INVALID_DATES`, `ANSI`, `ANSI_QUOTES`, `ERROR_FOR_DIVISION_BY_ZERO`, `HIGH_NOT_PRECEDENCE`, `IGNORE_SPACE`, `NO_AUTO_VALUE_ON_ZERO`, `NO_DIR_IN_CREATE`, `NO_ENGINE_SUBSTITUTION`, `NO_UNSIGNED_SUBTRACTION`, `NO_ZERO_DATE`, `NO_ZERO_IN_DATE`, `ONLY_FULL_GROUP_BY`, `PIPES_AS_CONCAT`, `REAL_AS_FLOAT`, `STRICT_ALL_TABLES`, `STRICT_TRANS_TABLES`, `TIME_TRUNCATE_FRACTIONAL`, `TRADITIONAL`).
+    """
+    password: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The password for the managed database's primary admin user.
+    """
+    plan: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The ID of the plan that you want the managed database to subscribe to. [See List Managed Database Plans](https://www.vultr.com/api/#tag/managed-databases/operation/list-database-plans)
+    """
+    plan_disk: NotRequired[pulumi.Input[_builtins.int]]
+    """
+    The description of the disk(s) on the managed database.
+    """
+    plan_ram: NotRequired[pulumi.Input[_builtins.int]]
+    """
+    The amount of memory available on the managed database in MB.
+    """
+    plan_replicas: NotRequired[pulumi.Input[_builtins.int]]
+    """
+    The number of standby nodes available on the managed database (excluded for Kafka engine types).
+    """
+    plan_vcpus: NotRequired[pulumi.Input[_builtins.int]]
+    """
+    The number of virtual CPUs available on the managed database.
+    """
+    port: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The connection port for the managed database.
+    """
+    public_host: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The public hostname assigned to the managed database (VPC-attached only).
+    """
+    status: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The current status of the managed database (poweroff, rebuilding, rebalancing, configuring, running).
+    """
+    tag: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The tag to assign to the managed database.
+    """
+    trusted_ips: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
+    """
+    A list of allowed IP addresses for the managed database.
+    """
+    user: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The primary admin user for the managed database.
+    """
+    vpc_id: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The ID of the VPC Network to attach to the Managed Database.
+    """
 
 @pulumi.input_type
 class DatabaseReadReplicaArgs:
@@ -246,6 +265,7 @@ class DatabaseReadReplicaArgs:
                  region: pulumi.Input[_builtins.str],
                  backup_hour: Optional[pulumi.Input[_builtins.str]] = None,
                  backup_minute: Optional[pulumi.Input[_builtins.str]] = None,
+                 ca_certificate: Optional[pulumi.Input[_builtins.str]] = None,
                  cluster_time_zone: Optional[pulumi.Input[_builtins.str]] = None,
                  database_engine: Optional[pulumi.Input[_builtins.str]] = None,
                  database_engine_version: Optional[pulumi.Input[_builtins.str]] = None,
@@ -280,6 +300,7 @@ class DatabaseReadReplicaArgs:
         :param pulumi.Input[_builtins.str] region: The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
         :param pulumi.Input[_builtins.str] backup_hour: The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
         :param pulumi.Input[_builtins.str] backup_minute: The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
+        :param pulumi.Input[_builtins.str] ca_certificate: The CA certificate for Managed Databases on this account.
         :param pulumi.Input[_builtins.str] cluster_time_zone: The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
         :param pulumi.Input[_builtins.str] database_engine: The database engine of the new managed database.
         :param pulumi.Input[_builtins.str] database_engine_version: The database engine version of the new managed database.
@@ -315,6 +336,8 @@ class DatabaseReadReplicaArgs:
             pulumi.set(__self__, "backup_hour", backup_hour)
         if backup_minute is not None:
             pulumi.set(__self__, "backup_minute", backup_minute)
+        if ca_certificate is not None:
+            pulumi.set(__self__, "ca_certificate", ca_certificate)
         if cluster_time_zone is not None:
             pulumi.set(__self__, "cluster_time_zone", cluster_time_zone)
         if database_engine is not None:
@@ -421,6 +444,18 @@ class DatabaseReadReplicaArgs:
     @backup_minute.setter
     def backup_minute(self, value: Optional[pulumi.Input[_builtins.str]]):
         pulumi.set(self, "backup_minute", value)
+
+    @_builtins.property
+    @pulumi.getter(name="caCertificate")
+    def ca_certificate(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        The CA certificate for Managed Databases on this account.
+        """
+        return pulumi.get(self, "ca_certificate")
+
+    @ca_certificate.setter
+    def ca_certificate(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "ca_certificate", value)
 
     @_builtins.property
     @pulumi.getter(name="clusterTimeZone")
@@ -768,26 +803,23 @@ class DatabaseReadReplicaArgs:
         pulumi.set(self, "vpc_id", value)
 
 
-if not MYPY:
-    class DatabaseUserAccessControlArgsDict(TypedDict):
-        acl_categories: pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]
-        """
-        The list of command category rules for this managed database user.
-        """
-        acl_channels: pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]
-        """
-        The list of publish/subscribe channel patterns for this managed database user.
-        """
-        acl_commands: pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]
-        """
-        The list of individual command rules for this managed database user.
-        """
-        acl_keys: pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]
-        """
-        The list of access rules for this managed database user.
-        """
-elif False:
-    DatabaseUserAccessControlArgsDict: TypeAlias = Mapping[str, Any]
+class DatabaseUserAccessControlArgsDict(TypedDict):
+    acl_categories: pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]
+    """
+    The list of command category rules for this managed database user.
+    """
+    acl_channels: pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]
+    """
+    The list of publish/subscribe channel patterns for this managed database user.
+    """
+    acl_commands: pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]
+    """
+    The list of individual command rules for this managed database user.
+    """
+    acl_keys: pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]
+    """
+    The list of access rules for this managed database user.
+    """
 
 @pulumi.input_type
 class DatabaseUserAccessControlArgs:
@@ -856,26 +888,25 @@ class DatabaseUserAccessControlArgs:
         pulumi.set(self, "acl_keys", value)
 
 
-if not MYPY:
-    class InstanceBackupsScheduleArgsDict(TypedDict):
-        type: pulumi.Input[_builtins.str]
-        """
-        Type of backup schedule Possible values are `daily`, `weekly`, `monthly`, `daily_alt_even`, or `daily_alt_odd`.
-        """
-        dom: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        Day of month to run. Use values between 1 and 28.
-        """
-        dow: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        Day of week to run. `1 = Sunday`, `2 = Monday`, `3 = Tuesday`, `4 = Wednesday`, `5 = Thursday`, `6 = Friday`, `7 = Saturday`
-        """
-        hour: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        Hour of day to run in UTC.
-        """
-elif False:
-    InstanceBackupsScheduleArgsDict: TypeAlias = Mapping[str, Any]
+class InstanceBackupsScheduleArgsDict(TypedDict):
+    type: pulumi.Input[_builtins.str]
+    """
+    Type of backup schedule Possible values are `daily`, `weekly`, `monthly`, `daily_alt_even`, or `daily_alt_odd`.
+    """
+    dom: NotRequired[pulumi.Input[_builtins.int]]
+    """
+    Day of month to run. Use values between 1 and 28.
+
+    `block_devices` - (Optional) Available for VX1 instances: A list of block devices to attach to your instance. Define your block devices, create bootable block devices, or use local storage (if plan has local storage) as scratch disk with these fields:
+    """
+    dow: NotRequired[pulumi.Input[_builtins.int]]
+    """
+    Day of week to run. `1 = Sunday`, `2 = Monday`, `3 = Tuesday`, `4 = Wednesday`, `5 = Thursday`, `6 = Friday`, `7 = Saturday`
+    """
+    hour: NotRequired[pulumi.Input[_builtins.int]]
+    """
+    Hour of day to run in UTC.
+    """
 
 @pulumi.input_type
 class InstanceBackupsScheduleArgs:
@@ -887,6 +918,8 @@ class InstanceBackupsScheduleArgs:
         """
         :param pulumi.Input[_builtins.str] type: Type of backup schedule Possible values are `daily`, `weekly`, `monthly`, `daily_alt_even`, or `daily_alt_odd`.
         :param pulumi.Input[_builtins.int] dom: Day of month to run. Use values between 1 and 28.
+               
+               `block_devices` - (Optional) Available for VX1 instances: A list of block devices to attach to your instance. Define your block devices, create bootable block devices, or use local storage (if plan has local storage) as scratch disk with these fields:
         :param pulumi.Input[_builtins.int] dow: Day of week to run. `1 = Sunday`, `2 = Monday`, `3 = Tuesday`, `4 = Wednesday`, `5 = Thursday`, `6 = Friday`, `7 = Saturday`
         :param pulumi.Input[_builtins.int] hour: Hour of day to run in UTC.
         """
@@ -915,6 +948,8 @@ class InstanceBackupsScheduleArgs:
     def dom(self) -> Optional[pulumi.Input[_builtins.int]]:
         """
         Day of month to run. Use values between 1 and 28.
+
+        `block_devices` - (Optional) Available for VX1 instances: A list of block devices to attach to your instance. Define your block devices, create bootable block devices, or use local storage (if plan has local storage) as scratch disk with these fields:
         """
         return pulumi.get(self, "dom")
 
@@ -947,67 +982,149 @@ class InstanceBackupsScheduleArgs:
         pulumi.set(self, "hour", value)
 
 
-if not MYPY:
-    class KubernetesNodePoolsArgsDict(TypedDict):
-        label: pulumi.Input[_builtins.str]
+class InstanceBlockDeviceArgsDict(TypedDict):
+    block_id: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The ID of an existing block device or `local` if the VX1 plan has local storage and you wish to utilize it for this instance.
+    """
+    bootable: NotRequired[pulumi.Input[_builtins.bool]]
+    """
+    Whether the associated block device is bootable.
+    """
+    disk_size: NotRequired[pulumi.Input[_builtins.int]]
+    """
+    The disk size for the block device if it is being created.
+    """
+    label: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    A label for the server.
+    """
+
+@pulumi.input_type
+class InstanceBlockDeviceArgs:
+    def __init__(__self__, *,
+                 block_id: Optional[pulumi.Input[_builtins.str]] = None,
+                 bootable: Optional[pulumi.Input[_builtins.bool]] = None,
+                 disk_size: Optional[pulumi.Input[_builtins.int]] = None,
+                 label: Optional[pulumi.Input[_builtins.str]] = None):
         """
-        The label to be used as a prefix for nodes in this node pool.
+        :param pulumi.Input[_builtins.str] block_id: The ID of an existing block device or `local` if the VX1 plan has local storage and you wish to utilize it for this instance.
+        :param pulumi.Input[_builtins.bool] bootable: Whether the associated block device is bootable.
+        :param pulumi.Input[_builtins.int] disk_size: The disk size for the block device if it is being created.
+        :param pulumi.Input[_builtins.str] label: A label for the server.
         """
-        node_quantity: pulumi.Input[_builtins.int]
+        if block_id is not None:
+            pulumi.set(__self__, "block_id", block_id)
+        if bootable is not None:
+            pulumi.set(__self__, "bootable", bootable)
+        if disk_size is not None:
+            pulumi.set(__self__, "disk_size", disk_size)
+        if label is not None:
+            pulumi.set(__self__, "label", label)
+
+    @_builtins.property
+    @pulumi.getter(name="blockId")
+    def block_id(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
-        The number of nodes in this node pool.
+        The ID of an existing block device or `local` if the VX1 plan has local storage and you wish to utilize it for this instance.
         """
-        plan: pulumi.Input[_builtins.str]
+        return pulumi.get(self, "block_id")
+
+    @block_id.setter
+    def block_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "block_id", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def bootable(self) -> Optional[pulumi.Input[_builtins.bool]]:
         """
-        The plan to be used in this node pool. [See Plans List](https://www.vultr.com/api/#operation/list-plans) Note the minimum plan requirements must have at least 1 core and 2 gbs of memory.
+        Whether the associated block device is bootable.
         """
-        auto_scaler: NotRequired[pulumi.Input[_builtins.bool]]
+        return pulumi.get(self, "bootable")
+
+    @bootable.setter
+    def bootable(self, value: Optional[pulumi.Input[_builtins.bool]]):
+        pulumi.set(self, "bootable", value)
+
+    @_builtins.property
+    @pulumi.getter(name="diskSize")
+    def disk_size(self) -> Optional[pulumi.Input[_builtins.int]]:
         """
-        Enable the auto scaler for the default node pool.
+        The disk size for the block device if it is being created.
         """
-        date_created: NotRequired[pulumi.Input[_builtins.str]]
+        return pulumi.get(self, "disk_size")
+
+    @disk_size.setter
+    def disk_size(self, value: Optional[pulumi.Input[_builtins.int]]):
+        pulumi.set(self, "disk_size", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def label(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
-        Date node was created.
+        A label for the server.
         """
-        date_updated: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Date of node pool updates.
-        """
-        id: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        ID of node.
-        """
-        labels: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]
-        """
-        A map of key/value pairs for Kubernetes node labels.
-        """
-        max_nodes: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        The maximum number of nodes to use with the auto scaler.
-        """
-        min_nodes: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        The minimum number of nodes to use with the auto scaler.
-        """
-        nodes: NotRequired[pulumi.Input[Sequence[pulumi.Input['KubernetesNodePoolsNodeArgsDict']]]]
-        """
-        Array that contains information about nodes within this node pool.
-        """
-        status: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Status of node.
-        """
-        tag: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Tag for node pool.
-        """
-        taints: NotRequired[pulumi.Input[Sequence[pulumi.Input['KubernetesNodePoolsTaintArgsDict']]]]
-        """
-        Taints to apply to the nodes in the node pool. Should contain `key`, `value` and `effect`.  The `effect` should be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
-        """
-        user_data: NotRequired[pulumi.Input[_builtins.str]]
-elif False:
-    KubernetesNodePoolsArgsDict: TypeAlias = Mapping[str, Any]
+        return pulumi.get(self, "label")
+
+    @label.setter
+    def label(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "label", value)
+
+
+class KubernetesNodePoolsArgsDict(TypedDict):
+    label: pulumi.Input[_builtins.str]
+    """
+    The label to be used as a prefix for nodes in this node pool.
+    """
+    node_quantity: pulumi.Input[_builtins.int]
+    """
+    The number of nodes in this node pool.
+    """
+    plan: pulumi.Input[_builtins.str]
+    """
+    The plan to be used in this node pool. [See plans list](https://www.vultr.com/api/#operation/list-plans) Note the minimum plan requirements must have at least 1 core and 2 gbs of memory.
+    """
+    auto_scaler: NotRequired[pulumi.Input[_builtins.bool]]
+    """
+    Enable the auto scaler for the default node pool.
+    """
+    date_created: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    Date node was created.
+    """
+    date_updated: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    Date of node pool updates.
+    """
+    id: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    ID of node.
+    """
+    labels: NotRequired[pulumi.Input[Sequence[pulumi.Input['KubernetesNodePoolsLabelArgsDict']]]]
+    max_nodes: NotRequired[pulumi.Input[_builtins.int]]
+    """
+    The maximum number of nodes to use with the auto scaler.
+    """
+    min_nodes: NotRequired[pulumi.Input[_builtins.int]]
+    """
+    The minimum number of nodes to use with the auto scaler.
+    """
+    nodes: NotRequired[pulumi.Input[Sequence[pulumi.Input['KubernetesNodePoolsNodeArgsDict']]]]
+    status: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    Status of node.
+    """
+    tag: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    Tag for node pool.
+    """
+    taints: NotRequired[pulumi.Input[Sequence[pulumi.Input['KubernetesNodePoolsTaintArgsDict']]]]
+    user_data: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    A base64 encoded string containing the user data to apply to nodes in the node pool.
+
+    `labels` - (Optional) A list of labels to apply to the nodes in the node pool with these fields:
+    """
 
 @pulumi.input_type
 class KubernetesNodePoolsArgs:
@@ -1019,7 +1136,7 @@ class KubernetesNodePoolsArgs:
                  date_created: Optional[pulumi.Input[_builtins.str]] = None,
                  date_updated: Optional[pulumi.Input[_builtins.str]] = None,
                  id: Optional[pulumi.Input[_builtins.str]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 labels: Optional[pulumi.Input[Sequence[pulumi.Input['KubernetesNodePoolsLabelArgs']]]] = None,
                  max_nodes: Optional[pulumi.Input[_builtins.int]] = None,
                  min_nodes: Optional[pulumi.Input[_builtins.int]] = None,
                  nodes: Optional[pulumi.Input[Sequence[pulumi.Input['KubernetesNodePoolsNodeArgs']]]] = None,
@@ -1030,18 +1147,18 @@ class KubernetesNodePoolsArgs:
         """
         :param pulumi.Input[_builtins.str] label: The label to be used as a prefix for nodes in this node pool.
         :param pulumi.Input[_builtins.int] node_quantity: The number of nodes in this node pool.
-        :param pulumi.Input[_builtins.str] plan: The plan to be used in this node pool. [See Plans List](https://www.vultr.com/api/#operation/list-plans) Note the minimum plan requirements must have at least 1 core and 2 gbs of memory.
+        :param pulumi.Input[_builtins.str] plan: The plan to be used in this node pool. [See plans list](https://www.vultr.com/api/#operation/list-plans) Note the minimum plan requirements must have at least 1 core and 2 gbs of memory.
         :param pulumi.Input[_builtins.bool] auto_scaler: Enable the auto scaler for the default node pool.
         :param pulumi.Input[_builtins.str] date_created: Date node was created.
         :param pulumi.Input[_builtins.str] date_updated: Date of node pool updates.
         :param pulumi.Input[_builtins.str] id: ID of node.
-        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: A map of key/value pairs for Kubernetes node labels.
         :param pulumi.Input[_builtins.int] max_nodes: The maximum number of nodes to use with the auto scaler.
         :param pulumi.Input[_builtins.int] min_nodes: The minimum number of nodes to use with the auto scaler.
-        :param pulumi.Input[Sequence[pulumi.Input['KubernetesNodePoolsNodeArgs']]] nodes: Array that contains information about nodes within this node pool.
         :param pulumi.Input[_builtins.str] status: Status of node.
         :param pulumi.Input[_builtins.str] tag: Tag for node pool.
-        :param pulumi.Input[Sequence[pulumi.Input['KubernetesNodePoolsTaintArgs']]] taints: Taints to apply to the nodes in the node pool. Should contain `key`, `value` and `effect`.  The `effect` should be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
+        :param pulumi.Input[_builtins.str] user_data: A base64 encoded string containing the user data to apply to nodes in the node pool.
+               
+               `labels` - (Optional) A list of labels to apply to the nodes in the node pool with these fields:
         """
         pulumi.set(__self__, "label", label)
         pulumi.set(__self__, "node_quantity", node_quantity)
@@ -1099,7 +1216,7 @@ class KubernetesNodePoolsArgs:
     @pulumi.getter
     def plan(self) -> pulumi.Input[_builtins.str]:
         """
-        The plan to be used in this node pool. [See Plans List](https://www.vultr.com/api/#operation/list-plans) Note the minimum plan requirements must have at least 1 core and 2 gbs of memory.
+        The plan to be used in this node pool. [See plans list](https://www.vultr.com/api/#operation/list-plans) Note the minimum plan requirements must have at least 1 core and 2 gbs of memory.
         """
         return pulumi.get(self, "plan")
 
@@ -1157,14 +1274,11 @@ class KubernetesNodePoolsArgs:
 
     @_builtins.property
     @pulumi.getter
-    def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
-        """
-        A map of key/value pairs for Kubernetes node labels.
-        """
+    def labels(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['KubernetesNodePoolsLabelArgs']]]]:
         return pulumi.get(self, "labels")
 
     @labels.setter
-    def labels(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def labels(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['KubernetesNodePoolsLabelArgs']]]]):
         pulumi.set(self, "labels", value)
 
     @_builtins.property
@@ -1194,9 +1308,6 @@ class KubernetesNodePoolsArgs:
     @_builtins.property
     @pulumi.getter
     def nodes(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['KubernetesNodePoolsNodeArgs']]]]:
-        """
-        Array that contains information about nodes within this node pool.
-        """
         return pulumi.get(self, "nodes")
 
     @nodes.setter
@@ -1230,9 +1341,6 @@ class KubernetesNodePoolsArgs:
     @_builtins.property
     @pulumi.getter
     def taints(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['KubernetesNodePoolsTaintArgs']]]]:
-        """
-        Taints to apply to the nodes in the node pool. Should contain `key`, `value` and `effect`.  The `effect` should be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
-        """
         return pulumi.get(self, "taints")
 
     @taints.setter
@@ -1242,6 +1350,11 @@ class KubernetesNodePoolsArgs:
     @_builtins.property
     @pulumi.getter(name="userData")
     def user_data(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        A base64 encoded string containing the user data to apply to nodes in the node pool.
+
+        `labels` - (Optional) A list of labels to apply to the nodes in the node pool with these fields:
+        """
         return pulumi.get(self, "user_data")
 
     @user_data.setter
@@ -1249,26 +1362,90 @@ class KubernetesNodePoolsArgs:
         pulumi.set(self, "user_data", value)
 
 
-if not MYPY:
-    class KubernetesNodePoolsNodeArgsDict(TypedDict):
-        date_created: NotRequired[pulumi.Input[_builtins.str]]
+class KubernetesNodePoolsLabelArgsDict(TypedDict):
+    key: pulumi.Input[_builtins.str]
+    """
+    The key definining the taint for kubernetes.
+    """
+    value: pulumi.Input[_builtins.str]
+    """
+    The value of the taint for kubernetes.
+    """
+    id: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    ID of node.
+    """
+
+@pulumi.input_type
+class KubernetesNodePoolsLabelArgs:
+    def __init__(__self__, *,
+                 key: pulumi.Input[_builtins.str],
+                 value: pulumi.Input[_builtins.str],
+                 id: Optional[pulumi.Input[_builtins.str]] = None):
         """
-        Date node was created.
+        :param pulumi.Input[_builtins.str] key: The key definining the taint for kubernetes.
+        :param pulumi.Input[_builtins.str] value: The value of the taint for kubernetes.
+        :param pulumi.Input[_builtins.str] id: ID of node.
         """
-        id: NotRequired[pulumi.Input[_builtins.str]]
+        pulumi.set(__self__, "key", key)
+        pulumi.set(__self__, "value", value)
+        if id is not None:
+            pulumi.set(__self__, "id", id)
+
+    @_builtins.property
+    @pulumi.getter
+    def key(self) -> pulumi.Input[_builtins.str]:
+        """
+        The key definining the taint for kubernetes.
+        """
+        return pulumi.get(self, "key")
+
+    @key.setter
+    def key(self, value: pulumi.Input[_builtins.str]):
+        pulumi.set(self, "key", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def value(self) -> pulumi.Input[_builtins.str]:
+        """
+        The value of the taint for kubernetes.
+        """
+        return pulumi.get(self, "value")
+
+    @value.setter
+    def value(self, value: pulumi.Input[_builtins.str]):
+        pulumi.set(self, "value", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def id(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
         ID of node.
         """
-        label: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        The label to be used as a prefix for nodes in this node pool.
-        """
-        status: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Status of node.
-        """
-elif False:
-    KubernetesNodePoolsNodeArgsDict: TypeAlias = Mapping[str, Any]
+        return pulumi.get(self, "id")
+
+    @id.setter
+    def id(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "id", value)
+
+
+class KubernetesNodePoolsNodeArgsDict(TypedDict):
+    date_created: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    Date node was created.
+    """
+    id: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    ID of node.
+    """
+    label: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The label to be used as a prefix for nodes in this node pool.
+    """
+    status: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    Status of node.
+    """
 
 @pulumi.input_type
 class KubernetesNodePoolsNodeArgs:
@@ -1341,27 +1518,49 @@ class KubernetesNodePoolsNodeArgs:
         pulumi.set(self, "status", value)
 
 
-if not MYPY:
-    class KubernetesNodePoolsTaintArgsDict(TypedDict):
-        effect: pulumi.Input[_builtins.str]
-        key: pulumi.Input[_builtins.str]
-        value: pulumi.Input[_builtins.str]
-elif False:
-    KubernetesNodePoolsTaintArgsDict: TypeAlias = Mapping[str, Any]
+class KubernetesNodePoolsTaintArgsDict(TypedDict):
+    effect: pulumi.Input[_builtins.str]
+    """
+    The effect of the taint for kubernetes.  Must be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
+    """
+    key: pulumi.Input[_builtins.str]
+    """
+    The key definining the taint for kubernetes.
+    """
+    value: pulumi.Input[_builtins.str]
+    """
+    The value of the taint for kubernetes.
+    """
+    id: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    ID of node.
+    """
 
 @pulumi.input_type
 class KubernetesNodePoolsTaintArgs:
     def __init__(__self__, *,
                  effect: pulumi.Input[_builtins.str],
                  key: pulumi.Input[_builtins.str],
-                 value: pulumi.Input[_builtins.str]):
+                 value: pulumi.Input[_builtins.str],
+                 id: Optional[pulumi.Input[_builtins.str]] = None):
+        """
+        :param pulumi.Input[_builtins.str] effect: The effect of the taint for kubernetes.  Must be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
+        :param pulumi.Input[_builtins.str] key: The key definining the taint for kubernetes.
+        :param pulumi.Input[_builtins.str] value: The value of the taint for kubernetes.
+        :param pulumi.Input[_builtins.str] id: ID of node.
+        """
         pulumi.set(__self__, "effect", effect)
         pulumi.set(__self__, "key", key)
         pulumi.set(__self__, "value", value)
+        if id is not None:
+            pulumi.set(__self__, "id", id)
 
     @_builtins.property
     @pulumi.getter
     def effect(self) -> pulumi.Input[_builtins.str]:
+        """
+        The effect of the taint for kubernetes.  Must be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
+        """
         return pulumi.get(self, "effect")
 
     @effect.setter
@@ -1371,6 +1570,9 @@ class KubernetesNodePoolsTaintArgs:
     @_builtins.property
     @pulumi.getter
     def key(self) -> pulumi.Input[_builtins.str]:
+        """
+        The key definining the taint for kubernetes.
+        """
         return pulumi.get(self, "key")
 
     @key.setter
@@ -1380,33 +1582,45 @@ class KubernetesNodePoolsTaintArgs:
     @_builtins.property
     @pulumi.getter
     def value(self) -> pulumi.Input[_builtins.str]:
+        """
+        The value of the taint for kubernetes.
+        """
         return pulumi.get(self, "value")
 
     @value.setter
     def value(self, value: pulumi.Input[_builtins.str]):
         pulumi.set(self, "value", value)
 
+    @_builtins.property
+    @pulumi.getter
+    def id(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        ID of node.
+        """
+        return pulumi.get(self, "id")
 
-if not MYPY:
-    class LoadBalancerFirewallRuleArgsDict(TypedDict):
-        ip_type: pulumi.Input[_builtins.str]
-        """
-        The type of ip this rule is - may be either v4 or v6.
-        """
-        port: pulumi.Input[_builtins.int]
-        """
-        The assigned port (integer) on the attached instances that the load balancer should check against. Default value is `80`.
-        """
-        source: pulumi.Input[_builtins.str]
-        """
-        IP address with subnet that is allowed through the firewall. You may also pass in `cloudflare` which will allow only CloudFlares IP range.
-        """
-        id: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        The load balancer ID.
-        """
-elif False:
-    LoadBalancerFirewallRuleArgsDict: TypeAlias = Mapping[str, Any]
+    @id.setter
+    def id(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "id", value)
+
+
+class LoadBalancerFirewallRuleArgsDict(TypedDict):
+    ip_type: pulumi.Input[_builtins.str]
+    """
+    The type of ip this rule is - may be either v4 or v6.
+    """
+    port: pulumi.Input[_builtins.int]
+    """
+    The assigned port (integer) on the attached instances that the load balancer should check against. Default value is `80`.
+    """
+    source: pulumi.Input[_builtins.str]
+    """
+    IP address with subnet that is allowed through the firewall. You may also pass in `cloudflare` which will allow only CloudFlares IP range.
+    """
+    id: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The load balancer ID.
+    """
 
 @pulumi.input_type
 class LoadBalancerFirewallRuleArgs:
@@ -1476,27 +1690,24 @@ class LoadBalancerFirewallRuleArgs:
         pulumi.set(self, "id", value)
 
 
-if not MYPY:
-    class LoadBalancerForwardingRuleArgsDict(TypedDict):
-        backend_port: pulumi.Input[_builtins.int]
-        """
-        Port on instance side.
-        """
-        backend_protocol: pulumi.Input[_builtins.str]
-        """
-        Protocol on instance side. Possible values: "http", "https", "tcp".
-        """
-        frontend_port: pulumi.Input[_builtins.int]
-        """
-        Port on load balancer side.
-        """
-        frontend_protocol: pulumi.Input[_builtins.str]
-        """
-        Protocol on load balancer side. Possible values: "http", "https", "tcp".
-        """
-        rule_id: NotRequired[pulumi.Input[_builtins.str]]
-elif False:
-    LoadBalancerForwardingRuleArgsDict: TypeAlias = Mapping[str, Any]
+class LoadBalancerForwardingRuleArgsDict(TypedDict):
+    backend_port: pulumi.Input[_builtins.int]
+    """
+    Port on instance side.
+    """
+    backend_protocol: pulumi.Input[_builtins.str]
+    """
+    Protocol on instance side. Possible values: "http", "https", "tcp".
+    """
+    frontend_port: pulumi.Input[_builtins.int]
+    """
+    Port on load balancer side.
+    """
+    frontend_protocol: pulumi.Input[_builtins.str]
+    """
+    Protocol on load balancer side. Possible values: "http", "https", "tcp".
+    """
+    rule_id: NotRequired[pulumi.Input[_builtins.str]]
 
 @pulumi.input_type
 class LoadBalancerForwardingRuleArgs:
@@ -1577,38 +1788,35 @@ class LoadBalancerForwardingRuleArgs:
         pulumi.set(self, "rule_id", value)
 
 
-if not MYPY:
-    class LoadBalancerHealthCheckArgsDict(TypedDict):
-        port: pulumi.Input[_builtins.int]
-        """
-        The assigned port (integer) on the attached instances that the load balancer should check against. Default value is `80`.
-        """
-        protocol: pulumi.Input[_builtins.str]
-        """
-        The protocol used to traffic requests to the load balancer. Possible values are `http`, or `tcp`. Default value is `http`.
-        """
-        check_interval: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        Time in seconds to perform health check. Default value is 15.
-        """
-        healthy_threshold: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        Number of failed attempts encountered before failover. Default value is 5.
-        """
-        path: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        The path on the attached instances that the load balancer should check against. Default value is `/`
-        """
-        response_timeout: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        Time in seconds to wait for a health check response. Default value is 5.
-        """
-        unhealthy_threshold: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        Number of failed attempts encountered before failover. Default value is 5.
-        """
-elif False:
-    LoadBalancerHealthCheckArgsDict: TypeAlias = Mapping[str, Any]
+class LoadBalancerHealthCheckArgsDict(TypedDict):
+    port: pulumi.Input[_builtins.int]
+    """
+    The assigned port (integer) on the attached instances that the load balancer should check against. Default value is `80`.
+    """
+    protocol: pulumi.Input[_builtins.str]
+    """
+    The protocol used to traffic requests to the load balancer. Possible values are `http`, or `tcp`. Default value is `http`.
+    """
+    check_interval: NotRequired[pulumi.Input[_builtins.int]]
+    """
+    Time in seconds to perform health check. Default value is 15.
+    """
+    healthy_threshold: NotRequired[pulumi.Input[_builtins.int]]
+    """
+    Number of failed attempts encountered before failover. Default value is 5.
+    """
+    path: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The path on the attached instances that the load balancer should check against. Default value is `/`
+    """
+    response_timeout: NotRequired[pulumi.Input[_builtins.int]]
+    """
+    Time in seconds to wait for a health check response. Default value is 5.
+    """
+    unhealthy_threshold: NotRequired[pulumi.Input[_builtins.int]]
+    """
+    Number of failed attempts encountered before failover. Default value is 5.
+    """
 
 @pulumi.input_type
 class LoadBalancerHealthCheckArgs:
@@ -1727,22 +1935,19 @@ class LoadBalancerHealthCheckArgs:
         pulumi.set(self, "unhealthy_threshold", value)
 
 
-if not MYPY:
-    class LoadBalancerSslArgsDict(TypedDict):
-        certificate: pulumi.Input[_builtins.str]
-        """
-        The SSL Certificate.
-        """
-        private_key: pulumi.Input[_builtins.str]
-        """
-        The SSL certificates private key.
-        """
-        chain: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        The SSL certificate chain.
-        """
-elif False:
-    LoadBalancerSslArgsDict: TypeAlias = Mapping[str, Any]
+class LoadBalancerSslArgsDict(TypedDict):
+    certificate: pulumi.Input[_builtins.str]
+    """
+    The SSL Certificate.
+    """
+    private_key: pulumi.Input[_builtins.str]
+    """
+    The SSL certificates private key.
+    """
+    chain: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The SSL certificate chain.
+    """
 
 @pulumi.input_type
 class LoadBalancerSslArgs:
@@ -1797,13 +2002,123 @@ class LoadBalancerSslArgs:
         pulumi.set(self, "chain", value)
 
 
-if not MYPY:
-    class VirtualFileSystemStorageAttachmentArgsDict(TypedDict):
-        instance_id: NotRequired[pulumi.Input[_builtins.str]]
-        mount: NotRequired[pulumi.Input[_builtins.int]]
-        state: NotRequired[pulumi.Input[_builtins.str]]
-elif False:
-    VirtualFileSystemStorageAttachmentArgsDict: TypeAlias = Mapping[str, Any]
+class OrganizationPolicyDocumentArgsDict(TypedDict):
+    statements: pulumi.Input[Sequence[pulumi.Input['OrganizationPolicyDocumentStatementArgsDict']]]
+    """
+    A list of blocks for the organization policy statements.
+    """
+    version: pulumi.Input[_builtins.str]
+    """
+    A version for organization policy document.
+    """
+
+@pulumi.input_type
+class OrganizationPolicyDocumentArgs:
+    def __init__(__self__, *,
+                 statements: pulumi.Input[Sequence[pulumi.Input['OrganizationPolicyDocumentStatementArgs']]],
+                 version: pulumi.Input[_builtins.str]):
+        """
+        :param pulumi.Input[Sequence[pulumi.Input['OrganizationPolicyDocumentStatementArgs']]] statements: A list of blocks for the organization policy statements.
+        :param pulumi.Input[_builtins.str] version: A version for organization policy document.
+        """
+        pulumi.set(__self__, "statements", statements)
+        pulumi.set(__self__, "version", version)
+
+    @_builtins.property
+    @pulumi.getter
+    def statements(self) -> pulumi.Input[Sequence[pulumi.Input['OrganizationPolicyDocumentStatementArgs']]]:
+        """
+        A list of blocks for the organization policy statements.
+        """
+        return pulumi.get(self, "statements")
+
+    @statements.setter
+    def statements(self, value: pulumi.Input[Sequence[pulumi.Input['OrganizationPolicyDocumentStatementArgs']]]):
+        pulumi.set(self, "statements", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def version(self) -> pulumi.Input[_builtins.str]:
+        """
+        A version for organization policy document.
+        """
+        return pulumi.get(self, "version")
+
+    @version.setter
+    def version(self, value: pulumi.Input[_builtins.str]):
+        pulumi.set(self, "version", value)
+
+
+class OrganizationPolicyDocumentStatementArgsDict(TypedDict):
+    actions: pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]
+    """
+    A list of actions for the policy document statement.
+    """
+    effect: pulumi.Input[_builtins.str]
+    """
+    The effect of the the policy document statement.
+    """
+    resources: pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]
+    """
+    A list of applicable resources for the policy document statement.
+    """
+
+@pulumi.input_type
+class OrganizationPolicyDocumentStatementArgs:
+    def __init__(__self__, *,
+                 actions: pulumi.Input[Sequence[pulumi.Input[_builtins.str]]],
+                 effect: pulumi.Input[_builtins.str],
+                 resources: pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]):
+        """
+        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] actions: A list of actions for the policy document statement.
+        :param pulumi.Input[_builtins.str] effect: The effect of the the policy document statement.
+        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] resources: A list of applicable resources for the policy document statement.
+        """
+        pulumi.set(__self__, "actions", actions)
+        pulumi.set(__self__, "effect", effect)
+        pulumi.set(__self__, "resources", resources)
+
+    @_builtins.property
+    @pulumi.getter
+    def actions(self) -> pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]:
+        """
+        A list of actions for the policy document statement.
+        """
+        return pulumi.get(self, "actions")
+
+    @actions.setter
+    def actions(self, value: pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]):
+        pulumi.set(self, "actions", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def effect(self) -> pulumi.Input[_builtins.str]:
+        """
+        The effect of the the policy document statement.
+        """
+        return pulumi.get(self, "effect")
+
+    @effect.setter
+    def effect(self, value: pulumi.Input[_builtins.str]):
+        pulumi.set(self, "effect", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def resources(self) -> pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]:
+        """
+        A list of applicable resources for the policy document statement.
+        """
+        return pulumi.get(self, "resources")
+
+    @resources.setter
+    def resources(self, value: pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]):
+        pulumi.set(self, "resources", value)
+
+
+class VirtualFileSystemStorageAttachmentArgsDict(TypedDict):
+    instance_id: NotRequired[pulumi.Input[_builtins.str]]
+    mount: NotRequired[pulumi.Input[_builtins.int]]
+    state: NotRequired[pulumi.Input[_builtins.str]]
 
 @pulumi.input_type
 class VirtualFileSystemStorageAttachmentArgs:
@@ -1846,18 +2161,15 @@ class VirtualFileSystemStorageAttachmentArgs:
         pulumi.set(self, "state", value)
 
 
-if not MYPY:
-    class GetApplicationFilterArgsDict(TypedDict):
-        name: _builtins.str
-        """
-        Attribute name to filter with.
-        """
-        values: Sequence[_builtins.str]
-        """
-        One or more values filter with.
-        """
-elif False:
-    GetApplicationFilterArgsDict: TypeAlias = Mapping[str, Any]
+class GetApplicationFilterArgsDict(TypedDict):
+    name: _builtins.str
+    """
+    Attribute name to filter with.
+    """
+    values: Sequence[_builtins.str]
+    """
+    One or more values filter with.
+    """
 
 @pulumi.input_type
 class GetApplicationFilterArgs:
@@ -1896,18 +2208,15 @@ class GetApplicationFilterArgs:
         pulumi.set(self, "values", value)
 
 
-if not MYPY:
-    class GetBackupFilterArgsDict(TypedDict):
-        name: _builtins.str
-        """
-        Attribute name to filter with.
-        """
-        values: Sequence[_builtins.str]
-        """
-        One or more values filter with.
-        """
-elif False:
-    GetBackupFilterArgsDict: TypeAlias = Mapping[str, Any]
+class GetBackupFilterArgsDict(TypedDict):
+    name: _builtins.str
+    """
+    Attribute name to filter with.
+    """
+    values: Sequence[_builtins.str]
+    """
+    One or more values filter with.
+    """
 
 @pulumi.input_type
 class GetBackupFilterArgs:
@@ -1946,18 +2255,15 @@ class GetBackupFilterArgs:
         pulumi.set(self, "values", value)
 
 
-if not MYPY:
-    class GetBareMetalPlanFilterArgsDict(TypedDict):
-        name: _builtins.str
-        """
-        Attribute name to filter with.
-        """
-        values: Sequence[_builtins.str]
-        """
-        One or more values filter with.
-        """
-elif False:
-    GetBareMetalPlanFilterArgsDict: TypeAlias = Mapping[str, Any]
+class GetBareMetalPlanFilterArgsDict(TypedDict):
+    name: _builtins.str
+    """
+    Attribute name to filter with.
+    """
+    values: Sequence[_builtins.str]
+    """
+    One or more values filter with.
+    """
 
 @pulumi.input_type
 class GetBareMetalPlanFilterArgs:
@@ -1996,18 +2302,15 @@ class GetBareMetalPlanFilterArgs:
         pulumi.set(self, "values", value)
 
 
-if not MYPY:
-    class GetBareMetalServerFilterArgsDict(TypedDict):
-        name: _builtins.str
-        """
-        Attribute name to filter with.
-        """
-        values: Sequence[_builtins.str]
-        """
-        One or more values filter with.
-        """
-elif False:
-    GetBareMetalServerFilterArgsDict: TypeAlias = Mapping[str, Any]
+class GetBareMetalServerFilterArgsDict(TypedDict):
+    name: _builtins.str
+    """
+    Attribute name to filter with.
+    """
+    values: Sequence[_builtins.str]
+    """
+    One or more values filter with.
+    """
 
 @pulumi.input_type
 class GetBareMetalServerFilterArgs:
@@ -2046,18 +2349,15 @@ class GetBareMetalServerFilterArgs:
         pulumi.set(self, "values", value)
 
 
-if not MYPY:
-    class GetBlockStorageFilterArgsDict(TypedDict):
-        name: _builtins.str
-        """
-        Attribute name to filter with.
-        """
-        values: Sequence[_builtins.str]
-        """
-        One or more values filter with.
-        """
-elif False:
-    GetBlockStorageFilterArgsDict: TypeAlias = Mapping[str, Any]
+class GetBlockStorageFilterArgsDict(TypedDict):
+    name: _builtins.str
+    """
+    Attribute name to filter with.
+    """
+    values: Sequence[_builtins.str]
+    """
+    One or more values filter with.
+    """
 
 @pulumi.input_type
 class GetBlockStorageFilterArgs:
@@ -2096,18 +2396,15 @@ class GetBlockStorageFilterArgs:
         pulumi.set(self, "values", value)
 
 
-if not MYPY:
-    class GetContainerRegistryFilterArgsDict(TypedDict):
-        name: _builtins.str
-        """
-        Attribute name to filter with.
-        """
-        values: Sequence[_builtins.str]
-        """
-        One or more values filter with.
-        """
-elif False:
-    GetContainerRegistryFilterArgsDict: TypeAlias = Mapping[str, Any]
+class GetContainerRegistryFilterArgsDict(TypedDict):
+    name: _builtins.str
+    """
+    Attribute name to filter with.
+    """
+    values: Sequence[_builtins.str]
+    """
+    One or more values filter with.
+    """
 
 @pulumi.input_type
 class GetContainerRegistryFilterArgs:
@@ -2146,18 +2443,15 @@ class GetContainerRegistryFilterArgs:
         pulumi.set(self, "values", value)
 
 
-if not MYPY:
-    class GetDatabaseFilterArgsDict(TypedDict):
-        name: _builtins.str
-        """
-        Attribute name to filter with.
-        """
-        values: Sequence[_builtins.str]
-        """
-        One or more values filter with.
-        """
-elif False:
-    GetDatabaseFilterArgsDict: TypeAlias = Mapping[str, Any]
+class GetDatabaseFilterArgsDict(TypedDict):
+    name: _builtins.str
+    """
+    Attribute name to filter with.
+    """
+    values: Sequence[_builtins.str]
+    """
+    One or more values filter with.
+    """
 
 @pulumi.input_type
 class GetDatabaseFilterArgs:
@@ -2196,18 +2490,15 @@ class GetDatabaseFilterArgs:
         pulumi.set(self, "values", value)
 
 
-if not MYPY:
-    class GetFirewallGroupFilterArgsDict(TypedDict):
-        name: _builtins.str
-        """
-        Attribute name to filter with.
-        """
-        values: Sequence[_builtins.str]
-        """
-        One or more values filter with.
-        """
-elif False:
-    GetFirewallGroupFilterArgsDict: TypeAlias = Mapping[str, Any]
+class GetFirewallGroupFilterArgsDict(TypedDict):
+    name: _builtins.str
+    """
+    Attribute name to filter with.
+    """
+    values: Sequence[_builtins.str]
+    """
+    One or more values filter with.
+    """
 
 @pulumi.input_type
 class GetFirewallGroupFilterArgs:
@@ -2246,18 +2537,15 @@ class GetFirewallGroupFilterArgs:
         pulumi.set(self, "values", value)
 
 
-if not MYPY:
-    class GetInferenceFilterArgsDict(TypedDict):
-        name: _builtins.str
-        """
-        Attribute name to filter with.
-        """
-        values: Sequence[_builtins.str]
-        """
-        One or more values filter with.
-        """
-elif False:
-    GetInferenceFilterArgsDict: TypeAlias = Mapping[str, Any]
+class GetInferenceFilterArgsDict(TypedDict):
+    name: _builtins.str
+    """
+    Attribute name to filter with.
+    """
+    values: Sequence[_builtins.str]
+    """
+    One or more values filter with.
+    """
 
 @pulumi.input_type
 class GetInferenceFilterArgs:
@@ -2296,18 +2584,15 @@ class GetInferenceFilterArgs:
         pulumi.set(self, "values", value)
 
 
-if not MYPY:
-    class GetInstanceFilterArgsDict(TypedDict):
-        name: _builtins.str
-        """
-        Attribute name to filter with.
-        """
-        values: Sequence[_builtins.str]
-        """
-        One or more values filter with.
-        """
-elif False:
-    GetInstanceFilterArgsDict: TypeAlias = Mapping[str, Any]
+class GetInstanceFilterArgsDict(TypedDict):
+    name: _builtins.str
+    """
+    Attribute name to filter with.
+    """
+    values: Sequence[_builtins.str]
+    """
+    One or more values filter with.
+    """
 
 @pulumi.input_type
 class GetInstanceFilterArgs:
@@ -2346,18 +2631,15 @@ class GetInstanceFilterArgs:
         pulumi.set(self, "values", value)
 
 
-if not MYPY:
-    class GetInstanceIpv4FilterArgsDict(TypedDict):
-        name: _builtins.str
-        """
-        Attribute name to filter with.
-        """
-        values: Sequence[_builtins.str]
-        """
-        One or more values to filter with.
-        """
-elif False:
-    GetInstanceIpv4FilterArgsDict: TypeAlias = Mapping[str, Any]
+class GetInstanceIpv4FilterArgsDict(TypedDict):
+    name: _builtins.str
+    """
+    Attribute name to filter with.
+    """
+    values: Sequence[_builtins.str]
+    """
+    One or more values to filter with.
+    """
 
 @pulumi.input_type
 class GetInstanceIpv4FilterArgs:
@@ -2396,18 +2678,15 @@ class GetInstanceIpv4FilterArgs:
         pulumi.set(self, "values", value)
 
 
-if not MYPY:
-    class GetInstancesFilterArgsDict(TypedDict):
-        name: _builtins.str
-        """
-        Attribute name to filter with.
-        """
-        values: Sequence[_builtins.str]
-        """
-        One or more values filter with.
-        """
-elif False:
-    GetInstancesFilterArgsDict: TypeAlias = Mapping[str, Any]
+class GetInstancesFilterArgsDict(TypedDict):
+    name: _builtins.str
+    """
+    Attribute name to filter with.
+    """
+    values: Sequence[_builtins.str]
+    """
+    One or more values filter with.
+    """
 
 @pulumi.input_type
 class GetInstancesFilterArgs:
@@ -2446,18 +2725,15 @@ class GetInstancesFilterArgs:
         pulumi.set(self, "values", value)
 
 
-if not MYPY:
-    class GetIsoPrivateFilterArgsDict(TypedDict):
-        name: _builtins.str
-        """
-        Attribute name to filter with.
-        """
-        values: Sequence[_builtins.str]
-        """
-        One or more values filter with.
-        """
-elif False:
-    GetIsoPrivateFilterArgsDict: TypeAlias = Mapping[str, Any]
+class GetIsoPrivateFilterArgsDict(TypedDict):
+    name: _builtins.str
+    """
+    Attribute name to filter with.
+    """
+    values: Sequence[_builtins.str]
+    """
+    One or more values filter with.
+    """
 
 @pulumi.input_type
 class GetIsoPrivateFilterArgs:
@@ -2496,18 +2772,15 @@ class GetIsoPrivateFilterArgs:
         pulumi.set(self, "values", value)
 
 
-if not MYPY:
-    class GetIsoPublicFilterArgsDict(TypedDict):
-        name: _builtins.str
-        """
-        Attribute name to filter with.
-        """
-        values: Sequence[_builtins.str]
-        """
-        One or more values filter with.
-        """
-elif False:
-    GetIsoPublicFilterArgsDict: TypeAlias = Mapping[str, Any]
+class GetIsoPublicFilterArgsDict(TypedDict):
+    name: _builtins.str
+    """
+    Attribute name to filter with.
+    """
+    values: Sequence[_builtins.str]
+    """
+    One or more values filter with.
+    """
 
 @pulumi.input_type
 class GetIsoPublicFilterArgs:
@@ -2546,18 +2819,15 @@ class GetIsoPublicFilterArgs:
         pulumi.set(self, "values", value)
 
 
-if not MYPY:
-    class GetKubernetesFilterArgsDict(TypedDict):
-        name: _builtins.str
-        """
-        Attribute name to filter with.
-        """
-        values: Sequence[_builtins.str]
-        """
-        One or more values filter with.
-        """
-elif False:
-    GetKubernetesFilterArgsDict: TypeAlias = Mapping[str, Any]
+class GetKubernetesFilterArgsDict(TypedDict):
+    name: _builtins.str
+    """
+    Attribute name to filter with.
+    """
+    values: Sequence[_builtins.str]
+    """
+    One or more values filter with.
+    """
 
 @pulumi.input_type
 class GetKubernetesFilterArgs:
@@ -2596,18 +2866,15 @@ class GetKubernetesFilterArgs:
         pulumi.set(self, "values", value)
 
 
-if not MYPY:
-    class GetLoadBalancerFilterArgsDict(TypedDict):
-        name: _builtins.str
-        """
-        Attribute name to filter with.
-        """
-        values: Sequence[_builtins.str]
-        """
-        One or more values filter with.
-        """
-elif False:
-    GetLoadBalancerFilterArgsDict: TypeAlias = Mapping[str, Any]
+class GetLoadBalancerFilterArgsDict(TypedDict):
+    name: _builtins.str
+    """
+    Attribute name to filter with.
+    """
+    values: Sequence[_builtins.str]
+    """
+    One or more values filter with.
+    """
 
 @pulumi.input_type
 class GetLoadBalancerFilterArgs:
@@ -2646,18 +2913,15 @@ class GetLoadBalancerFilterArgs:
         pulumi.set(self, "values", value)
 
 
-if not MYPY:
-    class GetObjectStorageClusterFilterArgsDict(TypedDict):
-        name: _builtins.str
-        """
-        Attribute name to filter with.
-        """
-        values: Sequence[_builtins.str]
-        """
-        One or more values filter with.
-        """
-elif False:
-    GetObjectStorageClusterFilterArgsDict: TypeAlias = Mapping[str, Any]
+class GetObjectStorageClusterFilterArgsDict(TypedDict):
+    name: _builtins.str
+    """
+    Attribute name to filter with.
+    """
+    values: Sequence[_builtins.str]
+    """
+    One or more values filter with.
+    """
 
 @pulumi.input_type
 class GetObjectStorageClusterFilterArgs:
@@ -2696,18 +2960,15 @@ class GetObjectStorageClusterFilterArgs:
         pulumi.set(self, "values", value)
 
 
-if not MYPY:
-    class GetObjectStorageFilterArgsDict(TypedDict):
-        name: _builtins.str
-        """
-        Attribute name to filter with.
-        """
-        values: Sequence[_builtins.str]
-        """
-        One or more values filter with.
-        """
-elif False:
-    GetObjectStorageFilterArgsDict: TypeAlias = Mapping[str, Any]
+class GetObjectStorageFilterArgsDict(TypedDict):
+    name: _builtins.str
+    """
+    Attribute name to filter with.
+    """
+    values: Sequence[_builtins.str]
+    """
+    One or more values filter with.
+    """
 
 @pulumi.input_type
 class GetObjectStorageFilterArgs:
@@ -2746,18 +3007,15 @@ class GetObjectStorageFilterArgs:
         pulumi.set(self, "values", value)
 
 
-if not MYPY:
-    class GetObjectStorageTierFilterArgsDict(TypedDict):
-        name: _builtins.str
-        """
-        Attribute name to filter with.
-        """
-        values: Sequence[_builtins.str]
-        """
-        One or more values filter with.
-        """
-elif False:
-    GetObjectStorageTierFilterArgsDict: TypeAlias = Mapping[str, Any]
+class GetObjectStorageTierFilterArgsDict(TypedDict):
+    name: _builtins.str
+    """
+    Attribute name to filter with.
+    """
+    values: Sequence[_builtins.str]
+    """
+    One or more values filter with.
+    """
 
 @pulumi.input_type
 class GetObjectStorageTierFilterArgs:
@@ -2796,18 +3054,297 @@ class GetObjectStorageTierFilterArgs:
         pulumi.set(self, "values", value)
 
 
-if not MYPY:
-    class GetOsFilterArgsDict(TypedDict):
-        name: _builtins.str
+class GetOidcIssuerFilterArgsDict(TypedDict):
+    name: _builtins.str
+    """
+    Attribute name to filter with.
+    """
+    values: Sequence[_builtins.str]
+    """
+    One or more values filter with.
+    """
+
+@pulumi.input_type
+class GetOidcIssuerFilterArgs:
+    def __init__(__self__, *,
+                 name: _builtins.str,
+                 values: Sequence[_builtins.str]):
+        """
+        :param _builtins.str name: Attribute name to filter with.
+        :param Sequence[_builtins.str] values: One or more values filter with.
+        """
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "values", values)
+
+    @_builtins.property
+    @pulumi.getter
+    def name(self) -> _builtins.str:
         """
         Attribute name to filter with.
         """
-        values: Sequence[_builtins.str]
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: _builtins.str):
+        pulumi.set(self, "name", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def values(self) -> Sequence[_builtins.str]:
         """
         One or more values filter with.
         """
-elif False:
-    GetOsFilterArgsDict: TypeAlias = Mapping[str, Any]
+        return pulumi.get(self, "values")
+
+    @values.setter
+    def values(self, value: Sequence[_builtins.str]):
+        pulumi.set(self, "values", value)
+
+
+class GetOidcProviderFilterArgsDict(TypedDict):
+    name: _builtins.str
+    """
+    Attribute name to filter with.
+    """
+    values: Sequence[_builtins.str]
+    """
+    One or more values filter with.
+    """
+
+@pulumi.input_type
+class GetOidcProviderFilterArgs:
+    def __init__(__self__, *,
+                 name: _builtins.str,
+                 values: Sequence[_builtins.str]):
+        """
+        :param _builtins.str name: Attribute name to filter with.
+        :param Sequence[_builtins.str] values: One or more values filter with.
+        """
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "values", values)
+
+    @_builtins.property
+    @pulumi.getter
+    def name(self) -> _builtins.str:
+        """
+        Attribute name to filter with.
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: _builtins.str):
+        pulumi.set(self, "name", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def values(self) -> Sequence[_builtins.str]:
+        """
+        One or more values filter with.
+        """
+        return pulumi.get(self, "values")
+
+    @values.setter
+    def values(self, value: Sequence[_builtins.str]):
+        pulumi.set(self, "values", value)
+
+
+class GetOrganizationFilterArgsDict(TypedDict):
+    name: _builtins.str
+    """
+    Attribute name to filter with.
+    """
+    values: Sequence[_builtins.str]
+    """
+    One or more values filter with.
+    """
+
+@pulumi.input_type
+class GetOrganizationFilterArgs:
+    def __init__(__self__, *,
+                 name: _builtins.str,
+                 values: Sequence[_builtins.str]):
+        """
+        :param _builtins.str name: Attribute name to filter with.
+        :param Sequence[_builtins.str] values: One or more values filter with.
+        """
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "values", values)
+
+    @_builtins.property
+    @pulumi.getter
+    def name(self) -> _builtins.str:
+        """
+        Attribute name to filter with.
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: _builtins.str):
+        pulumi.set(self, "name", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def values(self) -> Sequence[_builtins.str]:
+        """
+        One or more values filter with.
+        """
+        return pulumi.get(self, "values")
+
+    @values.setter
+    def values(self, value: Sequence[_builtins.str]):
+        pulumi.set(self, "values", value)
+
+
+class GetOrganizationGroupFilterArgsDict(TypedDict):
+    name: _builtins.str
+    """
+    Attribute name to filter with.
+    """
+    values: Sequence[_builtins.str]
+    """
+    One or more values filter with.
+    """
+
+@pulumi.input_type
+class GetOrganizationGroupFilterArgs:
+    def __init__(__self__, *,
+                 name: _builtins.str,
+                 values: Sequence[_builtins.str]):
+        """
+        :param _builtins.str name: Attribute name to filter with.
+        :param Sequence[_builtins.str] values: One or more values filter with.
+        """
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "values", values)
+
+    @_builtins.property
+    @pulumi.getter
+    def name(self) -> _builtins.str:
+        """
+        Attribute name to filter with.
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: _builtins.str):
+        pulumi.set(self, "name", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def values(self) -> Sequence[_builtins.str]:
+        """
+        One or more values filter with.
+        """
+        return pulumi.get(self, "values")
+
+    @values.setter
+    def values(self, value: Sequence[_builtins.str]):
+        pulumi.set(self, "values", value)
+
+
+class GetOrganizationPolicyFilterArgsDict(TypedDict):
+    name: _builtins.str
+    """
+    Attribute name to filter with.
+    """
+    values: Sequence[_builtins.str]
+    """
+    One or more values filter with.
+    """
+
+@pulumi.input_type
+class GetOrganizationPolicyFilterArgs:
+    def __init__(__self__, *,
+                 name: _builtins.str,
+                 values: Sequence[_builtins.str]):
+        """
+        :param _builtins.str name: Attribute name to filter with.
+        :param Sequence[_builtins.str] values: One or more values filter with.
+        """
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "values", values)
+
+    @_builtins.property
+    @pulumi.getter
+    def name(self) -> _builtins.str:
+        """
+        Attribute name to filter with.
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: _builtins.str):
+        pulumi.set(self, "name", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def values(self) -> Sequence[_builtins.str]:
+        """
+        One or more values filter with.
+        """
+        return pulumi.get(self, "values")
+
+    @values.setter
+    def values(self, value: Sequence[_builtins.str]):
+        pulumi.set(self, "values", value)
+
+
+class GetOrganizationRoleFilterArgsDict(TypedDict):
+    name: _builtins.str
+    """
+    Attribute name to filter with.
+    """
+    values: Sequence[_builtins.str]
+    """
+    One or more values filter with.
+    """
+
+@pulumi.input_type
+class GetOrganizationRoleFilterArgs:
+    def __init__(__self__, *,
+                 name: _builtins.str,
+                 values: Sequence[_builtins.str]):
+        """
+        :param _builtins.str name: Attribute name to filter with.
+        :param Sequence[_builtins.str] values: One or more values filter with.
+        """
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "values", values)
+
+    @_builtins.property
+    @pulumi.getter
+    def name(self) -> _builtins.str:
+        """
+        Attribute name to filter with.
+        """
+        return pulumi.get(self, "name")
+
+    @name.setter
+    def name(self, value: _builtins.str):
+        pulumi.set(self, "name", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def values(self) -> Sequence[_builtins.str]:
+        """
+        One or more values filter with.
+        """
+        return pulumi.get(self, "values")
+
+    @values.setter
+    def values(self, value: Sequence[_builtins.str]):
+        pulumi.set(self, "values", value)
+
+
+class GetOsFilterArgsDict(TypedDict):
+    name: _builtins.str
+    """
+    Attribute name to filter with.
+    """
+    values: Sequence[_builtins.str]
+    """
+    One or more values filter with.
+    """
 
 @pulumi.input_type
 class GetOsFilterArgs:
@@ -2846,18 +3383,15 @@ class GetOsFilterArgs:
         pulumi.set(self, "values", value)
 
 
-if not MYPY:
-    class GetPlanFilterArgsDict(TypedDict):
-        name: _builtins.str
-        """
-        Attribute name to filter with.
-        """
-        values: Sequence[_builtins.str]
-        """
-        One or more values filter with.
-        """
-elif False:
-    GetPlanFilterArgsDict: TypeAlias = Mapping[str, Any]
+class GetPlanFilterArgsDict(TypedDict):
+    name: _builtins.str
+    """
+    Attribute name to filter with.
+    """
+    values: Sequence[_builtins.str]
+    """
+    One or more values filter with.
+    """
 
 @pulumi.input_type
 class GetPlanFilterArgs:
@@ -2896,18 +3430,15 @@ class GetPlanFilterArgs:
         pulumi.set(self, "values", value)
 
 
-if not MYPY:
-    class GetRegionFilterArgsDict(TypedDict):
-        name: _builtins.str
-        """
-        Attribute name to filter with.
-        """
-        values: Sequence[_builtins.str]
-        """
-        One or more values filter with.
-        """
-elif False:
-    GetRegionFilterArgsDict: TypeAlias = Mapping[str, Any]
+class GetRegionFilterArgsDict(TypedDict):
+    name: _builtins.str
+    """
+    Attribute name to filter with.
+    """
+    values: Sequence[_builtins.str]
+    """
+    One or more values filter with.
+    """
 
 @pulumi.input_type
 class GetRegionFilterArgs:
@@ -2946,18 +3477,15 @@ class GetRegionFilterArgs:
         pulumi.set(self, "values", value)
 
 
-if not MYPY:
-    class GetReservedIpFilterArgsDict(TypedDict):
-        name: _builtins.str
-        """
-        Attribute name to filter with.
-        """
-        values: Sequence[_builtins.str]
-        """
-        One or more values filter with.
-        """
-elif False:
-    GetReservedIpFilterArgsDict: TypeAlias = Mapping[str, Any]
+class GetReservedIpFilterArgsDict(TypedDict):
+    name: _builtins.str
+    """
+    Attribute name to filter with.
+    """
+    values: Sequence[_builtins.str]
+    """
+    One or more values filter with.
+    """
 
 @pulumi.input_type
 class GetReservedIpFilterArgs:
@@ -2996,18 +3524,15 @@ class GetReservedIpFilterArgs:
         pulumi.set(self, "values", value)
 
 
-if not MYPY:
-    class GetReverseIpv4FilterArgsDict(TypedDict):
-        name: _builtins.str
-        """
-        Attribute name to filter with.
-        """
-        values: Sequence[_builtins.str]
-        """
-        One or more values to filter with.
-        """
-elif False:
-    GetReverseIpv4FilterArgsDict: TypeAlias = Mapping[str, Any]
+class GetReverseIpv4FilterArgsDict(TypedDict):
+    name: _builtins.str
+    """
+    Attribute name to filter with.
+    """
+    values: Sequence[_builtins.str]
+    """
+    One or more values to filter with.
+    """
 
 @pulumi.input_type
 class GetReverseIpv4FilterArgs:
@@ -3046,18 +3571,15 @@ class GetReverseIpv4FilterArgs:
         pulumi.set(self, "values", value)
 
 
-if not MYPY:
-    class GetReverseIpv6FilterArgsDict(TypedDict):
-        name: _builtins.str
-        """
-        Attribute name to filter with.
-        """
-        values: Sequence[_builtins.str]
-        """
-        One or more values to filter with.
-        """
-elif False:
-    GetReverseIpv6FilterArgsDict: TypeAlias = Mapping[str, Any]
+class GetReverseIpv6FilterArgsDict(TypedDict):
+    name: _builtins.str
+    """
+    Attribute name to filter with.
+    """
+    values: Sequence[_builtins.str]
+    """
+    One or more values to filter with.
+    """
 
 @pulumi.input_type
 class GetReverseIpv6FilterArgs:
@@ -3096,18 +3618,15 @@ class GetReverseIpv6FilterArgs:
         pulumi.set(self, "values", value)
 
 
-if not MYPY:
-    class GetSnapshotFilterArgsDict(TypedDict):
-        name: _builtins.str
-        """
-        Attribute name to filter with.
-        """
-        values: Sequence[_builtins.str]
-        """
-        One or more values filter with.
-        """
-elif False:
-    GetSnapshotFilterArgsDict: TypeAlias = Mapping[str, Any]
+class GetSnapshotFilterArgsDict(TypedDict):
+    name: _builtins.str
+    """
+    Attribute name to filter with.
+    """
+    values: Sequence[_builtins.str]
+    """
+    One or more values filter with.
+    """
 
 @pulumi.input_type
 class GetSnapshotFilterArgs:
@@ -3146,18 +3665,15 @@ class GetSnapshotFilterArgs:
         pulumi.set(self, "values", value)
 
 
-if not MYPY:
-    class GetSshKeyFilterArgsDict(TypedDict):
-        name: _builtins.str
-        """
-        Attribute name to filter with.
-        """
-        values: Sequence[_builtins.str]
-        """
-        One or more values filter with.
-        """
-elif False:
-    GetSshKeyFilterArgsDict: TypeAlias = Mapping[str, Any]
+class GetSshKeyFilterArgsDict(TypedDict):
+    name: _builtins.str
+    """
+    Attribute name to filter with.
+    """
+    values: Sequence[_builtins.str]
+    """
+    One or more values filter with.
+    """
 
 @pulumi.input_type
 class GetSshKeyFilterArgs:
@@ -3196,18 +3712,15 @@ class GetSshKeyFilterArgs:
         pulumi.set(self, "values", value)
 
 
-if not MYPY:
-    class GetStartupScriptFilterArgsDict(TypedDict):
-        name: _builtins.str
-        """
-        Attribute name to filter with.
-        """
-        values: Sequence[_builtins.str]
-        """
-        One or more values filter with.
-        """
-elif False:
-    GetStartupScriptFilterArgsDict: TypeAlias = Mapping[str, Any]
+class GetStartupScriptFilterArgsDict(TypedDict):
+    name: _builtins.str
+    """
+    Attribute name to filter with.
+    """
+    values: Sequence[_builtins.str]
+    """
+    One or more values filter with.
+    """
 
 @pulumi.input_type
 class GetStartupScriptFilterArgs:
@@ -3246,18 +3759,15 @@ class GetStartupScriptFilterArgs:
         pulumi.set(self, "values", value)
 
 
-if not MYPY:
-    class GetUserFilterArgsDict(TypedDict):
-        name: _builtins.str
-        """
-        Attribute name to filter with.
-        """
-        values: Sequence[_builtins.str]
-        """
-        One or more values filter with.
-        """
-elif False:
-    GetUserFilterArgsDict: TypeAlias = Mapping[str, Any]
+class GetUserFilterArgsDict(TypedDict):
+    name: _builtins.str
+    """
+    Attribute name to filter with.
+    """
+    values: Sequence[_builtins.str]
+    """
+    One or more values filter with.
+    """
 
 @pulumi.input_type
 class GetUserFilterArgs:
@@ -3296,18 +3806,15 @@ class GetUserFilterArgs:
         pulumi.set(self, "values", value)
 
 
-if not MYPY:
-    class GetVirtualFileSystemStorageFilterArgsDict(TypedDict):
-        name: _builtins.str
-        """
-        Attribute name to filter with.
-        """
-        values: Sequence[_builtins.str]
-        """
-        One or more values filter with.
-        """
-elif False:
-    GetVirtualFileSystemStorageFilterArgsDict: TypeAlias = Mapping[str, Any]
+class GetVirtualFileSystemStorageFilterArgsDict(TypedDict):
+    name: _builtins.str
+    """
+    Attribute name to filter with.
+    """
+    values: Sequence[_builtins.str]
+    """
+    One or more values filter with.
+    """
 
 @pulumi.input_type
 class GetVirtualFileSystemStorageFilterArgs:
@@ -3346,18 +3853,15 @@ class GetVirtualFileSystemStorageFilterArgs:
         pulumi.set(self, "values", value)
 
 
-if not MYPY:
-    class GetVpc2FilterArgsDict(TypedDict):
-        name: _builtins.str
-        """
-        Attribute name to filter with.
-        """
-        values: Sequence[_builtins.str]
-        """
-        One or more values filter with.
-        """
-elif False:
-    GetVpc2FilterArgsDict: TypeAlias = Mapping[str, Any]
+class GetVpc2FilterArgsDict(TypedDict):
+    name: _builtins.str
+    """
+    Attribute name to filter with.
+    """
+    values: Sequence[_builtins.str]
+    """
+    One or more values filter with.
+    """
 
 @pulumi.input_type
 class GetVpc2FilterArgs:
@@ -3396,18 +3900,15 @@ class GetVpc2FilterArgs:
         pulumi.set(self, "values", value)
 
 
-if not MYPY:
-    class GetVpcFilterArgsDict(TypedDict):
-        name: _builtins.str
-        """
-        Attribute name to filter with.
-        """
-        values: Sequence[_builtins.str]
-        """
-        One or more values filter with.
-        """
-elif False:
-    GetVpcFilterArgsDict: TypeAlias = Mapping[str, Any]
+class GetVpcFilterArgsDict(TypedDict):
+    name: _builtins.str
+    """
+    Attribute name to filter with.
+    """
+    values: Sequence[_builtins.str]
+    """
+    One or more values filter with.
+    """
 
 @pulumi.input_type
 class GetVpcFilterArgs:

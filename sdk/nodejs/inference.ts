@@ -15,7 +15,7 @@ import * as utilities from "./utilities";
  * import * as pulumi from "@pulumi/pulumi";
  * import * as vultr from "@ediri/vultr";
  *
- * const myInferenceSubscription = new vultr.Inference("myInferenceSubscription", {label: "my_inference_label"});
+ * const myInferenceSubscription = new vultr.Inference("my_inference_subscription", {label: "my_inference_label"});
  * ```
  *
  * ## Import
@@ -66,7 +66,6 @@ export class Inference extends pulumi.CustomResource {
      * A label for the inference subscription.
      */
     declare public readonly label: pulumi.Output<string>;
-    declare public /*out*/ readonly usage: pulumi.Output<{[key: string]: string}>;
 
     /**
      * Create a Inference resource with the given unique name, arguments, and options.
@@ -84,7 +83,6 @@ export class Inference extends pulumi.CustomResource {
             resourceInputs["apiKey"] = state?.apiKey;
             resourceInputs["dateCreated"] = state?.dateCreated;
             resourceInputs["label"] = state?.label;
-            resourceInputs["usage"] = state?.usage;
         } else {
             const args = argsOrState as InferenceArgs | undefined;
             if (args?.label === undefined && !opts.urn) {
@@ -93,7 +91,6 @@ export class Inference extends pulumi.CustomResource {
             resourceInputs["label"] = args?.label;
             resourceInputs["apiKey"] = undefined /*out*/;
             resourceInputs["dateCreated"] = undefined /*out*/;
-            resourceInputs["usage"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(Inference.__pulumiType, name, resourceInputs, opts);
@@ -116,7 +113,6 @@ export interface InferenceState {
      * A label for the inference subscription.
      */
     label?: pulumi.Input<string>;
-    usage?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
 }
 
 /**

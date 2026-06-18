@@ -28,10 +28,13 @@ class GetRegionResult:
     """
     A collection of values returned by getRegion.
     """
-    def __init__(__self__, city=None, continent=None, country=None, filters=None, id=None, options=None):
+    def __init__(__self__, city=None, connectivities=None, continent=None, country=None, filters=None, id=None, options=None):
         if city and not isinstance(city, str):
             raise TypeError("Expected argument 'city' to be a str")
         pulumi.set(__self__, "city", city)
+        if connectivities and not isinstance(connectivities, list):
+            raise TypeError("Expected argument 'connectivities' to be a list")
+        pulumi.set(__self__, "connectivities", connectivities)
         if continent and not isinstance(continent, str):
             raise TypeError("Expected argument 'continent' to be a str")
         pulumi.set(__self__, "continent", continent)
@@ -55,6 +58,14 @@ class GetRegionResult:
         The city the region is in.
         """
         return pulumi.get(self, "city")
+
+    @_builtins.property
+    @pulumi.getter
+    def connectivities(self) -> Sequence[_builtins.str]:
+        """
+        Lists the region's connectivity options, such as `public_ip` and `nat_gateway`.
+        """
+        return pulumi.get(self, "connectivities")
 
     @_builtins.property
     @pulumi.getter
@@ -101,6 +112,7 @@ class AwaitableGetRegionResult(GetRegionResult):
             yield self
         return GetRegionResult(
             city=self.city,
+            connectivities=self.connectivities,
             continent=self.continent,
             country=self.country,
             filters=self.filters,
@@ -137,6 +149,7 @@ def get_region(filters: Optional[Sequence[Union['GetRegionFilterArgs', 'GetRegio
 
     return AwaitableGetRegionResult(
         city=pulumi.get(__ret__, 'city'),
+        connectivities=pulumi.get(__ret__, 'connectivities'),
         continent=pulumi.get(__ret__, 'continent'),
         country=pulumi.get(__ret__, 'country'),
         filters=pulumi.get(__ret__, 'filters'),
@@ -170,6 +183,7 @@ def get_region_output(filters: Optional[pulumi.Input[Optional[Sequence[Union['Ge
     __ret__ = pulumi.runtime.invoke_output('vultr:index/getRegion:getRegion', __args__, opts=opts, typ=GetRegionResult)
     return __ret__.apply(lambda __response__: GetRegionResult(
         city=pulumi.get(__response__, 'city'),
+        connectivities=pulumi.get(__response__, 'connectivities'),
         continent=pulumi.get(__response__, 'continent'),
         country=pulumi.get(__response__, 'country'),
         filters=pulumi.get(__response__, 'filters'),

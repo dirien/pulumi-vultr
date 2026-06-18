@@ -25,6 +25,7 @@ class ReservedIpArgs:
                  label: Optional[pulumi.Input[_builtins.str]] = None):
         """
         The set of arguments for constructing a ReservedIp resource.
+
         :param pulumi.Input[_builtins.str] ip_type: The type of reserved IP that you want. Either "v4" or "v6".
         :param pulumi.Input[_builtins.str] region: The region ID that you want the reserved IP to be created in.
         :param pulumi.Input[_builtins.str] instance_id: The VPS ID you want this reserved IP to be attached to.
@@ -97,6 +98,7 @@ class _ReservedIpState:
                  subnet_size: Optional[pulumi.Input[_builtins.int]] = None):
         """
         Input properties used for looking up and filtering ReservedIp resources.
+
         :param pulumi.Input[_builtins.str] instance_id: The VPS ID you want this reserved IP to be attached to.
         :param pulumi.Input[_builtins.str] ip_type: The type of reserved IP that you want. Either "v4" or "v6".
         :param pulumi.Input[_builtins.str] label: The label you want to give your reserved IP.
@@ -212,10 +214,10 @@ class ReservedIp(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_reserved_ip = vultr.ReservedIp("myReservedIp",
-            ip_type="v4",
+        my_reserved_ip = vultr.ReservedIp("my_reserved_ip",
             label="my-reserved-ip",
-            region="sea")
+            region="sea",
+            ip_type="v4")
         ```
 
         Attach a reserved IP to a instance:
@@ -224,11 +226,11 @@ class ReservedIp(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_reserved_ip = vultr.ReservedIp("myReservedIp",
-            instance_id="b9cc6fad-70b1-40ee-ab6a-4d622858962f",
-            ip_type="v4",
+        my_reserved_ip = vultr.ReservedIp("my_reserved_ip",
             label="my-reserved-ip",
-            region="sea")
+            region="sea",
+            ip_type="v4",
+            instance_id="b9cc6fad-70b1-40ee-ab6a-4d622858962f")
         ```
 
         ## Import
@@ -238,6 +240,7 @@ class ReservedIp(pulumi.CustomResource):
         ```sh
         $ pulumi import vultr:index/reservedIp:ReservedIp my_reserved_ip b9cc6fad-70b1-40ee-ab6a-4d622858962f
         ```
+
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -263,10 +266,10 @@ class ReservedIp(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_reserved_ip = vultr.ReservedIp("myReservedIp",
-            ip_type="v4",
+        my_reserved_ip = vultr.ReservedIp("my_reserved_ip",
             label="my-reserved-ip",
-            region="sea")
+            region="sea",
+            ip_type="v4")
         ```
 
         Attach a reserved IP to a instance:
@@ -275,11 +278,11 @@ class ReservedIp(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_reserved_ip = vultr.ReservedIp("myReservedIp",
-            instance_id="b9cc6fad-70b1-40ee-ab6a-4d622858962f",
-            ip_type="v4",
+        my_reserved_ip = vultr.ReservedIp("my_reserved_ip",
             label="my-reserved-ip",
-            region="sea")
+            region="sea",
+            ip_type="v4",
+            instance_id="b9cc6fad-70b1-40ee-ab6a-4d622858962f")
         ```
 
         ## Import
@@ -289,6 +292,7 @@ class ReservedIp(pulumi.CustomResource):
         ```sh
         $ pulumi import vultr:index/reservedIp:ReservedIp my_reserved_ip b9cc6fad-70b1-40ee-ab6a-4d622858962f
         ```
+
 
         :param str resource_name: The name of the resource.
         :param ReservedIpArgs args: The arguments to use to populate this resource's properties.

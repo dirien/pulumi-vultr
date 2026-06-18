@@ -24,6 +24,7 @@ class ObjectStorageArgs:
                  label: Optional[pulumi.Input[_builtins.str]] = None):
         """
         The set of arguments for constructing a ObjectStorage resource.
+
         :param pulumi.Input[_builtins.int] cluster_id: The ID of the region that you want the object storage to be deployed in.
         :param pulumi.Input[_builtins.int] tier_id: The ID of the tier to deploy the storage under.
         :param pulumi.Input[_builtins.str] label: The description you want to give your object storage.
@@ -85,6 +86,7 @@ class _ObjectStorageState:
                  tier_id: Optional[pulumi.Input[_builtins.int]] = None):
         """
         Input properties used for looking up and filtering ObjectStorage resources.
+
         :param pulumi.Input[_builtins.int] cluster_id: The ID of the region that you want the object storage to be deployed in.
         :param pulumi.Input[_builtins.str] date_created: Date of creation for the object storage subscription.
         :param pulumi.Input[_builtins.str] label: The description you want to give your object storage.
@@ -261,8 +263,13 @@ class ObjectStorage(pulumi.CustomResource):
 
         tf = vultr.ObjectStorage("tf",
             cluster_id=9,
+            tier_id=4,
             label="vultr-object-storage",
-            tier_id=4)
+            bucket=[{
+                "name": "my-bucket",
+                "enableVersioning": True,
+                "enableLock": True,
+            }])
         ```
 
         ## Import
@@ -272,6 +279,7 @@ class ObjectStorage(pulumi.CustomResource):
         ```sh
         $ pulumi import vultr:index/objectStorage:ObjectStorage my_s3 0e04f918-575e-41cb-86f6-d729b354a5a1
         ```
+
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -298,8 +306,13 @@ class ObjectStorage(pulumi.CustomResource):
 
         tf = vultr.ObjectStorage("tf",
             cluster_id=9,
+            tier_id=4,
             label="vultr-object-storage",
-            tier_id=4)
+            bucket=[{
+                "name": "my-bucket",
+                "enableVersioning": True,
+                "enableLock": True,
+            }])
         ```
 
         ## Import
@@ -309,6 +322,7 @@ class ObjectStorage(pulumi.CustomResource):
         ```sh
         $ pulumi import vultr:index/objectStorage:ObjectStorage my_s3 0e04f918-575e-41cb-86f6-d729b354a5a1
         ```
+
 
         :param str resource_name: The name of the resource.
         :param ObjectStorageArgs args: The arguments to use to populate this resource's properties.

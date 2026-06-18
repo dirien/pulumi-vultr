@@ -67,6 +67,8 @@ type GetRegionArgs struct {
 type GetRegionResult struct {
 	// The city the region is in.
 	City string `pulumi:"city"`
+	// Lists the region's connectivity options, such as `publicIp` and `natGateway`.
+	Connectivities []string `pulumi:"connectivities"`
 	// The continent the region is in.
 	Continent string `pulumi:"continent"`
 	// The country the region is in.
@@ -115,6 +117,11 @@ func (o GetRegionResultOutput) ToGetRegionResultOutputWithContext(ctx context.Co
 // The city the region is in.
 func (o GetRegionResultOutput) City() pulumi.StringOutput {
 	return o.ApplyT(func(v GetRegionResult) string { return v.City }).(pulumi.StringOutput)
+}
+
+// Lists the region's connectivity options, such as `publicIp` and `natGateway`.
+func (o GetRegionResultOutput) Connectivities() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetRegionResult) []string { return v.Connectivities }).(pulumi.StringArrayOutput)
 }
 
 // The continent the region is in.

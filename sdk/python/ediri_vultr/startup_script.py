@@ -24,6 +24,7 @@ class StartupScriptArgs:
                  type: Optional[pulumi.Input[_builtins.str]] = None):
         """
         The set of arguments for constructing a StartupScript resource.
+
         :param pulumi.Input[_builtins.str] script: Contents of the startup script base64 encoded.
         :param pulumi.Input[_builtins.str] name: Name of the given script.
         :param pulumi.Input[_builtins.str] type: Type of startup script. Possible values are boot or pxe - default is boot.
@@ -81,6 +82,7 @@ class _StartupScriptState:
                  type: Optional[pulumi.Input[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering StartupScript resources.
+
         :param pulumi.Input[_builtins.str] date_created: Date the script was created.
         :param pulumi.Input[_builtins.str] date_modified: Date the script was last modified.
         :param pulumi.Input[_builtins.str] name: Name of the given script.
@@ -180,7 +182,9 @@ class StartupScript(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_script = vultr.StartupScript("myScript", script="ZWNobyAkUEFUSAo=")
+        my_script = vultr.StartupScript("my_script",
+            name="echo_path",
+            script="ZWNobyAkUEFUSAo=")
         ```
 
         ## Import
@@ -190,6 +194,7 @@ class StartupScript(pulumi.CustomResource):
         ```sh
         $ pulumi import vultr:index/startupScript:StartupScript my_script ff8f36a8-eb86-4b8d-8667-b9d5459b6390
         ```
+
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -214,7 +219,9 @@ class StartupScript(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_script = vultr.StartupScript("myScript", script="ZWNobyAkUEFUSAo=")
+        my_script = vultr.StartupScript("my_script",
+            name="echo_path",
+            script="ZWNobyAkUEFUSAo=")
         ```
 
         ## Import
@@ -224,6 +231,7 @@ class StartupScript(pulumi.CustomResource):
         ```sh
         $ pulumi import vultr:index/startupScript:StartupScript my_script ff8f36a8-eb86-4b8d-8667-b9d5459b6390
         ```
+
 
         :param str resource_name: The name of the resource.
         :param StartupScriptArgs args: The arguments to use to populate this resource's properties.

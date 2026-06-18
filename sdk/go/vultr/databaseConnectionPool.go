@@ -30,8 +30,9 @@ import (
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := vultr.NewDatabaseConnectionPool(ctx, "myDatabaseConnectionPool", &vultr.DatabaseConnectionPoolArgs{
-//				DatabaseId: pulumi.Any(vultr_database.My_database.Id),
+//			_, err := vultr.NewDatabaseConnectionPool(ctx, "my_database_connection_pool", &vultr.DatabaseConnectionPoolArgs{
+//				DatabaseId: pulumi.Any(myDatabase.Id),
+//				Name:       pulumi.String("my_database_connection_pool_name"),
 //				Database:   pulumi.String("defaultdb"),
 //				Username:   pulumi.String("vultradmin"),
 //				Mode:       pulumi.String("transaction"),

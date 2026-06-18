@@ -17,8 +17,13 @@ import * as utilities from "./utilities";
  *
  * const tf = new vultr.ObjectStorage("tf", {
  *     clusterId: 9,
- *     label: "vultr-object-storage",
  *     tierId: 4,
+ *     label: "vultr-object-storage",
+ *     bucket: [{
+ *         name: "my-bucket",
+ *         enableVersioning: true,
+ *         enableLock: true,
+ *     }],
  * });
  * ```
  *

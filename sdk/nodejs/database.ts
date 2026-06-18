@@ -17,12 +17,12 @@ import * as utilities from "./utilities";
  * import * as pulumi from "@pulumi/pulumi";
  * import * as vultr from "@ediri/vultr";
  *
- * const myDatabase = new vultr.Database("myDatabase", {
+ * const myDatabase = new vultr.Database("my_database", {
  *     databaseEngine: "pg",
  *     databaseEngineVersion: "15",
- *     label: "my_database_label",
- *     plan: "vultr-dbaas-startup-cc-1-55-2",
  *     region: "ewr",
+ *     plan: "vultr-dbaas-startup-cc-1-55-2",
+ *     label: "my_database_label",
  * });
  * ```
  *
@@ -32,16 +32,16 @@ import * as utilities from "./utilities";
  * import * as pulumi from "@pulumi/pulumi";
  * import * as vultr from "@ediri/vultr";
  *
- * const myDatabase = new vultr.Database("myDatabase", {
- *     clusterTimeZone: "America/New_York",
+ * const myDatabase = new vultr.Database("my_database", {
  *     databaseEngine: "pg",
  *     databaseEngineVersion: "15",
+ *     region: "ewr",
+ *     plan: "vultr-dbaas-startup-cc-1-55-2",
  *     label: "my_database_label",
+ *     tag: "some tag",
+ *     clusterTimeZone: "America/New_York",
  *     maintenanceDow: "sunday",
  *     maintenanceTime: "01:00",
- *     plan: "vultr-dbaas-startup-cc-1-55-2",
- *     region: "ewr",
- *     tag: "some tag",
  * });
  * ```
  *
@@ -97,6 +97,10 @@ export class Database extends pulumi.CustomResource {
      * The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
      */
     declare public readonly backupMinute: pulumi.Output<string | undefined>;
+    /**
+     * The CA certificate for Managed Databases on this account.
+     */
+    declare public /*out*/ readonly caCertificate: pulumi.Output<string>;
     /**
      * The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
      */
@@ -178,6 +182,10 @@ export class Database extends pulumi.CustomResource {
      * The password for the managed database's primary admin user.
      */
     declare public readonly password: pulumi.Output<string>;
+    /**
+     * Charges due for this managed database subscription at the end of the billing period.
+     */
+    declare public /*out*/ readonly pendingCharges: pulumi.Output<number>;
     /**
      * The ID of the plan that you want the managed database to subscribe to. [See List Managed Database Plans](https://www.vultr.com/api/#tag/managed-databases/operation/list-database-plans)
      */
@@ -264,6 +272,7 @@ export class Database extends pulumi.CustomResource {
             resourceInputs["accessKey"] = state?.accessKey;
             resourceInputs["backupHour"] = state?.backupHour;
             resourceInputs["backupMinute"] = state?.backupMinute;
+            resourceInputs["caCertificate"] = state?.caCertificate;
             resourceInputs["clusterTimeZone"] = state?.clusterTimeZone;
             resourceInputs["databaseEngine"] = state?.databaseEngine;
             resourceInputs["databaseEngineVersion"] = state?.databaseEngineVersion;
@@ -285,6 +294,7 @@ export class Database extends pulumi.CustomResource {
             resourceInputs["mysqlSlowQueryLog"] = state?.mysqlSlowQueryLog;
             resourceInputs["mysqlSqlModes"] = state?.mysqlSqlModes;
             resourceInputs["password"] = state?.password;
+            resourceInputs["pendingCharges"] = state?.pendingCharges;
             resourceInputs["plan"] = state?.plan;
             resourceInputs["planBrokers"] = state?.planBrokers;
             resourceInputs["planDisk"] = state?.planDisk;
@@ -352,10 +362,12 @@ export class Database extends pulumi.CustomResource {
             resourceInputs["tag"] = args?.tag;
             resourceInputs["trustedIps"] = args?.trustedIps;
             resourceInputs["vpcId"] = args?.vpcId;
+            resourceInputs["caCertificate"] = undefined /*out*/;
             resourceInputs["dateCreated"] = undefined /*out*/;
             resourceInputs["dbname"] = undefined /*out*/;
             resourceInputs["host"] = undefined /*out*/;
             resourceInputs["latestBackup"] = undefined /*out*/;
+            resourceInputs["pendingCharges"] = undefined /*out*/;
             resourceInputs["planRam"] = undefined /*out*/;
             resourceInputs["planVcpus"] = undefined /*out*/;
             resourceInputs["port"] = undefined /*out*/;
@@ -387,6 +399,10 @@ export interface DatabaseState {
      * The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
      */
     backupMinute?: pulumi.Input<string>;
+    /**
+     * The CA certificate for Managed Databases on this account.
+     */
+    caCertificate?: pulumi.Input<string>;
     /**
      * The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
      */
@@ -468,6 +484,10 @@ export interface DatabaseState {
      * The password for the managed database's primary admin user.
      */
     password?: pulumi.Input<string>;
+    /**
+     * Charges due for this managed database subscription at the end of the billing period.
+     */
+    pendingCharges?: pulumi.Input<number>;
     /**
      * The ID of the plan that you want the managed database to subscribe to. [See List Managed Database Plans](https://www.vultr.com/api/#tag/managed-databases/operation/list-database-plans)
      */

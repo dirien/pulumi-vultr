@@ -15,10 +15,11 @@ import * as utilities from "./utilities";
  * import * as pulumi from "@pulumi/pulumi";
  * import * as vultr from "@ediri/vultr";
  *
- * const myUser = new vultr.User("myUser", {
- *     apiEnabled: true,
+ * const myUser = new vultr.User("my_user", {
+ *     name: "my user",
  *     email: "user@vultr.com",
  *     password: "myP@ssw0rd",
+ *     apiEnabled: true,
  * });
  * ```
  *
@@ -28,7 +29,11 @@ import * as utilities from "./utilities";
  * import * as pulumi from "@pulumi/pulumi";
  * import * as vultr from "@ediri/vultr";
  *
- * const myUser = new vultr.User("myUser", {
+ * const myUser = new vultr.User("my_user", {
+ *     name: "my user",
+ *     email: "user@vultr.com",
+ *     password: "myP@ssw0rd",
+ *     apiEnabled: true,
  *     acls: [
  *         "manage_users",
  *         "subscriptions",
@@ -39,9 +44,7 @@ import * as utilities from "./utilities";
  *         "dns",
  *         "upgrade",
  *     ],
- *     apiEnabled: true,
- *     email: "user@vultr.com",
- *     password: "myP@ssw0rd",
+ *     serviceUser: true,
  * });
  * ```
  *
@@ -82,7 +85,9 @@ export class User extends pulumi.CustomResource {
     }
 
     /**
-     * The access control list for the user.
+     * The access control list for the user. 
+     * <<<<<<< HEAD
+     * =======
      */
     declare public readonly acls: pulumi.Output<string[] | undefined>;
     /**
@@ -95,6 +100,10 @@ export class User extends pulumi.CustomResource {
      */
     declare public readonly email: pulumi.Output<string>;
     /**
+     * A list of UUIDs of groups which should be attached to this user.
+     */
+    declare public readonly groups: pulumi.Output<string[] | undefined>;
+    /**
      * Name for this user.
      */
     declare public readonly name: pulumi.Output<string>;
@@ -102,6 +111,15 @@ export class User extends pulumi.CustomResource {
      * Password for this user.
      */
     declare public readonly password: pulumi.Output<string>;
+    /**
+     * A list of UUIDs of roles which should be attached to this user.
+     * >>>>>>> beta-organization
+     */
+    declare public readonly roles: pulumi.Output<string[] | undefined>;
+    /**
+     * Whether the user is a service user.
+     */
+    declare public readonly serviceUser: pulumi.Output<boolean | undefined>;
 
     /**
      * Create a User resource with the given unique name, arguments, and options.
@@ -120,8 +138,11 @@ export class User extends pulumi.CustomResource {
             resourceInputs["apiEnabled"] = state?.apiEnabled;
             resourceInputs["apiKey"] = state?.apiKey;
             resourceInputs["email"] = state?.email;
+            resourceInputs["groups"] = state?.groups;
             resourceInputs["name"] = state?.name;
             resourceInputs["password"] = state?.password;
+            resourceInputs["roles"] = state?.roles;
+            resourceInputs["serviceUser"] = state?.serviceUser;
         } else {
             const args = argsOrState as UserArgs | undefined;
             if (args?.email === undefined && !opts.urn) {
@@ -133,8 +154,11 @@ export class User extends pulumi.CustomResource {
             resourceInputs["acls"] = args?.acls;
             resourceInputs["apiEnabled"] = args?.apiEnabled;
             resourceInputs["email"] = args?.email;
+            resourceInputs["groups"] = args?.groups;
             resourceInputs["name"] = args?.name;
             resourceInputs["password"] = args?.password ? pulumi.secret(args.password) : undefined;
+            resourceInputs["roles"] = args?.roles;
+            resourceInputs["serviceUser"] = args?.serviceUser;
             resourceInputs["apiKey"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
@@ -149,7 +173,9 @@ export class User extends pulumi.CustomResource {
  */
 export interface UserState {
     /**
-     * The access control list for the user.
+     * The access control list for the user. 
+     * <<<<<<< HEAD
+     * =======
      */
     acls?: pulumi.Input<pulumi.Input<string>[]>;
     /**
@@ -162,6 +188,10 @@ export interface UserState {
      */
     email?: pulumi.Input<string>;
     /**
+     * A list of UUIDs of groups which should be attached to this user.
+     */
+    groups?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
      * Name for this user.
      */
     name?: pulumi.Input<string>;
@@ -169,6 +199,15 @@ export interface UserState {
      * Password for this user.
      */
     password?: pulumi.Input<string>;
+    /**
+     * A list of UUIDs of roles which should be attached to this user.
+     * >>>>>>> beta-organization
+     */
+    roles?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * Whether the user is a service user.
+     */
+    serviceUser?: pulumi.Input<boolean>;
 }
 
 /**
@@ -176,7 +215,9 @@ export interface UserState {
  */
 export interface UserArgs {
     /**
-     * The access control list for the user.
+     * The access control list for the user. 
+     * <<<<<<< HEAD
+     * =======
      */
     acls?: pulumi.Input<pulumi.Input<string>[]>;
     /**
@@ -188,6 +229,10 @@ export interface UserArgs {
      */
     email: pulumi.Input<string>;
     /**
+     * A list of UUIDs of groups which should be attached to this user.
+     */
+    groups?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
      * Name for this user.
      */
     name?: pulumi.Input<string>;
@@ -195,4 +240,13 @@ export interface UserArgs {
      * Password for this user.
      */
     password: pulumi.Input<string>;
+    /**
+     * A list of UUIDs of roles which should be attached to this user.
+     * >>>>>>> beta-organization
+     */
+    roles?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * Whether the user is a service user.
+     */
+    serviceUser?: pulumi.Input<boolean>;
 }

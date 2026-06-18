@@ -15,15 +15,15 @@ import * as utilities from "./utilities";
  * import * as pulumi from "@pulumi/pulumi";
  * import * as vultr from "@ediri/vultr";
  *
- * const myInstance = new vultr.Instance("myInstance", {
+ * const myInstance = new vultr.Instance("my_instance", {
  *     label: "my_instance",
- *     osId: 167,
- *     plan: "201",
  *     region: "ewr",
+ *     plan: "201",
+ *     osId: 167,
  * });
- * const mySnapshot = new vultr.Snapshot("mySnapshot", {
- *     description: "my instances snapshot",
+ * const mySnapshot = new vultr.Snapshot("my_snapshot", {
  *     instanceId: myInstance.id,
+ *     description: "my instances snapshot",
  * });
  * ```
  *

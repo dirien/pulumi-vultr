@@ -30,10 +30,10 @@ import (
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := vultr.NewVirtualFileSystemStorage(ctx, "myVfsStorage", &vultr.VirtualFileSystemStorageArgs{
+//			_, err := vultr.NewVirtualFileSystemStorage(ctx, "my_vfs_storage", &vultr.VirtualFileSystemStorageArgs{
 //				Label:  pulumi.String("vultr-vfs-storage"),
-//				Region: pulumi.String("ewr"),
 //				SizeGb: pulumi.Int(10),
+//				Region: pulumi.String("ewr"),
 //				Tags: pulumi.StringArray{
 //					pulumi.String("terraform"),
 //					pulumi.String("important"),

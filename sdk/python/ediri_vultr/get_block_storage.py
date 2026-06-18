@@ -28,13 +28,22 @@ class GetBlockStorageResult:
     """
     A collection of values returned by getBlockStorage.
     """
-    def __init__(__self__, attached_to_instance=None, block_type=None, cost=None, date_created=None, filters=None, id=None, label=None, mount_id=None, region=None, size_gb=None, status=None):
+    def __init__(__self__, attached_to_instance=None, attached_to_instance_ip=None, attached_to_instance_label=None, block_type=None, bootable=None, cost=None, date_created=None, filters=None, id=None, label=None, mount_id=None, os_id=None, pending_charges=None, region=None, size_gb=None, snapshot_id=None, status=None):
         if attached_to_instance and not isinstance(attached_to_instance, str):
             raise TypeError("Expected argument 'attached_to_instance' to be a str")
         pulumi.set(__self__, "attached_to_instance", attached_to_instance)
+        if attached_to_instance_ip and not isinstance(attached_to_instance_ip, str):
+            raise TypeError("Expected argument 'attached_to_instance_ip' to be a str")
+        pulumi.set(__self__, "attached_to_instance_ip", attached_to_instance_ip)
+        if attached_to_instance_label and not isinstance(attached_to_instance_label, str):
+            raise TypeError("Expected argument 'attached_to_instance_label' to be a str")
+        pulumi.set(__self__, "attached_to_instance_label", attached_to_instance_label)
         if block_type and not isinstance(block_type, str):
             raise TypeError("Expected argument 'block_type' to be a str")
         pulumi.set(__self__, "block_type", block_type)
+        if bootable and not isinstance(bootable, bool):
+            raise TypeError("Expected argument 'bootable' to be a bool")
+        pulumi.set(__self__, "bootable", bootable)
         if cost and not isinstance(cost, int):
             raise TypeError("Expected argument 'cost' to be a int")
         pulumi.set(__self__, "cost", cost)
@@ -53,12 +62,21 @@ class GetBlockStorageResult:
         if mount_id and not isinstance(mount_id, str):
             raise TypeError("Expected argument 'mount_id' to be a str")
         pulumi.set(__self__, "mount_id", mount_id)
+        if os_id and not isinstance(os_id, int):
+            raise TypeError("Expected argument 'os_id' to be a int")
+        pulumi.set(__self__, "os_id", os_id)
+        if pending_charges and not isinstance(pending_charges, float):
+            raise TypeError("Expected argument 'pending_charges' to be a float")
+        pulumi.set(__self__, "pending_charges", pending_charges)
         if region and not isinstance(region, str):
             raise TypeError("Expected argument 'region' to be a str")
         pulumi.set(__self__, "region", region)
         if size_gb and not isinstance(size_gb, int):
             raise TypeError("Expected argument 'size_gb' to be a int")
         pulumi.set(__self__, "size_gb", size_gb)
+        if snapshot_id and not isinstance(snapshot_id, str):
+            raise TypeError("Expected argument 'snapshot_id' to be a str")
+        pulumi.set(__self__, "snapshot_id", snapshot_id)
         if status and not isinstance(status, str):
             raise TypeError("Expected argument 'status' to be a str")
         pulumi.set(__self__, "status", status)
@@ -72,12 +90,36 @@ class GetBlockStorageResult:
         return pulumi.get(self, "attached_to_instance")
 
     @_builtins.property
+    @pulumi.getter(name="attachedToInstanceIp")
+    def attached_to_instance_ip(self) -> _builtins.str:
+        """
+        The IP address of the VPS the block storage subscription is attached to.
+        """
+        return pulumi.get(self, "attached_to_instance_ip")
+
+    @_builtins.property
+    @pulumi.getter(name="attachedToInstanceLabel")
+    def attached_to_instance_label(self) -> _builtins.str:
+        """
+        The label of the VPS the block storage subscription is attached to.
+        """
+        return pulumi.get(self, "attached_to_instance_label")
+
+    @_builtins.property
     @pulumi.getter(name="blockType")
     def block_type(self) -> _builtins.str:
         """
         The type of block storage volume.
         """
         return pulumi.get(self, "block_type")
+
+    @_builtins.property
+    @pulumi.getter
+    def bootable(self) -> _builtins.bool:
+        """
+        Whether or not this block device can be used as a bootable volume.
+        """
+        return pulumi.get(self, "bootable")
 
     @_builtins.property
     @pulumi.getter
@@ -125,6 +167,22 @@ class GetBlockStorageResult:
         return pulumi.get(self, "mount_id")
 
     @_builtins.property
+    @pulumi.getter(name="osId")
+    def os_id(self) -> _builtins.int:
+        """
+        The operating system ID for this bootable block device, if applicable.
+        """
+        return pulumi.get(self, "os_id")
+
+    @_builtins.property
+    @pulumi.getter(name="pendingCharges")
+    def pending_charges(self) -> _builtins.float:
+        """
+        Charges due for this block storage subscription at the end of the billing period.
+        """
+        return pulumi.get(self, "pending_charges")
+
+    @_builtins.property
     @pulumi.getter
     def region(self) -> _builtins.str:
         """
@@ -139,6 +197,14 @@ class GetBlockStorageResult:
         The size of the block storage subscription in GB.
         """
         return pulumi.get(self, "size_gb")
+
+    @_builtins.property
+    @pulumi.getter(name="snapshotId")
+    def snapshot_id(self) -> _builtins.str:
+        """
+        The snapshot_id from which this block device was cloned.
+        """
+        return pulumi.get(self, "snapshot_id")
 
     @_builtins.property
     @pulumi.getter
@@ -156,15 +222,21 @@ class AwaitableGetBlockStorageResult(GetBlockStorageResult):
             yield self
         return GetBlockStorageResult(
             attached_to_instance=self.attached_to_instance,
+            attached_to_instance_ip=self.attached_to_instance_ip,
+            attached_to_instance_label=self.attached_to_instance_label,
             block_type=self.block_type,
+            bootable=self.bootable,
             cost=self.cost,
             date_created=self.date_created,
             filters=self.filters,
             id=self.id,
             label=self.label,
             mount_id=self.mount_id,
+            os_id=self.os_id,
+            pending_charges=self.pending_charges,
             region=self.region,
             size_gb=self.size_gb,
+            snapshot_id=self.snapshot_id,
             status=self.status)
 
 
@@ -197,15 +269,21 @@ def get_block_storage(filters: Optional[Sequence[Union['GetBlockStorageFilterArg
 
     return AwaitableGetBlockStorageResult(
         attached_to_instance=pulumi.get(__ret__, 'attached_to_instance'),
+        attached_to_instance_ip=pulumi.get(__ret__, 'attached_to_instance_ip'),
+        attached_to_instance_label=pulumi.get(__ret__, 'attached_to_instance_label'),
         block_type=pulumi.get(__ret__, 'block_type'),
+        bootable=pulumi.get(__ret__, 'bootable'),
         cost=pulumi.get(__ret__, 'cost'),
         date_created=pulumi.get(__ret__, 'date_created'),
         filters=pulumi.get(__ret__, 'filters'),
         id=pulumi.get(__ret__, 'id'),
         label=pulumi.get(__ret__, 'label'),
         mount_id=pulumi.get(__ret__, 'mount_id'),
+        os_id=pulumi.get(__ret__, 'os_id'),
+        pending_charges=pulumi.get(__ret__, 'pending_charges'),
         region=pulumi.get(__ret__, 'region'),
         size_gb=pulumi.get(__ret__, 'size_gb'),
+        snapshot_id=pulumi.get(__ret__, 'snapshot_id'),
         status=pulumi.get(__ret__, 'status'))
 def get_block_storage_output(filters: Optional[pulumi.Input[Optional[Sequence[Union['GetBlockStorageFilterArgs', 'GetBlockStorageFilterArgsDict']]]]] = None,
                              opts: Optional[Union[pulumi.InvokeOptions, pulumi.InvokeOutputOptions]] = None) -> pulumi.Output[GetBlockStorageResult]:
@@ -235,13 +313,19 @@ def get_block_storage_output(filters: Optional[pulumi.Input[Optional[Sequence[Un
     __ret__ = pulumi.runtime.invoke_output('vultr:index/getBlockStorage:getBlockStorage', __args__, opts=opts, typ=GetBlockStorageResult)
     return __ret__.apply(lambda __response__: GetBlockStorageResult(
         attached_to_instance=pulumi.get(__response__, 'attached_to_instance'),
+        attached_to_instance_ip=pulumi.get(__response__, 'attached_to_instance_ip'),
+        attached_to_instance_label=pulumi.get(__response__, 'attached_to_instance_label'),
         block_type=pulumi.get(__response__, 'block_type'),
+        bootable=pulumi.get(__response__, 'bootable'),
         cost=pulumi.get(__response__, 'cost'),
         date_created=pulumi.get(__response__, 'date_created'),
         filters=pulumi.get(__response__, 'filters'),
         id=pulumi.get(__response__, 'id'),
         label=pulumi.get(__response__, 'label'),
         mount_id=pulumi.get(__response__, 'mount_id'),
+        os_id=pulumi.get(__response__, 'os_id'),
+        pending_charges=pulumi.get(__response__, 'pending_charges'),
         region=pulumi.get(__response__, 'region'),
         size_gb=pulumi.get(__response__, 'size_gb'),
+        snapshot_id=pulumi.get(__response__, 'snapshot_id'),
         status=pulumi.get(__response__, 'status')))

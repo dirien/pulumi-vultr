@@ -30,13 +30,13 @@ import (
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			myFirewallgroup, err := vultr.NewFirewallGroup(ctx, "myFirewallgroup", &vultr.FirewallGroupArgs{
+//			myFirewallgroup, err := vultr.NewFirewallGroup(ctx, "my_firewallgroup", &vultr.FirewallGroupArgs{
 //				Description: pulumi.String("base firewall"),
 //			})
 //			if err != nil {
 //				return err
 //			}
-//			_, err = vultr.NewFirewallRule(ctx, "myFirewallrule", &vultr.FirewallRuleArgs{
+//			_, err = vultr.NewFirewallRule(ctx, "my_firewallrule", &vultr.FirewallRuleArgs{
 //				FirewallGroupId: myFirewallgroup.ID(),
 //				Protocol:        pulumi.String("tcp"),
 //				IpType:          pulumi.String("v4"),
@@ -75,7 +75,7 @@ type FirewallRule struct {
 	// The type of protocol for this firewall rule. Possible values (icmp, tcp, udp, gre, esp, ah) **Note** they must be lowercase
 	Protocol pulumi.StringOutput `pulumi:"protocol"`
 	// Possible values ("", cloudflare)
-	Source pulumi.StringPtrOutput `pulumi:"source"`
+	Source pulumi.StringOutput `pulumi:"source"`
 	// IP address that you want to define for this firewall rule.
 	Subnet pulumi.StringOutput `pulumi:"subnet"`
 	// The number of bits for the subnet in CIDR notation. Example: 32.
@@ -320,8 +320,8 @@ func (o FirewallRuleOutput) Protocol() pulumi.StringOutput {
 }
 
 // Possible values ("", cloudflare)
-func (o FirewallRuleOutput) Source() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *FirewallRule) pulumi.StringPtrOutput { return v.Source }).(pulumi.StringPtrOutput)
+func (o FirewallRuleOutput) Source() pulumi.StringOutput {
+	return o.ApplyT(func(v *FirewallRule) pulumi.StringOutput { return v.Source }).(pulumi.StringOutput)
 }
 
 // IP address that you want to define for this firewall rule.

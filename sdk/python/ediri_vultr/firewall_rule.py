@@ -29,6 +29,7 @@ class FirewallRuleArgs:
                  source: Optional[pulumi.Input[_builtins.str]] = None):
         """
         The set of arguments for constructing a FirewallRule resource.
+
         :param pulumi.Input[_builtins.str] firewall_group_id: The firewall group that the firewall rule will belong to.
         :param pulumi.Input[_builtins.str] ip_type: The type of ip for this firewall rule. Possible values (v4, v6) **Note** they must be lowercase
         :param pulumi.Input[_builtins.str] protocol: The type of protocol for this firewall rule. Possible values (icmp, tcp, udp, gre, esp, ah) **Note** they must be lowercase
@@ -160,6 +161,7 @@ class _FirewallRuleState:
                  subnet_size: Optional[pulumi.Input[_builtins.int]] = None):
         """
         Input properties used for looking up and filtering FirewallRule resources.
+
         :param pulumi.Input[_builtins.str] firewall_group_id: The firewall group that the firewall rule will belong to.
         :param pulumi.Input[_builtins.str] ip_type: The type of ip for this firewall rule. Possible values (v4, v6) **Note** they must be lowercase
         :param pulumi.Input[_builtins.str] notes: A simple note for a given firewall rule
@@ -309,8 +311,8 @@ class FirewallRule(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_firewallgroup = vultr.FirewallGroup("myFirewallgroup", description="base firewall")
-        my_firewallrule = vultr.FirewallRule("myFirewallrule",
+        my_firewallgroup = vultr.FirewallGroup("my_firewallgroup", description="base firewall")
+        my_firewallrule = vultr.FirewallRule("my_firewallrule",
             firewall_group_id=my_firewallgroup.id,
             protocol="tcp",
             ip_type="v4",
@@ -327,6 +329,7 @@ class FirewallRule(pulumi.CustomResource):
         ```sh
         $ pulumi import vultr:index/firewallRule:FirewallRule my_rule b6a859c5-b299-49dd-8888-b1abbc517d08,1
         ```
+
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -356,8 +359,8 @@ class FirewallRule(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_firewallgroup = vultr.FirewallGroup("myFirewallgroup", description="base firewall")
-        my_firewallrule = vultr.FirewallRule("myFirewallrule",
+        my_firewallgroup = vultr.FirewallGroup("my_firewallgroup", description="base firewall")
+        my_firewallrule = vultr.FirewallRule("my_firewallrule",
             firewall_group_id=my_firewallgroup.id,
             protocol="tcp",
             ip_type="v4",
@@ -374,6 +377,7 @@ class FirewallRule(pulumi.CustomResource):
         ```sh
         $ pulumi import vultr:index/firewallRule:FirewallRule my_rule b6a859c5-b299-49dd-8888-b1abbc517d08,1
         ```
+
 
         :param str resource_name: The name of the resource.
         :param FirewallRuleArgs args: The arguments to use to populate this resource's properties.
@@ -515,7 +519,7 @@ class FirewallRule(pulumi.CustomResource):
 
     @_builtins.property
     @pulumi.getter
-    def source(self) -> pulumi.Output[Optional[_builtins.str]]:
+    def source(self) -> pulumi.Output[_builtins.str]:
         """
         Possible values ("", cloudflare)
         """

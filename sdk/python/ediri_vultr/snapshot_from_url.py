@@ -23,6 +23,7 @@ class SnapshotFromUrlArgs:
                  use_uefi: Optional[pulumi.Input[_builtins.bool]] = None):
         """
         The set of arguments for constructing a SnapshotFromUrl resource.
+
         :param pulumi.Input[_builtins.str] url: URL of the given resource you want to create a snapshot from.
         :param pulumi.Input[_builtins.bool] use_uefi: Whether or not to use UEFI when creating the snapshot.
         """
@@ -68,6 +69,7 @@ class _SnapshotFromUrlState:
                  use_uefi: Optional[pulumi.Input[_builtins.bool]] = None):
         """
         Input properties used for looking up and filtering SnapshotFromUrl resources.
+
         :param pulumi.Input[_builtins.int] app_id: The app id which the snapshot is associated with.
         :param pulumi.Input[_builtins.str] date_created: The date the snapshot was created.
         :param pulumi.Input[_builtins.str] description: The description for the given snapshot.
@@ -211,7 +213,7 @@ class SnapshotFromUrl(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_snapshot = vultr.SnapshotFromUrl("mySnapshot",
+        my_snapshot = vultr.SnapshotFromUrl("my_snapshot",
             url="http://dl-cdn.alpinelinux.org/alpine/v3.9/releases/x86_64/alpine-virt-3.9.1-x86_64.iso",
             use_uefi=True)
         ```
@@ -223,6 +225,7 @@ class SnapshotFromUrl(pulumi.CustomResource):
         ```sh
         $ pulumi import vultr:index/snapshotFromUrl:SnapshotFromUrl my_snapshot e60dc0a2-9313-4bab-bffc-57ffe33d99f6
         ```
+
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -246,7 +249,7 @@ class SnapshotFromUrl(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_snapshot = vultr.SnapshotFromUrl("mySnapshot",
+        my_snapshot = vultr.SnapshotFromUrl("my_snapshot",
             url="http://dl-cdn.alpinelinux.org/alpine/v3.9/releases/x86_64/alpine-virt-3.9.1-x86_64.iso",
             use_uefi=True)
         ```
@@ -258,6 +261,7 @@ class SnapshotFromUrl(pulumi.CustomResource):
         ```sh
         $ pulumi import vultr:index/snapshotFromUrl:SnapshotFromUrl my_snapshot e60dc0a2-9313-4bab-bffc-57ffe33d99f6
         ```
+
 
         :param str resource_name: The name of the resource.
         :param SnapshotFromUrlArgs args: The arguments to use to populate this resource's properties.

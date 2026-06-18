@@ -28,7 +28,7 @@ class GetUserResult:
     """
     A collection of values returned by getUser.
     """
-    def __init__(__self__, acls=None, api_enabled=None, email=None, filters=None, id=None, name=None):
+    def __init__(__self__, acls=None, api_enabled=None, email=None, filters=None, groups=None, id=None, name=None, roles=None, service_user=None):
         if acls and not isinstance(acls, list):
             raise TypeError("Expected argument 'acls' to be a list")
         pulumi.set(__self__, "acls", acls)
@@ -41,12 +41,21 @@ class GetUserResult:
         if filters and not isinstance(filters, list):
             raise TypeError("Expected argument 'filters' to be a list")
         pulumi.set(__self__, "filters", filters)
+        if groups and not isinstance(groups, list):
+            raise TypeError("Expected argument 'groups' to be a list")
+        pulumi.set(__self__, "groups", groups)
         if id and not isinstance(id, str):
             raise TypeError("Expected argument 'id' to be a str")
         pulumi.set(__self__, "id", id)
         if name and not isinstance(name, str):
             raise TypeError("Expected argument 'name' to be a str")
         pulumi.set(__self__, "name", name)
+        if roles and not isinstance(roles, list):
+            raise TypeError("Expected argument 'roles' to be a list")
+        pulumi.set(__self__, "roles", roles)
+        if service_user and not isinstance(service_user, bool):
+            raise TypeError("Expected argument 'service_user' to be a bool")
+        pulumi.set(__self__, "service_user", service_user)
 
     @_builtins.property
     @pulumi.getter
@@ -79,6 +88,14 @@ class GetUserResult:
 
     @_builtins.property
     @pulumi.getter
+    def groups(self) -> Sequence[_builtins.str]:
+        """
+        A list of UUIDs of groups attached to this user.
+        """
+        return pulumi.get(self, "groups")
+
+    @_builtins.property
+    @pulumi.getter
     def id(self) -> _builtins.str:
         """
         The provider-assigned unique ID for this managed resource.
@@ -93,6 +110,22 @@ class GetUserResult:
         """
         return pulumi.get(self, "name")
 
+    @_builtins.property
+    @pulumi.getter
+    def roles(self) -> Sequence[_builtins.str]:
+        """
+        A list of UUIDs of roles attached to this user.
+        """
+        return pulumi.get(self, "roles")
+
+    @_builtins.property
+    @pulumi.getter(name="serviceUser")
+    def service_user(self) -> _builtins.bool:
+        """
+        Whether the user is a service user.
+        """
+        return pulumi.get(self, "service_user")
+
 
 class AwaitableGetUserResult(GetUserResult):
     # pylint: disable=using-constant-test
@@ -104,8 +137,11 @@ class AwaitableGetUserResult(GetUserResult):
             api_enabled=self.api_enabled,
             email=self.email,
             filters=self.filters,
+            groups=self.groups,
             id=self.id,
-            name=self.name)
+            name=self.name,
+            roles=self.roles,
+            service_user=self.service_user)
 
 
 def get_user(filters: Optional[Sequence[Union['GetUserFilterArgs', 'GetUserFilterArgsDict']]] = None,
@@ -152,8 +188,11 @@ def get_user(filters: Optional[Sequence[Union['GetUserFilterArgs', 'GetUserFilte
         api_enabled=pulumi.get(__ret__, 'api_enabled'),
         email=pulumi.get(__ret__, 'email'),
         filters=pulumi.get(__ret__, 'filters'),
+        groups=pulumi.get(__ret__, 'groups'),
         id=pulumi.get(__ret__, 'id'),
-        name=pulumi.get(__ret__, 'name'))
+        name=pulumi.get(__ret__, 'name'),
+        roles=pulumi.get(__ret__, 'roles'),
+        service_user=pulumi.get(__ret__, 'service_user'))
 def get_user_output(filters: Optional[pulumi.Input[Optional[Sequence[Union['GetUserFilterArgs', 'GetUserFilterArgsDict']]]]] = None,
                     opts: Optional[Union[pulumi.InvokeOptions, pulumi.InvokeOutputOptions]] = None) -> pulumi.Output[GetUserResult]:
     """
@@ -197,5 +236,8 @@ def get_user_output(filters: Optional[pulumi.Input[Optional[Sequence[Union['GetU
         api_enabled=pulumi.get(__response__, 'api_enabled'),
         email=pulumi.get(__response__, 'email'),
         filters=pulumi.get(__response__, 'filters'),
+        groups=pulumi.get(__response__, 'groups'),
         id=pulumi.get(__response__, 'id'),
-        name=pulumi.get(__response__, 'name')))
+        name=pulumi.get(__response__, 'name'),
+        roles=pulumi.get(__response__, 'roles'),
+        service_user=pulumi.get(__response__, 'service_user')))

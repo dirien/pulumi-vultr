@@ -52,9 +52,21 @@ export interface GetBlockStorageResult {
      */
     readonly attachedToInstance: string;
     /**
+     * The IP address of the VPS the block storage subscription is attached to.
+     */
+    readonly attachedToInstanceIp: string;
+    /**
+     * The label of the VPS the block storage subscription is attached to.
+     */
+    readonly attachedToInstanceLabel: string;
+    /**
      * The type of block storage volume.
      */
     readonly blockType: string;
+    /**
+     * Whether or not this block device can be used as a bootable volume.
+     */
+    readonly bootable: boolean;
     /**
      * The cost per month of the block storage subscription in USD.
      */
@@ -77,6 +89,14 @@ export interface GetBlockStorageResult {
      */
     readonly mountId: string;
     /**
+     * The operating system ID for this bootable block device, if applicable.
+     */
+    readonly osId: number;
+    /**
+     * Charges due for this block storage subscription at the end of the billing period.
+     */
+    readonly pendingCharges: number;
+    /**
      * The region ID of the block storage subscription.
      */
     readonly region: string;
@@ -84,6 +104,10 @@ export interface GetBlockStorageResult {
      * The size of the block storage subscription in GB.
      */
     readonly sizeGb: number;
+    /**
+     * The snapshotId from which this block device was cloned.
+     */
+    readonly snapshotId: string;
     /**
      * The status of the block storage subscription.
      */

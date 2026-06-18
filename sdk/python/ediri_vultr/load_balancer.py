@@ -24,10 +24,13 @@ class LoadBalancerArgs:
                  forwarding_rules: pulumi.Input[Sequence[pulumi.Input['LoadBalancerForwardingRuleArgs']]],
                  region: pulumi.Input[_builtins.str],
                  attached_instances: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
+                 auto_ssl_domain: Optional[pulumi.Input[_builtins.str]] = None,
                  balancing_algorithm: Optional[pulumi.Input[_builtins.str]] = None,
                  cookie_name: Optional[pulumi.Input[_builtins.str]] = None,
                  firewall_rules: Optional[pulumi.Input[Sequence[pulumi.Input['LoadBalancerFirewallRuleArgs']]]] = None,
+                 global_regions: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
                  health_check: Optional[pulumi.Input['LoadBalancerHealthCheckArgs']] = None,
+                 http_version: Optional[pulumi.Input[_builtins.int]] = None,
                  label: Optional[pulumi.Input[_builtins.str]] = None,
                  proxy_protocol: Optional[pulumi.Input[_builtins.bool]] = None,
                  ssl: Optional[pulumi.Input['LoadBalancerSslArgs']] = None,
@@ -35,13 +38,17 @@ class LoadBalancerArgs:
                  vpc: Optional[pulumi.Input[_builtins.str]] = None):
         """
         The set of arguments for constructing a LoadBalancer resource.
+
         :param pulumi.Input[Sequence[pulumi.Input['LoadBalancerForwardingRuleArgs']]] forwarding_rules: List of forwarding rules for a load balancer. The configuration of a `forwarding_rules` is listened below.
         :param pulumi.Input[_builtins.str] region: The region your load balancer is deployed in.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] attached_instances: Array of instances that are currently attached to the load balancer.
+        :param pulumi.Input[_builtins.str] auto_ssl_domain: The auto SSL domain configuration for a load balancer. This can be a root domain (example.com) or include a subdomain (sub.example.com).
         :param pulumi.Input[_builtins.str] balancing_algorithm: The balancing algorithm for your load balancer. Options are `roundrobin` or `leastconn`. Default value is `roundrobin`
         :param pulumi.Input[_builtins.str] cookie_name: Name for your given sticky session.
         :param pulumi.Input[Sequence[pulumi.Input['LoadBalancerFirewallRuleArgs']]] firewall_rules: Defines the firewall rules for a load balancer.
+        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] global_regions: A set of region IDs to deploy child load balancers to.
         :param pulumi.Input['LoadBalancerHealthCheckArgs'] health_check: A block that defines the way load balancers should check for health. The configuration of a `health_check` is listed below.
+        :param pulumi.Input[_builtins.int] http_version: Integer value that indicates if HTTP/2 or HTTP/3 is enabled. Allowed values 2 or 3.
         :param pulumi.Input[_builtins.str] label: The load balancer's label.
         :param pulumi.Input[_builtins.bool] proxy_protocol: Boolean value that indicates if Proxy Protocol is enabled.
         :param pulumi.Input['LoadBalancerSslArgs'] ssl: A block that supplies your ssl configuration to be used with HTTPS. The configuration of a `ssl` is listed below.
@@ -52,14 +59,20 @@ class LoadBalancerArgs:
         pulumi.set(__self__, "region", region)
         if attached_instances is not None:
             pulumi.set(__self__, "attached_instances", attached_instances)
+        if auto_ssl_domain is not None:
+            pulumi.set(__self__, "auto_ssl_domain", auto_ssl_domain)
         if balancing_algorithm is not None:
             pulumi.set(__self__, "balancing_algorithm", balancing_algorithm)
         if cookie_name is not None:
             pulumi.set(__self__, "cookie_name", cookie_name)
         if firewall_rules is not None:
             pulumi.set(__self__, "firewall_rules", firewall_rules)
+        if global_regions is not None:
+            pulumi.set(__self__, "global_regions", global_regions)
         if health_check is not None:
             pulumi.set(__self__, "health_check", health_check)
+        if http_version is not None:
+            pulumi.set(__self__, "http_version", http_version)
         if label is not None:
             pulumi.set(__self__, "label", label)
         if proxy_protocol is not None:
@@ -108,6 +121,18 @@ class LoadBalancerArgs:
         pulumi.set(self, "attached_instances", value)
 
     @_builtins.property
+    @pulumi.getter(name="autoSslDomain")
+    def auto_ssl_domain(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        The auto SSL domain configuration for a load balancer. This can be a root domain (example.com) or include a subdomain (sub.example.com).
+        """
+        return pulumi.get(self, "auto_ssl_domain")
+
+    @auto_ssl_domain.setter
+    def auto_ssl_domain(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "auto_ssl_domain", value)
+
+    @_builtins.property
     @pulumi.getter(name="balancingAlgorithm")
     def balancing_algorithm(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
@@ -144,6 +169,18 @@ class LoadBalancerArgs:
         pulumi.set(self, "firewall_rules", value)
 
     @_builtins.property
+    @pulumi.getter(name="globalRegions")
+    def global_regions(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]:
+        """
+        A set of region IDs to deploy child load balancers to.
+        """
+        return pulumi.get(self, "global_regions")
+
+    @global_regions.setter
+    def global_regions(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "global_regions", value)
+
+    @_builtins.property
     @pulumi.getter(name="healthCheck")
     def health_check(self) -> Optional[pulumi.Input['LoadBalancerHealthCheckArgs']]:
         """
@@ -154,6 +191,18 @@ class LoadBalancerArgs:
     @health_check.setter
     def health_check(self, value: Optional[pulumi.Input['LoadBalancerHealthCheckArgs']]):
         pulumi.set(self, "health_check", value)
+
+    @_builtins.property
+    @pulumi.getter(name="httpVersion")
+    def http_version(self) -> Optional[pulumi.Input[_builtins.int]]:
+        """
+        Integer value that indicates if HTTP/2 or HTTP/3 is enabled. Allowed values 2 or 3.
+        """
+        return pulumi.get(self, "http_version")
+
+    @http_version.setter
+    def http_version(self, value: Optional[pulumi.Input[_builtins.int]]):
+        pulumi.set(self, "http_version", value)
 
     @_builtins.property
     @pulumi.getter
@@ -220,12 +269,15 @@ class LoadBalancerArgs:
 class _LoadBalancerState:
     def __init__(__self__, *,
                  attached_instances: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
+                 auto_ssl_domain: Optional[pulumi.Input[_builtins.str]] = None,
                  balancing_algorithm: Optional[pulumi.Input[_builtins.str]] = None,
                  cookie_name: Optional[pulumi.Input[_builtins.str]] = None,
                  firewall_rules: Optional[pulumi.Input[Sequence[pulumi.Input['LoadBalancerFirewallRuleArgs']]]] = None,
                  forwarding_rules: Optional[pulumi.Input[Sequence[pulumi.Input['LoadBalancerForwardingRuleArgs']]]] = None,
+                 global_regions: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
                  has_ssl: Optional[pulumi.Input[_builtins.bool]] = None,
                  health_check: Optional[pulumi.Input['LoadBalancerHealthCheckArgs']] = None,
+                 http_version: Optional[pulumi.Input[_builtins.int]] = None,
                  ipv4: Optional[pulumi.Input[_builtins.str]] = None,
                  ipv6: Optional[pulumi.Input[_builtins.str]] = None,
                  label: Optional[pulumi.Input[_builtins.str]] = None,
@@ -237,13 +289,17 @@ class _LoadBalancerState:
                  vpc: Optional[pulumi.Input[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering LoadBalancer resources.
+
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] attached_instances: Array of instances that are currently attached to the load balancer.
+        :param pulumi.Input[_builtins.str] auto_ssl_domain: The auto SSL domain configuration for a load balancer. This can be a root domain (example.com) or include a subdomain (sub.example.com).
         :param pulumi.Input[_builtins.str] balancing_algorithm: The balancing algorithm for your load balancer. Options are `roundrobin` or `leastconn`. Default value is `roundrobin`
         :param pulumi.Input[_builtins.str] cookie_name: Name for your given sticky session.
         :param pulumi.Input[Sequence[pulumi.Input['LoadBalancerFirewallRuleArgs']]] firewall_rules: Defines the firewall rules for a load balancer.
         :param pulumi.Input[Sequence[pulumi.Input['LoadBalancerForwardingRuleArgs']]] forwarding_rules: List of forwarding rules for a load balancer. The configuration of a `forwarding_rules` is listened below.
+        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] global_regions: A set of region IDs to deploy child load balancers to.
         :param pulumi.Input[_builtins.bool] has_ssl: Boolean value that indicates if SSL is enabled.
         :param pulumi.Input['LoadBalancerHealthCheckArgs'] health_check: A block that defines the way load balancers should check for health. The configuration of a `health_check` is listed below.
+        :param pulumi.Input[_builtins.int] http_version: Integer value that indicates if HTTP/2 or HTTP/3 is enabled. Allowed values 2 or 3.
         :param pulumi.Input[_builtins.str] ipv4: IPv4 address for your load balancer.
         :param pulumi.Input[_builtins.str] ipv6: IPv6 address for your load balancer.
         :param pulumi.Input[_builtins.str] label: The load balancer's label.
@@ -256,6 +312,8 @@ class _LoadBalancerState:
         """
         if attached_instances is not None:
             pulumi.set(__self__, "attached_instances", attached_instances)
+        if auto_ssl_domain is not None:
+            pulumi.set(__self__, "auto_ssl_domain", auto_ssl_domain)
         if balancing_algorithm is not None:
             pulumi.set(__self__, "balancing_algorithm", balancing_algorithm)
         if cookie_name is not None:
@@ -264,10 +322,14 @@ class _LoadBalancerState:
             pulumi.set(__self__, "firewall_rules", firewall_rules)
         if forwarding_rules is not None:
             pulumi.set(__self__, "forwarding_rules", forwarding_rules)
+        if global_regions is not None:
+            pulumi.set(__self__, "global_regions", global_regions)
         if has_ssl is not None:
             pulumi.set(__self__, "has_ssl", has_ssl)
         if health_check is not None:
             pulumi.set(__self__, "health_check", health_check)
+        if http_version is not None:
+            pulumi.set(__self__, "http_version", http_version)
         if ipv4 is not None:
             pulumi.set(__self__, "ipv4", ipv4)
         if ipv6 is not None:
@@ -298,6 +360,18 @@ class _LoadBalancerState:
     @attached_instances.setter
     def attached_instances(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "attached_instances", value)
+
+    @_builtins.property
+    @pulumi.getter(name="autoSslDomain")
+    def auto_ssl_domain(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        The auto SSL domain configuration for a load balancer. This can be a root domain (example.com) or include a subdomain (sub.example.com).
+        """
+        return pulumi.get(self, "auto_ssl_domain")
+
+    @auto_ssl_domain.setter
+    def auto_ssl_domain(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "auto_ssl_domain", value)
 
     @_builtins.property
     @pulumi.getter(name="balancingAlgorithm")
@@ -348,6 +422,18 @@ class _LoadBalancerState:
         pulumi.set(self, "forwarding_rules", value)
 
     @_builtins.property
+    @pulumi.getter(name="globalRegions")
+    def global_regions(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]:
+        """
+        A set of region IDs to deploy child load balancers to.
+        """
+        return pulumi.get(self, "global_regions")
+
+    @global_regions.setter
+    def global_regions(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "global_regions", value)
+
+    @_builtins.property
     @pulumi.getter(name="hasSsl")
     def has_ssl(self) -> Optional[pulumi.Input[_builtins.bool]]:
         """
@@ -370,6 +456,18 @@ class _LoadBalancerState:
     @health_check.setter
     def health_check(self, value: Optional[pulumi.Input['LoadBalancerHealthCheckArgs']]):
         pulumi.set(self, "health_check", value)
+
+    @_builtins.property
+    @pulumi.getter(name="httpVersion")
+    def http_version(self) -> Optional[pulumi.Input[_builtins.int]]:
+        """
+        Integer value that indicates if HTTP/2 or HTTP/3 is enabled. Allowed values 2 or 3.
+        """
+        return pulumi.get(self, "http_version")
+
+    @http_version.setter
+    def http_version(self, value: Optional[pulumi.Input[_builtins.int]]):
+        pulumi.set(self, "http_version", value)
 
     @_builtins.property
     @pulumi.getter
@@ -487,11 +585,14 @@ class LoadBalancer(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  attached_instances: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
+                 auto_ssl_domain: Optional[pulumi.Input[_builtins.str]] = None,
                  balancing_algorithm: Optional[pulumi.Input[_builtins.str]] = None,
                  cookie_name: Optional[pulumi.Input[_builtins.str]] = None,
                  firewall_rules: Optional[pulumi.Input[Sequence[pulumi.Input[Union['LoadBalancerFirewallRuleArgs', 'LoadBalancerFirewallRuleArgsDict']]]]] = None,
                  forwarding_rules: Optional[pulumi.Input[Sequence[pulumi.Input[Union['LoadBalancerForwardingRuleArgs', 'LoadBalancerForwardingRuleArgsDict']]]]] = None,
+                 global_regions: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
                  health_check: Optional[pulumi.Input[Union['LoadBalancerHealthCheckArgs', 'LoadBalancerHealthCheckArgsDict']]] = None,
+                 http_version: Optional[pulumi.Input[_builtins.int]] = None,
                  label: Optional[pulumi.Input[_builtins.str]] = None,
                  proxy_protocol: Optional[pulumi.Input[_builtins.bool]] = None,
                  region: Optional[pulumi.Input[_builtins.str]] = None,
@@ -511,24 +612,24 @@ class LoadBalancer(pulumi.CustomResource):
         import ediri_vultr as vultr
 
         lb = vultr.LoadBalancer("lb",
+            region="ewr",
+            label="vultr-load-balancer",
             balancing_algorithm="roundrobin",
             forwarding_rules=[{
-                "backend_port": 81,
-                "backend_protocol": "http",
-                "frontend_port": 82,
                 "frontend_protocol": "http",
+                "frontend_port": 82,
+                "backend_protocol": "http",
+                "backend_port": 81,
             }],
             health_check={
-                "check_interval": 3,
-                "healthy_threshold": 4,
                 "path": "/test",
                 "port": 8080,
                 "protocol": "http",
                 "response_timeout": 1,
                 "unhealthy_threshold": 2,
-            },
-            label="vultr-load-balancer",
-            region="ewr")
+                "check_interval": 3,
+                "healthy_threshold": 4,
+            })
         ```
 
         ## Import
@@ -539,14 +640,18 @@ class LoadBalancer(pulumi.CustomResource):
         $ pulumi import vultr:index/loadBalancer:LoadBalancer lb b6a859c5-b299-49dd-8888-b1abbc517d08
         ```
 
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] attached_instances: Array of instances that are currently attached to the load balancer.
+        :param pulumi.Input[_builtins.str] auto_ssl_domain: The auto SSL domain configuration for a load balancer. This can be a root domain (example.com) or include a subdomain (sub.example.com).
         :param pulumi.Input[_builtins.str] balancing_algorithm: The balancing algorithm for your load balancer. Options are `roundrobin` or `leastconn`. Default value is `roundrobin`
         :param pulumi.Input[_builtins.str] cookie_name: Name for your given sticky session.
         :param pulumi.Input[Sequence[pulumi.Input[Union['LoadBalancerFirewallRuleArgs', 'LoadBalancerFirewallRuleArgsDict']]]] firewall_rules: Defines the firewall rules for a load balancer.
         :param pulumi.Input[Sequence[pulumi.Input[Union['LoadBalancerForwardingRuleArgs', 'LoadBalancerForwardingRuleArgsDict']]]] forwarding_rules: List of forwarding rules for a load balancer. The configuration of a `forwarding_rules` is listened below.
+        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] global_regions: A set of region IDs to deploy child load balancers to.
         :param pulumi.Input[Union['LoadBalancerHealthCheckArgs', 'LoadBalancerHealthCheckArgsDict']] health_check: A block that defines the way load balancers should check for health. The configuration of a `health_check` is listed below.
+        :param pulumi.Input[_builtins.int] http_version: Integer value that indicates if HTTP/2 or HTTP/3 is enabled. Allowed values 2 or 3.
         :param pulumi.Input[_builtins.str] label: The load balancer's label.
         :param pulumi.Input[_builtins.bool] proxy_protocol: Boolean value that indicates if Proxy Protocol is enabled.
         :param pulumi.Input[_builtins.str] region: The region your load balancer is deployed in.
@@ -572,24 +677,24 @@ class LoadBalancer(pulumi.CustomResource):
         import ediri_vultr as vultr
 
         lb = vultr.LoadBalancer("lb",
+            region="ewr",
+            label="vultr-load-balancer",
             balancing_algorithm="roundrobin",
             forwarding_rules=[{
-                "backend_port": 81,
-                "backend_protocol": "http",
-                "frontend_port": 82,
                 "frontend_protocol": "http",
+                "frontend_port": 82,
+                "backend_protocol": "http",
+                "backend_port": 81,
             }],
             health_check={
-                "check_interval": 3,
-                "healthy_threshold": 4,
                 "path": "/test",
                 "port": 8080,
                 "protocol": "http",
                 "response_timeout": 1,
                 "unhealthy_threshold": 2,
-            },
-            label="vultr-load-balancer",
-            region="ewr")
+                "check_interval": 3,
+                "healthy_threshold": 4,
+            })
         ```
 
         ## Import
@@ -599,6 +704,7 @@ class LoadBalancer(pulumi.CustomResource):
         ```sh
         $ pulumi import vultr:index/loadBalancer:LoadBalancer lb b6a859c5-b299-49dd-8888-b1abbc517d08
         ```
+
 
         :param str resource_name: The name of the resource.
         :param LoadBalancerArgs args: The arguments to use to populate this resource's properties.
@@ -616,11 +722,14 @@ class LoadBalancer(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  attached_instances: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
+                 auto_ssl_domain: Optional[pulumi.Input[_builtins.str]] = None,
                  balancing_algorithm: Optional[pulumi.Input[_builtins.str]] = None,
                  cookie_name: Optional[pulumi.Input[_builtins.str]] = None,
                  firewall_rules: Optional[pulumi.Input[Sequence[pulumi.Input[Union['LoadBalancerFirewallRuleArgs', 'LoadBalancerFirewallRuleArgsDict']]]]] = None,
                  forwarding_rules: Optional[pulumi.Input[Sequence[pulumi.Input[Union['LoadBalancerForwardingRuleArgs', 'LoadBalancerForwardingRuleArgsDict']]]]] = None,
+                 global_regions: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
                  health_check: Optional[pulumi.Input[Union['LoadBalancerHealthCheckArgs', 'LoadBalancerHealthCheckArgsDict']]] = None,
+                 http_version: Optional[pulumi.Input[_builtins.int]] = None,
                  label: Optional[pulumi.Input[_builtins.str]] = None,
                  proxy_protocol: Optional[pulumi.Input[_builtins.bool]] = None,
                  region: Optional[pulumi.Input[_builtins.str]] = None,
@@ -637,13 +746,16 @@ class LoadBalancer(pulumi.CustomResource):
             __props__ = LoadBalancerArgs.__new__(LoadBalancerArgs)
 
             __props__.__dict__["attached_instances"] = attached_instances
+            __props__.__dict__["auto_ssl_domain"] = auto_ssl_domain
             __props__.__dict__["balancing_algorithm"] = balancing_algorithm
             __props__.__dict__["cookie_name"] = cookie_name
             __props__.__dict__["firewall_rules"] = firewall_rules
             if forwarding_rules is None and not opts.urn:
                 raise TypeError("Missing required property 'forwarding_rules'")
             __props__.__dict__["forwarding_rules"] = forwarding_rules
+            __props__.__dict__["global_regions"] = global_regions
             __props__.__dict__["health_check"] = health_check
+            __props__.__dict__["http_version"] = http_version
             __props__.__dict__["label"] = label
             __props__.__dict__["proxy_protocol"] = proxy_protocol
             if region is None and not opts.urn:
@@ -667,12 +779,15 @@ class LoadBalancer(pulumi.CustomResource):
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
             attached_instances: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
+            auto_ssl_domain: Optional[pulumi.Input[_builtins.str]] = None,
             balancing_algorithm: Optional[pulumi.Input[_builtins.str]] = None,
             cookie_name: Optional[pulumi.Input[_builtins.str]] = None,
             firewall_rules: Optional[pulumi.Input[Sequence[pulumi.Input[Union['LoadBalancerFirewallRuleArgs', 'LoadBalancerFirewallRuleArgsDict']]]]] = None,
             forwarding_rules: Optional[pulumi.Input[Sequence[pulumi.Input[Union['LoadBalancerForwardingRuleArgs', 'LoadBalancerForwardingRuleArgsDict']]]]] = None,
+            global_regions: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
             has_ssl: Optional[pulumi.Input[_builtins.bool]] = None,
             health_check: Optional[pulumi.Input[Union['LoadBalancerHealthCheckArgs', 'LoadBalancerHealthCheckArgsDict']]] = None,
+            http_version: Optional[pulumi.Input[_builtins.int]] = None,
             ipv4: Optional[pulumi.Input[_builtins.str]] = None,
             ipv6: Optional[pulumi.Input[_builtins.str]] = None,
             label: Optional[pulumi.Input[_builtins.str]] = None,
@@ -690,12 +805,15 @@ class LoadBalancer(pulumi.CustomResource):
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] attached_instances: Array of instances that are currently attached to the load balancer.
+        :param pulumi.Input[_builtins.str] auto_ssl_domain: The auto SSL domain configuration for a load balancer. This can be a root domain (example.com) or include a subdomain (sub.example.com).
         :param pulumi.Input[_builtins.str] balancing_algorithm: The balancing algorithm for your load balancer. Options are `roundrobin` or `leastconn`. Default value is `roundrobin`
         :param pulumi.Input[_builtins.str] cookie_name: Name for your given sticky session.
         :param pulumi.Input[Sequence[pulumi.Input[Union['LoadBalancerFirewallRuleArgs', 'LoadBalancerFirewallRuleArgsDict']]]] firewall_rules: Defines the firewall rules for a load balancer.
         :param pulumi.Input[Sequence[pulumi.Input[Union['LoadBalancerForwardingRuleArgs', 'LoadBalancerForwardingRuleArgsDict']]]] forwarding_rules: List of forwarding rules for a load balancer. The configuration of a `forwarding_rules` is listened below.
+        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] global_regions: A set of region IDs to deploy child load balancers to.
         :param pulumi.Input[_builtins.bool] has_ssl: Boolean value that indicates if SSL is enabled.
         :param pulumi.Input[Union['LoadBalancerHealthCheckArgs', 'LoadBalancerHealthCheckArgsDict']] health_check: A block that defines the way load balancers should check for health. The configuration of a `health_check` is listed below.
+        :param pulumi.Input[_builtins.int] http_version: Integer value that indicates if HTTP/2 or HTTP/3 is enabled. Allowed values 2 or 3.
         :param pulumi.Input[_builtins.str] ipv4: IPv4 address for your load balancer.
         :param pulumi.Input[_builtins.str] ipv6: IPv6 address for your load balancer.
         :param pulumi.Input[_builtins.str] label: The load balancer's label.
@@ -711,12 +829,15 @@ class LoadBalancer(pulumi.CustomResource):
         __props__ = _LoadBalancerState.__new__(_LoadBalancerState)
 
         __props__.__dict__["attached_instances"] = attached_instances
+        __props__.__dict__["auto_ssl_domain"] = auto_ssl_domain
         __props__.__dict__["balancing_algorithm"] = balancing_algorithm
         __props__.__dict__["cookie_name"] = cookie_name
         __props__.__dict__["firewall_rules"] = firewall_rules
         __props__.__dict__["forwarding_rules"] = forwarding_rules
+        __props__.__dict__["global_regions"] = global_regions
         __props__.__dict__["has_ssl"] = has_ssl
         __props__.__dict__["health_check"] = health_check
+        __props__.__dict__["http_version"] = http_version
         __props__.__dict__["ipv4"] = ipv4
         __props__.__dict__["ipv6"] = ipv6
         __props__.__dict__["label"] = label
@@ -735,6 +856,14 @@ class LoadBalancer(pulumi.CustomResource):
         Array of instances that are currently attached to the load balancer.
         """
         return pulumi.get(self, "attached_instances")
+
+    @_builtins.property
+    @pulumi.getter(name="autoSslDomain")
+    def auto_ssl_domain(self) -> pulumi.Output[Optional[_builtins.str]]:
+        """
+        The auto SSL domain configuration for a load balancer. This can be a root domain (example.com) or include a subdomain (sub.example.com).
+        """
+        return pulumi.get(self, "auto_ssl_domain")
 
     @_builtins.property
     @pulumi.getter(name="balancingAlgorithm")
@@ -769,6 +898,14 @@ class LoadBalancer(pulumi.CustomResource):
         return pulumi.get(self, "forwarding_rules")
 
     @_builtins.property
+    @pulumi.getter(name="globalRegions")
+    def global_regions(self) -> pulumi.Output[Optional[Sequence[_builtins.str]]]:
+        """
+        A set of region IDs to deploy child load balancers to.
+        """
+        return pulumi.get(self, "global_regions")
+
+    @_builtins.property
     @pulumi.getter(name="hasSsl")
     def has_ssl(self) -> pulumi.Output[_builtins.bool]:
         """
@@ -783,6 +920,14 @@ class LoadBalancer(pulumi.CustomResource):
         A block that defines the way load balancers should check for health. The configuration of a `health_check` is listed below.
         """
         return pulumi.get(self, "health_check")
+
+    @_builtins.property
+    @pulumi.getter(name="httpVersion")
+    def http_version(self) -> pulumi.Output[Optional[_builtins.int]]:
+        """
+        Integer value that indicates if HTTP/2 or HTTP/3 is enabled. Allowed values 2 or 3.
+        """
+        return pulumi.get(self, "http_version")
 
     @_builtins.property
     @pulumi.getter

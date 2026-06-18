@@ -15,13 +15,14 @@ import * as utilities from "./utilities";
  * import * as pulumi from "@pulumi/pulumi";
  * import * as vultr from "@ediri/vultr";
  *
- * const myDomain = new vultr.DnsDomain("myDomain", {
+ * const myDomain = new vultr.DnsDomain("my_domain", {
  *     domain: "domain.com",
  *     ip: "66.42.94.227",
  * });
- * const myRecord = new vultr.DnsRecord("myRecord", {
- *     data: "66.42.94.227",
+ * const myRecord = new vultr.DnsRecord("my_record", {
  *     domain: myDomain.id,
+ *     name: "www",
+ *     data: "66.42.94.227",
  *     type: "A",
  * });
  * ```

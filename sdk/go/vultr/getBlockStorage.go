@@ -29,7 +29,7 @@ import (
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := vultr.LookupBlockStorage(ctx, &vultr.LookupBlockStorageArgs{
+//			_, err := vultr.GetBlockStorage(ctx, &vultr.LookupBlockStorageArgs{
 //				Filters: []vultr.GetBlockStorageFilter{
 //					{
 //						Name: "label",
@@ -67,8 +67,14 @@ type LookupBlockStorageArgs struct {
 type LookupBlockStorageResult struct {
 	// The ID of the VPS the block storage subscription is attached to.
 	AttachedToInstance string `pulumi:"attachedToInstance"`
+	// The IP address of the VPS the block storage subscription is attached to.
+	AttachedToInstanceIp string `pulumi:"attachedToInstanceIp"`
+	// The label of the VPS the block storage subscription is attached to.
+	AttachedToInstanceLabel string `pulumi:"attachedToInstanceLabel"`
 	// The type of block storage volume.
 	BlockType string `pulumi:"blockType"`
+	// Whether or not this block device can be used as a bootable volume.
+	Bootable bool `pulumi:"bootable"`
 	// The cost per month of the block storage subscription in USD.
 	Cost int `pulumi:"cost"`
 	// The date the block storage subscription was added to your Vultr account.
@@ -80,10 +86,16 @@ type LookupBlockStorageResult struct {
 	Label string `pulumi:"label"`
 	// An ID associated with the instance, when mounted the ID can be found in /dev/disk/by-id prefixed with virtio.
 	MountId string `pulumi:"mountId"`
+	// The operating system ID for this bootable block device, if applicable.
+	OsId int `pulumi:"osId"`
+	// Charges due for this block storage subscription at the end of the billing period.
+	PendingCharges float64 `pulumi:"pendingCharges"`
 	// The region ID of the block storage subscription.
 	Region string `pulumi:"region"`
 	// The size of the block storage subscription in GB.
 	SizeGb int `pulumi:"sizeGb"`
+	// The snapshotId from which this block device was cloned.
+	SnapshotId string `pulumi:"snapshotId"`
 	// The status of the block storage subscription.
 	Status string `pulumi:"status"`
 }
@@ -127,9 +139,24 @@ func (o LookupBlockStorageResultOutput) AttachedToInstance() pulumi.StringOutput
 	return o.ApplyT(func(v LookupBlockStorageResult) string { return v.AttachedToInstance }).(pulumi.StringOutput)
 }
 
+// The IP address of the VPS the block storage subscription is attached to.
+func (o LookupBlockStorageResultOutput) AttachedToInstanceIp() pulumi.StringOutput {
+	return o.ApplyT(func(v LookupBlockStorageResult) string { return v.AttachedToInstanceIp }).(pulumi.StringOutput)
+}
+
+// The label of the VPS the block storage subscription is attached to.
+func (o LookupBlockStorageResultOutput) AttachedToInstanceLabel() pulumi.StringOutput {
+	return o.ApplyT(func(v LookupBlockStorageResult) string { return v.AttachedToInstanceLabel }).(pulumi.StringOutput)
+}
+
 // The type of block storage volume.
 func (o LookupBlockStorageResultOutput) BlockType() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupBlockStorageResult) string { return v.BlockType }).(pulumi.StringOutput)
+}
+
+// Whether or not this block device can be used as a bootable volume.
+func (o LookupBlockStorageResultOutput) Bootable() pulumi.BoolOutput {
+	return o.ApplyT(func(v LookupBlockStorageResult) bool { return v.Bootable }).(pulumi.BoolOutput)
 }
 
 // The cost per month of the block storage subscription in USD.
@@ -161,6 +188,16 @@ func (o LookupBlockStorageResultOutput) MountId() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupBlockStorageResult) string { return v.MountId }).(pulumi.StringOutput)
 }
 
+// The operating system ID for this bootable block device, if applicable.
+func (o LookupBlockStorageResultOutput) OsId() pulumi.IntOutput {
+	return o.ApplyT(func(v LookupBlockStorageResult) int { return v.OsId }).(pulumi.IntOutput)
+}
+
+// Charges due for this block storage subscription at the end of the billing period.
+func (o LookupBlockStorageResultOutput) PendingCharges() pulumi.Float64Output {
+	return o.ApplyT(func(v LookupBlockStorageResult) float64 { return v.PendingCharges }).(pulumi.Float64Output)
+}
+
 // The region ID of the block storage subscription.
 func (o LookupBlockStorageResultOutput) Region() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupBlockStorageResult) string { return v.Region }).(pulumi.StringOutput)
@@ -169,6 +206,11 @@ func (o LookupBlockStorageResultOutput) Region() pulumi.StringOutput {
 // The size of the block storage subscription in GB.
 func (o LookupBlockStorageResultOutput) SizeGb() pulumi.IntOutput {
 	return o.ApplyT(func(v LookupBlockStorageResult) int { return v.SizeGb }).(pulumi.IntOutput)
+}
+
+// The snapshotId from which this block device was cloned.
+func (o LookupBlockStorageResultOutput) SnapshotId() pulumi.StringOutput {
+	return o.ApplyT(func(v LookupBlockStorageResult) string { return v.SnapshotId }).(pulumi.StringOutput)
 }
 
 // The status of the block storage subscription.

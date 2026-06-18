@@ -29,7 +29,7 @@ import (
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := vultr.LookupObjectStorage(ctx, &vultr.LookupObjectStorageArgs{
+//			_, err := vultr.GetObjectStorage(ctx, &vultr.LookupObjectStorageArgs{
 //				Filters: []vultr.GetObjectStorageFilter{
 //					{
 //						Name: "label",

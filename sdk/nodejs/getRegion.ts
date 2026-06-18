@@ -52,6 +52,10 @@ export interface GetRegionResult {
      */
     readonly city: string;
     /**
+     * Lists the region's connectivity options, such as `publicIp` and `natGateway`.
+     */
+    readonly connectivities: string[];
+    /**
      * The continent the region is in.
      */
     readonly continent: string;

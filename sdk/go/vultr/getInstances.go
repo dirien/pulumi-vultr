@@ -41,7 +41,7 @@ import (
 // if err != nil {
 // return err
 // }
-// ctx.Export("instances", pulumi.StringArray(%!v(PANIC=Format method: fatal: A failure has occurred: unlowered splat expression @ #-functions-%svultr:index-getInstances:getInstances.pp:8,11-45)))
+// ctx.Export("instances", pulumi.StringArray(%!v(PANIC=Format method: fatal: A failure has occurred: unlowered splat expression @ example.pp:10,11-45)))
 // return nil
 // })
 // }

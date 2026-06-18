@@ -17,7 +17,7 @@ import * as utilities from "./utilities";
  * import * as pulumi from "@pulumi/pulumi";
  * import * as vultr from "@ediri/vultr";
  *
- * const myVpc2 = new vultr.Vpc2("myVpc2", {
+ * const myVpc2 = new vultr.Vpc2("my_vpc2", {
  *     description: "my vpc2",
  *     region: "ewr",
  * });
@@ -29,11 +29,11 @@ import * as utilities from "./utilities";
  * import * as pulumi from "@pulumi/pulumi";
  * import * as vultr from "@ediri/vultr";
  *
- * const myVpc2 = new vultr.Vpc2("myVpc2", {
+ * const myVpc2 = new vultr.Vpc2("my_vpc2", {
  *     description: "my private vpc2",
+ *     region: "ewr",
  *     ipBlock: "10.0.0.0",
  *     prefixLength: 24,
- *     region: "ewr",
  * });
  * ```
  *

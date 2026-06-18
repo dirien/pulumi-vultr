@@ -30,8 +30,8 @@ import (
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := vultr.NewDatabaseTopic(ctx, "myDatabaseTopic", &vultr.DatabaseTopicArgs{
-//				DatabaseId:     pulumi.Any(vultr_database.My_database.Id),
+//			_, err := vultr.NewDatabaseTopic(ctx, "my_database_topic", &vultr.DatabaseTopicArgs{
+//				DatabaseId:     pulumi.Any(myDatabase.Id),
 //				Name:           pulumi.String("my_database_topic"),
 //				Partitions:     pulumi.Int(3),
 //				Replication:    pulumi.Int(2),

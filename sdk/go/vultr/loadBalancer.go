@@ -31,26 +31,26 @@ import (
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
 //			_, err := vultr.NewLoadBalancer(ctx, "lb", &vultr.LoadBalancerArgs{
+//				Region:             pulumi.String("ewr"),
+//				Label:              pulumi.String("vultr-load-balancer"),
 //				BalancingAlgorithm: pulumi.String("roundrobin"),
 //				ForwardingRules: vultr.LoadBalancerForwardingRuleArray{
 //					&vultr.LoadBalancerForwardingRuleArgs{
-//						BackendPort:      pulumi.Int(81),
-//						BackendProtocol:  pulumi.String("http"),
-//						FrontendPort:     pulumi.Int(82),
 //						FrontendProtocol: pulumi.String("http"),
+//						FrontendPort:     pulumi.Int(82),
+//						BackendProtocol:  pulumi.String("http"),
+//						BackendPort:      pulumi.Int(81),
 //					},
 //				},
 //				HealthCheck: &vultr.LoadBalancerHealthCheckArgs{
-//					CheckInterval:      pulumi.Int(3),
-//					HealthyThreshold:   pulumi.Int(4),
 //					Path:               pulumi.String("/test"),
 //					Port:               pulumi.Int(8080),
 //					Protocol:           pulumi.String("http"),
 //					ResponseTimeout:    pulumi.Int(1),
 //					UnhealthyThreshold: pulumi.Int(2),
+//					CheckInterval:      pulumi.Int(3),
+//					HealthyThreshold:   pulumi.Int(4),
 //				},
-//				Label:  pulumi.String("vultr-load-balancer"),
-//				Region: pulumi.String("ewr"),
 //			})
 //			if err != nil {
 //				return err
@@ -73,6 +73,8 @@ type LoadBalancer struct {
 
 	// Array of instances that are currently attached to the load balancer.
 	AttachedInstances pulumi.StringArrayOutput `pulumi:"attachedInstances"`
+	// The auto SSL domain configuration for a load balancer. This can be a root domain (example.com) or include a subdomain (sub.example.com).
+	AutoSslDomain pulumi.StringPtrOutput `pulumi:"autoSslDomain"`
 	// The balancing algorithm for your load balancer. Options are `roundrobin` or `leastconn`. Default value is `roundrobin`
 	BalancingAlgorithm pulumi.StringOutput `pulumi:"balancingAlgorithm"`
 	// Name for your given sticky session.
@@ -81,10 +83,14 @@ type LoadBalancer struct {
 	FirewallRules LoadBalancerFirewallRuleArrayOutput `pulumi:"firewallRules"`
 	// List of forwarding rules for a load balancer. The configuration of a `forwardingRules` is listened below.
 	ForwardingRules LoadBalancerForwardingRuleArrayOutput `pulumi:"forwardingRules"`
+	// A set of region IDs to deploy child load balancers to.
+	GlobalRegions pulumi.StringArrayOutput `pulumi:"globalRegions"`
 	// Boolean value that indicates if SSL is enabled.
 	HasSsl pulumi.BoolOutput `pulumi:"hasSsl"`
 	// A block that defines the way load balancers should check for health. The configuration of a `healthCheck` is listed below.
 	HealthCheck LoadBalancerHealthCheckOutput `pulumi:"healthCheck"`
+	// Integer value that indicates if HTTP/2 or HTTP/3 is enabled. Allowed values 2 or 3.
+	HttpVersion pulumi.IntPtrOutput `pulumi:"httpVersion"`
 	// IPv4 address for your load balancer.
 	Ipv4 pulumi.StringOutput `pulumi:"ipv4"`
 	// IPv6 address for your load balancer.
@@ -143,6 +149,8 @@ func GetLoadBalancer(ctx *pulumi.Context,
 type loadBalancerState struct {
 	// Array of instances that are currently attached to the load balancer.
 	AttachedInstances []string `pulumi:"attachedInstances"`
+	// The auto SSL domain configuration for a load balancer. This can be a root domain (example.com) or include a subdomain (sub.example.com).
+	AutoSslDomain *string `pulumi:"autoSslDomain"`
 	// The balancing algorithm for your load balancer. Options are `roundrobin` or `leastconn`. Default value is `roundrobin`
 	BalancingAlgorithm *string `pulumi:"balancingAlgorithm"`
 	// Name for your given sticky session.
@@ -151,10 +159,14 @@ type loadBalancerState struct {
 	FirewallRules []LoadBalancerFirewallRule `pulumi:"firewallRules"`
 	// List of forwarding rules for a load balancer. The configuration of a `forwardingRules` is listened below.
 	ForwardingRules []LoadBalancerForwardingRule `pulumi:"forwardingRules"`
+	// A set of region IDs to deploy child load balancers to.
+	GlobalRegions []string `pulumi:"globalRegions"`
 	// Boolean value that indicates if SSL is enabled.
 	HasSsl *bool `pulumi:"hasSsl"`
 	// A block that defines the way load balancers should check for health. The configuration of a `healthCheck` is listed below.
 	HealthCheck *LoadBalancerHealthCheck `pulumi:"healthCheck"`
+	// Integer value that indicates if HTTP/2 or HTTP/3 is enabled. Allowed values 2 or 3.
+	HttpVersion *int `pulumi:"httpVersion"`
 	// IPv4 address for your load balancer.
 	Ipv4 *string `pulumi:"ipv4"`
 	// IPv6 address for your load balancer.
@@ -178,6 +190,8 @@ type loadBalancerState struct {
 type LoadBalancerState struct {
 	// Array of instances that are currently attached to the load balancer.
 	AttachedInstances pulumi.StringArrayInput
+	// The auto SSL domain configuration for a load balancer. This can be a root domain (example.com) or include a subdomain (sub.example.com).
+	AutoSslDomain pulumi.StringPtrInput
 	// The balancing algorithm for your load balancer. Options are `roundrobin` or `leastconn`. Default value is `roundrobin`
 	BalancingAlgorithm pulumi.StringPtrInput
 	// Name for your given sticky session.
@@ -186,10 +200,14 @@ type LoadBalancerState struct {
 	FirewallRules LoadBalancerFirewallRuleArrayInput
 	// List of forwarding rules for a load balancer. The configuration of a `forwardingRules` is listened below.
 	ForwardingRules LoadBalancerForwardingRuleArrayInput
+	// A set of region IDs to deploy child load balancers to.
+	GlobalRegions pulumi.StringArrayInput
 	// Boolean value that indicates if SSL is enabled.
 	HasSsl pulumi.BoolPtrInput
 	// A block that defines the way load balancers should check for health. The configuration of a `healthCheck` is listed below.
 	HealthCheck LoadBalancerHealthCheckPtrInput
+	// Integer value that indicates if HTTP/2 or HTTP/3 is enabled. Allowed values 2 or 3.
+	HttpVersion pulumi.IntPtrInput
 	// IPv4 address for your load balancer.
 	Ipv4 pulumi.StringPtrInput
 	// IPv6 address for your load balancer.
@@ -217,6 +235,8 @@ func (LoadBalancerState) ElementType() reflect.Type {
 type loadBalancerArgs struct {
 	// Array of instances that are currently attached to the load balancer.
 	AttachedInstances []string `pulumi:"attachedInstances"`
+	// The auto SSL domain configuration for a load balancer. This can be a root domain (example.com) or include a subdomain (sub.example.com).
+	AutoSslDomain *string `pulumi:"autoSslDomain"`
 	// The balancing algorithm for your load balancer. Options are `roundrobin` or `leastconn`. Default value is `roundrobin`
 	BalancingAlgorithm *string `pulumi:"balancingAlgorithm"`
 	// Name for your given sticky session.
@@ -225,8 +245,12 @@ type loadBalancerArgs struct {
 	FirewallRules []LoadBalancerFirewallRule `pulumi:"firewallRules"`
 	// List of forwarding rules for a load balancer. The configuration of a `forwardingRules` is listened below.
 	ForwardingRules []LoadBalancerForwardingRule `pulumi:"forwardingRules"`
+	// A set of region IDs to deploy child load balancers to.
+	GlobalRegions []string `pulumi:"globalRegions"`
 	// A block that defines the way load balancers should check for health. The configuration of a `healthCheck` is listed below.
 	HealthCheck *LoadBalancerHealthCheck `pulumi:"healthCheck"`
+	// Integer value that indicates if HTTP/2 or HTTP/3 is enabled. Allowed values 2 or 3.
+	HttpVersion *int `pulumi:"httpVersion"`
 	// The load balancer's label.
 	Label *string `pulumi:"label"`
 	// Boolean value that indicates if Proxy Protocol is enabled.
@@ -245,6 +269,8 @@ type loadBalancerArgs struct {
 type LoadBalancerArgs struct {
 	// Array of instances that are currently attached to the load balancer.
 	AttachedInstances pulumi.StringArrayInput
+	// The auto SSL domain configuration for a load balancer. This can be a root domain (example.com) or include a subdomain (sub.example.com).
+	AutoSslDomain pulumi.StringPtrInput
 	// The balancing algorithm for your load balancer. Options are `roundrobin` or `leastconn`. Default value is `roundrobin`
 	BalancingAlgorithm pulumi.StringPtrInput
 	// Name for your given sticky session.
@@ -253,8 +279,12 @@ type LoadBalancerArgs struct {
 	FirewallRules LoadBalancerFirewallRuleArrayInput
 	// List of forwarding rules for a load balancer. The configuration of a `forwardingRules` is listened below.
 	ForwardingRules LoadBalancerForwardingRuleArrayInput
+	// A set of region IDs to deploy child load balancers to.
+	GlobalRegions pulumi.StringArrayInput
 	// A block that defines the way load balancers should check for health. The configuration of a `healthCheck` is listed below.
 	HealthCheck LoadBalancerHealthCheckPtrInput
+	// Integer value that indicates if HTTP/2 or HTTP/3 is enabled. Allowed values 2 or 3.
+	HttpVersion pulumi.IntPtrInput
 	// The load balancer's label.
 	Label pulumi.StringPtrInput
 	// Boolean value that indicates if Proxy Protocol is enabled.
@@ -361,6 +391,11 @@ func (o LoadBalancerOutput) AttachedInstances() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v *LoadBalancer) pulumi.StringArrayOutput { return v.AttachedInstances }).(pulumi.StringArrayOutput)
 }
 
+// The auto SSL domain configuration for a load balancer. This can be a root domain (example.com) or include a subdomain (sub.example.com).
+func (o LoadBalancerOutput) AutoSslDomain() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *LoadBalancer) pulumi.StringPtrOutput { return v.AutoSslDomain }).(pulumi.StringPtrOutput)
+}
+
 // The balancing algorithm for your load balancer. Options are `roundrobin` or `leastconn`. Default value is `roundrobin`
 func (o LoadBalancerOutput) BalancingAlgorithm() pulumi.StringOutput {
 	return o.ApplyT(func(v *LoadBalancer) pulumi.StringOutput { return v.BalancingAlgorithm }).(pulumi.StringOutput)
@@ -381,6 +416,11 @@ func (o LoadBalancerOutput) ForwardingRules() LoadBalancerForwardingRuleArrayOut
 	return o.ApplyT(func(v *LoadBalancer) LoadBalancerForwardingRuleArrayOutput { return v.ForwardingRules }).(LoadBalancerForwardingRuleArrayOutput)
 }
 
+// A set of region IDs to deploy child load balancers to.
+func (o LoadBalancerOutput) GlobalRegions() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *LoadBalancer) pulumi.StringArrayOutput { return v.GlobalRegions }).(pulumi.StringArrayOutput)
+}
+
 // Boolean value that indicates if SSL is enabled.
 func (o LoadBalancerOutput) HasSsl() pulumi.BoolOutput {
 	return o.ApplyT(func(v *LoadBalancer) pulumi.BoolOutput { return v.HasSsl }).(pulumi.BoolOutput)
@@ -389,6 +429,11 @@ func (o LoadBalancerOutput) HasSsl() pulumi.BoolOutput {
 // A block that defines the way load balancers should check for health. The configuration of a `healthCheck` is listed below.
 func (o LoadBalancerOutput) HealthCheck() LoadBalancerHealthCheckOutput {
 	return o.ApplyT(func(v *LoadBalancer) LoadBalancerHealthCheckOutput { return v.HealthCheck }).(LoadBalancerHealthCheckOutput)
+}
+
+// Integer value that indicates if HTTP/2 or HTTP/3 is enabled. Allowed values 2 or 3.
+func (o LoadBalancerOutput) HttpVersion() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *LoadBalancer) pulumi.IntPtrOutput { return v.HttpVersion }).(pulumi.IntPtrOutput)
 }
 
 // IPv4 address for your load balancer.

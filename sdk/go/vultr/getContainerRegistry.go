@@ -27,7 +27,7 @@ import (
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := vultr.LookupContainerRegistry(ctx, &vultr.LookupContainerRegistryArgs{
+//			_, err := vultr.GetContainerRegistry(ctx, &vultr.LookupContainerRegistryArgs{
 //				Filters: []vultr.GetContainerRegistryFilter{
 //					{
 //						Name: "name",

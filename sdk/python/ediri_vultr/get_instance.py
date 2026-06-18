@@ -28,7 +28,7 @@ class GetInstanceResult:
     """
     A collection of values returned by getInstance.
     """
-    def __init__(__self__, allowed_bandwidth=None, app_id=None, backups=None, backups_schedule=None, date_created=None, disk=None, features=None, filters=None, firewall_group_id=None, gateway_v4=None, hostname=None, id=None, image_id=None, internal_ip=None, kvm=None, label=None, location=None, main_ip=None, netmask_v4=None, os=None, os_id=None, plan=None, power_status=None, ram=None, region=None, server_status=None, status=None, tags=None, user_scheme=None, v6_main_ip=None, v6_network=None, v6_network_size=None, vcpu_count=None, vpc2_ids=None, vpc_ids=None):
+    def __init__(__self__, allowed_bandwidth=None, app_id=None, backups=None, backups_schedule=None, date_created=None, disk=None, features=None, filters=None, firewall_group_id=None, gateway_v4=None, hostname=None, id=None, image_id=None, internal_ip=None, kvm=None, label=None, location=None, main_ip=None, netmask_v4=None, os=None, os_id=None, plan=None, power_status=None, ram=None, region=None, server_status=None, snapshot_id=None, status=None, tags=None, user_scheme=None, v6_main_ip=None, v6_network=None, v6_network_size=None, vcpu_count=None, vpc2_ids=None, vpc_ids=None):
         if allowed_bandwidth and not isinstance(allowed_bandwidth, int):
             raise TypeError("Expected argument 'allowed_bandwidth' to be a int")
         pulumi.set(__self__, "allowed_bandwidth", allowed_bandwidth)
@@ -107,6 +107,9 @@ class GetInstanceResult:
         if server_status and not isinstance(server_status, str):
             raise TypeError("Expected argument 'server_status' to be a str")
         pulumi.set(__self__, "server_status", server_status)
+        if snapshot_id and not isinstance(snapshot_id, str):
+            raise TypeError("Expected argument 'snapshot_id' to be a str")
+        pulumi.set(__self__, "snapshot_id", snapshot_id)
         if status and not isinstance(status, str):
             raise TypeError("Expected argument 'status' to be a str")
         pulumi.set(__self__, "status", status)
@@ -335,6 +338,14 @@ class GetInstanceResult:
         return pulumi.get(self, "server_status")
 
     @_builtins.property
+    @pulumi.getter(name="snapshotId")
+    def snapshot_id(self) -> _builtins.str:
+        """
+        The ID of the Vultr snapshot that the server was restored from.
+        """
+        return pulumi.get(self, "snapshot_id")
+
+    @_builtins.property
     @pulumi.getter
     def status(self) -> _builtins.str:
         """
@@ -436,6 +447,7 @@ class AwaitableGetInstanceResult(GetInstanceResult):
             ram=self.ram,
             region=self.region,
             server_status=self.server_status,
+            snapshot_id=self.snapshot_id,
             status=self.status,
             tags=self.tags,
             user_scheme=self.user_scheme,
@@ -501,6 +513,7 @@ def get_instance(filters: Optional[Sequence[Union['GetInstanceFilterArgs', 'GetI
         ram=pulumi.get(__ret__, 'ram'),
         region=pulumi.get(__ret__, 'region'),
         server_status=pulumi.get(__ret__, 'server_status'),
+        snapshot_id=pulumi.get(__ret__, 'snapshot_id'),
         status=pulumi.get(__ret__, 'status'),
         tags=pulumi.get(__ret__, 'tags'),
         user_scheme=pulumi.get(__ret__, 'user_scheme'),
@@ -563,6 +576,7 @@ def get_instance_output(filters: Optional[pulumi.Input[Optional[Sequence[Union['
         ram=pulumi.get(__response__, 'ram'),
         region=pulumi.get(__response__, 'region'),
         server_status=pulumi.get(__response__, 'server_status'),
+        snapshot_id=pulumi.get(__response__, 'snapshot_id'),
         status=pulumi.get(__response__, 'status'),
         tags=pulumi.get(__response__, 'tags'),
         user_scheme=pulumi.get(__response__, 'user_scheme'),

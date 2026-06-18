@@ -23,6 +23,7 @@ class SnapshotArgs:
                  description: Optional[pulumi.Input[_builtins.str]] = None):
         """
         The set of arguments for constructing a Snapshot resource.
+
         :param pulumi.Input[_builtins.str] instance_id: ID of a given instance that you want to create a snapshot from.
         :param pulumi.Input[_builtins.str] description: The description for the given snapshot.
                
@@ -75,6 +76,7 @@ class _SnapshotState:
                  status: Optional[pulumi.Input[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering Snapshot resources.
+
         :param pulumi.Input[_builtins.int] app_id: The app id which the snapshot is associated with.
         :param pulumi.Input[_builtins.str] date_created: The date the snapshot was created.
         :param pulumi.Input[_builtins.str] description: The description for the given snapshot.
@@ -211,14 +213,14 @@ class Snapshot(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_instance = vultr.Instance("myInstance",
+        my_instance = vultr.Instance("my_instance",
             label="my_instance",
-            os_id=167,
+            region="ewr",
             plan="201",
-            region="ewr")
-        my_snapshot = vultr.Snapshot("mySnapshot",
-            description="my instances snapshot",
-            instance_id=my_instance.id)
+            os_id=167)
+        my_snapshot = vultr.Snapshot("my_snapshot",
+            instance_id=my_instance.id,
+            description="my instances snapshot")
         ```
 
         ## Import
@@ -228,6 +230,7 @@ class Snapshot(pulumi.CustomResource):
         ```sh
         $ pulumi import vultr:index/snapshot:Snapshot my_snapshot 283941e8-0783-410e-9540-71c86b833992
         ```
+
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -255,14 +258,14 @@ class Snapshot(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_instance = vultr.Instance("myInstance",
+        my_instance = vultr.Instance("my_instance",
             label="my_instance",
-            os_id=167,
+            region="ewr",
             plan="201",
-            region="ewr")
-        my_snapshot = vultr.Snapshot("mySnapshot",
-            description="my instances snapshot",
-            instance_id=my_instance.id)
+            os_id=167)
+        my_snapshot = vultr.Snapshot("my_snapshot",
+            instance_id=my_instance.id,
+            description="my instances snapshot")
         ```
 
         ## Import
@@ -272,6 +275,7 @@ class Snapshot(pulumi.CustomResource):
         ```sh
         $ pulumi import vultr:index/snapshot:Snapshot my_snapshot 283941e8-0783-410e-9540-71c86b833992
         ```
+
 
         :param str resource_name: The name of the resource.
         :param SnapshotArgs args: The arguments to use to populate this resource's properties.

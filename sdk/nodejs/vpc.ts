@@ -15,7 +15,7 @@ import * as utilities from "./utilities";
  * import * as pulumi from "@pulumi/pulumi";
  * import * as vultr from "@ediri/vultr";
  *
- * const myVpc = new vultr.Vpc("myVpc", {
+ * const myVpc = new vultr.Vpc("my_vpc", {
  *     description: "my vpc",
  *     region: "ewr",
  * });
@@ -27,7 +27,7 @@ import * as utilities from "./utilities";
  * import * as pulumi from "@pulumi/pulumi";
  * import * as vultr from "@ediri/vultr";
  *
- * const myVpc = new vultr.Vpc("myVpc", {
+ * const myVpc = new vultr.Vpc("my_vpc", {
  *     description: "my private vpc",
  *     region: "ewr",
  *     v4Subnet: "10.0.0.0",

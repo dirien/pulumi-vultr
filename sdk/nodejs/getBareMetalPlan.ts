@@ -76,6 +76,9 @@ export interface GetBareMetalPlanResult {
      * The provider-assigned unique ID for this managed resource.
      */
     readonly id: string;
+    /**
+     * A list of DCIDs (used as `region` in Terraform) where the plan can be deployed.
+     */
     readonly locations: string[];
     /**
      * The price per month of the plan in USD.

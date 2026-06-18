@@ -15,7 +15,10 @@ import * as utilities from "./utilities";
  * import * as pulumi from "@pulumi/pulumi";
  * import * as vultr from "@ediri/vultr";
  *
- * const myDatabaseDb = new vultr.DatabaseDb("myDatabaseDb", {databaseId: vultr_database.my_database.id});
+ * const myDatabaseDb = new vultr.DatabaseDb("my_database_db", {
+ *     databaseId: myDatabase.id,
+ *     name: "my_database_db",
+ * });
  * ```
  */
 export class DatabaseDb extends pulumi.CustomResource {

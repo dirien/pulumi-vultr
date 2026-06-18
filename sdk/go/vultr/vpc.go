@@ -30,7 +30,7 @@ import (
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := vultr.NewVpc(ctx, "myVpc", &vultr.VpcArgs{
+//			_, err := vultr.NewVpc(ctx, "my_vpc", &vultr.VpcArgs{
 //				Description: pulumi.String("my vpc"),
 //				Region:      pulumi.String("ewr"),
 //			})
@@ -57,7 +57,7 @@ import (
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := vultr.NewVpc(ctx, "myVpc", &vultr.VpcArgs{
+//			_, err := vultr.NewVpc(ctx, "my_vpc", &vultr.VpcArgs{
 //				Description:  pulumi.String("my private vpc"),
 //				Region:       pulumi.String("ewr"),
 //				V4Subnet:     pulumi.String("10.0.0.0"),
