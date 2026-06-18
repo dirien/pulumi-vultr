@@ -29,7 +29,7 @@ import (
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := vultr.NewFirewallGroup(ctx, "myFirewallgroup", &vultr.FirewallGroupArgs{
+//			_, err := vultr.NewFirewallGroup(ctx, "my_firewallgroup", &vultr.FirewallGroupArgs{
 //				Description: pulumi.String("base firewall"),
 //			})
 //			if err != nil {
@@ -57,12 +57,6 @@ type FirewallGroup struct {
 	DateModified pulumi.StringOutput `pulumi:"dateModified"`
 	// Description of the firewall group.
 	Description pulumi.StringPtrOutput `pulumi:"description"`
-	// The number of instances that are currently using this firewall group.
-	InstanceCount pulumi.IntOutput `pulumi:"instanceCount"`
-	// The number of max firewall rules this group can have.
-	MaxRuleCount pulumi.IntOutput `pulumi:"maxRuleCount"`
-	// The number of firewall rules this group currently has.
-	RuleCount pulumi.IntOutput `pulumi:"ruleCount"`
 }
 
 // NewFirewallGroup registers a new resource with the given unique name, arguments, and options.
@@ -101,12 +95,6 @@ type firewallGroupState struct {
 	DateModified *string `pulumi:"dateModified"`
 	// Description of the firewall group.
 	Description *string `pulumi:"description"`
-	// The number of instances that are currently using this firewall group.
-	InstanceCount *int `pulumi:"instanceCount"`
-	// The number of max firewall rules this group can have.
-	MaxRuleCount *int `pulumi:"maxRuleCount"`
-	// The number of firewall rules this group currently has.
-	RuleCount *int `pulumi:"ruleCount"`
 }
 
 type FirewallGroupState struct {
@@ -116,12 +104,6 @@ type FirewallGroupState struct {
 	DateModified pulumi.StringPtrInput
 	// Description of the firewall group.
 	Description pulumi.StringPtrInput
-	// The number of instances that are currently using this firewall group.
-	InstanceCount pulumi.IntPtrInput
-	// The number of max firewall rules this group can have.
-	MaxRuleCount pulumi.IntPtrInput
-	// The number of firewall rules this group currently has.
-	RuleCount pulumi.IntPtrInput
 }
 
 func (FirewallGroupState) ElementType() reflect.Type {
@@ -239,21 +221,6 @@ func (o FirewallGroupOutput) DateModified() pulumi.StringOutput {
 // Description of the firewall group.
 func (o FirewallGroupOutput) Description() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *FirewallGroup) pulumi.StringPtrOutput { return v.Description }).(pulumi.StringPtrOutput)
-}
-
-// The number of instances that are currently using this firewall group.
-func (o FirewallGroupOutput) InstanceCount() pulumi.IntOutput {
-	return o.ApplyT(func(v *FirewallGroup) pulumi.IntOutput { return v.InstanceCount }).(pulumi.IntOutput)
-}
-
-// The number of max firewall rules this group can have.
-func (o FirewallGroupOutput) MaxRuleCount() pulumi.IntOutput {
-	return o.ApplyT(func(v *FirewallGroup) pulumi.IntOutput { return v.MaxRuleCount }).(pulumi.IntOutput)
-}
-
-// The number of firewall rules this group currently has.
-func (o FirewallGroupOutput) RuleCount() pulumi.IntOutput {
-	return o.ApplyT(func(v *FirewallGroup) pulumi.IntOutput { return v.RuleCount }).(pulumi.IntOutput)
 }
 
 type FirewallGroupArrayOutput struct{ *pulumi.OutputState }

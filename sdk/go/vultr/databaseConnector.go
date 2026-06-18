@@ -41,8 +41,8 @@ import (
 //				return err
 //			}
 //			json0 := string(tmpJSON0)
-//			_, err = vultr.NewDatabaseConnector(ctx, "myDatabaseConnector", &vultr.DatabaseConnectorArgs{
-//				DatabaseId: pulumi.Any(vultr_database.My_database.Id),
+//			_, err = vultr.NewDatabaseConnector(ctx, "my_database_connector", &vultr.DatabaseConnectorArgs{
+//				DatabaseId: pulumi.Any(myDatabase.Id),
 //				Name:       pulumi.String("my_database_connector"),
 //				Class:      pulumi.String("com.couchbase.connect.kafka.CouchbaseSinkConnector"),
 //				Topics:     pulumi.String("my_database_topic"),

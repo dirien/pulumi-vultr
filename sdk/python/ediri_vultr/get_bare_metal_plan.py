@@ -130,6 +130,9 @@ class GetBareMetalPlanResult:
     @_builtins.property
     @pulumi.getter
     def locations(self) -> Sequence[_builtins.str]:
+        """
+        A list of DCIDs (used as `region` in Terraform) where the plan can be deployed.
+        """
         return pulumi.get(self, "locations")
 
     @_builtins.property

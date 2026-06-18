@@ -15,6 +15,10 @@ export interface DatabaseReadReplica {
      */
     backupMinute?: pulumi.Input<string>;
     /**
+     * The CA certificate for Managed Databases on this account.
+     */
+    caCertificate?: pulumi.Input<string>;
+    /**
      * The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
      */
     clusterTimeZone?: pulumi.Input<string>;
@@ -574,6 +578,138 @@ export interface GetObjectStorageTierFilterArgs {
     values: pulumi.Input<pulumi.Input<string>[]>;
 }
 
+export interface GetOidcIssuerFilter {
+    /**
+     * Attribute name to filter with.
+     */
+    name: string;
+    /**
+     * One or more values filter with.
+     */
+    values: string[];
+}
+
+export interface GetOidcIssuerFilterArgs {
+    /**
+     * Attribute name to filter with.
+     */
+    name: pulumi.Input<string>;
+    /**
+     * One or more values filter with.
+     */
+    values: pulumi.Input<pulumi.Input<string>[]>;
+}
+
+export interface GetOidcProviderFilter {
+    /**
+     * Attribute name to filter with.
+     */
+    name: string;
+    /**
+     * One or more values filter with.
+     */
+    values: string[];
+}
+
+export interface GetOidcProviderFilterArgs {
+    /**
+     * Attribute name to filter with.
+     */
+    name: pulumi.Input<string>;
+    /**
+     * One or more values filter with.
+     */
+    values: pulumi.Input<pulumi.Input<string>[]>;
+}
+
+export interface GetOrganizationFilter {
+    /**
+     * Attribute name to filter with.
+     */
+    name: string;
+    /**
+     * One or more values filter with.
+     */
+    values: string[];
+}
+
+export interface GetOrganizationFilterArgs {
+    /**
+     * Attribute name to filter with.
+     */
+    name: pulumi.Input<string>;
+    /**
+     * One or more values filter with.
+     */
+    values: pulumi.Input<pulumi.Input<string>[]>;
+}
+
+export interface GetOrganizationGroupFilter {
+    /**
+     * Attribute name to filter with.
+     */
+    name: string;
+    /**
+     * One or more values filter with.
+     */
+    values: string[];
+}
+
+export interface GetOrganizationGroupFilterArgs {
+    /**
+     * Attribute name to filter with.
+     */
+    name: pulumi.Input<string>;
+    /**
+     * One or more values filter with.
+     */
+    values: pulumi.Input<pulumi.Input<string>[]>;
+}
+
+export interface GetOrganizationPolicyFilter {
+    /**
+     * Attribute name to filter with.
+     */
+    name: string;
+    /**
+     * One or more values filter with.
+     */
+    values: string[];
+}
+
+export interface GetOrganizationPolicyFilterArgs {
+    /**
+     * Attribute name to filter with.
+     */
+    name: pulumi.Input<string>;
+    /**
+     * One or more values filter with.
+     */
+    values: pulumi.Input<pulumi.Input<string>[]>;
+}
+
+export interface GetOrganizationRoleFilter {
+    /**
+     * Attribute name to filter with.
+     */
+    name: string;
+    /**
+     * One or more values filter with.
+     */
+    values: string[];
+}
+
+export interface GetOrganizationRoleFilterArgs {
+    /**
+     * Attribute name to filter with.
+     */
+    name: pulumi.Input<string>;
+    /**
+     * One or more values filter with.
+     */
+    values: pulumi.Input<pulumi.Input<string>[]>;
+}
+
 export interface GetOsFilter {
     /**
      * Attribute name to filter with.
@@ -863,6 +999,8 @@ export interface GetVpcFilterArgs {
 export interface InstanceBackupsSchedule {
     /**
      * Day of month to run. Use values between 1 and 28.
+     *
+     * `blockDevices` - (Optional) Available for VX1 instances: A list of block devices to attach to your instance. Define your block devices, create bootable block devices, or use local storage (if plan has local storage) as scratch disk with these fields:
      */
     dom?: pulumi.Input<number>;
     /**
@@ -877,6 +1015,25 @@ export interface InstanceBackupsSchedule {
      * Type of backup schedule Possible values are `daily`, `weekly`, `monthly`, `dailyAltEven`, or `dailyAltOdd`.
      */
     type: pulumi.Input<string>;
+}
+
+export interface InstanceBlockDevice {
+    /**
+     * The ID of an existing block device or `local` if the VX1 plan has local storage and you wish to utilize it for this instance.
+     */
+    blockId?: pulumi.Input<string>;
+    /**
+     * Whether the associated block device is bootable.
+     */
+    bootable?: pulumi.Input<boolean>;
+    /**
+     * The disk size for the block device if it is being created.
+     */
+    diskSize?: pulumi.Input<number>;
+    /**
+     * A label for the server.
+     */
+    label?: pulumi.Input<string>;
 }
 
 export interface KubernetesNodePools {
@@ -900,10 +1057,7 @@ export interface KubernetesNodePools {
      * The label to be used as a prefix for nodes in this node pool.
      */
     label: pulumi.Input<string>;
-    /**
-     * A map of key/value pairs for Kubernetes node labels.
-     */
-    labels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    labels?: pulumi.Input<pulumi.Input<inputs.KubernetesNodePoolsLabel>[]>;
     /**
      * The maximum number of nodes to use with the auto scaler.
      */
@@ -916,12 +1070,9 @@ export interface KubernetesNodePools {
      * The number of nodes in this node pool.
      */
     nodeQuantity: pulumi.Input<number>;
-    /**
-     * Array that contains information about nodes within this node pool.
-     */
     nodes?: pulumi.Input<pulumi.Input<inputs.KubernetesNodePoolsNode>[]>;
     /**
-     * The plan to be used in this node pool. [See Plans List](https://www.vultr.com/api/#operation/list-plans) Note the minimum plan requirements must have at least 1 core and 2 gbs of memory.
+     * The plan to be used in this node pool. [See plans list](https://www.vultr.com/api/#operation/list-plans) Note the minimum plan requirements must have at least 1 core and 2 gbs of memory.
      */
     plan: pulumi.Input<string>;
     /**
@@ -932,11 +1083,28 @@ export interface KubernetesNodePools {
      * Tag for node pool.
      */
     tag?: pulumi.Input<string>;
-    /**
-     * Taints to apply to the nodes in the node pool. Should contain `key`, `value` and `effect`.  The `effect` should be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
-     */
     taints?: pulumi.Input<pulumi.Input<inputs.KubernetesNodePoolsTaint>[]>;
+    /**
+     * A base64 encoded string containing the user data to apply to nodes in the node pool.
+     *
+     * `labels` - (Optional) A list of labels to apply to the nodes in the node pool with these fields:
+     */
     userData?: pulumi.Input<string>;
+}
+
+export interface KubernetesNodePoolsLabel {
+    /**
+     * ID of node.
+     */
+    id?: pulumi.Input<string>;
+    /**
+     * The key definining the taint for kubernetes.
+     */
+    key: pulumi.Input<string>;
+    /**
+     * The value of the taint for kubernetes.
+     */
+    value: pulumi.Input<string>;
 }
 
 export interface KubernetesNodePoolsNode {
@@ -959,8 +1127,21 @@ export interface KubernetesNodePoolsNode {
 }
 
 export interface KubernetesNodePoolsTaint {
+    /**
+     * The effect of the taint for kubernetes.  Must be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
+     */
     effect: pulumi.Input<string>;
+    /**
+     * ID of node.
+     */
+    id?: pulumi.Input<string>;
+    /**
+     * The key definining the taint for kubernetes.
+     */
     key: pulumi.Input<string>;
+    /**
+     * The value of the taint for kubernetes.
+     */
     value: pulumi.Input<string>;
 }
 
@@ -1047,6 +1228,32 @@ export interface LoadBalancerSsl {
      * The SSL certificates private key.
      */
     privateKey: pulumi.Input<string>;
+}
+
+export interface OrganizationPolicyDocument {
+    /**
+     * A list of blocks for the organization policy statements.
+     */
+    statements: pulumi.Input<pulumi.Input<inputs.OrganizationPolicyDocumentStatement>[]>;
+    /**
+     * A version for organization policy document.
+     */
+    version: pulumi.Input<string>;
+}
+
+export interface OrganizationPolicyDocumentStatement {
+    /**
+     * A list of actions for the policy document statement.
+     */
+    actions: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * The effect of the the policy document statement.
+     */
+    effect: pulumi.Input<string>;
+    /**
+     * A list of applicable resources for the policy document statement.
+     */
+    resources: pulumi.Input<pulumi.Input<string>[]>;
 }
 
 export interface VirtualFileSystemStorageAttachment {

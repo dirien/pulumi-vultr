@@ -18,24 +18,24 @@ import * as utilities from "./utilities";
  * import * as vultr from "@ediri/vultr";
  *
  * const lb = new vultr.LoadBalancer("lb", {
+ *     region: "ewr",
+ *     label: "vultr-load-balancer",
  *     balancingAlgorithm: "roundrobin",
  *     forwardingRules: [{
- *         backendPort: 81,
- *         backendProtocol: "http",
- *         frontendPort: 82,
  *         frontendProtocol: "http",
+ *         frontendPort: 82,
+ *         backendProtocol: "http",
+ *         backendPort: 81,
  *     }],
  *     healthCheck: {
- *         checkInterval: 3,
- *         healthyThreshold: 4,
  *         path: "/test",
  *         port: 8080,
  *         protocol: "http",
  *         responseTimeout: 1,
  *         unhealthyThreshold: 2,
+ *         checkInterval: 3,
+ *         healthyThreshold: 4,
  *     },
- *     label: "vultr-load-balancer",
- *     region: "ewr",
  * });
  * ```
  *
@@ -80,6 +80,10 @@ export class LoadBalancer extends pulumi.CustomResource {
      */
     declare public readonly attachedInstances: pulumi.Output<string[]>;
     /**
+     * The auto SSL domain configuration for a load balancer. This can be a root domain (example.com) or include a subdomain (sub.example.com).
+     */
+    declare public readonly autoSslDomain: pulumi.Output<string | undefined>;
+    /**
      * The balancing algorithm for your load balancer. Options are `roundrobin` or `leastconn`. Default value is `roundrobin`
      */
     declare public readonly balancingAlgorithm: pulumi.Output<string>;
@@ -96,6 +100,10 @@ export class LoadBalancer extends pulumi.CustomResource {
      */
     declare public readonly forwardingRules: pulumi.Output<outputs.LoadBalancerForwardingRule[]>;
     /**
+     * A set of region IDs to deploy child load balancers to.
+     */
+    declare public readonly globalRegions: pulumi.Output<string[] | undefined>;
+    /**
      * Boolean value that indicates if SSL is enabled.
      */
     declare public /*out*/ readonly hasSsl: pulumi.Output<boolean>;
@@ -103,6 +111,10 @@ export class LoadBalancer extends pulumi.CustomResource {
      * A block that defines the way load balancers should check for health. The configuration of a `healthCheck` is listed below.
      */
     declare public readonly healthCheck: pulumi.Output<outputs.LoadBalancerHealthCheck>;
+    /**
+     * Integer value that indicates if HTTP/2 or HTTP/3 is enabled. Allowed values 2 or 3.
+     */
+    declare public readonly httpVersion: pulumi.Output<number | undefined>;
     /**
      * IPv4 address for your load balancer.
      */
@@ -154,12 +166,15 @@ export class LoadBalancer extends pulumi.CustomResource {
         if (opts.id) {
             const state = argsOrState as LoadBalancerState | undefined;
             resourceInputs["attachedInstances"] = state?.attachedInstances;
+            resourceInputs["autoSslDomain"] = state?.autoSslDomain;
             resourceInputs["balancingAlgorithm"] = state?.balancingAlgorithm;
             resourceInputs["cookieName"] = state?.cookieName;
             resourceInputs["firewallRules"] = state?.firewallRules;
             resourceInputs["forwardingRules"] = state?.forwardingRules;
+            resourceInputs["globalRegions"] = state?.globalRegions;
             resourceInputs["hasSsl"] = state?.hasSsl;
             resourceInputs["healthCheck"] = state?.healthCheck;
+            resourceInputs["httpVersion"] = state?.httpVersion;
             resourceInputs["ipv4"] = state?.ipv4;
             resourceInputs["ipv6"] = state?.ipv6;
             resourceInputs["label"] = state?.label;
@@ -178,11 +193,14 @@ export class LoadBalancer extends pulumi.CustomResource {
                 throw new Error("Missing required property 'region'");
             }
             resourceInputs["attachedInstances"] = args?.attachedInstances;
+            resourceInputs["autoSslDomain"] = args?.autoSslDomain;
             resourceInputs["balancingAlgorithm"] = args?.balancingAlgorithm;
             resourceInputs["cookieName"] = args?.cookieName;
             resourceInputs["firewallRules"] = args?.firewallRules;
             resourceInputs["forwardingRules"] = args?.forwardingRules;
+            resourceInputs["globalRegions"] = args?.globalRegions;
             resourceInputs["healthCheck"] = args?.healthCheck;
+            resourceInputs["httpVersion"] = args?.httpVersion;
             resourceInputs["label"] = args?.label;
             resourceInputs["proxyProtocol"] = args?.proxyProtocol;
             resourceInputs["region"] = args?.region;
@@ -208,6 +226,10 @@ export interface LoadBalancerState {
      */
     attachedInstances?: pulumi.Input<pulumi.Input<string>[]>;
     /**
+     * The auto SSL domain configuration for a load balancer. This can be a root domain (example.com) or include a subdomain (sub.example.com).
+     */
+    autoSslDomain?: pulumi.Input<string>;
+    /**
      * The balancing algorithm for your load balancer. Options are `roundrobin` or `leastconn`. Default value is `roundrobin`
      */
     balancingAlgorithm?: pulumi.Input<string>;
@@ -224,6 +246,10 @@ export interface LoadBalancerState {
      */
     forwardingRules?: pulumi.Input<pulumi.Input<inputs.LoadBalancerForwardingRule>[]>;
     /**
+     * A set of region IDs to deploy child load balancers to.
+     */
+    globalRegions?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
      * Boolean value that indicates if SSL is enabled.
      */
     hasSsl?: pulumi.Input<boolean>;
@@ -231,6 +257,10 @@ export interface LoadBalancerState {
      * A block that defines the way load balancers should check for health. The configuration of a `healthCheck` is listed below.
      */
     healthCheck?: pulumi.Input<inputs.LoadBalancerHealthCheck>;
+    /**
+     * Integer value that indicates if HTTP/2 or HTTP/3 is enabled. Allowed values 2 or 3.
+     */
+    httpVersion?: pulumi.Input<number>;
     /**
      * IPv4 address for your load balancer.
      */
@@ -278,6 +308,10 @@ export interface LoadBalancerArgs {
      */
     attachedInstances?: pulumi.Input<pulumi.Input<string>[]>;
     /**
+     * The auto SSL domain configuration for a load balancer. This can be a root domain (example.com) or include a subdomain (sub.example.com).
+     */
+    autoSslDomain?: pulumi.Input<string>;
+    /**
      * The balancing algorithm for your load balancer. Options are `roundrobin` or `leastconn`. Default value is `roundrobin`
      */
     balancingAlgorithm?: pulumi.Input<string>;
@@ -294,9 +328,17 @@ export interface LoadBalancerArgs {
      */
     forwardingRules: pulumi.Input<pulumi.Input<inputs.LoadBalancerForwardingRule>[]>;
     /**
+     * A set of region IDs to deploy child load balancers to.
+     */
+    globalRegions?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
      * A block that defines the way load balancers should check for health. The configuration of a `healthCheck` is listed below.
      */
     healthCheck?: pulumi.Input<inputs.LoadBalancerHealthCheck>;
+    /**
+     * Integer value that indicates if HTTP/2 or HTTP/3 is enabled. Allowed values 2 or 3.
+     */
+    httpVersion?: pulumi.Input<number>;
     /**
      * The load balancer's label.
      */

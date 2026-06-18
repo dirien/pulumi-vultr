@@ -15,10 +15,10 @@ import * as utilities from "./utilities";
  * import * as pulumi from "@pulumi/pulumi";
  * import * as vultr from "@ediri/vultr";
  *
- * const myReservedIp = new vultr.ReservedIp("myReservedIp", {
- *     ipType: "v4",
+ * const myReservedIp = new vultr.ReservedIp("my_reserved_ip", {
  *     label: "my-reserved-ip",
  *     region: "sea",
+ *     ipType: "v4",
  * });
  * ```
  *
@@ -28,11 +28,11 @@ import * as utilities from "./utilities";
  * import * as pulumi from "@pulumi/pulumi";
  * import * as vultr from "@ediri/vultr";
  *
- * const myReservedIp = new vultr.ReservedIp("myReservedIp", {
- *     instanceId: "b9cc6fad-70b1-40ee-ab6a-4d622858962f",
- *     ipType: "v4",
+ * const myReservedIp = new vultr.ReservedIp("my_reserved_ip", {
  *     label: "my-reserved-ip",
  *     region: "sea",
+ *     ipType: "v4",
+ *     instanceId: "b9cc6fad-70b1-40ee-ab6a-4d622858962f",
  * });
  * ```
  *

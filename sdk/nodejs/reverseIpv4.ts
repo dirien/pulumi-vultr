@@ -17,13 +17,13 @@ import * as utilities from "./utilities";
  * import * as pulumi from "@pulumi/pulumi";
  * import * as vultr from "@ediri/vultr";
  *
- * const myInstance = new vultr.Instance("myInstance", {
- *     enableIpv6: true,
- *     osId: 477,
+ * const myInstance = new vultr.Instance("my_instance", {
  *     plan: "vc2-1c-2gb",
  *     region: "ewr",
+ *     osId: 477,
+ *     enableIpv6: true,
  * });
- * const myReverseIpv4 = new vultr.ReverseIpv4("myReverseIpv4", {
+ * const myReverseIpv4 = new vultr.ReverseIpv4("my_reverse_ipv4", {
  *     instanceId: myInstance.id,
  *     ip: myInstance.mainIp,
  *     reverse: "host.example.com",

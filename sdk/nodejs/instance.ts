@@ -17,10 +17,10 @@ import * as utilities from "./utilities";
  * import * as pulumi from "@pulumi/pulumi";
  * import * as vultr from "@ediri/vultr";
  *
- * const myInstance = new vultr.Instance("myInstance", {
- *     osId: 1743,
+ * const myInstance = new vultr.Instance("my_instance", {
  *     plan: "vc2-1c-2gb",
  *     region: "sea",
+ *     osId: 1743,
  * });
  * ```
  *
@@ -30,21 +30,21 @@ import * as utilities from "./utilities";
  * import * as pulumi from "@pulumi/pulumi";
  * import * as vultr from "@ediri/vultr";
  *
- * const myInstance = new vultr.Instance("myInstance", {
- *     activationEmail: false,
+ * const myInstance = new vultr.Instance("my_instance", {
+ *     plan: "vc2-1c-2gb",
+ *     region: "sea",
+ *     osId: 1743,
+ *     label: "my-instance-label",
+ *     tags: ["my-instance-tag"],
+ *     hostname: "my-instance-hostname",
+ *     enableIpv6: true,
+ *     disablePublicIpv4: true,
  *     backups: "enabled",
  *     backupsSchedule: {
  *         type: "daily",
  *     },
  *     ddosProtection: true,
- *     disablePublicIpv4: true,
- *     enableIpv6: true,
- *     hostname: "my-instance-hostname",
- *     label: "my-instance-label",
- *     osId: 1743,
- *     plan: "vc2-1c-2gb",
- *     region: "sea",
- *     tags: ["my-instance-tag"],
+ *     activationEmail: false,
  * });
  * ```
  *
@@ -108,6 +108,7 @@ export class Instance extends pulumi.CustomResource {
      * A block that defines the way backups should be scheduled. While this is an optional field if `backups` are `enabled` this field is mandatory. The configuration of a `backupsSchedule` is listed below.
      */
     declare public readonly backupsSchedule: pulumi.Output<outputs.InstanceBackupsSchedule | undefined>;
+    declare public readonly blockDevices: pulumi.Output<outputs.InstanceBlockDevice[] | undefined>;
     /**
      * The date the server was added to your Vultr account.
      */
@@ -286,6 +287,7 @@ export class Instance extends pulumi.CustomResource {
             resourceInputs["appVariables"] = state?.appVariables;
             resourceInputs["backups"] = state?.backups;
             resourceInputs["backupsSchedule"] = state?.backupsSchedule;
+            resourceInputs["blockDevices"] = state?.blockDevices;
             resourceInputs["dateCreated"] = state?.dateCreated;
             resourceInputs["ddosProtection"] = state?.ddosProtection;
             resourceInputs["defaultPassword"] = state?.defaultPassword;
@@ -338,6 +340,7 @@ export class Instance extends pulumi.CustomResource {
             resourceInputs["appVariables"] = args?.appVariables;
             resourceInputs["backups"] = args?.backups;
             resourceInputs["backupsSchedule"] = args?.backupsSchedule;
+            resourceInputs["blockDevices"] = args?.blockDevices;
             resourceInputs["ddosProtection"] = args?.ddosProtection;
             resourceInputs["disablePublicIpv4"] = args?.disablePublicIpv4;
             resourceInputs["enableIpv6"] = args?.enableIpv6;
@@ -380,7 +383,7 @@ export class Instance extends pulumi.CustomResource {
             resourceInputs["vcpuCount"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
-        const secretOpts = { additionalSecretOutputs: ["defaultPassword"] };
+        const secretOpts = { additionalSecretOutputs: ["defaultPassword", "kvm"] };
         opts = pulumi.mergeOptions(opts, secretOpts);
         super(Instance.__pulumiType, name, resourceInputs, opts);
     }
@@ -414,6 +417,7 @@ export interface InstanceState {
      * A block that defines the way backups should be scheduled. While this is an optional field if `backups` are `enabled` this field is mandatory. The configuration of a `backupsSchedule` is listed below.
      */
     backupsSchedule?: pulumi.Input<inputs.InstanceBackupsSchedule>;
+    blockDevices?: pulumi.Input<pulumi.Input<inputs.InstanceBlockDevice>[]>;
     /**
      * The date the server was added to your Vultr account.
      */
@@ -598,6 +602,7 @@ export interface InstanceArgs {
      * A block that defines the way backups should be scheduled. While this is an optional field if `backups` are `enabled` this field is mandatory. The configuration of a `backupsSchedule` is listed below.
      */
     backupsSchedule?: pulumi.Input<inputs.InstanceBackupsSchedule>;
+    blockDevices?: pulumi.Input<pulumi.Input<inputs.InstanceBlockDevice>[]>;
     /**
      * Whether DDOS protection will be enabled on the server (there is an additional charge for this).
      */

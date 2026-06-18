@@ -28,7 +28,7 @@ class GetInferenceResult:
     """
     A collection of values returned by getInference.
     """
-    def __init__(__self__, api_key=None, date_created=None, filters=None, id=None, label=None, usage=None):
+    def __init__(__self__, api_key=None, date_created=None, filters=None, id=None, label=None):
         if api_key and not isinstance(api_key, str):
             raise TypeError("Expected argument 'api_key' to be a str")
         pulumi.set(__self__, "api_key", api_key)
@@ -44,9 +44,6 @@ class GetInferenceResult:
         if label and not isinstance(label, str):
             raise TypeError("Expected argument 'label' to be a str")
         pulumi.set(__self__, "label", label)
-        if usage and not isinstance(usage, dict):
-            raise TypeError("Expected argument 'usage' to be a dict")
-        pulumi.set(__self__, "usage", usage)
 
     @_builtins.property
     @pulumi.getter(name="apiKey")
@@ -85,11 +82,6 @@ class GetInferenceResult:
         """
         return pulumi.get(self, "label")
 
-    @_builtins.property
-    @pulumi.getter
-    def usage(self) -> Mapping[str, _builtins.str]:
-        return pulumi.get(self, "usage")
-
 
 class AwaitableGetInferenceResult(GetInferenceResult):
     # pylint: disable=using-constant-test
@@ -101,8 +93,7 @@ class AwaitableGetInferenceResult(GetInferenceResult):
             date_created=self.date_created,
             filters=self.filters,
             id=self.id,
-            label=self.label,
-            usage=self.usage)
+            label=self.label)
 
 
 def get_inference(filters: Optional[Sequence[Union['GetInferenceFilterArgs', 'GetInferenceFilterArgsDict']]] = None,
@@ -137,8 +128,7 @@ def get_inference(filters: Optional[Sequence[Union['GetInferenceFilterArgs', 'Ge
         date_created=pulumi.get(__ret__, 'date_created'),
         filters=pulumi.get(__ret__, 'filters'),
         id=pulumi.get(__ret__, 'id'),
-        label=pulumi.get(__ret__, 'label'),
-        usage=pulumi.get(__ret__, 'usage'))
+        label=pulumi.get(__ret__, 'label'))
 def get_inference_output(filters: Optional[pulumi.Input[Optional[Sequence[Union['GetInferenceFilterArgs', 'GetInferenceFilterArgsDict']]]]] = None,
                          opts: Optional[Union[pulumi.InvokeOptions, pulumi.InvokeOutputOptions]] = None) -> pulumi.Output[GetInferenceResult]:
     """
@@ -170,5 +160,4 @@ def get_inference_output(filters: Optional[pulumi.Input[Optional[Sequence[Union[
         date_created=pulumi.get(__response__, 'date_created'),
         filters=pulumi.get(__response__, 'filters'),
         id=pulumi.get(__response__, 'id'),
-        label=pulumi.get(__response__, 'label'),
-        usage=pulumi.get(__response__, 'usage')))
+        label=pulumi.get(__response__, 'label')))

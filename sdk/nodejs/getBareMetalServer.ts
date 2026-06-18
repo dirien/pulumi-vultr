@@ -111,6 +111,10 @@ export interface GetBareMetalServerResult {
      */
     readonly region: string;
     /**
+     * The ID of the Vultr snapshot that the server was restored from.
+     */
+    readonly snapshotId: string;
+    /**
      * The status of the server's subscription.
      */
     readonly status: string;

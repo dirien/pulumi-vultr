@@ -15,13 +15,52 @@ import (
 // Provides a Vultr Reverse IPv6 resource. This can be used to create, read,
 // modify, and delete reverse DNS records for IPv6 addresses. Upon success, DNS
 // changes may take 6-12 hours to become active.
+//
+// ## Example Usage
+//
+// Create a new reverse DNS record for an IPv6 address:
+//
+// ```go
+// package main
+//
+// import (
+//
+//	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr"
+//	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+//
+// )
+//
+//	func main() {
+//		pulumi.Run(func(ctx *pulumi.Context) error {
+//			myServer, err := vultr.NewInstance(ctx, "my_server", &vultr.InstanceArgs{
+//				Plan:       pulumi.String("vc2-1c-1gb"),
+//				Region:     pulumi.String("ewr"),
+//				OsId:       pulumi.Int(167),
+//				EnableIpv6: pulumi.Bool(true),
+//			})
+//			if err != nil {
+//				return err
+//			}
+//			_, err = vultr.NewReverseIpv6(ctx, "my_reverse_ipv6", &vultr.ReverseIpv6Args{
+//				InstanceId: myServer.ID(),
+//				Ip:         myServer.V6MainIp,
+//				Reverse:    pulumi.String("host.example.com"),
+//			})
+//			if err != nil {
+//				return err
+//			}
+//			return nil
+//		})
+//	}
+//
+// ```
 type ReverseIpv6 struct {
 	pulumi.CustomResourceState
 
 	// The ID of the server you want to set an IPv6
 	// reverse DNS record for.
 	InstanceId pulumi.StringOutput `pulumi:"instanceId"`
-	// The IPv6 address used in the reverse DNS record.
+	// The IPv6 address used in the reverse DNS record. Valid IPv6 address, stored as fully-expanded format.
 	Ip pulumi.StringOutput `pulumi:"ip"`
 	// The hostname used in the IPv6 reverse DNS record.
 	Reverse pulumi.StringOutput `pulumi:"reverse"`
@@ -69,7 +108,7 @@ type reverseIpv6State struct {
 	// The ID of the server you want to set an IPv6
 	// reverse DNS record for.
 	InstanceId *string `pulumi:"instanceId"`
-	// The IPv6 address used in the reverse DNS record.
+	// The IPv6 address used in the reverse DNS record. Valid IPv6 address, stored as fully-expanded format.
 	Ip *string `pulumi:"ip"`
 	// The hostname used in the IPv6 reverse DNS record.
 	Reverse *string `pulumi:"reverse"`
@@ -79,7 +118,7 @@ type ReverseIpv6State struct {
 	// The ID of the server you want to set an IPv6
 	// reverse DNS record for.
 	InstanceId pulumi.StringPtrInput
-	// The IPv6 address used in the reverse DNS record.
+	// The IPv6 address used in the reverse DNS record. Valid IPv6 address, stored as fully-expanded format.
 	Ip pulumi.StringPtrInput
 	// The hostname used in the IPv6 reverse DNS record.
 	Reverse pulumi.StringPtrInput
@@ -93,7 +132,7 @@ type reverseIpv6Args struct {
 	// The ID of the server you want to set an IPv6
 	// reverse DNS record for.
 	InstanceId string `pulumi:"instanceId"`
-	// The IPv6 address used in the reverse DNS record.
+	// The IPv6 address used in the reverse DNS record. Valid IPv6 address, stored as fully-expanded format.
 	Ip string `pulumi:"ip"`
 	// The hostname used in the IPv6 reverse DNS record.
 	Reverse string `pulumi:"reverse"`
@@ -104,7 +143,7 @@ type ReverseIpv6Args struct {
 	// The ID of the server you want to set an IPv6
 	// reverse DNS record for.
 	InstanceId pulumi.StringInput
-	// The IPv6 address used in the reverse DNS record.
+	// The IPv6 address used in the reverse DNS record. Valid IPv6 address, stored as fully-expanded format.
 	Ip pulumi.StringInput
 	// The hostname used in the IPv6 reverse DNS record.
 	Reverse pulumi.StringInput
@@ -203,7 +242,7 @@ func (o ReverseIpv6Output) InstanceId() pulumi.StringOutput {
 	return o.ApplyT(func(v *ReverseIpv6) pulumi.StringOutput { return v.InstanceId }).(pulumi.StringOutput)
 }
 
-// The IPv6 address used in the reverse DNS record.
+// The IPv6 address used in the reverse DNS record. Valid IPv6 address, stored as fully-expanded format.
 func (o ReverseIpv6Output) Ip() pulumi.StringOutput {
 	return o.ApplyT(func(v *ReverseIpv6) pulumi.StringOutput { return v.Ip }).(pulumi.StringOutput)
 }

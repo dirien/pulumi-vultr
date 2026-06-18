@@ -14,24 +14,83 @@ import (
 
 // Deploy additional node pools to an existing Vultr Kubernetes Engine (VKE) cluster.
 //
+// ## Example Usage
+//
+// Create a new VKE cluster:
+//
+// ```go
+// package main
+//
+// import (
+//
+//	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr"
+//	"github.com/pulumi/pulumi-std/sdk/v2/go/std"
+//	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+//
+// )
+//
+//	func main() {
+//		pulumi.Run(func(ctx *pulumi.Context) error {
+//			invokeBase64encode, err := std.Base64encode(ctx, &std.Base64encodeArgs{
+//				Input: "This will be added to node user data",
+//			}, nil)
+//			if err != nil {
+//				return err
+//			}
+//			_, err = vultr.NewKubernetesNodePools(ctx, "np-1", &vultr.KubernetesNodePoolsArgs{
+//				ClusterId:    pulumi.Any(k8.Id),
+//				NodeQuantity: pulumi.Int(1),
+//				Plan:         pulumi.String("vc2-4c-8gb"),
+//				Label:        pulumi.String("my-label"),
+//				Tag:          pulumi.String("my-tag"),
+//				AutoScaler:   pulumi.Bool(true),
+//				MinNodes:     pulumi.Int(1),
+//				MaxNodes:     pulumi.Int(2),
+//				Labels: vultr.KubernetesNodePoolsLabelArray{
+//					&vultr.KubernetesNodePoolsLabelArgs{
+//						Key:   pulumi.String("my-label"),
+//						Value: pulumi.String("a-label-on-all-nodes"),
+//					},
+//					&vultr.KubernetesNodePoolsLabelArgs{
+//						Key:   pulumi.String("my-second-label"),
+//						Value: pulumi.String("another-label-on-all-nodes"),
+//					},
+//				},
+//				Taints: vultr.KubernetesNodePoolsTaintArray{
+//					&vultr.KubernetesNodePoolsTaintArgs{
+//						Key:    pulumi.String("a-taint"),
+//						Value:  pulumi.String("is-tainted"),
+//						Effect: pulumi.String("NoExecute"),
+//					},
+//					&vultr.KubernetesNodePoolsTaintArgs{
+//						Key:    pulumi.String("another-taint"),
+//						Value:  pulumi.String("is-tainted"),
+//						Effect: pulumi.String("NoSchedule"),
+//					},
+//				},
+//				UserData: pulumi.String(invokeBase64encode.Result),
+//			})
+//			if err != nil {
+//				return err
+//			}
+//			return nil
+//		})
+//	}
+//
+// ```
+//
 // ## Import
 //
-// # Node pool resources are able to be imported into terraform state like other
-//
+// Node pool resources are able to be imported into terraform state like other
 // resources, however, since they rely on a kubernetes cluster, the import state
-//
 // requires the UUID of the cluster as well. With that in mind, format the second
-//
 // argument to the `pulumi import` command as a space delimited string of
-//
 // UUIDs, the first is the cluster ID, the second is the node pool ID. It will
-//
 // look like this:
 //
-// "clusterID nodePoolID"
-//
 // ```sh
-// $ pulumi import vultr:index/kubernetesNodePools:KubernetesNodePools my-k8s-np "7365a98b-5a43-450f-bd27-d768827100e5 ec330340-4f50-4526-858f-a39199f568ac"
+// # "clusterID nodePoolID"
+// terraform import vultr_kubernetes_node_pools.my-k8s-np "7365a98b-5a43-450f-bd27-d768827100e5 ec330340-4f50-4526-858f-a39199f568ac"
 // ```
 type KubernetesNodePools struct {
 	pulumi.CustomResourceState
@@ -45,26 +104,25 @@ type KubernetesNodePools struct {
 	// Date of node pool updates.
 	DateUpdated pulumi.StringOutput `pulumi:"dateUpdated"`
 	// The label to be used as a prefix for nodes in this node pool.
-	Label pulumi.StringOutput `pulumi:"label"`
-	// A map of key/value pairs for Kubernetes node labels.
-	Labels pulumi.StringMapOutput `pulumi:"labels"`
+	Label  pulumi.StringOutput                 `pulumi:"label"`
+	Labels KubernetesNodePoolsLabelArrayOutput `pulumi:"labels"`
 	// The maximum number of nodes to use with the auto scaler.
 	MaxNodes pulumi.IntPtrOutput `pulumi:"maxNodes"`
 	// The minimum number of nodes to use with the auto scaler.
 	MinNodes pulumi.IntPtrOutput `pulumi:"minNodes"`
 	// The number of nodes in this node pool.
-	NodeQuantity pulumi.IntOutput `pulumi:"nodeQuantity"`
-	// Array that contains information about nodes within this node pool.
-	Nodes KubernetesNodePoolsNodeArrayOutput `pulumi:"nodes"`
-	// The plan to be used in this node pool. [See Plans List](https://www.vultr.com/api/#operation/list-plans) Note the minimum plan requirements must have at least 1 core and 2 gbs of memory.
+	NodeQuantity pulumi.IntOutput                   `pulumi:"nodeQuantity"`
+	Nodes        KubernetesNodePoolsNodeArrayOutput `pulumi:"nodes"`
+	// The plan to be used in this node pool. [See plans list](https://www.vultr.com/api/#operation/list-plans) Note the minimum plan requirements must have at least 1 core and 2 gbs of memory.
 	Plan pulumi.StringOutput `pulumi:"plan"`
 	// Status of node.
 	Status pulumi.StringOutput `pulumi:"status"`
 	// A tag that is assigned to this node pool.
-	Tag pulumi.StringPtrOutput `pulumi:"tag"`
-	// Taints to apply to the nodes in the node pool. Should contain `key`, `value` and `effect`.  The `effect` should be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
+	Tag    pulumi.StringPtrOutput              `pulumi:"tag"`
 	Taints KubernetesNodePoolsTaintArrayOutput `pulumi:"taints"`
 	// A base64 encoded string containing the user data to apply to nodes in the node pool.
+	//
+	// `labels` - (Optional) A list of labels to apply to the nodes in the node pool with these fields:
 	UserData pulumi.StringPtrOutput `pulumi:"userData"`
 }
 
@@ -119,26 +177,25 @@ type kubernetesNodePoolsState struct {
 	// Date of node pool updates.
 	DateUpdated *string `pulumi:"dateUpdated"`
 	// The label to be used as a prefix for nodes in this node pool.
-	Label *string `pulumi:"label"`
-	// A map of key/value pairs for Kubernetes node labels.
-	Labels map[string]string `pulumi:"labels"`
+	Label  *string                    `pulumi:"label"`
+	Labels []KubernetesNodePoolsLabel `pulumi:"labels"`
 	// The maximum number of nodes to use with the auto scaler.
 	MaxNodes *int `pulumi:"maxNodes"`
 	// The minimum number of nodes to use with the auto scaler.
 	MinNodes *int `pulumi:"minNodes"`
 	// The number of nodes in this node pool.
-	NodeQuantity *int `pulumi:"nodeQuantity"`
-	// Array that contains information about nodes within this node pool.
-	Nodes []KubernetesNodePoolsNode `pulumi:"nodes"`
-	// The plan to be used in this node pool. [See Plans List](https://www.vultr.com/api/#operation/list-plans) Note the minimum plan requirements must have at least 1 core and 2 gbs of memory.
+	NodeQuantity *int                      `pulumi:"nodeQuantity"`
+	Nodes        []KubernetesNodePoolsNode `pulumi:"nodes"`
+	// The plan to be used in this node pool. [See plans list](https://www.vultr.com/api/#operation/list-plans) Note the minimum plan requirements must have at least 1 core and 2 gbs of memory.
 	Plan *string `pulumi:"plan"`
 	// Status of node.
 	Status *string `pulumi:"status"`
 	// A tag that is assigned to this node pool.
-	Tag *string `pulumi:"tag"`
-	// Taints to apply to the nodes in the node pool. Should contain `key`, `value` and `effect`.  The `effect` should be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
+	Tag    *string                    `pulumi:"tag"`
 	Taints []KubernetesNodePoolsTaint `pulumi:"taints"`
 	// A base64 encoded string containing the user data to apply to nodes in the node pool.
+	//
+	// `labels` - (Optional) A list of labels to apply to the nodes in the node pool with these fields:
 	UserData *string `pulumi:"userData"`
 }
 
@@ -152,26 +209,25 @@ type KubernetesNodePoolsState struct {
 	// Date of node pool updates.
 	DateUpdated pulumi.StringPtrInput
 	// The label to be used as a prefix for nodes in this node pool.
-	Label pulumi.StringPtrInput
-	// A map of key/value pairs for Kubernetes node labels.
-	Labels pulumi.StringMapInput
+	Label  pulumi.StringPtrInput
+	Labels KubernetesNodePoolsLabelArrayInput
 	// The maximum number of nodes to use with the auto scaler.
 	MaxNodes pulumi.IntPtrInput
 	// The minimum number of nodes to use with the auto scaler.
 	MinNodes pulumi.IntPtrInput
 	// The number of nodes in this node pool.
 	NodeQuantity pulumi.IntPtrInput
-	// Array that contains information about nodes within this node pool.
-	Nodes KubernetesNodePoolsNodeArrayInput
-	// The plan to be used in this node pool. [See Plans List](https://www.vultr.com/api/#operation/list-plans) Note the minimum plan requirements must have at least 1 core and 2 gbs of memory.
+	Nodes        KubernetesNodePoolsNodeArrayInput
+	// The plan to be used in this node pool. [See plans list](https://www.vultr.com/api/#operation/list-plans) Note the minimum plan requirements must have at least 1 core and 2 gbs of memory.
 	Plan pulumi.StringPtrInput
 	// Status of node.
 	Status pulumi.StringPtrInput
 	// A tag that is assigned to this node pool.
-	Tag pulumi.StringPtrInput
-	// Taints to apply to the nodes in the node pool. Should contain `key`, `value` and `effect`.  The `effect` should be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
+	Tag    pulumi.StringPtrInput
 	Taints KubernetesNodePoolsTaintArrayInput
 	// A base64 encoded string containing the user data to apply to nodes in the node pool.
+	//
+	// `labels` - (Optional) A list of labels to apply to the nodes in the node pool with these fields:
 	UserData pulumi.StringPtrInput
 }
 
@@ -185,22 +241,22 @@ type kubernetesNodePoolsArgs struct {
 	// The VKE cluster ID you want to attach this nodepool to.
 	ClusterId string `pulumi:"clusterId"`
 	// The label to be used as a prefix for nodes in this node pool.
-	Label string `pulumi:"label"`
-	// A map of key/value pairs for Kubernetes node labels.
-	Labels map[string]string `pulumi:"labels"`
+	Label  string                     `pulumi:"label"`
+	Labels []KubernetesNodePoolsLabel `pulumi:"labels"`
 	// The maximum number of nodes to use with the auto scaler.
 	MaxNodes *int `pulumi:"maxNodes"`
 	// The minimum number of nodes to use with the auto scaler.
 	MinNodes *int `pulumi:"minNodes"`
 	// The number of nodes in this node pool.
 	NodeQuantity int `pulumi:"nodeQuantity"`
-	// The plan to be used in this node pool. [See Plans List](https://www.vultr.com/api/#operation/list-plans) Note the minimum plan requirements must have at least 1 core and 2 gbs of memory.
+	// The plan to be used in this node pool. [See plans list](https://www.vultr.com/api/#operation/list-plans) Note the minimum plan requirements must have at least 1 core and 2 gbs of memory.
 	Plan string `pulumi:"plan"`
 	// A tag that is assigned to this node pool.
-	Tag *string `pulumi:"tag"`
-	// Taints to apply to the nodes in the node pool. Should contain `key`, `value` and `effect`.  The `effect` should be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
+	Tag    *string                    `pulumi:"tag"`
 	Taints []KubernetesNodePoolsTaint `pulumi:"taints"`
 	// A base64 encoded string containing the user data to apply to nodes in the node pool.
+	//
+	// `labels` - (Optional) A list of labels to apply to the nodes in the node pool with these fields:
 	UserData *string `pulumi:"userData"`
 }
 
@@ -211,22 +267,22 @@ type KubernetesNodePoolsArgs struct {
 	// The VKE cluster ID you want to attach this nodepool to.
 	ClusterId pulumi.StringInput
 	// The label to be used as a prefix for nodes in this node pool.
-	Label pulumi.StringInput
-	// A map of key/value pairs for Kubernetes node labels.
-	Labels pulumi.StringMapInput
+	Label  pulumi.StringInput
+	Labels KubernetesNodePoolsLabelArrayInput
 	// The maximum number of nodes to use with the auto scaler.
 	MaxNodes pulumi.IntPtrInput
 	// The minimum number of nodes to use with the auto scaler.
 	MinNodes pulumi.IntPtrInput
 	// The number of nodes in this node pool.
 	NodeQuantity pulumi.IntInput
-	// The plan to be used in this node pool. [See Plans List](https://www.vultr.com/api/#operation/list-plans) Note the minimum plan requirements must have at least 1 core and 2 gbs of memory.
+	// The plan to be used in this node pool. [See plans list](https://www.vultr.com/api/#operation/list-plans) Note the minimum plan requirements must have at least 1 core and 2 gbs of memory.
 	Plan pulumi.StringInput
 	// A tag that is assigned to this node pool.
-	Tag pulumi.StringPtrInput
-	// Taints to apply to the nodes in the node pool. Should contain `key`, `value` and `effect`.  The `effect` should be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
+	Tag    pulumi.StringPtrInput
 	Taints KubernetesNodePoolsTaintArrayInput
 	// A base64 encoded string containing the user data to apply to nodes in the node pool.
+	//
+	// `labels` - (Optional) A list of labels to apply to the nodes in the node pool with these fields:
 	UserData pulumi.StringPtrInput
 }
 
@@ -342,9 +398,8 @@ func (o KubernetesNodePoolsOutput) Label() pulumi.StringOutput {
 	return o.ApplyT(func(v *KubernetesNodePools) pulumi.StringOutput { return v.Label }).(pulumi.StringOutput)
 }
 
-// A map of key/value pairs for Kubernetes node labels.
-func (o KubernetesNodePoolsOutput) Labels() pulumi.StringMapOutput {
-	return o.ApplyT(func(v *KubernetesNodePools) pulumi.StringMapOutput { return v.Labels }).(pulumi.StringMapOutput)
+func (o KubernetesNodePoolsOutput) Labels() KubernetesNodePoolsLabelArrayOutput {
+	return o.ApplyT(func(v *KubernetesNodePools) KubernetesNodePoolsLabelArrayOutput { return v.Labels }).(KubernetesNodePoolsLabelArrayOutput)
 }
 
 // The maximum number of nodes to use with the auto scaler.
@@ -362,12 +417,11 @@ func (o KubernetesNodePoolsOutput) NodeQuantity() pulumi.IntOutput {
 	return o.ApplyT(func(v *KubernetesNodePools) pulumi.IntOutput { return v.NodeQuantity }).(pulumi.IntOutput)
 }
 
-// Array that contains information about nodes within this node pool.
 func (o KubernetesNodePoolsOutput) Nodes() KubernetesNodePoolsNodeArrayOutput {
 	return o.ApplyT(func(v *KubernetesNodePools) KubernetesNodePoolsNodeArrayOutput { return v.Nodes }).(KubernetesNodePoolsNodeArrayOutput)
 }
 
-// The plan to be used in this node pool. [See Plans List](https://www.vultr.com/api/#operation/list-plans) Note the minimum plan requirements must have at least 1 core and 2 gbs of memory.
+// The plan to be used in this node pool. [See plans list](https://www.vultr.com/api/#operation/list-plans) Note the minimum plan requirements must have at least 1 core and 2 gbs of memory.
 func (o KubernetesNodePoolsOutput) Plan() pulumi.StringOutput {
 	return o.ApplyT(func(v *KubernetesNodePools) pulumi.StringOutput { return v.Plan }).(pulumi.StringOutput)
 }
@@ -382,12 +436,13 @@ func (o KubernetesNodePoolsOutput) Tag() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *KubernetesNodePools) pulumi.StringPtrOutput { return v.Tag }).(pulumi.StringPtrOutput)
 }
 
-// Taints to apply to the nodes in the node pool. Should contain `key`, `value` and `effect`.  The `effect` should be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
 func (o KubernetesNodePoolsOutput) Taints() KubernetesNodePoolsTaintArrayOutput {
 	return o.ApplyT(func(v *KubernetesNodePools) KubernetesNodePoolsTaintArrayOutput { return v.Taints }).(KubernetesNodePoolsTaintArrayOutput)
 }
 
 // A base64 encoded string containing the user data to apply to nodes in the node pool.
+//
+// `labels` - (Optional) A list of labels to apply to the nodes in the node pool with these fields:
 func (o KubernetesNodePoolsOutput) UserData() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *KubernetesNodePools) pulumi.StringPtrOutput { return v.UserData }).(pulumi.StringPtrOutput)
 }

@@ -30,8 +30,9 @@ import (
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := vultr.NewDatabaseDb(ctx, "myDatabaseDb", &vultr.DatabaseDbArgs{
-//				DatabaseId: pulumi.Any(vultr_database.My_database.Id),
+//			_, err := vultr.NewDatabaseDb(ctx, "my_database_db", &vultr.DatabaseDbArgs{
+//				DatabaseId: pulumi.Any(myDatabase.Id),
+//				Name:       pulumi.String("my_database_db"),
 //			})
 //			if err != nil {
 //				return err

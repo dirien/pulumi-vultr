@@ -23,14 +23,24 @@ class UserArgs:
                  password: pulumi.Input[_builtins.str],
                  acls: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
                  api_enabled: Optional[pulumi.Input[_builtins.bool]] = None,
-                 name: Optional[pulumi.Input[_builtins.str]] = None):
+                 groups: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
+                 name: Optional[pulumi.Input[_builtins.str]] = None,
+                 roles: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
+                 service_user: Optional[pulumi.Input[_builtins.bool]] = None):
         """
         The set of arguments for constructing a User resource.
+
         :param pulumi.Input[_builtins.str] email: Email for this user.
         :param pulumi.Input[_builtins.str] password: Password for this user.
-        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] acls: The access control list for the user.
+        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] acls: The access control list for the user. 
+               <<<<<<< HEAD
+               =======
         :param pulumi.Input[_builtins.bool] api_enabled: Whether API is enabled for the user. Default behavior is set to enabled.
+        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] groups: A list of UUIDs of groups which should be attached to this user.
         :param pulumi.Input[_builtins.str] name: Name for this user.
+        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] roles: A list of UUIDs of roles which should be attached to this user.
+               >>>>>>> beta-organization
+        :param pulumi.Input[_builtins.bool] service_user: Whether the user is a service user.
         """
         pulumi.set(__self__, "email", email)
         pulumi.set(__self__, "password", password)
@@ -38,8 +48,14 @@ class UserArgs:
             pulumi.set(__self__, "acls", acls)
         if api_enabled is not None:
             pulumi.set(__self__, "api_enabled", api_enabled)
+        if groups is not None:
+            pulumi.set(__self__, "groups", groups)
         if name is not None:
             pulumi.set(__self__, "name", name)
+        if roles is not None:
+            pulumi.set(__self__, "roles", roles)
+        if service_user is not None:
+            pulumi.set(__self__, "service_user", service_user)
 
     @_builtins.property
     @pulumi.getter
@@ -69,7 +85,9 @@ class UserArgs:
     @pulumi.getter
     def acls(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]:
         """
-        The access control list for the user.
+        The access control list for the user. 
+        <<<<<<< HEAD
+        =======
         """
         return pulumi.get(self, "acls")
 
@@ -91,6 +109,18 @@ class UserArgs:
 
     @_builtins.property
     @pulumi.getter
+    def groups(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]:
+        """
+        A list of UUIDs of groups which should be attached to this user.
+        """
+        return pulumi.get(self, "groups")
+
+    @groups.setter
+    def groups(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "groups", value)
+
+    @_builtins.property
+    @pulumi.getter
     def name(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
         Name for this user.
@@ -101,6 +131,31 @@ class UserArgs:
     def name(self, value: Optional[pulumi.Input[_builtins.str]]):
         pulumi.set(self, "name", value)
 
+    @_builtins.property
+    @pulumi.getter
+    def roles(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]:
+        """
+        A list of UUIDs of roles which should be attached to this user.
+        >>>>>>> beta-organization
+        """
+        return pulumi.get(self, "roles")
+
+    @roles.setter
+    def roles(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "roles", value)
+
+    @_builtins.property
+    @pulumi.getter(name="serviceUser")
+    def service_user(self) -> Optional[pulumi.Input[_builtins.bool]]:
+        """
+        Whether the user is a service user.
+        """
+        return pulumi.get(self, "service_user")
+
+    @service_user.setter
+    def service_user(self, value: Optional[pulumi.Input[_builtins.bool]]):
+        pulumi.set(self, "service_user", value)
+
 
 @pulumi.input_type
 class _UserState:
@@ -109,15 +164,25 @@ class _UserState:
                  api_enabled: Optional[pulumi.Input[_builtins.bool]] = None,
                  api_key: Optional[pulumi.Input[_builtins.str]] = None,
                  email: Optional[pulumi.Input[_builtins.str]] = None,
+                 groups: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
                  name: Optional[pulumi.Input[_builtins.str]] = None,
-                 password: Optional[pulumi.Input[_builtins.str]] = None):
+                 password: Optional[pulumi.Input[_builtins.str]] = None,
+                 roles: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
+                 service_user: Optional[pulumi.Input[_builtins.bool]] = None):
         """
         Input properties used for looking up and filtering User resources.
-        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] acls: The access control list for the user.
+
+        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] acls: The access control list for the user. 
+               <<<<<<< HEAD
+               =======
         :param pulumi.Input[_builtins.bool] api_enabled: Whether API is enabled for the user. Default behavior is set to enabled.
         :param pulumi.Input[_builtins.str] email: Email for this user.
+        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] groups: A list of UUIDs of groups which should be attached to this user.
         :param pulumi.Input[_builtins.str] name: Name for this user.
         :param pulumi.Input[_builtins.str] password: Password for this user.
+        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] roles: A list of UUIDs of roles which should be attached to this user.
+               >>>>>>> beta-organization
+        :param pulumi.Input[_builtins.bool] service_user: Whether the user is a service user.
         """
         if acls is not None:
             pulumi.set(__self__, "acls", acls)
@@ -127,16 +192,24 @@ class _UserState:
             pulumi.set(__self__, "api_key", api_key)
         if email is not None:
             pulumi.set(__self__, "email", email)
+        if groups is not None:
+            pulumi.set(__self__, "groups", groups)
         if name is not None:
             pulumi.set(__self__, "name", name)
         if password is not None:
             pulumi.set(__self__, "password", password)
+        if roles is not None:
+            pulumi.set(__self__, "roles", roles)
+        if service_user is not None:
+            pulumi.set(__self__, "service_user", service_user)
 
     @_builtins.property
     @pulumi.getter
     def acls(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]:
         """
-        The access control list for the user.
+        The access control list for the user. 
+        <<<<<<< HEAD
+        =======
         """
         return pulumi.get(self, "acls")
 
@@ -179,6 +252,18 @@ class _UserState:
 
     @_builtins.property
     @pulumi.getter
+    def groups(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]:
+        """
+        A list of UUIDs of groups which should be attached to this user.
+        """
+        return pulumi.get(self, "groups")
+
+    @groups.setter
+    def groups(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "groups", value)
+
+    @_builtins.property
+    @pulumi.getter
     def name(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
         Name for this user.
@@ -201,6 +286,31 @@ class _UserState:
     def password(self, value: Optional[pulumi.Input[_builtins.str]]):
         pulumi.set(self, "password", value)
 
+    @_builtins.property
+    @pulumi.getter
+    def roles(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]:
+        """
+        A list of UUIDs of roles which should be attached to this user.
+        >>>>>>> beta-organization
+        """
+        return pulumi.get(self, "roles")
+
+    @roles.setter
+    def roles(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "roles", value)
+
+    @_builtins.property
+    @pulumi.getter(name="serviceUser")
+    def service_user(self) -> Optional[pulumi.Input[_builtins.bool]]:
+        """
+        Whether the user is a service user.
+        """
+        return pulumi.get(self, "service_user")
+
+    @service_user.setter
+    def service_user(self, value: Optional[pulumi.Input[_builtins.bool]]):
+        pulumi.set(self, "service_user", value)
+
 
 @pulumi.type_token("vultr:index/user:User")
 class User(pulumi.CustomResource):
@@ -211,8 +321,11 @@ class User(pulumi.CustomResource):
                  acls: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
                  api_enabled: Optional[pulumi.Input[_builtins.bool]] = None,
                  email: Optional[pulumi.Input[_builtins.str]] = None,
+                 groups: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
                  name: Optional[pulumi.Input[_builtins.str]] = None,
                  password: Optional[pulumi.Input[_builtins.str]] = None,
+                 roles: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
+                 service_user: Optional[pulumi.Input[_builtins.bool]] = None,
                  __props__=None):
         """
         Provides a Vultr User resource. This can be used to create, read, modify, and delete Users.
@@ -225,10 +338,11 @@ class User(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_user = vultr.User("myUser",
-            api_enabled=True,
+        my_user = vultr.User("my_user",
+            name="my user",
             email="user@vultr.com",
-            password="myP@ssw0rd")
+            password="myP@ssw0rd",
+            api_enabled=True)
         ```
 
         Create a new User with all ACLs
@@ -237,7 +351,11 @@ class User(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_user = vultr.User("myUser",
+        my_user = vultr.User("my_user",
+            name="my user",
+            email="user@vultr.com",
+            password="myP@ssw0rd",
+            api_enabled=True,
             acls=[
                 "manage_users",
                 "subscriptions",
@@ -248,9 +366,7 @@ class User(pulumi.CustomResource):
                 "dns",
                 "upgrade",
             ],
-            api_enabled=True,
-            email="user@vultr.com",
-            password="myP@ssw0rd")
+            service_user=True)
         ```
 
         ## Import
@@ -261,13 +377,20 @@ class User(pulumi.CustomResource):
         $ pulumi import vultr:index/user:User myuser 1345fef0-8ed3-4a66-bd8c-822a7b7bd05a
         ```
 
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] acls: The access control list for the user.
+        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] acls: The access control list for the user. 
+               <<<<<<< HEAD
+               =======
         :param pulumi.Input[_builtins.bool] api_enabled: Whether API is enabled for the user. Default behavior is set to enabled.
         :param pulumi.Input[_builtins.str] email: Email for this user.
+        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] groups: A list of UUIDs of groups which should be attached to this user.
         :param pulumi.Input[_builtins.str] name: Name for this user.
         :param pulumi.Input[_builtins.str] password: Password for this user.
+        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] roles: A list of UUIDs of roles which should be attached to this user.
+               >>>>>>> beta-organization
+        :param pulumi.Input[_builtins.bool] service_user: Whether the user is a service user.
         """
         ...
     @overload
@@ -286,10 +409,11 @@ class User(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_user = vultr.User("myUser",
-            api_enabled=True,
+        my_user = vultr.User("my_user",
+            name="my user",
             email="user@vultr.com",
-            password="myP@ssw0rd")
+            password="myP@ssw0rd",
+            api_enabled=True)
         ```
 
         Create a new User with all ACLs
@@ -298,7 +422,11 @@ class User(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_user = vultr.User("myUser",
+        my_user = vultr.User("my_user",
+            name="my user",
+            email="user@vultr.com",
+            password="myP@ssw0rd",
+            api_enabled=True,
             acls=[
                 "manage_users",
                 "subscriptions",
@@ -309,9 +437,7 @@ class User(pulumi.CustomResource):
                 "dns",
                 "upgrade",
             ],
-            api_enabled=True,
-            email="user@vultr.com",
-            password="myP@ssw0rd")
+            service_user=True)
         ```
 
         ## Import
@@ -321,6 +447,7 @@ class User(pulumi.CustomResource):
         ```sh
         $ pulumi import vultr:index/user:User myuser 1345fef0-8ed3-4a66-bd8c-822a7b7bd05a
         ```
+
 
         :param str resource_name: The name of the resource.
         :param UserArgs args: The arguments to use to populate this resource's properties.
@@ -340,8 +467,11 @@ class User(pulumi.CustomResource):
                  acls: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
                  api_enabled: Optional[pulumi.Input[_builtins.bool]] = None,
                  email: Optional[pulumi.Input[_builtins.str]] = None,
+                 groups: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
                  name: Optional[pulumi.Input[_builtins.str]] = None,
                  password: Optional[pulumi.Input[_builtins.str]] = None,
+                 roles: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
+                 service_user: Optional[pulumi.Input[_builtins.bool]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -356,10 +486,13 @@ class User(pulumi.CustomResource):
             if email is None and not opts.urn:
                 raise TypeError("Missing required property 'email'")
             __props__.__dict__["email"] = email
+            __props__.__dict__["groups"] = groups
             __props__.__dict__["name"] = name
             if password is None and not opts.urn:
                 raise TypeError("Missing required property 'password'")
             __props__.__dict__["password"] = None if password is None else pulumi.Output.secret(password)
+            __props__.__dict__["roles"] = roles
+            __props__.__dict__["service_user"] = service_user
             __props__.__dict__["api_key"] = None
         secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["password"])
         opts = pulumi.ResourceOptions.merge(opts, secret_opts)
@@ -377,8 +510,11 @@ class User(pulumi.CustomResource):
             api_enabled: Optional[pulumi.Input[_builtins.bool]] = None,
             api_key: Optional[pulumi.Input[_builtins.str]] = None,
             email: Optional[pulumi.Input[_builtins.str]] = None,
+            groups: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
             name: Optional[pulumi.Input[_builtins.str]] = None,
-            password: Optional[pulumi.Input[_builtins.str]] = None) -> 'User':
+            password: Optional[pulumi.Input[_builtins.str]] = None,
+            roles: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
+            service_user: Optional[pulumi.Input[_builtins.bool]] = None) -> 'User':
         """
         Get an existing User resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -386,11 +522,17 @@ class User(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] acls: The access control list for the user.
+        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] acls: The access control list for the user. 
+               <<<<<<< HEAD
+               =======
         :param pulumi.Input[_builtins.bool] api_enabled: Whether API is enabled for the user. Default behavior is set to enabled.
         :param pulumi.Input[_builtins.str] email: Email for this user.
+        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] groups: A list of UUIDs of groups which should be attached to this user.
         :param pulumi.Input[_builtins.str] name: Name for this user.
         :param pulumi.Input[_builtins.str] password: Password for this user.
+        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] roles: A list of UUIDs of roles which should be attached to this user.
+               >>>>>>> beta-organization
+        :param pulumi.Input[_builtins.bool] service_user: Whether the user is a service user.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -400,15 +542,20 @@ class User(pulumi.CustomResource):
         __props__.__dict__["api_enabled"] = api_enabled
         __props__.__dict__["api_key"] = api_key
         __props__.__dict__["email"] = email
+        __props__.__dict__["groups"] = groups
         __props__.__dict__["name"] = name
         __props__.__dict__["password"] = password
+        __props__.__dict__["roles"] = roles
+        __props__.__dict__["service_user"] = service_user
         return User(resource_name, opts=opts, __props__=__props__)
 
     @_builtins.property
     @pulumi.getter
     def acls(self) -> pulumi.Output[Optional[Sequence[_builtins.str]]]:
         """
-        The access control list for the user.
+        The access control list for the user. 
+        <<<<<<< HEAD
+        =======
         """
         return pulumi.get(self, "acls")
 
@@ -435,6 +582,14 @@ class User(pulumi.CustomResource):
 
     @_builtins.property
     @pulumi.getter
+    def groups(self) -> pulumi.Output[Optional[Sequence[_builtins.str]]]:
+        """
+        A list of UUIDs of groups which should be attached to this user.
+        """
+        return pulumi.get(self, "groups")
+
+    @_builtins.property
+    @pulumi.getter
     def name(self) -> pulumi.Output[_builtins.str]:
         """
         Name for this user.
@@ -448,4 +603,21 @@ class User(pulumi.CustomResource):
         Password for this user.
         """
         return pulumi.get(self, "password")
+
+    @_builtins.property
+    @pulumi.getter
+    def roles(self) -> pulumi.Output[Optional[Sequence[_builtins.str]]]:
+        """
+        A list of UUIDs of roles which should be attached to this user.
+        >>>>>>> beta-organization
+        """
+        return pulumi.get(self, "roles")
+
+    @_builtins.property
+    @pulumi.getter(name="serviceUser")
+    def service_user(self) -> pulumi.Output[Optional[_builtins.bool]]:
+        """
+        Whether the user is a service user.
+        """
+        return pulumi.get(self, "service_user")
 

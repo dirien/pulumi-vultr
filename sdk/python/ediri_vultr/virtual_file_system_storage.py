@@ -29,6 +29,7 @@ class VirtualFileSystemStorageArgs:
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None):
         """
         The set of arguments for constructing a VirtualFileSystemStorage resource.
+
         :param pulumi.Input[_builtins.str] label: The label to give to the virtual file system storage subscription.
         :param pulumi.Input[_builtins.str] region: The region in which this virtual file system storage will reside.
         :param pulumi.Input[_builtins.int] size_gb: The size of the given virtual file system storage subscription.
@@ -135,6 +136,7 @@ class _VirtualFileSystemStorageState:
                  tags: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None):
         """
         Input properties used for looking up and filtering VirtualFileSystemStorage resources.
+
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] attached_instances: A list of UUIDs to attach to the virtual file system storage subscription.
         :param pulumi.Input[Sequence[pulumi.Input['VirtualFileSystemStorageAttachmentArgs']]] attachments: A list of attchment states for instances currently attached to the virtual file system storage.
         :param pulumi.Input[_builtins.float] charges: The current pending charges for the virtual file system storage subscription in USD.
@@ -327,10 +329,10 @@ class VirtualFileSystemStorage(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_vfs_storage = vultr.VirtualFileSystemStorage("myVfsStorage",
+        my_vfs_storage = vultr.VirtualFileSystemStorage("my_vfs_storage",
             label="vultr-vfs-storage",
-            region="ewr",
             size_gb=10,
+            region="ewr",
             tags=[
                 "terraform",
                 "important",
@@ -344,6 +346,7 @@ class VirtualFileSystemStorage(pulumi.CustomResource):
         ```sh
         $ pulumi import vultr:index/virtualFileSystemStorage:VirtualFileSystemStorage my_vfs_storage 79210a84-bc58-494f-8dd1-953685654f7f
         ```
+
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -371,10 +374,10 @@ class VirtualFileSystemStorage(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_vfs_storage = vultr.VirtualFileSystemStorage("myVfsStorage",
+        my_vfs_storage = vultr.VirtualFileSystemStorage("my_vfs_storage",
             label="vultr-vfs-storage",
-            region="ewr",
             size_gb=10,
+            region="ewr",
             tags=[
                 "terraform",
                 "important",
@@ -388,6 +391,7 @@ class VirtualFileSystemStorage(pulumi.CustomResource):
         ```sh
         $ pulumi import vultr:index/virtualFileSystemStorage:VirtualFileSystemStorage my_vfs_storage 79210a84-bc58-494f-8dd1-953685654f7f
         ```
+
 
         :param str resource_name: The name of the resource.
         :param VirtualFileSystemStorageArgs args: The arguments to use to populate this resource's properties.

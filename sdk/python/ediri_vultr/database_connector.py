@@ -26,6 +26,7 @@ class DatabaseConnectorArgs:
                  config: Optional[pulumi.Input[_builtins.str]] = None):
         """
         The set of arguments for constructing a DatabaseConnector resource.
+
         :param pulumi.Input[_builtins.str] class_: The class for the new managed database connector.
         :param pulumi.Input[_builtins.str] database_id: The managed database ID you want to attach this connector to.
         :param pulumi.Input[_builtins.str] name: The name for the new managed database connector.
@@ -110,6 +111,7 @@ class _DatabaseConnectorState:
                  topics: Optional[pulumi.Input[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering DatabaseConnector resources.
+
         :param pulumi.Input[_builtins.str] class_: The class for the new managed database connector.
         :param pulumi.Input[_builtins.str] config: A JSON string containing the configuration properties you wish to use with the new managed database connector.
         :param pulumi.Input[_builtins.str] database_id: The managed database ID you want to attach this connector to.
@@ -212,8 +214,8 @@ class DatabaseConnector(pulumi.CustomResource):
         import ediri_vultr as vultr
         import json
 
-        my_database_connector = vultr.DatabaseConnector("myDatabaseConnector",
-            database_id=vultr_database["my_database"]["id"],
+        my_database_connector = vultr.DatabaseConnector("my_database_connector",
+            database_id=my_database["id"],
             name="my_database_connector",
             class_="com.couchbase.connect.kafka.CouchbaseSinkConnector",
             topics="my_database_topic",
@@ -223,6 +225,7 @@ class DatabaseConnector(pulumi.CustomResource):
                 "couchbase.password": "some_password",
             }))
         ```
+
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -250,8 +253,8 @@ class DatabaseConnector(pulumi.CustomResource):
         import ediri_vultr as vultr
         import json
 
-        my_database_connector = vultr.DatabaseConnector("myDatabaseConnector",
-            database_id=vultr_database["my_database"]["id"],
+        my_database_connector = vultr.DatabaseConnector("my_database_connector",
+            database_id=my_database["id"],
             name="my_database_connector",
             class_="com.couchbase.connect.kafka.CouchbaseSinkConnector",
             topics="my_database_topic",
@@ -261,6 +264,7 @@ class DatabaseConnector(pulumi.CustomResource):
                 "couchbase.password": "some_password",
             }))
         ```
+
 
         :param str resource_name: The name of the resource.
         :param DatabaseConnectorArgs args: The arguments to use to populate this resource's properties.

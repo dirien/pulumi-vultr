@@ -30,10 +30,11 @@ import (
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := vultr.NewUser(ctx, "myUser", &vultr.UserArgs{
-//				ApiEnabled: pulumi.Bool(true),
+//			_, err := vultr.NewUser(ctx, "my_user", &vultr.UserArgs{
+//				Name:       pulumi.String("my user"),
 //				Email:      pulumi.String("user@vultr.com"),
 //				Password:   pulumi.String("myP@ssw0rd"),
+//				ApiEnabled: pulumi.Bool(true),
 //			})
 //			if err != nil {
 //				return err
@@ -58,7 +59,11 @@ import (
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := vultr.NewUser(ctx, "myUser", &vultr.UserArgs{
+//			_, err := vultr.NewUser(ctx, "my_user", &vultr.UserArgs{
+//				Name:       pulumi.String("my user"),
+//				Email:      pulumi.String("user@vultr.com"),
+//				Password:   pulumi.String("myP@ssw0rd"),
+//				ApiEnabled: pulumi.Bool(true),
 //				Acls: pulumi.StringArray{
 //					pulumi.String("manage_users"),
 //					pulumi.String("subscriptions"),
@@ -69,9 +74,7 @@ import (
 //					pulumi.String("dns"),
 //					pulumi.String("upgrade"),
 //				},
-//				ApiEnabled: pulumi.Bool(true),
-//				Email:      pulumi.String("user@vultr.com"),
-//				Password:   pulumi.String("myP@ssw0rd"),
+//				ServiceUser: pulumi.Bool(true),
 //			})
 //			if err != nil {
 //				return err
@@ -93,16 +96,25 @@ type User struct {
 	pulumi.CustomResourceState
 
 	// The access control list for the user.
+	// <<<<<<< HEAD
+	// ===
 	Acls pulumi.StringArrayOutput `pulumi:"acls"`
 	// Whether API is enabled for the user. Default behavior is set to enabled.
 	ApiEnabled pulumi.BoolPtrOutput `pulumi:"apiEnabled"`
 	ApiKey     pulumi.StringOutput  `pulumi:"apiKey"`
 	// Email for this user.
 	Email pulumi.StringOutput `pulumi:"email"`
+	// A list of UUIDs of groups which should be attached to this user.
+	Groups pulumi.StringArrayOutput `pulumi:"groups"`
 	// Name for this user.
 	Name pulumi.StringOutput `pulumi:"name"`
 	// Password for this user.
 	Password pulumi.StringOutput `pulumi:"password"`
+	// A list of UUIDs of roles which should be attached to this user.
+	// > > > > > > > beta-organization
+	Roles pulumi.StringArrayOutput `pulumi:"roles"`
+	// Whether the user is a service user.
+	ServiceUser pulumi.BoolPtrOutput `pulumi:"serviceUser"`
 }
 
 // NewUser registers a new resource with the given unique name, arguments, and options.
@@ -149,30 +161,48 @@ func GetUser(ctx *pulumi.Context,
 // Input properties used for looking up and filtering User resources.
 type userState struct {
 	// The access control list for the user.
+	// <<<<<<< HEAD
+	// ===
 	Acls []string `pulumi:"acls"`
 	// Whether API is enabled for the user. Default behavior is set to enabled.
 	ApiEnabled *bool   `pulumi:"apiEnabled"`
 	ApiKey     *string `pulumi:"apiKey"`
 	// Email for this user.
 	Email *string `pulumi:"email"`
+	// A list of UUIDs of groups which should be attached to this user.
+	Groups []string `pulumi:"groups"`
 	// Name for this user.
 	Name *string `pulumi:"name"`
 	// Password for this user.
 	Password *string `pulumi:"password"`
+	// A list of UUIDs of roles which should be attached to this user.
+	// > > > > > > > beta-organization
+	Roles []string `pulumi:"roles"`
+	// Whether the user is a service user.
+	ServiceUser *bool `pulumi:"serviceUser"`
 }
 
 type UserState struct {
 	// The access control list for the user.
+	// <<<<<<< HEAD
+	// ===
 	Acls pulumi.StringArrayInput
 	// Whether API is enabled for the user. Default behavior is set to enabled.
 	ApiEnabled pulumi.BoolPtrInput
 	ApiKey     pulumi.StringPtrInput
 	// Email for this user.
 	Email pulumi.StringPtrInput
+	// A list of UUIDs of groups which should be attached to this user.
+	Groups pulumi.StringArrayInput
 	// Name for this user.
 	Name pulumi.StringPtrInput
 	// Password for this user.
 	Password pulumi.StringPtrInput
+	// A list of UUIDs of roles which should be attached to this user.
+	// > > > > > > > beta-organization
+	Roles pulumi.StringArrayInput
+	// Whether the user is a service user.
+	ServiceUser pulumi.BoolPtrInput
 }
 
 func (UserState) ElementType() reflect.Type {
@@ -181,29 +211,47 @@ func (UserState) ElementType() reflect.Type {
 
 type userArgs struct {
 	// The access control list for the user.
+	// <<<<<<< HEAD
+	// ===
 	Acls []string `pulumi:"acls"`
 	// Whether API is enabled for the user. Default behavior is set to enabled.
 	ApiEnabled *bool `pulumi:"apiEnabled"`
 	// Email for this user.
 	Email string `pulumi:"email"`
+	// A list of UUIDs of groups which should be attached to this user.
+	Groups []string `pulumi:"groups"`
 	// Name for this user.
 	Name *string `pulumi:"name"`
 	// Password for this user.
 	Password string `pulumi:"password"`
+	// A list of UUIDs of roles which should be attached to this user.
+	// > > > > > > > beta-organization
+	Roles []string `pulumi:"roles"`
+	// Whether the user is a service user.
+	ServiceUser *bool `pulumi:"serviceUser"`
 }
 
 // The set of arguments for constructing a User resource.
 type UserArgs struct {
 	// The access control list for the user.
+	// <<<<<<< HEAD
+	// ===
 	Acls pulumi.StringArrayInput
 	// Whether API is enabled for the user. Default behavior is set to enabled.
 	ApiEnabled pulumi.BoolPtrInput
 	// Email for this user.
 	Email pulumi.StringInput
+	// A list of UUIDs of groups which should be attached to this user.
+	Groups pulumi.StringArrayInput
 	// Name for this user.
 	Name pulumi.StringPtrInput
 	// Password for this user.
 	Password pulumi.StringInput
+	// A list of UUIDs of roles which should be attached to this user.
+	// > > > > > > > beta-organization
+	Roles pulumi.StringArrayInput
+	// Whether the user is a service user.
+	ServiceUser pulumi.BoolPtrInput
 }
 
 func (UserArgs) ElementType() reflect.Type {
@@ -294,6 +342,8 @@ func (o UserOutput) ToUserOutputWithContext(ctx context.Context) UserOutput {
 }
 
 // The access control list for the user.
+// <<<<<<< HEAD
+// ===
 func (o UserOutput) Acls() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v *User) pulumi.StringArrayOutput { return v.Acls }).(pulumi.StringArrayOutput)
 }
@@ -312,6 +362,11 @@ func (o UserOutput) Email() pulumi.StringOutput {
 	return o.ApplyT(func(v *User) pulumi.StringOutput { return v.Email }).(pulumi.StringOutput)
 }
 
+// A list of UUIDs of groups which should be attached to this user.
+func (o UserOutput) Groups() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *User) pulumi.StringArrayOutput { return v.Groups }).(pulumi.StringArrayOutput)
+}
+
 // Name for this user.
 func (o UserOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *User) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
@@ -320,6 +375,17 @@ func (o UserOutput) Name() pulumi.StringOutput {
 // Password for this user.
 func (o UserOutput) Password() pulumi.StringOutput {
 	return o.ApplyT(func(v *User) pulumi.StringOutput { return v.Password }).(pulumi.StringOutput)
+}
+
+// A list of UUIDs of roles which should be attached to this user.
+// > > > > > > > beta-organization
+func (o UserOutput) Roles() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *User) pulumi.StringArrayOutput { return v.Roles }).(pulumi.StringArrayOutput)
+}
+
+// Whether the user is a service user.
+func (o UserOutput) ServiceUser() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *User) pulumi.BoolPtrOutput { return v.ServiceUser }).(pulumi.BoolPtrOutput)
 }
 
 type UserArrayOutput struct{ *pulumi.OutputState }

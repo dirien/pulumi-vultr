@@ -27,6 +27,7 @@ class DatabaseConnectionPoolArgs:
                  name: Optional[pulumi.Input[_builtins.str]] = None):
         """
         The set of arguments for constructing a DatabaseConnectionPool resource.
+
         :param pulumi.Input[_builtins.str] database: The logical database to use for the new managed database connection pool.
         :param pulumi.Input[_builtins.str] database_id: The managed database ID you want to attach this connection pool to.
         :param pulumi.Input[_builtins.str] mode: The mode to configure for the new managed database connection pool (`session`, `transaction`, `statement`).
@@ -126,6 +127,7 @@ class _DatabaseConnectionPoolState:
                  username: Optional[pulumi.Input[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering DatabaseConnectionPool resources.
+
         :param pulumi.Input[_builtins.str] database: The logical database to use for the new managed database connection pool.
         :param pulumi.Input[_builtins.str] database_id: The managed database ID you want to attach this connection pool to.
         :param pulumi.Input[_builtins.str] mode: The mode to configure for the new managed database connection pool (`session`, `transaction`, `statement`).
@@ -243,13 +245,15 @@ class DatabaseConnectionPool(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_database_connection_pool = vultr.DatabaseConnectionPool("myDatabaseConnectionPool",
-            database_id=vultr_database["my_database"]["id"],
+        my_database_connection_pool = vultr.DatabaseConnectionPool("my_database_connection_pool",
+            database_id=my_database["id"],
+            name="my_database_connection_pool_name",
             database="defaultdb",
             username="vultradmin",
             mode="transaction",
             size=3)
         ```
+
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -277,13 +281,15 @@ class DatabaseConnectionPool(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_database_connection_pool = vultr.DatabaseConnectionPool("myDatabaseConnectionPool",
-            database_id=vultr_database["my_database"]["id"],
+        my_database_connection_pool = vultr.DatabaseConnectionPool("my_database_connection_pool",
+            database_id=my_database["id"],
+            name="my_database_connection_pool_name",
             database="defaultdb",
             username="vultradmin",
             mode="transaction",
             size=3)
         ```
+
 
         :param str resource_name: The name of the resource.
         :param DatabaseConnectionPoolArgs args: The arguments to use to populate this resource's properties.

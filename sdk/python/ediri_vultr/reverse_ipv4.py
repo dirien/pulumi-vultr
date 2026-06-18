@@ -24,6 +24,7 @@ class ReverseIpv4Args:
                  reverse: pulumi.Input[_builtins.str]):
         """
         The set of arguments for constructing a ReverseIpv4 resource.
+
         :param pulumi.Input[_builtins.str] instance_id: The ID of the instance you want to set an IPv4
                reverse DNS record for.
         :param pulumi.Input[_builtins.str] ip: The IPv4 address used in the reverse DNS record.
@@ -81,6 +82,7 @@ class _ReverseIpv4State:
                  reverse: Optional[pulumi.Input[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering ReverseIpv4 resources.
+
         :param pulumi.Input[_builtins.str] gateway: The gateway IP address.
         :param pulumi.Input[_builtins.str] instance_id: The ID of the instance you want to set an IPv4
                reverse DNS record for.
@@ -184,16 +186,17 @@ class ReverseIpv4(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_instance = vultr.Instance("myInstance",
-            enable_ipv6=True,
-            os_id=477,
+        my_instance = vultr.Instance("my_instance",
             plan="vc2-1c-2gb",
-            region="ewr")
-        my_reverse_ipv4 = vultr.ReverseIpv4("myReverseIpv4",
+            region="ewr",
+            os_id=477,
+            enable_ipv6=True)
+        my_reverse_ipv4 = vultr.ReverseIpv4("my_reverse_ipv4",
             instance_id=my_instance.id,
             ip=my_instance.main_ip,
             reverse="host.example.com")
         ```
+
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -221,16 +224,17 @@ class ReverseIpv4(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_instance = vultr.Instance("myInstance",
-            enable_ipv6=True,
-            os_id=477,
+        my_instance = vultr.Instance("my_instance",
             plan="vc2-1c-2gb",
-            region="ewr")
-        my_reverse_ipv4 = vultr.ReverseIpv4("myReverseIpv4",
+            region="ewr",
+            os_id=477,
+            enable_ipv6=True)
+        my_reverse_ipv4 = vultr.ReverseIpv4("my_reverse_ipv4",
             instance_id=my_instance.id,
             ip=my_instance.main_ip,
             reverse="host.example.com")
         ```
+
 
         :param str resource_name: The name of the resource.
         :param ReverseIpv4Args args: The arguments to use to populate this resource's properties.

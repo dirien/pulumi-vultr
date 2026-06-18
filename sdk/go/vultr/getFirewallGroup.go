@@ -29,7 +29,7 @@ import (
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := vultr.LookupFirewallGroup(ctx, &vultr.LookupFirewallGroupArgs{
+//			_, err := vultr.GetFirewallGroup(ctx, &vultr.LookupFirewallGroupArgs{
 //				Filters: []vultr.GetFirewallGroupFilter{
 //					{
 //						Name: "description",

@@ -29,7 +29,7 @@ import (
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := vultr.LookupLoadBalancer(ctx, &vultr.LookupLoadBalancerArgs{
+//			_, err := vultr.GetLoadBalancer(ctx, &vultr.LookupLoadBalancerArgs{
 //				Filters: []vultr.GetLoadBalancerFilter{
 //					{
 //						Name: "label",
@@ -69,6 +69,8 @@ type LookupLoadBalancerArgs struct {
 type LookupLoadBalancerResult struct {
 	// Array of instances that are currently attached to the load balancer.
 	AttachedInstances []string `pulumi:"attachedInstances"`
+	// The auto SSL domain configuration for a load balancer. This can be a root domain (example.com) or include a subdomain (sub.example.com).
+	AutoSslDomain string `pulumi:"autoSslDomain"`
 	// The balancing algorithm for your load balancer.
 	BalancingAlgorithm string `pulumi:"balancingAlgorithm"`
 	// Name for your given sticky session.
@@ -78,10 +80,14 @@ type LookupLoadBalancerResult struct {
 	FirewallRules []map[string]string     `pulumi:"firewallRules"`
 	// Defines the forwarding rules for a load balancer. The configuration of a `forwardingRules` is listened below.
 	ForwardingRules []map[string]string `pulumi:"forwardingRules"`
+	// A set of region IDs to deploy child load balancers to.
+	GlobalRegions []string `pulumi:"globalRegions"`
 	// Boolean value that indicates if SSL is enabled.
 	HasSsl bool `pulumi:"hasSsl"`
 	// Defines the way load balancers should check for health. The configuration of a `healthCheck` is listed below.
 	HealthCheck map[string]string `pulumi:"healthCheck"`
+	// Integer value that indicates if HTTP/2 or HTTP/3 is enabled. Allowed values 2 or 3.
+	HttpVersion int `pulumi:"httpVersion"`
 	// The provider-assigned unique ID for this managed resource.
 	Id string `pulumi:"id"`
 	// IPv4 address for your load balancer.
@@ -142,6 +148,11 @@ func (o LookupLoadBalancerResultOutput) AttachedInstances() pulumi.StringArrayOu
 	return o.ApplyT(func(v LookupLoadBalancerResult) []string { return v.AttachedInstances }).(pulumi.StringArrayOutput)
 }
 
+// The auto SSL domain configuration for a load balancer. This can be a root domain (example.com) or include a subdomain (sub.example.com).
+func (o LookupLoadBalancerResultOutput) AutoSslDomain() pulumi.StringOutput {
+	return o.ApplyT(func(v LookupLoadBalancerResult) string { return v.AutoSslDomain }).(pulumi.StringOutput)
+}
+
 // The balancing algorithm for your load balancer.
 func (o LookupLoadBalancerResultOutput) BalancingAlgorithm() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupLoadBalancerResult) string { return v.BalancingAlgorithm }).(pulumi.StringOutput)
@@ -169,6 +180,11 @@ func (o LookupLoadBalancerResultOutput) ForwardingRules() pulumi.StringMapArrayO
 	return o.ApplyT(func(v LookupLoadBalancerResult) []map[string]string { return v.ForwardingRules }).(pulumi.StringMapArrayOutput)
 }
 
+// A set of region IDs to deploy child load balancers to.
+func (o LookupLoadBalancerResultOutput) GlobalRegions() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v LookupLoadBalancerResult) []string { return v.GlobalRegions }).(pulumi.StringArrayOutput)
+}
+
 // Boolean value that indicates if SSL is enabled.
 func (o LookupLoadBalancerResultOutput) HasSsl() pulumi.BoolOutput {
 	return o.ApplyT(func(v LookupLoadBalancerResult) bool { return v.HasSsl }).(pulumi.BoolOutput)
@@ -177,6 +193,11 @@ func (o LookupLoadBalancerResultOutput) HasSsl() pulumi.BoolOutput {
 // Defines the way load balancers should check for health. The configuration of a `healthCheck` is listed below.
 func (o LookupLoadBalancerResultOutput) HealthCheck() pulumi.StringMapOutput {
 	return o.ApplyT(func(v LookupLoadBalancerResult) map[string]string { return v.HealthCheck }).(pulumi.StringMapOutput)
+}
+
+// Integer value that indicates if HTTP/2 or HTTP/3 is enabled. Allowed values 2 or 3.
+func (o LookupLoadBalancerResultOutput) HttpVersion() pulumi.IntOutput {
+	return o.ApplyT(func(v LookupLoadBalancerResult) int { return v.HttpVersion }).(pulumi.IntOutput)
 }
 
 // The provider-assigned unique ID for this managed resource.

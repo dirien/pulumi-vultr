@@ -15,8 +15,8 @@ import * as utilities from "./utilities";
  * import * as pulumi from "@pulumi/pulumi";
  * import * as vultr from "@ediri/vultr";
  *
- * const myDatabaseTopic = new vultr.DatabaseTopic("myDatabaseTopic", {
- *     databaseId: vultr_database.my_database.id,
+ * const myDatabaseTopic = new vultr.DatabaseTopic("my_database_topic", {
+ *     databaseId: myDatabase.id,
  *     name: "my_database_topic",
  *     partitions: 3,
  *     replication: 2,

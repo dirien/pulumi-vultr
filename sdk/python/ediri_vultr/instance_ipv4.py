@@ -23,6 +23,7 @@ class InstanceIpv4Args:
                  reboot: Optional[pulumi.Input[_builtins.bool]] = None):
         """
         The set of arguments for constructing a InstanceIpv4 resource.
+
         :param pulumi.Input[_builtins.str] instance_id: The ID of the instance to be assigned the IPv4 address.
         :param pulumi.Input[_builtins.bool] reboot: Default true. Determines whether or not the server is rebooted after adding the IPv4 address.
         """
@@ -66,6 +67,7 @@ class _InstanceIpv4State:
                  reverse: Optional[pulumi.Input[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering InstanceIpv4 resources.
+
         :param pulumi.Input[_builtins.str] gateway: The gateway IP address.
         :param pulumi.Input[_builtins.str] instance_id: The ID of the instance to be assigned the IPv4 address.
         :param pulumi.Input[_builtins.str] ip: The IPv4 address in canonical format.
@@ -180,15 +182,16 @@ class InstanceIpv4(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_instance = vultr.Instance("myInstance",
-            enable_ipv6=True,
-            os_id=167,
+        my_instance = vultr.Instance("my_instance",
             plan="vc2-1c-1gb",
-            region="ewr")
-        my_instance_ipv4 = vultr.InstanceIpv4("myInstanceIpv4",
+            region="ewr",
+            os_id=167,
+            enable_ipv6=True)
+        my_instance_ipv4 = vultr.InstanceIpv4("my_instance_ipv4",
             instance_id=my_instance.id,
             reboot=False)
         ```
+
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -213,15 +216,16 @@ class InstanceIpv4(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_instance = vultr.Instance("myInstance",
-            enable_ipv6=True,
-            os_id=167,
+        my_instance = vultr.Instance("my_instance",
             plan="vc2-1c-1gb",
-            region="ewr")
-        my_instance_ipv4 = vultr.InstanceIpv4("myInstanceIpv4",
+            region="ewr",
+            os_id=167,
+            enable_ipv6=True)
+        my_instance_ipv4 = vultr.InstanceIpv4("my_instance_ipv4",
             instance_id=my_instance.id,
             reboot=False)
         ```
+
 
         :param str resource_name: The name of the resource.
         :param InstanceIpv4Args args: The arguments to use to populate this resource's properties.

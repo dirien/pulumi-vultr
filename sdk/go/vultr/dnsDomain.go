@@ -30,7 +30,7 @@ import (
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := vultr.NewDnsDomain(ctx, "myDomain", &vultr.DnsDomainArgs{
+//			_, err := vultr.NewDnsDomain(ctx, "my_domain", &vultr.DnsDomainArgs{
 //				Domain: pulumi.String("domain.com"),
 //				Ip:     pulumi.String("66.42.94.227"),
 //			})

@@ -77,7 +77,8 @@ type GetPlanResult struct {
 	// For GPU plans, the VRAM available in the plan.
 	GpuVram int `pulumi:"gpuVram"`
 	// The provider-assigned unique ID for this managed resource.
-	Id        string   `pulumi:"id"`
+	Id string `pulumi:"id"`
+	// A list of DCIDs (used as `region` in Terraform) where the plan can be deployed.
 	Locations []string `pulumi:"locations"`
 	// The price per month of the plan in USD.
 	MonthlyCost float64 `pulumi:"monthlyCost"`
@@ -157,6 +158,7 @@ func (o GetPlanResultOutput) Id() pulumi.StringOutput {
 	return o.ApplyT(func(v GetPlanResult) string { return v.Id }).(pulumi.StringOutput)
 }
 
+// A list of DCIDs (used as `region` in Terraform) where the plan can be deployed.
 func (o GetPlanResultOutput) Locations() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v GetPlanResult) []string { return v.Locations }).(pulumi.StringArrayOutput)
 }

@@ -19,13 +19,17 @@ __all__ = [
     'DatabaseReadReplica',
     'DatabaseUserAccessControl',
     'InstanceBackupsSchedule',
+    'InstanceBlockDevice',
     'KubernetesNodePools',
+    'KubernetesNodePoolsLabel',
     'KubernetesNodePoolsNode',
     'KubernetesNodePoolsTaint',
     'LoadBalancerFirewallRule',
     'LoadBalancerForwardingRule',
     'LoadBalancerHealthCheck',
     'LoadBalancerSsl',
+    'OrganizationPolicyDocument',
+    'OrganizationPolicyDocumentStatement',
     'VirtualFileSystemStorageAttachment',
     'GetApplicationFilterResult',
     'GetBackupFilterResult',
@@ -46,13 +50,23 @@ __all__ = [
     'GetIsoPublicFilterResult',
     'GetKubernetesFilterResult',
     'GetKubernetesNodePoolResult',
+    'GetKubernetesNodePoolLabelResult',
     'GetKubernetesNodePoolNodeResult',
     'GetKubernetesNodePoolTaintResult',
     'GetLoadBalancerFilterResult',
+    'GetLogsResultResult',
     'GetObjectStorageClusterFilterResult',
     'GetObjectStorageFilterResult',
     'GetObjectStorageTierFilterResult',
     'GetObjectStorageTierLocationResult',
+    'GetOidcIssuerFilterResult',
+    'GetOidcProviderFilterResult',
+    'GetOrganizationFilterResult',
+    'GetOrganizationGroupFilterResult',
+    'GetOrganizationPolicyDocumentResult',
+    'GetOrganizationPolicyDocumentStatementResult',
+    'GetOrganizationPolicyFilterResult',
+    'GetOrganizationRoleFilterResult',
     'GetOsFilterResult',
     'GetPlanFilterResult',
     'GetRegionFilterResult',
@@ -78,6 +92,8 @@ class DatabaseReadReplica(dict):
             suggest = "backup_hour"
         elif key == "backupMinute":
             suggest = "backup_minute"
+        elif key == "caCertificate":
+            suggest = "ca_certificate"
         elif key == "clusterTimeZone":
             suggest = "cluster_time_zone"
         elif key == "databaseEngine":
@@ -135,6 +151,7 @@ class DatabaseReadReplica(dict):
                  region: _builtins.str,
                  backup_hour: Optional[_builtins.str] = None,
                  backup_minute: Optional[_builtins.str] = None,
+                 ca_certificate: Optional[_builtins.str] = None,
                  cluster_time_zone: Optional[_builtins.str] = None,
                  database_engine: Optional[_builtins.str] = None,
                  database_engine_version: Optional[_builtins.str] = None,
@@ -169,6 +186,7 @@ class DatabaseReadReplica(dict):
         :param _builtins.str region: The ID of the region that the managed database is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
         :param _builtins.str backup_hour: The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
         :param _builtins.str backup_minute: The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
+        :param _builtins.str ca_certificate: The CA certificate for Managed Databases on this account.
         :param _builtins.str cluster_time_zone: The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
         :param _builtins.str database_engine: The database engine of the new managed database.
         :param _builtins.str database_engine_version: The database engine version of the new managed database.
@@ -204,6 +222,8 @@ class DatabaseReadReplica(dict):
             pulumi.set(__self__, "backup_hour", backup_hour)
         if backup_minute is not None:
             pulumi.set(__self__, "backup_minute", backup_minute)
+        if ca_certificate is not None:
+            pulumi.set(__self__, "ca_certificate", ca_certificate)
         if cluster_time_zone is not None:
             pulumi.set(__self__, "cluster_time_zone", cluster_time_zone)
         if database_engine is not None:
@@ -294,6 +314,14 @@ class DatabaseReadReplica(dict):
         The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
         """
         return pulumi.get(self, "backup_minute")
+
+    @_builtins.property
+    @pulumi.getter(name="caCertificate")
+    def ca_certificate(self) -> Optional[_builtins.str]:
+        """
+        The CA certificate for Managed Databases on this account.
+        """
+        return pulumi.get(self, "ca_certificate")
 
     @_builtins.property
     @pulumi.getter(name="clusterTimeZone")
@@ -609,6 +637,8 @@ class InstanceBackupsSchedule(dict):
         """
         :param _builtins.str type: Type of backup schedule Possible values are `daily`, `weekly`, `monthly`, `daily_alt_even`, or `daily_alt_odd`.
         :param _builtins.int dom: Day of month to run. Use values between 1 and 28.
+               
+               `block_devices` - (Optional) Available for VX1 instances: A list of block devices to attach to your instance. Define your block devices, create bootable block devices, or use local storage (if plan has local storage) as scratch disk with these fields:
         :param _builtins.int dow: Day of week to run. `1 = Sunday`, `2 = Monday`, `3 = Tuesday`, `4 = Wednesday`, `5 = Thursday`, `6 = Friday`, `7 = Saturday`
         :param _builtins.int hour: Hour of day to run in UTC.
         """
@@ -633,6 +663,8 @@ class InstanceBackupsSchedule(dict):
     def dom(self) -> Optional[_builtins.int]:
         """
         Day of month to run. Use values between 1 and 28.
+
+        `block_devices` - (Optional) Available for VX1 instances: A list of block devices to attach to your instance. Define your block devices, create bootable block devices, or use local storage (if plan has local storage) as scratch disk with these fields:
         """
         return pulumi.get(self, "dom")
 
@@ -651,6 +683,80 @@ class InstanceBackupsSchedule(dict):
         Hour of day to run in UTC.
         """
         return pulumi.get(self, "hour")
+
+
+@pulumi.output_type
+class InstanceBlockDevice(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "blockId":
+            suggest = "block_id"
+        elif key == "diskSize":
+            suggest = "disk_size"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in InstanceBlockDevice. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        InstanceBlockDevice.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        InstanceBlockDevice.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 block_id: Optional[_builtins.str] = None,
+                 bootable: Optional[_builtins.bool] = None,
+                 disk_size: Optional[_builtins.int] = None,
+                 label: Optional[_builtins.str] = None):
+        """
+        :param _builtins.str block_id: The ID of an existing block device or `local` if the VX1 plan has local storage and you wish to utilize it for this instance.
+        :param _builtins.bool bootable: Whether the associated block device is bootable.
+        :param _builtins.int disk_size: The disk size for the block device if it is being created.
+        :param _builtins.str label: A label for the server.
+        """
+        if block_id is not None:
+            pulumi.set(__self__, "block_id", block_id)
+        if bootable is not None:
+            pulumi.set(__self__, "bootable", bootable)
+        if disk_size is not None:
+            pulumi.set(__self__, "disk_size", disk_size)
+        if label is not None:
+            pulumi.set(__self__, "label", label)
+
+    @_builtins.property
+    @pulumi.getter(name="blockId")
+    def block_id(self) -> Optional[_builtins.str]:
+        """
+        The ID of an existing block device or `local` if the VX1 plan has local storage and you wish to utilize it for this instance.
+        """
+        return pulumi.get(self, "block_id")
+
+    @_builtins.property
+    @pulumi.getter
+    def bootable(self) -> Optional[_builtins.bool]:
+        """
+        Whether the associated block device is bootable.
+        """
+        return pulumi.get(self, "bootable")
+
+    @_builtins.property
+    @pulumi.getter(name="diskSize")
+    def disk_size(self) -> Optional[_builtins.int]:
+        """
+        The disk size for the block device if it is being created.
+        """
+        return pulumi.get(self, "disk_size")
+
+    @_builtins.property
+    @pulumi.getter
+    def label(self) -> Optional[_builtins.str]:
+        """
+        A label for the server.
+        """
+        return pulumi.get(self, "label")
 
 
 @pulumi.output_type
@@ -692,7 +798,7 @@ class KubernetesNodePools(dict):
                  date_created: Optional[_builtins.str] = None,
                  date_updated: Optional[_builtins.str] = None,
                  id: Optional[_builtins.str] = None,
-                 labels: Optional[Mapping[str, _builtins.str]] = None,
+                 labels: Optional[Sequence['outputs.KubernetesNodePoolsLabel']] = None,
                  max_nodes: Optional[_builtins.int] = None,
                  min_nodes: Optional[_builtins.int] = None,
                  nodes: Optional[Sequence['outputs.KubernetesNodePoolsNode']] = None,
@@ -703,18 +809,18 @@ class KubernetesNodePools(dict):
         """
         :param _builtins.str label: The label to be used as a prefix for nodes in this node pool.
         :param _builtins.int node_quantity: The number of nodes in this node pool.
-        :param _builtins.str plan: The plan to be used in this node pool. [See Plans List](https://www.vultr.com/api/#operation/list-plans) Note the minimum plan requirements must have at least 1 core and 2 gbs of memory.
+        :param _builtins.str plan: The plan to be used in this node pool. [See plans list](https://www.vultr.com/api/#operation/list-plans) Note the minimum plan requirements must have at least 1 core and 2 gbs of memory.
         :param _builtins.bool auto_scaler: Enable the auto scaler for the default node pool.
         :param _builtins.str date_created: Date node was created.
         :param _builtins.str date_updated: Date of node pool updates.
         :param _builtins.str id: ID of node.
-        :param Mapping[str, _builtins.str] labels: A map of key/value pairs for Kubernetes node labels.
         :param _builtins.int max_nodes: The maximum number of nodes to use with the auto scaler.
         :param _builtins.int min_nodes: The minimum number of nodes to use with the auto scaler.
-        :param Sequence['KubernetesNodePoolsNodeArgs'] nodes: Array that contains information about nodes within this node pool.
         :param _builtins.str status: Status of node.
         :param _builtins.str tag: Tag for node pool.
-        :param Sequence['KubernetesNodePoolsTaintArgs'] taints: Taints to apply to the nodes in the node pool. Should contain `key`, `value` and `effect`.  The `effect` should be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
+        :param _builtins.str user_data: A base64 encoded string containing the user data to apply to nodes in the node pool.
+               
+               `labels` - (Optional) A list of labels to apply to the nodes in the node pool with these fields:
         """
         pulumi.set(__self__, "label", label)
         pulumi.set(__self__, "node_quantity", node_quantity)
@@ -764,7 +870,7 @@ class KubernetesNodePools(dict):
     @pulumi.getter
     def plan(self) -> _builtins.str:
         """
-        The plan to be used in this node pool. [See Plans List](https://www.vultr.com/api/#operation/list-plans) Note the minimum plan requirements must have at least 1 core and 2 gbs of memory.
+        The plan to be used in this node pool. [See plans list](https://www.vultr.com/api/#operation/list-plans) Note the minimum plan requirements must have at least 1 core and 2 gbs of memory.
         """
         return pulumi.get(self, "plan")
 
@@ -802,10 +908,7 @@ class KubernetesNodePools(dict):
 
     @_builtins.property
     @pulumi.getter
-    def labels(self) -> Optional[Mapping[str, _builtins.str]]:
-        """
-        A map of key/value pairs for Kubernetes node labels.
-        """
+    def labels(self) -> Optional[Sequence['outputs.KubernetesNodePoolsLabel']]:
         return pulumi.get(self, "labels")
 
     @_builtins.property
@@ -827,9 +930,6 @@ class KubernetesNodePools(dict):
     @_builtins.property
     @pulumi.getter
     def nodes(self) -> Optional[Sequence['outputs.KubernetesNodePoolsNode']]:
-        """
-        Array that contains information about nodes within this node pool.
-        """
         return pulumi.get(self, "nodes")
 
     @_builtins.property
@@ -851,15 +951,58 @@ class KubernetesNodePools(dict):
     @_builtins.property
     @pulumi.getter
     def taints(self) -> Optional[Sequence['outputs.KubernetesNodePoolsTaint']]:
-        """
-        Taints to apply to the nodes in the node pool. Should contain `key`, `value` and `effect`.  The `effect` should be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
-        """
         return pulumi.get(self, "taints")
 
     @_builtins.property
     @pulumi.getter(name="userData")
     def user_data(self) -> Optional[_builtins.str]:
+        """
+        A base64 encoded string containing the user data to apply to nodes in the node pool.
+
+        `labels` - (Optional) A list of labels to apply to the nodes in the node pool with these fields:
+        """
         return pulumi.get(self, "user_data")
+
+
+@pulumi.output_type
+class KubernetesNodePoolsLabel(dict):
+    def __init__(__self__, *,
+                 key: _builtins.str,
+                 value: _builtins.str,
+                 id: Optional[_builtins.str] = None):
+        """
+        :param _builtins.str key: The key definining the taint for kubernetes.
+        :param _builtins.str value: The value of the taint for kubernetes.
+        :param _builtins.str id: ID of node.
+        """
+        pulumi.set(__self__, "key", key)
+        pulumi.set(__self__, "value", value)
+        if id is not None:
+            pulumi.set(__self__, "id", id)
+
+    @_builtins.property
+    @pulumi.getter
+    def key(self) -> _builtins.str:
+        """
+        The key definining the taint for kubernetes.
+        """
+        return pulumi.get(self, "key")
+
+    @_builtins.property
+    @pulumi.getter
+    def value(self) -> _builtins.str:
+        """
+        The value of the taint for kubernetes.
+        """
+        return pulumi.get(self, "value")
+
+    @_builtins.property
+    @pulumi.getter
+    def id(self) -> Optional[_builtins.str]:
+        """
+        ID of node.
+        """
+        return pulumi.get(self, "id")
 
 
 @pulumi.output_type
@@ -939,25 +1082,51 @@ class KubernetesNodePoolsTaint(dict):
     def __init__(__self__, *,
                  effect: _builtins.str,
                  key: _builtins.str,
-                 value: _builtins.str):
+                 value: _builtins.str,
+                 id: Optional[_builtins.str] = None):
+        """
+        :param _builtins.str effect: The effect of the taint for kubernetes.  Must be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
+        :param _builtins.str key: The key definining the taint for kubernetes.
+        :param _builtins.str value: The value of the taint for kubernetes.
+        :param _builtins.str id: ID of node.
+        """
         pulumi.set(__self__, "effect", effect)
         pulumi.set(__self__, "key", key)
         pulumi.set(__self__, "value", value)
+        if id is not None:
+            pulumi.set(__self__, "id", id)
 
     @_builtins.property
     @pulumi.getter
     def effect(self) -> _builtins.str:
+        """
+        The effect of the taint for kubernetes.  Must be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
+        """
         return pulumi.get(self, "effect")
 
     @_builtins.property
     @pulumi.getter
     def key(self) -> _builtins.str:
+        """
+        The key definining the taint for kubernetes.
+        """
         return pulumi.get(self, "key")
 
     @_builtins.property
     @pulumi.getter
     def value(self) -> _builtins.str:
+        """
+        The value of the taint for kubernetes.
+        """
         return pulumi.get(self, "value")
+
+    @_builtins.property
+    @pulumi.getter
+    def id(self) -> Optional[_builtins.str]:
+        """
+        ID of node.
+        """
+        return pulumi.get(self, "id")
 
 
 @pulumi.output_type
@@ -1281,6 +1450,75 @@ class LoadBalancerSsl(dict):
         The SSL certificate chain.
         """
         return pulumi.get(self, "chain")
+
+
+@pulumi.output_type
+class OrganizationPolicyDocument(dict):
+    def __init__(__self__, *,
+                 statements: Sequence['outputs.OrganizationPolicyDocumentStatement'],
+                 version: _builtins.str):
+        """
+        :param Sequence['OrganizationPolicyDocumentStatementArgs'] statements: A list of blocks for the organization policy statements.
+        :param _builtins.str version: A version for organization policy document.
+        """
+        pulumi.set(__self__, "statements", statements)
+        pulumi.set(__self__, "version", version)
+
+    @_builtins.property
+    @pulumi.getter
+    def statements(self) -> Sequence['outputs.OrganizationPolicyDocumentStatement']:
+        """
+        A list of blocks for the organization policy statements.
+        """
+        return pulumi.get(self, "statements")
+
+    @_builtins.property
+    @pulumi.getter
+    def version(self) -> _builtins.str:
+        """
+        A version for organization policy document.
+        """
+        return pulumi.get(self, "version")
+
+
+@pulumi.output_type
+class OrganizationPolicyDocumentStatement(dict):
+    def __init__(__self__, *,
+                 actions: Sequence[_builtins.str],
+                 effect: _builtins.str,
+                 resources: Sequence[_builtins.str]):
+        """
+        :param Sequence[_builtins.str] actions: A list of actions for the policy document statement.
+        :param _builtins.str effect: The effect of the the policy document statement.
+        :param Sequence[_builtins.str] resources: A list of applicable resources for the policy document statement.
+        """
+        pulumi.set(__self__, "actions", actions)
+        pulumi.set(__self__, "effect", effect)
+        pulumi.set(__self__, "resources", resources)
+
+    @_builtins.property
+    @pulumi.getter
+    def actions(self) -> Sequence[_builtins.str]:
+        """
+        A list of actions for the policy document statement.
+        """
+        return pulumi.get(self, "actions")
+
+    @_builtins.property
+    @pulumi.getter
+    def effect(self) -> _builtins.str:
+        """
+        The effect of the the policy document statement.
+        """
+        return pulumi.get(self, "effect")
+
+    @_builtins.property
+    @pulumi.getter
+    def resources(self) -> Sequence[_builtins.str]:
+        """
+        A list of applicable resources for the policy document statement.
+        """
+        return pulumi.get(self, "resources")
 
 
 @pulumi.output_type
@@ -1621,6 +1859,7 @@ class GetDatabaseReadReplicaResult(dict):
     def __init__(__self__, *,
                  backup_hour: _builtins.str,
                  backup_minute: _builtins.str,
+                 ca_certificate: _builtins.str,
                  cluster_time_zone: _builtins.str,
                  database_engine: _builtins.str,
                  database_engine_version: _builtins.str,
@@ -1655,6 +1894,7 @@ class GetDatabaseReadReplicaResult(dict):
         """
         :param _builtins.str backup_hour: The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
         :param _builtins.str backup_minute: The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
+        :param _builtins.str ca_certificate: The CA certificate for Managed Databases on this account.
         :param _builtins.str cluster_time_zone: The configured time zone for the Managed Database in TZ database format.
         :param _builtins.str database_engine: The database engine of the managed database.
         :param _builtins.str database_engine_version: The database engine version of the managed database.
@@ -1687,6 +1927,7 @@ class GetDatabaseReadReplicaResult(dict):
         """
         pulumi.set(__self__, "backup_hour", backup_hour)
         pulumi.set(__self__, "backup_minute", backup_minute)
+        pulumi.set(__self__, "ca_certificate", ca_certificate)
         pulumi.set(__self__, "cluster_time_zone", cluster_time_zone)
         pulumi.set(__self__, "database_engine", database_engine)
         pulumi.set(__self__, "database_engine_version", database_engine_version)
@@ -1734,6 +1975,14 @@ class GetDatabaseReadReplicaResult(dict):
         The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
         """
         return pulumi.get(self, "backup_minute")
+
+    @_builtins.property
+    @pulumi.getter(name="caCertificate")
+    def ca_certificate(self) -> _builtins.str:
+        """
+        The CA certificate for Managed Databases on this account.
+        """
+        return pulumi.get(self, "ca_certificate")
 
     @_builtins.property
     @pulumi.getter(name="clusterTimeZone")
@@ -2152,6 +2401,7 @@ class GetInstancesInstanceResult(dict):
                  ram: _builtins.int,
                  region: _builtins.str,
                  server_status: _builtins.str,
+                 snapshot_id: _builtins.str,
                  status: _builtins.str,
                  tags: Sequence[_builtins.str],
                  user_scheme: _builtins.str,
@@ -2183,6 +2433,7 @@ class GetInstancesInstanceResult(dict):
         :param _builtins.int ram: The amount of memory available on the instance in MB.
         :param _builtins.str region: The region ID of the server.
         :param _builtins.str server_status: A more detailed server status (none, locked, installingbooting, isomounting, ok).
+        :param _builtins.str snapshot_id: The ID of the Vultr snapshot that the server was restored from.
         :param _builtins.str status: The status of the server's subscription.
         :param Sequence[_builtins.str] tags: A list of tags applied to the instance.
         :param _builtins.str user_scheme: The scheme used for the default user (linux servers only).
@@ -2217,6 +2468,7 @@ class GetInstancesInstanceResult(dict):
         pulumi.set(__self__, "ram", ram)
         pulumi.set(__self__, "region", region)
         pulumi.set(__self__, "server_status", server_status)
+        pulumi.set(__self__, "snapshot_id", snapshot_id)
         pulumi.set(__self__, "status", status)
         pulumi.set(__self__, "tags", tags)
         pulumi.set(__self__, "user_scheme", user_scheme)
@@ -2423,6 +2675,14 @@ class GetInstancesInstanceResult(dict):
         return pulumi.get(self, "server_status")
 
     @_builtins.property
+    @pulumi.getter(name="snapshotId")
+    def snapshot_id(self) -> _builtins.str:
+        """
+        The ID of the Vultr snapshot that the server was restored from.
+        """
+        return pulumi.get(self, "snapshot_id")
+
+    @_builtins.property
     @pulumi.getter
     def status(self) -> _builtins.str:
         """
@@ -2574,59 +2834,59 @@ class GetKubernetesFilterResult(dict):
 @pulumi.output_type
 class GetKubernetesNodePoolResult(dict):
     def __init__(__self__, *,
+                 auto_scaler: _builtins.bool,
                  date_created: _builtins.str,
                  date_updated: _builtins.str,
                  id: _builtins.str,
                  label: _builtins.str,
+                 labels: Sequence['outputs.GetKubernetesNodePoolLabelResult'],
+                 max_nodes: _builtins.int,
+                 min_nodes: _builtins.int,
                  node_quantity: _builtins.int,
                  nodes: Sequence['outputs.GetKubernetesNodePoolNodeResult'],
                  plan: _builtins.str,
                  status: _builtins.str,
                  tag: _builtins.str,
-                 auto_scaler: Optional[_builtins.bool] = None,
-                 labels: Optional[Mapping[str, _builtins.str]] = None,
-                 max_nodes: Optional[_builtins.int] = None,
-                 min_nodes: Optional[_builtins.int] = None,
-                 taints: Optional[Sequence['outputs.GetKubernetesNodePoolTaintResult']] = None,
-                 user_data: Optional[_builtins.str] = None):
+                 taints: Sequence['outputs.GetKubernetesNodePoolTaintResult'],
+                 user_data: _builtins.str):
         """
+        :param _builtins.bool auto_scaler: Boolean indicating if the auto scaler for the default node pool is active.
         :param _builtins.str date_created: Date node was created.
         :param _builtins.str date_updated: Date of node pool updates.
         :param _builtins.str id: ID of node.
         :param _builtins.str label: Label of node.
+        :param _builtins.int max_nodes: The maximum number of nodes used by the auto scaler.
+        :param _builtins.int min_nodes: The minimum number of nodes used by the auto scaler.
         :param _builtins.int node_quantity: Number of nodes within node pool.
         :param Sequence['GetKubernetesNodePoolNodeArgs'] nodes: Array that contains information about nodes within this node pool.
         :param _builtins.str plan: Node plan that nodes are using within this node pool.
         :param _builtins.str status: Status of node.
         :param _builtins.str tag: Tag for node pool.
-        :param _builtins.bool auto_scaler: Boolean indicating if the auto scaler for the default node pool is active.
-        :param Mapping[str, _builtins.str] labels: Kubernetes node labels applied to the node pool.
-        :param _builtins.int max_nodes: The maximum number of nodes used by the auto scaler.
-        :param _builtins.int min_nodes: The minimum number of nodes used by the auto scaler.
-        :param Sequence['GetKubernetesNodePoolTaintArgs'] taints: Kubernetes node taints applied to the node pool.
         :param _builtins.str user_data: The base64 encoded string containing the user data applied to nodes in the node pool.
         """
+        pulumi.set(__self__, "auto_scaler", auto_scaler)
         pulumi.set(__self__, "date_created", date_created)
         pulumi.set(__self__, "date_updated", date_updated)
         pulumi.set(__self__, "id", id)
         pulumi.set(__self__, "label", label)
+        pulumi.set(__self__, "labels", labels)
+        pulumi.set(__self__, "max_nodes", max_nodes)
+        pulumi.set(__self__, "min_nodes", min_nodes)
         pulumi.set(__self__, "node_quantity", node_quantity)
         pulumi.set(__self__, "nodes", nodes)
         pulumi.set(__self__, "plan", plan)
         pulumi.set(__self__, "status", status)
         pulumi.set(__self__, "tag", tag)
-        if auto_scaler is not None:
-            pulumi.set(__self__, "auto_scaler", auto_scaler)
-        if labels is not None:
-            pulumi.set(__self__, "labels", labels)
-        if max_nodes is not None:
-            pulumi.set(__self__, "max_nodes", max_nodes)
-        if min_nodes is not None:
-            pulumi.set(__self__, "min_nodes", min_nodes)
-        if taints is not None:
-            pulumi.set(__self__, "taints", taints)
-        if user_data is not None:
-            pulumi.set(__self__, "user_data", user_data)
+        pulumi.set(__self__, "taints", taints)
+        pulumi.set(__self__, "user_data", user_data)
+
+    @_builtins.property
+    @pulumi.getter(name="autoScaler")
+    def auto_scaler(self) -> _builtins.bool:
+        """
+        Boolean indicating if the auto scaler for the default node pool is active.
+        """
+        return pulumi.get(self, "auto_scaler")
 
     @_builtins.property
     @pulumi.getter(name="dateCreated")
@@ -2659,6 +2919,27 @@ class GetKubernetesNodePoolResult(dict):
         Label of node.
         """
         return pulumi.get(self, "label")
+
+    @_builtins.property
+    @pulumi.getter
+    def labels(self) -> Sequence['outputs.GetKubernetesNodePoolLabelResult']:
+        return pulumi.get(self, "labels")
+
+    @_builtins.property
+    @pulumi.getter(name="maxNodes")
+    def max_nodes(self) -> _builtins.int:
+        """
+        The maximum number of nodes used by the auto scaler.
+        """
+        return pulumi.get(self, "max_nodes")
+
+    @_builtins.property
+    @pulumi.getter(name="minNodes")
+    def min_nodes(self) -> _builtins.int:
+        """
+        The minimum number of nodes used by the auto scaler.
+        """
+        return pulumi.get(self, "min_nodes")
 
     @_builtins.property
     @pulumi.getter(name="nodeQuantity")
@@ -2701,52 +2982,57 @@ class GetKubernetesNodePoolResult(dict):
         return pulumi.get(self, "tag")
 
     @_builtins.property
-    @pulumi.getter(name="autoScaler")
-    def auto_scaler(self) -> Optional[_builtins.bool]:
-        """
-        Boolean indicating if the auto scaler for the default node pool is active.
-        """
-        return pulumi.get(self, "auto_scaler")
-
-    @_builtins.property
     @pulumi.getter
-    def labels(self) -> Optional[Mapping[str, _builtins.str]]:
-        """
-        Kubernetes node labels applied to the node pool.
-        """
-        return pulumi.get(self, "labels")
-
-    @_builtins.property
-    @pulumi.getter(name="maxNodes")
-    def max_nodes(self) -> Optional[_builtins.int]:
-        """
-        The maximum number of nodes used by the auto scaler.
-        """
-        return pulumi.get(self, "max_nodes")
-
-    @_builtins.property
-    @pulumi.getter(name="minNodes")
-    def min_nodes(self) -> Optional[_builtins.int]:
-        """
-        The minimum number of nodes used by the auto scaler.
-        """
-        return pulumi.get(self, "min_nodes")
-
-    @_builtins.property
-    @pulumi.getter
-    def taints(self) -> Optional[Sequence['outputs.GetKubernetesNodePoolTaintResult']]:
-        """
-        Kubernetes node taints applied to the node pool.
-        """
+    def taints(self) -> Sequence['outputs.GetKubernetesNodePoolTaintResult']:
         return pulumi.get(self, "taints")
 
     @_builtins.property
     @pulumi.getter(name="userData")
-    def user_data(self) -> Optional[_builtins.str]:
+    def user_data(self) -> _builtins.str:
         """
         The base64 encoded string containing the user data applied to nodes in the node pool.
         """
         return pulumi.get(self, "user_data")
+
+
+@pulumi.output_type
+class GetKubernetesNodePoolLabelResult(dict):
+    def __init__(__self__, *,
+                 id: _builtins.str,
+                 key: _builtins.str,
+                 value: _builtins.str):
+        """
+        :param _builtins.str id: ID of node.
+        :param _builtins.str key: The key definining the taint for kubernetes.
+        :param _builtins.str value: The value of the taint for kubernetes.
+        """
+        pulumi.set(__self__, "id", id)
+        pulumi.set(__self__, "key", key)
+        pulumi.set(__self__, "value", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def id(self) -> _builtins.str:
+        """
+        ID of node.
+        """
+        return pulumi.get(self, "id")
+
+    @_builtins.property
+    @pulumi.getter
+    def key(self) -> _builtins.str:
+        """
+        The key definining the taint for kubernetes.
+        """
+        return pulumi.get(self, "key")
+
+    @_builtins.property
+    @pulumi.getter
+    def value(self) -> _builtins.str:
+        """
+        The value of the taint for kubernetes.
+        """
+        return pulumi.get(self, "value")
 
 
 @pulumi.output_type
@@ -2804,25 +3090,50 @@ class GetKubernetesNodePoolNodeResult(dict):
 class GetKubernetesNodePoolTaintResult(dict):
     def __init__(__self__, *,
                  effect: _builtins.str,
+                 id: _builtins.str,
                  key: _builtins.str,
                  value: _builtins.str):
+        """
+        :param _builtins.str effect: The effect of the taint for kubernetes.
+        :param _builtins.str id: ID of node.
+        :param _builtins.str key: The key definining the taint for kubernetes.
+        :param _builtins.str value: The value of the taint for kubernetes.
+        """
         pulumi.set(__self__, "effect", effect)
+        pulumi.set(__self__, "id", id)
         pulumi.set(__self__, "key", key)
         pulumi.set(__self__, "value", value)
 
     @_builtins.property
     @pulumi.getter
     def effect(self) -> _builtins.str:
+        """
+        The effect of the taint for kubernetes.
+        """
         return pulumi.get(self, "effect")
 
     @_builtins.property
     @pulumi.getter
+    def id(self) -> _builtins.str:
+        """
+        ID of node.
+        """
+        return pulumi.get(self, "id")
+
+    @_builtins.property
+    @pulumi.getter
     def key(self) -> _builtins.str:
+        """
+        The key definining the taint for kubernetes.
+        """
         return pulumi.get(self, "key")
 
     @_builtins.property
     @pulumi.getter
     def value(self) -> _builtins.str:
+        """
+        The value of the taint for kubernetes.
+        """
         return pulumi.get(self, "value")
 
 
@@ -2853,6 +3164,112 @@ class GetLoadBalancerFilterResult(dict):
         One or more values filter with.
         """
         return pulumi.get(self, "values")
+
+
+@pulumi.output_type
+class GetLogsResultResult(dict):
+    def __init__(__self__, *,
+                 http_status_code: _builtins.int,
+                 ip_address: _builtins.str,
+                 level: _builtins.str,
+                 message: _builtins.str,
+                 method: _builtins.str,
+                 query_parameters: _builtins.str,
+                 request_body: _builtins.str,
+                 request_path: _builtins.str,
+                 resource_id: _builtins.str,
+                 resource_type: _builtins.str,
+                 timestamp: _builtins.str,
+                 user_id: _builtins.str,
+                 user_name: _builtins.str):
+        """
+        :param _builtins.str resource_id: Filter the logs by the UUID of a specific resource.
+        :param _builtins.str resource_type: Filter the logs by the type of a resource (i.e. `instances`, `kubernetes`, `bare-metals`).
+        """
+        pulumi.set(__self__, "http_status_code", http_status_code)
+        pulumi.set(__self__, "ip_address", ip_address)
+        pulumi.set(__self__, "level", level)
+        pulumi.set(__self__, "message", message)
+        pulumi.set(__self__, "method", method)
+        pulumi.set(__self__, "query_parameters", query_parameters)
+        pulumi.set(__self__, "request_body", request_body)
+        pulumi.set(__self__, "request_path", request_path)
+        pulumi.set(__self__, "resource_id", resource_id)
+        pulumi.set(__self__, "resource_type", resource_type)
+        pulumi.set(__self__, "timestamp", timestamp)
+        pulumi.set(__self__, "user_id", user_id)
+        pulumi.set(__self__, "user_name", user_name)
+
+    @_builtins.property
+    @pulumi.getter(name="httpStatusCode")
+    def http_status_code(self) -> _builtins.int:
+        return pulumi.get(self, "http_status_code")
+
+    @_builtins.property
+    @pulumi.getter(name="ipAddress")
+    def ip_address(self) -> _builtins.str:
+        return pulumi.get(self, "ip_address")
+
+    @_builtins.property
+    @pulumi.getter
+    def level(self) -> _builtins.str:
+        return pulumi.get(self, "level")
+
+    @_builtins.property
+    @pulumi.getter
+    def message(self) -> _builtins.str:
+        return pulumi.get(self, "message")
+
+    @_builtins.property
+    @pulumi.getter
+    def method(self) -> _builtins.str:
+        return pulumi.get(self, "method")
+
+    @_builtins.property
+    @pulumi.getter(name="queryParameters")
+    def query_parameters(self) -> _builtins.str:
+        return pulumi.get(self, "query_parameters")
+
+    @_builtins.property
+    @pulumi.getter(name="requestBody")
+    def request_body(self) -> _builtins.str:
+        return pulumi.get(self, "request_body")
+
+    @_builtins.property
+    @pulumi.getter(name="requestPath")
+    def request_path(self) -> _builtins.str:
+        return pulumi.get(self, "request_path")
+
+    @_builtins.property
+    @pulumi.getter(name="resourceId")
+    def resource_id(self) -> _builtins.str:
+        """
+        Filter the logs by the UUID of a specific resource.
+        """
+        return pulumi.get(self, "resource_id")
+
+    @_builtins.property
+    @pulumi.getter(name="resourceType")
+    def resource_type(self) -> _builtins.str:
+        """
+        Filter the logs by the type of a resource (i.e. `instances`, `kubernetes`, `bare-metals`).
+        """
+        return pulumi.get(self, "resource_type")
+
+    @_builtins.property
+    @pulumi.getter
+    def timestamp(self) -> _builtins.str:
+        return pulumi.get(self, "timestamp")
+
+    @_builtins.property
+    @pulumi.getter(name="userId")
+    def user_id(self) -> _builtins.str:
+        return pulumi.get(self, "user_id")
+
+    @_builtins.property
+    @pulumi.getter(name="userName")
+    def user_name(self) -> _builtins.str:
+        return pulumi.get(self, "user_name")
 
 
 @pulumi.output_type
@@ -2983,6 +3400,249 @@ class GetObjectStorageTierLocationResult(dict):
     @pulumi.getter
     def region(self) -> _builtins.str:
         return pulumi.get(self, "region")
+
+
+@pulumi.output_type
+class GetOidcIssuerFilterResult(dict):
+    def __init__(__self__, *,
+                 name: _builtins.str,
+                 values: Sequence[_builtins.str]):
+        """
+        :param _builtins.str name: Attribute name to filter with.
+        :param Sequence[_builtins.str] values: One or more values filter with.
+        """
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "values", values)
+
+    @_builtins.property
+    @pulumi.getter
+    def name(self) -> _builtins.str:
+        """
+        Attribute name to filter with.
+        """
+        return pulumi.get(self, "name")
+
+    @_builtins.property
+    @pulumi.getter
+    def values(self) -> Sequence[_builtins.str]:
+        """
+        One or more values filter with.
+        """
+        return pulumi.get(self, "values")
+
+
+@pulumi.output_type
+class GetOidcProviderFilterResult(dict):
+    def __init__(__self__, *,
+                 name: _builtins.str,
+                 values: Sequence[_builtins.str]):
+        """
+        :param _builtins.str name: Attribute name to filter with.
+        :param Sequence[_builtins.str] values: One or more values filter with.
+        """
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "values", values)
+
+    @_builtins.property
+    @pulumi.getter
+    def name(self) -> _builtins.str:
+        """
+        Attribute name to filter with.
+        """
+        return pulumi.get(self, "name")
+
+    @_builtins.property
+    @pulumi.getter
+    def values(self) -> Sequence[_builtins.str]:
+        """
+        One or more values filter with.
+        """
+        return pulumi.get(self, "values")
+
+
+@pulumi.output_type
+class GetOrganizationFilterResult(dict):
+    def __init__(__self__, *,
+                 name: _builtins.str,
+                 values: Sequence[_builtins.str]):
+        """
+        :param _builtins.str name: Attribute name to filter with.
+        :param Sequence[_builtins.str] values: One or more values filter with.
+        """
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "values", values)
+
+    @_builtins.property
+    @pulumi.getter
+    def name(self) -> _builtins.str:
+        """
+        Attribute name to filter with.
+        """
+        return pulumi.get(self, "name")
+
+    @_builtins.property
+    @pulumi.getter
+    def values(self) -> Sequence[_builtins.str]:
+        """
+        One or more values filter with.
+        """
+        return pulumi.get(self, "values")
+
+
+@pulumi.output_type
+class GetOrganizationGroupFilterResult(dict):
+    def __init__(__self__, *,
+                 name: _builtins.str,
+                 values: Sequence[_builtins.str]):
+        """
+        :param _builtins.str name: Attribute name to filter with.
+        :param Sequence[_builtins.str] values: One or more values filter with.
+        """
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "values", values)
+
+    @_builtins.property
+    @pulumi.getter
+    def name(self) -> _builtins.str:
+        """
+        Attribute name to filter with.
+        """
+        return pulumi.get(self, "name")
+
+    @_builtins.property
+    @pulumi.getter
+    def values(self) -> Sequence[_builtins.str]:
+        """
+        One or more values filter with.
+        """
+        return pulumi.get(self, "values")
+
+
+@pulumi.output_type
+class GetOrganizationPolicyDocumentResult(dict):
+    def __init__(__self__, *,
+                 statements: Sequence['outputs.GetOrganizationPolicyDocumentStatementResult'],
+                 version: _builtins.str):
+        """
+        :param Sequence['GetOrganizationPolicyDocumentStatementArgs'] statements: A list of blocks for the organization policy statements.
+        :param _builtins.str version: A version for organization policy document.
+        """
+        pulumi.set(__self__, "statements", statements)
+        pulumi.set(__self__, "version", version)
+
+    @_builtins.property
+    @pulumi.getter
+    def statements(self) -> Sequence['outputs.GetOrganizationPolicyDocumentStatementResult']:
+        """
+        A list of blocks for the organization policy statements.
+        """
+        return pulumi.get(self, "statements")
+
+    @_builtins.property
+    @pulumi.getter
+    def version(self) -> _builtins.str:
+        """
+        A version for organization policy document.
+        """
+        return pulumi.get(self, "version")
+
+
+@pulumi.output_type
+class GetOrganizationPolicyDocumentStatementResult(dict):
+    def __init__(__self__, *,
+                 actions: Sequence[_builtins.str],
+                 effect: _builtins.str,
+                 resources: Sequence[_builtins.str]):
+        """
+        :param Sequence[_builtins.str] actions: A list of actions for the policy document statement.
+        :param _builtins.str effect: The effect of the the policy document statement.
+        :param Sequence[_builtins.str] resources: A list of applicable resources for the policy document statement.
+        """
+        pulumi.set(__self__, "actions", actions)
+        pulumi.set(__self__, "effect", effect)
+        pulumi.set(__self__, "resources", resources)
+
+    @_builtins.property
+    @pulumi.getter
+    def actions(self) -> Sequence[_builtins.str]:
+        """
+        A list of actions for the policy document statement.
+        """
+        return pulumi.get(self, "actions")
+
+    @_builtins.property
+    @pulumi.getter
+    def effect(self) -> _builtins.str:
+        """
+        The effect of the the policy document statement.
+        """
+        return pulumi.get(self, "effect")
+
+    @_builtins.property
+    @pulumi.getter
+    def resources(self) -> Sequence[_builtins.str]:
+        """
+        A list of applicable resources for the policy document statement.
+        """
+        return pulumi.get(self, "resources")
+
+
+@pulumi.output_type
+class GetOrganizationPolicyFilterResult(dict):
+    def __init__(__self__, *,
+                 name: _builtins.str,
+                 values: Sequence[_builtins.str]):
+        """
+        :param _builtins.str name: Attribute name to filter with.
+        :param Sequence[_builtins.str] values: One or more values filter with.
+        """
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "values", values)
+
+    @_builtins.property
+    @pulumi.getter
+    def name(self) -> _builtins.str:
+        """
+        Attribute name to filter with.
+        """
+        return pulumi.get(self, "name")
+
+    @_builtins.property
+    @pulumi.getter
+    def values(self) -> Sequence[_builtins.str]:
+        """
+        One or more values filter with.
+        """
+        return pulumi.get(self, "values")
+
+
+@pulumi.output_type
+class GetOrganizationRoleFilterResult(dict):
+    def __init__(__self__, *,
+                 name: _builtins.str,
+                 values: Sequence[_builtins.str]):
+        """
+        :param _builtins.str name: Attribute name to filter with.
+        :param Sequence[_builtins.str] values: One or more values filter with.
+        """
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "values", values)
+
+    @_builtins.property
+    @pulumi.getter
+    def name(self) -> _builtins.str:
+        """
+        Attribute name to filter with.
+        """
+        return pulumi.get(self, "name")
+
+    @_builtins.property
+    @pulumi.getter
+    def values(self) -> Sequence[_builtins.str]:
+        """
+        One or more values filter with.
+        """
+        return pulumi.get(self, "values")
 
 
 @pulumi.output_type

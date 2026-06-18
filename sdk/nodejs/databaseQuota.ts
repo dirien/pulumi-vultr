@@ -15,8 +15,8 @@ import * as utilities from "./utilities";
  * import * as pulumi from "@pulumi/pulumi";
  * import * as vultr from "@ediri/vultr";
  *
- * const myDatabaseQuota = new vultr.DatabaseQuota("myDatabaseQuota", {
- *     databaseId: vultr_database.my_database.id,
+ * const myDatabaseQuota = new vultr.DatabaseQuota("my_database_quota", {
+ *     databaseId: myDatabase.id,
  *     clientId: "my_database_quota",
  *     consumerByteRate: 3,
  *     producerByteRate: 2,

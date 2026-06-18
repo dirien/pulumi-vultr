@@ -29,7 +29,7 @@ import (
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := vultr.LookupUser(ctx, &vultr.LookupUserArgs{
+//			_, err := vultr.GetUser(ctx, &vultr.LookupUserArgs{
 //				Filters: []vultr.GetUserFilter{
 //					{
 //						Name: "email",
@@ -62,7 +62,7 @@ import (
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := vultr.LookupUser(ctx, &vultr.LookupUserArgs{
+//			_, err := vultr.GetUser(ctx, &vultr.LookupUserArgs{
 //				Filters: []vultr.GetUserFilter{
 //					{
 //						Name: "name",
@@ -105,10 +105,16 @@ type LookupUserResult struct {
 	// The email of the user.
 	Email   string          `pulumi:"email"`
 	Filters []GetUserFilter `pulumi:"filters"`
+	// A list of UUIDs of groups attached to this user.
+	Groups []string `pulumi:"groups"`
 	// The provider-assigned unique ID for this managed resource.
 	Id string `pulumi:"id"`
 	// The name of the user.
 	Name string `pulumi:"name"`
+	// A list of UUIDs of roles attached to this user.
+	Roles []string `pulumi:"roles"`
+	// Whether the user is a service user.
+	ServiceUser bool `pulumi:"serviceUser"`
 }
 
 func LookupUserOutput(ctx *pulumi.Context, args LookupUserOutputArgs, opts ...pulumi.InvokeOption) LookupUserResultOutput {
@@ -164,6 +170,11 @@ func (o LookupUserResultOutput) Filters() GetUserFilterArrayOutput {
 	return o.ApplyT(func(v LookupUserResult) []GetUserFilter { return v.Filters }).(GetUserFilterArrayOutput)
 }
 
+// A list of UUIDs of groups attached to this user.
+func (o LookupUserResultOutput) Groups() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v LookupUserResult) []string { return v.Groups }).(pulumi.StringArrayOutput)
+}
+
 // The provider-assigned unique ID for this managed resource.
 func (o LookupUserResultOutput) Id() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupUserResult) string { return v.Id }).(pulumi.StringOutput)
@@ -172,6 +183,16 @@ func (o LookupUserResultOutput) Id() pulumi.StringOutput {
 // The name of the user.
 func (o LookupUserResultOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupUserResult) string { return v.Name }).(pulumi.StringOutput)
+}
+
+// A list of UUIDs of roles attached to this user.
+func (o LookupUserResultOutput) Roles() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v LookupUserResult) []string { return v.Roles }).(pulumi.StringArrayOutput)
+}
+
+// Whether the user is a service user.
+func (o LookupUserResultOutput) ServiceUser() pulumi.BoolOutput {
+	return o.ApplyT(func(v LookupUserResult) bool { return v.ServiceUser }).(pulumi.BoolOutput)
 }
 
 func init() {

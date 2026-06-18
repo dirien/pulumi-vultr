@@ -28,6 +28,7 @@ class InstanceArgs:
                  app_variables: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
                  backups: Optional[pulumi.Input[_builtins.str]] = None,
                  backups_schedule: Optional[pulumi.Input['InstanceBackupsScheduleArgs']] = None,
+                 block_devices: Optional[pulumi.Input[Sequence[pulumi.Input['InstanceBlockDeviceArgs']]]] = None,
                  ddos_protection: Optional[pulumi.Input[_builtins.bool]] = None,
                  disable_public_ipv4: Optional[pulumi.Input[_builtins.bool]] = None,
                  enable_ipv6: Optional[pulumi.Input[_builtins.bool]] = None,
@@ -49,6 +50,7 @@ class InstanceArgs:
                  vpc_ids: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None):
         """
         The set of arguments for constructing a Instance resource.
+
         :param pulumi.Input[_builtins.str] plan: The ID of the plan that you want the instance to subscribe to. [See List Plans](https://www.vultr.com/api/#tag/plans)
         :param pulumi.Input[_builtins.str] region: The ID of the region that the instance is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
         :param pulumi.Input[_builtins.bool] activation_email: Whether an activation email will be sent when the server is ready.
@@ -88,6 +90,8 @@ class InstanceArgs:
             pulumi.set(__self__, "backups", backups)
         if backups_schedule is not None:
             pulumi.set(__self__, "backups_schedule", backups_schedule)
+        if block_devices is not None:
+            pulumi.set(__self__, "block_devices", block_devices)
         if ddos_protection is not None:
             pulumi.set(__self__, "ddos_protection", ddos_protection)
         if disable_public_ipv4 is not None:
@@ -213,6 +217,15 @@ class InstanceArgs:
     @backups_schedule.setter
     def backups_schedule(self, value: Optional[pulumi.Input['InstanceBackupsScheduleArgs']]):
         pulumi.set(self, "backups_schedule", value)
+
+    @_builtins.property
+    @pulumi.getter(name="blockDevices")
+    def block_devices(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['InstanceBlockDeviceArgs']]]]:
+        return pulumi.get(self, "block_devices")
+
+    @block_devices.setter
+    def block_devices(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['InstanceBlockDeviceArgs']]]]):
+        pulumi.set(self, "block_devices", value)
 
     @_builtins.property
     @pulumi.getter(name="ddosProtection")
@@ -453,6 +466,7 @@ class _InstanceState:
                  app_variables: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
                  backups: Optional[pulumi.Input[_builtins.str]] = None,
                  backups_schedule: Optional[pulumi.Input['InstanceBackupsScheduleArgs']] = None,
+                 block_devices: Optional[pulumi.Input[Sequence[pulumi.Input['InstanceBlockDeviceArgs']]]] = None,
                  date_created: Optional[pulumi.Input[_builtins.str]] = None,
                  ddos_protection: Optional[pulumi.Input[_builtins.bool]] = None,
                  default_password: Optional[pulumi.Input[_builtins.str]] = None,
@@ -494,6 +508,7 @@ class _InstanceState:
                  vpc_ids: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None):
         """
         Input properties used for looking up and filtering Instance resources.
+
         :param pulumi.Input[_builtins.bool] activation_email: Whether an activation email will be sent when the server is ready.
         :param pulumi.Input[_builtins.int] allowed_bandwidth: The server's allowed bandwidth usage in GB.
         :param pulumi.Input[_builtins.int] app_id: The ID of the Vultr application to be installed on the server. [See List Applications](https://www.vultr.com/api/#operation/list-applications)
@@ -552,6 +567,8 @@ class _InstanceState:
             pulumi.set(__self__, "backups", backups)
         if backups_schedule is not None:
             pulumi.set(__self__, "backups_schedule", backups_schedule)
+        if block_devices is not None:
+            pulumi.set(__self__, "block_devices", block_devices)
         if date_created is not None:
             pulumi.set(__self__, "date_created", date_created)
         if ddos_protection is not None:
@@ -705,6 +722,15 @@ class _InstanceState:
     @backups_schedule.setter
     def backups_schedule(self, value: Optional[pulumi.Input['InstanceBackupsScheduleArgs']]):
         pulumi.set(self, "backups_schedule", value)
+
+    @_builtins.property
+    @pulumi.getter(name="blockDevices")
+    def block_devices(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['InstanceBlockDeviceArgs']]]]:
+        return pulumi.get(self, "block_devices")
+
+    @block_devices.setter
+    def block_devices(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['InstanceBlockDeviceArgs']]]]):
+        pulumi.set(self, "block_devices", value)
 
     @_builtins.property
     @pulumi.getter(name="dateCreated")
@@ -1187,6 +1213,7 @@ class Instance(pulumi.CustomResource):
                  app_variables: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
                  backups: Optional[pulumi.Input[_builtins.str]] = None,
                  backups_schedule: Optional[pulumi.Input[Union['InstanceBackupsScheduleArgs', 'InstanceBackupsScheduleArgsDict']]] = None,
+                 block_devices: Optional[pulumi.Input[Sequence[pulumi.Input[Union['InstanceBlockDeviceArgs', 'InstanceBlockDeviceArgsDict']]]]] = None,
                  ddos_protection: Optional[pulumi.Input[_builtins.bool]] = None,
                  disable_public_ipv4: Optional[pulumi.Input[_builtins.bool]] = None,
                  enable_ipv6: Optional[pulumi.Input[_builtins.bool]] = None,
@@ -1220,10 +1247,10 @@ class Instance(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_instance = vultr.Instance("myInstance",
-            os_id=1743,
+        my_instance = vultr.Instance("my_instance",
             plan="vc2-1c-2gb",
-            region="sea")
+            region="sea",
+            os_id=1743)
         ```
 
         Create a new instance with options:
@@ -1232,21 +1259,21 @@ class Instance(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_instance = vultr.Instance("myInstance",
-            activation_email=False,
+        my_instance = vultr.Instance("my_instance",
+            plan="vc2-1c-2gb",
+            region="sea",
+            os_id=1743,
+            label="my-instance-label",
+            tags=["my-instance-tag"],
+            hostname="my-instance-hostname",
+            enable_ipv6=True,
+            disable_public_ipv4=True,
             backups="enabled",
             backups_schedule={
                 "type": "daily",
             },
             ddos_protection=True,
-            disable_public_ipv4=True,
-            enable_ipv6=True,
-            hostname="my-instance-hostname",
-            label="my-instance-label",
-            os_id=1743,
-            plan="vc2-1c-2gb",
-            region="sea",
-            tags=["my-instance-tag"])
+            activation_email=False)
         ```
 
         ## Import
@@ -1256,6 +1283,7 @@ class Instance(pulumi.CustomResource):
         ```sh
         $ pulumi import vultr:index/instance:Instance my_instance b6a859c5-b299-49dd-8888-b1abbc517d08
         ```
+
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -1303,10 +1331,10 @@ class Instance(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_instance = vultr.Instance("myInstance",
-            os_id=1743,
+        my_instance = vultr.Instance("my_instance",
             plan="vc2-1c-2gb",
-            region="sea")
+            region="sea",
+            os_id=1743)
         ```
 
         Create a new instance with options:
@@ -1315,21 +1343,21 @@ class Instance(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_instance = vultr.Instance("myInstance",
-            activation_email=False,
+        my_instance = vultr.Instance("my_instance",
+            plan="vc2-1c-2gb",
+            region="sea",
+            os_id=1743,
+            label="my-instance-label",
+            tags=["my-instance-tag"],
+            hostname="my-instance-hostname",
+            enable_ipv6=True,
+            disable_public_ipv4=True,
             backups="enabled",
             backups_schedule={
                 "type": "daily",
             },
             ddos_protection=True,
-            disable_public_ipv4=True,
-            enable_ipv6=True,
-            hostname="my-instance-hostname",
-            label="my-instance-label",
-            os_id=1743,
-            plan="vc2-1c-2gb",
-            region="sea",
-            tags=["my-instance-tag"])
+            activation_email=False)
         ```
 
         ## Import
@@ -1339,6 +1367,7 @@ class Instance(pulumi.CustomResource):
         ```sh
         $ pulumi import vultr:index/instance:Instance my_instance b6a859c5-b299-49dd-8888-b1abbc517d08
         ```
+
 
         :param str resource_name: The name of the resource.
         :param InstanceArgs args: The arguments to use to populate this resource's properties.
@@ -1360,6 +1389,7 @@ class Instance(pulumi.CustomResource):
                  app_variables: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
                  backups: Optional[pulumi.Input[_builtins.str]] = None,
                  backups_schedule: Optional[pulumi.Input[Union['InstanceBackupsScheduleArgs', 'InstanceBackupsScheduleArgsDict']]] = None,
+                 block_devices: Optional[pulumi.Input[Sequence[pulumi.Input[Union['InstanceBlockDeviceArgs', 'InstanceBlockDeviceArgsDict']]]]] = None,
                  ddos_protection: Optional[pulumi.Input[_builtins.bool]] = None,
                  disable_public_ipv4: Optional[pulumi.Input[_builtins.bool]] = None,
                  enable_ipv6: Optional[pulumi.Input[_builtins.bool]] = None,
@@ -1395,6 +1425,7 @@ class Instance(pulumi.CustomResource):
             __props__.__dict__["app_variables"] = app_variables
             __props__.__dict__["backups"] = backups
             __props__.__dict__["backups_schedule"] = backups_schedule
+            __props__.__dict__["block_devices"] = block_devices
             __props__.__dict__["ddos_protection"] = ddos_protection
             __props__.__dict__["disable_public_ipv4"] = disable_public_ipv4
             __props__.__dict__["enable_ipv6"] = enable_ipv6
@@ -1439,7 +1470,7 @@ class Instance(pulumi.CustomResource):
             __props__.__dict__["v6_network"] = None
             __props__.__dict__["v6_network_size"] = None
             __props__.__dict__["vcpu_count"] = None
-        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["defaultPassword"])
+        secret_opts = pulumi.ResourceOptions(additional_secret_outputs=["defaultPassword", "kvm"])
         opts = pulumi.ResourceOptions.merge(opts, secret_opts)
         super(Instance, __self__).__init__(
             'vultr:index/instance:Instance',
@@ -1457,6 +1488,7 @@ class Instance(pulumi.CustomResource):
             app_variables: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
             backups: Optional[pulumi.Input[_builtins.str]] = None,
             backups_schedule: Optional[pulumi.Input[Union['InstanceBackupsScheduleArgs', 'InstanceBackupsScheduleArgsDict']]] = None,
+            block_devices: Optional[pulumi.Input[Sequence[pulumi.Input[Union['InstanceBlockDeviceArgs', 'InstanceBlockDeviceArgsDict']]]]] = None,
             date_created: Optional[pulumi.Input[_builtins.str]] = None,
             ddos_protection: Optional[pulumi.Input[_builtins.bool]] = None,
             default_password: Optional[pulumi.Input[_builtins.str]] = None,
@@ -1559,6 +1591,7 @@ class Instance(pulumi.CustomResource):
         __props__.__dict__["app_variables"] = app_variables
         __props__.__dict__["backups"] = backups
         __props__.__dict__["backups_schedule"] = backups_schedule
+        __props__.__dict__["block_devices"] = block_devices
         __props__.__dict__["date_created"] = date_created
         __props__.__dict__["ddos_protection"] = ddos_protection
         __props__.__dict__["default_password"] = default_password
@@ -1647,6 +1680,11 @@ class Instance(pulumi.CustomResource):
         A block that defines the way backups should be scheduled. While this is an optional field if `backups` are `enabled` this field is mandatory. The configuration of a `backups_schedule` is listed below.
         """
         return pulumi.get(self, "backups_schedule")
+
+    @_builtins.property
+    @pulumi.getter(name="blockDevices")
+    def block_devices(self) -> pulumi.Output[Optional[Sequence['outputs.InstanceBlockDevice']]]:
+        return pulumi.get(self, "block_devices")
 
     @_builtins.property
     @pulumi.getter(name="dateCreated")

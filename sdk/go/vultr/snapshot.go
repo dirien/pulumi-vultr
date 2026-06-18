@@ -30,18 +30,18 @@ import (
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			myInstance, err := vultr.NewInstance(ctx, "myInstance", &vultr.InstanceArgs{
+//			myInstance, err := vultr.NewInstance(ctx, "my_instance", &vultr.InstanceArgs{
 //				Label:  pulumi.String("my_instance"),
-//				OsId:   pulumi.Int(167),
-//				Plan:   pulumi.String("201"),
 //				Region: pulumi.String("ewr"),
+//				Plan:   pulumi.String("201"),
+//				OsId:   pulumi.Int(167),
 //			})
 //			if err != nil {
 //				return err
 //			}
-//			_, err = vultr.NewSnapshot(ctx, "mySnapshot", &vultr.SnapshotArgs{
-//				Description: pulumi.String("my instances snapshot"),
+//			_, err = vultr.NewSnapshot(ctx, "my_snapshot", &vultr.SnapshotArgs{
 //				InstanceId:  myInstance.ID(),
+//				Description: pulumi.String("my instances snapshot"),
 //			})
 //			if err != nil {
 //				return err

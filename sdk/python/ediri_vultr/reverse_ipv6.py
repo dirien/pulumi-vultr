@@ -24,9 +24,10 @@ class ReverseIpv6Args:
                  reverse: pulumi.Input[_builtins.str]):
         """
         The set of arguments for constructing a ReverseIpv6 resource.
+
         :param pulumi.Input[_builtins.str] instance_id: The ID of the server you want to set an IPv6
                reverse DNS record for.
-        :param pulumi.Input[_builtins.str] ip: The IPv6 address used in the reverse DNS record.
+        :param pulumi.Input[_builtins.str] ip: The IPv6 address used in the reverse DNS record. Valid IPv6 address, stored as fully-expanded format.
         :param pulumi.Input[_builtins.str] reverse: The hostname used in the IPv6 reverse DNS record.
         """
         pulumi.set(__self__, "instance_id", instance_id)
@@ -50,7 +51,7 @@ class ReverseIpv6Args:
     @pulumi.getter
     def ip(self) -> pulumi.Input[_builtins.str]:
         """
-        The IPv6 address used in the reverse DNS record.
+        The IPv6 address used in the reverse DNS record. Valid IPv6 address, stored as fully-expanded format.
         """
         return pulumi.get(self, "ip")
 
@@ -79,9 +80,10 @@ class _ReverseIpv6State:
                  reverse: Optional[pulumi.Input[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering ReverseIpv6 resources.
+
         :param pulumi.Input[_builtins.str] instance_id: The ID of the server you want to set an IPv6
                reverse DNS record for.
-        :param pulumi.Input[_builtins.str] ip: The IPv6 address used in the reverse DNS record.
+        :param pulumi.Input[_builtins.str] ip: The IPv6 address used in the reverse DNS record. Valid IPv6 address, stored as fully-expanded format.
         :param pulumi.Input[_builtins.str] reverse: The hostname used in the IPv6 reverse DNS record.
         """
         if instance_id is not None:
@@ -108,7 +110,7 @@ class _ReverseIpv6State:
     @pulumi.getter
     def ip(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
-        The IPv6 address used in the reverse DNS record.
+        The IPv6 address used in the reverse DNS record. Valid IPv6 address, stored as fully-expanded format.
         """
         return pulumi.get(self, "ip")
 
@@ -144,11 +146,31 @@ class ReverseIpv6(pulumi.CustomResource):
         modify, and delete reverse DNS records for IPv6 addresses. Upon success, DNS
         changes may take 6-12 hours to become active.
 
+        ## Example Usage
+
+        Create a new reverse DNS record for an IPv6 address:
+
+        ```python
+        import pulumi
+        import ediri_vultr as vultr
+
+        my_server = vultr.Instance("my_server",
+            plan="vc2-1c-1gb",
+            region="ewr",
+            os_id=167,
+            enable_ipv6=True)
+        my_reverse_ipv6 = vultr.ReverseIpv6("my_reverse_ipv6",
+            instance_id=my_server.id,
+            ip=my_server.v6_main_ip,
+            reverse="host.example.com")
+        ```
+
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[_builtins.str] instance_id: The ID of the server you want to set an IPv6
                reverse DNS record for.
-        :param pulumi.Input[_builtins.str] ip: The IPv6 address used in the reverse DNS record.
+        :param pulumi.Input[_builtins.str] ip: The IPv6 address used in the reverse DNS record. Valid IPv6 address, stored as fully-expanded format.
         :param pulumi.Input[_builtins.str] reverse: The hostname used in the IPv6 reverse DNS record.
         """
         ...
@@ -161,6 +183,26 @@ class ReverseIpv6(pulumi.CustomResource):
         Provides a Vultr Reverse IPv6 resource. This can be used to create, read,
         modify, and delete reverse DNS records for IPv6 addresses. Upon success, DNS
         changes may take 6-12 hours to become active.
+
+        ## Example Usage
+
+        Create a new reverse DNS record for an IPv6 address:
+
+        ```python
+        import pulumi
+        import ediri_vultr as vultr
+
+        my_server = vultr.Instance("my_server",
+            plan="vc2-1c-1gb",
+            region="ewr",
+            os_id=167,
+            enable_ipv6=True)
+        my_reverse_ipv6 = vultr.ReverseIpv6("my_reverse_ipv6",
+            instance_id=my_server.id,
+            ip=my_server.v6_main_ip,
+            reverse="host.example.com")
+        ```
+
 
         :param str resource_name: The name of the resource.
         :param ReverseIpv6Args args: The arguments to use to populate this resource's properties.
@@ -220,7 +262,7 @@ class ReverseIpv6(pulumi.CustomResource):
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[_builtins.str] instance_id: The ID of the server you want to set an IPv6
                reverse DNS record for.
-        :param pulumi.Input[_builtins.str] ip: The IPv6 address used in the reverse DNS record.
+        :param pulumi.Input[_builtins.str] ip: The IPv6 address used in the reverse DNS record. Valid IPv6 address, stored as fully-expanded format.
         :param pulumi.Input[_builtins.str] reverse: The hostname used in the IPv6 reverse DNS record.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
@@ -245,7 +287,7 @@ class ReverseIpv6(pulumi.CustomResource):
     @pulumi.getter
     def ip(self) -> pulumi.Output[_builtins.str]:
         """
-        The IPv6 address used in the reverse DNS record.
+        The IPv6 address used in the reverse DNS record. Valid IPv6 address, stored as fully-expanded format.
         """
         return pulumi.get(self, "ip")
 

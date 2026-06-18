@@ -15,8 +15,8 @@ import * as utilities from "./utilities";
  * import * as pulumi from "@pulumi/pulumi";
  * import * as vultr from "@ediri/vultr";
  *
- * const myDatabaseReplica = new vultr.DatabaseReplica("myDatabaseReplica", {
- *     databaseId: vultr_database.my_database.id,
+ * const myDatabaseReplica = new vultr.DatabaseReplica("my_database_replica", {
+ *     databaseId: myDatabase.id,
  *     region: "sea",
  *     label: "my_database_replica_label",
  *     tag: "test tag",
@@ -59,6 +59,10 @@ export class DatabaseReplica extends pulumi.CustomResource {
      * The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
      */
     declare public readonly backupMinute: pulumi.Output<string>;
+    /**
+     * The CA certificate for Managed Databases on this account.
+     */
+    declare public /*out*/ readonly caCertificate: pulumi.Output<string>;
     /**
      * The configured time zone for the managed database read replica in TZ database format.
      */
@@ -196,6 +200,7 @@ export class DatabaseReplica extends pulumi.CustomResource {
             const state = argsOrState as DatabaseReplicaState | undefined;
             resourceInputs["backupHour"] = state?.backupHour;
             resourceInputs["backupMinute"] = state?.backupMinute;
+            resourceInputs["caCertificate"] = state?.caCertificate;
             resourceInputs["clusterTimeZone"] = state?.clusterTimeZone;
             resourceInputs["databaseEngine"] = state?.databaseEngine;
             resourceInputs["databaseEngineVersion"] = state?.databaseEngineVersion;
@@ -253,6 +258,7 @@ export class DatabaseReplica extends pulumi.CustomResource {
             resourceInputs["region"] = args?.region;
             resourceInputs["tag"] = args?.tag;
             resourceInputs["trustedIps"] = args?.trustedIps;
+            resourceInputs["caCertificate"] = undefined /*out*/;
             resourceInputs["clusterTimeZone"] = undefined /*out*/;
             resourceInputs["databaseEngine"] = undefined /*out*/;
             resourceInputs["databaseEngineVersion"] = undefined /*out*/;
@@ -289,6 +295,10 @@ export interface DatabaseReplicaState {
      * The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
      */
     backupMinute?: pulumi.Input<string>;
+    /**
+     * The CA certificate for Managed Databases on this account.
+     */
+    caCertificate?: pulumi.Input<string>;
     /**
      * The configured time zone for the managed database read replica in TZ database format.
      */

@@ -22,6 +22,7 @@ class FirewallGroupArgs:
                  description: Optional[pulumi.Input[_builtins.str]] = None):
         """
         The set of arguments for constructing a FirewallGroup resource.
+
         :param pulumi.Input[_builtins.str] description: Description of the firewall group.
         """
         if description is not None:
@@ -45,18 +46,13 @@ class _FirewallGroupState:
     def __init__(__self__, *,
                  date_created: Optional[pulumi.Input[_builtins.str]] = None,
                  date_modified: Optional[pulumi.Input[_builtins.str]] = None,
-                 description: Optional[pulumi.Input[_builtins.str]] = None,
-                 instance_count: Optional[pulumi.Input[_builtins.int]] = None,
-                 max_rule_count: Optional[pulumi.Input[_builtins.int]] = None,
-                 rule_count: Optional[pulumi.Input[_builtins.int]] = None):
+                 description: Optional[pulumi.Input[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering FirewallGroup resources.
+
         :param pulumi.Input[_builtins.str] date_created: The date the firewall group was created.
         :param pulumi.Input[_builtins.str] date_modified: The date the firewall group was modified.
         :param pulumi.Input[_builtins.str] description: Description of the firewall group.
-        :param pulumi.Input[_builtins.int] instance_count: The number of instances that are currently using this firewall group.
-        :param pulumi.Input[_builtins.int] max_rule_count: The number of max firewall rules this group can have.
-        :param pulumi.Input[_builtins.int] rule_count: The number of firewall rules this group currently has.
         """
         if date_created is not None:
             pulumi.set(__self__, "date_created", date_created)
@@ -64,12 +60,6 @@ class _FirewallGroupState:
             pulumi.set(__self__, "date_modified", date_modified)
         if description is not None:
             pulumi.set(__self__, "description", description)
-        if instance_count is not None:
-            pulumi.set(__self__, "instance_count", instance_count)
-        if max_rule_count is not None:
-            pulumi.set(__self__, "max_rule_count", max_rule_count)
-        if rule_count is not None:
-            pulumi.set(__self__, "rule_count", rule_count)
 
     @_builtins.property
     @pulumi.getter(name="dateCreated")
@@ -107,42 +97,6 @@ class _FirewallGroupState:
     def description(self, value: Optional[pulumi.Input[_builtins.str]]):
         pulumi.set(self, "description", value)
 
-    @_builtins.property
-    @pulumi.getter(name="instanceCount")
-    def instance_count(self) -> Optional[pulumi.Input[_builtins.int]]:
-        """
-        The number of instances that are currently using this firewall group.
-        """
-        return pulumi.get(self, "instance_count")
-
-    @instance_count.setter
-    def instance_count(self, value: Optional[pulumi.Input[_builtins.int]]):
-        pulumi.set(self, "instance_count", value)
-
-    @_builtins.property
-    @pulumi.getter(name="maxRuleCount")
-    def max_rule_count(self) -> Optional[pulumi.Input[_builtins.int]]:
-        """
-        The number of max firewall rules this group can have.
-        """
-        return pulumi.get(self, "max_rule_count")
-
-    @max_rule_count.setter
-    def max_rule_count(self, value: Optional[pulumi.Input[_builtins.int]]):
-        pulumi.set(self, "max_rule_count", value)
-
-    @_builtins.property
-    @pulumi.getter(name="ruleCount")
-    def rule_count(self) -> Optional[pulumi.Input[_builtins.int]]:
-        """
-        The number of firewall rules this group currently has.
-        """
-        return pulumi.get(self, "rule_count")
-
-    @rule_count.setter
-    def rule_count(self, value: Optional[pulumi.Input[_builtins.int]]):
-        pulumi.set(self, "rule_count", value)
-
 
 @pulumi.type_token("vultr:index/firewallGroup:FirewallGroup")
 class FirewallGroup(pulumi.CustomResource):
@@ -163,7 +117,7 @@ class FirewallGroup(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_firewallgroup = vultr.FirewallGroup("myFirewallgroup", description="base firewall")
+        my_firewallgroup = vultr.FirewallGroup("my_firewallgroup", description="base firewall")
         ```
 
         ## Import
@@ -173,6 +127,7 @@ class FirewallGroup(pulumi.CustomResource):
         ```sh
         $ pulumi import vultr:index/firewallGroup:FirewallGroup my_firewallgroup c342f929
         ```
+
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -195,7 +150,7 @@ class FirewallGroup(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_firewallgroup = vultr.FirewallGroup("myFirewallgroup", description="base firewall")
+        my_firewallgroup = vultr.FirewallGroup("my_firewallgroup", description="base firewall")
         ```
 
         ## Import
@@ -205,6 +160,7 @@ class FirewallGroup(pulumi.CustomResource):
         ```sh
         $ pulumi import vultr:index/firewallGroup:FirewallGroup my_firewallgroup c342f929
         ```
+
 
         :param str resource_name: The name of the resource.
         :param FirewallGroupArgs args: The arguments to use to populate this resource's properties.
@@ -234,9 +190,6 @@ class FirewallGroup(pulumi.CustomResource):
             __props__.__dict__["description"] = description
             __props__.__dict__["date_created"] = None
             __props__.__dict__["date_modified"] = None
-            __props__.__dict__["instance_count"] = None
-            __props__.__dict__["max_rule_count"] = None
-            __props__.__dict__["rule_count"] = None
         super(FirewallGroup, __self__).__init__(
             'vultr:index/firewallGroup:FirewallGroup',
             resource_name,
@@ -249,10 +202,7 @@ class FirewallGroup(pulumi.CustomResource):
             opts: Optional[pulumi.ResourceOptions] = None,
             date_created: Optional[pulumi.Input[_builtins.str]] = None,
             date_modified: Optional[pulumi.Input[_builtins.str]] = None,
-            description: Optional[pulumi.Input[_builtins.str]] = None,
-            instance_count: Optional[pulumi.Input[_builtins.int]] = None,
-            max_rule_count: Optional[pulumi.Input[_builtins.int]] = None,
-            rule_count: Optional[pulumi.Input[_builtins.int]] = None) -> 'FirewallGroup':
+            description: Optional[pulumi.Input[_builtins.str]] = None) -> 'FirewallGroup':
         """
         Get an existing FirewallGroup resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -263,9 +213,6 @@ class FirewallGroup(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] date_created: The date the firewall group was created.
         :param pulumi.Input[_builtins.str] date_modified: The date the firewall group was modified.
         :param pulumi.Input[_builtins.str] description: Description of the firewall group.
-        :param pulumi.Input[_builtins.int] instance_count: The number of instances that are currently using this firewall group.
-        :param pulumi.Input[_builtins.int] max_rule_count: The number of max firewall rules this group can have.
-        :param pulumi.Input[_builtins.int] rule_count: The number of firewall rules this group currently has.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -274,9 +221,6 @@ class FirewallGroup(pulumi.CustomResource):
         __props__.__dict__["date_created"] = date_created
         __props__.__dict__["date_modified"] = date_modified
         __props__.__dict__["description"] = description
-        __props__.__dict__["instance_count"] = instance_count
-        __props__.__dict__["max_rule_count"] = max_rule_count
-        __props__.__dict__["rule_count"] = rule_count
         return FirewallGroup(resource_name, opts=opts, __props__=__props__)
 
     @_builtins.property
@@ -302,28 +246,4 @@ class FirewallGroup(pulumi.CustomResource):
         Description of the firewall group.
         """
         return pulumi.get(self, "description")
-
-    @_builtins.property
-    @pulumi.getter(name="instanceCount")
-    def instance_count(self) -> pulumi.Output[_builtins.int]:
-        """
-        The number of instances that are currently using this firewall group.
-        """
-        return pulumi.get(self, "instance_count")
-
-    @_builtins.property
-    @pulumi.getter(name="maxRuleCount")
-    def max_rule_count(self) -> pulumi.Output[_builtins.int]:
-        """
-        The number of max firewall rules this group can have.
-        """
-        return pulumi.get(self, "max_rule_count")
-
-    @_builtins.property
-    @pulumi.getter(name="ruleCount")
-    def rule_count(self) -> pulumi.Output[_builtins.int]:
-        """
-        The number of firewall rules this group currently has.
-        """
-        return pulumi.get(self, "rule_count")
 

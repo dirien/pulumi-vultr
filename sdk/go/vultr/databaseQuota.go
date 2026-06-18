@@ -30,8 +30,8 @@ import (
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := vultr.NewDatabaseQuota(ctx, "myDatabaseQuota", &vultr.DatabaseQuotaArgs{
-//				DatabaseId:        pulumi.Any(vultr_database.My_database.Id),
+//			_, err := vultr.NewDatabaseQuota(ctx, "my_database_quota", &vultr.DatabaseQuotaArgs{
+//				DatabaseId:        pulumi.Any(myDatabase.Id),
 //				ClientId:          pulumi.String("my_database_quota"),
 //				ConsumerByteRate:  pulumi.Int(3),
 //				ProducerByteRate:  pulumi.Int(2),

@@ -32,16 +32,16 @@ import (
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			myInstance, err := vultr.NewInstance(ctx, "myInstance", &vultr.InstanceArgs{
-//				EnableIpv6: pulumi.Bool(true),
-//				OsId:       pulumi.Int(477),
+//			myInstance, err := vultr.NewInstance(ctx, "my_instance", &vultr.InstanceArgs{
 //				Plan:       pulumi.String("vc2-1c-2gb"),
 //				Region:     pulumi.String("ewr"),
+//				OsId:       pulumi.Int(477),
+//				EnableIpv6: pulumi.Bool(true),
 //			})
 //			if err != nil {
 //				return err
 //			}
-//			_, err = vultr.NewReverseIpv4(ctx, "myReverseIpv4", &vultr.ReverseIpv4Args{
+//			_, err = vultr.NewReverseIpv4(ctx, "my_reverse_ipv4", &vultr.ReverseIpv4Args{
 //				InstanceId: myInstance.ID(),
 //				Ip:         myInstance.MainIp,
 //				Reverse:    pulumi.String("host.example.com"),

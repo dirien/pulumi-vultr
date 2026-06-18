@@ -1,0 +1,3 @@
+name: vultr
+description: A Pulumi resource provider for vultr.
+language: nodejs

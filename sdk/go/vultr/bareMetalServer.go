@@ -30,10 +30,10 @@ import (
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := vultr.NewBareMetalServer(ctx, "myServer", &vultr.BareMetalServerArgs{
-//				OsId:   pulumi.Int(1743),
+//			_, err := vultr.NewBareMetalServer(ctx, "my_server", &vultr.BareMetalServerArgs{
 //				Plan:   pulumi.String("vbm-4c-32gb"),
 //				Region: pulumi.String("ewr"),
+//				OsId:   pulumi.Int(1743),
 //			})
 //			if err != nil {
 //				return err
@@ -58,18 +58,18 @@ import (
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := vultr.NewBareMetalServer(ctx, "myServer", &vultr.BareMetalServerArgs{
-//				ActivationEmail: pulumi.Bool(false),
-//				EnableIpv6:      pulumi.Bool(true),
-//				Hostname:        pulumi.String("my-server-hostname"),
-//				Label:           pulumi.String("my-server-label"),
-//				OsId:            pulumi.Int(1743),
-//				Plan:            pulumi.String("vbm-4c-32gb"),
-//				Region:          pulumi.String("ewr"),
+//			_, err := vultr.NewBareMetalServer(ctx, "my_server", &vultr.BareMetalServerArgs{
+//				Plan:   pulumi.String("vbm-4c-32gb"),
+//				Region: pulumi.String("ewr"),
+//				OsId:   pulumi.Int(1743),
+//				Label:  pulumi.String("my-server-label"),
 //				Tags: pulumi.StringArray{
 //					pulumi.String("my-server-tag"),
 //				},
-//				UserData: pulumi.String("this is my user data"),
+//				Hostname:        pulumi.String("my-server-hostname"),
+//				UserData:        pulumi.String("this is my user data"),
+//				EnableIpv6:      pulumi.Bool(true),
+//				ActivationEmail: pulumi.Bool(false),
 //			})
 //			if err != nil {
 //				return err
@@ -117,7 +117,8 @@ type BareMetalServer struct {
 	// The MAC address associated with the server.
 	MacAddress pulumi.IntOutput `pulumi:"macAddress"`
 	// The server's main IP address.
-	MainIp    pulumi.StringOutput    `pulumi:"mainIp"`
+	MainIp pulumi.StringOutput `pulumi:"mainIp"`
+	// The raid configuration to use when provisioning the server.  Possible values: `raid1`, `jbod`, `none`. Defaults to `none`.
 	MdiskMode pulumi.StringPtrOutput `pulumi:"mdiskMode"`
 	// The server's IPv4 netmask.
 	NetmaskV4 pulumi.StringOutput `pulumi:"netmaskV4"`
@@ -137,7 +138,7 @@ type BareMetalServer struct {
 	// The ID of the startup script you want added to the server.
 	ScriptId pulumi.StringPtrOutput `pulumi:"scriptId"`
 	// The ID of the Vultr snapshot that the server will restore for the initial installation. [See List Snapshots](https://www.vultr.com/api/#operation/list-snapshots)
-	SnapshotId pulumi.StringPtrOutput `pulumi:"snapshotId"`
+	SnapshotId pulumi.StringOutput `pulumi:"snapshotId"`
 	// A list of SSH key IDs to apply to the server on install (only valid for Linux/FreeBSD).
 	SshKeyIds pulumi.StringArrayOutput `pulumi:"sshKeyIds"`
 	// The status of the server's subscription.
@@ -229,7 +230,8 @@ type bareMetalServerState struct {
 	// The MAC address associated with the server.
 	MacAddress *int `pulumi:"macAddress"`
 	// The server's main IP address.
-	MainIp    *string `pulumi:"mainIp"`
+	MainIp *string `pulumi:"mainIp"`
+	// The raid configuration to use when provisioning the server.  Possible values: `raid1`, `jbod`, `none`. Defaults to `none`.
 	MdiskMode *string `pulumi:"mdiskMode"`
 	// The server's IPv4 netmask.
 	NetmaskV4 *string `pulumi:"netmaskV4"`
@@ -302,7 +304,8 @@ type BareMetalServerState struct {
 	// The MAC address associated with the server.
 	MacAddress pulumi.IntPtrInput
 	// The server's main IP address.
-	MainIp    pulumi.StringPtrInput
+	MainIp pulumi.StringPtrInput
+	// The raid configuration to use when provisioning the server.  Possible values: `raid1`, `jbod`, `none`. Defaults to `none`.
 	MdiskMode pulumi.StringPtrInput
 	// The server's IPv4 netmask.
 	NetmaskV4 pulumi.StringPtrInput
@@ -365,7 +368,8 @@ type bareMetalServerArgs struct {
 	// The ID of the Vultr marketplace application to be installed on the server. [See List Applications](https://www.vultr.com/api/#operation/list-applications) Note marketplace applications are denoted by type: `marketplace` and you must use the `imageId` not the id.
 	ImageId *string `pulumi:"imageId"`
 	// A label for the server.
-	Label     *string `pulumi:"label"`
+	Label *string `pulumi:"label"`
+	// The raid configuration to use when provisioning the server.  Possible values: `raid1`, `jbod`, `none`. Defaults to `none`.
 	MdiskMode *string `pulumi:"mdiskMode"`
 	// The ID of the operating system to be installed on the server. [See List OS](https://www.vultr.com/api/#operation/list-os)
 	OsId          *int  `pulumi:"osId"`
@@ -411,7 +415,8 @@ type BareMetalServerArgs struct {
 	// The ID of the Vultr marketplace application to be installed on the server. [See List Applications](https://www.vultr.com/api/#operation/list-applications) Note marketplace applications are denoted by type: `marketplace` and you must use the `imageId` not the id.
 	ImageId pulumi.StringPtrInput
 	// A label for the server.
-	Label     pulumi.StringPtrInput
+	Label pulumi.StringPtrInput
+	// The raid configuration to use when provisioning the server.  Possible values: `raid1`, `jbod`, `none`. Defaults to `none`.
 	MdiskMode pulumi.StringPtrInput
 	// The ID of the operating system to be installed on the server. [See List OS](https://www.vultr.com/api/#operation/list-os)
 	OsId          pulumi.IntPtrInput
@@ -599,6 +604,7 @@ func (o BareMetalServerOutput) MainIp() pulumi.StringOutput {
 	return o.ApplyT(func(v *BareMetalServer) pulumi.StringOutput { return v.MainIp }).(pulumi.StringOutput)
 }
 
+// The raid configuration to use when provisioning the server.  Possible values: `raid1`, `jbod`, `none`. Defaults to `none`.
 func (o BareMetalServerOutput) MdiskMode() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *BareMetalServer) pulumi.StringPtrOutput { return v.MdiskMode }).(pulumi.StringPtrOutput)
 }
@@ -648,8 +654,8 @@ func (o BareMetalServerOutput) ScriptId() pulumi.StringPtrOutput {
 }
 
 // The ID of the Vultr snapshot that the server will restore for the initial installation. [See List Snapshots](https://www.vultr.com/api/#operation/list-snapshots)
-func (o BareMetalServerOutput) SnapshotId() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *BareMetalServer) pulumi.StringPtrOutput { return v.SnapshotId }).(pulumi.StringPtrOutput)
+func (o BareMetalServerOutput) SnapshotId() pulumi.StringOutput {
+	return o.ApplyT(func(v *BareMetalServer) pulumi.StringOutput { return v.SnapshotId }).(pulumi.StringOutput)
 }
 
 // A list of SSH key IDs to apply to the server on install (only valid for Linux/FreeBSD).

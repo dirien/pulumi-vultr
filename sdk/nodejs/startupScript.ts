@@ -15,7 +15,10 @@ import * as utilities from "./utilities";
  * import * as pulumi from "@pulumi/pulumi";
  * import * as vultr from "@ediri/vultr";
  *
- * const myScript = new vultr.StartupScript("myScript", {script: "ZWNobyAkUEFUSAo="});
+ * const myScript = new vultr.StartupScript("my_script", {
+ *     name: "echo_path",
+ *     script: "ZWNobyAkUEFUSAo=",
+ * });
  * ```
  *
  * ## Import

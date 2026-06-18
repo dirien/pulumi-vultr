@@ -42,6 +42,7 @@ class BareMetalServerArgs:
                  vpc_id: Optional[pulumi.Input[_builtins.str]] = None):
         """
         The set of arguments for constructing a BareMetalServer resource.
+
         :param pulumi.Input[_builtins.str] plan: The ID of the plan that you want the server to subscribe to. [See List Plans](https://www.vultr.com/api/#tag/plans)
         :param pulumi.Input[_builtins.str] region: The ID of the region that the server is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
         :param pulumi.Input[_builtins.bool] activation_email: Whether an activation email will be sent when the server is ready.
@@ -51,6 +52,7 @@ class BareMetalServerArgs:
         :param pulumi.Input[_builtins.str] hostname: The hostname to assign to the server.
         :param pulumi.Input[_builtins.str] image_id: The ID of the Vultr marketplace application to be installed on the server. [See List Applications](https://www.vultr.com/api/#operation/list-applications) Note marketplace applications are denoted by type: `marketplace` and you must use the `image_id` not the id.
         :param pulumi.Input[_builtins.str] label: A label for the server.
+        :param pulumi.Input[_builtins.str] mdisk_mode: The raid configuration to use when provisioning the server.  Possible values: `raid1`, `jbod`, `none`. Defaults to `none`.
         :param pulumi.Input[_builtins.int] os_id: The ID of the operating system to be installed on the server. [See List OS](https://www.vultr.com/api/#operation/list-os)
         :param pulumi.Input[_builtins.str] reserved_ipv4: The ID of the floating IP to use as the main IP of this server. [See Reserved IPs](https://www.vultr.com/api/#operation/list-reserved-ips)
         :param pulumi.Input[_builtins.str] script_id: The ID of the startup script you want added to the server.
@@ -217,6 +219,9 @@ class BareMetalServerArgs:
     @_builtins.property
     @pulumi.getter(name="mdiskMode")
     def mdisk_mode(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        The raid configuration to use when provisioning the server.  Possible values: `raid1`, `jbod`, `none`. Defaults to `none`.
+        """
         return pulumi.get(self, "mdisk_mode")
 
     @mdisk_mode.setter
@@ -394,6 +399,7 @@ class _BareMetalServerState:
                  vpc_id: Optional[pulumi.Input[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering BareMetalServer resources.
+
         :param pulumi.Input[_builtins.bool] activation_email: Whether an activation email will be sent when the server is ready.
         :param pulumi.Input[_builtins.int] app_id: The ID of the Vultr application to be installed on the server. [See List Applications](https://www.vultr.com/api/#operation/list-applications)
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] app_variables: A map of user-supplied variable keys and values for Vultr Marketplace apps. [See List Marketplace App Variables](https://www.vultr.com/api/#tag/marketplace/operation/list-marketplace-app-variables)
@@ -408,6 +414,7 @@ class _BareMetalServerState:
         :param pulumi.Input[_builtins.str] label: A label for the server.
         :param pulumi.Input[_builtins.int] mac_address: The MAC address associated with the server.
         :param pulumi.Input[_builtins.str] main_ip: The server's main IP address.
+        :param pulumi.Input[_builtins.str] mdisk_mode: The raid configuration to use when provisioning the server.  Possible values: `raid1`, `jbod`, `none`. Defaults to `none`.
         :param pulumi.Input[_builtins.str] netmask_v4: The server's IPv4 netmask.
         :param pulumi.Input[_builtins.str] os: The string description of the operating system installed on the server.
         :param pulumi.Input[_builtins.int] os_id: The ID of the operating system to be installed on the server. [See List OS](https://www.vultr.com/api/#operation/list-os)
@@ -673,6 +680,9 @@ class _BareMetalServerState:
     @_builtins.property
     @pulumi.getter(name="mdiskMode")
     def mdisk_mode(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        The raid configuration to use when provisioning the server.  Possible values: `raid1`, `jbod`, `none`. Defaults to `none`.
+        """
         return pulumi.get(self, "mdisk_mode")
 
     @mdisk_mode.setter
@@ -957,10 +967,10 @@ class BareMetalServer(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_server = vultr.BareMetalServer("myServer",
-            os_id=1743,
+        my_server = vultr.BareMetalServer("my_server",
             plan="vbm-4c-32gb",
-            region="ewr")
+            region="ewr",
+            os_id=1743)
         ```
 
         Create a new bare metal server with options:
@@ -969,16 +979,16 @@ class BareMetalServer(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_server = vultr.BareMetalServer("myServer",
-            activation_email=False,
-            enable_ipv6=True,
-            hostname="my-server-hostname",
-            label="my-server-label",
-            os_id=1743,
+        my_server = vultr.BareMetalServer("my_server",
             plan="vbm-4c-32gb",
             region="ewr",
+            os_id=1743,
+            label="my-server-label",
             tags=["my-server-tag"],
-            user_data="this is my user data")
+            hostname="my-server-hostname",
+            user_data="this is my user data",
+            enable_ipv6=True,
+            activation_email=False)
         ```
 
         ## Import
@@ -989,6 +999,7 @@ class BareMetalServer(pulumi.CustomResource):
         $ pulumi import vultr:index/bareMetalServer:BareMetalServer my_server b6a859c5-b299-49dd-8888-b1abbc517d08
         ```
 
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[_builtins.bool] activation_email: Whether an activation email will be sent when the server is ready.
@@ -998,6 +1009,7 @@ class BareMetalServer(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] hostname: The hostname to assign to the server.
         :param pulumi.Input[_builtins.str] image_id: The ID of the Vultr marketplace application to be installed on the server. [See List Applications](https://www.vultr.com/api/#operation/list-applications) Note marketplace applications are denoted by type: `marketplace` and you must use the `image_id` not the id.
         :param pulumi.Input[_builtins.str] label: A label for the server.
+        :param pulumi.Input[_builtins.str] mdisk_mode: The raid configuration to use when provisioning the server.  Possible values: `raid1`, `jbod`, `none`. Defaults to `none`.
         :param pulumi.Input[_builtins.int] os_id: The ID of the operating system to be installed on the server. [See List OS](https://www.vultr.com/api/#operation/list-os)
         :param pulumi.Input[_builtins.str] plan: The ID of the plan that you want the server to subscribe to. [See List Plans](https://www.vultr.com/api/#tag/plans)
         :param pulumi.Input[_builtins.str] region: The ID of the region that the server is to be created in. [See List Regions](https://www.vultr.com/api/#operation/list-regions)
@@ -1028,10 +1040,10 @@ class BareMetalServer(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_server = vultr.BareMetalServer("myServer",
-            os_id=1743,
+        my_server = vultr.BareMetalServer("my_server",
             plan="vbm-4c-32gb",
-            region="ewr")
+            region="ewr",
+            os_id=1743)
         ```
 
         Create a new bare metal server with options:
@@ -1040,16 +1052,16 @@ class BareMetalServer(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_server = vultr.BareMetalServer("myServer",
-            activation_email=False,
-            enable_ipv6=True,
-            hostname="my-server-hostname",
-            label="my-server-label",
-            os_id=1743,
+        my_server = vultr.BareMetalServer("my_server",
             plan="vbm-4c-32gb",
             region="ewr",
+            os_id=1743,
+            label="my-server-label",
             tags=["my-server-tag"],
-            user_data="this is my user data")
+            hostname="my-server-hostname",
+            user_data="this is my user data",
+            enable_ipv6=True,
+            activation_email=False)
         ```
 
         ## Import
@@ -1059,6 +1071,7 @@ class BareMetalServer(pulumi.CustomResource):
         ```sh
         $ pulumi import vultr:index/bareMetalServer:BareMetalServer my_server b6a859c5-b299-49dd-8888-b1abbc517d08
         ```
+
 
         :param str resource_name: The name of the resource.
         :param BareMetalServerArgs args: The arguments to use to populate this resource's properties.
@@ -1212,6 +1225,7 @@ class BareMetalServer(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] label: A label for the server.
         :param pulumi.Input[_builtins.int] mac_address: The MAC address associated with the server.
         :param pulumi.Input[_builtins.str] main_ip: The server's main IP address.
+        :param pulumi.Input[_builtins.str] mdisk_mode: The raid configuration to use when provisioning the server.  Possible values: `raid1`, `jbod`, `none`. Defaults to `none`.
         :param pulumi.Input[_builtins.str] netmask_v4: The server's IPv4 netmask.
         :param pulumi.Input[_builtins.str] os: The string description of the operating system installed on the server.
         :param pulumi.Input[_builtins.int] os_id: The ID of the operating system to be installed on the server. [See List OS](https://www.vultr.com/api/#operation/list-os)
@@ -1388,6 +1402,9 @@ class BareMetalServer(pulumi.CustomResource):
     @_builtins.property
     @pulumi.getter(name="mdiskMode")
     def mdisk_mode(self) -> pulumi.Output[Optional[_builtins.str]]:
+        """
+        The raid configuration to use when provisioning the server.  Possible values: `raid1`, `jbod`, `none`. Defaults to `none`.
+        """
         return pulumi.get(self, "mdisk_mode")
 
     @_builtins.property
@@ -1461,7 +1478,7 @@ class BareMetalServer(pulumi.CustomResource):
 
     @_builtins.property
     @pulumi.getter(name="snapshotId")
-    def snapshot_id(self) -> pulumi.Output[Optional[_builtins.str]]:
+    def snapshot_id(self) -> pulumi.Output[_builtins.str]:
         """
         The ID of the Vultr snapshot that the server will restore for the initial installation. [See List Snapshots](https://www.vultr.com/api/#operation/list-snapshots)
         """

@@ -15,8 +15,9 @@ import * as utilities from "./utilities";
  * import * as pulumi from "@pulumi/pulumi";
  * import * as vultr from "@ediri/vultr";
  *
- * const myDatabaseConnectionPool = new vultr.DatabaseConnectionPool("myDatabaseConnectionPool", {
- *     databaseId: vultr_database.my_database.id,
+ * const myDatabaseConnectionPool = new vultr.DatabaseConnectionPool("my_database_connection_pool", {
+ *     databaseId: myDatabase.id,
+ *     name: "my_database_connection_pool_name",
  *     database: "defaultdb",
  *     username: "vultradmin",
  *     mode: "transaction",

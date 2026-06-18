@@ -29,6 +29,7 @@ class DatabaseUserArgs:
                  permission: Optional[pulumi.Input[_builtins.str]] = None):
         """
         The set of arguments for constructing a DatabaseUser resource.
+
         :param pulumi.Input[_builtins.str] database_id: The managed database ID you want to attach this user to.
         :param pulumi.Input[_builtins.str] username: The username of the new managed database user.
         :param pulumi.Input[_builtins.str] encryption: The encryption type of the new managed database user's password (MySQL engine types only - `caching_sha2_password`, `mysql_native_password`).
@@ -129,6 +130,7 @@ class _DatabaseUserState:
                  username: Optional[pulumi.Input[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering DatabaseUser resources.
+
         :param pulumi.Input[_builtins.str] database_id: The managed database ID you want to attach this user to.
         :param pulumi.Input[_builtins.str] encryption: The encryption type of the new managed database user's password (MySQL engine types only - `caching_sha2_password`, `mysql_native_password`).
         :param pulumi.Input[_builtins.str] password: The password of the new managed database user.
@@ -264,11 +266,12 @@ class DatabaseUser(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_database_user = vultr.DatabaseUser("myDatabaseUser",
-            database_id=vultr_database["my_database"]["id"],
+        my_database_user = vultr.DatabaseUser("my_database_user",
+            database_id=my_database["id"],
             username="my_database_user",
             password="randomTestPW40298")
         ```
+
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -295,11 +298,12 @@ class DatabaseUser(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_database_user = vultr.DatabaseUser("myDatabaseUser",
-            database_id=vultr_database["my_database"]["id"],
+        my_database_user = vultr.DatabaseUser("my_database_user",
+            database_id=my_database["id"],
             username="my_database_user",
             password="randomTestPW40298")
         ```
+
 
         :param str resource_name: The name of the resource.
         :param DatabaseUserArgs args: The arguments to use to populate this resource's properties.

@@ -57,6 +57,10 @@ export interface GetLoadBalancerResult {
      */
     readonly attachedInstances: string[];
     /**
+     * The auto SSL domain configuration for a load balancer. This can be a root domain (example.com) or include a subdomain (sub.example.com).
+     */
+    readonly autoSslDomain: string;
+    /**
      * The balancing algorithm for your load balancer.
      */
     readonly balancingAlgorithm: string;
@@ -72,6 +76,10 @@ export interface GetLoadBalancerResult {
      */
     readonly forwardingRules: {[key: string]: string}[];
     /**
+     * A set of region IDs to deploy child load balancers to.
+     */
+    readonly globalRegions: string[];
+    /**
      * Boolean value that indicates if SSL is enabled.
      */
     readonly hasSsl: boolean;
@@ -79,6 +87,10 @@ export interface GetLoadBalancerResult {
      * Defines the way load balancers should check for health. The configuration of a `healthCheck` is listed below.
      */
     readonly healthCheck: {[key: string]: string};
+    /**
+     * Integer value that indicates if HTTP/2 or HTTP/3 is enabled. Allowed values 2 or 3.
+     */
+    readonly httpVersion: number;
     /**
      * The provider-assigned unique ID for this managed resource.
      */

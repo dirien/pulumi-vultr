@@ -30,10 +30,10 @@ import (
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := vultr.NewReservedIp(ctx, "myReservedIp", &vultr.ReservedIpArgs{
-//				IpType: pulumi.String("v4"),
+//			_, err := vultr.NewReservedIp(ctx, "my_reserved_ip", &vultr.ReservedIpArgs{
 //				Label:  pulumi.String("my-reserved-ip"),
 //				Region: pulumi.String("sea"),
+//				IpType: pulumi.String("v4"),
 //			})
 //			if err != nil {
 //				return err
@@ -58,11 +58,11 @@ import (
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := vultr.NewReservedIp(ctx, "myReservedIp", &vultr.ReservedIpArgs{
-//				InstanceId: pulumi.String("b9cc6fad-70b1-40ee-ab6a-4d622858962f"),
-//				IpType:     pulumi.String("v4"),
+//			_, err := vultr.NewReservedIp(ctx, "my_reserved_ip", &vultr.ReservedIpArgs{
 //				Label:      pulumi.String("my-reserved-ip"),
 //				Region:     pulumi.String("sea"),
+//				IpType:     pulumi.String("v4"),
+//				InstanceId: pulumi.String("b9cc6fad-70b1-40ee-ab6a-4d622858962f"),
 //			})
 //			if err != nil {
 //				return err

@@ -31,9 +31,10 @@ import (
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
 //			_, err := vultr.NewContainerRegistry(ctx, "vcr1", &vultr.ContainerRegistryArgs{
+//				Name:   pulumi.String("examplecontainerregistry"),
+//				Region: pulumi.String("sjc"),
 //				Plan:   pulumi.String("start_up"),
 //				Public: pulumi.Bool(false),
-//				Region: pulumi.String("sjc"),
 //			})
 //			if err != nil {
 //				return err

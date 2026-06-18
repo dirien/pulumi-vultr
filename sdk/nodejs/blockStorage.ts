@@ -15,10 +15,10 @@ import * as utilities from "./utilities";
  * import * as pulumi from "@pulumi/pulumi";
  * import * as vultr from "@ediri/vultr";
  *
- * const myBlockstorage = new vultr.BlockStorage("myBlockstorage", {
+ * const myBlockstorage = new vultr.BlockStorage("my_blockstorage", {
  *     label: "vultr-block-storage",
- *     region: "ewr",
  *     sizeGb: 10,
+ *     region: "ewr",
  * });
  * ```
  *
@@ -61,11 +61,23 @@ export class BlockStorage extends pulumi.CustomResource {
     /**
      * VPS ID that you want to have this block storage attached to.
      */
-    declare public readonly attachedToInstance: pulumi.Output<string | undefined>;
+    declare public readonly attachedToInstance: pulumi.Output<string>;
+    /**
+     * IP address of the VPS the block storage subscription is attached to.
+     */
+    declare public /*out*/ readonly attachedToInstanceIp: pulumi.Output<string>;
+    /**
+     * Label of the VPS the block storage subscription is attached to.
+     */
+    declare public /*out*/ readonly attachedToInstanceLabel: pulumi.Output<string>;
     /**
      * Determines on the type of block storage volume that will be created. Soon to become a required parameter. Options are `highPerf` or `storageOpt`.
      */
     declare public readonly blockType: pulumi.Output<string>;
+    /**
+     * Boolean value that will flag a block storage device as bootable.
+     */
+    declare public readonly bootable: pulumi.Output<boolean | undefined>;
     /**
      * The monthly cost of this block storage.
      */
@@ -87,13 +99,25 @@ export class BlockStorage extends pulumi.CustomResource {
      */
     declare public /*out*/ readonly mountId: pulumi.Output<string>;
     /**
-     * Region in which this block storage will reside in. (Currently only NJ/NY supported region "ewr")
+     * The operating system ID to use for this block storage device if it is bootable.
+     */
+    declare public readonly osId: pulumi.Output<number | undefined>;
+    /**
+     * Charges due for this block storage subscription at the end of the billing period.
+     */
+    declare public /*out*/ readonly pendingCharges: pulumi.Output<number>;
+    /**
+     * Region in which this block storage will reside in. Refer to the region data source to determine if the desired storage option is available or check the [API options](https://www.vultr.com/api/#tag/region/operation/list-regions).
      */
     declare public readonly region: pulumi.Output<string>;
     /**
      * The size of the given block storage.
      */
     declare public readonly sizeGb: pulumi.Output<number>;
+    /**
+     * The ID of an existing block snapshot your new block storage will be a clone of.
+     */
+    declare public readonly snapshotId: pulumi.Output<string | undefined>;
     /**
      * Current status of your block storage.
      */
@@ -113,14 +137,20 @@ export class BlockStorage extends pulumi.CustomResource {
         if (opts.id) {
             const state = argsOrState as BlockStorageState | undefined;
             resourceInputs["attachedToInstance"] = state?.attachedToInstance;
+            resourceInputs["attachedToInstanceIp"] = state?.attachedToInstanceIp;
+            resourceInputs["attachedToInstanceLabel"] = state?.attachedToInstanceLabel;
             resourceInputs["blockType"] = state?.blockType;
+            resourceInputs["bootable"] = state?.bootable;
             resourceInputs["cost"] = state?.cost;
             resourceInputs["dateCreated"] = state?.dateCreated;
             resourceInputs["label"] = state?.label;
             resourceInputs["live"] = state?.live;
             resourceInputs["mountId"] = state?.mountId;
+            resourceInputs["osId"] = state?.osId;
+            resourceInputs["pendingCharges"] = state?.pendingCharges;
             resourceInputs["region"] = state?.region;
             resourceInputs["sizeGb"] = state?.sizeGb;
+            resourceInputs["snapshotId"] = state?.snapshotId;
             resourceInputs["status"] = state?.status;
         } else {
             const args = argsOrState as BlockStorageArgs | undefined;
@@ -132,13 +162,19 @@ export class BlockStorage extends pulumi.CustomResource {
             }
             resourceInputs["attachedToInstance"] = args?.attachedToInstance;
             resourceInputs["blockType"] = args?.blockType;
+            resourceInputs["bootable"] = args?.bootable;
             resourceInputs["label"] = args?.label;
             resourceInputs["live"] = args?.live;
+            resourceInputs["osId"] = args?.osId;
             resourceInputs["region"] = args?.region;
             resourceInputs["sizeGb"] = args?.sizeGb;
+            resourceInputs["snapshotId"] = args?.snapshotId;
+            resourceInputs["attachedToInstanceIp"] = undefined /*out*/;
+            resourceInputs["attachedToInstanceLabel"] = undefined /*out*/;
             resourceInputs["cost"] = undefined /*out*/;
             resourceInputs["dateCreated"] = undefined /*out*/;
             resourceInputs["mountId"] = undefined /*out*/;
+            resourceInputs["pendingCharges"] = undefined /*out*/;
             resourceInputs["status"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
@@ -155,9 +191,21 @@ export interface BlockStorageState {
      */
     attachedToInstance?: pulumi.Input<string>;
     /**
+     * IP address of the VPS the block storage subscription is attached to.
+     */
+    attachedToInstanceIp?: pulumi.Input<string>;
+    /**
+     * Label of the VPS the block storage subscription is attached to.
+     */
+    attachedToInstanceLabel?: pulumi.Input<string>;
+    /**
      * Determines on the type of block storage volume that will be created. Soon to become a required parameter. Options are `highPerf` or `storageOpt`.
      */
     blockType?: pulumi.Input<string>;
+    /**
+     * Boolean value that will flag a block storage device as bootable.
+     */
+    bootable?: pulumi.Input<boolean>;
     /**
      * The monthly cost of this block storage.
      */
@@ -179,13 +227,25 @@ export interface BlockStorageState {
      */
     mountId?: pulumi.Input<string>;
     /**
-     * Region in which this block storage will reside in. (Currently only NJ/NY supported region "ewr")
+     * The operating system ID to use for this block storage device if it is bootable.
+     */
+    osId?: pulumi.Input<number>;
+    /**
+     * Charges due for this block storage subscription at the end of the billing period.
+     */
+    pendingCharges?: pulumi.Input<number>;
+    /**
+     * Region in which this block storage will reside in. Refer to the region data source to determine if the desired storage option is available or check the [API options](https://www.vultr.com/api/#tag/region/operation/list-regions).
      */
     region?: pulumi.Input<string>;
     /**
      * The size of the given block storage.
      */
     sizeGb?: pulumi.Input<number>;
+    /**
+     * The ID of an existing block snapshot your new block storage will be a clone of.
+     */
+    snapshotId?: pulumi.Input<string>;
     /**
      * Current status of your block storage.
      */
@@ -205,6 +265,10 @@ export interface BlockStorageArgs {
      */
     blockType?: pulumi.Input<string>;
     /**
+     * Boolean value that will flag a block storage device as bootable.
+     */
+    bootable?: pulumi.Input<boolean>;
+    /**
      * Label that is given to your block storage.
      */
     label?: pulumi.Input<string>;
@@ -213,11 +277,19 @@ export interface BlockStorageArgs {
      */
     live?: pulumi.Input<boolean>;
     /**
-     * Region in which this block storage will reside in. (Currently only NJ/NY supported region "ewr")
+     * The operating system ID to use for this block storage device if it is bootable.
+     */
+    osId?: pulumi.Input<number>;
+    /**
+     * Region in which this block storage will reside in. Refer to the region data source to determine if the desired storage option is available or check the [API options](https://www.vultr.com/api/#tag/region/operation/list-regions).
      */
     region: pulumi.Input<string>;
     /**
      * The size of the given block storage.
      */
     sizeGb: pulumi.Input<number>;
+    /**
+     * The ID of an existing block snapshot your new block storage will be a clone of.
+     */
+    snapshotId?: pulumi.Input<string>;
 }

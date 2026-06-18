@@ -23,6 +23,7 @@ class SSHKeyArgs:
                  name: Optional[pulumi.Input[_builtins.str]] = None):
         """
         The set of arguments for constructing a SSHKey resource.
+
         :param pulumi.Input[_builtins.str] ssh_key: The public SSH key.
         :param pulumi.Input[_builtins.str] name: The name/label of the SSH key.
         """
@@ -63,6 +64,7 @@ class _SSHKeyState:
                  ssh_key: Optional[pulumi.Input[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering SSHKey resources.
+
         :param pulumi.Input[_builtins.str] date_created: The date the SSH key was added to your Vultr account.
         :param pulumi.Input[_builtins.str] name: The name/label of the SSH key.
         :param pulumi.Input[_builtins.str] ssh_key: The public SSH key.
@@ -131,7 +133,9 @@ class SSHKey(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_ssh_key = vultr.SSHKey("mySshKey", ssh_key="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCyVGaw1PuEl98f4/7Kq3O9ZIvDw2OFOSXAFVqilSFNkHlefm1iMtPeqsIBp2t9cbGUf55xNDULz/bD/4BCV43yZ5lh0cUYuXALg9NI29ui7PEGReXjSpNwUD6ceN/78YOK41KAcecq+SS0bJ4b4amKZIJG3JWmDKljtv1dmSBCrTmEAQaOorxqGGBYmZS7NQumRe4lav5r6wOs8OACMANE1ejkeZsGFzJFNqvr5DuHdDL5FAudW23me3BDmrM9ifUzzjl1Jwku3bnRaCcjaxH8oTumt1a00mWci/1qUlaVFft085yvVq7KZbF2OPPbl+erDW91+EZ2FgEi+v1/CSJ5 your_username@hostname")
+        my_ssh_key = vultr.SSHKey("my_ssh_key",
+            name="my-ssh-key",
+            ssh_key="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCyVGaw1PuEl98f4/7Kq3O9ZIvDw2OFOSXAFVqilSFNkHlefm1iMtPeqsIBp2t9cbGUf55xNDULz/bD/4BCV43yZ5lh0cUYuXALg9NI29ui7PEGReXjSpNwUD6ceN/78YOK41KAcecq+SS0bJ4b4amKZIJG3JWmDKljtv1dmSBCrTmEAQaOorxqGGBYmZS7NQumRe4lav5r6wOs8OACMANE1ejkeZsGFzJFNqvr5DuHdDL5FAudW23me3BDmrM9ifUzzjl1Jwku3bnRaCcjaxH8oTumt1a00mWci/1qUlaVFft085yvVq7KZbF2OPPbl+erDW91+EZ2FgEi+v1/CSJ5 your_username@hostname")
         ```
 
         ## Import
@@ -141,6 +145,7 @@ class SSHKey(pulumi.CustomResource):
         ```sh
         $ pulumi import vultr:index/sSHKey:SSHKey my_key 6b0876a7-f709-41ba-aed8-abed9d38ae45
         ```
+
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -164,7 +169,9 @@ class SSHKey(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_ssh_key = vultr.SSHKey("mySshKey", ssh_key="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCyVGaw1PuEl98f4/7Kq3O9ZIvDw2OFOSXAFVqilSFNkHlefm1iMtPeqsIBp2t9cbGUf55xNDULz/bD/4BCV43yZ5lh0cUYuXALg9NI29ui7PEGReXjSpNwUD6ceN/78YOK41KAcecq+SS0bJ4b4amKZIJG3JWmDKljtv1dmSBCrTmEAQaOorxqGGBYmZS7NQumRe4lav5r6wOs8OACMANE1ejkeZsGFzJFNqvr5DuHdDL5FAudW23me3BDmrM9ifUzzjl1Jwku3bnRaCcjaxH8oTumt1a00mWci/1qUlaVFft085yvVq7KZbF2OPPbl+erDW91+EZ2FgEi+v1/CSJ5 your_username@hostname")
+        my_ssh_key = vultr.SSHKey("my_ssh_key",
+            name="my-ssh-key",
+            ssh_key="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCyVGaw1PuEl98f4/7Kq3O9ZIvDw2OFOSXAFVqilSFNkHlefm1iMtPeqsIBp2t9cbGUf55xNDULz/bD/4BCV43yZ5lh0cUYuXALg9NI29ui7PEGReXjSpNwUD6ceN/78YOK41KAcecq+SS0bJ4b4amKZIJG3JWmDKljtv1dmSBCrTmEAQaOorxqGGBYmZS7NQumRe4lav5r6wOs8OACMANE1ejkeZsGFzJFNqvr5DuHdDL5FAudW23me3BDmrM9ifUzzjl1Jwku3bnRaCcjaxH8oTumt1a00mWci/1qUlaVFft085yvVq7KZbF2OPPbl+erDW91+EZ2FgEi+v1/CSJ5 your_username@hostname")
         ```
 
         ## Import
@@ -174,6 +181,7 @@ class SSHKey(pulumi.CustomResource):
         ```sh
         $ pulumi import vultr:index/sSHKey:SSHKey my_key 6b0876a7-f709-41ba-aed8-abed9d38ae45
         ```
+
 
         :param str resource_name: The name of the resource.
         :param SSHKeyArgs args: The arguments to use to populate this resource's properties.

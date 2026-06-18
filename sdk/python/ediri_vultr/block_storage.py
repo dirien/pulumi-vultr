@@ -23,16 +23,23 @@ class BlockStorageArgs:
                  size_gb: pulumi.Input[_builtins.int],
                  attached_to_instance: Optional[pulumi.Input[_builtins.str]] = None,
                  block_type: Optional[pulumi.Input[_builtins.str]] = None,
+                 bootable: Optional[pulumi.Input[_builtins.bool]] = None,
                  label: Optional[pulumi.Input[_builtins.str]] = None,
-                 live: Optional[pulumi.Input[_builtins.bool]] = None):
+                 live: Optional[pulumi.Input[_builtins.bool]] = None,
+                 os_id: Optional[pulumi.Input[_builtins.int]] = None,
+                 snapshot_id: Optional[pulumi.Input[_builtins.str]] = None):
         """
         The set of arguments for constructing a BlockStorage resource.
-        :param pulumi.Input[_builtins.str] region: Region in which this block storage will reside in. (Currently only NJ/NY supported region "ewr")
+
+        :param pulumi.Input[_builtins.str] region: Region in which this block storage will reside in. Refer to the region data source to determine if the desired storage option is available or check the [API options](https://www.vultr.com/api/#tag/region/operation/list-regions).
         :param pulumi.Input[_builtins.int] size_gb: The size of the given block storage.
         :param pulumi.Input[_builtins.str] attached_to_instance: VPS ID that you want to have this block storage attached to.
         :param pulumi.Input[_builtins.str] block_type: Determines on the type of block storage volume that will be created. Soon to become a required parameter. Options are `high_perf` or `storage_opt`.
+        :param pulumi.Input[_builtins.bool] bootable: Boolean value that will flag a block storage device as bootable.
         :param pulumi.Input[_builtins.str] label: Label that is given to your block storage.
         :param pulumi.Input[_builtins.bool] live: Boolean value that will allow attachment of the volume to an instance without a restart. Default is false.
+        :param pulumi.Input[_builtins.int] os_id: The operating system ID to use for this block storage device if it is bootable.
+        :param pulumi.Input[_builtins.str] snapshot_id: The ID of an existing block snapshot your new block storage will be a clone of.
         """
         pulumi.set(__self__, "region", region)
         pulumi.set(__self__, "size_gb", size_gb)
@@ -40,16 +47,22 @@ class BlockStorageArgs:
             pulumi.set(__self__, "attached_to_instance", attached_to_instance)
         if block_type is not None:
             pulumi.set(__self__, "block_type", block_type)
+        if bootable is not None:
+            pulumi.set(__self__, "bootable", bootable)
         if label is not None:
             pulumi.set(__self__, "label", label)
         if live is not None:
             pulumi.set(__self__, "live", live)
+        if os_id is not None:
+            pulumi.set(__self__, "os_id", os_id)
+        if snapshot_id is not None:
+            pulumi.set(__self__, "snapshot_id", snapshot_id)
 
     @_builtins.property
     @pulumi.getter
     def region(self) -> pulumi.Input[_builtins.str]:
         """
-        Region in which this block storage will reside in. (Currently only NJ/NY supported region "ewr")
+        Region in which this block storage will reside in. Refer to the region data source to determine if the desired storage option is available or check the [API options](https://www.vultr.com/api/#tag/region/operation/list-regions).
         """
         return pulumi.get(self, "region")
 
@@ -95,6 +108,18 @@ class BlockStorageArgs:
 
     @_builtins.property
     @pulumi.getter
+    def bootable(self) -> Optional[pulumi.Input[_builtins.bool]]:
+        """
+        Boolean value that will flag a block storage device as bootable.
+        """
+        return pulumi.get(self, "bootable")
+
+    @bootable.setter
+    def bootable(self, value: Optional[pulumi.Input[_builtins.bool]]):
+        pulumi.set(self, "bootable", value)
+
+    @_builtins.property
+    @pulumi.getter
     def label(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
         Label that is given to your block storage.
@@ -117,37 +142,80 @@ class BlockStorageArgs:
     def live(self, value: Optional[pulumi.Input[_builtins.bool]]):
         pulumi.set(self, "live", value)
 
+    @_builtins.property
+    @pulumi.getter(name="osId")
+    def os_id(self) -> Optional[pulumi.Input[_builtins.int]]:
+        """
+        The operating system ID to use for this block storage device if it is bootable.
+        """
+        return pulumi.get(self, "os_id")
+
+    @os_id.setter
+    def os_id(self, value: Optional[pulumi.Input[_builtins.int]]):
+        pulumi.set(self, "os_id", value)
+
+    @_builtins.property
+    @pulumi.getter(name="snapshotId")
+    def snapshot_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        The ID of an existing block snapshot your new block storage will be a clone of.
+        """
+        return pulumi.get(self, "snapshot_id")
+
+    @snapshot_id.setter
+    def snapshot_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "snapshot_id", value)
+
 
 @pulumi.input_type
 class _BlockStorageState:
     def __init__(__self__, *,
                  attached_to_instance: Optional[pulumi.Input[_builtins.str]] = None,
+                 attached_to_instance_ip: Optional[pulumi.Input[_builtins.str]] = None,
+                 attached_to_instance_label: Optional[pulumi.Input[_builtins.str]] = None,
                  block_type: Optional[pulumi.Input[_builtins.str]] = None,
-                 cost: Optional[pulumi.Input[_builtins.float]] = None,
+                 bootable: Optional[pulumi.Input[_builtins.bool]] = None,
+                 cost: Optional[pulumi.Input[_builtins.int]] = None,
                  date_created: Optional[pulumi.Input[_builtins.str]] = None,
                  label: Optional[pulumi.Input[_builtins.str]] = None,
                  live: Optional[pulumi.Input[_builtins.bool]] = None,
                  mount_id: Optional[pulumi.Input[_builtins.str]] = None,
+                 os_id: Optional[pulumi.Input[_builtins.int]] = None,
+                 pending_charges: Optional[pulumi.Input[_builtins.float]] = None,
                  region: Optional[pulumi.Input[_builtins.str]] = None,
                  size_gb: Optional[pulumi.Input[_builtins.int]] = None,
+                 snapshot_id: Optional[pulumi.Input[_builtins.str]] = None,
                  status: Optional[pulumi.Input[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering BlockStorage resources.
+
         :param pulumi.Input[_builtins.str] attached_to_instance: VPS ID that you want to have this block storage attached to.
+        :param pulumi.Input[_builtins.str] attached_to_instance_ip: IP address of the VPS the block storage subscription is attached to.
+        :param pulumi.Input[_builtins.str] attached_to_instance_label: Label of the VPS the block storage subscription is attached to.
         :param pulumi.Input[_builtins.str] block_type: Determines on the type of block storage volume that will be created. Soon to become a required parameter. Options are `high_perf` or `storage_opt`.
-        :param pulumi.Input[_builtins.float] cost: The monthly cost of this block storage.
+        :param pulumi.Input[_builtins.bool] bootable: Boolean value that will flag a block storage device as bootable.
+        :param pulumi.Input[_builtins.int] cost: The monthly cost of this block storage.
         :param pulumi.Input[_builtins.str] date_created: The date this block storage was created.
         :param pulumi.Input[_builtins.str] label: Label that is given to your block storage.
         :param pulumi.Input[_builtins.bool] live: Boolean value that will allow attachment of the volume to an instance without a restart. Default is false.
         :param pulumi.Input[_builtins.str] mount_id: An ID associated with the instance, when mounted the ID can be found in /dev/disk/by-id prefixed with virtio.
-        :param pulumi.Input[_builtins.str] region: Region in which this block storage will reside in. (Currently only NJ/NY supported region "ewr")
+        :param pulumi.Input[_builtins.int] os_id: The operating system ID to use for this block storage device if it is bootable.
+        :param pulumi.Input[_builtins.float] pending_charges: Charges due for this block storage subscription at the end of the billing period.
+        :param pulumi.Input[_builtins.str] region: Region in which this block storage will reside in. Refer to the region data source to determine if the desired storage option is available or check the [API options](https://www.vultr.com/api/#tag/region/operation/list-regions).
         :param pulumi.Input[_builtins.int] size_gb: The size of the given block storage.
+        :param pulumi.Input[_builtins.str] snapshot_id: The ID of an existing block snapshot your new block storage will be a clone of.
         :param pulumi.Input[_builtins.str] status: Current status of your block storage.
         """
         if attached_to_instance is not None:
             pulumi.set(__self__, "attached_to_instance", attached_to_instance)
+        if attached_to_instance_ip is not None:
+            pulumi.set(__self__, "attached_to_instance_ip", attached_to_instance_ip)
+        if attached_to_instance_label is not None:
+            pulumi.set(__self__, "attached_to_instance_label", attached_to_instance_label)
         if block_type is not None:
             pulumi.set(__self__, "block_type", block_type)
+        if bootable is not None:
+            pulumi.set(__self__, "bootable", bootable)
         if cost is not None:
             pulumi.set(__self__, "cost", cost)
         if date_created is not None:
@@ -158,10 +226,16 @@ class _BlockStorageState:
             pulumi.set(__self__, "live", live)
         if mount_id is not None:
             pulumi.set(__self__, "mount_id", mount_id)
+        if os_id is not None:
+            pulumi.set(__self__, "os_id", os_id)
+        if pending_charges is not None:
+            pulumi.set(__self__, "pending_charges", pending_charges)
         if region is not None:
             pulumi.set(__self__, "region", region)
         if size_gb is not None:
             pulumi.set(__self__, "size_gb", size_gb)
+        if snapshot_id is not None:
+            pulumi.set(__self__, "snapshot_id", snapshot_id)
         if status is not None:
             pulumi.set(__self__, "status", status)
 
@@ -178,6 +252,30 @@ class _BlockStorageState:
         pulumi.set(self, "attached_to_instance", value)
 
     @_builtins.property
+    @pulumi.getter(name="attachedToInstanceIp")
+    def attached_to_instance_ip(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        IP address of the VPS the block storage subscription is attached to.
+        """
+        return pulumi.get(self, "attached_to_instance_ip")
+
+    @attached_to_instance_ip.setter
+    def attached_to_instance_ip(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "attached_to_instance_ip", value)
+
+    @_builtins.property
+    @pulumi.getter(name="attachedToInstanceLabel")
+    def attached_to_instance_label(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        Label of the VPS the block storage subscription is attached to.
+        """
+        return pulumi.get(self, "attached_to_instance_label")
+
+    @attached_to_instance_label.setter
+    def attached_to_instance_label(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "attached_to_instance_label", value)
+
+    @_builtins.property
     @pulumi.getter(name="blockType")
     def block_type(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
@@ -191,14 +289,26 @@ class _BlockStorageState:
 
     @_builtins.property
     @pulumi.getter
-    def cost(self) -> Optional[pulumi.Input[_builtins.float]]:
+    def bootable(self) -> Optional[pulumi.Input[_builtins.bool]]:
+        """
+        Boolean value that will flag a block storage device as bootable.
+        """
+        return pulumi.get(self, "bootable")
+
+    @bootable.setter
+    def bootable(self, value: Optional[pulumi.Input[_builtins.bool]]):
+        pulumi.set(self, "bootable", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def cost(self) -> Optional[pulumi.Input[_builtins.int]]:
         """
         The monthly cost of this block storage.
         """
         return pulumi.get(self, "cost")
 
     @cost.setter
-    def cost(self, value: Optional[pulumi.Input[_builtins.float]]):
+    def cost(self, value: Optional[pulumi.Input[_builtins.int]]):
         pulumi.set(self, "cost", value)
 
     @_builtins.property
@@ -250,10 +360,34 @@ class _BlockStorageState:
         pulumi.set(self, "mount_id", value)
 
     @_builtins.property
+    @pulumi.getter(name="osId")
+    def os_id(self) -> Optional[pulumi.Input[_builtins.int]]:
+        """
+        The operating system ID to use for this block storage device if it is bootable.
+        """
+        return pulumi.get(self, "os_id")
+
+    @os_id.setter
+    def os_id(self, value: Optional[pulumi.Input[_builtins.int]]):
+        pulumi.set(self, "os_id", value)
+
+    @_builtins.property
+    @pulumi.getter(name="pendingCharges")
+    def pending_charges(self) -> Optional[pulumi.Input[_builtins.float]]:
+        """
+        Charges due for this block storage subscription at the end of the billing period.
+        """
+        return pulumi.get(self, "pending_charges")
+
+    @pending_charges.setter
+    def pending_charges(self, value: Optional[pulumi.Input[_builtins.float]]):
+        pulumi.set(self, "pending_charges", value)
+
+    @_builtins.property
     @pulumi.getter
     def region(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
-        Region in which this block storage will reside in. (Currently only NJ/NY supported region "ewr")
+        Region in which this block storage will reside in. Refer to the region data source to determine if the desired storage option is available or check the [API options](https://www.vultr.com/api/#tag/region/operation/list-regions).
         """
         return pulumi.get(self, "region")
 
@@ -272,6 +406,18 @@ class _BlockStorageState:
     @size_gb.setter
     def size_gb(self, value: Optional[pulumi.Input[_builtins.int]]):
         pulumi.set(self, "size_gb", value)
+
+    @_builtins.property
+    @pulumi.getter(name="snapshotId")
+    def snapshot_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        The ID of an existing block snapshot your new block storage will be a clone of.
+        """
+        return pulumi.get(self, "snapshot_id")
+
+    @snapshot_id.setter
+    def snapshot_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "snapshot_id", value)
 
     @_builtins.property
     @pulumi.getter
@@ -294,10 +440,13 @@ class BlockStorage(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  attached_to_instance: Optional[pulumi.Input[_builtins.str]] = None,
                  block_type: Optional[pulumi.Input[_builtins.str]] = None,
+                 bootable: Optional[pulumi.Input[_builtins.bool]] = None,
                  label: Optional[pulumi.Input[_builtins.str]] = None,
                  live: Optional[pulumi.Input[_builtins.bool]] = None,
+                 os_id: Optional[pulumi.Input[_builtins.int]] = None,
                  region: Optional[pulumi.Input[_builtins.str]] = None,
                  size_gb: Optional[pulumi.Input[_builtins.int]] = None,
+                 snapshot_id: Optional[pulumi.Input[_builtins.str]] = None,
                  __props__=None):
         """
         Provides a Vultr Block Storage resource. This can be used to create, read, modify, and delete Block Storage.
@@ -310,10 +459,10 @@ class BlockStorage(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_blockstorage = vultr.BlockStorage("myBlockstorage",
+        my_blockstorage = vultr.BlockStorage("my_blockstorage",
             label="vultr-block-storage",
-            region="ewr",
-            size_gb=10)
+            size_gb=10,
+            region="ewr")
         ```
 
         ## Import
@@ -324,14 +473,18 @@ class BlockStorage(pulumi.CustomResource):
         $ pulumi import vultr:index/blockStorage:BlockStorage my_blockstorage e315835e-d466-4e89-9b4c-dfd8788d7685
         ```
 
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[_builtins.str] attached_to_instance: VPS ID that you want to have this block storage attached to.
         :param pulumi.Input[_builtins.str] block_type: Determines on the type of block storage volume that will be created. Soon to become a required parameter. Options are `high_perf` or `storage_opt`.
+        :param pulumi.Input[_builtins.bool] bootable: Boolean value that will flag a block storage device as bootable.
         :param pulumi.Input[_builtins.str] label: Label that is given to your block storage.
         :param pulumi.Input[_builtins.bool] live: Boolean value that will allow attachment of the volume to an instance without a restart. Default is false.
-        :param pulumi.Input[_builtins.str] region: Region in which this block storage will reside in. (Currently only NJ/NY supported region "ewr")
+        :param pulumi.Input[_builtins.int] os_id: The operating system ID to use for this block storage device if it is bootable.
+        :param pulumi.Input[_builtins.str] region: Region in which this block storage will reside in. Refer to the region data source to determine if the desired storage option is available or check the [API options](https://www.vultr.com/api/#tag/region/operation/list-regions).
         :param pulumi.Input[_builtins.int] size_gb: The size of the given block storage.
+        :param pulumi.Input[_builtins.str] snapshot_id: The ID of an existing block snapshot your new block storage will be a clone of.
         """
         ...
     @overload
@@ -350,10 +503,10 @@ class BlockStorage(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_blockstorage = vultr.BlockStorage("myBlockstorage",
+        my_blockstorage = vultr.BlockStorage("my_blockstorage",
             label="vultr-block-storage",
-            region="ewr",
-            size_gb=10)
+            size_gb=10,
+            region="ewr")
         ```
 
         ## Import
@@ -363,6 +516,7 @@ class BlockStorage(pulumi.CustomResource):
         ```sh
         $ pulumi import vultr:index/blockStorage:BlockStorage my_blockstorage e315835e-d466-4e89-9b4c-dfd8788d7685
         ```
+
 
         :param str resource_name: The name of the resource.
         :param BlockStorageArgs args: The arguments to use to populate this resource's properties.
@@ -381,10 +535,13 @@ class BlockStorage(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  attached_to_instance: Optional[pulumi.Input[_builtins.str]] = None,
                  block_type: Optional[pulumi.Input[_builtins.str]] = None,
+                 bootable: Optional[pulumi.Input[_builtins.bool]] = None,
                  label: Optional[pulumi.Input[_builtins.str]] = None,
                  live: Optional[pulumi.Input[_builtins.bool]] = None,
+                 os_id: Optional[pulumi.Input[_builtins.int]] = None,
                  region: Optional[pulumi.Input[_builtins.str]] = None,
                  size_gb: Optional[pulumi.Input[_builtins.int]] = None,
+                 snapshot_id: Optional[pulumi.Input[_builtins.str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -396,17 +553,23 @@ class BlockStorage(pulumi.CustomResource):
 
             __props__.__dict__["attached_to_instance"] = attached_to_instance
             __props__.__dict__["block_type"] = block_type
+            __props__.__dict__["bootable"] = bootable
             __props__.__dict__["label"] = label
             __props__.__dict__["live"] = live
+            __props__.__dict__["os_id"] = os_id
             if region is None and not opts.urn:
                 raise TypeError("Missing required property 'region'")
             __props__.__dict__["region"] = region
             if size_gb is None and not opts.urn:
                 raise TypeError("Missing required property 'size_gb'")
             __props__.__dict__["size_gb"] = size_gb
+            __props__.__dict__["snapshot_id"] = snapshot_id
+            __props__.__dict__["attached_to_instance_ip"] = None
+            __props__.__dict__["attached_to_instance_label"] = None
             __props__.__dict__["cost"] = None
             __props__.__dict__["date_created"] = None
             __props__.__dict__["mount_id"] = None
+            __props__.__dict__["pending_charges"] = None
             __props__.__dict__["status"] = None
         super(BlockStorage, __self__).__init__(
             'vultr:index/blockStorage:BlockStorage',
@@ -419,14 +582,20 @@ class BlockStorage(pulumi.CustomResource):
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
             attached_to_instance: Optional[pulumi.Input[_builtins.str]] = None,
+            attached_to_instance_ip: Optional[pulumi.Input[_builtins.str]] = None,
+            attached_to_instance_label: Optional[pulumi.Input[_builtins.str]] = None,
             block_type: Optional[pulumi.Input[_builtins.str]] = None,
-            cost: Optional[pulumi.Input[_builtins.float]] = None,
+            bootable: Optional[pulumi.Input[_builtins.bool]] = None,
+            cost: Optional[pulumi.Input[_builtins.int]] = None,
             date_created: Optional[pulumi.Input[_builtins.str]] = None,
             label: Optional[pulumi.Input[_builtins.str]] = None,
             live: Optional[pulumi.Input[_builtins.bool]] = None,
             mount_id: Optional[pulumi.Input[_builtins.str]] = None,
+            os_id: Optional[pulumi.Input[_builtins.int]] = None,
+            pending_charges: Optional[pulumi.Input[_builtins.float]] = None,
             region: Optional[pulumi.Input[_builtins.str]] = None,
             size_gb: Optional[pulumi.Input[_builtins.int]] = None,
+            snapshot_id: Optional[pulumi.Input[_builtins.str]] = None,
             status: Optional[pulumi.Input[_builtins.str]] = None) -> 'BlockStorage':
         """
         Get an existing BlockStorage resource's state with the given name, id, and optional extra
@@ -436,14 +605,20 @@ class BlockStorage(pulumi.CustomResource):
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[_builtins.str] attached_to_instance: VPS ID that you want to have this block storage attached to.
+        :param pulumi.Input[_builtins.str] attached_to_instance_ip: IP address of the VPS the block storage subscription is attached to.
+        :param pulumi.Input[_builtins.str] attached_to_instance_label: Label of the VPS the block storage subscription is attached to.
         :param pulumi.Input[_builtins.str] block_type: Determines on the type of block storage volume that will be created. Soon to become a required parameter. Options are `high_perf` or `storage_opt`.
-        :param pulumi.Input[_builtins.float] cost: The monthly cost of this block storage.
+        :param pulumi.Input[_builtins.bool] bootable: Boolean value that will flag a block storage device as bootable.
+        :param pulumi.Input[_builtins.int] cost: The monthly cost of this block storage.
         :param pulumi.Input[_builtins.str] date_created: The date this block storage was created.
         :param pulumi.Input[_builtins.str] label: Label that is given to your block storage.
         :param pulumi.Input[_builtins.bool] live: Boolean value that will allow attachment of the volume to an instance without a restart. Default is false.
         :param pulumi.Input[_builtins.str] mount_id: An ID associated with the instance, when mounted the ID can be found in /dev/disk/by-id prefixed with virtio.
-        :param pulumi.Input[_builtins.str] region: Region in which this block storage will reside in. (Currently only NJ/NY supported region "ewr")
+        :param pulumi.Input[_builtins.int] os_id: The operating system ID to use for this block storage device if it is bootable.
+        :param pulumi.Input[_builtins.float] pending_charges: Charges due for this block storage subscription at the end of the billing period.
+        :param pulumi.Input[_builtins.str] region: Region in which this block storage will reside in. Refer to the region data source to determine if the desired storage option is available or check the [API options](https://www.vultr.com/api/#tag/region/operation/list-regions).
         :param pulumi.Input[_builtins.int] size_gb: The size of the given block storage.
+        :param pulumi.Input[_builtins.str] snapshot_id: The ID of an existing block snapshot your new block storage will be a clone of.
         :param pulumi.Input[_builtins.str] status: Current status of your block storage.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
@@ -451,24 +626,46 @@ class BlockStorage(pulumi.CustomResource):
         __props__ = _BlockStorageState.__new__(_BlockStorageState)
 
         __props__.__dict__["attached_to_instance"] = attached_to_instance
+        __props__.__dict__["attached_to_instance_ip"] = attached_to_instance_ip
+        __props__.__dict__["attached_to_instance_label"] = attached_to_instance_label
         __props__.__dict__["block_type"] = block_type
+        __props__.__dict__["bootable"] = bootable
         __props__.__dict__["cost"] = cost
         __props__.__dict__["date_created"] = date_created
         __props__.__dict__["label"] = label
         __props__.__dict__["live"] = live
         __props__.__dict__["mount_id"] = mount_id
+        __props__.__dict__["os_id"] = os_id
+        __props__.__dict__["pending_charges"] = pending_charges
         __props__.__dict__["region"] = region
         __props__.__dict__["size_gb"] = size_gb
+        __props__.__dict__["snapshot_id"] = snapshot_id
         __props__.__dict__["status"] = status
         return BlockStorage(resource_name, opts=opts, __props__=__props__)
 
     @_builtins.property
     @pulumi.getter(name="attachedToInstance")
-    def attached_to_instance(self) -> pulumi.Output[Optional[_builtins.str]]:
+    def attached_to_instance(self) -> pulumi.Output[_builtins.str]:
         """
         VPS ID that you want to have this block storage attached to.
         """
         return pulumi.get(self, "attached_to_instance")
+
+    @_builtins.property
+    @pulumi.getter(name="attachedToInstanceIp")
+    def attached_to_instance_ip(self) -> pulumi.Output[_builtins.str]:
+        """
+        IP address of the VPS the block storage subscription is attached to.
+        """
+        return pulumi.get(self, "attached_to_instance_ip")
+
+    @_builtins.property
+    @pulumi.getter(name="attachedToInstanceLabel")
+    def attached_to_instance_label(self) -> pulumi.Output[_builtins.str]:
+        """
+        Label of the VPS the block storage subscription is attached to.
+        """
+        return pulumi.get(self, "attached_to_instance_label")
 
     @_builtins.property
     @pulumi.getter(name="blockType")
@@ -480,7 +677,15 @@ class BlockStorage(pulumi.CustomResource):
 
     @_builtins.property
     @pulumi.getter
-    def cost(self) -> pulumi.Output[_builtins.float]:
+    def bootable(self) -> pulumi.Output[Optional[_builtins.bool]]:
+        """
+        Boolean value that will flag a block storage device as bootable.
+        """
+        return pulumi.get(self, "bootable")
+
+    @_builtins.property
+    @pulumi.getter
+    def cost(self) -> pulumi.Output[_builtins.int]:
         """
         The monthly cost of this block storage.
         """
@@ -519,10 +724,26 @@ class BlockStorage(pulumi.CustomResource):
         return pulumi.get(self, "mount_id")
 
     @_builtins.property
+    @pulumi.getter(name="osId")
+    def os_id(self) -> pulumi.Output[Optional[_builtins.int]]:
+        """
+        The operating system ID to use for this block storage device if it is bootable.
+        """
+        return pulumi.get(self, "os_id")
+
+    @_builtins.property
+    @pulumi.getter(name="pendingCharges")
+    def pending_charges(self) -> pulumi.Output[_builtins.float]:
+        """
+        Charges due for this block storage subscription at the end of the billing period.
+        """
+        return pulumi.get(self, "pending_charges")
+
+    @_builtins.property
     @pulumi.getter
     def region(self) -> pulumi.Output[_builtins.str]:
         """
-        Region in which this block storage will reside in. (Currently only NJ/NY supported region "ewr")
+        Region in which this block storage will reside in. Refer to the region data source to determine if the desired storage option is available or check the [API options](https://www.vultr.com/api/#tag/region/operation/list-regions).
         """
         return pulumi.get(self, "region")
 
@@ -533,6 +754,14 @@ class BlockStorage(pulumi.CustomResource):
         The size of the given block storage.
         """
         return pulumi.get(self, "size_gb")
+
+    @_builtins.property
+    @pulumi.getter(name="snapshotId")
+    def snapshot_id(self) -> pulumi.Output[Optional[_builtins.str]]:
+        """
+        The ID of an existing block snapshot your new block storage will be a clone of.
+        """
+        return pulumi.get(self, "snapshot_id")
 
     @_builtins.property
     @pulumi.getter

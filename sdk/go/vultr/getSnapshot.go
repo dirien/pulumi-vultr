@@ -29,7 +29,7 @@ import (
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := vultr.LookupSnapshot(ctx, &vultr.LookupSnapshotArgs{
+//			_, err := vultr.GetSnapshot(ctx, &vultr.LookupSnapshotArgs{
 //				Filters: []vultr.GetSnapshotFilter{
 //					{
 //						Name: "description",

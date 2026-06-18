@@ -39,9 +39,17 @@ from .get_iso_private import *
 from .get_iso_public import *
 from .get_kubernetes import *
 from .get_load_balancer import *
+from .get_logs import *
 from .get_object_storage import *
 from .get_object_storage_cluster import *
 from .get_object_storage_tier import *
+from .get_oidc_discovery import *
+from .get_oidc_issuer import *
+from .get_oidc_provider import *
+from .get_organization import *
+from .get_organization_group import *
+from .get_organization_policy import *
+from .get_organization_role import *
 from .get_os import *
 from .get_plan import *
 from .get_region import *
@@ -62,7 +70,25 @@ from .iso_private import *
 from .kubernetes import *
 from .kubernetes_node_pools import *
 from .load_balancer import *
+from .nat_gateway import *
+from .nat_gateway_firewall_rule import *
+from .nat_gateway_port_forwarding_rule import *
 from .object_storage import *
+from .object_storage_bucket import *
+from .oidc_issuer import *
+from .oidc_provider import *
+from .oidc_token import *
+from .organization import *
+from .organization_group import *
+from .organization_invitation import *
+from .organization_policy import *
+from .organization_policy_group_attachment import *
+from .organization_policy_user_attachment import *
+from .organization_role import *
+from .organization_role_group_attachment import *
+from .organization_role_policy_attachment import *
+from .organization_role_session import *
+from .organization_role_trust import *
 from .provider import *
 from .reserved_ip import *
 from .reverse_ipv4 import *
@@ -266,10 +292,154 @@ _utilities.register(
  },
  {
   "pkg": "vultr",
+  "mod": "index/natGateway",
+  "fqn": "ediri_vultr",
+  "classes": {
+   "vultr:index/natGateway:NatGateway": "NatGateway"
+  }
+ },
+ {
+  "pkg": "vultr",
+  "mod": "index/natGatewayFirewallRule",
+  "fqn": "ediri_vultr",
+  "classes": {
+   "vultr:index/natGatewayFirewallRule:NatGatewayFirewallRule": "NatGatewayFirewallRule"
+  }
+ },
+ {
+  "pkg": "vultr",
+  "mod": "index/natGatewayPortForwardingRule",
+  "fqn": "ediri_vultr",
+  "classes": {
+   "vultr:index/natGatewayPortForwardingRule:NatGatewayPortForwardingRule": "NatGatewayPortForwardingRule"
+  }
+ },
+ {
+  "pkg": "vultr",
   "mod": "index/objectStorage",
   "fqn": "ediri_vultr",
   "classes": {
    "vultr:index/objectStorage:ObjectStorage": "ObjectStorage"
+  }
+ },
+ {
+  "pkg": "vultr",
+  "mod": "index/objectStorageBucket",
+  "fqn": "ediri_vultr",
+  "classes": {
+   "vultr:index/objectStorageBucket:ObjectStorageBucket": "ObjectStorageBucket"
+  }
+ },
+ {
+  "pkg": "vultr",
+  "mod": "index/oidcIssuer",
+  "fqn": "ediri_vultr",
+  "classes": {
+   "vultr:index/oidcIssuer:OidcIssuer": "OidcIssuer"
+  }
+ },
+ {
+  "pkg": "vultr",
+  "mod": "index/oidcProvider",
+  "fqn": "ediri_vultr",
+  "classes": {
+   "vultr:index/oidcProvider:OidcProvider": "OidcProvider"
+  }
+ },
+ {
+  "pkg": "vultr",
+  "mod": "index/oidcToken",
+  "fqn": "ediri_vultr",
+  "classes": {
+   "vultr:index/oidcToken:OidcToken": "OidcToken"
+  }
+ },
+ {
+  "pkg": "vultr",
+  "mod": "index/organization",
+  "fqn": "ediri_vultr",
+  "classes": {
+   "vultr:index/organization:Organization": "Organization"
+  }
+ },
+ {
+  "pkg": "vultr",
+  "mod": "index/organizationGroup",
+  "fqn": "ediri_vultr",
+  "classes": {
+   "vultr:index/organizationGroup:OrganizationGroup": "OrganizationGroup"
+  }
+ },
+ {
+  "pkg": "vultr",
+  "mod": "index/organizationInvitation",
+  "fqn": "ediri_vultr",
+  "classes": {
+   "vultr:index/organizationInvitation:OrganizationInvitation": "OrganizationInvitation"
+  }
+ },
+ {
+  "pkg": "vultr",
+  "mod": "index/organizationPolicy",
+  "fqn": "ediri_vultr",
+  "classes": {
+   "vultr:index/organizationPolicy:OrganizationPolicy": "OrganizationPolicy"
+  }
+ },
+ {
+  "pkg": "vultr",
+  "mod": "index/organizationPolicyGroupAttachment",
+  "fqn": "ediri_vultr",
+  "classes": {
+   "vultr:index/organizationPolicyGroupAttachment:OrganizationPolicyGroupAttachment": "OrganizationPolicyGroupAttachment"
+  }
+ },
+ {
+  "pkg": "vultr",
+  "mod": "index/organizationPolicyUserAttachment",
+  "fqn": "ediri_vultr",
+  "classes": {
+   "vultr:index/organizationPolicyUserAttachment:OrganizationPolicyUserAttachment": "OrganizationPolicyUserAttachment"
+  }
+ },
+ {
+  "pkg": "vultr",
+  "mod": "index/organizationRole",
+  "fqn": "ediri_vultr",
+  "classes": {
+   "vultr:index/organizationRole:OrganizationRole": "OrganizationRole"
+  }
+ },
+ {
+  "pkg": "vultr",
+  "mod": "index/organizationRoleGroupAttachment",
+  "fqn": "ediri_vultr",
+  "classes": {
+   "vultr:index/organizationRoleGroupAttachment:OrganizationRoleGroupAttachment": "OrganizationRoleGroupAttachment"
+  }
+ },
+ {
+  "pkg": "vultr",
+  "mod": "index/organizationRolePolicyAttachment",
+  "fqn": "ediri_vultr",
+  "classes": {
+   "vultr:index/organizationRolePolicyAttachment:OrganizationRolePolicyAttachment": "OrganizationRolePolicyAttachment"
+  }
+ },
+ {
+  "pkg": "vultr",
+  "mod": "index/organizationRoleSession",
+  "fqn": "ediri_vultr",
+  "classes": {
+   "vultr:index/organizationRoleSession:OrganizationRoleSession": "OrganizationRoleSession"
+  }
+ },
+ {
+  "pkg": "vultr",
+  "mod": "index/organizationRoleTrust",
+  "fqn": "ediri_vultr",
+  "classes": {
+   "vultr:index/organizationRoleTrust:OrganizationRoleTrust": "OrganizationRoleTrust"
   }
  },
  {

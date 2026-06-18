@@ -22,31 +22,49 @@ __all__ = ['KubernetesArgs', 'Kubernetes']
 class KubernetesArgs:
     def __init__(__self__, *,
                  label: pulumi.Input[_builtins.str],
+                 node_pools: pulumi.Input['KubernetesNodePoolsArgs'],
                  region: pulumi.Input[_builtins.str],
                  version: pulumi.Input[_builtins.str],
                  enable_firewall: Optional[pulumi.Input[_builtins.bool]] = None,
                  ha_controlplanes: Optional[pulumi.Input[_builtins.bool]] = None,
-                 node_pools: Optional[pulumi.Input['KubernetesNodePoolsArgs']] = None,
+                 oidc_client_id: Optional[pulumi.Input[_builtins.str]] = None,
+                 oidc_groups_claim: Optional[pulumi.Input[_builtins.str]] = None,
+                 oidc_issuer_url: Optional[pulumi.Input[_builtins.str]] = None,
+                 oidc_username_claim: Optional[pulumi.Input[_builtins.str]] = None,
                  vpc_id: Optional[pulumi.Input[_builtins.str]] = None):
         """
         The set of arguments for constructing a Kubernetes resource.
-        :param pulumi.Input[_builtins.str] label: The VKE clusters label.
+
+        :param pulumi.Input[_builtins.str] label: The label to be used as a prefix for nodes in this node pool.
+        :param pulumi.Input['KubernetesNodePoolsArgs'] node_pools: Contains the default node pool that was deployed.
         :param pulumi.Input[_builtins.str] region: The region your VKE cluster will be deployed in.
         :param pulumi.Input[_builtins.str] version: The version your VKE cluster you want deployed. [See Available Version](https://www.vultr.com/api/#operation/get-kubernetes-versions)
         :param pulumi.Input[_builtins.bool] enable_firewall: Boolean indicating if the cluster should be created with a managed firewall.
         :param pulumi.Input[_builtins.bool] ha_controlplanes: Boolean indicating if the cluster should be created with multiple, highly available controlplanes.
-        :param pulumi.Input['KubernetesNodePoolsArgs'] node_pools: Contains the default node pool that was deployed.
+        :param pulumi.Input[_builtins.str] oidc_client_id: The unique identifier assigned to your application by the OIDC provider.
+        :param pulumi.Input[_builtins.str] oidc_groups_claim: The claim in the OIDC token that contains the user's group memberships.
+               
+               `node_pools` (Required) Defines the default node pool for a cluster using these fields:
+        :param pulumi.Input[_builtins.str] oidc_issuer_url: The URL of the OIDC provider that issues authentication tokens.
+        :param pulumi.Input[_builtins.str] oidc_username_claim: The claim in the OIDC token that identifies the end user's username.
         :param pulumi.Input[_builtins.str] vpc_id: The ID of the VPC to use when creating the cluster. If not provided a new VPC will be created instead.
         """
         pulumi.set(__self__, "label", label)
+        pulumi.set(__self__, "node_pools", node_pools)
         pulumi.set(__self__, "region", region)
         pulumi.set(__self__, "version", version)
         if enable_firewall is not None:
             pulumi.set(__self__, "enable_firewall", enable_firewall)
         if ha_controlplanes is not None:
             pulumi.set(__self__, "ha_controlplanes", ha_controlplanes)
-        if node_pools is not None:
-            pulumi.set(__self__, "node_pools", node_pools)
+        if oidc_client_id is not None:
+            pulumi.set(__self__, "oidc_client_id", oidc_client_id)
+        if oidc_groups_claim is not None:
+            pulumi.set(__self__, "oidc_groups_claim", oidc_groups_claim)
+        if oidc_issuer_url is not None:
+            pulumi.set(__self__, "oidc_issuer_url", oidc_issuer_url)
+        if oidc_username_claim is not None:
+            pulumi.set(__self__, "oidc_username_claim", oidc_username_claim)
         if vpc_id is not None:
             pulumi.set(__self__, "vpc_id", vpc_id)
 
@@ -54,13 +72,25 @@ class KubernetesArgs:
     @pulumi.getter
     def label(self) -> pulumi.Input[_builtins.str]:
         """
-        The VKE clusters label.
+        The label to be used as a prefix for nodes in this node pool.
         """
         return pulumi.get(self, "label")
 
     @label.setter
     def label(self, value: pulumi.Input[_builtins.str]):
         pulumi.set(self, "label", value)
+
+    @_builtins.property
+    @pulumi.getter(name="nodePools")
+    def node_pools(self) -> pulumi.Input['KubernetesNodePoolsArgs']:
+        """
+        Contains the default node pool that was deployed.
+        """
+        return pulumi.get(self, "node_pools")
+
+    @node_pools.setter
+    def node_pools(self, value: pulumi.Input['KubernetesNodePoolsArgs']):
+        pulumi.set(self, "node_pools", value)
 
     @_builtins.property
     @pulumi.getter
@@ -111,16 +141,54 @@ class KubernetesArgs:
         pulumi.set(self, "ha_controlplanes", value)
 
     @_builtins.property
-    @pulumi.getter(name="nodePools")
-    def node_pools(self) -> Optional[pulumi.Input['KubernetesNodePoolsArgs']]:
+    @pulumi.getter(name="oidcClientId")
+    def oidc_client_id(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
-        Contains the default node pool that was deployed.
+        The unique identifier assigned to your application by the OIDC provider.
         """
-        return pulumi.get(self, "node_pools")
+        return pulumi.get(self, "oidc_client_id")
 
-    @node_pools.setter
-    def node_pools(self, value: Optional[pulumi.Input['KubernetesNodePoolsArgs']]):
-        pulumi.set(self, "node_pools", value)
+    @oidc_client_id.setter
+    def oidc_client_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "oidc_client_id", value)
+
+    @_builtins.property
+    @pulumi.getter(name="oidcGroupsClaim")
+    def oidc_groups_claim(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        The claim in the OIDC token that contains the user's group memberships.
+
+        `node_pools` (Required) Defines the default node pool for a cluster using these fields:
+        """
+        return pulumi.get(self, "oidc_groups_claim")
+
+    @oidc_groups_claim.setter
+    def oidc_groups_claim(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "oidc_groups_claim", value)
+
+    @_builtins.property
+    @pulumi.getter(name="oidcIssuerUrl")
+    def oidc_issuer_url(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        The URL of the OIDC provider that issues authentication tokens.
+        """
+        return pulumi.get(self, "oidc_issuer_url")
+
+    @oidc_issuer_url.setter
+    def oidc_issuer_url(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "oidc_issuer_url", value)
+
+    @_builtins.property
+    @pulumi.getter(name="oidcUsernameClaim")
+    def oidc_username_claim(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        The claim in the OIDC token that identifies the end user's username.
+        """
+        return pulumi.get(self, "oidc_username_claim")
+
+    @oidc_username_claim.setter
+    def oidc_username_claim(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "oidc_username_claim", value)
 
     @_builtins.property
     @pulumi.getter(name="vpcId")
@@ -151,6 +219,10 @@ class _KubernetesState:
                  kube_config: Optional[pulumi.Input[_builtins.str]] = None,
                  label: Optional[pulumi.Input[_builtins.str]] = None,
                  node_pools: Optional[pulumi.Input['KubernetesNodePoolsArgs']] = None,
+                 oidc_client_id: Optional[pulumi.Input[_builtins.str]] = None,
+                 oidc_groups_claim: Optional[pulumi.Input[_builtins.str]] = None,
+                 oidc_issuer_url: Optional[pulumi.Input[_builtins.str]] = None,
+                 oidc_username_claim: Optional[pulumi.Input[_builtins.str]] = None,
                  region: Optional[pulumi.Input[_builtins.str]] = None,
                  service_subnet: Optional[pulumi.Input[_builtins.str]] = None,
                  status: Optional[pulumi.Input[_builtins.str]] = None,
@@ -158,6 +230,7 @@ class _KubernetesState:
                  vpc_id: Optional[pulumi.Input[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering Kubernetes resources.
+
         :param pulumi.Input[_builtins.str] client_certificate: The base64 encoded public certificate used by clients to access the cluster.
         :param pulumi.Input[_builtins.str] client_key: The base64 encoded private key used by clients to access the cluster.
         :param pulumi.Input[_builtins.str] cluster_ca_certificate: The base64 encoded public certificate for the cluster's certificate authority.
@@ -169,8 +242,14 @@ class _KubernetesState:
         :param pulumi.Input[_builtins.bool] ha_controlplanes: Boolean indicating if the cluster should be created with multiple, highly available controlplanes.
         :param pulumi.Input[_builtins.str] ip: IP address of VKE cluster control plane.
         :param pulumi.Input[_builtins.str] kube_config: Base64 encoded Kubeconfig for this VKE cluster.
-        :param pulumi.Input[_builtins.str] label: The VKE clusters label.
+        :param pulumi.Input[_builtins.str] label: The label to be used as a prefix for nodes in this node pool.
         :param pulumi.Input['KubernetesNodePoolsArgs'] node_pools: Contains the default node pool that was deployed.
+        :param pulumi.Input[_builtins.str] oidc_client_id: The unique identifier assigned to your application by the OIDC provider.
+        :param pulumi.Input[_builtins.str] oidc_groups_claim: The claim in the OIDC token that contains the user's group memberships.
+               
+               `node_pools` (Required) Defines the default node pool for a cluster using these fields:
+        :param pulumi.Input[_builtins.str] oidc_issuer_url: The URL of the OIDC provider that issues authentication tokens.
+        :param pulumi.Input[_builtins.str] oidc_username_claim: The claim in the OIDC token that identifies the end user's username.
         :param pulumi.Input[_builtins.str] region: The region your VKE cluster will be deployed in.
         :param pulumi.Input[_builtins.str] service_subnet: IP range that services will run on this cluster.
         :param pulumi.Input[_builtins.str] status: Status of node.
@@ -203,6 +282,14 @@ class _KubernetesState:
             pulumi.set(__self__, "label", label)
         if node_pools is not None:
             pulumi.set(__self__, "node_pools", node_pools)
+        if oidc_client_id is not None:
+            pulumi.set(__self__, "oidc_client_id", oidc_client_id)
+        if oidc_groups_claim is not None:
+            pulumi.set(__self__, "oidc_groups_claim", oidc_groups_claim)
+        if oidc_issuer_url is not None:
+            pulumi.set(__self__, "oidc_issuer_url", oidc_issuer_url)
+        if oidc_username_claim is not None:
+            pulumi.set(__self__, "oidc_username_claim", oidc_username_claim)
         if region is not None:
             pulumi.set(__self__, "region", region)
         if service_subnet is not None:
@@ -350,7 +437,7 @@ class _KubernetesState:
     @pulumi.getter
     def label(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
-        The VKE clusters label.
+        The label to be used as a prefix for nodes in this node pool.
         """
         return pulumi.get(self, "label")
 
@@ -369,6 +456,56 @@ class _KubernetesState:
     @node_pools.setter
     def node_pools(self, value: Optional[pulumi.Input['KubernetesNodePoolsArgs']]):
         pulumi.set(self, "node_pools", value)
+
+    @_builtins.property
+    @pulumi.getter(name="oidcClientId")
+    def oidc_client_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        The unique identifier assigned to your application by the OIDC provider.
+        """
+        return pulumi.get(self, "oidc_client_id")
+
+    @oidc_client_id.setter
+    def oidc_client_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "oidc_client_id", value)
+
+    @_builtins.property
+    @pulumi.getter(name="oidcGroupsClaim")
+    def oidc_groups_claim(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        The claim in the OIDC token that contains the user's group memberships.
+
+        `node_pools` (Required) Defines the default node pool for a cluster using these fields:
+        """
+        return pulumi.get(self, "oidc_groups_claim")
+
+    @oidc_groups_claim.setter
+    def oidc_groups_claim(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "oidc_groups_claim", value)
+
+    @_builtins.property
+    @pulumi.getter(name="oidcIssuerUrl")
+    def oidc_issuer_url(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        The URL of the OIDC provider that issues authentication tokens.
+        """
+        return pulumi.get(self, "oidc_issuer_url")
+
+    @oidc_issuer_url.setter
+    def oidc_issuer_url(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "oidc_issuer_url", value)
+
+    @_builtins.property
+    @pulumi.getter(name="oidcUsernameClaim")
+    def oidc_username_claim(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        The claim in the OIDC token that identifies the end user's username.
+        """
+        return pulumi.get(self, "oidc_username_claim")
+
+    @oidc_username_claim.setter
+    def oidc_username_claim(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "oidc_username_claim", value)
 
     @_builtins.property
     @pulumi.getter
@@ -441,11 +578,19 @@ class Kubernetes(pulumi.CustomResource):
                  ha_controlplanes: Optional[pulumi.Input[_builtins.bool]] = None,
                  label: Optional[pulumi.Input[_builtins.str]] = None,
                  node_pools: Optional[pulumi.Input[Union['KubernetesNodePoolsArgs', 'KubernetesNodePoolsArgsDict']]] = None,
+                 oidc_client_id: Optional[pulumi.Input[_builtins.str]] = None,
+                 oidc_groups_claim: Optional[pulumi.Input[_builtins.str]] = None,
+                 oidc_issuer_url: Optional[pulumi.Input[_builtins.str]] = None,
+                 oidc_username_claim: Optional[pulumi.Input[_builtins.str]] = None,
                  region: Optional[pulumi.Input[_builtins.str]] = None,
                  version: Optional[pulumi.Input[_builtins.str]] = None,
                  vpc_id: Optional[pulumi.Input[_builtins.str]] = None,
                  __props__=None):
         """
+        Get information about a Vultr Kubernetes Engine (VKE) Cluster.
+
+        > The node pool deployed with this resource adds its own `tag` which is then used as an identifier for Terraform to see which node pool is part of this resource. This resource only supports a single node pool. To deploy additional worker nodes you must use `KubernetesNodePools`.
+
         ## Example Usage
 
         Create a new VKE cluster:
@@ -455,72 +600,67 @@ class Kubernetes(pulumi.CustomResource):
         import ediri_vultr as vultr
 
         k8 = vultr.Kubernetes("k8",
+            region="ewr",
             label="vke-test",
+            version="v1.28.2+1",
             node_pools={
-                "auto_scaler": True,
-                "label": "vke-nodepool",
-                "labels": {
-                    "my-label": "a-label-on-all-nodes",
-                    "my-second-label": "another-label-on-all-nodes",
-                },
-                "max_nodes": 2,
-                "min_nodes": 1,
                 "node_quantity": 1,
                 "plan": "vc2-1c-2gb",
-                "taints": [{
-                    "effect": "NoExecute",
-                    "key": "a-taint",
-                    "value": "is-tainted",
-                }],
-            },
-            region="ewr",
-            version="v1.28.2+1")
+                "label": "vke-nodepool",
+                "auto_scaler": True,
+                "min_nodes": 1,
+                "max_nodes": 2,
+                "labels": [
+                    {
+                        "key": "my-label",
+                        "value": "a-label-on-all-nodes",
+                    },
+                    {
+                        "key": "my-second-label",
+                        "value": "another-label-on-all-nodes",
+                    },
+                ],
+                "taints": [
+                    {
+                        "key": "a-taint",
+                        "value": "is-tainted",
+                        "effect": "NoExecute",
+                    },
+                    {
+                        "key": "another-taint",
+                        "value": "is-tainted",
+                        "effect": "NoSchedule",
+                    },
+                ],
+            })
         ```
-
-        A default node pool is required when first creating the resource but it can be removed at a later point so long as there is a separate `KubernetesNodePools` resource attached. For example:
-
-        ```python
-        import pulumi
-        import ediri_vultr as vultr
-
-        k8 = vultr.Kubernetes("k8",
-            region="ewr",
-            label="vke-test",
-            version="v1.28.2+1")
-        # This resource must be created and attached to the cluster
-        # before removing the default node from the vultr_kubernetes resource
-        np = vultr.KubernetesNodePools("np",
-            cluster_id=k8.id,
-            node_quantity=1,
-            plan="vc2-1c-2gb",
-            label="vke-nodepool",
-            auto_scaler=True,
-            min_nodes=1,
-            max_nodes=2)
-        ```
-
-        There is still a requirement that there be one node pool attached to the cluster but this should allow more flexibility about which node pool that is.
 
         ## Import
 
         A kubernetes cluster created outside of terraform can be imported into the
-
         terraform state using the UUID.  One thing to note is that all kubernetes
-
         resources have a default node pool with a tag of `tf-vke-default`. In order to
-
-        avoid errors, ensure that there is a node pool with that tag set.
+        avoid errors, ensure that there is a node pool with that tag set that the node
+        pool matches the configuration in the `node_pools` block of the kubernetes
+        resource.
 
         ```sh
         $ pulumi import vultr:index/kubernetes:Kubernetes my-k8s 7365a98b-5a43-450f-bd27-d768827100e5
         ```
 
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[_builtins.bool] enable_firewall: Boolean indicating if the cluster should be created with a managed firewall.
         :param pulumi.Input[_builtins.bool] ha_controlplanes: Boolean indicating if the cluster should be created with multiple, highly available controlplanes.
-        :param pulumi.Input[_builtins.str] label: The VKE clusters label.
+        :param pulumi.Input[_builtins.str] label: The label to be used as a prefix for nodes in this node pool.
         :param pulumi.Input[Union['KubernetesNodePoolsArgs', 'KubernetesNodePoolsArgsDict']] node_pools: Contains the default node pool that was deployed.
+        :param pulumi.Input[_builtins.str] oidc_client_id: The unique identifier assigned to your application by the OIDC provider.
+        :param pulumi.Input[_builtins.str] oidc_groups_claim: The claim in the OIDC token that contains the user's group memberships.
+               
+               `node_pools` (Required) Defines the default node pool for a cluster using these fields:
+        :param pulumi.Input[_builtins.str] oidc_issuer_url: The URL of the OIDC provider that issues authentication tokens.
+        :param pulumi.Input[_builtins.str] oidc_username_claim: The claim in the OIDC token that identifies the end user's username.
         :param pulumi.Input[_builtins.str] region: The region your VKE cluster will be deployed in.
         :param pulumi.Input[_builtins.str] version: The version your VKE cluster you want deployed. [See Available Version](https://www.vultr.com/api/#operation/get-kubernetes-versions)
         :param pulumi.Input[_builtins.str] vpc_id: The ID of the VPC to use when creating the cluster. If not provided a new VPC will be created instead.
@@ -532,6 +672,10 @@ class Kubernetes(pulumi.CustomResource):
                  args: KubernetesArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
+        Get information about a Vultr Kubernetes Engine (VKE) Cluster.
+
+        > The node pool deployed with this resource adds its own `tag` which is then used as an identifier for Terraform to see which node pool is part of this resource. This resource only supports a single node pool. To deploy additional worker nodes you must use `KubernetesNodePools`.
+
         ## Example Usage
 
         Create a new VKE cluster:
@@ -541,65 +685,54 @@ class Kubernetes(pulumi.CustomResource):
         import ediri_vultr as vultr
 
         k8 = vultr.Kubernetes("k8",
+            region="ewr",
             label="vke-test",
+            version="v1.28.2+1",
             node_pools={
-                "auto_scaler": True,
-                "label": "vke-nodepool",
-                "labels": {
-                    "my-label": "a-label-on-all-nodes",
-                    "my-second-label": "another-label-on-all-nodes",
-                },
-                "max_nodes": 2,
-                "min_nodes": 1,
                 "node_quantity": 1,
                 "plan": "vc2-1c-2gb",
-                "taints": [{
-                    "effect": "NoExecute",
-                    "key": "a-taint",
-                    "value": "is-tainted",
-                }],
-            },
-            region="ewr",
-            version="v1.28.2+1")
+                "label": "vke-nodepool",
+                "auto_scaler": True,
+                "min_nodes": 1,
+                "max_nodes": 2,
+                "labels": [
+                    {
+                        "key": "my-label",
+                        "value": "a-label-on-all-nodes",
+                    },
+                    {
+                        "key": "my-second-label",
+                        "value": "another-label-on-all-nodes",
+                    },
+                ],
+                "taints": [
+                    {
+                        "key": "a-taint",
+                        "value": "is-tainted",
+                        "effect": "NoExecute",
+                    },
+                    {
+                        "key": "another-taint",
+                        "value": "is-tainted",
+                        "effect": "NoSchedule",
+                    },
+                ],
+            })
         ```
-
-        A default node pool is required when first creating the resource but it can be removed at a later point so long as there is a separate `KubernetesNodePools` resource attached. For example:
-
-        ```python
-        import pulumi
-        import ediri_vultr as vultr
-
-        k8 = vultr.Kubernetes("k8",
-            region="ewr",
-            label="vke-test",
-            version="v1.28.2+1")
-        # This resource must be created and attached to the cluster
-        # before removing the default node from the vultr_kubernetes resource
-        np = vultr.KubernetesNodePools("np",
-            cluster_id=k8.id,
-            node_quantity=1,
-            plan="vc2-1c-2gb",
-            label="vke-nodepool",
-            auto_scaler=True,
-            min_nodes=1,
-            max_nodes=2)
-        ```
-
-        There is still a requirement that there be one node pool attached to the cluster but this should allow more flexibility about which node pool that is.
 
         ## Import
 
         A kubernetes cluster created outside of terraform can be imported into the
-
         terraform state using the UUID.  One thing to note is that all kubernetes
-
         resources have a default node pool with a tag of `tf-vke-default`. In order to
-
-        avoid errors, ensure that there is a node pool with that tag set.
+        avoid errors, ensure that there is a node pool with that tag set that the node
+        pool matches the configuration in the `node_pools` block of the kubernetes
+        resource.
 
         ```sh
         $ pulumi import vultr:index/kubernetes:Kubernetes my-k8s 7365a98b-5a43-450f-bd27-d768827100e5
         ```
+
 
         :param str resource_name: The name of the resource.
         :param KubernetesArgs args: The arguments to use to populate this resource's properties.
@@ -620,6 +753,10 @@ class Kubernetes(pulumi.CustomResource):
                  ha_controlplanes: Optional[pulumi.Input[_builtins.bool]] = None,
                  label: Optional[pulumi.Input[_builtins.str]] = None,
                  node_pools: Optional[pulumi.Input[Union['KubernetesNodePoolsArgs', 'KubernetesNodePoolsArgsDict']]] = None,
+                 oidc_client_id: Optional[pulumi.Input[_builtins.str]] = None,
+                 oidc_groups_claim: Optional[pulumi.Input[_builtins.str]] = None,
+                 oidc_issuer_url: Optional[pulumi.Input[_builtins.str]] = None,
+                 oidc_username_claim: Optional[pulumi.Input[_builtins.str]] = None,
                  region: Optional[pulumi.Input[_builtins.str]] = None,
                  version: Optional[pulumi.Input[_builtins.str]] = None,
                  vpc_id: Optional[pulumi.Input[_builtins.str]] = None,
@@ -637,7 +774,13 @@ class Kubernetes(pulumi.CustomResource):
             if label is None and not opts.urn:
                 raise TypeError("Missing required property 'label'")
             __props__.__dict__["label"] = label
+            if node_pools is None and not opts.urn:
+                raise TypeError("Missing required property 'node_pools'")
             __props__.__dict__["node_pools"] = node_pools
+            __props__.__dict__["oidc_client_id"] = oidc_client_id
+            __props__.__dict__["oidc_groups_claim"] = oidc_groups_claim
+            __props__.__dict__["oidc_issuer_url"] = oidc_issuer_url
+            __props__.__dict__["oidc_username_claim"] = oidc_username_claim
             if region is None and not opts.urn:
                 raise TypeError("Missing required property 'region'")
             __props__.__dict__["region"] = region
@@ -681,6 +824,10 @@ class Kubernetes(pulumi.CustomResource):
             kube_config: Optional[pulumi.Input[_builtins.str]] = None,
             label: Optional[pulumi.Input[_builtins.str]] = None,
             node_pools: Optional[pulumi.Input[Union['KubernetesNodePoolsArgs', 'KubernetesNodePoolsArgsDict']]] = None,
+            oidc_client_id: Optional[pulumi.Input[_builtins.str]] = None,
+            oidc_groups_claim: Optional[pulumi.Input[_builtins.str]] = None,
+            oidc_issuer_url: Optional[pulumi.Input[_builtins.str]] = None,
+            oidc_username_claim: Optional[pulumi.Input[_builtins.str]] = None,
             region: Optional[pulumi.Input[_builtins.str]] = None,
             service_subnet: Optional[pulumi.Input[_builtins.str]] = None,
             status: Optional[pulumi.Input[_builtins.str]] = None,
@@ -704,8 +851,14 @@ class Kubernetes(pulumi.CustomResource):
         :param pulumi.Input[_builtins.bool] ha_controlplanes: Boolean indicating if the cluster should be created with multiple, highly available controlplanes.
         :param pulumi.Input[_builtins.str] ip: IP address of VKE cluster control plane.
         :param pulumi.Input[_builtins.str] kube_config: Base64 encoded Kubeconfig for this VKE cluster.
-        :param pulumi.Input[_builtins.str] label: The VKE clusters label.
+        :param pulumi.Input[_builtins.str] label: The label to be used as a prefix for nodes in this node pool.
         :param pulumi.Input[Union['KubernetesNodePoolsArgs', 'KubernetesNodePoolsArgsDict']] node_pools: Contains the default node pool that was deployed.
+        :param pulumi.Input[_builtins.str] oidc_client_id: The unique identifier assigned to your application by the OIDC provider.
+        :param pulumi.Input[_builtins.str] oidc_groups_claim: The claim in the OIDC token that contains the user's group memberships.
+               
+               `node_pools` (Required) Defines the default node pool for a cluster using these fields:
+        :param pulumi.Input[_builtins.str] oidc_issuer_url: The URL of the OIDC provider that issues authentication tokens.
+        :param pulumi.Input[_builtins.str] oidc_username_claim: The claim in the OIDC token that identifies the end user's username.
         :param pulumi.Input[_builtins.str] region: The region your VKE cluster will be deployed in.
         :param pulumi.Input[_builtins.str] service_subnet: IP range that services will run on this cluster.
         :param pulumi.Input[_builtins.str] status: Status of node.
@@ -729,6 +882,10 @@ class Kubernetes(pulumi.CustomResource):
         __props__.__dict__["kube_config"] = kube_config
         __props__.__dict__["label"] = label
         __props__.__dict__["node_pools"] = node_pools
+        __props__.__dict__["oidc_client_id"] = oidc_client_id
+        __props__.__dict__["oidc_groups_claim"] = oidc_groups_claim
+        __props__.__dict__["oidc_issuer_url"] = oidc_issuer_url
+        __props__.__dict__["oidc_username_claim"] = oidc_username_claim
         __props__.__dict__["region"] = region
         __props__.__dict__["service_subnet"] = service_subnet
         __props__.__dict__["status"] = status
@@ -828,17 +985,51 @@ class Kubernetes(pulumi.CustomResource):
     @pulumi.getter
     def label(self) -> pulumi.Output[_builtins.str]:
         """
-        The VKE clusters label.
+        The label to be used as a prefix for nodes in this node pool.
         """
         return pulumi.get(self, "label")
 
     @_builtins.property
     @pulumi.getter(name="nodePools")
-    def node_pools(self) -> pulumi.Output[Optional['outputs.KubernetesNodePools']]:
+    def node_pools(self) -> pulumi.Output['outputs.KubernetesNodePools']:
         """
         Contains the default node pool that was deployed.
         """
         return pulumi.get(self, "node_pools")
+
+    @_builtins.property
+    @pulumi.getter(name="oidcClientId")
+    def oidc_client_id(self) -> pulumi.Output[Optional[_builtins.str]]:
+        """
+        The unique identifier assigned to your application by the OIDC provider.
+        """
+        return pulumi.get(self, "oidc_client_id")
+
+    @_builtins.property
+    @pulumi.getter(name="oidcGroupsClaim")
+    def oidc_groups_claim(self) -> pulumi.Output[Optional[_builtins.str]]:
+        """
+        The claim in the OIDC token that contains the user's group memberships.
+
+        `node_pools` (Required) Defines the default node pool for a cluster using these fields:
+        """
+        return pulumi.get(self, "oidc_groups_claim")
+
+    @_builtins.property
+    @pulumi.getter(name="oidcIssuerUrl")
+    def oidc_issuer_url(self) -> pulumi.Output[Optional[_builtins.str]]:
+        """
+        The URL of the OIDC provider that issues authentication tokens.
+        """
+        return pulumi.get(self, "oidc_issuer_url")
+
+    @_builtins.property
+    @pulumi.getter(name="oidcUsernameClaim")
+    def oidc_username_claim(self) -> pulumi.Output[Optional[_builtins.str]]:
+        """
+        The claim in the OIDC token that identifies the end user's username.
+        """
+        return pulumi.get(self, "oidc_username_claim")
 
     @_builtins.property
     @pulumi.getter

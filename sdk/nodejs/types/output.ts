@@ -15,6 +15,10 @@ export interface DatabaseReadReplica {
      */
     backupMinute: string;
     /**
+     * The CA certificate for Managed Databases on this account.
+     */
+    caCertificate: string;
+    /**
      * The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
      */
     clusterTimeZone: string;
@@ -273,6 +277,10 @@ export interface GetDatabaseReadReplica {
      * The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
      */
     backupMinute: string;
+    /**
+     * The CA certificate for Managed Databases on this account.
+     */
+    caCertificate: string;
     /**
      * The configured time zone for the Managed Database in TZ database format.
      */
@@ -542,6 +550,10 @@ export interface GetInstancesInstance {
      */
     serverStatus: string;
     /**
+     * The ID of the Vultr snapshot that the server was restored from.
+     */
+    snapshotId: string;
+    /**
      * The status of the server's subscription.
      */
     status: string;
@@ -609,7 +621,7 @@ export interface GetKubernetesNodePool {
     /**
      * Boolean indicating if the auto scaler for the default node pool is active.
      */
-    autoScaler?: boolean;
+    autoScaler: boolean;
     /**
      * Date node was created.
      */
@@ -626,18 +638,15 @@ export interface GetKubernetesNodePool {
      * Label of node.
      */
     label: string;
-    /**
-     * Kubernetes node labels applied to the node pool.
-     */
-    labels?: {[key: string]: string};
+    labels: outputs.GetKubernetesNodePoolLabel[];
     /**
      * The maximum number of nodes used by the auto scaler.
      */
-    maxNodes?: number;
+    maxNodes: number;
     /**
      * The minimum number of nodes used by the auto scaler.
      */
-    minNodes?: number;
+    minNodes: number;
     /**
      * Number of nodes within node pool.
      */
@@ -658,14 +667,26 @@ export interface GetKubernetesNodePool {
      * Tag for node pool.
      */
     tag: string;
-    /**
-     * Kubernetes node taints applied to the node pool.
-     */
-    taints?: outputs.GetKubernetesNodePoolTaint[];
+    taints: outputs.GetKubernetesNodePoolTaint[];
     /**
      * The base64 encoded string containing the user data applied to nodes in the node pool.
      */
-    userData?: string;
+    userData: string;
+}
+
+export interface GetKubernetesNodePoolLabel {
+    /**
+     * ID of node.
+     */
+    id: string;
+    /**
+     * The key definining the taint for kubernetes.
+     */
+    key: string;
+    /**
+     * The value of the taint for kubernetes.
+     */
+    value: string;
 }
 
 export interface GetKubernetesNodePoolNode {
@@ -688,8 +709,21 @@ export interface GetKubernetesNodePoolNode {
 }
 
 export interface GetKubernetesNodePoolTaint {
+    /**
+     * The effect of the taint for kubernetes.
+     */
     effect: string;
+    /**
+     * ID of node.
+     */
+    id: string;
+    /**
+     * The key definining the taint for kubernetes.
+     */
     key: string;
+    /**
+     * The value of the taint for kubernetes.
+     */
     value: string;
 }
 
@@ -702,6 +736,28 @@ export interface GetLoadBalancerFilter {
      * One or more values filter with.
      */
     values: string[];
+}
+
+export interface GetLogsResult {
+    httpStatusCode: number;
+    ipAddress: string;
+    level: string;
+    message: string;
+    method: string;
+    queryParameters: string;
+    requestBody: string;
+    requestPath: string;
+    /**
+     * Filter the logs by the UUID of a specific resource.
+     */
+    resourceId: string;
+    /**
+     * Filter the logs by the type of a resource (i.e. `instances`, `kubernetes`, `bare-metals`).
+     */
+    resourceType: string;
+    timestamp: string;
+    userId: string;
+    userName: string;
 }
 
 export interface GetObjectStorageClusterFilter {
@@ -748,6 +804,98 @@ export interface GetObjectStorageTierLocation {
      */
     name: string;
     region: string;
+}
+
+export interface GetOidcIssuerFilter {
+    /**
+     * Attribute name to filter with.
+     */
+    name: string;
+    /**
+     * One or more values filter with.
+     */
+    values: string[];
+}
+
+export interface GetOidcProviderFilter {
+    /**
+     * Attribute name to filter with.
+     */
+    name: string;
+    /**
+     * One or more values filter with.
+     */
+    values: string[];
+}
+
+export interface GetOrganizationFilter {
+    /**
+     * Attribute name to filter with.
+     */
+    name: string;
+    /**
+     * One or more values filter with.
+     */
+    values: string[];
+}
+
+export interface GetOrganizationGroupFilter {
+    /**
+     * Attribute name to filter with.
+     */
+    name: string;
+    /**
+     * One or more values filter with.
+     */
+    values: string[];
+}
+
+export interface GetOrganizationPolicyDocument {
+    /**
+     * A list of blocks for the organization policy statements.
+     */
+    statements: outputs.GetOrganizationPolicyDocumentStatement[];
+    /**
+     * A version for organization policy document.
+     */
+    version: string;
+}
+
+export interface GetOrganizationPolicyDocumentStatement {
+    /**
+     * A list of actions for the policy document statement.
+     */
+    actions: string[];
+    /**
+     * The effect of the the policy document statement.
+     */
+    effect: string;
+    /**
+     * A list of applicable resources for the policy document statement.
+     */
+    resources: string[];
+}
+
+export interface GetOrganizationPolicyFilter {
+    /**
+     * Attribute name to filter with.
+     */
+    name: string;
+    /**
+     * One or more values filter with.
+     */
+    values: string[];
+}
+
+export interface GetOrganizationRoleFilter {
+    /**
+     * Attribute name to filter with.
+     */
+    name: string;
+    /**
+     * One or more values filter with.
+     */
+    values: string[];
 }
 
 export interface GetOsFilter {
@@ -902,6 +1050,8 @@ export interface GetVpcFilter {
 export interface InstanceBackupsSchedule {
     /**
      * Day of month to run. Use values between 1 and 28.
+     *
+     * `blockDevices` - (Optional) Available for VX1 instances: A list of block devices to attach to your instance. Define your block devices, create bootable block devices, or use local storage (if plan has local storage) as scratch disk with these fields:
      */
     dom: number;
     /**
@@ -916,6 +1066,25 @@ export interface InstanceBackupsSchedule {
      * Type of backup schedule Possible values are `daily`, `weekly`, `monthly`, `dailyAltEven`, or `dailyAltOdd`.
      */
     type: string;
+}
+
+export interface InstanceBlockDevice {
+    /**
+     * The ID of an existing block device or `local` if the VX1 plan has local storage and you wish to utilize it for this instance.
+     */
+    blockId?: string;
+    /**
+     * Whether the associated block device is bootable.
+     */
+    bootable?: boolean;
+    /**
+     * The disk size for the block device if it is being created.
+     */
+    diskSize?: number;
+    /**
+     * A label for the server.
+     */
+    label?: string;
 }
 
 export interface KubernetesNodePools {
@@ -939,10 +1108,7 @@ export interface KubernetesNodePools {
      * The label to be used as a prefix for nodes in this node pool.
      */
     label: string;
-    /**
-     * A map of key/value pairs for Kubernetes node labels.
-     */
-    labels?: {[key: string]: string};
+    labels?: outputs.KubernetesNodePoolsLabel[];
     /**
      * The maximum number of nodes to use with the auto scaler.
      */
@@ -955,12 +1121,9 @@ export interface KubernetesNodePools {
      * The number of nodes in this node pool.
      */
     nodeQuantity: number;
-    /**
-     * Array that contains information about nodes within this node pool.
-     */
     nodes: outputs.KubernetesNodePoolsNode[];
     /**
-     * The plan to be used in this node pool. [See Plans List](https://www.vultr.com/api/#operation/list-plans) Note the minimum plan requirements must have at least 1 core and 2 gbs of memory.
+     * The plan to be used in this node pool. [See plans list](https://www.vultr.com/api/#operation/list-plans) Note the minimum plan requirements must have at least 1 core and 2 gbs of memory.
      */
     plan: string;
     /**
@@ -971,11 +1134,28 @@ export interface KubernetesNodePools {
      * Tag for node pool.
      */
     tag: string;
-    /**
-     * Taints to apply to the nodes in the node pool. Should contain `key`, `value` and `effect`.  The `effect` should be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
-     */
     taints?: outputs.KubernetesNodePoolsTaint[];
+    /**
+     * A base64 encoded string containing the user data to apply to nodes in the node pool.
+     *
+     * `labels` - (Optional) A list of labels to apply to the nodes in the node pool with these fields:
+     */
     userData?: string;
+}
+
+export interface KubernetesNodePoolsLabel {
+    /**
+     * ID of node.
+     */
+    id: string;
+    /**
+     * The key definining the taint for kubernetes.
+     */
+    key: string;
+    /**
+     * The value of the taint for kubernetes.
+     */
+    value: string;
 }
 
 export interface KubernetesNodePoolsNode {
@@ -998,8 +1178,21 @@ export interface KubernetesNodePoolsNode {
 }
 
 export interface KubernetesNodePoolsTaint {
+    /**
+     * The effect of the taint for kubernetes.  Must be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
+     */
     effect: string;
+    /**
+     * ID of node.
+     */
+    id: string;
+    /**
+     * The key definining the taint for kubernetes.
+     */
     key: string;
+    /**
+     * The value of the taint for kubernetes.
+     */
     value: string;
 }
 
@@ -1086,6 +1279,32 @@ export interface LoadBalancerSsl {
      * The SSL certificates private key.
      */
     privateKey: string;
+}
+
+export interface OrganizationPolicyDocument {
+    /**
+     * A list of blocks for the organization policy statements.
+     */
+    statements: outputs.OrganizationPolicyDocumentStatement[];
+    /**
+     * A version for organization policy document.
+     */
+    version: string;
+}
+
+export interface OrganizationPolicyDocumentStatement {
+    /**
+     * A list of actions for the policy document statement.
+     */
+    actions: string[];
+    /**
+     * The effect of the the policy document statement.
+     */
+    effect: string;
+    /**
+     * A list of applicable resources for the policy document statement.
+     */
+    resources: string[];
 }
 
 export interface VirtualFileSystemStorageAttachment {

@@ -30,8 +30,8 @@ import (
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := vultr.NewDatabaseReplica(ctx, "myDatabaseReplica", &vultr.DatabaseReplicaArgs{
-//				DatabaseId: pulumi.Any(vultr_database.My_database.Id),
+//			_, err := vultr.NewDatabaseReplica(ctx, "my_database_replica", &vultr.DatabaseReplicaArgs{
+//				DatabaseId: pulumi.Any(myDatabase.Id),
 //				Region:     pulumi.String("sea"),
 //				Label:      pulumi.String("my_database_replica_label"),
 //				Tag:        pulumi.String("test tag"),
@@ -51,6 +51,8 @@ type DatabaseReplica struct {
 	BackupHour pulumi.StringOutput `pulumi:"backupHour"`
 	// The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
 	BackupMinute pulumi.StringOutput `pulumi:"backupMinute"`
+	// The CA certificate for Managed Databases on this account.
+	CaCertificate pulumi.StringOutput `pulumi:"caCertificate"`
 	// The configured time zone for the managed database read replica in TZ database format.
 	ClusterTimeZone pulumi.StringOutput `pulumi:"clusterTimeZone"`
 	// The database engine of the managed database read replica.
@@ -157,6 +159,8 @@ type databaseReplicaState struct {
 	BackupHour *string `pulumi:"backupHour"`
 	// The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
 	BackupMinute *string `pulumi:"backupMinute"`
+	// The CA certificate for Managed Databases on this account.
+	CaCertificate *string `pulumi:"caCertificate"`
 	// The configured time zone for the managed database read replica in TZ database format.
 	ClusterTimeZone *string `pulumi:"clusterTimeZone"`
 	// The database engine of the managed database read replica.
@@ -225,6 +229,8 @@ type DatabaseReplicaState struct {
 	BackupHour pulumi.StringPtrInput
 	// The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
 	BackupMinute pulumi.StringPtrInput
+	// The CA certificate for Managed Databases on this account.
+	CaCertificate pulumi.StringPtrInput
 	// The configured time zone for the managed database read replica in TZ database format.
 	ClusterTimeZone pulumi.StringPtrInput
 	// The database engine of the managed database read replica.
@@ -452,6 +458,11 @@ func (o DatabaseReplicaOutput) BackupHour() pulumi.StringOutput {
 // The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
 func (o DatabaseReplicaOutput) BackupMinute() pulumi.StringOutput {
 	return o.ApplyT(func(v *DatabaseReplica) pulumi.StringOutput { return v.BackupMinute }).(pulumi.StringOutput)
+}
+
+// The CA certificate for Managed Databases on this account.
+func (o DatabaseReplicaOutput) CaCertificate() pulumi.StringOutput {
+	return o.ApplyT(func(v *DatabaseReplica) pulumi.StringOutput { return v.CaCertificate }).(pulumi.StringOutput)
 }
 
 // The configured time zone for the managed database read replica in TZ database format.

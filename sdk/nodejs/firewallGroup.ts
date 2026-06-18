@@ -15,7 +15,7 @@ import * as utilities from "./utilities";
  * import * as pulumi from "@pulumi/pulumi";
  * import * as vultr from "@ediri/vultr";
  *
- * const myFirewallgroup = new vultr.FirewallGroup("myFirewallgroup", {description: "base firewall"});
+ * const myFirewallgroup = new vultr.FirewallGroup("my_firewallgroup", {description: "base firewall"});
  * ```
  *
  * ## Import
@@ -66,18 +66,6 @@ export class FirewallGroup extends pulumi.CustomResource {
      * Description of the firewall group.
      */
     declare public readonly description: pulumi.Output<string | undefined>;
-    /**
-     * The number of instances that are currently using this firewall group.
-     */
-    declare public /*out*/ readonly instanceCount: pulumi.Output<number>;
-    /**
-     * The number of max firewall rules this group can have.
-     */
-    declare public /*out*/ readonly maxRuleCount: pulumi.Output<number>;
-    /**
-     * The number of firewall rules this group currently has.
-     */
-    declare public /*out*/ readonly ruleCount: pulumi.Output<number>;
 
     /**
      * Create a FirewallGroup resource with the given unique name, arguments, and options.
@@ -95,17 +83,11 @@ export class FirewallGroup extends pulumi.CustomResource {
             resourceInputs["dateCreated"] = state?.dateCreated;
             resourceInputs["dateModified"] = state?.dateModified;
             resourceInputs["description"] = state?.description;
-            resourceInputs["instanceCount"] = state?.instanceCount;
-            resourceInputs["maxRuleCount"] = state?.maxRuleCount;
-            resourceInputs["ruleCount"] = state?.ruleCount;
         } else {
             const args = argsOrState as FirewallGroupArgs | undefined;
             resourceInputs["description"] = args?.description;
             resourceInputs["dateCreated"] = undefined /*out*/;
             resourceInputs["dateModified"] = undefined /*out*/;
-            resourceInputs["instanceCount"] = undefined /*out*/;
-            resourceInputs["maxRuleCount"] = undefined /*out*/;
-            resourceInputs["ruleCount"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(FirewallGroup.__pulumiType, name, resourceInputs, opts);
@@ -128,18 +110,6 @@ export interface FirewallGroupState {
      * Description of the firewall group.
      */
     description?: pulumi.Input<string>;
-    /**
-     * The number of instances that are currently using this firewall group.
-     */
-    instanceCount?: pulumi.Input<number>;
-    /**
-     * The number of max firewall rules this group can have.
-     */
-    maxRuleCount?: pulumi.Input<number>;
-    /**
-     * The number of firewall rules this group currently has.
-     */
-    ruleCount?: pulumi.Input<number>;
 }
 
 /**

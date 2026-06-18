@@ -8,6 +8,27 @@ import * as utilities from "./utilities";
  * Provides a Vultr Reverse IPv6 resource. This can be used to create, read,
  * modify, and delete reverse DNS records for IPv6 addresses. Upon success, DNS
  * changes may take 6-12 hours to become active.
+ *
+ * ## Example Usage
+ *
+ * Create a new reverse DNS record for an IPv6 address:
+ *
+ * ```typescript
+ * import * as pulumi from "@pulumi/pulumi";
+ * import * as vultr from "@ediri/vultr";
+ *
+ * const myServer = new vultr.Instance("my_server", {
+ *     plan: "vc2-1c-1gb",
+ *     region: "ewr",
+ *     osId: 167,
+ *     enableIpv6: true,
+ * });
+ * const myReverseIpv6 = new vultr.ReverseIpv6("my_reverse_ipv6", {
+ *     instanceId: myServer.id,
+ *     ip: myServer.v6MainIp,
+ *     reverse: "host.example.com",
+ * });
+ * ```
  */
 export class ReverseIpv6 extends pulumi.CustomResource {
     /**
@@ -43,7 +64,7 @@ export class ReverseIpv6 extends pulumi.CustomResource {
      */
     declare public readonly instanceId: pulumi.Output<string>;
     /**
-     * The IPv6 address used in the reverse DNS record.
+     * The IPv6 address used in the reverse DNS record. Valid IPv6 address, stored as fully-expanded format.
      */
     declare public readonly ip: pulumi.Output<string>;
     /**
@@ -97,7 +118,7 @@ export interface ReverseIpv6State {
      */
     instanceId?: pulumi.Input<string>;
     /**
-     * The IPv6 address used in the reverse DNS record.
+     * The IPv6 address used in the reverse DNS record. Valid IPv6 address, stored as fully-expanded format.
      */
     ip?: pulumi.Input<string>;
     /**
@@ -116,7 +137,7 @@ export interface ReverseIpv6Args {
      */
     instanceId: pulumi.Input<string>;
     /**
-     * The IPv6 address used in the reverse DNS record.
+     * The IPv6 address used in the reverse DNS record. Valid IPv6 address, stored as fully-expanded format.
      */
     ip: pulumi.Input<string>;
     /**

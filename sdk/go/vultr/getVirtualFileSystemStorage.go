@@ -29,7 +29,7 @@ import (
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := vultr.LookupVirtualFileSystemStorage(ctx, &vultr.LookupVirtualFileSystemStorageArgs{
+//			_, err := vultr.GetVirtualFileSystemStorage(ctx, &vultr.LookupVirtualFileSystemStorageArgs{
 //				Filters: []vultr.GetVirtualFileSystemStorageFilter{
 //					{
 //						Name: "label",

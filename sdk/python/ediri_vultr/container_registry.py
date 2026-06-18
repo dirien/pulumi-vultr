@@ -25,6 +25,7 @@ class ContainerRegistryArgs:
                  name: Optional[pulumi.Input[_builtins.str]] = None):
         """
         The set of arguments for constructing a ContainerRegistry resource.
+
         :param pulumi.Input[_builtins.str] plan: The billing plan for the container registry. [See available plans](https://www.vultr.com/api/#tag/Container-Registry/operation/list-registry-plans)
         :param pulumi.Input[_builtins.bool] public: Boolean indicating if the container registry should be created with public visibility or if it should require credentials.
         :param pulumi.Input[_builtins.str] region: The region where your container registry will be deployed. [See available regions](https://www.vultr.com/api/#tag/Container-Registry/operation/list-registry-regions)
@@ -98,6 +99,7 @@ class _ContainerRegistryState:
                  storage: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None):
         """
         Input properties used for looking up and filtering ContainerRegistry resources.
+
         :param pulumi.Input[_builtins.str] container_registry_urn: The URN of the container registry.
         :param pulumi.Input[_builtins.str] date_created: A date-time of when the root user was created.
         :param pulumi.Input[_builtins.str] name: The name for your container registry.  Must be lowercase and only alphanumeric characters.
@@ -244,12 +246,14 @@ class ContainerRegistry(pulumi.CustomResource):
         import ediri_vultr as vultr
 
         vcr1 = vultr.ContainerRegistry("vcr1",
+            name="examplecontainerregistry",
+            region="sjc",
             plan="start_up",
-            public=False,
-            region="sjc")
+            public=False)
         ```
 
         The `name` for container registries must be all lowercase and only contain alphanumeric characters.
+
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -276,12 +280,14 @@ class ContainerRegistry(pulumi.CustomResource):
         import ediri_vultr as vultr
 
         vcr1 = vultr.ContainerRegistry("vcr1",
+            name="examplecontainerregistry",
+            region="sjc",
             plan="start_up",
-            public=False,
-            region="sjc")
+            public=False)
         ```
 
         The `name` for container registries must be all lowercase and only contain alphanumeric characters.
+
 
         :param str resource_name: The name of the resource.
         :param ContainerRegistryArgs args: The arguments to use to populate this resource's properties.

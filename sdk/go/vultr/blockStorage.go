@@ -30,10 +30,10 @@ import (
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := vultr.NewBlockStorage(ctx, "myBlockstorage", &vultr.BlockStorageArgs{
+//			_, err := vultr.NewBlockStorage(ctx, "my_blockstorage", &vultr.BlockStorageArgs{
 //				Label:  pulumi.String("vultr-block-storage"),
-//				Region: pulumi.String("ewr"),
 //				SizeGb: pulumi.Int(10),
+//				Region: pulumi.String("ewr"),
 //			})
 //			if err != nil {
 //				return err
@@ -55,11 +55,17 @@ type BlockStorage struct {
 	pulumi.CustomResourceState
 
 	// VPS ID that you want to have this block storage attached to.
-	AttachedToInstance pulumi.StringPtrOutput `pulumi:"attachedToInstance"`
+	AttachedToInstance pulumi.StringOutput `pulumi:"attachedToInstance"`
+	// IP address of the VPS the block storage subscription is attached to.
+	AttachedToInstanceIp pulumi.StringOutput `pulumi:"attachedToInstanceIp"`
+	// Label of the VPS the block storage subscription is attached to.
+	AttachedToInstanceLabel pulumi.StringOutput `pulumi:"attachedToInstanceLabel"`
 	// Determines on the type of block storage volume that will be created. Soon to become a required parameter. Options are `highPerf` or `storageOpt`.
 	BlockType pulumi.StringOutput `pulumi:"blockType"`
+	// Boolean value that will flag a block storage device as bootable.
+	Bootable pulumi.BoolPtrOutput `pulumi:"bootable"`
 	// The monthly cost of this block storage.
-	Cost pulumi.Float64Output `pulumi:"cost"`
+	Cost pulumi.IntOutput `pulumi:"cost"`
 	// The date this block storage was created.
 	DateCreated pulumi.StringOutput `pulumi:"dateCreated"`
 	// Label that is given to your block storage.
@@ -68,10 +74,16 @@ type BlockStorage struct {
 	Live pulumi.BoolPtrOutput `pulumi:"live"`
 	// An ID associated with the instance, when mounted the ID can be found in /dev/disk/by-id prefixed with virtio.
 	MountId pulumi.StringOutput `pulumi:"mountId"`
-	// Region in which this block storage will reside in. (Currently only NJ/NY supported region "ewr")
+	// The operating system ID to use for this block storage device if it is bootable.
+	OsId pulumi.IntPtrOutput `pulumi:"osId"`
+	// Charges due for this block storage subscription at the end of the billing period.
+	PendingCharges pulumi.Float64Output `pulumi:"pendingCharges"`
+	// Region in which this block storage will reside in. Refer to the region data source to determine if the desired storage option is available or check the [API options](https://www.vultr.com/api/#tag/region/operation/list-regions).
 	Region pulumi.StringOutput `pulumi:"region"`
 	// The size of the given block storage.
 	SizeGb pulumi.IntOutput `pulumi:"sizeGb"`
+	// The ID of an existing block snapshot your new block storage will be a clone of.
+	SnapshotId pulumi.StringPtrOutput `pulumi:"snapshotId"`
 	// Current status of your block storage.
 	Status pulumi.StringOutput `pulumi:"status"`
 }
@@ -114,10 +126,16 @@ func GetBlockStorage(ctx *pulumi.Context,
 type blockStorageState struct {
 	// VPS ID that you want to have this block storage attached to.
 	AttachedToInstance *string `pulumi:"attachedToInstance"`
+	// IP address of the VPS the block storage subscription is attached to.
+	AttachedToInstanceIp *string `pulumi:"attachedToInstanceIp"`
+	// Label of the VPS the block storage subscription is attached to.
+	AttachedToInstanceLabel *string `pulumi:"attachedToInstanceLabel"`
 	// Determines on the type of block storage volume that will be created. Soon to become a required parameter. Options are `highPerf` or `storageOpt`.
 	BlockType *string `pulumi:"blockType"`
+	// Boolean value that will flag a block storage device as bootable.
+	Bootable *bool `pulumi:"bootable"`
 	// The monthly cost of this block storage.
-	Cost *float64 `pulumi:"cost"`
+	Cost *int `pulumi:"cost"`
 	// The date this block storage was created.
 	DateCreated *string `pulumi:"dateCreated"`
 	// Label that is given to your block storage.
@@ -126,10 +144,16 @@ type blockStorageState struct {
 	Live *bool `pulumi:"live"`
 	// An ID associated with the instance, when mounted the ID can be found in /dev/disk/by-id prefixed with virtio.
 	MountId *string `pulumi:"mountId"`
-	// Region in which this block storage will reside in. (Currently only NJ/NY supported region "ewr")
+	// The operating system ID to use for this block storage device if it is bootable.
+	OsId *int `pulumi:"osId"`
+	// Charges due for this block storage subscription at the end of the billing period.
+	PendingCharges *float64 `pulumi:"pendingCharges"`
+	// Region in which this block storage will reside in. Refer to the region data source to determine if the desired storage option is available or check the [API options](https://www.vultr.com/api/#tag/region/operation/list-regions).
 	Region *string `pulumi:"region"`
 	// The size of the given block storage.
 	SizeGb *int `pulumi:"sizeGb"`
+	// The ID of an existing block snapshot your new block storage will be a clone of.
+	SnapshotId *string `pulumi:"snapshotId"`
 	// Current status of your block storage.
 	Status *string `pulumi:"status"`
 }
@@ -137,10 +161,16 @@ type blockStorageState struct {
 type BlockStorageState struct {
 	// VPS ID that you want to have this block storage attached to.
 	AttachedToInstance pulumi.StringPtrInput
+	// IP address of the VPS the block storage subscription is attached to.
+	AttachedToInstanceIp pulumi.StringPtrInput
+	// Label of the VPS the block storage subscription is attached to.
+	AttachedToInstanceLabel pulumi.StringPtrInput
 	// Determines on the type of block storage volume that will be created. Soon to become a required parameter. Options are `highPerf` or `storageOpt`.
 	BlockType pulumi.StringPtrInput
+	// Boolean value that will flag a block storage device as bootable.
+	Bootable pulumi.BoolPtrInput
 	// The monthly cost of this block storage.
-	Cost pulumi.Float64PtrInput
+	Cost pulumi.IntPtrInput
 	// The date this block storage was created.
 	DateCreated pulumi.StringPtrInput
 	// Label that is given to your block storage.
@@ -149,10 +179,16 @@ type BlockStorageState struct {
 	Live pulumi.BoolPtrInput
 	// An ID associated with the instance, when mounted the ID can be found in /dev/disk/by-id prefixed with virtio.
 	MountId pulumi.StringPtrInput
-	// Region in which this block storage will reside in. (Currently only NJ/NY supported region "ewr")
+	// The operating system ID to use for this block storage device if it is bootable.
+	OsId pulumi.IntPtrInput
+	// Charges due for this block storage subscription at the end of the billing period.
+	PendingCharges pulumi.Float64PtrInput
+	// Region in which this block storage will reside in. Refer to the region data source to determine if the desired storage option is available or check the [API options](https://www.vultr.com/api/#tag/region/operation/list-regions).
 	Region pulumi.StringPtrInput
 	// The size of the given block storage.
 	SizeGb pulumi.IntPtrInput
+	// The ID of an existing block snapshot your new block storage will be a clone of.
+	SnapshotId pulumi.StringPtrInput
 	// Current status of your block storage.
 	Status pulumi.StringPtrInput
 }
@@ -166,14 +202,20 @@ type blockStorageArgs struct {
 	AttachedToInstance *string `pulumi:"attachedToInstance"`
 	// Determines on the type of block storage volume that will be created. Soon to become a required parameter. Options are `highPerf` or `storageOpt`.
 	BlockType *string `pulumi:"blockType"`
+	// Boolean value that will flag a block storage device as bootable.
+	Bootable *bool `pulumi:"bootable"`
 	// Label that is given to your block storage.
 	Label *string `pulumi:"label"`
 	// Boolean value that will allow attachment of the volume to an instance without a restart. Default is false.
 	Live *bool `pulumi:"live"`
-	// Region in which this block storage will reside in. (Currently only NJ/NY supported region "ewr")
+	// The operating system ID to use for this block storage device if it is bootable.
+	OsId *int `pulumi:"osId"`
+	// Region in which this block storage will reside in. Refer to the region data source to determine if the desired storage option is available or check the [API options](https://www.vultr.com/api/#tag/region/operation/list-regions).
 	Region string `pulumi:"region"`
 	// The size of the given block storage.
 	SizeGb int `pulumi:"sizeGb"`
+	// The ID of an existing block snapshot your new block storage will be a clone of.
+	SnapshotId *string `pulumi:"snapshotId"`
 }
 
 // The set of arguments for constructing a BlockStorage resource.
@@ -182,14 +224,20 @@ type BlockStorageArgs struct {
 	AttachedToInstance pulumi.StringPtrInput
 	// Determines on the type of block storage volume that will be created. Soon to become a required parameter. Options are `highPerf` or `storageOpt`.
 	BlockType pulumi.StringPtrInput
+	// Boolean value that will flag a block storage device as bootable.
+	Bootable pulumi.BoolPtrInput
 	// Label that is given to your block storage.
 	Label pulumi.StringPtrInput
 	// Boolean value that will allow attachment of the volume to an instance without a restart. Default is false.
 	Live pulumi.BoolPtrInput
-	// Region in which this block storage will reside in. (Currently only NJ/NY supported region "ewr")
+	// The operating system ID to use for this block storage device if it is bootable.
+	OsId pulumi.IntPtrInput
+	// Region in which this block storage will reside in. Refer to the region data source to determine if the desired storage option is available or check the [API options](https://www.vultr.com/api/#tag/region/operation/list-regions).
 	Region pulumi.StringInput
 	// The size of the given block storage.
 	SizeGb pulumi.IntInput
+	// The ID of an existing block snapshot your new block storage will be a clone of.
+	SnapshotId pulumi.StringPtrInput
 }
 
 func (BlockStorageArgs) ElementType() reflect.Type {
@@ -280,8 +328,18 @@ func (o BlockStorageOutput) ToBlockStorageOutputWithContext(ctx context.Context)
 }
 
 // VPS ID that you want to have this block storage attached to.
-func (o BlockStorageOutput) AttachedToInstance() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *BlockStorage) pulumi.StringPtrOutput { return v.AttachedToInstance }).(pulumi.StringPtrOutput)
+func (o BlockStorageOutput) AttachedToInstance() pulumi.StringOutput {
+	return o.ApplyT(func(v *BlockStorage) pulumi.StringOutput { return v.AttachedToInstance }).(pulumi.StringOutput)
+}
+
+// IP address of the VPS the block storage subscription is attached to.
+func (o BlockStorageOutput) AttachedToInstanceIp() pulumi.StringOutput {
+	return o.ApplyT(func(v *BlockStorage) pulumi.StringOutput { return v.AttachedToInstanceIp }).(pulumi.StringOutput)
+}
+
+// Label of the VPS the block storage subscription is attached to.
+func (o BlockStorageOutput) AttachedToInstanceLabel() pulumi.StringOutput {
+	return o.ApplyT(func(v *BlockStorage) pulumi.StringOutput { return v.AttachedToInstanceLabel }).(pulumi.StringOutput)
 }
 
 // Determines on the type of block storage volume that will be created. Soon to become a required parameter. Options are `highPerf` or `storageOpt`.
@@ -289,9 +347,14 @@ func (o BlockStorageOutput) BlockType() pulumi.StringOutput {
 	return o.ApplyT(func(v *BlockStorage) pulumi.StringOutput { return v.BlockType }).(pulumi.StringOutput)
 }
 
+// Boolean value that will flag a block storage device as bootable.
+func (o BlockStorageOutput) Bootable() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *BlockStorage) pulumi.BoolPtrOutput { return v.Bootable }).(pulumi.BoolPtrOutput)
+}
+
 // The monthly cost of this block storage.
-func (o BlockStorageOutput) Cost() pulumi.Float64Output {
-	return o.ApplyT(func(v *BlockStorage) pulumi.Float64Output { return v.Cost }).(pulumi.Float64Output)
+func (o BlockStorageOutput) Cost() pulumi.IntOutput {
+	return o.ApplyT(func(v *BlockStorage) pulumi.IntOutput { return v.Cost }).(pulumi.IntOutput)
 }
 
 // The date this block storage was created.
@@ -314,7 +377,17 @@ func (o BlockStorageOutput) MountId() pulumi.StringOutput {
 	return o.ApplyT(func(v *BlockStorage) pulumi.StringOutput { return v.MountId }).(pulumi.StringOutput)
 }
 
-// Region in which this block storage will reside in. (Currently only NJ/NY supported region "ewr")
+// The operating system ID to use for this block storage device if it is bootable.
+func (o BlockStorageOutput) OsId() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *BlockStorage) pulumi.IntPtrOutput { return v.OsId }).(pulumi.IntPtrOutput)
+}
+
+// Charges due for this block storage subscription at the end of the billing period.
+func (o BlockStorageOutput) PendingCharges() pulumi.Float64Output {
+	return o.ApplyT(func(v *BlockStorage) pulumi.Float64Output { return v.PendingCharges }).(pulumi.Float64Output)
+}
+
+// Region in which this block storage will reside in. Refer to the region data source to determine if the desired storage option is available or check the [API options](https://www.vultr.com/api/#tag/region/operation/list-regions).
 func (o BlockStorageOutput) Region() pulumi.StringOutput {
 	return o.ApplyT(func(v *BlockStorage) pulumi.StringOutput { return v.Region }).(pulumi.StringOutput)
 }
@@ -322,6 +395,11 @@ func (o BlockStorageOutput) Region() pulumi.StringOutput {
 // The size of the given block storage.
 func (o BlockStorageOutput) SizeGb() pulumi.IntOutput {
 	return o.ApplyT(func(v *BlockStorage) pulumi.IntOutput { return v.SizeGb }).(pulumi.IntOutput)
+}
+
+// The ID of an existing block snapshot your new block storage will be a clone of.
+func (o BlockStorageOutput) SnapshotId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *BlockStorage) pulumi.StringPtrOutput { return v.SnapshotId }).(pulumi.StringPtrOutput)
 }
 
 // Current status of your block storage.

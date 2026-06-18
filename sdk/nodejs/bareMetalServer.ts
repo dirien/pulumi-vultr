@@ -15,10 +15,10 @@ import * as utilities from "./utilities";
  * import * as pulumi from "@pulumi/pulumi";
  * import * as vultr from "@ediri/vultr";
  *
- * const myServer = new vultr.BareMetalServer("myServer", {
- *     osId: 1743,
+ * const myServer = new vultr.BareMetalServer("my_server", {
  *     plan: "vbm-4c-32gb",
  *     region: "ewr",
+ *     osId: 1743,
  * });
  * ```
  *
@@ -28,16 +28,16 @@ import * as utilities from "./utilities";
  * import * as pulumi from "@pulumi/pulumi";
  * import * as vultr from "@ediri/vultr";
  *
- * const myServer = new vultr.BareMetalServer("myServer", {
- *     activationEmail: false,
- *     enableIpv6: true,
- *     hostname: "my-server-hostname",
- *     label: "my-server-label",
- *     osId: 1743,
+ * const myServer = new vultr.BareMetalServer("my_server", {
  *     plan: "vbm-4c-32gb",
  *     region: "ewr",
+ *     osId: 1743,
+ *     label: "my-server-label",
  *     tags: ["my-server-tag"],
+ *     hostname: "my-server-hostname",
  *     userData: "this is my user data",
+ *     enableIpv6: true,
+ *     activationEmail: false,
  * });
  * ```
  *
@@ -133,6 +133,9 @@ export class BareMetalServer extends pulumi.CustomResource {
      * The server's main IP address.
      */
     declare public /*out*/ readonly mainIp: pulumi.Output<string>;
+    /**
+     * The raid configuration to use when provisioning the server.  Possible values: `raid1`, `jbod`, `none`. Defaults to `none`.
+     */
     declare public readonly mdiskMode: pulumi.Output<string | undefined>;
     /**
      * The server's IPv4 netmask.
@@ -170,7 +173,7 @@ export class BareMetalServer extends pulumi.CustomResource {
     /**
      * The ID of the Vultr snapshot that the server will restore for the initial installation. [See List Snapshots](https://www.vultr.com/api/#operation/list-snapshots)
      */
-    declare public readonly snapshotId: pulumi.Output<string | undefined>;
+    declare public readonly snapshotId: pulumi.Output<string>;
     /**
      * A list of SSH key IDs to apply to the server on install (only valid for Linux/FreeBSD).
      */
@@ -373,6 +376,9 @@ export interface BareMetalServerState {
      * The server's main IP address.
      */
     mainIp?: pulumi.Input<string>;
+    /**
+     * The raid configuration to use when provisioning the server.  Possible values: `raid1`, `jbod`, `none`. Defaults to `none`.
+     */
     mdiskMode?: pulumi.Input<string>;
     /**
      * The server's IPv4 netmask.
@@ -487,6 +493,9 @@ export interface BareMetalServerArgs {
      * A label for the server.
      */
     label?: pulumi.Input<string>;
+    /**
+     * The raid configuration to use when provisioning the server.  Possible values: `raid1`, `jbod`, `none`. Defaults to `none`.
+     */
     mdiskMode?: pulumi.Input<string>;
     /**
      * The ID of the operating system to be installed on the server. [See List OS](https://www.vultr.com/api/#operation/list-os)

@@ -17,8 +17,8 @@ import * as utilities from "./utilities";
  * import * as pulumi from "@pulumi/pulumi";
  * import * as vultr from "@ediri/vultr";
  *
- * const myDatabaseUser = new vultr.DatabaseUser("myDatabaseUser", {
- *     databaseId: vultr_database.my_database.id,
+ * const myDatabaseUser = new vultr.DatabaseUser("my_database_user", {
+ *     databaseId: myDatabase.id,
  *     username: "my_database_user",
  *     password: "randomTestPW40298",
  * });

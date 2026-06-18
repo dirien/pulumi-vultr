@@ -29,7 +29,7 @@ import (
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := vultr.LookupInference(ctx, &vultr.LookupInferenceArgs{
+//			_, err := vultr.GetInference(ctx, &vultr.LookupInferenceArgs{
 //				Filters: []vultr.GetInferenceFilter{
 //					{
 //						Name: "label",
@@ -73,8 +73,7 @@ type LookupInferenceResult struct {
 	// The provider-assigned unique ID for this managed resource.
 	Id string `pulumi:"id"`
 	// The inference subscription's label.
-	Label string            `pulumi:"label"`
-	Usage map[string]string `pulumi:"usage"`
+	Label string `pulumi:"label"`
 }
 
 func LookupInferenceOutput(ctx *pulumi.Context, args LookupInferenceOutputArgs, opts ...pulumi.InvokeOption) LookupInferenceResultOutput {
@@ -133,10 +132,6 @@ func (o LookupInferenceResultOutput) Id() pulumi.StringOutput {
 // The inference subscription's label.
 func (o LookupInferenceResultOutput) Label() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupInferenceResult) string { return v.Label }).(pulumi.StringOutput)
-}
-
-func (o LookupInferenceResultOutput) Usage() pulumi.StringMapOutput {
-	return o.ApplyT(func(v LookupInferenceResult) map[string]string { return v.Usage }).(pulumi.StringMapOutput)
 }
 
 func init() {

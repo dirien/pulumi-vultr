@@ -29,7 +29,7 @@ import (
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := vultr.LookupBareMetalServer(ctx, &vultr.LookupBareMetalServerArgs{
+//			_, err := vultr.GetBareMetalServer(ctx, &vultr.LookupBareMetalServerArgs{
 //				Filters: []vultr.GetBareMetalServerFilter{
 //					{
 //						Name: "label",
@@ -98,6 +98,8 @@ type LookupBareMetalServerResult struct {
 	Ram string `pulumi:"ram"`
 	// The region ID of the server.
 	Region string `pulumi:"region"`
+	// The ID of the Vultr snapshot that the server was restored from.
+	SnapshotId string `pulumi:"snapshotId"`
 	// The status of the server's subscription.
 	Status string `pulumi:"status"`
 	// A list of tags applied to the server.
@@ -232,6 +234,11 @@ func (o LookupBareMetalServerResultOutput) Ram() pulumi.StringOutput {
 // The region ID of the server.
 func (o LookupBareMetalServerResultOutput) Region() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupBareMetalServerResult) string { return v.Region }).(pulumi.StringOutput)
+}
+
+// The ID of the Vultr snapshot that the server was restored from.
+func (o LookupBareMetalServerResultOutput) SnapshotId() pulumi.StringOutput {
+	return o.ApplyT(func(v LookupBareMetalServerResult) string { return v.SnapshotId }).(pulumi.StringOutput)
 }
 
 // The status of the server's subscription.

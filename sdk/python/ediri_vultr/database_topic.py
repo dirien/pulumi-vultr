@@ -27,6 +27,7 @@ class DatabaseTopicArgs:
                  retention_hours: pulumi.Input[_builtins.int]):
         """
         The set of arguments for constructing a DatabaseTopic resource.
+
         :param pulumi.Input[_builtins.str] database_id: The managed database ID you want to attach this topic to.
         :param pulumi.Input[_builtins.str] name: The name for the new managed database topic.
         :param pulumi.Input[_builtins.int] partitions: The number of partitions for the new managed database topic.
@@ -125,6 +126,7 @@ class _DatabaseTopicState:
                  retention_hours: Optional[pulumi.Input[_builtins.int]] = None):
         """
         Input properties used for looking up and filtering DatabaseTopic resources.
+
         :param pulumi.Input[_builtins.str] database_id: The managed database ID you want to attach this topic to.
         :param pulumi.Input[_builtins.str] name: The name for the new managed database topic.
         :param pulumi.Input[_builtins.int] partitions: The number of partitions for the new managed database topic.
@@ -242,14 +244,15 @@ class DatabaseTopic(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_database_topic = vultr.DatabaseTopic("myDatabaseTopic",
-            database_id=vultr_database["my_database"]["id"],
+        my_database_topic = vultr.DatabaseTopic("my_database_topic",
+            database_id=my_database["id"],
             name="my_database_topic",
             partitions=3,
             replication=2,
             retention_hours=120,
             retention_bytes=-1)
         ```
+
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -277,14 +280,15 @@ class DatabaseTopic(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_database_topic = vultr.DatabaseTopic("myDatabaseTopic",
-            database_id=vultr_database["my_database"]["id"],
+        my_database_topic = vultr.DatabaseTopic("my_database_topic",
+            database_id=my_database["id"],
             name="my_database_topic",
             partitions=3,
             replication=2,
             retention_hours=120,
             retention_bytes=-1)
         ```
+
 
         :param str resource_name: The name of the resource.
         :param DatabaseTopicArgs args: The arguments to use to populate this resource's properties.

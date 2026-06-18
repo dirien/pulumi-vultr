@@ -26,7 +26,7 @@ class KubernetesNodePoolsInitArgs:
                  node_quantity: pulumi.Input[_builtins.int],
                  plan: pulumi.Input[_builtins.str],
                  auto_scaler: Optional[pulumi.Input[_builtins.bool]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 labels: Optional[pulumi.Input[Sequence[pulumi.Input['KubernetesNodePoolsLabelArgs']]]] = None,
                  max_nodes: Optional[pulumi.Input[_builtins.int]] = None,
                  min_nodes: Optional[pulumi.Input[_builtins.int]] = None,
                  tag: Optional[pulumi.Input[_builtins.str]] = None,
@@ -34,17 +34,18 @@ class KubernetesNodePoolsInitArgs:
                  user_data: Optional[pulumi.Input[_builtins.str]] = None):
         """
         The set of arguments for constructing a KubernetesNodePools resource.
+
         :param pulumi.Input[_builtins.str] cluster_id: The VKE cluster ID you want to attach this nodepool to.
         :param pulumi.Input[_builtins.str] label: The label to be used as a prefix for nodes in this node pool.
         :param pulumi.Input[_builtins.int] node_quantity: The number of nodes in this node pool.
-        :param pulumi.Input[_builtins.str] plan: The plan to be used in this node pool. [See Plans List](https://www.vultr.com/api/#operation/list-plans) Note the minimum plan requirements must have at least 1 core and 2 gbs of memory.
+        :param pulumi.Input[_builtins.str] plan: The plan to be used in this node pool. [See plans list](https://www.vultr.com/api/#operation/list-plans) Note the minimum plan requirements must have at least 1 core and 2 gbs of memory.
         :param pulumi.Input[_builtins.bool] auto_scaler: Enable the auto scaler for the default node pool.
-        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: A map of key/value pairs for Kubernetes node labels.
         :param pulumi.Input[_builtins.int] max_nodes: The maximum number of nodes to use with the auto scaler.
         :param pulumi.Input[_builtins.int] min_nodes: The minimum number of nodes to use with the auto scaler.
         :param pulumi.Input[_builtins.str] tag: A tag that is assigned to this node pool.
-        :param pulumi.Input[Sequence[pulumi.Input['KubernetesNodePoolsTaintArgs']]] taints: Taints to apply to the nodes in the node pool. Should contain `key`, `value` and `effect`.  The `effect` should be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
         :param pulumi.Input[_builtins.str] user_data: A base64 encoded string containing the user data to apply to nodes in the node pool.
+               
+               `labels` - (Optional) A list of labels to apply to the nodes in the node pool with these fields:
         """
         pulumi.set(__self__, "cluster_id", cluster_id)
         pulumi.set(__self__, "label", label)
@@ -105,7 +106,7 @@ class KubernetesNodePoolsInitArgs:
     @pulumi.getter
     def plan(self) -> pulumi.Input[_builtins.str]:
         """
-        The plan to be used in this node pool. [See Plans List](https://www.vultr.com/api/#operation/list-plans) Note the minimum plan requirements must have at least 1 core and 2 gbs of memory.
+        The plan to be used in this node pool. [See plans list](https://www.vultr.com/api/#operation/list-plans) Note the minimum plan requirements must have at least 1 core and 2 gbs of memory.
         """
         return pulumi.get(self, "plan")
 
@@ -127,14 +128,11 @@ class KubernetesNodePoolsInitArgs:
 
     @_builtins.property
     @pulumi.getter
-    def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
-        """
-        A map of key/value pairs for Kubernetes node labels.
-        """
+    def labels(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['KubernetesNodePoolsLabelArgs']]]]:
         return pulumi.get(self, "labels")
 
     @labels.setter
-    def labels(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def labels(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['KubernetesNodePoolsLabelArgs']]]]):
         pulumi.set(self, "labels", value)
 
     @_builtins.property
@@ -176,9 +174,6 @@ class KubernetesNodePoolsInitArgs:
     @_builtins.property
     @pulumi.getter
     def taints(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['KubernetesNodePoolsTaintArgs']]]]:
-        """
-        Taints to apply to the nodes in the node pool. Should contain `key`, `value` and `effect`.  The `effect` should be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
-        """
         return pulumi.get(self, "taints")
 
     @taints.setter
@@ -190,6 +185,8 @@ class KubernetesNodePoolsInitArgs:
     def user_data(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
         A base64 encoded string containing the user data to apply to nodes in the node pool.
+
+        `labels` - (Optional) A list of labels to apply to the nodes in the node pool with these fields:
         """
         return pulumi.get(self, "user_data")
 
@@ -206,7 +203,7 @@ class _KubernetesNodePoolsState:
                  date_created: Optional[pulumi.Input[_builtins.str]] = None,
                  date_updated: Optional[pulumi.Input[_builtins.str]] = None,
                  label: Optional[pulumi.Input[_builtins.str]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 labels: Optional[pulumi.Input[Sequence[pulumi.Input['KubernetesNodePoolsLabelArgs']]]] = None,
                  max_nodes: Optional[pulumi.Input[_builtins.int]] = None,
                  min_nodes: Optional[pulumi.Input[_builtins.int]] = None,
                  node_quantity: Optional[pulumi.Input[_builtins.int]] = None,
@@ -218,21 +215,21 @@ class _KubernetesNodePoolsState:
                  user_data: Optional[pulumi.Input[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering KubernetesNodePools resources.
+
         :param pulumi.Input[_builtins.bool] auto_scaler: Enable the auto scaler for the default node pool.
         :param pulumi.Input[_builtins.str] cluster_id: The VKE cluster ID you want to attach this nodepool to.
         :param pulumi.Input[_builtins.str] date_created: Date node was created.
         :param pulumi.Input[_builtins.str] date_updated: Date of node pool updates.
         :param pulumi.Input[_builtins.str] label: The label to be used as a prefix for nodes in this node pool.
-        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: A map of key/value pairs for Kubernetes node labels.
         :param pulumi.Input[_builtins.int] max_nodes: The maximum number of nodes to use with the auto scaler.
         :param pulumi.Input[_builtins.int] min_nodes: The minimum number of nodes to use with the auto scaler.
         :param pulumi.Input[_builtins.int] node_quantity: The number of nodes in this node pool.
-        :param pulumi.Input[Sequence[pulumi.Input['KubernetesNodePoolsNodeArgs']]] nodes: Array that contains information about nodes within this node pool.
-        :param pulumi.Input[_builtins.str] plan: The plan to be used in this node pool. [See Plans List](https://www.vultr.com/api/#operation/list-plans) Note the minimum plan requirements must have at least 1 core and 2 gbs of memory.
+        :param pulumi.Input[_builtins.str] plan: The plan to be used in this node pool. [See plans list](https://www.vultr.com/api/#operation/list-plans) Note the minimum plan requirements must have at least 1 core and 2 gbs of memory.
         :param pulumi.Input[_builtins.str] status: Status of node.
         :param pulumi.Input[_builtins.str] tag: A tag that is assigned to this node pool.
-        :param pulumi.Input[Sequence[pulumi.Input['KubernetesNodePoolsTaintArgs']]] taints: Taints to apply to the nodes in the node pool. Should contain `key`, `value` and `effect`.  The `effect` should be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
         :param pulumi.Input[_builtins.str] user_data: A base64 encoded string containing the user data to apply to nodes in the node pool.
+               
+               `labels` - (Optional) A list of labels to apply to the nodes in the node pool with these fields:
         """
         if auto_scaler is not None:
             pulumi.set(__self__, "auto_scaler", auto_scaler)
@@ -327,14 +324,11 @@ class _KubernetesNodePoolsState:
 
     @_builtins.property
     @pulumi.getter
-    def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
-        """
-        A map of key/value pairs for Kubernetes node labels.
-        """
+    def labels(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['KubernetesNodePoolsLabelArgs']]]]:
         return pulumi.get(self, "labels")
 
     @labels.setter
-    def labels(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
+    def labels(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['KubernetesNodePoolsLabelArgs']]]]):
         pulumi.set(self, "labels", value)
 
     @_builtins.property
@@ -376,9 +370,6 @@ class _KubernetesNodePoolsState:
     @_builtins.property
     @pulumi.getter
     def nodes(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['KubernetesNodePoolsNodeArgs']]]]:
-        """
-        Array that contains information about nodes within this node pool.
-        """
         return pulumi.get(self, "nodes")
 
     @nodes.setter
@@ -389,7 +380,7 @@ class _KubernetesNodePoolsState:
     @pulumi.getter
     def plan(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
-        The plan to be used in this node pool. [See Plans List](https://www.vultr.com/api/#operation/list-plans) Note the minimum plan requirements must have at least 1 core and 2 gbs of memory.
+        The plan to be used in this node pool. [See plans list](https://www.vultr.com/api/#operation/list-plans) Note the minimum plan requirements must have at least 1 core and 2 gbs of memory.
         """
         return pulumi.get(self, "plan")
 
@@ -424,9 +415,6 @@ class _KubernetesNodePoolsState:
     @_builtins.property
     @pulumi.getter
     def taints(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['KubernetesNodePoolsTaintArgs']]]]:
-        """
-        Taints to apply to the nodes in the node pool. Should contain `key`, `value` and `effect`.  The `effect` should be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
-        """
         return pulumi.get(self, "taints")
 
     @taints.setter
@@ -438,6 +426,8 @@ class _KubernetesNodePoolsState:
     def user_data(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
         A base64 encoded string containing the user data to apply to nodes in the node pool.
+
+        `labels` - (Optional) A list of labels to apply to the nodes in the node pool with these fields:
         """
         return pulumi.get(self, "user_data")
 
@@ -455,7 +445,7 @@ class KubernetesNodePools(pulumi.CustomResource):
                  auto_scaler: Optional[pulumi.Input[_builtins.bool]] = None,
                  cluster_id: Optional[pulumi.Input[_builtins.str]] = None,
                  label: Optional[pulumi.Input[_builtins.str]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 labels: Optional[pulumi.Input[Sequence[pulumi.Input[Union['KubernetesNodePoolsLabelArgs', 'KubernetesNodePoolsLabelArgsDict']]]]] = None,
                  max_nodes: Optional[pulumi.Input[_builtins.int]] = None,
                  min_nodes: Optional[pulumi.Input[_builtins.int]] = None,
                  node_quantity: Optional[pulumi.Input[_builtins.int]] = None,
@@ -467,39 +457,77 @@ class KubernetesNodePools(pulumi.CustomResource):
         """
         Deploy additional node pools to an existing Vultr Kubernetes Engine (VKE) cluster.
 
+        ## Example Usage
+
+        Create a new VKE cluster:
+
+        ```python
+        import pulumi
+        import ediri_vultr as vultr
+        import pulumi_std as std
+
+        np_1 = vultr.KubernetesNodePools("np-1",
+            cluster_id=k8["id"],
+            node_quantity=1,
+            plan="vc2-4c-8gb",
+            label="my-label",
+            tag="my-tag",
+            auto_scaler=True,
+            min_nodes=1,
+            max_nodes=2,
+            labels=[
+                {
+                    "key": "my-label",
+                    "value": "a-label-on-all-nodes",
+                },
+                {
+                    "key": "my-second-label",
+                    "value": "another-label-on-all-nodes",
+                },
+            ],
+            taints=[
+                {
+                    "key": "a-taint",
+                    "value": "is-tainted",
+                    "effect": "NoExecute",
+                },
+                {
+                    "key": "another-taint",
+                    "value": "is-tainted",
+                    "effect": "NoSchedule",
+                },
+            ],
+            user_data=std.base64encode(input="This will be added to node user data").result)
+        ```
+
         ## Import
 
         Node pool resources are able to be imported into terraform state like other
-
         resources, however, since they rely on a kubernetes cluster, the import state
-
         requires the UUID of the cluster as well. With that in mind, format the second
-
         argument to the `pulumi import` command as a space delimited string of
-
         UUIDs, the first is the cluster ID, the second is the node pool ID. It will
-
         look like this:
 
-        "clusterID nodePoolID"
-
         ```sh
-        $ pulumi import vultr:index/kubernetesNodePools:KubernetesNodePools my-k8s-np "7365a98b-5a43-450f-bd27-d768827100e5 ec330340-4f50-4526-858f-a39199f568ac"
+        # "clusterID nodePoolID"
+        terraform import vultr_kubernetes_node_pools.my-k8s-np "7365a98b-5a43-450f-bd27-d768827100e5 ec330340-4f50-4526-858f-a39199f568ac"
         ```
+
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[_builtins.bool] auto_scaler: Enable the auto scaler for the default node pool.
         :param pulumi.Input[_builtins.str] cluster_id: The VKE cluster ID you want to attach this nodepool to.
         :param pulumi.Input[_builtins.str] label: The label to be used as a prefix for nodes in this node pool.
-        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: A map of key/value pairs for Kubernetes node labels.
         :param pulumi.Input[_builtins.int] max_nodes: The maximum number of nodes to use with the auto scaler.
         :param pulumi.Input[_builtins.int] min_nodes: The minimum number of nodes to use with the auto scaler.
         :param pulumi.Input[_builtins.int] node_quantity: The number of nodes in this node pool.
-        :param pulumi.Input[_builtins.str] plan: The plan to be used in this node pool. [See Plans List](https://www.vultr.com/api/#operation/list-plans) Note the minimum plan requirements must have at least 1 core and 2 gbs of memory.
+        :param pulumi.Input[_builtins.str] plan: The plan to be used in this node pool. [See plans list](https://www.vultr.com/api/#operation/list-plans) Note the minimum plan requirements must have at least 1 core and 2 gbs of memory.
         :param pulumi.Input[_builtins.str] tag: A tag that is assigned to this node pool.
-        :param pulumi.Input[Sequence[pulumi.Input[Union['KubernetesNodePoolsTaintArgs', 'KubernetesNodePoolsTaintArgsDict']]]] taints: Taints to apply to the nodes in the node pool. Should contain `key`, `value` and `effect`.  The `effect` should be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
         :param pulumi.Input[_builtins.str] user_data: A base64 encoded string containing the user data to apply to nodes in the node pool.
+               
+               `labels` - (Optional) A list of labels to apply to the nodes in the node pool with these fields:
         """
         ...
     @overload
@@ -510,25 +538,63 @@ class KubernetesNodePools(pulumi.CustomResource):
         """
         Deploy additional node pools to an existing Vultr Kubernetes Engine (VKE) cluster.
 
+        ## Example Usage
+
+        Create a new VKE cluster:
+
+        ```python
+        import pulumi
+        import ediri_vultr as vultr
+        import pulumi_std as std
+
+        np_1 = vultr.KubernetesNodePools("np-1",
+            cluster_id=k8["id"],
+            node_quantity=1,
+            plan="vc2-4c-8gb",
+            label="my-label",
+            tag="my-tag",
+            auto_scaler=True,
+            min_nodes=1,
+            max_nodes=2,
+            labels=[
+                {
+                    "key": "my-label",
+                    "value": "a-label-on-all-nodes",
+                },
+                {
+                    "key": "my-second-label",
+                    "value": "another-label-on-all-nodes",
+                },
+            ],
+            taints=[
+                {
+                    "key": "a-taint",
+                    "value": "is-tainted",
+                    "effect": "NoExecute",
+                },
+                {
+                    "key": "another-taint",
+                    "value": "is-tainted",
+                    "effect": "NoSchedule",
+                },
+            ],
+            user_data=std.base64encode(input="This will be added to node user data").result)
+        ```
+
         ## Import
 
         Node pool resources are able to be imported into terraform state like other
-
         resources, however, since they rely on a kubernetes cluster, the import state
-
         requires the UUID of the cluster as well. With that in mind, format the second
-
         argument to the `pulumi import` command as a space delimited string of
-
         UUIDs, the first is the cluster ID, the second is the node pool ID. It will
-
         look like this:
 
-        "clusterID nodePoolID"
-
         ```sh
-        $ pulumi import vultr:index/kubernetesNodePools:KubernetesNodePools my-k8s-np "7365a98b-5a43-450f-bd27-d768827100e5 ec330340-4f50-4526-858f-a39199f568ac"
+        # "clusterID nodePoolID"
+        terraform import vultr_kubernetes_node_pools.my-k8s-np "7365a98b-5a43-450f-bd27-d768827100e5 ec330340-4f50-4526-858f-a39199f568ac"
         ```
+
 
         :param str resource_name: The name of the resource.
         :param KubernetesNodePoolsInitArgs args: The arguments to use to populate this resource's properties.
@@ -548,7 +614,7 @@ class KubernetesNodePools(pulumi.CustomResource):
                  auto_scaler: Optional[pulumi.Input[_builtins.bool]] = None,
                  cluster_id: Optional[pulumi.Input[_builtins.str]] = None,
                  label: Optional[pulumi.Input[_builtins.str]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 labels: Optional[pulumi.Input[Sequence[pulumi.Input[Union['KubernetesNodePoolsLabelArgs', 'KubernetesNodePoolsLabelArgsDict']]]]] = None,
                  max_nodes: Optional[pulumi.Input[_builtins.int]] = None,
                  min_nodes: Optional[pulumi.Input[_builtins.int]] = None,
                  node_quantity: Optional[pulumi.Input[_builtins.int]] = None,
@@ -603,7 +669,7 @@ class KubernetesNodePools(pulumi.CustomResource):
             date_created: Optional[pulumi.Input[_builtins.str]] = None,
             date_updated: Optional[pulumi.Input[_builtins.str]] = None,
             label: Optional[pulumi.Input[_builtins.str]] = None,
-            labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+            labels: Optional[pulumi.Input[Sequence[pulumi.Input[Union['KubernetesNodePoolsLabelArgs', 'KubernetesNodePoolsLabelArgsDict']]]]] = None,
             max_nodes: Optional[pulumi.Input[_builtins.int]] = None,
             min_nodes: Optional[pulumi.Input[_builtins.int]] = None,
             node_quantity: Optional[pulumi.Input[_builtins.int]] = None,
@@ -625,16 +691,15 @@ class KubernetesNodePools(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] date_created: Date node was created.
         :param pulumi.Input[_builtins.str] date_updated: Date of node pool updates.
         :param pulumi.Input[_builtins.str] label: The label to be used as a prefix for nodes in this node pool.
-        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: A map of key/value pairs for Kubernetes node labels.
         :param pulumi.Input[_builtins.int] max_nodes: The maximum number of nodes to use with the auto scaler.
         :param pulumi.Input[_builtins.int] min_nodes: The minimum number of nodes to use with the auto scaler.
         :param pulumi.Input[_builtins.int] node_quantity: The number of nodes in this node pool.
-        :param pulumi.Input[Sequence[pulumi.Input[Union['KubernetesNodePoolsNodeArgs', 'KubernetesNodePoolsNodeArgsDict']]]] nodes: Array that contains information about nodes within this node pool.
-        :param pulumi.Input[_builtins.str] plan: The plan to be used in this node pool. [See Plans List](https://www.vultr.com/api/#operation/list-plans) Note the minimum plan requirements must have at least 1 core and 2 gbs of memory.
+        :param pulumi.Input[_builtins.str] plan: The plan to be used in this node pool. [See plans list](https://www.vultr.com/api/#operation/list-plans) Note the minimum plan requirements must have at least 1 core and 2 gbs of memory.
         :param pulumi.Input[_builtins.str] status: Status of node.
         :param pulumi.Input[_builtins.str] tag: A tag that is assigned to this node pool.
-        :param pulumi.Input[Sequence[pulumi.Input[Union['KubernetesNodePoolsTaintArgs', 'KubernetesNodePoolsTaintArgsDict']]]] taints: Taints to apply to the nodes in the node pool. Should contain `key`, `value` and `effect`.  The `effect` should be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
         :param pulumi.Input[_builtins.str] user_data: A base64 encoded string containing the user data to apply to nodes in the node pool.
+               
+               `labels` - (Optional) A list of labels to apply to the nodes in the node pool with these fields:
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -699,10 +764,7 @@ class KubernetesNodePools(pulumi.CustomResource):
 
     @_builtins.property
     @pulumi.getter
-    def labels(self) -> pulumi.Output[Optional[Mapping[str, _builtins.str]]]:
-        """
-        A map of key/value pairs for Kubernetes node labels.
-        """
+    def labels(self) -> pulumi.Output[Optional[Sequence['outputs.KubernetesNodePoolsLabel']]]:
         return pulumi.get(self, "labels")
 
     @_builtins.property
@@ -732,16 +794,13 @@ class KubernetesNodePools(pulumi.CustomResource):
     @_builtins.property
     @pulumi.getter
     def nodes(self) -> pulumi.Output[Sequence['outputs.KubernetesNodePoolsNode']]:
-        """
-        Array that contains information about nodes within this node pool.
-        """
         return pulumi.get(self, "nodes")
 
     @_builtins.property
     @pulumi.getter
     def plan(self) -> pulumi.Output[_builtins.str]:
         """
-        The plan to be used in this node pool. [See Plans List](https://www.vultr.com/api/#operation/list-plans) Note the minimum plan requirements must have at least 1 core and 2 gbs of memory.
+        The plan to be used in this node pool. [See plans list](https://www.vultr.com/api/#operation/list-plans) Note the minimum plan requirements must have at least 1 core and 2 gbs of memory.
         """
         return pulumi.get(self, "plan")
 
@@ -764,9 +823,6 @@ class KubernetesNodePools(pulumi.CustomResource):
     @_builtins.property
     @pulumi.getter
     def taints(self) -> pulumi.Output[Optional[Sequence['outputs.KubernetesNodePoolsTaint']]]:
-        """
-        Taints to apply to the nodes in the node pool. Should contain `key`, `value` and `effect`.  The `effect` should be one of `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
-        """
         return pulumi.get(self, "taints")
 
     @_builtins.property
@@ -774,6 +830,8 @@ class KubernetesNodePools(pulumi.CustomResource):
     def user_data(self) -> pulumi.Output[Optional[_builtins.str]]:
         """
         A base64 encoded string containing the user data to apply to nodes in the node pool.
+
+        `labels` - (Optional) A list of labels to apply to the nodes in the node pool with these fields:
         """
         return pulumi.get(self, "user_data")
 

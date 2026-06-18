@@ -29,7 +29,7 @@ import (
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := vultr.LookupDnsDomain(ctx, &vultr.LookupDnsDomainArgs{
+//			_, err := vultr.GetDnsDomain(ctx, &vultr.LookupDnsDomainArgs{
 //				Domain: "example.com",
 //			}, nil)
 //			if err != nil {

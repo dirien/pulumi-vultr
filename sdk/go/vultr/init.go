@@ -65,8 +65,44 @@ func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi
 		r = &KubernetesNodePools{}
 	case "vultr:index/loadBalancer:LoadBalancer":
 		r = &LoadBalancer{}
+	case "vultr:index/natGateway:NatGateway":
+		r = &NatGateway{}
+	case "vultr:index/natGatewayFirewallRule:NatGatewayFirewallRule":
+		r = &NatGatewayFirewallRule{}
+	case "vultr:index/natGatewayPortForwardingRule:NatGatewayPortForwardingRule":
+		r = &NatGatewayPortForwardingRule{}
 	case "vultr:index/objectStorage:ObjectStorage":
 		r = &ObjectStorage{}
+	case "vultr:index/objectStorageBucket:ObjectStorageBucket":
+		r = &ObjectStorageBucket{}
+	case "vultr:index/oidcIssuer:OidcIssuer":
+		r = &OidcIssuer{}
+	case "vultr:index/oidcProvider:OidcProvider":
+		r = &OidcProvider{}
+	case "vultr:index/oidcToken:OidcToken":
+		r = &OidcToken{}
+	case "vultr:index/organization:Organization":
+		r = &Organization{}
+	case "vultr:index/organizationGroup:OrganizationGroup":
+		r = &OrganizationGroup{}
+	case "vultr:index/organizationInvitation:OrganizationInvitation":
+		r = &OrganizationInvitation{}
+	case "vultr:index/organizationPolicy:OrganizationPolicy":
+		r = &OrganizationPolicy{}
+	case "vultr:index/organizationPolicyGroupAttachment:OrganizationPolicyGroupAttachment":
+		r = &OrganizationPolicyGroupAttachment{}
+	case "vultr:index/organizationPolicyUserAttachment:OrganizationPolicyUserAttachment":
+		r = &OrganizationPolicyUserAttachment{}
+	case "vultr:index/organizationRole:OrganizationRole":
+		r = &OrganizationRole{}
+	case "vultr:index/organizationRoleGroupAttachment:OrganizationRoleGroupAttachment":
+		r = &OrganizationRoleGroupAttachment{}
+	case "vultr:index/organizationRolePolicyAttachment:OrganizationRolePolicyAttachment":
+		r = &OrganizationRolePolicyAttachment{}
+	case "vultr:index/organizationRoleSession:OrganizationRoleSession":
+		r = &OrganizationRoleSession{}
+	case "vultr:index/organizationRoleTrust:OrganizationRoleTrust":
+		r = &OrganizationRoleTrust{}
 	case "vultr:index/reservedIp:ReservedIp":
 		r = &ReservedIp{}
 	case "vultr:index/reverseIpv4:ReverseIpv4":
@@ -232,7 +268,97 @@ func init() {
 	)
 	pulumi.RegisterResourceModule(
 		"vultr",
+		"index/natGateway",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"vultr",
+		"index/natGatewayFirewallRule",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"vultr",
+		"index/natGatewayPortForwardingRule",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"vultr",
 		"index/objectStorage",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"vultr",
+		"index/objectStorageBucket",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"vultr",
+		"index/oidcIssuer",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"vultr",
+		"index/oidcProvider",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"vultr",
+		"index/oidcToken",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"vultr",
+		"index/organization",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"vultr",
+		"index/organizationGroup",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"vultr",
+		"index/organizationInvitation",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"vultr",
+		"index/organizationPolicy",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"vultr",
+		"index/organizationPolicyGroupAttachment",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"vultr",
+		"index/organizationPolicyUserAttachment",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"vultr",
+		"index/organizationRole",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"vultr",
+		"index/organizationRoleGroupAttachment",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"vultr",
+		"index/organizationRolePolicyAttachment",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"vultr",
+		"index/organizationRoleSession",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"vultr",
+		"index/organizationRoleTrust",
 		&module{version},
 	)
 	pulumi.RegisterResourceModule(

@@ -56,6 +56,7 @@ class DatabaseArgs:
                  vpc_id: Optional[pulumi.Input[_builtins.str]] = None):
         """
         The set of arguments for constructing a Database resource.
+
         :param pulumi.Input[_builtins.str] database_engine: The database engine of the new managed database.
         :param pulumi.Input[_builtins.str] database_engine_version: The database engine version of the new managed database.
         :param pulumi.Input[_builtins.str] label: A label for the managed database.
@@ -552,6 +553,7 @@ class _DatabaseState:
                  access_key: Optional[pulumi.Input[_builtins.str]] = None,
                  backup_hour: Optional[pulumi.Input[_builtins.str]] = None,
                  backup_minute: Optional[pulumi.Input[_builtins.str]] = None,
+                 ca_certificate: Optional[pulumi.Input[_builtins.str]] = None,
                  cluster_time_zone: Optional[pulumi.Input[_builtins.str]] = None,
                  database_engine: Optional[pulumi.Input[_builtins.str]] = None,
                  database_engine_version: Optional[pulumi.Input[_builtins.str]] = None,
@@ -573,6 +575,7 @@ class _DatabaseState:
                  mysql_slow_query_log: Optional[pulumi.Input[_builtins.bool]] = None,
                  mysql_sql_modes: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
                  password: Optional[pulumi.Input[_builtins.str]] = None,
+                 pending_charges: Optional[pulumi.Input[_builtins.float]] = None,
                  plan: Optional[pulumi.Input[_builtins.str]] = None,
                  plan_brokers: Optional[pulumi.Input[_builtins.int]] = None,
                  plan_disk: Optional[pulumi.Input[_builtins.int]] = None,
@@ -592,10 +595,12 @@ class _DatabaseState:
                  vpc_id: Optional[pulumi.Input[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering Database resources.
+
         :param pulumi.Input[_builtins.str] access_cert: The certificate to authenticate the default user (Kafka engine types only).
         :param pulumi.Input[_builtins.str] access_key: The private key to authenticate the default user (Kafka engine types only).
         :param pulumi.Input[_builtins.str] backup_hour: The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
         :param pulumi.Input[_builtins.str] backup_minute: The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
+        :param pulumi.Input[_builtins.str] ca_certificate: The CA certificate for Managed Databases on this account.
         :param pulumi.Input[_builtins.str] cluster_time_zone: The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
         :param pulumi.Input[_builtins.str] database_engine: The database engine of the new managed database.
         :param pulumi.Input[_builtins.str] database_engine_version: The database engine version of the new managed database.
@@ -616,6 +621,7 @@ class _DatabaseState:
         :param pulumi.Input[_builtins.bool] mysql_slow_query_log: The configuration value for slow query logging on the managed database (MySQL engine types only).
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] mysql_sql_modes: A list of SQL modes to configure for the managed database (MySQL engine types only - `ALLOW_INVALID_DATES`, `ANSI`, `ANSI_QUOTES`, `ERROR_FOR_DIVISION_BY_ZERO`, `HIGH_NOT_PRECEDENCE`, `IGNORE_SPACE`, `NO_AUTO_VALUE_ON_ZERO`, `NO_DIR_IN_CREATE`, `NO_ENGINE_SUBSTITUTION`, `NO_UNSIGNED_SUBTRACTION`, `NO_ZERO_DATE`, `NO_ZERO_IN_DATE`, `ONLY_FULL_GROUP_BY`, `PIPES_AS_CONCAT`, `REAL_AS_FLOAT`, `STRICT_ALL_TABLES`, `STRICT_TRANS_TABLES`, `TIME_TRUNCATE_FRACTIONAL`, `TRADITIONAL`).
         :param pulumi.Input[_builtins.str] password: The password for the managed database's primary admin user.
+        :param pulumi.Input[_builtins.float] pending_charges: Charges due for this managed database subscription at the end of the billing period.
         :param pulumi.Input[_builtins.str] plan: The ID of the plan that you want the managed database to subscribe to. [See List Managed Database Plans](https://www.vultr.com/api/#tag/managed-databases/operation/list-database-plans)
         :param pulumi.Input[_builtins.int] plan_brokers: The number of brokers available on the managed database (Kafka engine types only).
         :param pulumi.Input[_builtins.int] plan_disk: The description of the disk(s) on the managed database.
@@ -642,6 +648,8 @@ class _DatabaseState:
             pulumi.set(__self__, "backup_hour", backup_hour)
         if backup_minute is not None:
             pulumi.set(__self__, "backup_minute", backup_minute)
+        if ca_certificate is not None:
+            pulumi.set(__self__, "ca_certificate", ca_certificate)
         if cluster_time_zone is not None:
             pulumi.set(__self__, "cluster_time_zone", cluster_time_zone)
         if database_engine is not None:
@@ -684,6 +692,8 @@ class _DatabaseState:
             pulumi.set(__self__, "mysql_sql_modes", mysql_sql_modes)
         if password is not None:
             pulumi.set(__self__, "password", password)
+        if pending_charges is not None:
+            pulumi.set(__self__, "pending_charges", pending_charges)
         if plan is not None:
             pulumi.set(__self__, "plan", plan)
         if plan_brokers is not None:
@@ -766,6 +776,18 @@ class _DatabaseState:
     @backup_minute.setter
     def backup_minute(self, value: Optional[pulumi.Input[_builtins.str]]):
         pulumi.set(self, "backup_minute", value)
+
+    @_builtins.property
+    @pulumi.getter(name="caCertificate")
+    def ca_certificate(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        The CA certificate for Managed Databases on this account.
+        """
+        return pulumi.get(self, "ca_certificate")
+
+    @ca_certificate.setter
+    def ca_certificate(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "ca_certificate", value)
 
     @_builtins.property
     @pulumi.getter(name="clusterTimeZone")
@@ -1015,6 +1037,18 @@ class _DatabaseState:
     @password.setter
     def password(self, value: Optional[pulumi.Input[_builtins.str]]):
         pulumi.set(self, "password", value)
+
+    @_builtins.property
+    @pulumi.getter(name="pendingCharges")
+    def pending_charges(self) -> Optional[pulumi.Input[_builtins.float]]:
+        """
+        Charges due for this managed database subscription at the end of the billing period.
+        """
+        return pulumi.get(self, "pending_charges")
+
+    @pending_charges.setter
+    def pending_charges(self, value: Optional[pulumi.Input[_builtins.float]]):
+        pulumi.set(self, "pending_charges", value)
 
     @_builtins.property
     @pulumi.getter
@@ -1272,12 +1306,12 @@ class Database(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_database = vultr.Database("myDatabase",
+        my_database = vultr.Database("my_database",
             database_engine="pg",
             database_engine_version="15",
-            label="my_database_label",
+            region="ewr",
             plan="vultr-dbaas-startup-cc-1-55-2",
-            region="ewr")
+            label="my_database_label")
         ```
 
         Create a new database with options:
@@ -1286,16 +1320,16 @@ class Database(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_database = vultr.Database("myDatabase",
-            cluster_time_zone="America/New_York",
+        my_database = vultr.Database("my_database",
             database_engine="pg",
             database_engine_version="15",
-            label="my_database_label",
-            maintenance_dow="sunday",
-            maintenance_time="01:00",
-            plan="vultr-dbaas-startup-cc-1-55-2",
             region="ewr",
-            tag="some tag")
+            plan="vultr-dbaas-startup-cc-1-55-2",
+            label="my_database_label",
+            tag="some tag",
+            cluster_time_zone="America/New_York",
+            maintenance_dow="sunday",
+            maintenance_time="01:00")
         ```
 
         ## Import
@@ -1305,6 +1339,7 @@ class Database(pulumi.CustomResource):
         ```sh
         $ pulumi import vultr:index/database:Database my_database b6a859c5-b299-49dd-8888-b1abbc517d08
         ```
+
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -1358,12 +1393,12 @@ class Database(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_database = vultr.Database("myDatabase",
+        my_database = vultr.Database("my_database",
             database_engine="pg",
             database_engine_version="15",
-            label="my_database_label",
+            region="ewr",
             plan="vultr-dbaas-startup-cc-1-55-2",
-            region="ewr")
+            label="my_database_label")
         ```
 
         Create a new database with options:
@@ -1372,16 +1407,16 @@ class Database(pulumi.CustomResource):
         import pulumi
         import ediri_vultr as vultr
 
-        my_database = vultr.Database("myDatabase",
-            cluster_time_zone="America/New_York",
+        my_database = vultr.Database("my_database",
             database_engine="pg",
             database_engine_version="15",
-            label="my_database_label",
-            maintenance_dow="sunday",
-            maintenance_time="01:00",
-            plan="vultr-dbaas-startup-cc-1-55-2",
             region="ewr",
-            tag="some tag")
+            plan="vultr-dbaas-startup-cc-1-55-2",
+            label="my_database_label",
+            tag="some tag",
+            cluster_time_zone="America/New_York",
+            maintenance_dow="sunday",
+            maintenance_time="01:00")
         ```
 
         ## Import
@@ -1391,6 +1426,7 @@ class Database(pulumi.CustomResource):
         ```sh
         $ pulumi import vultr:index/database:Database my_database b6a859c5-b299-49dd-8888-b1abbc517d08
         ```
+
 
         :param str resource_name: The name of the resource.
         :param DatabaseArgs args: The arguments to use to populate this resource's properties.
@@ -1492,10 +1528,12 @@ class Database(pulumi.CustomResource):
             __props__.__dict__["tag"] = tag
             __props__.__dict__["trusted_ips"] = trusted_ips
             __props__.__dict__["vpc_id"] = vpc_id
+            __props__.__dict__["ca_certificate"] = None
             __props__.__dict__["date_created"] = None
             __props__.__dict__["dbname"] = None
             __props__.__dict__["host"] = None
             __props__.__dict__["latest_backup"] = None
+            __props__.__dict__["pending_charges"] = None
             __props__.__dict__["plan_ram"] = None
             __props__.__dict__["plan_vcpus"] = None
             __props__.__dict__["port"] = None
@@ -1515,6 +1553,7 @@ class Database(pulumi.CustomResource):
             access_key: Optional[pulumi.Input[_builtins.str]] = None,
             backup_hour: Optional[pulumi.Input[_builtins.str]] = None,
             backup_minute: Optional[pulumi.Input[_builtins.str]] = None,
+            ca_certificate: Optional[pulumi.Input[_builtins.str]] = None,
             cluster_time_zone: Optional[pulumi.Input[_builtins.str]] = None,
             database_engine: Optional[pulumi.Input[_builtins.str]] = None,
             database_engine_version: Optional[pulumi.Input[_builtins.str]] = None,
@@ -1536,6 +1575,7 @@ class Database(pulumi.CustomResource):
             mysql_slow_query_log: Optional[pulumi.Input[_builtins.bool]] = None,
             mysql_sql_modes: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
             password: Optional[pulumi.Input[_builtins.str]] = None,
+            pending_charges: Optional[pulumi.Input[_builtins.float]] = None,
             plan: Optional[pulumi.Input[_builtins.str]] = None,
             plan_brokers: Optional[pulumi.Input[_builtins.int]] = None,
             plan_disk: Optional[pulumi.Input[_builtins.int]] = None,
@@ -1564,6 +1604,7 @@ class Database(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] access_key: The private key to authenticate the default user (Kafka engine types only).
         :param pulumi.Input[_builtins.str] backup_hour: The preferred hour of the day (UTC) for daily backups to take place (unavailable for Kafka engine types).
         :param pulumi.Input[_builtins.str] backup_minute: The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
+        :param pulumi.Input[_builtins.str] ca_certificate: The CA certificate for Managed Databases on this account.
         :param pulumi.Input[_builtins.str] cluster_time_zone: The configured time zone for the Managed Database in TZ database format (e.g. `UTC`, `America/New_York`, `Europe/London`).
         :param pulumi.Input[_builtins.str] database_engine: The database engine of the new managed database.
         :param pulumi.Input[_builtins.str] database_engine_version: The database engine version of the new managed database.
@@ -1584,6 +1625,7 @@ class Database(pulumi.CustomResource):
         :param pulumi.Input[_builtins.bool] mysql_slow_query_log: The configuration value for slow query logging on the managed database (MySQL engine types only).
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] mysql_sql_modes: A list of SQL modes to configure for the managed database (MySQL engine types only - `ALLOW_INVALID_DATES`, `ANSI`, `ANSI_QUOTES`, `ERROR_FOR_DIVISION_BY_ZERO`, `HIGH_NOT_PRECEDENCE`, `IGNORE_SPACE`, `NO_AUTO_VALUE_ON_ZERO`, `NO_DIR_IN_CREATE`, `NO_ENGINE_SUBSTITUTION`, `NO_UNSIGNED_SUBTRACTION`, `NO_ZERO_DATE`, `NO_ZERO_IN_DATE`, `ONLY_FULL_GROUP_BY`, `PIPES_AS_CONCAT`, `REAL_AS_FLOAT`, `STRICT_ALL_TABLES`, `STRICT_TRANS_TABLES`, `TIME_TRUNCATE_FRACTIONAL`, `TRADITIONAL`).
         :param pulumi.Input[_builtins.str] password: The password for the managed database's primary admin user.
+        :param pulumi.Input[_builtins.float] pending_charges: Charges due for this managed database subscription at the end of the billing period.
         :param pulumi.Input[_builtins.str] plan: The ID of the plan that you want the managed database to subscribe to. [See List Managed Database Plans](https://www.vultr.com/api/#tag/managed-databases/operation/list-database-plans)
         :param pulumi.Input[_builtins.int] plan_brokers: The number of brokers available on the managed database (Kafka engine types only).
         :param pulumi.Input[_builtins.int] plan_disk: The description of the disk(s) on the managed database.
@@ -1610,6 +1652,7 @@ class Database(pulumi.CustomResource):
         __props__.__dict__["access_key"] = access_key
         __props__.__dict__["backup_hour"] = backup_hour
         __props__.__dict__["backup_minute"] = backup_minute
+        __props__.__dict__["ca_certificate"] = ca_certificate
         __props__.__dict__["cluster_time_zone"] = cluster_time_zone
         __props__.__dict__["database_engine"] = database_engine
         __props__.__dict__["database_engine_version"] = database_engine_version
@@ -1631,6 +1674,7 @@ class Database(pulumi.CustomResource):
         __props__.__dict__["mysql_slow_query_log"] = mysql_slow_query_log
         __props__.__dict__["mysql_sql_modes"] = mysql_sql_modes
         __props__.__dict__["password"] = password
+        __props__.__dict__["pending_charges"] = pending_charges
         __props__.__dict__["plan"] = plan
         __props__.__dict__["plan_brokers"] = plan_brokers
         __props__.__dict__["plan_disk"] = plan_disk
@@ -1681,6 +1725,14 @@ class Database(pulumi.CustomResource):
         The preferred minute of the backup hour for daily backups to take place (unavailable for Kafka engine types).
         """
         return pulumi.get(self, "backup_minute")
+
+    @_builtins.property
+    @pulumi.getter(name="caCertificate")
+    def ca_certificate(self) -> pulumi.Output[_builtins.str]:
+        """
+        The CA certificate for Managed Databases on this account.
+        """
+        return pulumi.get(self, "ca_certificate")
 
     @_builtins.property
     @pulumi.getter(name="clusterTimeZone")
@@ -1846,6 +1898,14 @@ class Database(pulumi.CustomResource):
         The password for the managed database's primary admin user.
         """
         return pulumi.get(self, "password")
+
+    @_builtins.property
+    @pulumi.getter(name="pendingCharges")
+    def pending_charges(self) -> pulumi.Output[_builtins.float]:
+        """
+        Charges due for this managed database subscription at the end of the billing period.
+        """
+        return pulumi.get(self, "pending_charges")
 
     @_builtins.property
     @pulumi.getter

@@ -15,8 +15,8 @@ import * as utilities from "./utilities";
  * import * as pulumi from "@pulumi/pulumi";
  * import * as vultr from "@ediri/vultr";
  *
- * const myFirewallgroup = new vultr.FirewallGroup("myFirewallgroup", {description: "base firewall"});
- * const myFirewallrule = new vultr.FirewallRule("myFirewallrule", {
+ * const myFirewallgroup = new vultr.FirewallGroup("my_firewallgroup", {description: "base firewall"});
+ * const myFirewallrule = new vultr.FirewallRule("my_firewallrule", {
  *     firewallGroupId: myFirewallgroup.id,
  *     protocol: "tcp",
  *     ipType: "v4",
@@ -86,7 +86,7 @@ export class FirewallRule extends pulumi.CustomResource {
     /**
      * Possible values ("", cloudflare)
      */
-    declare public readonly source: pulumi.Output<string | undefined>;
+    declare public readonly source: pulumi.Output<string>;
     /**
      * IP address that you want to define for this firewall rule.
      */

@@ -12,6 +12,10 @@ import (
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
+// Get information about a Vultr Kubernetes Engine (VKE) Cluster.
+//
+// > The node pool deployed with this resource adds its own `tag` which is then used as an identifier for Terraform to see which node pool is part of this resource. This resource only supports a single node pool. To deploy additional worker nodes you must use `KubernetesNodePools`.
+//
 // ## Example Usage
 //
 // Create a new VKE cluster:
@@ -29,70 +33,39 @@ import (
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
 //			_, err := vultr.NewKubernetes(ctx, "k8", &vultr.KubernetesArgs{
-//				Label: pulumi.String("vke-test"),
-//				NodePools: &vultr.KubernetesNodePoolsTypeArgs{
-//					AutoScaler: pulumi.Bool(true),
-//					Label:      pulumi.String("vke-nodepool"),
-//					Labels: pulumi.StringMap{
-//						"my-label":        pulumi.String("a-label-on-all-nodes"),
-//						"my-second-label": pulumi.String("another-label-on-all-nodes"),
-//					},
-//					MaxNodes:     pulumi.Int(2),
-//					MinNodes:     pulumi.Int(1),
-//					NodeQuantity: pulumi.Int(1),
-//					Plan:         pulumi.String("vc2-1c-2gb"),
-//					Taints: vultr.KubernetesNodePoolsTaintArray{
-//						&vultr.KubernetesNodePoolsTaintArgs{
-//							Effect: pulumi.String("NoExecute"),
-//							Key:    pulumi.String("a-taint"),
-//							Value:  pulumi.String("is-tainted"),
-//						},
-//					},
-//				},
-//				Region:  pulumi.String("ewr"),
-//				Version: pulumi.String("v1.28.2+1"),
-//			})
-//			if err != nil {
-//				return err
-//			}
-//			return nil
-//		})
-//	}
-//
-// ```
-//
-// A default node pool is required when first creating the resource but it can be removed at a later point so long as there is a separate `KubernetesNodePools` resource attached. For example:
-//
-// ```go
-// package main
-//
-// import (
-//
-//	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr"
-//	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-//
-// )
-//
-//	func main() {
-//		pulumi.Run(func(ctx *pulumi.Context) error {
-//			k8, err := vultr.NewKubernetes(ctx, "k8", &vultr.KubernetesArgs{
 //				Region:  pulumi.String("ewr"),
 //				Label:   pulumi.String("vke-test"),
 //				Version: pulumi.String("v1.28.2+1"),
-//			})
-//			if err != nil {
-//				return err
-//			}
-//			// This resource must be created and attached to the cluster
-//			// before removing the default node from the vultr_kubernetes resource
-//			_, err = vultr.NewKubernetesNodePools(ctx, "np", &vultr.KubernetesNodePoolsArgs{
-//				ClusterId:    k8.ID(),
-//				NodeQuantity: pulumi.Int(1),
-//				Plan:         pulumi.String("vc2-1c-2gb"),
-//				Label:        pulumi.String("vke-nodepool"),
-//				AutoScaler:   pulumi.Bool(true),
-//				MinNodes:     pulumi.Int(1),
-//				MaxNodes:     pulumi.Int(2),
+//				NodePools: &vultr.KubernetesNodePoolsTypeArgs{
+//					NodeQuantity: pulumi.Int(1),
+//					Plan:         pulumi.String("vc2-1c-2gb"),
+//					Label:        pulumi.String("vke-nodepool"),
+//					AutoScaler:   pulumi.Bool(true),
+//					MinNodes:     pulumi.Int(1),
+//					MaxNodes:     pulumi.Int(2),
+//					Labels: vultr.KubernetesNodePoolsLabelArray{
+//						&vultr.KubernetesNodePoolsLabelArgs{
+//							Key:   pulumi.String("my-label"),
+//							Value: pulumi.String("a-label-on-all-nodes"),
+//						},
+//						&vultr.KubernetesNodePoolsLabelArgs{
+//							Key:   pulumi.String("my-second-label"),
+//							Value: pulumi.String("another-label-on-all-nodes"),
+//						},
+//					},
+//					Taints: vultr.KubernetesNodePoolsTaintArray{
+//						&vultr.KubernetesNodePoolsTaintArgs{
+//							Key:    pulumi.String("a-taint"),
+//							Value:  pulumi.String("is-tainted"),
+//							Effect: pulumi.String("NoExecute"),
+//						},
+//						&vultr.KubernetesNodePoolsTaintArgs{
+//							Key:    pulumi.String("another-taint"),
+//							Value:  pulumi.String("is-tainted"),
+//							Effect: pulumi.String("NoSchedule"),
+//						},
+//					},
+//				},
 //			})
 //			if err != nil {
 //				return err
@@ -103,17 +76,14 @@ import (
 //
 // ```
 //
-// There is still a requirement that there be one node pool attached to the cluster but this should allow more flexibility about which node pool that is.
-//
 // ## Import
 //
-// # A kubernetes cluster created outside of terraform can be imported into the
-//
+// A kubernetes cluster created outside of terraform can be imported into the
 // terraform state using the UUID.  One thing to note is that all kubernetes
-//
 // resources have a default node pool with a tag of `tf-vke-default`. In order to
-//
-// avoid errors, ensure that there is a node pool with that tag set.
+// avoid errors, ensure that there is a node pool with that tag set that the node
+// pool matches the configuration in the `nodePools` block of the kubernetes
+// resource.
 //
 // ```sh
 // $ pulumi import vultr:index/kubernetes:Kubernetes my-k8s 7365a98b-5a43-450f-bd27-d768827100e5
@@ -143,10 +113,20 @@ type Kubernetes struct {
 	Ip pulumi.StringOutput `pulumi:"ip"`
 	// Base64 encoded Kubeconfig for this VKE cluster.
 	KubeConfig pulumi.StringOutput `pulumi:"kubeConfig"`
-	// The VKE clusters label.
+	// The label to be used as a prefix for nodes in this node pool.
 	Label pulumi.StringOutput `pulumi:"label"`
 	// Contains the default node pool that was deployed.
-	NodePools KubernetesNodePoolsTypePtrOutput `pulumi:"nodePools"`
+	NodePools KubernetesNodePoolsTypeOutput `pulumi:"nodePools"`
+	// The unique identifier assigned to your application by the OIDC provider.
+	OidcClientId pulumi.StringPtrOutput `pulumi:"oidcClientId"`
+	// The claim in the OIDC token that contains the user's group memberships.
+	//
+	// `nodePools` (Required) Defines the default node pool for a cluster using these fields:
+	OidcGroupsClaim pulumi.StringPtrOutput `pulumi:"oidcGroupsClaim"`
+	// The URL of the OIDC provider that issues authentication tokens.
+	OidcIssuerUrl pulumi.StringPtrOutput `pulumi:"oidcIssuerUrl"`
+	// The claim in the OIDC token that identifies the end user's username.
+	OidcUsernameClaim pulumi.StringPtrOutput `pulumi:"oidcUsernameClaim"`
 	// The region your VKE cluster will be deployed in.
 	Region pulumi.StringOutput `pulumi:"region"`
 	// IP range that services will run on this cluster.
@@ -168,6 +148,9 @@ func NewKubernetes(ctx *pulumi.Context,
 
 	if args.Label == nil {
 		return nil, errors.New("invalid value for required argument 'Label'")
+	}
+	if args.NodePools == nil {
+		return nil, errors.New("invalid value for required argument 'NodePools'")
 	}
 	if args.Region == nil {
 		return nil, errors.New("invalid value for required argument 'Region'")
@@ -227,10 +210,20 @@ type kubernetesState struct {
 	Ip *string `pulumi:"ip"`
 	// Base64 encoded Kubeconfig for this VKE cluster.
 	KubeConfig *string `pulumi:"kubeConfig"`
-	// The VKE clusters label.
+	// The label to be used as a prefix for nodes in this node pool.
 	Label *string `pulumi:"label"`
 	// Contains the default node pool that was deployed.
 	NodePools *KubernetesNodePoolsType `pulumi:"nodePools"`
+	// The unique identifier assigned to your application by the OIDC provider.
+	OidcClientId *string `pulumi:"oidcClientId"`
+	// The claim in the OIDC token that contains the user's group memberships.
+	//
+	// `nodePools` (Required) Defines the default node pool for a cluster using these fields:
+	OidcGroupsClaim *string `pulumi:"oidcGroupsClaim"`
+	// The URL of the OIDC provider that issues authentication tokens.
+	OidcIssuerUrl *string `pulumi:"oidcIssuerUrl"`
+	// The claim in the OIDC token that identifies the end user's username.
+	OidcUsernameClaim *string `pulumi:"oidcUsernameClaim"`
 	// The region your VKE cluster will be deployed in.
 	Region *string `pulumi:"region"`
 	// IP range that services will run on this cluster.
@@ -266,10 +259,20 @@ type KubernetesState struct {
 	Ip pulumi.StringPtrInput
 	// Base64 encoded Kubeconfig for this VKE cluster.
 	KubeConfig pulumi.StringPtrInput
-	// The VKE clusters label.
+	// The label to be used as a prefix for nodes in this node pool.
 	Label pulumi.StringPtrInput
 	// Contains the default node pool that was deployed.
 	NodePools KubernetesNodePoolsTypePtrInput
+	// The unique identifier assigned to your application by the OIDC provider.
+	OidcClientId pulumi.StringPtrInput
+	// The claim in the OIDC token that contains the user's group memberships.
+	//
+	// `nodePools` (Required) Defines the default node pool for a cluster using these fields:
+	OidcGroupsClaim pulumi.StringPtrInput
+	// The URL of the OIDC provider that issues authentication tokens.
+	OidcIssuerUrl pulumi.StringPtrInput
+	// The claim in the OIDC token that identifies the end user's username.
+	OidcUsernameClaim pulumi.StringPtrInput
 	// The region your VKE cluster will be deployed in.
 	Region pulumi.StringPtrInput
 	// IP range that services will run on this cluster.
@@ -291,10 +294,20 @@ type kubernetesArgs struct {
 	EnableFirewall *bool `pulumi:"enableFirewall"`
 	// Boolean indicating if the cluster should be created with multiple, highly available controlplanes.
 	HaControlplanes *bool `pulumi:"haControlplanes"`
-	// The VKE clusters label.
+	// The label to be used as a prefix for nodes in this node pool.
 	Label string `pulumi:"label"`
 	// Contains the default node pool that was deployed.
-	NodePools *KubernetesNodePoolsType `pulumi:"nodePools"`
+	NodePools KubernetesNodePoolsType `pulumi:"nodePools"`
+	// The unique identifier assigned to your application by the OIDC provider.
+	OidcClientId *string `pulumi:"oidcClientId"`
+	// The claim in the OIDC token that contains the user's group memberships.
+	//
+	// `nodePools` (Required) Defines the default node pool for a cluster using these fields:
+	OidcGroupsClaim *string `pulumi:"oidcGroupsClaim"`
+	// The URL of the OIDC provider that issues authentication tokens.
+	OidcIssuerUrl *string `pulumi:"oidcIssuerUrl"`
+	// The claim in the OIDC token that identifies the end user's username.
+	OidcUsernameClaim *string `pulumi:"oidcUsernameClaim"`
 	// The region your VKE cluster will be deployed in.
 	Region string `pulumi:"region"`
 	// The version your VKE cluster you want deployed. [See Available Version](https://www.vultr.com/api/#operation/get-kubernetes-versions)
@@ -309,10 +322,20 @@ type KubernetesArgs struct {
 	EnableFirewall pulumi.BoolPtrInput
 	// Boolean indicating if the cluster should be created with multiple, highly available controlplanes.
 	HaControlplanes pulumi.BoolPtrInput
-	// The VKE clusters label.
+	// The label to be used as a prefix for nodes in this node pool.
 	Label pulumi.StringInput
 	// Contains the default node pool that was deployed.
-	NodePools KubernetesNodePoolsTypePtrInput
+	NodePools KubernetesNodePoolsTypeInput
+	// The unique identifier assigned to your application by the OIDC provider.
+	OidcClientId pulumi.StringPtrInput
+	// The claim in the OIDC token that contains the user's group memberships.
+	//
+	// `nodePools` (Required) Defines the default node pool for a cluster using these fields:
+	OidcGroupsClaim pulumi.StringPtrInput
+	// The URL of the OIDC provider that issues authentication tokens.
+	OidcIssuerUrl pulumi.StringPtrInput
+	// The claim in the OIDC token that identifies the end user's username.
+	OidcUsernameClaim pulumi.StringPtrInput
 	// The region your VKE cluster will be deployed in.
 	Region pulumi.StringInput
 	// The version your VKE cluster you want deployed. [See Available Version](https://www.vultr.com/api/#operation/get-kubernetes-versions)
@@ -463,14 +486,36 @@ func (o KubernetesOutput) KubeConfig() pulumi.StringOutput {
 	return o.ApplyT(func(v *Kubernetes) pulumi.StringOutput { return v.KubeConfig }).(pulumi.StringOutput)
 }
 
-// The VKE clusters label.
+// The label to be used as a prefix for nodes in this node pool.
 func (o KubernetesOutput) Label() pulumi.StringOutput {
 	return o.ApplyT(func(v *Kubernetes) pulumi.StringOutput { return v.Label }).(pulumi.StringOutput)
 }
 
 // Contains the default node pool that was deployed.
-func (o KubernetesOutput) NodePools() KubernetesNodePoolsTypePtrOutput {
-	return o.ApplyT(func(v *Kubernetes) KubernetesNodePoolsTypePtrOutput { return v.NodePools }).(KubernetesNodePoolsTypePtrOutput)
+func (o KubernetesOutput) NodePools() KubernetesNodePoolsTypeOutput {
+	return o.ApplyT(func(v *Kubernetes) KubernetesNodePoolsTypeOutput { return v.NodePools }).(KubernetesNodePoolsTypeOutput)
+}
+
+// The unique identifier assigned to your application by the OIDC provider.
+func (o KubernetesOutput) OidcClientId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Kubernetes) pulumi.StringPtrOutput { return v.OidcClientId }).(pulumi.StringPtrOutput)
+}
+
+// The claim in the OIDC token that contains the user's group memberships.
+//
+// `nodePools` (Required) Defines the default node pool for a cluster using these fields:
+func (o KubernetesOutput) OidcGroupsClaim() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Kubernetes) pulumi.StringPtrOutput { return v.OidcGroupsClaim }).(pulumi.StringPtrOutput)
+}
+
+// The URL of the OIDC provider that issues authentication tokens.
+func (o KubernetesOutput) OidcIssuerUrl() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Kubernetes) pulumi.StringPtrOutput { return v.OidcIssuerUrl }).(pulumi.StringPtrOutput)
+}
+
+// The claim in the OIDC token that identifies the end user's username.
+func (o KubernetesOutput) OidcUsernameClaim() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Kubernetes) pulumi.StringPtrOutput { return v.OidcUsernameClaim }).(pulumi.StringPtrOutput)
 }
 
 // The region your VKE cluster will be deployed in.

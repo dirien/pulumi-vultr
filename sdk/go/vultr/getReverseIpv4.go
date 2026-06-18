@@ -29,7 +29,7 @@ import (
 //
 //	func main() {
 //		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := vultr.LookupReverseIpv4(ctx, &vultr.LookupReverseIpv4Args{
+//			_, err := vultr.GetReverseIpv4(ctx, &vultr.LookupReverseIpv4Args{
 //				Filters: []vultr.GetReverseIpv4Filter{
 //					{
 //						Name: "reverse",
